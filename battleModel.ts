@@ -12,8 +12,8 @@ class BattleModel {
     allCards : Card[];
     
     constructor() {
-        this.player1 = new Player(0, "Desna team", null, 1); // me
-        this.player2 = new Player(1, "Balgo team", null, 1); // opp
+        this.player1 = new Player(0, "Desna team", new Formation(54), 1); // me
+        this.player2 = new Player(1, "Balgo team", new Formation(54), 1); // opp
         
         // initialize the cards
         this.myCards = [];
@@ -27,11 +27,13 @@ class BattleModel {
             this.myCards[i] = new Card(groupA[i].name,
                                         new Stats(groupA[i].hp, groupA[i].atk, groupA[i].def, groupA[i].wis, groupA[i].agi), 
                                         [null, skill1, null], 
-                                        this.player1); //my cards
+                                        this.player1,
+                                        i); //my cards
             this.oppCards[i] = new Card(groupB[i].name, 
                                         new Stats(groupB[i].hp, groupB[i].atk, groupB[i].def, groupB[i].wis, groupB[i].agi),
                                         [null, skill2, null], 
-                                        this.player2); // opp card
+                                        this.player2,
+                                        i); // opp card
             this.allCards.push(this.myCards[i]);
             this.allCards.push(this.oppCards[i]);
         }
@@ -116,7 +118,7 @@ class BattleModel {
     
             var targetCard = opposingCards[targetIndex];
     
-            var baseDamage = getATKDamage(executor, targetCard, false);
+            var baseDamage = this.getATKDamage(executor, targetCard, false);
             var damage = skillMod * baseDamage;
     
             targetCard.stats.hp -= damage;
@@ -169,7 +171,7 @@ class BattleModel {
 
                     var targetCard = opposingCards[targetIndex];
 
-                    var damage = getATKDamage(currentCard, targetCard, false);
+                    var damage = this.getATKDamage(currentCard, targetCard, false);
 
                     targetCard.stats.hp -= damage;
                     this.bblog(currentCard.name + " attacks " + targetCard.name);
@@ -187,12 +189,46 @@ class BattleModel {
                     this.bblog("player " + currentCard.getPlayerName() + " has won");
                 }
             }
-        }
+        }        
     }
 
     performOpeningSkills () {
         this.bblog("my opening skills performed");
         this.bblog("opp opening skills performed");
+    }
+    
+    getATKDamage(attacker : Card, defender : Card, ignorePosition : boolean) {
+            var ATTACK_FACTOR = 0.3;
+            var DIFF_FACTOR = 0.2;
+        
+            var POS_ATTACK_FACTOR = {
+                1: 0.8,
+                2: 1,
+                3: 1.2
+            };
+            
+            var POS_DAMAGE_FACTOR = {
+                1: 0.8,
+                2: 1,
+                3: 1.2
+            };
+        
+            var baseDamage = attacker.stats.atk * ATTACK_FACTOR;
+            var damage = ((attacker.stats.atk - defender.stats.def) * DIFF_FACTOR) + baseDamage;
+        
+            if (!ignorePosition) {
+                damage *= POS_ATTACK_FACTOR[attacker.getFormationRow()];
+                damage *= POS_DAMAGE_FACTOR[defender.getFormationRow()];
+            }
+        
+            //set lower limit
+            if (damage < baseDamage * 0.1) {
+                damage = baseDamage * 0.1;
+            }
+        
+            damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
+        
+            return damage;
     }
 
     bblog (data) {
@@ -255,38 +291,7 @@ function bblogMajor(data) {
     battleEventDiv.appendChild(newEvent);
 }
 
-function getATKDamage(attacker, defender, ignorePosition) {
-    var ATTACK_FACTOR = 0.3;
-    var DIFF_FACTOR = 0.2;
 
-    // $_POS_ATTACK_FACTOR: {
-    //     1: 1.2,
-    //     2: 1,
-    //     3: 0.8
-    // },
-    // $_POS_DAMAGE_FACTOR: {
-    //     1: 1.2,
-    //     2: 1,
-    //     3: 0.8
-    // },
-
-    var baseDamage = attacker.stats.atk * ATTACK_FACTOR;
-    var damage = ((attacker.stats.atk - defender.stats.def) * DIFF_FACTOR) + baseDamage;
-
-    // if (!ignorePosition) {
-    //     damage *= this._POS_ATTACK_FACTOR[caster.getOrder()];
-    //     damage *= this._POS_DAMAGE_FACTOR[target.getOrder()];
-    // }
-
-    //set lower limit
-    if (damage < baseDamage * 0.1) {
-        damage = baseDamage * 0.1;
-    }
-
-    damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
-
-    return damage;
-}
 
 /**
  * Returns a random number between min (inclusive) and max (exclusive)

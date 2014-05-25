@@ -7,7 +7,10 @@ class Card {
     player : Player;
     isDead : boolean;
     
-    constructor(name : string, stats : Stats, skills : Skill[], player : Player) {
+    formationColumn : number; // 0 to 4
+    formationRow : number; // 1, 2 or 3
+    
+    constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn) {
         this.name = name;
         this.stats = stats; // this will be modified during the battle
         this.originalStats = 
@@ -16,6 +19,8 @@ class Card {
         this.player = player; // 0: me, 1: opponent
     
         this.isDead = false;
+        this.formationColumn = formationColumn;
+        this.formationRow = player.formation.getCardRow(formationColumn);
     }
     
     getName() {
@@ -30,6 +35,9 @@ class Card {
         return this.player.name;
     }
     
+    getFormationRow() {
+        return this.formationRow;
+    }    
 }
 
 class Stats {
