@@ -7,6 +7,10 @@ class Card {
     player : Player;
     isDead : boolean;
     
+    openingSkill : Skill;
+    attackSkill : Skill;
+    protectSkill :Skill;   
+    
     formationColumn : number; // 0 to 4
     formationRow : number; // 1, 2 or 3
     
@@ -21,6 +25,21 @@ class Card {
         this.isDead = false;
         this.formationColumn = formationColumn;
         this.formationRow = player.formation.getCardRow(formationColumn);
+        
+        for (var i = 0; i < skills.length; i++) {
+            var skill = skills[i];
+            if (skill) {
+                if (skill.skillType == 1) {
+                    this.openingSkill = skill;
+                }
+                else if (skill.skillType == 2) {
+                    this.attackSkill = skill;
+                }
+                else if  (skill.skillType == 5) {
+                    this.protectSkill = skill;
+                }
+            }
+        }
     }
     
     getName() {

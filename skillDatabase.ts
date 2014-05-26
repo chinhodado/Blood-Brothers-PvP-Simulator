@@ -2,6 +2,21 @@
 
 var SkillDatabase = {
 
+    2 : {
+        name: "Strength of Blade",
+        skillType: 1,
+        skillFunc: 1,
+        skillCalcType: 0,
+        skillFuncArg1: 0.5,
+        skillFuncArg2: 1,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 3,
+        baseProbability: 13,
+        maxProbability: 70
+    },
+
     17 : {
         name: "Berserk",
         skillType: 2,

@@ -7,35 +7,42 @@ class BattleModel {
     player1 : Player;
     player2 : Player;
     
-    myCards : Card[];
-    oppCards : Card[];
+    player1Cards : Card[];
+    player2Cards : Card[];
     allCards : Card[];
     
+    // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
+    currentPlayer : Player;
+    oppositePlayer : Player;
+    currentPlayerCards : Card[];
+    oppositePlayerCards : Card[];
+        
     constructor() {
-        this.player1 = new Player(0, "Desna team", new Formation(54), 1); // me
-        this.player2 = new Player(1, "Balgo team", new Formation(54), 1); // opp
+        this.player1 = new Player(1, "Desna team", new Formation(56), 1); // me
+        this.player2 = new Player(2, "Balgo & Ghis team", new Formation(56), 1); // opp
         
         // initialize the cards
-        this.myCards = [];
-        this.oppCards = [];
+        this.player1Cards = [];
+        this.player2Cards = [];
         this.allCards = [];
         
         for (var i = 0; i < 5; i++) {
-            var skill1 : Skill = new Skill(groupA[i].skillId);
-            var skill2 : Skill = new Skill(groupB[i].skillId);
+
+            var player1Skills = this.makeSkillArray(groupA[i].skills);
+            var player2Skills = this.makeSkillArray(groupB[i].skills);
             
-            this.myCards[i] = new Card(groupA[i].name,
+            this.player1Cards[i] = new Card(groupA[i].name,
                                         new Stats(groupA[i].hp, groupA[i].atk, groupA[i].def, groupA[i].wis, groupA[i].agi), 
-                                        [null, skill1, null], 
+                                        player1Skills, 
                                         this.player1,
                                         i); //my cards
-            this.oppCards[i] = new Card(groupB[i].name, 
+            this.player2Cards[i] = new Card(groupB[i].name, 
                                         new Stats(groupB[i].hp, groupB[i].atk, groupB[i].def, groupB[i].wis, groupB[i].agi),
-                                        [null, skill2, null], 
+                                        player2Skills, 
                                         this.player2,
                                         i); // opp card
-            this.allCards.push(this.myCards[i]);
-            this.allCards.push(this.oppCards[i]);
+            this.allCards.push(this.player1Cards[i]);
+            this.allCards.push(this.player2Cards[i]);
         }
     
         // sort the cards
@@ -43,7 +50,18 @@ class BattleModel {
             return b.stats.agi - a.stats.agi; // descending based on agi
         });    
     }
-
+    
+    makeSkillArray (skills : number[]) {
+        var skillArray : Skill[] = [];
+        
+        for (var i = 0; i < 3; i++) {
+            if (skills[i]) {
+                skillArray.push(new Skill(skills[i]));
+            }
+        }
+        
+        return skillArray;
+    }
 
     getCurrentDebugInfo () {
 //        var info = "";
@@ -52,13 +70,28 @@ class BattleModel {
 //            info += this.myCards[i].name;
 //        }
     }
-
-    getPlayerCards (playerId : number) {
-        if (playerId === 0) {
-            return this.myCards;
+    
+    getOppositePlayer (player : Player) {
+        if (player == this.player1) {
+            return this.player2;
         }
-        else if (playerId == 1) {
-            return this.oppCards;
+        else if (player == this.player2) {
+            return this.player1;
+        }
+        else {
+            throw new Error("Invalid player");
+        }
+    }
+
+    getPlayerCards (player : Player) {
+        if (player === this.player1) {
+            return this.player1Cards;
+        }
+        else if (player === this.player2) {
+            return this.player2Cards;
+        }
+        else {
+            throw new Error("Invalid player");
         }
     }
 
@@ -80,12 +113,15 @@ class BattleModel {
         return possibleIndices[randomIndex];
     }
 
-    isAllDeadPlayer (playerId : number) {
-        if (playerId === 0) {
-            return this.isAllDead(this.myCards);
+    isAllDeadPlayer (player : Player) {
+        if (player === this.player1) {
+            return this.isAllDead(this.player1Cards);
         }
-        else if (playerId == 1) {
-            return this.isAllDead(this.oppCards);
+        else if (player === this.player2) {
+            return this.isAllDead(this.player2Cards);
+        }
+        else {
+            throw new Error("Invalid player");
         }
     }
 
@@ -102,24 +138,23 @@ class BattleModel {
     }
 
     executeActiveSkill (executor : Card) {
-    	var skill = executor.skills[1];
+    	var skill = executor.attackSkill;
         var skillMod = skill.skillFuncArg1;
         var numTarget = (<EnemyRandomRange>skill.range).numTarget;
-        var opposingCards = this.getPlayerCards(1 - executor.getPlayerId());
         
         for (var i = 0; i < numTarget; i++) {
 
-            var targetIndex = this.getValidSingleTarget(opposingCards);
+            var targetIndex = this.getValidSingleTarget(this.oppositePlayerCards);
     
             if (targetIndex == -1) {
                 // no valid target, miss a turn, continue to next card
                 return;
             }
     
-            var targetCard = opposingCards[targetIndex];
+            var targetCard = this.oppositePlayerCards[targetIndex];
     
             var baseDamage = this.getATKDamage(executor, targetCard, false);
-            var damage = skillMod * baseDamage;
+            var damage = Math.round(skillMod * baseDamage);
     
             targetCard.stats.hp -= damage;
             
@@ -145,51 +180,58 @@ class BattleModel {
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !finished; i++) {
                 var currentCard = this.allCards[i];
+                this.currentPlayer = currentCard.player;
+                this.currentPlayerCards = this.getPlayerCards(this.currentPlayer); // cards of the attacking player
+                this.oppositePlayer = this.getOppositePlayer(this.currentPlayer);
+                this.oppositePlayerCards = this.getPlayerCards(this.oppositePlayer);
 
                 if (!currentCard || currentCard.isDead) {
                     continue;
                 }
 
-                var currentCards = this.getPlayerCards(currentCard.getPlayerId()); // cards of the attacking player
-                var opposingCards = this.getPlayerCards(1 - currentCard.getPlayerId());
-
                 // procs active skill if we can
-                if (Math.random() <= 0.3) {
-                    var skillName = currentCard.skills[1].name;
-                    this.bblog(currentCard.name + " procs " + skillName);
-
-                    this.executeActiveSkill(currentCard);
+                var attackSkill = currentCard.attackSkill;
+                if (attackSkill) {
+                    if (Math.random() * 100 <= attackSkill.maxProbability) {
+                        this.bblog(currentCard.name + " procs " + attackSkill.name);    
+                        this.executeActiveSkill(currentCard);
+                    }
+                    else {
+                        this.executeNormalAttack(currentCard);
+                    }
                 }
                 else {
-                    // TODO: move to a separate attack function
-                    var targetIndex = this.getValidSingleTarget(opposingCards);
-
-                    if (targetIndex == -1) {
-                        // no valid target, miss a turn, continue to next card
-                        continue;
-                    }
-
-                    var targetCard = opposingCards[targetIndex];
-
-                    var damage = this.getATKDamage(currentCard, targetCard, false);
-
-                    targetCard.stats.hp -= damage;
-                    this.bblog(currentCard.name + " attacks " + targetCard.name);
-                    this.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-
-                    if (targetCard.stats.hp <= 0) {
-                        this.bblogMinor(targetCard.name + " is dead");
-                        targetCard.isDead = true;
-                    }
+                    this.executeNormalAttack(currentCard);
                 }
 
-
-                if (this.isAllDead(opposingCards)) {
+                if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
                     this.bblog("player " + currentCard.getPlayerName() + " has won");
                 }
             }
         }        
+    }
+    
+    executeNormalAttack (attacker : Card) {
+        var targetIndex = this.getValidSingleTarget(this.oppositePlayerCards);
+
+        if (targetIndex == -1) {
+            // no valid target, miss a turn, continue to next card
+            return;
+        }
+
+        var targetCard = this.oppositePlayerCards[targetIndex];
+
+        var damage = this.getATKDamage(attacker, targetCard, false);
+
+        targetCard.stats.hp -= damage;
+        this.bblog(attacker.name + " attacks " + targetCard.name);
+        this.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
+
+        if (targetCard.stats.hp <= 0) {
+            this.bblogMinor(targetCard.name + " is dead");
+            targetCard.isDead = true;
+        }
     }
 
     performOpeningSkills () {
@@ -263,7 +305,6 @@ class BattleModel {
 
         // the last "major" event that occurred in this turn, like when a fam procs
         var lastEvent : any = turnEventList.lastChild;
-        console.log(lastEvent);
 
         // the sub event list
         var subEventList = lastEvent.getElementsByClassName("ul").lastChild;
