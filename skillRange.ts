@@ -3,7 +3,7 @@
 class RangeFactory {
 
     static RANGE_TYPE = {
-
+        3 : "SelfBothSidesRange",
         16: "EnemyRandomRange",
         17: "EnemyRandomRange",
 
@@ -20,14 +20,14 @@ class RangeFactory {
         20: 5,
         23: 2
     };
-
+    
     getRange (id) {
         var range = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
         } 
         else {
-            throw new Error("invalid rangeId : " + id + " or not implemented");
+            range = this.createRange(id);            
         }
         return range;
     }
@@ -42,20 +42,37 @@ class RangeFactory {
     }
     
     getRangeClass (id) {
+        var rangeClass = RangeFactory.RANGE_TYPE[id];
+        
+        if (!rangeClass) {
+            throw new Error("invalid rangeId : " + id + " or not implemented");
+        }
+        
         return RangeFactory.RANGE_TYPE[id];
+    }
+    
+    createRange (id) {
+        var rangeClass = this.getRangeClass(id);
+        return new window[rangeClass](id);
     }
 }
 
 class BaseRange {
    
     id : number;
+    battleModel : BattleModel;
     
     constructor(id : number) {
-        this.id = id;    
-    } 
+        this.id = id;
+        this.battleModel = BattleModel.battleModel;
+    }
+    
+    getTargets(executor : Card) : Card[] {
+        // to be overrridden
+        return null;
+    }
 }
 
-// EnemyRandomRange
 class EnemyRandomRange extends BaseRange {
 
     numTarget : number;
@@ -64,6 +81,33 @@ class EnemyRandomRange extends BaseRange {
         super(id);
         this.numTarget = numTarget;    
     }   
+}
+
+class SelfBothSidesRange extends BaseRange {
+    
+    constructor(id : number) {
+        super(id);
+    }
+    
+    getTargets(executor : Card) : Card[] {
+        var targets = [];
+        
+        if (!executor.isDead) { // should always be true
+            targets.push(executor);
+        }
+        
+        var leftCard : Card = this.battleModel.getLeftSideCard(executor);
+        if (leftCard && !leftCard.isDead) {
+            targets.push(leftCard);
+        }
+        
+        var rightCard : Card = this.battleModel.getRightSideCard(executor);
+        if (rightCard && !rightCard.isDead) {
+            targets.push(rightCard);
+        }
+        
+        return targets;
+    }
 }
 
 

@@ -36,10 +36,6 @@ class Skill {
         this.baseProbability = skillData.baseProbability;
         this.maxProbability = skillData.maxProbability;
         
-        var rangeFactory = new RangeFactory();
-        
-        this.range = rangeFactory.getRange(this.skillRange);
-    }
-
-    
+        this.range = BattleModel.rangeFactory.getRange(this.skillRange);
+    }    
 }

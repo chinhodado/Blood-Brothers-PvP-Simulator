@@ -2,13 +2,19 @@
 
 class BattleModel {
 
+    static battleModel : BattleModel;
+    static rangeFactory : RangeFactory;
+
     eventCounter : number = 0;
     currentTurn : number = 0;
     player1 : Player;
     player2 : Player;
     
+    // the two players' cards. The order of the cards in these two arrays should never be changed
     player1Cards : Card[];
     player2Cards : Card[];
+    
+    // contains all cards in play. Should be re-sorted every turn
     allCards : Card[];
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
@@ -18,6 +24,10 @@ class BattleModel {
     oppositePlayerCards : Card[];
         
     constructor() {
+    
+        BattleModel.battleModel = this;
+        BattleModel.rangeFactory = new RangeFactory();
+        
         this.player1 = new Player(1, "Desna team", new Formation(56), 1); // me
         this.player2 = new Player(2, "Balgo & Ghis team", new Formation(56), 1); // opp
         
@@ -48,9 +58,48 @@ class BattleModel {
         // sort the cards
         this.allCards.sort(function (a, b) {
             return b.stats.agi - a.stats.agi; // descending based on agi
-        });    
+        });
     }
     
+    /**
+     * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost 
+     * position in the formation
+     */
+    getLeftSideCard (card : Card) : Card {
+        var playerCards = this.getPlayerCards(card.player);
+        var column = card.formationColumn;
+        if (column == 0) { // leftmost position
+            return null;
+        }
+        else if (column <= 4 && column >= 1) { // just to be safe
+            return playerCards[column - 1];
+        }
+        else {
+            throw new Error("Invalid card index");
+        }
+    }
+    
+    /**
+     * Get the card to the right of a supplied card. Return null if the supplied card is at the rightmost 
+     * position in the formation
+     */
+    getRightSideCard (card : Card) : Card {
+        var playerCards = this.getPlayerCards(card.player);
+        var column = card.formationColumn;
+        if (column == 4) { // rightmost position
+            return null;
+        }
+        else if (column >= 0 && column <= 3) { // just to be safe
+            return playerCards[column + 1];
+        }
+        else {
+            throw new Error("Invalid card index");
+        }
+    }
+    
+    /**
+     * Given an array of skill ids, return an array of Skills
+     */
     makeSkillArray (skills : number[]) {
         var skillArray : Skill[] = [];
         
@@ -83,6 +132,9 @@ class BattleModel {
         }
     }
 
+    /**
+     * Get all the cards that belong to a player
+     */
     getPlayerCards (player : Player) {
         if (player === this.player1) {
             return this.player1Cards;
@@ -166,6 +218,20 @@ class BattleModel {
             }
         }
     }
+    
+    executeOpeningSkill (executor : Card) {
+        var skill = executor.openingSkill;
+        var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+        var skillMod = skill.skillFuncArg1;
+        var statToBuff = ENUM.StatusType[skill.skillFuncArg2];        
+        var targets : Card[] = skill.range.getTargets(executor);
+        var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
+
+        for (var i = 0; i < targets.length; i++) {
+            targets[i].addStat(statToBuff, buffAmount);
+            this.bblogMinor(targets[i].name + "'s " + statToBuff + " increased by " + buffAmount);            
+        }
+    }
 
     startBattle () {
         this.performOpeningSkills();
@@ -235,8 +301,25 @@ class BattleModel {
     }
 
     performOpeningSkills () {
-        this.bblog("my opening skills performed");
-        this.bblog("opp opening skills performed");
+        for (var i = 0; i < this.player1Cards.length; i++) {
+            var skill1 = this.player1Cards[i].openingSkill;
+            if (skill1) {
+                if (Math.random() * 100 < skill1.maxProbability) {
+                    this.bblog(this.player1Cards[i].name + " procs " + skill1.name);
+                    this.executeOpeningSkill(this.player1Cards[i]);
+                }
+            }
+        }
+        
+        for (var i = 0; i < this.player2Cards.length; i++) {
+            var skill2 = this.player2Cards[i].openingSkill;
+            if (skill2) {
+                if (Math.random() * 100 < skill2.maxProbability) {
+                    this.bblog(this.player2Cards[i].name + " procs " + skill2.name);
+                    this.executeOpeningSkill(this.player2Cards[i]);
+                }
+            }
+        }
     }
     
     getATKDamage(attacker : Card, defender : Card, ignorePosition : boolean) {
