@@ -4,7 +4,8 @@ class BattleModel {
 
     static battleModel : BattleModel;
     static rangeFactory : RangeFactory;
-
+    
+    eventLog = {};
     eventCounter : number = 0;
     currentTurn : number = 0;
     player1 : Player;
@@ -28,8 +29,8 @@ class BattleModel {
         BattleModel.battleModel = this;
         BattleModel.rangeFactory = new RangeFactory();
         
-        this.player1 = new Player(1, "Desna team", new Formation(56), 1); // me
-        this.player2 = new Player(2, "Balgo & Ghis team", new Formation(56), 1); // opp
+        this.player1 = new Player(1, "Desna team", new Formation(55), 1); // me
+        this.player2 = new Player(2, "Balgo & Ghis team", new Formation(55), 1); // opp
         
         // initialize the cards
         this.player1Cards = [];
@@ -371,7 +372,38 @@ class BattleModel {
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
         newEvent.setAttribute("tabindex", this.eventCounter + "");
+        newEvent.setAttribute("id", this.eventCounter + "");
+        
+        // populate right section with the field situation
+        newEvent.onclick = function () {
+            var model = BattleModel.battleModel;
+            var log = model.eventLog[this.id];
+            log = JSON.parse(log);
+            for (var player = 1; player <=2; player++) {
+                var playerCards = log["player" + player + "Cards"];
+                for (var fam = 0; fam < 5; fam++) {
+                    var stats = playerCards[fam].stats;
+                    var htmlelem = document.getElementById("player" + player + "Fam" + fam);
+                    var infotext = playerCards[fam].name + "<br>" +
+                                    "HP: "  + stats.hp  + "<br>" +
+                                    "ATK: " + stats.atk + "<br>" +
+                                    "DEF: " + stats.def + "<br>" +
+                                    "WIS: " + stats.wis + "<br>" +
+                                    "AGI: " + stats.agi
+                    htmlelem.innerHTML = infotext;
+                }
+            }
+        };
         turnEventList.appendChild(newEvent);
+        
+        // save a log of the current field situation
+        var toSerialize = {
+            player1Cards: this.player1Cards,
+            player2Cards: this.player2Cards
+        };
+        
+        this.eventLog[this.eventCounter] =  JSON.stringify(toSerialize);
+        
         this.eventCounter++;
     }
 
@@ -408,6 +440,9 @@ class BattleModel {
     }
 }
 
+/**
+ * Log a new turn
+ */
 function bblogMajor(data) {
     var battleEventDiv = document.getElementById("battleEventDiv");
     var newEvent = document.createElement("p");

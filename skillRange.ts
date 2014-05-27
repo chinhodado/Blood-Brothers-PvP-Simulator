@@ -60,11 +60,9 @@ class RangeFactory {
 class BaseRange {
    
     id : number;
-    battleModel : BattleModel;
     
     constructor(id : number) {
         this.id = id;
-        this.battleModel = BattleModel.battleModel;
     }
     
     getTargets(executor : Card) : Card[] {
@@ -96,12 +94,12 @@ class SelfBothSidesRange extends BaseRange {
             targets.push(executor);
         }
         
-        var leftCard : Card = this.battleModel.getLeftSideCard(executor);
+        var leftCard : Card = BattleModel.battleModel.getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = this.battleModel.getRightSideCard(executor);
+        var rightCard : Card = BattleModel.battleModel.getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
