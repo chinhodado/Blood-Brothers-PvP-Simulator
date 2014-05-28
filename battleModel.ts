@@ -376,35 +376,46 @@ class BattleModel {
         
         // populate right section with the field situation
         newEvent.onclick = function () {
-            var model = BattleModel.battleModel;
-            var log = model.eventLog[this.id];
-            log = JSON.parse(log);
-            for (var player = 1; player <=2; player++) {
-                var playerCards = log["player" + player + "Cards"];
-                for (var fam = 0; fam < 5; fam++) {
-                    var stats = playerCards[fam].stats;
-                    var htmlelem = document.getElementById("player" + player + "Fam" + fam);
-                    var infotext = playerCards[fam].name + "<br>" +
-                                    "HP: "  + stats.hp  + "<br>" +
-                                    "ATK: " + stats.atk + "<br>" +
-                                    "DEF: " + stats.def + "<br>" +
-                                    "WIS: " + stats.wis + "<br>" +
-                                    "AGI: " + stats.agi
-                    htmlelem.innerHTML = infotext;
-                }
-            }
+            BattleModel.battleModel.displayEventLogAtIndex(this.id);
         };
         turnEventList.appendChild(newEvent);
         
+        // save a log of the current field situation
+        this.updateEventLogAtIndex(this.eventCounter);
+    }
+    
+    displayEventLogAtIndex(index) {
+        var model = BattleModel.battleModel;
+        var log = model.eventLog[index];
+        log = JSON.parse(log);
+        for (var player = 1; player <=2; player++) {
+            var playerCards = log["player" + player + "Cards"];
+            for (var fam = 0; fam < 5; fam++) {
+                var stats = playerCards[fam].stats;
+                var htmlelem = document.getElementById("player" + player + "Fam" + fam);
+                var infotext = playerCards[fam].name + "<br>" +
+                                "HP: "  + stats.hp  + "<br>" +
+                                "ATK: " + stats.atk + "<br>" +
+                                "DEF: " + stats.def + "<br>" +
+                                "WIS: " + stats.wis + "<br>" +
+                                "AGI: " + stats.agi
+                htmlelem.innerHTML = infotext;
+            }
+        }
+    }
+    
+    updateEventLogAtIndex(index) {        
         // save a log of the current field situation
         var toSerialize = {
             player1Cards: this.player1Cards,
             player2Cards: this.player2Cards
         };
         
-        this.eventLog[this.eventCounter] =  JSON.stringify(toSerialize);
-        
-        this.eventCounter++;
+        this.eventLog[index] =  JSON.stringify(toSerialize);
+    }
+    
+    updateEventLogAtLastIndex() {
+        this.updateEventLogAtIndex(Object.keys(this.eventLog)[Object.keys(this.eventLog).length - 1]);
     }
 
     /**
@@ -434,8 +445,10 @@ class BattleModel {
         // new list item for the sub event, and append it to the sub event list
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
-        newEvent.setAttribute("tabindex", this.eventCounter + "");
+        //newEvent.setAttribute("tabindex", this.eventCounter + "");
         subEventList.appendChild(newEvent);
+        
+        this.updateEventLogAtLastIndex();
         this.eventCounter++;
     }
 }
