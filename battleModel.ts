@@ -6,10 +6,14 @@ class BattleModel {
     static rangeFactory : RangeFactory;
     
     eventLog = {};
-    eventCounter : number = 0;
+    majorEventCounter : number = 0;
+    minorEventCounter : number = 0;
+    
     currentTurn : number = 0;
     player1 : Player;
     player2 : Player;
+    
+    initialFieldInfo;
     
     // the two players' cards. The order of the cards in these two arrays should never be changed
     player1Cards : Card[];
@@ -42,13 +46,16 @@ class BattleModel {
             var player1Skills = this.makeSkillArray(groupA[i].skills);
             var player2Skills = this.makeSkillArray(groupB[i].skills);
             
+            var stats1 = new Stats(groupA[i].hp, groupA[i].atk, groupA[i].def, groupA[i].wis, groupA[i].agi);
+            var stats2 = new Stats(groupB[i].hp, groupB[i].atk, groupB[i].def, groupB[i].wis, groupB[i].agi);
+            
             this.player1Cards[i] = new Card(groupA[i].name,
-                                        new Stats(groupA[i].hp, groupA[i].atk, groupA[i].def, groupA[i].wis, groupA[i].agi), 
+                                        stats1, 
                                         player1Skills, 
                                         this.player1,
                                         i); //my cards
             this.player2Cards[i] = new Card(groupB[i].name, 
-                                        new Stats(groupB[i].hp, groupB[i].atk, groupB[i].def, groupB[i].wis, groupB[i].agi),
+                                        stats2,
                                         player2Skills, 
                                         this.player2,
                                         i); // opp card
@@ -60,6 +67,9 @@ class BattleModel {
         this.allCards.sort(function (a, b) {
             return b.stats.agi - a.stats.agi; // descending based on agi
         });
+        
+        // save the initial field snapshot
+        this.initialFieldInfo = this.saveCurrentField();
     }
     
     /**
@@ -212,7 +222,7 @@ class BattleModel {
             targetCard.stats.hp -= damage;
             
             this.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-    
+            this.addEvent(targetCard, ENUM.StatType.HP, (-1) * damage);
             if (targetCard.stats.hp <= 0) {
                 this.bblogMinor(targetCard.name + " is dead");
                 targetCard.isDead = true;
@@ -230,7 +240,10 @@ class BattleModel {
 
         for (var i = 0; i < targets.length; i++) {
             targets[i].addStat(statToBuff, buffAmount);
-            this.bblogMinor(targets[i].name + "'s " + statToBuff + " increased by " + buffAmount);            
+            this.bblogMinor(targets[i].name + "'s " + statToBuff + " increased by " + buffAmount);
+            
+            // there's an enum mismatch here...
+            this.addEvent(targets[i], ENUM.StatType[statToBuff], buffAmount);
         }
     }
 
@@ -242,7 +255,7 @@ class BattleModel {
         while (!finished) {
 
             this.currentTurn++;
-            bblogMajor("Turn " + this.currentTurn);
+            this.bblogTurn("Turn " + this.currentTurn);
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !finished; i++) {
@@ -260,7 +273,7 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability) {
-                        this.bblog(currentCard.name + " procs " + attackSkill.name);    
+                        this.bblogMajor(currentCard.name + " procs " + attackSkill.name);    
                         this.executeActiveSkill(currentCard);
                     }
                     else {
@@ -273,7 +286,7 @@ class BattleModel {
 
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
-                    this.bblog("player " + currentCard.getPlayerName() + " has won");
+                    this.bblogMajor("player " + currentCard.getPlayerName() + " has won");
                 }
             }
         }        
@@ -292,10 +305,12 @@ class BattleModel {
         var damage = this.getATKDamage(attacker, targetCard, false);
 
         targetCard.stats.hp -= damage;
-        this.bblog(attacker.name + " attacks " + targetCard.name);
+        this.bblogMajor(attacker.name + " attacks " + targetCard.name);
         this.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-
+        this.addEvent(targetCard, ENUM.StatType.HP, damage * (-1));
+        
         if (targetCard.stats.hp <= 0) {
+            // maybe we also need to log an event
             this.bblogMinor(targetCard.name + " is dead");
             targetCard.isDead = true;
         }
@@ -306,7 +321,7 @@ class BattleModel {
             var skill1 = this.player1Cards[i].openingSkill;
             if (skill1) {
                 if (Math.random() * 100 < skill1.maxProbability) {
-                    this.bblog(this.player1Cards[i].name + " procs " + skill1.name);
+                    this.bblogMajor(this.player1Cards[i].name + " procs " + skill1.name);
                     this.executeOpeningSkill(this.player1Cards[i]);
                 }
             }
@@ -316,7 +331,7 @@ class BattleModel {
             var skill2 = this.player2Cards[i].openingSkill;
             if (skill2) {
                 if (Math.random() * 100 < skill2.maxProbability) {
-                    this.bblog(this.player2Cards[i].name + " procs " + skill2.name);
+                    this.bblogMajor(this.player2Cards[i].name + " procs " + skill2.name);
                     this.executeOpeningSkill(this.player2Cards[i]);
                 }
             }
@@ -356,38 +371,33 @@ class BattleModel {
         
             return damage;
     }
-
-    bblog (data) {
-        var id = "turn" + this.currentTurn + "events";
-        var battleEventDiv = document.getElementById("battleEventDiv");
-        var turnEventList = document.getElementById(id);
+    
+    addEvent(card : Card, attribute : ENUM.StatType, amount : number) {    
+        // because this function is called after the counter has been incremented
+        var index = this.majorEventCounter - 1;
         
-        // if not already exist, create it
-        if (!turnEventList) {
-            turnEventList = document.createElement("ul");
-            turnEventList.setAttribute("id", id);
-            battleEventDiv.appendChild(turnEventList);
+        if (!this.eventLog[index]) {
+            this.eventLog[index] = [];
         }
-
-        var newEvent = document.createElement("li");
-        newEvent.innerHTML = "<a>" + data + "</a>";
-        newEvent.setAttribute("tabindex", this.eventCounter + "");
-        newEvent.setAttribute("id", this.eventCounter + "");
-        
-        // populate right section with the field situation
-        newEvent.onclick = function () {
-            BattleModel.battleModel.displayEventLogAtIndex(this.id);
-        };
-        turnEventList.appendChild(newEvent);
-        
-        // save a log of the current field situation
-        this.updateEventLogAtIndex(this.eventCounter);
+        this.eventLog[index].push({
+            cardId : card.id,
+            attribute : attribute,
+            amount : amount
+        });
     }
     
     displayEventLogAtIndex(index) {
-        var model = BattleModel.battleModel;
-        var log = model.eventLog[index];
-        log = JSON.parse(log);
+
+        var initialField = JSON.parse(this.initialFieldInfo);
+        console.clear();
+        for (var i = 0; i <=  index; i++) {
+            console.log(this.eventLog[i]);
+            for (var j = 0; j < this.eventLog[i].length; j++) {
+                this.applyEvent(this.eventLog[i][j], initialField);
+            }
+        }
+        
+        var log = initialField;
         for (var player = 1; player <=2; player++) {
             var playerCards = log["player" + player + "Cards"];
             for (var fam = 0; fam < 5; fam++) {
@@ -404,18 +414,78 @@ class BattleModel {
         }
     }
     
-    updateEventLogAtIndex(index) {        
+    applyEvent(event, toApply) {
+        // get the card
+        var card;
+        for (var i = 0; i<5; i++) {
+            if (toApply.player1Cards[i].id == event.cardId) {
+                card = toApply.player1Cards[i];
+                break;
+            }
+            if (toApply.player2Cards[i].id == event.cardId) {
+                card = toApply.player2Cards[i];
+                break;
+            }
+        }
+        
+        // TODO: abstract this... please, future me, make it nicer :(
+        if (event.attribute == ENUM.StatType.HP) {
+            card.stats.hp += event.amount;
+        }
+        else if (event.attribute == ENUM.StatType.ATK) {
+            card.stats.atk += event.amount;
+        }
+        else if (event.attribute == ENUM.StatType.DEF) {
+            card.stats.def += event.amount;
+        }
+        else if (event.attribute == ENUM.StatType.WIS) {
+            card.stats.wis += event.amount;
+        }
+        else if (event.attribute == ENUM.StatType.AGI) {
+            card.stats.agi += event.amount;
+        }
+    }
+        
+    saveCurrentField() {        
         // save a log of the current field situation
         var toSerialize = {
             player1Cards: this.player1Cards,
             player2Cards: this.player2Cards
         };
         
-        this.eventLog[index] =  JSON.stringify(toSerialize);
+        return JSON.stringify(toSerialize);
     }
     
-    updateEventLogAtLastIndex() {
-        this.updateEventLogAtIndex(Object.keys(this.eventLog)[Object.keys(this.eventLog).length - 1]);
+    /**
+     * Use this to log a major event: a normal attack, a proc, etc. Can also be
+     * thought of as logging the main action in a fam's turn
+     */
+    bblogMajor (data) {
+        var id = "turn" + this.currentTurn + "events";
+        var battleEventDiv = document.getElementById("battleEventDiv");
+        var turnEventList = document.getElementById(id);
+        
+        // if not already exist, create it
+        if (!turnEventList) {
+            turnEventList = document.createElement("ul");
+            turnEventList.setAttribute("id", id);
+            battleEventDiv.appendChild(turnEventList);
+        }
+
+        var newEvent = document.createElement("li");
+        newEvent.innerHTML = "<a>" + data + "</a>";
+        newEvent.setAttribute("tabindex", this.majorEventCounter + "");
+        newEvent.setAttribute("id", this.majorEventCounter + "");
+        
+        // populate right section with the field situation
+        newEvent.onclick = function () {
+            BattleModel.battleModel.displayEventLogAtIndex(this.id);
+        };
+        turnEventList.appendChild(newEvent);
+        
+        // save a log of the current field situation
+        //this.updateEventLogAtIndex(this.eventCounter);
+        this.majorEventCounter++;
     }
 
     /**
@@ -429,11 +499,11 @@ class BattleModel {
         // assume that it has already been created
         var turnEventList = document.getElementById(id);
 
-        // the last "major" event that occurred in this turn, like when a fam procs
+        // a <li>, the last "major" event that occurred in this turn, like when a fam procs
         var lastEvent : any = turnEventList.lastChild;
 
-        // the sub event list
-        var subEventList = lastEvent.getElementsByClassName("ul").lastChild;
+        // the <ul> nested inside the above <li>, the sub event list
+        var subEventList = lastEvent.getElementsByClassName("ul")[0];
         
         // if not already exist, create it
         if (!subEventList) {
@@ -448,22 +518,20 @@ class BattleModel {
         //newEvent.setAttribute("tabindex", this.eventCounter + "");
         subEventList.appendChild(newEvent);
         
-        this.updateEventLogAtLastIndex();
-        this.eventCounter++;
+        //this.updateEventLogAtLastIndex();
+        this.minorEventCounter++;
+    }
+    
+    /**
+     * Log a new turn
+     */
+    bblogTurn(data) {
+        var battleEventDiv = document.getElementById("battleEventDiv");
+        var newEvent = document.createElement("p");
+        newEvent.innerHTML = data;
+        battleEventDiv.appendChild(newEvent);
     }
 }
-
-/**
- * Log a new turn
- */
-function bblogMajor(data) {
-    var battleEventDiv = document.getElementById("battleEventDiv");
-    var newEvent = document.createElement("p");
-    newEvent.innerHTML = data;
-    battleEventDiv.appendChild(newEvent);
-}
-
-
 
 /**
  * Returns a random number between min (inclusive) and max (exclusive)

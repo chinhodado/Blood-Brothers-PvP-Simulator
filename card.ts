@@ -2,6 +2,7 @@ class Card {
 
     name : string;
     stats : Stats;
+    id : number; // id for this simulator, not the id in game
     originalStats : Stats;
     skills : Skill[];
     player : Player;
@@ -9,7 +10,7 @@ class Card {
     
     openingSkill : Skill;
     attackSkill : Skill;
-    protectSkill :Skill;   
+    protectSkill :Skill;
     
     formationColumn : number; // 0 to 4
     formationRow : number; // 1, 2 or 3
@@ -20,7 +21,7 @@ class Card {
         this.originalStats = 
             new Stats(stats.hp, stats.atk, stats.def, stats.wis, stats.agi); // this should never be modified
         this.skills = skills;
-        this.player = player; // 0: me, 1: opponent
+        this.player = player; // 1: me, 2: opponent
     
         this.isDead = false;
         this.formationColumn = formationColumn;
@@ -40,6 +41,8 @@ class Card {
                 }
             }
         }
+        
+        this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }
     
     getName() {
