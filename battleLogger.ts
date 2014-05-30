@@ -137,8 +137,11 @@ class BattleLogger {
     displayEventLogAtIndex(index) {
 
         var initialField = JSON.parse(this.initialFieldInfo);
+        
+        // apply events to initial field up to the specified event
         for (var i = 0; i <=  index; i++) {
-            for (var j = 0; j < this.eventLog[i].length; j++) {
+            // need to make sure eventLog[i] exists, in case this is an empty event (like the "Battle start" event);
+            for (var j = 0; this.eventLog[i] && j < this.eventLog[i].length; j++) {
                 this.applyEvent(this.eventLog[i][j], initialField);
             }
         }
@@ -158,7 +161,8 @@ class BattleLogger {
                     agi : "AGI: " + stats.agi
                 }
                 
-                for (var j = 0; j < this.eventLog[index].length; j++) {
+                // need to make sure eventLog[index] exists
+                for (var j = 0; this.eventLog[index] && j < this.eventLog[index].length; j++) {
                     var tempEvent = this.eventLog[index][j];
                     if (tempEvent.cardId == playerCards[fam].id) {
                         if (tempEvent.attribute == ENUM.StatType.HP) {

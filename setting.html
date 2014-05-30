@@ -1,0 +1,40 @@
+<html>
+<head>
+    <script type="text/javascript" src="famDatabase.js"></script>
+</head>
+<body>
+    <form action="game.html" method="GET">
+
+        <select name="p2fam0" class="famSelect"></select>
+        <select name="p2fam1" class="famSelect"></select>
+        <select name="p2fam2" class="famSelect"></select>
+        <select name="p2fam3" class="famSelect"></select>
+        <select name="p2fam4" class="famSelect"></select>
+
+        <br>
+        
+        <select name="p1fam0" class="famSelect"></select>
+        <select name="p1fam1" class="famSelect"></select>
+        <select name="p1fam2" class="famSelect"></select>
+        <select name="p1fam3" class="famSelect"></select>
+        <select name="p1fam4" class="famSelect"></select>
+
+        <script type="text/javascript">
+            var selects = document.getElementsByClassName("famSelect");
+            for (var i = 0; i < selects.length; i++) {
+                for (var key in famDatabase) {
+                    var option = document.createElement("option");
+                    option.value = key;
+                    option.text = key;
+                    selects[i].add(option);
+                }
+            };
+        </script>
+
+        <br>
+
+        <input type="submit" value="Start">
+            
+    </form>
+</body>
+</html>

@@ -40,28 +40,39 @@ class BattleModel {
         BattleModel.rangeFactory = new RangeFactory();
         this.logger = new BattleLogger();
         
-        this.player1 = new Player(1, "Desna team", new Formation(55), 1); // me
-        this.player2 = new Player(2, "Balgo & Ghis team", new Formation(55), 1); // opp
+        this.player1 = new Player(1, "Player 1", new Formation(55), 1); // me
+        this.player2 = new Player(2, "Player 2", new Formation(55), 1); // opp
         
         // initialize the cards
         this.player1Cards = [];
         this.player2Cards = [];
         this.allCards = [];
         
+        var player1cardsInfo = [];
         for (var i = 0; i < 5; i++) {
-
-            var player1Skills = this.makeSkillArray(groupA[i].skills);
-            var player2Skills = this.makeSkillArray(groupB[i].skills);
+            player1cardsInfo.push(famDatabase[getURLParameter("p1fam" + i)]);
+        }
+        
+        var player2cardsInfo = [];
+        for (var i = 0; i < 5; i++) {
+            player2cardsInfo.push(famDatabase[getURLParameter("p2fam" + i)]);
+        }
+        
+        for (var i = 0; i < 5; i++) {
+            var player1Skills = this.makeSkillArray(player1cardsInfo[i].skills);
+            var player2Skills = this.makeSkillArray(player2cardsInfo[i].skills);
             
-            var stats1 = new Stats(groupA[i].hp, groupA[i].atk, groupA[i].def, groupA[i].wis, groupA[i].agi);
-            var stats2 = new Stats(groupB[i].hp, groupB[i].atk, groupB[i].def, groupB[i].wis, groupB[i].agi);
+            var stats1 = new Stats(player1cardsInfo[i].hp, player1cardsInfo[i].atk, 
+                player1cardsInfo[i].def, player1cardsInfo[i].wis, player1cardsInfo[i].agi);
+            var stats2 = new Stats(player2cardsInfo[i].hp, player2cardsInfo[i].atk, 
+                player2cardsInfo[i].def, player2cardsInfo[i].wis, player2cardsInfo[i].agi);
             
-            this.player1Cards[i] = new Card(groupA[i].name,
+            this.player1Cards[i] = new Card(player1cardsInfo[i].name,
                                         stats1, 
                                         player1Skills, 
                                         this.player1,
                                         i); //my cards
-            this.player2Cards[i] = new Card(groupB[i].name, 
+            this.player2Cards[i] = new Card(player2cardsInfo[i].name, 
                                         stats2,
                                         player2Skills, 
                                         this.player2,
@@ -247,6 +258,9 @@ class BattleModel {
     }
 
     startBattle () {
+        this.logger.bblogMajor("Battle start");
+        this.logger.bblogMinor("Everything ready");
+        
         this.performOpeningSkills();
 
         var finished = false;
@@ -387,3 +401,6 @@ function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
