@@ -94,12 +94,12 @@ class SelfBothSidesRange extends BaseRange {
             targets.push(executor);
         }
         
-        var leftCard : Card = BattleModel.battleModel.getLeftSideCard(executor);
+        var leftCard : Card = BattleModel.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = BattleModel.battleModel.getRightSideCard(executor);
+        var rightCard : Card = BattleModel.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
