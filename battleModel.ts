@@ -403,12 +403,42 @@ class BattleModel {
             for (var fam = 0; fam < 5; fam++) {
                 var stats = playerCards[fam].stats;
                 var htmlelem = document.getElementById("player" + player + "Fam" + fam);
+                
+                var infoText = {
+                    hp : "HP: " + stats.hp,
+                    atk : "ATK: " + stats.atk,
+                    def : "DEF: " + stats.def,
+                    wis : "WIS: " + stats.wis,
+                    agi : "AGI: " + stats.agi
+                }
+                
+                for (var j = 0; j < this.eventLog[index].length; j++) {
+                    var tempEvent = this.eventLog[index][j];
+                    if (tempEvent.cardId == playerCards[fam].id) {
+                        if (tempEvent.attribute == ENUM.StatType.HP) {
+                            infoText.hp = "<b>" + infoText.hp + "</b>";
+                        }
+                        if (tempEvent.attribute == ENUM.StatType.ATK) {
+                            infoText.atk = "<b>" + infoText.atk + "</b>";
+                        }
+                        if (tempEvent.attribute == ENUM.StatType.DEF) {
+                            infoText.def = "<b>" + infoText.def + "</b>";
+                        }
+                        if (tempEvent.attribute == ENUM.StatType.WIS) {
+                            infoText.wis = "<b>" + infoText.wis + "</b>";
+                        }
+                        if (tempEvent.attribute == ENUM.StatType.AGI) {
+                            infoText.agi = "<b>" + infoText.agi + "</b>";
+                        }
+                    }
+                }
+                
                 var infotext = playerCards[fam].name + "<br>" +
-                                "HP: "  + stats.hp  + "<br>" +
-                                "ATK: " + stats.atk + "<br>" +
-                                "DEF: " + stats.def + "<br>" +
-                                "WIS: " + stats.wis + "<br>" +
-                                "AGI: " + stats.agi
+                                infoText.hp  + "<br>" +
+                                infoText.atk + "<br>" +
+                                infoText.def + "<br>" +
+                                infoText.wis + "<br>" +
+                                infoText.agi
                 htmlelem.innerHTML = infotext;
             }
         }
