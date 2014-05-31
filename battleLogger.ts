@@ -106,11 +106,11 @@ class BattleLogger {
         // get the card
         var card;
         for (var i = 0; i<5; i++) {
-            if (toApply.player1Cards[i].id == event.cardId) {
+            if (toApply.player1Cards[i].id == event.target) {
                 card = toApply.player1Cards[i];
                 break;
             }
-            if (toApply.player2Cards[i].id == event.cardId) {
+            if (toApply.player2Cards[i].id == event.target) {
                 card = toApply.player2Cards[i];
                 break;
             }
@@ -147,13 +147,14 @@ class BattleLogger {
         }
         
         var log = initialField;
-        for (var player = 1; player <=2; player++) {
+        for (var player = 1; player <=2; player++) { // for each player
             var playerCards = log["player" + player + "Cards"];
-            for (var fam = 0; fam < 5; fam++) {
-                var stats = playerCards[fam].stats;
+            for (var fam = 0; fam < 5; fam++) { // for each card
+                var stats = playerCards[fam].stats; 
                 var htmlelem = document.getElementById("player" + player + "Fam" + fam);
                 
                 var infoText = {
+                    name : playerCards[fam].name,
                     hp : "HP: " + stats.hp,
                     atk : "ATK: " + stats.atk,
                     def : "DEF: " + stats.def,
@@ -161,29 +162,34 @@ class BattleLogger {
                     agi : "AGI: " + stats.agi
                 }
                 
+                // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
                 for (var j = 0; this.eventLog[index] && j < this.eventLog[index].length; j++) {
-                    var tempEvent = this.eventLog[index][j];
-                    if (tempEvent.cardId == playerCards[fam].id) {
+                    var tempEvent = this.eventLog[index][j]; // a minor event
+                    if (tempEvent.target == playerCards[fam].id) {
                         if (tempEvent.attribute == ENUM.StatType.HP) {
-                            infoText.hp = "<b>" + infoText.hp + "</b>";
+                            infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
                         }
                         if (tempEvent.attribute == ENUM.StatType.ATK) {
-                            infoText.atk = "<b>" + infoText.atk + "</b>";
+                            infoText.atk = this.decorateText(infoText.atk, tempEvent.amount < 0);
                         }
                         if (tempEvent.attribute == ENUM.StatType.DEF) {
-                            infoText.def = "<b>" + infoText.def + "</b>";
+                            infoText.def = this.decorateText(infoText.def, tempEvent.amount < 0);
                         }
                         if (tempEvent.attribute == ENUM.StatType.WIS) {
-                            infoText.wis = "<b>" + infoText.wis + "</b>";
+                            infoText.wis = this.decorateText(infoText.wis, tempEvent.amount < 0);
                         }
                         if (tempEvent.attribute == ENUM.StatType.AGI) {
-                            infoText.agi = "<b>" + infoText.agi + "</b>";
+                            infoText.agi = this.decorateText(infoText.agi, tempEvent.amount < 0);
                         }
                     }
                 }
                 
-                var infotext = playerCards[fam].name + "<br>" +
+                if (this.eventLog[index] && this.eventLog[index][0].executor == playerCards[fam].id) {
+                    infoText.name = "<b>" + infoText.name + "</b>";
+                }
+                
+                var infotext = infoText.name + "<br>" +
                                 infoText.hp  + "<br>" +
                                 infoText.atk + "<br>" +
                                 infoText.def + "<br>" +
@@ -194,7 +200,18 @@ class BattleLogger {
         }
     }
     
-    addEvent(card : Card, attribute : ENUM.StatType, amount : number) {
+    decorateText(text : string, isNegative : boolean) {
+        var openTag : string;
+        if (isNegative) {
+            openTag = "<span style='color:red'>";
+        }
+        else {
+            openTag = "<span style='color:green'>";
+        }
+        return openTag + text + "</span>";
+    }
+    
+    addEvent(executor: Card, target : Card, attribute : ENUM.StatType, amount : number) {
         // because this function is called after the counter has been incremented
         var index = this.majorEventCounter - 1;
         
@@ -202,7 +219,8 @@ class BattleLogger {
             this.eventLog[index] = [];
         }
         this.eventLog[index].push({
-            cardId : card.id,
+            executor : executor.id,
+            target : target.id,
             attribute : attribute,
             amount : amount
         });

@@ -232,7 +232,7 @@ class BattleModel {
             targetCard.stats.hp -= damage;
             
             this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-            this.logger.addEvent(targetCard, ENUM.StatType.HP, (-1) * damage);
+            this.logger.addEvent(executor, targetCard, ENUM.StatType.HP, (-1) * damage);
             if (targetCard.stats.hp <= 0) {
                 this.logger.bblogMinor(targetCard.name + " is dead");
                 targetCard.isDead = true;
@@ -253,7 +253,7 @@ class BattleModel {
             this.logger.bblogMinor(targets[i].name + "'s " + statToBuff + " increased by " + buffAmount);
             
             // there's an enum mismatch here...
-            this.logger.addEvent(targets[i], ENUM.StatType[statToBuff], buffAmount);
+            this.logger.addEvent(executor, targets[i], ENUM.StatType[statToBuff], buffAmount);
         }
     }
 
@@ -320,7 +320,7 @@ class BattleModel {
         targetCard.stats.hp -= damage;
         this.logger.bblogMajor(attacker.name + " attacks " + targetCard.name);
         this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-        this.logger.addEvent(targetCard, ENUM.StatType.HP, damage * (-1));
+        this.logger.addEvent(attacker, targetCard, ENUM.StatType.HP, damage * (-1));
         
         if (targetCard.stats.hp <= 0) {
             // maybe we also need to log an event
