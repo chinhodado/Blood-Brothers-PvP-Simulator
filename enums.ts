@@ -96,6 +96,12 @@ module ENUM {
 
         WILL_ATTACK_AGAIN = 18
     }
+    
+    export enum FormationRow {
+        REAR = 1,
+        MID = 2,
+        FRONT = 3
+    }
 }
 
 

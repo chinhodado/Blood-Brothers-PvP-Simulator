@@ -36,7 +36,7 @@ class Formation {
      * Given a position (from 0-5), return the row of the familiar currently at that position based
      * on the current formation
      */
-    getCardRow(position : number) {
+    getCardRow(position : number) : ENUM.FormationRow {
         return Formation.FORMATION_CONFIG[this.id][position];
     }
 }

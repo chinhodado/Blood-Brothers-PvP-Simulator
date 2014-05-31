@@ -13,7 +13,7 @@ class Card {
     protectSkill :Skill;
     
     formationColumn : number; // 0 to 4
-    formationRow : number; // 1, 2 or 3
+    formationRow : ENUM.FormationRow; // 1, 2 or 3
     
     constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn) {
         this.name = name;
@@ -57,7 +57,7 @@ class Card {
         return this.player.name;
     }
     
-    getFormationRow() {
+    getFormationRow() : ENUM.FormationRow {
         return this.formationRow;
     }
     

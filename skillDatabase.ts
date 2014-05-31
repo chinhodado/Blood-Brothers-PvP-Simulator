@@ -60,5 +60,50 @@ var SkillDatabase = {
         skillRange: 16,
         baseProbability: 11,
         maxProbability: 30
+    },
+    
+    99000 : {
+        name : "Raging Flames",
+        skillType: 2,
+        skillFunc: 3,
+        skillCalcType: 3,
+        skillFuncArg1: 2.4,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 16,
+        baseProbability: 11,
+        maxProbability: 30
+    },
+    
+    99001 : {
+        name : "Rippling Flame",
+        skillType: 2,
+        skillFunc: 3,
+        skillCalcType: 1,
+        skillFuncArg1: 1.85,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 16,
+        baseProbability: 11,
+        maxProbability: 30        
+    },
+    
+    99002 : {
+        name : "Inferno",
+        skillType: 2,
+        skillFunc: 3,
+        skillCalcType: 1,
+        skillFuncArg1: 1.4,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 19,
+        baseProbability: 11,
+        maxProbability: 30        
     }
 };

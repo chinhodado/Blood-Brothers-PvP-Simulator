@@ -249,7 +249,21 @@ class BattleModel {
     
             var targetCard = this.oppositePlayerCards[targetIndex];
     
-            var baseDamage = this.getATKDamage(executor, targetCard, false);
+            var baseDamage : number;
+            
+            switch (skill.skillCalcType) {
+                case (ENUM.SkillCalcType.DEFAULT) :
+                case (ENUM.SkillCalcType.WIS) :
+                    baseDamage = getDamageCalculatedByWIS(executor, targetCard);
+                    break;
+                case (ENUM.SkillCalcType.ATK) :
+                    baseDamage = getDamageCalculatedByATK(executor, targetCard, false);
+                    break;
+                case (ENUM.SkillCalcType.AGI) :
+                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, false);
+                    break;
+            }
+            
             var damage = Math.round(skillMod * baseDamage);
     
             targetCard.stats.hp -= damage;
@@ -338,7 +352,7 @@ class BattleModel {
             return;
         }
 
-        var damage = this.getATKDamage(attacker, targetCard, false);
+        var damage = getDamageCalculatedByATK(attacker, targetCard, false);
 
         targetCard.stats.hp -= damage;
         this.logger.bblogMajor(attacker.name + " attacks " + targetCard.name);
@@ -374,57 +388,4 @@ class BattleModel {
             }
         }
     }
-    
-    getATKDamage(attacker : Card, defender : Card, ignorePosition : boolean) {
-            var ATTACK_FACTOR = 0.3;
-            var DIFF_FACTOR = 0.2;
-        
-            var POS_ATTACK_FACTOR = {
-                1: 0.8,
-                2: 1,
-                3: 1.2
-            };
-            
-            var POS_DAMAGE_FACTOR = {
-                1: 0.8,
-                2: 1,
-                3: 1.2
-            };
-        
-            var baseDamage = attacker.stats.atk * ATTACK_FACTOR;
-            var damage = ((attacker.stats.atk - defender.stats.def) * DIFF_FACTOR) + baseDamage;
-        
-            if (!ignorePosition) {
-                damage *= POS_ATTACK_FACTOR[attacker.getFormationRow()];
-                damage *= POS_DAMAGE_FACTOR[defender.getFormationRow()];
-            }
-        
-            //set lower limit
-            if (damage < baseDamage * 0.1) {
-                damage = baseDamage * 0.1;
-            }
-        
-            damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
-        
-            return damage;
-    }
-}
-
-/**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
-function getRandomArbitary (min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-/**
- * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
- */
-function getRandomInt (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
