@@ -185,6 +185,29 @@ class BattleModel {
 
         return possibleIndices[randomIndex];
     }
+    
+    getNearestSingleOpponentTarget (executor : Card) : Card {
+        var oppCards : Card[] = this.getPlayerCards(this.getOppositePlayer(executor.player));
+        var executorIndex = executor.formationColumn;
+        if (oppCards[executorIndex] && !oppCards[executorIndex].isDead) {
+            return oppCards[executorIndex];
+        }
+        else if (oppCards[executorIndex - 1] && !oppCards[executorIndex - 1].isDead) {
+            return oppCards[executorIndex - 1];
+        }
+        else if (oppCards[executorIndex + 1] && !oppCards[executorIndex + 1].isDead) {
+            return oppCards[executorIndex + 1];
+        }
+        else if (oppCards[executorIndex - 2] && !oppCards[executorIndex - 2].isDead) {
+            return oppCards[executorIndex - 2];
+        }
+        else if (oppCards[executorIndex + 2] && !oppCards[executorIndex + 2].isDead) {
+            return oppCards[executorIndex + 2];
+        }
+        else {
+            return null;
+        }
+    }
 
     isAllDeadPlayer (player : Player) {
         if (player === this.player1) {
@@ -231,7 +254,8 @@ class BattleModel {
     
             targetCard.stats.hp -= damage;
             
-            this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
+            this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
+                targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
             this.logger.addEvent(executor, targetCard, ENUM.StatType.HP, (-1) * damage);
             if (targetCard.stats.hp <= 0) {
                 this.logger.bblogMinor(targetCard.name + " is dead");
@@ -306,20 +330,20 @@ class BattleModel {
     }
     
     executeNormalAttack (attacker : Card) {
-        var targetIndex = this.getValidSingleTarget(this.oppositePlayerCards);
+        
+        var targetCard = this.getNearestSingleOpponentTarget(attacker);
 
-        if (targetIndex == -1) {
+        if (targetCard == null) {
             // no valid target, miss a turn, continue to next card
             return;
         }
-
-        var targetCard = this.oppositePlayerCards[targetIndex];
 
         var damage = this.getATKDamage(attacker, targetCard, false);
 
         targetCard.stats.hp -= damage;
         this.logger.bblogMajor(attacker.name + " attacks " + targetCard.name);
-        this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
+        this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
+            targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
         this.logger.addEvent(attacker, targetCard, ENUM.StatType.HP, damage * (-1));
         
         if (targetCard.stats.hp <= 0) {
