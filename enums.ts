@@ -5,7 +5,7 @@ module ENUM {
      */
     export enum SkillType {
         OPENING = 1,
-        ATTACK = 2,
+        ATTACK = 2, // aka active
         DEFENSE = 3,
         FIELD = 4,
         PROTECT = 5,
@@ -24,7 +24,7 @@ module ENUM {
         BUFF = 1,
         DEBUFF = 2,
         ATTACK = 3,
-        MAGIC = 4,
+        MAGIC = 4, // anything that ignores position
         COOP = 5,
         REVIVE = 6,
         KILL = 7,
@@ -56,9 +56,9 @@ module ENUM {
      * Is the skill calculated based on atk, wis, agi, etc.
      */
     export enum SkillCalcType {
-        DEFAULT = 0, // default is Wis
+        DEFAULT = 0, // default is Wis, usually used for buff
         ATK = 1,
-        WIS = 2,
+        WIS = 2, // usually used for active skill
         AGI = 3, 
         HEAL = 4,
         BUFF = 5,

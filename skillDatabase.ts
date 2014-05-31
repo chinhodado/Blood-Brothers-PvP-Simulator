@@ -46,7 +46,37 @@ var SkillDatabase = {
         baseProbability: 11,
         maxProbability: 30
     },
-
+    
+    239 : {
+        name : "Dark Rush",
+        skillType: 2,
+        skillFunc: 4,
+        skillCalcType: 3,
+        skillFuncArg1: 2,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 16,
+        baseProbability: 11,
+        maxProbability: 30
+    },
+    
+    240 : {
+        name : "midnight Smile",
+        skillType: 1,
+        skillFunc: 1,
+        skillCalcType: 0,
+        skillFuncArg1: 0.2,
+        skillFuncArg2: 4,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 3,
+        baseProbability: 13,
+        maxProbability: 70
+    },
+    
     349 : {
         name : "Staff of Tyranny",
         skillType: 2,
@@ -105,5 +135,35 @@ var SkillDatabase = {
         skillRange: 19,
         baseProbability: 11,
         maxProbability: 30        
-    }
+    },
+    
+    99003 : {
+        name : "Niten Ichi-ryu",
+        skillType: 2,
+        skillFunc: 3,
+        skillCalcType: 1,
+        skillFuncArg1: 1.75,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 16,
+        baseProbability: 11,
+        maxProbability: 30        
+    },
+    
+    99004 : {
+        name : "Flash",
+        skillType: 2,
+        skillFunc: 3,
+        skillCalcType: 2,
+        skillFuncArg1: 2.25,
+        skillFuncArg2: 0,
+        skillFuncArg3: 0,
+        skillFuncArg4: 0,
+        skillFuncArg5: 0,
+        skillRange: 16,
+        baseProbability: 11,
+        maxProbability: 30      
+    },
 };

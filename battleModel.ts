@@ -81,13 +81,17 @@ class BattleModel {
             this.allCards.push(this.player2Cards[i]);
         }
     
+        this.sortAllCards();
+        
+        // save the initial field snapshot
+        this.logger.saveInitialField();
+    }
+    
+    sortAllCards() {
         // sort the cards
         this.allCards.sort(function (a, b) {
             return b.stats.agi - a.stats.agi; // descending based on agi
         });
-        
-        // save the initial field snapshot
-        this.logger.saveInitialField();
     }
     
     /**
@@ -248,6 +252,7 @@ class BattleModel {
             }
     
             var targetCard = this.oppositePlayerCards[targetIndex];
+            var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
     
             var baseDamage : number;
             
@@ -257,10 +262,10 @@ class BattleModel {
                     baseDamage = getDamageCalculatedByWIS(executor, targetCard);
                     break;
                 case (ENUM.SkillCalcType.ATK) :
-                    baseDamage = getDamageCalculatedByATK(executor, targetCard, false);
+                    baseDamage = getDamageCalculatedByATK(executor, targetCard, ignorePosition);
                     break;
                 case (ENUM.SkillCalcType.AGI) :
-                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, false);
+                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, ignorePosition);
                     break;
             }
             
@@ -300,6 +305,7 @@ class BattleModel {
         this.logger.bblogMinor("Everything ready");
         
         this.performOpeningSkills();
+        this.sortAllCards();
 
         var finished = false;
 

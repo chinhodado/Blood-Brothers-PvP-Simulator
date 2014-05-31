@@ -20,6 +20,15 @@ var famDatabase = {
     "Griffin Mount II" : 
         {name: "Griffin",       hp: 11887, atk: 9909,  def: 14391, wis: 14263, agi: 11960, skills: [2]},
     
+    "Hel, Goddess of Death II" :
+        {name: "Hel",           hp: 14709, atk: 17450, def: 14709, wis: 15771, agi: 18057, skills: [239, 240]},
+    
+    "Musashi, the Twinblade II" :
+        {name: "Musashi",       hp: 20592, atk: 24752, def: 19151, wis: 17981, agi: 18024, skills: [99003]}, 
+    
     "Queen of the Waspmen II" :
         {name: "Queen Waspmen", hp: 14070, atk: 19898, def: 13247, wis: 15998, agi: 17829, skills: [99002]},
+    
+    "Tanba, Founder of Ninja II" :
+        {name: "Tanba",         hp: 17580, atk: 23213, def: 17883, wis: 23289, agi: 18057, skills: [99004]},
 }
