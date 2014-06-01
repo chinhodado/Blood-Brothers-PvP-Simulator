@@ -98,9 +98,9 @@ module ENUM {
     }
     
     export enum FormationRow {
-        REAR = 1,
+        REAR = 3,
         MID = 2,
-        FRONT = 3
+        FRONT = 1
     }
 }
 

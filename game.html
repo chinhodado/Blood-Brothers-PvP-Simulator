@@ -1,4 +1,4 @@
-<html>
+<html style="width:100%; height:100%;">
 
 <head>
     <script type="text/javascript" src="battleLogger.js"></script>
@@ -13,47 +13,71 @@
     <script type="text/javascript" src="skillDatabase.js"></script>    
     <script type="text/javascript" src="skillRange.js"></script>
     <script type="text/javascript" src="util.js"></script>
+
+    <style type="text/css">
+        * {
+            font-family: "Consolas";
+            font-size: 14;
+        }
+        .wrapper {
+            display: table;
+            table-layout: fixed;
+
+            width:100%;
+        }
+        .wrapper div {
+            display: table-cell;
+
+        }
+        .wrapper center {
+            display: table-caption;
+        }
+    </style>
 </head>
 
-<body>
+<body style="width:100%; height:100%;">
     <div id="battleEventDiv" style="width:50%; float: left;">
     </div>
 
-    <div id="rightSide" style="width:50%; float: right;">
-        <div style="position:fixed; width:50%;">
-            <div id="player2Fam" style="height:50%;">
+    <div id="rightSide" style="width:50%; height:100%; float: right;">
+        <div style="position:fixed; width:48%; height:100%;">
+            <div id="player2Fam" style="height:30%;" class="wrapper">
                 <center>Player 2</center>
-                <div id="player2Fam0" style="width:20%; float:left;">
+                <div id="player2Fam0">
                     <p>player2 fam 0 </p>         
                 </div>
-                <div id="player2Fam1" style="width:20%; float:left;">
+                <div id="player2Fam1">
                     <p>player2 fam 1 </p>         
                 </div>
-                <div id="player2Fam2" style="width:20%; float:left;">
+                <div id="player2Fam2">
                     <p>player2 fam 2 </p>         
                 </div>
-                <div id="player2Fam3" style="width:20%; float:left;">
+                <div id="player2Fam3">
                     <p>player2 fam 3 </p>         
                 </div>
-                <div id="player2Fam4" style="width:20%; float:left;">
+                <div id="player2Fam4">
                     <p>player2 fam 4 </p>         
                 </div>
             </div>
-            <div id="player1Fam" style="height:50%;">
+
+            <canvas id="player2canvas" style="border:1px solid #000000;"></canvas>
+            <canvas id="player1canvas" style="border:1px solid #000000;"></canvas>
+
+            <div id="player1Fam" style="height:30%;" class="wrapper">
                 <center>Player 1</center>
-                <div id="player1Fam0" style="width:20%; float:left;">
+                <div id="player1Fam0">
                     <p>player1 fam 0 </p>         
                 </div>
-                <div id="player1Fam1" style="width:20%; float:left;">
+                <div id="player1Fam1">
                     <p>player1 fam 1 </p>         
                 </div>
-                <div id="player1Fam2" style="width:20%; float:left;">
+                <div id="player1Fam2">
                     <p>player1 fam 2 </p>         
                 </div>
-                <div id="player1Fam3" style="width:20%; float:left;">
+                <div id="player1Fam3">
                     <p>player1 fam 3 </p>         
                 </div>
-                <div id="player1Fam4" style="width:20%; float:left;">
+                <div id="player1Fam4">
                     <p>player1 fam 4 </p>         
                 </div>
             </div>

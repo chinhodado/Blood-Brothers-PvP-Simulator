@@ -40,8 +40,8 @@ class BattleModel {
         BattleModel.rangeFactory = new RangeFactory();
         this.logger = new BattleLogger();
         
-        this.player1 = new Player(1, "Player 1", new Formation(55), 1); // me
-        this.player2 = new Player(2, "Player 2", new Formation(55), 1); // opp
+        this.player1 = new Player(1, "Player 1", new Formation("REAR_5"), 1); // me
+        this.player2 = new Player(2, "Player 2", new Formation("REAR_5"), 1); // opp
         
         // initialize the cards
         this.player1Cards = [];
@@ -85,6 +85,8 @@ class BattleModel {
         
         // save the initial field snapshot
         this.logger.saveInitialField();
+        
+        this.logger.displayFormationOnCanvas();
     }
     
     sortAllCards() {

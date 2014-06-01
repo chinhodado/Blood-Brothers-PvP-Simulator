@@ -235,4 +235,68 @@ class BattleLogger {
         
         this.initialFieldInfo = JSON.stringify(toSerialize);
     }
+    
+    /**
+     * Display the two players' formations on their canvases
+     */
+    displayFormationOnCanvas() {
+
+        var playerFormations = {};
+        playerFormations[1] = BattleModel.getInstance().player1.formation.getFormationConfig(); // player1's formation
+        
+        // reverse player2's formation for display purpose
+        var player2formation = BattleModel.getInstance().player2.formation.getFormationConfig();
+        var temp = [];
+        var tempNumber : number;
+        for (var i = 0; i < 5; i++) {            
+            switch (player2formation[i]) {
+                case 1 :
+                    tempNumber = 3;
+                    break;
+                case 2 : 
+                    tempNumber = 2;
+                    break;
+                case 3 :
+                    tempNumber = 1;
+                    break;
+            }
+            temp.push(tempNumber);
+        }
+        playerFormations[2] = temp;
+
+        for (var player = 1; player <= 2; player ++) { // for each player
+            var c : any = document.getElementById("player" + player + "canvas"); // grab the player's canvas
+            var ctx = c.getContext("2d");
+    
+            // set the canvas's width and height
+            ctx.canvas.width  = window.innerWidth * 0.45;
+            ctx.canvas.height = window.innerHeight * 0.2;
+    
+            var horizontalStep = c.width / 10;
+            var verticalStep = c.height / 2;
+            
+            // draw the lines and bullets
+            for (var i = 0; i < 4; i++) {
+                var bullet1X = ((i + 1) * 2 - 1) * horizontalStep;
+                var bullet1Y = (playerFormations[player][i] - 1) * verticalStep;
+                bullet1Y = bullet1Y < horizontalStep? bullet1Y + 5 : bullet1Y - 5;
+    
+                var bullet2X = ((i + 2) * 2 - 1) * horizontalStep;
+                var bullet2Y = (playerFormations[player][i + 1] - 1) * verticalStep;
+                bullet2Y = bullet2Y < horizontalStep? bullet2Y + 5 : bullet2Y - 5;
+    
+                ctx.moveTo(bullet1X, bullet1Y);
+                ctx.lineTo(bullet2X, bullet2Y);
+                ctx.stroke();
+    
+                ctx.beginPath();
+                ctx.arc(bullet1X, bullet1Y, 5, 0, 2*Math.PI);
+                ctx.fill();
+    
+                ctx.beginPath();
+                ctx.arc(bullet2X, bullet2Y, 5, 0, 2*Math.PI);
+                ctx.fill();
+            }
+        }
+    }
 }

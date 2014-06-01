@@ -1,35 +1,22 @@
 class Formation {
 
-    static FORMATION_NAME = {
-        50 : "5-Skein",
-        51 : "5-Valley",
-        52 : "5-Tooth",
-        53 : "5-Wave",
-        54 : "5-Front",
-        55 : "5-Mid",
-        56 : "5-Rear",
-        57 : "5-Pike",
-        58 : "5-Shiled",
-        59 : "5-Pincer",
-    };
-    
     static FORMATION_CONFIG = {
-        50 : [1,2,3,2,1], // 1: rear, 2: mid, 3: front
-        51 : [3,2,1,2,3],
-        52 : [3,1,3,1,3],
-        53 : [1,3,2,3,1],
-        54 : [3,3,3,3,3],
-        55 : [2,2,2,2,2],
-        56 : [1,1,1,1,1],
-        57 : [1,1,3,1,1],
-        58 : [3,3,1,3,3],
-        59 : [1,3,1,3,1],
+        SKEIN_5  : [3,2,1,2,3], // 1: front, 2: mid, 3: rear
+        VALLEY_5 : [1,2,3,2,1],
+        TOOTH_5  : [1,3,1,3,1],
+        WAVE_5   : [3,1,2,1,3],
+        FRONT_5  : [1,1,1,1,1],
+        MID_5    : [2,2,2,2,2],
+        REAR_5   : [3,3,3,3,3],
+        PIKE_5   : [3,3,1,3,3],
+        SHIELD_5 : [1,1,3,1,1],
+        PINCER_5 : [3,1,3,1,3],
     };
        
-    id : number;
+    type : string;
     
-    constructor(id : number) {
-        this.id = id;
+    constructor(type : string) {
+        this.type = type;
     }
     
     /**
@@ -37,6 +24,13 @@ class Formation {
      * on the current formation
      */
     getCardRow(position : number) : ENUM.FormationRow {
-        return Formation.FORMATION_CONFIG[this.id][position];
+        return Formation.FORMATION_CONFIG[this.type][position];
+    }
+    
+    /**
+     * Return the config array of the current formation
+     */
+    getFormationConfig() : number[] {
+        return Formation.FORMATION_CONFIG[this.type];
     }
 }
