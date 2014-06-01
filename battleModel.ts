@@ -40,8 +40,10 @@ class BattleModel {
         BattleModel.rangeFactory = new RangeFactory();
         this.logger = new BattleLogger();
         
-        this.player1 = new Player(1, "Player 1", new Formation("REAR_5"), 1); // me
-        this.player2 = new Player(2, "Player 2", new Formation("REAR_5"), 1); // opp
+        var player1formation = getURLParameter("p1formation");
+        var player2formation = getURLParameter("p2formation");
+        this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
+        this.player2 = new Player(2, "Player 2", new Formation(player2formation), 1); // opp
         
         // initialize the cards
         this.player1Cards = [];
@@ -303,8 +305,7 @@ class BattleModel {
     }
 
     startBattle () {
-        this.logger.bblogMajor("Battle start");
-        this.logger.bblogMinor("Everything ready");
+        this.logger.startBattleLog();
         
         this.performOpeningSkills();
         this.sortAllCards();
@@ -345,7 +346,7 @@ class BattleModel {
 
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
-                    this.logger.bblogMajor("player " + currentCard.getPlayerName() + " has won");
+                    this.logger.bblogMajor(currentCard.getPlayerName() + " has won");
                 }
             }
         }        

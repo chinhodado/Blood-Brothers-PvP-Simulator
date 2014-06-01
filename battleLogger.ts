@@ -299,4 +299,13 @@ class BattleLogger {
             }
         }
     }
+    
+    /**
+     * Log the situation at the start of battle and display the initial info
+     */
+    startBattleLog() {
+        this.bblogMajor("Battle start");
+        this.bblogMinor("Everything ready");
+        this.displayEventLogAtIndex(0);
+    }
 }

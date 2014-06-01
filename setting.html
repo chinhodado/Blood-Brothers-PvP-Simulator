@@ -2,22 +2,51 @@
 <head>
     <script type="text/javascript" src="famDatabase.js"></script>
 </head>
-<body>
+<body style="width: 100%; text-align: center;">
+<div style="display: inline-block;">
     <form action="game.html" method="GET">
 
-        <select name="p2fam0" class="famSelect"></select>
-        <select name="p2fam1" class="famSelect"></select>
-        <select name="p2fam2" class="famSelect"></select>
-        <select name="p2fam3" class="famSelect"></select>
-        <select name="p2fam4" class="famSelect"></select>
+        <p>Player 2</p>
+        <select name="p2fam0" class="famSelect randomize"></select>
+        <select name="p2fam1" class="famSelect randomize"></select>
+        <select name="p2fam2" class="famSelect randomize"></select>
+        <select name="p2fam3" class="famSelect randomize"></select>
+        <select name="p2fam4" class="famSelect randomize"></select>
+        <br><br>
+        <select name="p2formation" class="randomize">
+            <option value="SKEIN_5">5-Skein</option>
+            <option value="VALLEY_5">5-Valley</option>
+            <option value="TOOTH_5">5-Tooth</option>
+            <option value="WAVE_5">5-Wave</option>
+            <option value="FRONT_5">5-Front</option>
+            <option value="MID_5">5-Mid</option>
+            <option value="REAR_5">5-Rear</option>
+            <option value="PIKE_5">5-Pike</option>
+            <option value="SHIELD_5">5-Shield</option>
+            <option value="PINCER_5">5-Pincer</option>
+        </select>
 
-        <br>
-        
-        <select name="p1fam0" class="famSelect"></select>
-        <select name="p1fam1" class="famSelect"></select>
-        <select name="p1fam2" class="famSelect"></select>
-        <select name="p1fam3" class="famSelect"></select>
-        <select name="p1fam4" class="famSelect"></select>
+        <br><br><br><br>
+
+        <p>Player 1</p>
+        <select name="p1fam0" class="famSelect randomize"></select>
+        <select name="p1fam1" class="famSelect randomize"></select>
+        <select name="p1fam2" class="famSelect randomize"></select>
+        <select name="p1fam3" class="famSelect randomize"></select>
+        <select name="p1fam4" class="famSelect randomize"></select>
+        <br><br>
+        <select name="p1formation" class="randomize">
+            <option value="SKEIN_5">5-Skein</option>
+            <option value="VALLEY_5">5-Valley</option>
+            <option value="TOOTH_5">5-Tooth</option>
+            <option value="WAVE_5">5-Wave</option>
+            <option value="FRONT_5">5-Front</option>
+            <option value="MID_5">5-Mid</option>
+            <option value="REAR_5">5-Rear</option>
+            <option value="PIKE_5">5-Pike</option>
+            <option value="SHIELD_5">5-Shield</option>
+            <option value="PINCER_5">5-Pincer</option>
+        </select>
 
         <script type="text/javascript">
             var selects = document.getElementsByClassName("famSelect");
@@ -31,10 +60,23 @@
             };
         </script>
 
-        <br>
+        <br><br><br>
 
+        <button type="button" id="randomizeButton">Randomize</button>
         <input type="submit" value="Start">
             
     </form>
+    
+    <script type="text/javascript">
+        var randomizeButton = document.getElementById("randomizeButton");
+        randomizeButton.onclick = function() {
+            var selects = document.getElementsByClassName("randomize");
+            for (var i = 0; i < selects.length; i++) {
+                var options = selects[i].getElementsByTagName("option");
+                options[Math.floor(Math.random() * options.length)].selected = true;
+            };
+        }
+    </script>
+<div>
 </body>
 </html>

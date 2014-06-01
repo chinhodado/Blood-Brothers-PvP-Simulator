@@ -63,7 +63,7 @@ var SkillDatabase = {
     },
     
     240 : {
-        name : "midnight Smile",
+        name : "Midnight Smile",
         skillType: 1,
         skillFunc: 1,
         skillCalcType: 0,
