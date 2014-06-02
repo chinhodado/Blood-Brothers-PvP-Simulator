@@ -9,18 +9,14 @@ module ENUM {
         DEFENSE = 3,
         FIELD = 4,
         PROTECT = 5,
-        RANDOM = 9,
-        TEMPORARY = 10,
+
         ACTION_ON_DEATH = 16,
-        BUFF_ON_DEATH = 17
     }
     
     /**
      * Is the skill buff, attack, magic, etc.
      */
     export enum SkillFunc {
-        NO_MULTIPLE_SKILL = -2,
-        NO_SKILL = -1,
         BUFF = 1,
         DEBUFF = 2,
         ATTACK = 3,
@@ -40,9 +36,9 @@ module ENUM {
         HEAL = 18,
         AFFLICTION = 19,
         PATIENCE = 20,
-        DEBUFFATTACK = 21,
+        DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
         DEBUFFINDIRECT = 22,
-        IDLE = 23,
+
         RANDOM = 24,
         COPY = 25,
         IMITATE = 26,
@@ -70,7 +66,7 @@ module ENUM {
         HP, ATK, DEF, WIS, AGI
     }
     
-    export enum StatusType {
+    export enum StatusType { // skillFuncArg2 for buffs
         ATK = 1,
         DEF = 2,
         WIS = 3,
@@ -82,19 +78,9 @@ module ENUM {
 
         SKILL_PROBABILITY = 8,
 
-        ALL_STATUS = 9, // ATK + DEF + WIS + AGI
-
-        REMAIN_HP_ATK_UP = 11,
-        REMAIN_HP_DEF_UP = 12,
-        REMAIN_HP_WIS_UP = 13,
-        REMAIN_HP_AGI_UP = 14,
-        REMAIN_HP_ALL_STATUS_UP = 15,
-
         ACTION_ON_DEATH = 16,
 
         HP_SHIELD = 17,
-
-        WILL_ATTACK_AGAIN = 18
     }
     
     export enum FormationRow {

@@ -3,6 +3,7 @@
 class RangeFactory {
 
     static RANGE_TYPE = {
+        4 : "AllRange",
         3 : "SelfBothSidesRange",
         16: "EnemyRandomRange",
         17: "EnemyRandomRange",
@@ -104,6 +105,24 @@ class SelfBothSidesRange extends BaseRange {
             targets.push(rightCard);
         }
         
+        return targets;
+    }
+}
+
+class AllRange extends BaseRange {
+    constructor(id : number) {
+        super(id);
+    }
+    
+    getTargets(executor : Card) : Card[] {
+        var targets = [];
+        var partyCards = BattleModel.getInstance().getPlayerCards(executor.player);
+        
+        for (var i = 0; i < partyCards.length; i++) {
+            if (!partyCards[i].isDead) {
+                targets.push(partyCards[i]);
+            }
+        }
         return targets;
     }
 }

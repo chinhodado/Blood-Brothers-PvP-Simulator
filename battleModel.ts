@@ -94,7 +94,7 @@ class BattleModel {
     sortAllCards() {
         // sort the cards
         this.allCards.sort(function (a, b) {
-            return b.stats.agi - a.stats.agi; // descending based on agi
+            return b.getAGI() - a.getAGI(); // descending based on agi
         });
     }
     
@@ -212,6 +212,18 @@ class BattleModel {
         else if (oppCards[executorIndex + 2] && !oppCards[executorIndex + 2].isDead) {
             return oppCards[executorIndex + 2];
         }
+        else if (oppCards[executorIndex - 3] && !oppCards[executorIndex - 3].isDead) {
+            return oppCards[executorIndex -3];
+        }
+        else if (oppCards[executorIndex + 3] && !oppCards[executorIndex + 3].isDead) {
+            return oppCards[executorIndex + 3];
+        }
+        else if (oppCards[executorIndex - 4] && !oppCards[executorIndex - 4].isDead) {
+            return oppCards[executorIndex - 4];
+        }
+        else if (oppCards[executorIndex + 4] && !oppCards[executorIndex + 4].isDead) {
+            return oppCards[executorIndex + 4];
+        }
         else {
             return null;
         }
@@ -273,14 +285,28 @@ class BattleModel {
                     break;
             }
             
-            var damage = Math.round(skillMod * baseDamage);
+            // apply the multiplier
+            var damage = skillMod * baseDamage;
+            
+            // apply the target's ward
+            switch (skill.ward) {
+                case ("PHYSICAL") :
+                    damage = Math.round(damage * (1 - targetCard.status.attackResistance));
+                    break;
+                case ("MAGICAL") :
+                    damage = Math.round(damage * (1 - targetCard.status.magicResistance));
+                    break;
+                case ("BREATH") :
+                    damage = Math.round(damage * (1 - targetCard.status.breathResistance));
+                    break;
+            }
     
-            targetCard.stats.hp -= damage;
+            targetCard.changeHP(-1 * damage);
             
             this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
-                targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-            this.logger.addEvent(executor, targetCard, ENUM.StatType.HP, (-1) * damage);
-            if (targetCard.stats.hp <= 0) {
+                targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
+            this.logger.addEvent(executor, targetCard, "HP", (-1) * damage);
+            if (targetCard.getHP() <= 0) {
                 this.logger.bblogMinor(targetCard.name + " is dead");
                 targetCard.isDead = true;
             }
@@ -289,18 +315,33 @@ class BattleModel {
     
     executeOpeningSkill (executor : Card) {
         var skill = executor.openingSkill;
-        var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-        var skillMod = skill.skillFuncArg1;
-        var statToBuff = ENUM.StatusType[skill.skillFuncArg2];        
+        
+        switch (skill.skillFuncArg2) {
+            case ENUM.StatusType.ATK :
+            case ENUM.StatusType.DEF :
+            case ENUM.StatusType.WIS :
+            case ENUM.StatusType.AGI :
+                var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+                var skillMod = skill.skillFuncArg1;
+                var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
+                break;
+            case ENUM.StatusType.ATTACK_RESISTANCE :
+            case ENUM.StatusType.MAGIC_RESISTANCE :
+            case ENUM.StatusType.BREATH_RESISTANCE :
+                var buffAmount = skill.skillFuncArg1;
+                break;
+            default :
+                throw new Error("Wrong status type or not implemented");
+        }
+        
+        var thingToBuff = skill.skillFuncArg2;        
         var targets : Card[] = skill.range.getTargets(executor);
-        var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
-
+        
         for (var i = 0; i < targets.length; i++) {
-            targets[i].addStat(statToBuff, buffAmount);
-            this.logger.bblogMinor(targets[i].name + "'s " + statToBuff + " increased by " + buffAmount);
+            targets[i].changeStatus(thingToBuff, buffAmount);
+            this.logger.bblogMinor(targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount);
             
-            // there's an enum mismatch here...
-            this.logger.addEvent(executor, targets[i], ENUM.StatType[statToBuff], buffAmount);
+            this.logger.addEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount);
         }
     }
 
@@ -362,14 +403,15 @@ class BattleModel {
         }
 
         var damage = getDamageCalculatedByATK(attacker, targetCard, false);
+        damage = Math.round(damage * (1 - targetCard.status.attackResistance)); // apply physical ward
 
-        targetCard.stats.hp -= damage;
+        targetCard.changeHP(-1 * damage);
         this.logger.bblogMajor(attacker.name + " attacks " + targetCard.name);
         this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
-            targetCard.stats.hp + "/" + targetCard.originalStats.hp + ")");
-        this.logger.addEvent(attacker, targetCard, ENUM.StatType.HP, damage * (-1));
+            targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
+        this.logger.addEvent(attacker, targetCard, "HP", damage * (-1));
         
-        if (targetCard.stats.hp <= 0) {
+        if (targetCard.getHP() <= 0) {
             // maybe we also need to log an event
             this.logger.bblogMinor(targetCard.name + " is dead");
             targetCard.isDead = true;

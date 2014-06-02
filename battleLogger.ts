@@ -1,3 +1,6 @@
+/**
+ * Handle the logging and displaying of information
+ */
 class BattleLogger {
 
     eventLog = {};
@@ -50,8 +53,6 @@ class BattleLogger {
         };
         turnEventList.appendChild(newEvent);
         
-        // save a log of the current field situation
-        //this.updateEventLogAtIndex(this.eventCounter);
         this.majorEventCounter++;
     }
     
@@ -117,25 +118,52 @@ class BattleLogger {
         }
         
         // TODO: abstract this... please, future me, make it nicer :(
-        if (event.attribute == ENUM.StatType.HP) {
+        if (event.attribute == "HP") {
             card.stats.hp += event.amount;
         }
-        else if (event.attribute == ENUM.StatType.ATK) {
-            card.stats.atk += event.amount;
-        }
-        else if (event.attribute == ENUM.StatType.DEF) {
-            card.stats.def += event.amount;
-        }
-        else if (event.attribute == ENUM.StatType.WIS) {
-            card.stats.wis += event.amount;
-        }
-        else if (event.attribute == ENUM.StatType.AGI) {
-            card.stats.agi += event.amount;
+        else {
+            switch (ENUM.StatusType[<string>event.attribute]) {
+                case ENUM.StatusType.ATK :
+                    card.status.atk += event.amount;
+                    break;
+                case ENUM.StatusType.DEF :
+                    card.status.def += event.amount;
+                    break;
+                case ENUM.StatusType.WIS :
+                    card.status.wis += event.amount;
+                    break;
+                case ENUM.StatusType.AGI :
+                    card.status.agi += event.amount;
+                    break;
+                case ENUM.StatusType.ATTACK_RESISTANCE :
+                    card.status.attackResistance = event.amount;
+                    break;  
+                case ENUM.StatusType.MAGIC_RESISTANCE :
+                    card.status.magicResistance = event.amount;
+                    break;
+                case ENUM.StatusType.BREATH_RESISTANCE :
+                    card.status.breathResistance = event.amount;
+                    break;
+                case ENUM.StatusType.SKILL_PROBABILITY :
+                    card.status.skillProbability = event.amount;
+                    break;
+                default :
+                    throw new Error("Unknown attribute");
+                    break;
+            }
         }
     }
     
-    displayEventLogAtIndex(index) {
+    /**
+     * --- This function is a clusterfuck. I apologize if you are reading this, especially to myself in the future. ---
+     * 
+     * This is called when you click on an event in the event list. It updates the field on the right side
+     * of the screen with information after the event that you clicked on has been processed. That event
+     * is represented by the index argument supplied into this function.
+     */
+    displayEventLogAtIndex(index) { // <- the index of the event in the event log
 
+        // first deserialize the initial field info into a nice object that we will modify later
         var initialField = JSON.parse(this.initialFieldInfo);
         
         // apply events to initial field up to the specified event
@@ -146,20 +174,30 @@ class BattleLogger {
             }
         }
         
-        var log = initialField;
+        // now prepares the info and print them outS
         for (var player = 1; player <=2; player++) { // for each player
-            var playerCards = log["player" + player + "Cards"];
+            var playerCards = initialField["player" + player + "Cards"]; // get the cards of that player
             for (var fam = 0; fam < 5; fam++) { // for each card
-                var stats = playerCards[fam].stats; 
-                var htmlelem = document.getElementById("player" + player + "Fam" + fam);
+                var stats = playerCards[fam].stats;
+                var status = playerCards[fam].status;
+                var htmlelem = document.getElementById("player" + player + "Fam" + fam); // <- the box to display info of the current fam
+                
+                // the stats of the fam after the buffs/debuffs are added in
+                var addedATK = stats.atk + status.atk;
+                var addedDEF = stats.def + status.def;
+                var addedWIS = stats.wis + status.wis;
+                var addedAGI = stats.agi + status.agi;
                 
                 var infoText = {
                     name : playerCards[fam].name,
                     hp : "HP: " + stats.hp,
-                    atk : "ATK: " + stats.atk,
-                    def : "DEF: " + stats.def,
-                    wis : "WIS: " + stats.wis,
-                    agi : "AGI: " + stats.agi
+                    atk : "ATK: " + addedATK,
+                    def : "DEF: " + addedDEF,
+                    wis : "WIS: " + addedWIS,
+                    agi : "AGI: " + addedAGI,
+                    physicalResist : "Physical Ward: " + status.attackResistance,
+                    magicalResist : "Magical Ward: " + status.magicResistance,
+                    breathResist : "Breath Ward: " + status.breathResistance
                 }
                 
                 // grab all minor events under the latest major event
@@ -167,20 +205,29 @@ class BattleLogger {
                 for (var j = 0; this.eventLog[index] && j < this.eventLog[index].length; j++) {
                     var tempEvent = this.eventLog[index][j]; // a minor event
                     if (tempEvent.target == playerCards[fam].id) {
-                        if (tempEvent.attribute == ENUM.StatType.HP) {
+                        if (tempEvent.attribute == "HP") {
                             infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
                         }
-                        if (tempEvent.attribute == ENUM.StatType.ATK) {
+                        else if (tempEvent.attribute == "ATK") {
                             infoText.atk = this.decorateText(infoText.atk, tempEvent.amount < 0);
                         }
-                        if (tempEvent.attribute == ENUM.StatType.DEF) {
+                        else if (tempEvent.attribute == "DEF") {
                             infoText.def = this.decorateText(infoText.def, tempEvent.amount < 0);
                         }
-                        if (tempEvent.attribute == ENUM.StatType.WIS) {
+                        else if (tempEvent.attribute == "WIS") {
                             infoText.wis = this.decorateText(infoText.wis, tempEvent.amount < 0);
                         }
-                        if (tempEvent.attribute == ENUM.StatType.AGI) {
+                        else if (tempEvent.attribute == "AGI") {
                             infoText.agi = this.decorateText(infoText.agi, tempEvent.amount < 0);
+                        }
+                        else if (tempEvent.attribute == "ATTACK_RESISTANCE") {
+                            infoText.physicalResist = this.decorateText(infoText.physicalResist, false);
+                        }
+                        else if (tempEvent.attribute == "MAGIC_RESISTANCE") {
+                            infoText.magicalResist = this.decorateText(infoText.magicalResist, false);
+                        }
+                        else if (tempEvent.attribute == "BREATH_RESISTANCE") {
+                            infoText.breathResist = this.decorateText(infoText.breathResist, false);
                         }
                     }
                 }
@@ -189,29 +236,43 @@ class BattleLogger {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
                 
-                var infotext = infoText.name + "<br>" +
-                                infoText.hp  + "<br>" +
-                                infoText.atk + "<br>" +
-                                infoText.def + "<br>" +
-                                infoText.wis + "<br>" +
-                                infoText.agi
-                htmlelem.innerHTML = infotext;
+                var finalFamInfo = infoText.name + "<br>" +
+                                    infoText.hp  + "<br>" +
+                                    infoText.atk + "<br>" +
+                                    infoText.def + "<br>" +
+                                    infoText.wis + "<br>" +
+                                    infoText.agi + "<br>" +
+                                    infoText.physicalResist + "<br>" +
+                                    infoText.magicalResist + "<br>" +
+                                    infoText.breathResist + "<br>"
+                htmlelem.innerHTML = finalFamInfo;
             }
         }
     }
     
+    /**
+     * Decorate a string by bolding it and make it red or green
+     * @param isNegative true if you want the text to be red, false if green
+     */
     decorateText(text : string, isNegative : boolean) {
         var openTag : string;
         if (isNegative) {
-            openTag = "<span style='color:red'>";
+            openTag = "<span style='color:red'><b>";
         }
         else {
-            openTag = "<span style='color:green'>";
+            openTag = "<span style='color:green'><b>";
         }
-        return openTag + text + "</span>";
+        return openTag + text + "</b></span>";
     }
     
-    addEvent(executor: Card, target : Card, attribute : ENUM.StatType, amount : number) {
+    /**
+     * Add an event to our event log. An event must have:
+     *  - an executor/attacker/caster: whom the action in this event comes from
+     *  - a target/defender: the one affected in this event
+     *  - attribute: the thing belonging to the target that has been changed in this event
+     *  - amount: the amount changed
+     */
+    addEvent(executor: Card, target : Card, attribute : string, amount : number) {
         // because this function is called after the counter has been incremented
         var index = this.majorEventCounter - 1;
         
@@ -219,13 +280,17 @@ class BattleLogger {
             this.eventLog[index] = [];
         }
         this.eventLog[index].push({
-            executor : executor.id,
-            target : target.id,
-            attribute : attribute,
-            amount : amount
+            executor : executor.id, // the card id of the executor
+            target : target.id,     // the card id of the target
+            attribute : attribute,  // can be "HP" or a ENUM.StatusType "key" (a string)
+            amount : amount         // the amount changed
         });
     }
     
+    /**
+     * Save the initial situation of the field
+     * For now it just saves the cards of the two players
+     */
     saveInitialField() {
         // save a log of the current field situation
         var toSerialize = {

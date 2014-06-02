@@ -17,6 +17,9 @@ var famDatabase = {
     "Ghislandi, Iron Heart II" : 
         {name: "Ghislandi",     hp: 12324, atk: 13551, def: 13525, wis: 12212, agi: 12187, skills: [17]},
     
+    "Gorlin Gold Helm II" :
+        {name: "Gorlin",        hp: 11928, atk: 12380, def: 17000, wis: 6809,  agi: 10904, skills: [167]},
+    
     "Griffin Mount II" : 
         {name: "Griffin",       hp: 11887, atk: 9909,  def: 14391, wis: 14263, agi: 11960, skills: [2]},
     
@@ -31,4 +34,7 @@ var famDatabase = {
     
     "Tanba, Founder of Ninja II" :
         {name: "Tanba",         hp: 17580, atk: 23213, def: 17883, wis: 23289, agi: 18057, skills: [99004]},
+    
+    "Yulia, Snakesage II"  :
+        {name: "Yulia",         hp: 14081, atk: 14664, def: 12052, wis: 13544, agi: 12524, skills: [134]},
 }

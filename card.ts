@@ -4,6 +4,7 @@ class Card {
     stats : Stats;
     id : number; // id for this simulator, not the id in game
     originalStats : Stats;
+    status : Status;
     skills : Skill[];
     player : Player;
     isDead : boolean;
@@ -18,6 +19,7 @@ class Card {
     constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn) {
         this.name = name;
         this.stats = stats; // this will be modified during the battle
+        this.status = new Status();
         this.originalStats = 
             new Stats(stats.hp, stats.atk, stats.def, stats.wis, stats.agi); // this should never be modified
         this.skills = skills;
@@ -63,47 +65,76 @@ class Card {
     
     getStat(statType : String) : number {
         if (statType === "HP") {
-            return this.stats.hp;
+            return this.getHP();
         }
         else if (statType === "ATK") {
-            return this.stats.atk;
+            return this.getATK();
         }
         else if (statType === "DEF") {
-            return this.stats.def;
+            return this.getDEF();
         }
         else if (statType === "WIS") {
-            return this.stats.wis;
+            return this.getWIS();
         }
         else if (statType === "AGI") {
-            return this.stats.agi;
+            return this.getAGI();
         }
         else if (statType === "DEFAULT") {
-            return this.stats.wis; // default for skill
+            return this.getWIS(); // default for skill
         }
         else {
             throw new Error ("Invalid stat type");
         }
     }
     
-    addStat(statType : String, amount : number) : void {
-        if (statType === "HP") {
-            this.stats.hp += amount;
+    changeStatus(statusType : ENUM.StatusType, amount : number) : void {
+        if (statusType === ENUM.StatusType.ATK) {
+            this.status.atk += amount;
         }
-        else if (statType === "ATK") {
-            this.stats.atk += amount;
+        else if (statusType === ENUM.StatusType.DEF) {
+            this.status.def += amount;
         }
-        else if (statType === "DEF") {
-            this.stats.def += amount;
+        else if (statusType === ENUM.StatusType.WIS) {
+            this.status.wis += amount;
         }
-        else if (statType === "WIS") {
-            this.stats.wis += amount;
+        else if (statusType === ENUM.StatusType.AGI) {
+            this.status.agi += amount;
         }
-        else if (statType === "AGI") {
-            this.stats.agi += amount;
+        else if (statusType === ENUM.StatusType.ATTACK_RESISTANCE) {
+            this.status.attackResistance = amount; // do not stack
+        }
+        else if (statusType === ENUM.StatusType.MAGIC_RESISTANCE) {
+            this.status.magicResistance = amount; // do not stack
+        }
+        else if (statusType === ENUM.StatusType.BREATH_RESISTANCE) {
+            this.status.breathResistance = amount; // do not stack
+        }
+        else if (statusType === ENUM.StatusType.SKILL_PROBABILITY) {
+            this.status.skillProbability += amount;
         }
         else {
-            throw new Error ("Invalid stat type");
+            throw new Error ("Invalid status type");
         }
+    }
+    
+    getHP () {
+        return this.stats.hp;
+    }
+    changeHP (amount : number) {
+        this.stats.hp += amount;
+    }
+    
+    getATK () {
+        return this.stats.atk + this.status.atk;
+    }
+    getDEF () {
+        return this.stats.def + this.status.def;
+    }
+    getWIS () {
+        return this.stats.wis + this.status.wis;
+    }
+    getAGI () {
+        return this.stats.agi + this.status.agi;
     }
 }
 
@@ -122,4 +153,18 @@ class Stats {
         this.wis = wis;
         this.agi = agi;
     }
+}
+
+class Status {
+    // the amount changed because of buffs or debuffs
+    atk : number = 0;
+    def : number = 0;
+    wis : number = 0;
+    agi : number = 0;
+
+    attackResistance : number = 0;
+    magicResistance :  number = 0;
+    breathResistance : number = 0;
+
+    skillProbability : number = 0;
 }

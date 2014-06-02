@@ -12,8 +12,8 @@ function getDamageCalculatedByATK(attacker : Card, defender : Card, ignorePositi
     POS_DAMAGE_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
     
-    var baseDamage = attacker.stats.atk * ATTACK_FACTOR;
-    var damage = ((attacker.stats.atk - defender.stats.def) * DIFF_FACTOR) + baseDamage;
+    var baseDamage = attacker.getATK() * ATTACK_FACTOR;
+    var damage = ((attacker.getATK() - defender.getDEF()) * DIFF_FACTOR) + baseDamage;
     
     if (!ignorePosition) {
         damage *= POS_ATTACK_FACTOR[attacker.getFormationRow()];
@@ -44,8 +44,8 @@ function getDamageCalculatedByAGI(attacker : Card, defender : Card, ignorePositi
     POS_DAMAGE_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
     
-    var baseDamage = attacker.stats.agi * ATTACK_FACTOR;
-    var damage = ((attacker.stats.agi - defender.stats.def) * DIFF_FACTOR) + baseDamage;
+    var baseDamage = attacker.getAGI() * ATTACK_FACTOR;
+    var damage = ((attacker.getAGI() - defender.getDEF()) * DIFF_FACTOR) + baseDamage;
     
     if (!ignorePosition) {
         damage *= POS_ATTACK_FACTOR[attacker.getFormationRow()];
@@ -67,9 +67,9 @@ function getDamageCalculatedByWIS(attacker : Card, defender : Card) {
     var WIS_DEF_FACTOR = 0.5;
     var DIFF_FACTOR = 0.2;
  
-    var baseDamage = attacker.stats.wis * ATTACK_FACTOR;
-    var targetWisDef = (defender.stats.wis + defender.stats.def) * WIS_DEF_FACTOR;
-    var damage = ((attacker.stats.wis - targetWisDef) * DIFF_FACTOR) + baseDamage;
+    var baseDamage = attacker.getWIS() * ATTACK_FACTOR;
+    var targetWisDef = (defender.getWIS() + defender.getDEF()) * WIS_DEF_FACTOR;
+    var damage = ((attacker.getWIS() - targetWisDef) * DIFF_FACTOR) + baseDamage;
 
     //set lower limit
     if (damage < baseDamage * 0.1) {

@@ -13,8 +13,8 @@ class Skill {
     skillFuncArg4 : number;
     skillFuncArg5 : number;
     skillRange : number;
-    baseProbability : number;
     maxProbability : number;
+    ward : string;
 
     range : BaseRange;
     
@@ -33,8 +33,8 @@ class Skill {
         this.skillFuncArg4 = skillData.skillFuncArg4;
         this.skillFuncArg5 = skillData.skillFuncArg5;
         this.skillRange = skillData.skillRange;
-        this.baseProbability = skillData.baseProbability;
         this.maxProbability = skillData.maxProbability;
+        this.ward = skillData.ward;
         
         this.range = BattleModel.rangeFactory.getRange(this.skillRange);
     }    
