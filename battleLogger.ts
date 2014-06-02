@@ -48,7 +48,7 @@ class BattleLogger {
         newEvent.setAttribute("id", this.majorEventCounter + "");
         
         // populate right section with the field situation
-        newEvent.onclick = function () {
+        newEvent.onfocus = function () {
             BattleLogger.getInstance().displayEventLogAtIndex(this.id);
         };
         turnEventList.appendChild(newEvent);
