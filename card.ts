@@ -16,7 +16,9 @@ class Card {
     formationColumn : number; // 0 to 4
     formationRow : ENUM.FormationRow; // 1, 2 or 3
     
-    constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn) {
+    imageLink : string
+    
+    constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn, imageLink : string) {
         this.name = name;
         this.stats = stats; // this will be modified during the battle
         this.status = new Status();
@@ -44,6 +46,7 @@ class Card {
             }
         }
         
+        this.imageLink = imageLink;
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }
     

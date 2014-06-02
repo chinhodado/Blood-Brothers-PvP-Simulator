@@ -10,6 +10,12 @@ class BattleLogger {
     currentTurn : number = 0;
     initialFieldInfo;
     
+    imageCoordinate = {
+        // array of 5 arrays of 3 elements: x, y and ytype ("UP", "MID" or "DOWN")
+        1 : [], // for player 1
+        2 : []  // and player 2
+    };
+        
     private static _instance : BattleLogger = null;
 
     constructor() {
@@ -179,6 +185,7 @@ class BattleLogger {
             var playerCards = initialField["player" + player + "Cards"]; // get the cards of that player
             for (var fam = 0; fam < 5; fam++) { // for each card
                 var stats = playerCards[fam].stats;
+                var originalStats = playerCards[fam].originalStats;
                 var status = playerCards[fam].status;
                 var htmlelem = document.getElementById("player" + player + "Fam" + fam); // <- the box to display info of the current fam
                 
@@ -195,9 +202,9 @@ class BattleLogger {
                     def : "DEF: " + addedDEF,
                     wis : "WIS: " + addedWIS,
                     agi : "AGI: " + addedAGI,
-                    physicalResist : "Physical Ward: " + status.attackResistance,
-                    magicalResist : "Magical Ward: " + status.magicResistance,
-                    breathResist : "Breath Ward: " + status.breathResistance
+                    physicalResist : "PW: " + status.attackResistance,
+                    magicalResist : "MW: " + status.magicResistance,
+                    breathResist : "BW: " + status.breathResistance
                 }
                 
                 // grab all minor events under the latest major event
@@ -242,10 +249,13 @@ class BattleLogger {
                                     infoText.def + "<br>" +
                                     infoText.wis + "<br>" +
                                     infoText.agi + "<br>" +
-                                    infoText.physicalResist + "<br>" +
-                                    infoText.magicalResist + "<br>" +
-                                    infoText.breathResist + "<br>"
+                                    infoText.physicalResist + ", " +
+                                    infoText.magicalResist + ", " +
+                                    infoText.breathResist + " "
                 htmlelem.innerHTML = finalFamInfo;
+                
+                // display hp on canvas
+                this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
             }
         }
     }
@@ -302,9 +312,9 @@ class BattleLogger {
     }
     
     /**
-     * Display the two players' formations on their canvases
+     * Display the two players' formations and their familiars on their canvas
      */
-    displayFormationOnCanvas() {
+    displayFormationAndFamOnCanvas() {
 
         var playerFormations = {};
         playerFormations[1] = BattleModel.getInstance().player1.formation.getFormationConfig(); // player1's formation
@@ -335,34 +345,121 @@ class BattleLogger {
     
             // set the canvas's width and height
             ctx.canvas.width  = window.innerWidth * 0.45;
-            ctx.canvas.height = window.innerHeight * 0.2;
+            //ctx.canvas.height = window.innerHeight * 0.2;
     
             var horizontalStep = c.width / 10;
             var verticalStep = c.height / 2;
             
-            // draw the lines and bullets
+            var coordArray = [];
+            
+            // calculate the bullets coord
+            for (var i = 0; i < 5; i++) {
+                var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
+                var bulletY = (playerFormations[player][i] - 1) * verticalStep;
+                bulletY = bulletY < verticalStep? bulletY + 15 : (bulletY > verticalStep? bulletY - 15 : bulletY);
+                
+                coordArray.push([bulletX, bulletY]);
+            }
+            
+            // now draw lines and bullets
             for (var i = 0; i < 4; i++) {
-                var bullet1X = ((i + 1) * 2 - 1) * horizontalStep;
-                var bullet1Y = (playerFormations[player][i] - 1) * verticalStep;
-                bullet1Y = bullet1Y < horizontalStep? bullet1Y + 5 : bullet1Y - 5;
-    
-                var bullet2X = ((i + 2) * 2 - 1) * horizontalStep;
-                var bullet2Y = (playerFormations[player][i + 1] - 1) * verticalStep;
-                bullet2Y = bullet2Y < horizontalStep? bullet2Y + 5 : bullet2Y - 5;
-    
-                ctx.moveTo(bullet1X, bullet1Y);
-                ctx.lineTo(bullet2X, bullet2Y);
+                ctx.moveTo(coordArray[i][0], coordArray[i][1]);
+                ctx.lineTo(coordArray[i + 1][0], coordArray[i + 1][1]);
                 ctx.stroke();
     
                 ctx.beginPath();
-                ctx.arc(bullet1X, bullet1Y, 5, 0, 2*Math.PI);
+                ctx.arc(coordArray[i][0], coordArray[i][1], 5, 0, 2*Math.PI);
                 ctx.fill();
     
                 ctx.beginPath();
-                ctx.arc(bullet2X, bullet2Y, 5, 0, 2*Math.PI);
+                ctx.arc(coordArray[i + 1][0], coordArray[i + 1][1], 5, 0, 2*Math.PI);
                 ctx.fill();
             }
+            
+            // grab the image links of the curent player's fam
+            var imageLinksArray = [];
+            var initialField = JSON.parse(this.initialFieldInfo);
+            var playerCards = initialField["player" + player + "Cards"]; // get the cards of this player
+            for (var fam = 0; fam < 5; fam++) { // for each card
+                imageLinksArray.push(playerCards[fam].imageLink);
+            }
+            
+            var IMAGE_WIDTH = 60;            
+            
+            // calculate the coordinate for fam images
+            for (var i = 0; i < 5; i++) {
+                this.imageCoordinate[player][i] = [];
+                
+                if (coordArray[i][1] < verticalStep / 2) { // if y is less than 1/4 the height of the canvas
+                    this.imageCoordinate[player][i][1] = 0;
+                    this.imageCoordinate[player][i][2] = "UP";
+                }
+                else if (coordArray[i][1] > verticalStep / 2 * 3) { // if y is greater than 3/4 the height of the canvas
+                    this.imageCoordinate[player][i][1] = ctx.canvas.height - IMAGE_WIDTH * 1.5;
+                    this.imageCoordinate[player][i][2] = "DOWN";
+                }
+                else { // middle
+                    this.imageCoordinate[player][i][1] = coordArray[i][1] - IMAGE_WIDTH * 1.5 / 2;
+                    this.imageCoordinate[player][i][2] = "MID";
+                }
+                
+                // the x coordinate is 1/2 image width to the left of the bullet
+                this.imageCoordinate[player][i][0] = coordArray[i][0] - IMAGE_WIDTH / 2;
+            }
+            
+            // display fam images
+            for (var i = 0; i < 5; i++) {
+                (function (i, array, ctx) {
+                    var img = new Image();
+                    img.src = imageLinksArray[i];
+           
+                    img.onload = function() {
+                        ctx.drawImage(img, array[i][0], array[i][1]);
+                    }
+                })(i, this.imageCoordinate[player], ctx);
+            }
         }
+    }
+    
+    displayHPOnCanvas (percent, player, index) {
+        var c : any = document.getElementById("player" + player + "canvas");
+        var ctx = c.getContext("2d");
+        
+        var xstart = Math.round(this.imageCoordinate[player][index][0]);
+        
+        if (this.imageCoordinate[player][index][2] != "DOWN") {
+            // display hp on top of the fam
+            var ystart : number = this.imageCoordinate[player][index][1] + 90;
+        }
+        else {
+            // diaply hp at bottom of fam            
+            var ystart : number = this.imageCoordinate[player][index][1] - 20;
+        }
+        
+        var width = 60; // width of the health bar
+        var height = 5; // height of the health bar
+        
+        if (percent < 0) {
+            var availableHealth = 0; // health bar can't be less than 0
+        }
+        else {
+            var availableHealth = Math.round(percent/100 * width);
+        }
+        
+        // line width for the border
+        ctx.lineWidth = 2;
+        
+        ctx.fillStyle="#00FF00"; // <- green blood
+        
+        // first draw the full hp bar
+        ctx.fillRect(xstart + 1.5, ystart + 1, availableHealth - 2.5, height - 2);
+
+        // then clear it to show only the available health
+        ctx.clearRect(xstart + availableHealth + 1, ystart + 1, width - availableHealth, height - 2);
+        
+        // draw the border
+        ctx.fillStyle="#000000"; // <- black border
+        ctx.strokeRect(xstart, ystart, width, height);
     }
     
     /**

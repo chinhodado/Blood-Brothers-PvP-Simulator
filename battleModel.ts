@@ -73,12 +73,14 @@ class BattleModel {
                                         stats1, 
                                         player1Skills, 
                                         this.player1,
-                                        i); //my cards
+                                        i,
+                                        player1cardsInfo[i].imageLink); //my cards
             this.player2Cards[i] = new Card(player2cardsInfo[i].name, 
                                         stats2,
                                         player2Skills, 
                                         this.player2,
-                                        i); // opp card
+                                        i,
+                                        player2cardsInfo[i].imageLink); // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
         }
@@ -88,7 +90,7 @@ class BattleModel {
         // save the initial field snapshot
         this.logger.saveInitialField();
         
-        this.logger.displayFormationOnCanvas();
+        this.logger.displayFormationAndFamOnCanvas();
     }
     
     sortAllCards() {
