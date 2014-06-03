@@ -301,6 +301,8 @@ class BattleModel {
                 case ("BREATH") :
                     damage = Math.round(damage * (1 - targetCard.status.breathResistance));
                     break;
+                default :
+                    throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
             }
     
             targetCard.changeHP(-1 * damage);

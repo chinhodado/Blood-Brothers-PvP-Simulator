@@ -62,6 +62,18 @@ var SkillDatabase = {
         skillRange: 3, maxProbability: 70
     },
     
+    466 : {
+        name : "Blade of Judgment", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    467 : {
+        name : "Atonement", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.3, skillFuncArg2: 5, skillFuncArg3: 7, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 70
+    },
+    
     99000 : {
         name : "Raging Flames", skillType: 2, skillFunc: 3, skillCalcType: 3,
         skillFuncArg1: 2.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
