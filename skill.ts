@@ -37,5 +37,23 @@ class Skill {
         this.ward = skillData.ward;
         
         this.range = BattleModel.rangeFactory.getRange(this.skillRange);
-    }    
+    }
+    
+    getSkillFuncArg(argnum : number) {
+        if (argnum == 1) {
+            return this.skillFuncArg1;
+        }
+        else if (argnum == 2) {
+            return this.skillFuncArg2;
+        }
+        else if (argnum == 3) {
+            return this.skillFuncArg3;
+        }
+        else if (argnum == 4) {
+            return this.skillFuncArg4;
+        }
+        else if (argnum == 5) {
+            return this.skillFuncArg5;
+        }
+    }
 }

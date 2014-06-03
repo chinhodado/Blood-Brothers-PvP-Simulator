@@ -318,32 +318,37 @@ class BattleModel {
     executeOpeningSkill (executor : Card) {
         var skill = executor.openingSkill;
         
-        switch (skill.skillFuncArg2) {
-            case ENUM.StatusType.ATK :
-            case ENUM.StatusType.DEF :
-            case ENUM.StatusType.WIS :
-            case ENUM.StatusType.AGI :
-                var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-                var skillMod = skill.skillFuncArg1;
-                var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
-                break;
-            case ENUM.StatusType.ATTACK_RESISTANCE :
-            case ENUM.StatusType.MAGIC_RESISTANCE :
-            case ENUM.StatusType.BREATH_RESISTANCE :
-                var buffAmount = skill.skillFuncArg1;
-                break;
-            default :
-                throw new Error("Wrong status type or not implemented");
-        }
-        
-        var thingToBuff = skill.skillFuncArg2;        
-        var targets : Card[] = skill.range.getTargets(executor);
-        
-        for (var i = 0; i < targets.length; i++) {
-            targets[i].changeStatus(thingToBuff, buffAmount);
-            this.logger.bblogMinor(targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount);
+        for (var skillFuncArgNum = 2; skillFuncArgNum <= 5; skillFuncArgNum++) {
+            if (skill.getSkillFuncArg(skillFuncArgNum) == 0) {
+                continue;
+            }
+            switch (skill.getSkillFuncArg(skillFuncArgNum)) {
+                case ENUM.StatusType.ATK :
+                case ENUM.StatusType.DEF :
+                case ENUM.StatusType.WIS :
+                case ENUM.StatusType.AGI :
+                    var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+                    var skillMod = skill.skillFuncArg1;
+                    var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
+                    break;
+                case ENUM.StatusType.ATTACK_RESISTANCE :
+                case ENUM.StatusType.MAGIC_RESISTANCE :
+                case ENUM.StatusType.BREATH_RESISTANCE :
+                    var buffAmount = skill.skillFuncArg1;
+                    break;
+                default :
+                    throw new Error("Wrong status type or not implemented");
+            }
             
-            this.logger.addEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount);
+            var thingToBuff = skill.getSkillFuncArg(skillFuncArgNum);        
+            var targets : Card[] = skill.range.getTargets(executor);
+            
+            for (var i = 0; i < targets.length; i++) {
+                targets[i].changeStatus(thingToBuff, buffAmount);
+                this.logger.bblogMinor(targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount);
+                
+                this.logger.addEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount);
+            }
         }
     }
 

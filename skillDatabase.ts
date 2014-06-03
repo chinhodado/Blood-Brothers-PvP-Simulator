@@ -50,6 +50,18 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
     
+    380 : {
+        name : "Feral Claws", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 0.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    381 : {
+        name : "Lion's Roar", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.4, skillFuncArg2: 6, skillFuncArg3: 7, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 3, maxProbability: 70
+    },
+    
     99000 : {
         name : "Raging Flames", skillType: 2, skillFunc: 3, skillCalcType: 3,
         skillFuncArg1: 2.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
