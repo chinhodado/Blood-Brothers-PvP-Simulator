@@ -19,6 +19,12 @@ var SkillDatabase = {
         skillFuncArg1: 0.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 17, maxProbability: 30, ward: "PHYSICAL"
     },
+    
+    23 : {
+        name: "Breath of Flame", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 30, ward: "BREATH"
+    },
 
     33 : {
         name: "Whirlwind", skillType: 2, skillFunc: 3, skillCalcType: 3, 
@@ -42,6 +48,12 @@ var SkillDatabase = {
         name: "Whorl of Attack", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    114 : {
+        name: "Electric Shock", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 30, ward: "MAGICAL"
     },
 
     123 : {
@@ -114,6 +126,12 @@ var SkillDatabase = {
         name: "Ghasthunt", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    216 : {
+        name: "Bodycheck", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 6, maxProbability: 30, ward: "PHYSICAL"
     },
 
     221 : {
@@ -204,6 +222,12 @@ var SkillDatabase = {
         name: "Evil Wink", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 1.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    314 : {
+        name: "Fearless Laugh", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 32, maxProbability: 30, ward: "PHYSICAL"
     },
 
     321 : {

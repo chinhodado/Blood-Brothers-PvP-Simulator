@@ -177,6 +177,18 @@ class BattleModel {
             throw new Error("Invalid player");
         }
     }
+    
+    getEnemyCards (player : Player) {
+        if (player === this.player1) {
+            return this.player2Cards;
+        }
+        else if (player === this.player2) {
+            return this.player1Cards;
+        }
+        else {
+            throw new Error("Invalid player");
+        }
+    }
 
     getValidSingleTarget (cards : Card[]) {
         var possibleIndices = [];
@@ -199,36 +211,17 @@ class BattleModel {
     getNearestSingleOpponentTarget (executor : Card) : Card {
         var oppCards : Card[] = this.getPlayerCards(this.getOppositePlayer(executor.player));
         var executorIndex = executor.formationColumn;
-        if (oppCards[executorIndex] && !oppCards[executorIndex].isDead) {
-            return oppCards[executorIndex];
+        
+        var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
+        
+        for (var i = 0; i < offsetArray.length; i++) {
+            if (oppCards[executorIndex + i] && !oppCards[executorIndex + i].isDead) {
+                return oppCards[executorIndex + i];
+            }
         }
-        else if (oppCards[executorIndex - 1] && !oppCards[executorIndex - 1].isDead) {
-            return oppCards[executorIndex - 1];
-        }
-        else if (oppCards[executorIndex + 1] && !oppCards[executorIndex + 1].isDead) {
-            return oppCards[executorIndex + 1];
-        }
-        else if (oppCards[executorIndex - 2] && !oppCards[executorIndex - 2].isDead) {
-            return oppCards[executorIndex - 2];
-        }
-        else if (oppCards[executorIndex + 2] && !oppCards[executorIndex + 2].isDead) {
-            return oppCards[executorIndex + 2];
-        }
-        else if (oppCards[executorIndex - 3] && !oppCards[executorIndex - 3].isDead) {
-            return oppCards[executorIndex -3];
-        }
-        else if (oppCards[executorIndex + 3] && !oppCards[executorIndex + 3].isDead) {
-            return oppCards[executorIndex + 3];
-        }
-        else if (oppCards[executorIndex - 4] && !oppCards[executorIndex - 4].isDead) {
-            return oppCards[executorIndex - 4];
-        }
-        else if (oppCards[executorIndex + 4] && !oppCards[executorIndex + 4].isDead) {
-            return oppCards[executorIndex + 4];
-        }
-        else {
-            return null;
-        }
+        
+        // if it reaches this point, there's no target, so return null
+        return null;
     }
 
     isAllDeadPlayer (player : Player) {
@@ -255,7 +248,7 @@ class BattleModel {
         return isAllDead;
     }
 
-    executeActiveSkill (executor : Card) {
+    executeRandomAttackSkill (executor : Card) {
     	var skill = executor.attackSkill;
         var skillMod = skill.skillFuncArg1;
         var numTarget = (<EnemyRandomRange>skill.range).numTarget;
@@ -270,6 +263,62 @@ class BattleModel {
             }
     
             var targetCard = this.oppositePlayerCards[targetIndex];
+            var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
+    
+            var baseDamage : number;
+            
+            switch (skill.skillCalcType) {
+                case (ENUM.SkillCalcType.DEFAULT) :
+                case (ENUM.SkillCalcType.WIS) :
+                    baseDamage = getDamageCalculatedByWIS(executor, targetCard);
+                    break;
+                case (ENUM.SkillCalcType.ATK) :
+                    baseDamage = getDamageCalculatedByATK(executor, targetCard, ignorePosition);
+                    break;
+                case (ENUM.SkillCalcType.AGI) :
+                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, ignorePosition);
+                    break;
+            }
+            
+            // apply the multiplier
+            var damage = skillMod * baseDamage;
+            
+            // apply the target's ward
+            switch (skill.ward) {
+                case ("PHYSICAL") :
+                    damage = Math.round(damage * (1 - targetCard.status.attackResistance));
+                    break;
+                case ("MAGICAL") :
+                    damage = Math.round(damage * (1 - targetCard.status.magicResistance));
+                    break;
+                case ("BREATH") :
+                    damage = Math.round(damage * (1 - targetCard.status.breathResistance));
+                    break;
+                default :
+                    throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
+            }
+    
+            targetCard.changeHP(-1 * damage);
+            
+            this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
+                targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
+            this.logger.addEvent(executor, targetCard, "HP", (-1) * damage);
+            if (targetCard.getHP() <= 0) {
+                this.logger.bblogMinor(targetCard.name + " is dead");
+                targetCard.isDead = true;
+            }
+        }
+    }
+    
+    // TODO: abstract out the similar parts with random attack
+    executeNearAttackSkill (executor : Card) {
+        var skill = executor.attackSkill;
+        var skillMod = skill.skillFuncArg1;
+        var targets : Card[] = skill.range.getTargets(executor);
+        
+        for (var i = 0; i < targets.length; i++) {
+
+            var targetCard = targets[i];
             var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
     
             var baseDamage : number;
@@ -383,8 +432,13 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability) {
-                        this.logger.bblogMajor(currentCard.name + " procs " + attackSkill.name);    
-                        this.executeActiveSkill(currentCard);
+                        this.logger.bblogMajor(currentCard.name + " procs " + attackSkill.name);
+                        if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
+                            this.executeRandomAttackSkill(currentCard);
+                        }
+                        else if (BattleModel.rangeFactory.isEnemyNearRange(attackSkill.skillRange)) {
+                            this.executeNearAttackSkill(currentCard);
+                        }
                     }
                     else {
                         this.executeNormalAttack(currentCard);
