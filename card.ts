@@ -104,13 +104,19 @@ class Card {
             this.status.agi += amount;
         }
         else if (statusType === ENUM.StatusType.ATTACK_RESISTANCE) {
-            this.status.attackResistance = amount; // do not stack
+            if (this.status.attackResistance < amount) {
+                this.status.attackResistance = amount; // do not stack
+            }
         }
         else if (statusType === ENUM.StatusType.MAGIC_RESISTANCE) {
-            this.status.magicResistance = amount; // do not stack
+            if (this.status.magicResistance < amount) {
+                this.status.magicResistance = amount; // do not stack
+            }
         }
         else if (statusType === ENUM.StatusType.BREATH_RESISTANCE) {
-            this.status.breathResistance = amount; // do not stack
+            if (this.status.breathResistance < amount) {
+                this.status.breathResistance = amount; // do not stack
+            }
         }
         else if (statusType === ENUM.StatusType.SKILL_PROBABILITY) {
             this.status.skillProbability += amount;
