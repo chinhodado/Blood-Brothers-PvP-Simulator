@@ -1,5 +1,10 @@
 "use strict";
-
+/**
+ * Some notes:
+ * - For attack skills, there has to be a "ward" attribute
+ * - For skills with PHYSICAL ward and not random multihitting (like fork, AoE...), there has to be a 
+ *   "contact" attribute with 1 being "has/does contact"
+ */
 var SkillDatabase = {
 
     2 : {
@@ -54,6 +59,12 @@ var SkillDatabase = {
         name: "Electric Shock", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 7, maxProbability: 30, ward: "MAGICAL"
+    },
+    
+    118 : {
+        name: "Slashing Blade", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
     123 : {
@@ -131,7 +142,7 @@ var SkillDatabase = {
     216 : {
         name: "Bodycheck", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 6, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 6, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
     221 : {
@@ -193,6 +204,12 @@ var SkillDatabase = {
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
+    
+    258 : {
+        name: "Fatal Kiss", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "MAGICAL"
+    },
 
     259 : {
         name: "Hell Spark", skillType: 2, skillFunc: 3, skillCalcType: 1, 
@@ -211,6 +228,12 @@ var SkillDatabase = {
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
     },
+    
+    302 : {
+        name: "Ice Wall", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "BREATH"
+    },
 
     303 : {
         name: "Chill Horn", skillType: 2, skillFunc: 3, skillCalcType: 2, 
@@ -224,10 +247,16 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
     
+    313 : {
+        name: "White Ruin", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "BREATH"
+    },
+    
     314 : {
         name: "Fearless Laugh", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 32, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 32, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
     321 : {
@@ -240,6 +269,12 @@ var SkillDatabase = {
         name: "Test of Courage", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    340 : {
+        name: "Penance", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
     341 : {
@@ -294,6 +329,12 @@ var SkillDatabase = {
         name: "Libra's Retribution", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+    
+    406 : {
+        name: "Piercing Arrow", skillType: 2, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 0
     },
 
     427 : {

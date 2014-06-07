@@ -11,6 +11,8 @@ class RangeFactory {
         6 : "EnemyNearRange",
         7 : "EnemyNearRange",
         
+        8 : "EnemyAllRange",
+        
         16: "EnemyRandomRange",
         17: "EnemyRandomRange",
 
@@ -173,7 +175,7 @@ class EnemyNearRange extends BaseRange {
         this.maxDistance = EnemyNearRange.MAX_DISTANCE_FROM_CENTER[numTarget];
     }
     
-    getTargets (executor : Card) {
+    getTargets (executor : Card) : Card[] {
         // get center enemy
         var centerEnemy = BattleModel.getInstance().getNearestSingleOpponentTarget(executor);
         var enemyCards = BattleModel.getInstance().getEnemyCards(executor.player);
@@ -197,6 +199,24 @@ class EnemyNearRange extends BaseRange {
         }
 
         return targets;
+    }
+}
+
+class EnemyAllRange extends BaseRange {
+    constructor(id: number) {
+        super(id);
+    }
+    
+    getTargets (executor : Card) : Card[]{
+        var enemyCards = BattleModel.getInstance().getEnemyCards(executor.player);
+        var targets = [];
+        for (var i = 0; i < enemyCards.length; i++) {
+            var currentEnemyCard = enemyCards[i];
+            if (currentEnemyCard && !currentEnemyCard.isDead) {
+                targets.push(currentEnemyCard);
+            }
+        }
+        return targets
     }
 }
 

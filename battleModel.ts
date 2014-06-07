@@ -215,8 +215,9 @@ class BattleModel {
         var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
         
         for (var i = 0; i < offsetArray.length; i++) {
-            if (oppCards[executorIndex + i] && !oppCards[executorIndex + i].isDead) {
-                return oppCards[executorIndex + i];
+            var currentOppCard = oppCards[executorIndex + offsetArray[i]];
+            if (currentOppCard && !currentOppCard.isDead) {
+                return currentOppCard;
             }
         }
         
@@ -311,7 +312,10 @@ class BattleModel {
     }
     
     // TODO: abstract out the similar parts with random attack
-    executeNearAttackSkill (executor : Card) {
+    /**
+     * Execute an attack skill that has the targets obtained from its range
+     */
+    executeAttackSkillWithRangeTargets (executor : Card) {
         var skill = executor.attackSkill;
         var skillMod = skill.skillFuncArg1;
         var targets : Card[] = skill.range.getTargets(executor);
@@ -436,8 +440,8 @@ class BattleModel {
                         if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
                             this.executeRandomAttackSkill(currentCard);
                         }
-                        else if (BattleModel.rangeFactory.isEnemyNearRange(attackSkill.skillRange)) {
-                            this.executeNearAttackSkill(currentCard);
+                        else {
+                            this.executeAttackSkillWithRangeTargets(currentCard);
                         }
                     }
                     else {
