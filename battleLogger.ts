@@ -3,9 +3,12 @@
  */
 class BattleLogger {
 
-    eventLog = {};
-    majorEventCounter : number = 0;
-    minorEventCounter : number = 0;
+    // an object that has keys as indices of majorEventLog
+    // and values as the things that happened under that major event
+    minorEventLog = {};
+
+    // just an array of strings
+    majorEventLog : string[] = [];
     
     currentTurn : number = 0;
     initialFieldInfo;
@@ -33,10 +36,10 @@ class BattleLogger {
     }
     
     /**
-     * Use this to log a major event: a normal attack, a proc, etc. Can also be
-     * thought of as logging the main action in a fam's turn
+     * Display a major event on screen (the left side list)
      */
-    bblogMajor (data) {
+    displayMajorEvent (index : number) : void {
+        var data = this.majorEventLog[index];
         var id = "turn" + this.currentTurn + "events";
         var battleEventDiv = document.getElementById("battleEventDiv");
         var turnEventList = document.getElementById(id);
@@ -50,16 +53,24 @@ class BattleLogger {
 
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
-        newEvent.setAttribute("tabindex", this.majorEventCounter + "");
-        newEvent.setAttribute("id", this.majorEventCounter + "");
+        newEvent.setAttribute("tabindex", index + "");
+        newEvent.setAttribute("id", index + "");
         
         // populate right section with the field situation
         newEvent.onfocus = function () {
             BattleLogger.getInstance().displayEventLogAtIndex(this.id);
         };
-        turnEventList.appendChild(newEvent);
-        
-        this.majorEventCounter++;
+        turnEventList.appendChild(newEvent);    
+    }
+    
+    /**
+     * Use this to log a major event: a normal attack, a proc, etc. Can also be
+     * thought of as logging the main action in a fam's turn. The data to log here
+     * is just a string, there's no actual data change associated with a major event
+     */
+    addMajorEvent (data : string) {
+        this.majorEventLog.push(data);
+        this.displayMajorEvent(this.majorEventLog.length - 1);
     }
     
     /**
@@ -73,10 +84,9 @@ class BattleLogger {
     }
     
     /**
-     * Use this to log a sub-event in a card's turn, like a single hit in a multi-hit skill, or if the target fam is dead
-     * @param data Data to log
+     * Display a minor event on screen
      */
-    bblogMinor (data) {
+    displayMinorEvent (data) {
         var id = "turn" + this.currentTurn + "events";
         
         // the list of events of this turn
@@ -100,16 +110,13 @@ class BattleLogger {
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
         //newEvent.setAttribute("tabindex", this.eventCounter + "");
-        subEventList.appendChild(newEvent);
-        
-        //this.updateEventLogAtLastIndex();
-        this.minorEventCounter++;
+        subEventList.appendChild(newEvent);        
     }
     
     /**
      * Apply an event to the supplied data
      */
-    applyEvent(event, toApply) {
+    applyMinorEvent(event, toApply) {
         // get the card
         var card;
         for (var i = 0; i<5; i++) {
@@ -175,8 +182,8 @@ class BattleLogger {
         // apply events to initial field up to the specified event
         for (var i = 0; i <=  index; i++) {
             // need to make sure eventLog[i] exists, in case this is an empty event (like the "Battle start" event);
-            for (var j = 0; this.eventLog[i] && j < this.eventLog[i].length; j++) {
-                this.applyEvent(this.eventLog[i][j], initialField);
+            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
+                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
             }
         }
         
@@ -209,8 +216,8 @@ class BattleLogger {
                 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
-                for (var j = 0; this.eventLog[index] && j < this.eventLog[index].length; j++) {
-                    var tempEvent = this.eventLog[index][j]; // a minor event
+                for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
+                    var tempEvent = this.minorEventLog[index][j]; // a minor event
                     if (tempEvent.target == playerCards[fam].id) {
                         if (tempEvent.attribute == "HP") {
                             infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
@@ -239,7 +246,7 @@ class BattleLogger {
                     }
                 }
                 
-                if (this.eventLog[index] && this.eventLog[index][0].executor == playerCards[fam].id) {
+                if (this.minorEventLog[index] && this.minorEventLog[index][0].executor == playerCards[fam].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
                 
@@ -276,25 +283,27 @@ class BattleLogger {
     }
     
     /**
-     * Add an event to our event log. An event must have:
+     * Add a minor event to our minor event log. A minor event must have:
      *  - an executor/attacker/caster: whom the action in this event comes from
      *  - a target/defender: the one affected in this event
      *  - attribute: the thing belonging to the target that has been changed in this event
      *  - amount: the amount changed
+     *  - description: a description in plain text of what happened
      */
-    addEvent(executor: Card, target : Card, attribute : string, amount : number) {
-        // because this function is called after the counter has been incremented
-        var index = this.majorEventCounter - 1;
+    addMinorEvent(executor: Card, target : Card, attribute : string, amount : number, description : string) {
+        var index = this.majorEventLog.length - 1;
         
-        if (!this.eventLog[index]) {
-            this.eventLog[index] = [];
+        if (!this.minorEventLog[index]) {
+            this.minorEventLog[index] = [];
         }
-        this.eventLog[index].push({
-            executor : executor.id, // the card id of the executor
-            target : target.id,     // the card id of the target
-            attribute : attribute,  // can be "HP" or a ENUM.StatusType "key" (a string)
-            amount : amount         // the amount changed
+        this.minorEventLog[index].push({
+            executor : executor.id,   // the card id of the executor
+            target : target.id,       // the card id of the target
+            attribute : attribute,    // can be "HP" or a ENUM.StatusType "key" (a string)
+            amount : amount,          // the amount changed
+            description : description // description of the event in plain text
         });
+        this.displayMinorEvent(description);
     }
     
     /**
@@ -466,8 +475,8 @@ class BattleLogger {
      * Log the situation at the start of battle and display the initial info
      */
     startBattleLog() {
-        this.bblogMajor("Battle start");
-        this.bblogMinor("Everything ready");
+        this.addMajorEvent("Battle start");
+        this.displayMinorEvent("Everything ready");
         this.displayEventLogAtIndex(0);
     }
 }

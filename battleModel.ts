@@ -301,11 +301,10 @@ class BattleModel {
     
             targetCard.changeHP(-1 * damage);
             
-            this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
-                targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
-            this.logger.addEvent(executor, targetCard, "HP", (-1) * damage);
+            var description = targetCard.name + " lost " + damage + "hp (remaining " + targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
+            this.logger.addMinorEvent(executor, targetCard, "HP", (-1) * damage, description);
             if (targetCard.getHP() <= 0) {
-                this.logger.bblogMinor(targetCard.name + " is dead");
+                this.logger.displayMinorEvent(targetCard.name + " is dead");
                 targetCard.isDead = true;
             }
         }
@@ -360,11 +359,10 @@ class BattleModel {
     
             targetCard.changeHP(-1 * damage);
             
-            this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
-                targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
-            this.logger.addEvent(executor, targetCard, "HP", (-1) * damage);
+            var description = targetCard.name + " lost " + damage + "hp (remaining " + targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
+            this.logger.addMinorEvent(executor, targetCard, "HP", (-1) * damage, description);
             if (targetCard.getHP() <= 0) {
-                this.logger.bblogMinor(targetCard.name + " is dead");
+                this.logger.displayMinorEvent(targetCard.name + " is dead");
                 targetCard.isDead = true;
             }
         }
@@ -400,9 +398,8 @@ class BattleModel {
             
             for (var i = 0; i < targets.length; i++) {
                 targets[i].changeStatus(thingToBuff, buffAmount);
-                this.logger.bblogMinor(targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount);
-                
-                this.logger.addEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount);
+                var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
+                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description);
             }
         }
     }
@@ -436,7 +433,7 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability) {
-                        this.logger.bblogMajor(currentCard.name + " procs " + attackSkill.name);
+                        this.logger.addMajorEvent(currentCard.name + " procs " + attackSkill.name);
                         if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
                             this.executeRandomAttackSkill(currentCard);
                         }
@@ -454,7 +451,7 @@ class BattleModel {
 
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
-                    this.logger.bblogMajor(currentCard.getPlayerName() + " has won");
+                    this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");
                 }
             }
         }        
@@ -473,14 +470,14 @@ class BattleModel {
         damage = Math.round(damage * (1 - targetCard.status.attackResistance)); // apply physical ward
 
         targetCard.changeHP(-1 * damage);
-        this.logger.bblogMajor(attacker.name + " attacks " + targetCard.name);
-        this.logger.bblogMinor(targetCard.name + " lost " + damage + "hp (remaining " + 
-            targetCard.getHP() + "/" + targetCard.originalStats.hp + ")");
-        this.logger.addEvent(attacker, targetCard, "HP", damage * (-1));
+        this.logger.addMajorEvent(attacker.name + " attacks " + targetCard.name);
+        var description = targetCard.name + " lost " + damage + "hp (remaining " + 
+            targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
+        this.logger.addMinorEvent(attacker, targetCard, "HP", damage * (-1), description);
         
         if (targetCard.getHP() <= 0) {
             // maybe we also need to log an event
-            this.logger.bblogMinor(targetCard.name + " is dead");
+            this.logger.displayMinorEvent(targetCard.name + " is dead");
             targetCard.isDead = true;
         }
     }
@@ -490,7 +487,7 @@ class BattleModel {
             var skill1 = this.player1Cards[i].openingSkill;
             if (skill1) {
                 if (Math.random() * 100 < skill1.maxProbability) {
-                    this.logger.bblogMajor(this.player1Cards[i].name + " procs " + skill1.name);
+                    this.logger.addMajorEvent(this.player1Cards[i].name + " procs " + skill1.name);
                     this.executeOpeningSkill(this.player1Cards[i]);
                 }
             }
@@ -500,7 +497,7 @@ class BattleModel {
             var skill2 = this.player2Cards[i].openingSkill;
             if (skill2) {
                 if (Math.random() * 100 < skill2.maxProbability) {
-                    this.logger.bblogMajor(this.player2Cards[i].name + " procs " + skill2.name);
+                    this.logger.addMajorEvent(this.player2Cards[i].name + " procs " + skill2.name);
                     this.executeOpeningSkill(this.player2Cards[i]);
                 }
             }
