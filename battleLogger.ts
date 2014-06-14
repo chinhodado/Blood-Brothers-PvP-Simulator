@@ -18,6 +18,11 @@ class BattleLogger {
         1 : [], // for player 1
         2 : []  // and player 2
     };
+    
+    imageHeight = {
+        1 : [],
+        2 : []
+    }
         
     private static _instance : BattleLogger = null;
 
@@ -263,6 +268,10 @@ class BattleLogger {
                 
                 // display hp on canvas
                 this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
+                
+                if (stats.hp <= 0) {
+                    this.displayDeadFamiliar(player, fam);
+                }
             }
         }
     }
@@ -349,15 +358,14 @@ class BattleLogger {
         playerFormations[2] = temp;
 
         for (var player = 1; player <= 2; player ++) { // for each player
-            var c : any = document.getElementById("player" + player + "canvas"); // grab the player's canvas
-            var ctx = c.getContext("2d");
-    
-            // set the canvas's width and height
-            ctx.canvas.width  = window.innerWidth * 0.45;
-            //ctx.canvas.height = window.innerHeight * 0.2;
-    
-            var horizontalStep = c.width / 10;
-            var verticalStep = c.height / 2;
+            // todo: set the svg size dynamically
+            var draw = SVG('svg' + player).size(600, 150).attr('id', 'player' + player + 'svg');
+            var rect = draw.rect(600, 150).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
+            
+            var SVG_WIDTH = draw.attr("width");
+            var SVG_HEIGHT = draw.attr("height");
+            var horizontalStep = SVG_WIDTH / 10;
+            var verticalStep = SVG_HEIGHT / 2;
             
             var coordArray = [];
             
@@ -371,18 +379,15 @@ class BattleLogger {
             }
             
             // now draw lines and bullets
+            for (var i = 0; i < 5; i++) {
+                var diameter = 10;
+                var dot = draw.circle(diameter)
+                              .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
+            }
+
             for (var i = 0; i < 4; i++) {
-                ctx.moveTo(coordArray[i][0], coordArray[i][1]);
-                ctx.lineTo(coordArray[i + 1][0], coordArray[i + 1][1]);
-                ctx.stroke();
-    
-                ctx.beginPath();
-                ctx.arc(coordArray[i][0], coordArray[i][1], 5, 0, 2*Math.PI);
-                ctx.fill();
-    
-                ctx.beginPath();
-                ctx.arc(coordArray[i + 1][0], coordArray[i + 1][1], 5, 0, 2*Math.PI);
-                ctx.fill();
+                var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
+                               .stroke({ width: 1 });
             }
             
             // grab the image links of the curent player's fam
@@ -404,7 +409,7 @@ class BattleLogger {
                     this.imageCoordinate[player][i][2] = "UP";
                 }
                 else if (coordArray[i][1] > verticalStep / 2 * 3) { // if y is greater than 3/4 the height of the canvas
-                    this.imageCoordinate[player][i][1] = ctx.canvas.height - IMAGE_WIDTH * 1.5;
+                    this.imageCoordinate[player][i][1] = SVG_HEIGHT - IMAGE_WIDTH * 1.5;
                     this.imageCoordinate[player][i][2] = "DOWN";
                 }
                 else { // middle
@@ -417,58 +422,72 @@ class BattleLogger {
             }
             
             // display fam images
+            
+
             for (var i = 0; i < 5; i++) {
-                (function (i, array, ctx) {
-                    var img = new Image();
-                    img.src = imageLinksArray[i];
-           
-                    img.onload = function() {
-                        ctx.drawImage(img, array[i][0], array[i][1]);
-                    }
-                })(i, this.imageCoordinate[player], ctx);
+                draw.image(imageLinksArray[i])
+                    .move(this.imageCoordinate[player][i][0], this.imageCoordinate[player][i][1]);
             }
         }
     }
-    
-    displayHPOnCanvas (percent, player, index) {
-        var c : any = document.getElementById("player" + player + "canvas");
-        var ctx = c.getContext("2d");
-        
+
+    displayHPOnCanvas(percent, player, index) {
+
+        var draw = SVG.get('player' + player + 'svg');
+
         var xstart = Math.round(this.imageCoordinate[player][index][0]);
-        
+
         if (this.imageCoordinate[player][index][2] != "DOWN") {
             // display hp on top of the fam
-            var ystart : number = this.imageCoordinate[player][index][1] + 90;
+            var ystart: number = this.imageCoordinate[player][index][1] + 90;
         }
         else {
             // diaply hp at bottom of fam            
-            var ystart : number = this.imageCoordinate[player][index][1] - 20;
+            var ystart: number = this.imageCoordinate[player][index][1] - 20;
         }
-        
+
         var width = 60; // width of the health bar
         var height = 5; // height of the health bar
-        
+
         if (percent < 0) {
-            var availableHealth = 0; // health bar can't be less than 0
+            percent = 0; // health can't be less than 0
+        }
+
+        // first draw the (empty) hp bar
+        // try to get the bar if it exist, or create if not
+        var hpbarId = 'player' + player + 'fam' + index + 'hp';
+        var hpbar = SVG.get(hpbarId);
+        
+        if (!hpbar) {
+            hpbar = draw.rect(width, height)
+                .style({ 'stroke-width': 1, 'stroke': '#000000'})
+                .attr('id', hpbarId)
+                .move(xstart, ystart);
+        }
+
+        // now we deal with the background gradient used for displaying the HP
+        var hpGradientId = 'player' + player + 'fam' + index + 'hpGradient';
+        var hpGradient = SVG.get(hpGradientId);
+
+        if (!hpGradient) {
+            // draw for full HP
+            hpGradient = draw.gradient('linear', function (stop) {
+                stop.at({ offset: '100%', color: '#00ff00' })
+                stop.at({ offset: '100%', color: 'transparent' })
+            }).attr('id', hpGradientId);
         }
         else {
-            var availableHealth = Math.round(percent/100 * width);
+            hpGradient.update(function (stop) {
+                stop.at({ offset: percent + '%', color: '#00ff00' })
+                stop.at({ offset: percent + '%', color: 'transparent' })
+            })
         }
-        
-        // line width for the border
-        ctx.lineWidth = 2;
-        
-        ctx.fillStyle="#00FF00"; // <- green blood
-        
-        // first draw the full hp bar
-        ctx.fillRect(xstart + 1.5, ystart + 1, availableHealth - 2.5, height - 2);
 
-        // then clear it to show only the available health
-        ctx.clearRect(xstart + availableHealth + 1, ystart + 1, width - availableHealth, height - 2);
-        
-        // draw the border
-        ctx.fillStyle="#000000"; // <- black border
-        ctx.strokeRect(xstart, ystart, width, height);
+        hpbar.fill(hpGradient);
+    }
+    
+    displayDeadFamiliar (player, fam) {
+
     }
     
     /**

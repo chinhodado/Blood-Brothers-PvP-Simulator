@@ -1,3 +1,10 @@
-*.js
+*.map
 .project
+.gitattributes
+*.csproj
+*.user
+*.config
 /.settings
+/bin
+/obj
+/compiled

@@ -1,23 +1,25 @@
 <html style="width:100%; height:100%;">
 
 <head>
-    <script type="text/javascript" src="battleLogger.js"></script>
-    <script type="text/javascript" src="battleModel.js"></script>
-    <script type="text/javascript" src="card.js"></script>
-    <script type="text/javascript" src="enums.js"></script>
-    <script type="text/javascript" src="famDatabase.js"></script>
-    <script type="text/javascript" src="formation.js"></script>
-    <script type="text/javascript" src="player.js"></script>
-    <script type="text/javascript" src="skill.js"></script>
-    <script type="text/javascript" src="skillCalcType.js"></script>
-    <script type="text/javascript" src="skillDatabase.js"></script>    
-    <script type="text/javascript" src="skillRange.js"></script>
-    <script type="text/javascript" src="util.js"></script>
+    <title>Blood Brothers simulator</title>
+    <script src="lib/svg.min.js"></script>
+    <script src="compiled/battleLogger.js"></script>
+    <script src="compiled/battleModel.js"></script>
+    <script src="compiled/card.js"></script>
+    <script src="compiled/enums.js"></script>
+    <script src="compiled/famDatabase.js"></script>
+    <script src="compiled/formation.js"></script>
+    <script src="compiled/player.js"></script>
+    <script src="compiled/skill.js"></script>
+    <script src="compiled/skillCalcType.js"></script>
+    <script src="compiled/skillDatabase.js"></script>    
+    <script src="compiled/skillRange.js"></script>
+    <script src="compiled/util.js"></script>
 
     <style type="text/css">
         * {
             font-family: "Consolas";
-            font-size: 12;
+            font-size: 12px;
         }
         .wrapper {
             display: table;
@@ -60,8 +62,8 @@
                 </div>
             </div>
 
-            <canvas id="player2canvas" style="border:1px solid #000000;"></canvas>
-            <canvas id="player1canvas" style="border:1px solid #000000;"></canvas>
+            <div id="svg2" style="height: 150px;"></div>
+            <div id="svg1" style="height: 150px;"></div>
 
             <div id="player1Fam" style="margin-bottom:30px;" class="wrapper">
                 <center>Player 1</center>
