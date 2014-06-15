@@ -102,7 +102,8 @@ declare module svgjs {
 
         each(iterator:(i?:number, children?:Element[])=>void, deep?:boolean):void;
         filter(adder:(filter:Filter)=>void):Element;        
-
+        gradient(type: string, stopFunc: (stop: any) => void): Element;
+        
         transform(t:Transform):Element;
         transform(): Transform;
         

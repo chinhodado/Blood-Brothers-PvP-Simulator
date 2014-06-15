@@ -114,7 +114,6 @@ class BattleLogger {
         // new list item for the sub event, and append it to the sub event list
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
-        //newEvent.setAttribute("tabindex", this.eventCounter + "");
         subEventList.appendChild(newEvent);        
     }
     
@@ -268,10 +267,9 @@ class BattleLogger {
                 
                 // display hp on canvas
                 this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
-                
-                if (stats.hp <= 0) {
-                    this.displayDeadFamiliar(player, fam);
-                }
+
+                // display dead or alive familiar
+                this.displayDeadAliveFamiliar(player, fam, stats.hp <= 0);
             }
         }
     }
@@ -422,11 +420,10 @@ class BattleLogger {
             }
             
             // display fam images
-            
-
             for (var i = 0; i < 5; i++) {
                 draw.image(imageLinksArray[i])
-                    .move(this.imageCoordinate[player][i][0], this.imageCoordinate[player][i][1]);
+                    .move(this.imageCoordinate[player][i][0], this.imageCoordinate[player][i][1])
+                    .attr('id', 'player' + player + 'fam' + i + 'image');
             }
         }
     }
@@ -467,7 +464,7 @@ class BattleLogger {
 
         // now we deal with the background gradient used for displaying the HP
         var hpGradientId = 'player' + player + 'fam' + index + 'hpGradient';
-        var hpGradient = SVG.get(hpGradientId);
+        var hpGradient : any = SVG.get(hpGradientId);
 
         if (!hpGradient) {
             // draw for full HP
@@ -486,8 +483,38 @@ class BattleLogger {
         hpbar.fill(hpGradient);
     }
     
-    displayDeadFamiliar (player, fam) {
+    displayDeadAliveFamiliar(player, fam, isDead) {
+        var image : any = SVG.get('player' + player + 'fam' + fam + 'image');
+        var filter = SVG.get('darkenFilter');
+        if (isDead) {
+            if (!filter) {
+                // If the filter does not exist yet, create it
+                // I don't know how to create a standalone filter for reuse
+                // later, so I have to use this roundabout way. First set
+                // the filter to the image:
+                image.filter(function (add) {
+                    add.componentTransfer({
+                        rgb: { type: 'linear', slope: 0.05 }
+                    })
+                });
 
+                // now grab the filter from the image, and give it the id
+                filter = image.filterer;
+                filter.attr('id', 'darkenFilter');
+
+                // have to reapply the filter to the image since the image
+                // does not change its filter id automatically
+                image.filter(filter);
+            }
+            else {
+                // if the filter is already created, we just use it
+                image.filter(filter);
+            }
+        }
+        else {
+            // if the fam is not dead, remove any existing filter from it
+            image.unfilter();
+        }
     }
     
     /**
