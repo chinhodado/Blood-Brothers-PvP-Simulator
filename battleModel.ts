@@ -388,11 +388,50 @@ class BattleModel {
     executeAttackSkillWithRangeTargets (executor : Card) {
         var skill = executor.attackSkill;
         var targets : Card[] = skill.range.getTargets(executor);
-        
-        for (var i = 0; i < targets.length; i++) {
-            var targetCard = targets[i];
-            this.damageToTarget(executor, targetCard, skill, null);
+
+        if (skill.contact == 0) {
+            // if the skill doesn't make contact, it must be AoE, so only one fam can be protected
+
+            // shuffle the targets. This serves two purposes. First, we can iterate
+            // through the array in a random manner. Second, since the order is not
+            // simply left-to-right anymore, it reminds us that this is an AoE skill
+            shuffle(targets);
+
+            // assume only one protection can be proc during an AoE skill. Is it true?
+            var aoeProtectSkillActivated = false; //<- has any protect skill activated during this whole AoE?
+
+            for (var i = 0; i < targets.length; i++) {
+                var targetCard = targets[i];
+
+                var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
+
+                // if no protect skill has been activated at all during this AoE, we can try to
+                // protect this target, otherwise no protect can be activated to protect this target
+                if (!aoeProtectSkillActivated) {
+                    protectSkillActivated = this.processProtect(executor, targetCard, skill);
+                    if (protectSkillActivated) {
+                        aoeProtectSkillActivated = true;
+                    }
+                }
+
+                // if not protected, proceed with the attack as normal
+                if (!protectSkillActivated) {
+                    this.damageToTarget(executor, targetCard, skill, null);
+                }
+            }
         }
+        else {
+            for (var i = 0; i < targets.length; i++) {
+                var targetCard = targets[i];
+
+                var protectSkillActivated = this.processProtect(executor, targetCard, skill);
+
+                // if not protected, proceed with the attack as normal
+                if (!protectSkillActivated) {
+                    this.damageToTarget(executor, targetCard, skill, null);
+                }
+            }
+        }        
     }
     
     executeOpeningSkill (executor : Card) {
