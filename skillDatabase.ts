@@ -1,11 +1,18 @@
 "use strict";
 /**
  * Some notes:
- * - For attack skills, there has to be a "ward" attribute
+ * - For attack skills, there has to be a "ward" attribute, which takes a value of "PHYSICAL", "BREATH" or "MAGICAL"
  * - For skills with PHYSICAL ward and not random multihitting (like fork, AoE...), there has to be a 
  *   "contact" attribute with 1 being "has/does contact"
+ * - There is no need for the baseProbability
  */
 var SkillDatabase = {
+
+    0: {
+        name: "Default auto", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL"
+    },
 
     2 : {
         name: "Strength of Blades", skillType: 1, skillFunc: 1, skillCalcType: 0,
@@ -49,6 +56,24 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    61: {
+        name: "Cloak & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 2, maxProbability: 50
+    },
+
+    62: {
+        name: "Cloak", skillType: 5, skillFunc: 12, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 2, maxProbability: 50
+    },
+
+    63: {
+        name: "Shroud", skillType: 5, skillFunc: 12, skillCalcType: 0,
+        skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 50
+    },
+
     112 : {
         name: "Whorl of Attack", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -78,6 +103,12 @@ var SkillDatabase = {
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    125: {
+        name: "Shield & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 50
+    },
     
     134 : {
         name: "Magic Ward 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
@@ -103,6 +134,12 @@ var SkillDatabase = {
         skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    154: {
+        name: "Cloak & Dagger 2", skillType: 5, skillFunc: 14, skillCalcType: 1,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 2, maxProbability: 50
+    },
+
     156 : {
         name: "Rebuke", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -125,6 +162,12 @@ var SkillDatabase = {
         name: "Sword of Justice", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    180: {
+        name: "Proxy Counter", skillType: 5, skillFunc: 14, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 28, maxProbability: 50
     },
     
     196 : {
@@ -161,6 +204,12 @@ var SkillDatabase = {
         name: "Spirit Word", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    236: {
+        name: "Flash", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 2.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL"
     },
 
     238 : {
@@ -265,6 +314,12 @@ var SkillDatabase = {
         skillRange: 17, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    325: {
+        name: "Rippling Flame", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.85, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
     327 : {
         name: "Test of Courage", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -330,11 +385,23 @@ var SkillDatabase = {
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    398: {
+        name: "Knuckle Guard", skillType: 5, skillFunc: 12, skillCalcType: 0,
+        skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 50
+    },
     
     406 : {
         name: "Piercing Arrow", skillType: 2, skillFunc: 4, skillCalcType: 1, 
         skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 0
+    },
+
+    425: {
+        name: "Lese Majesty", skillType: 5, skillFunc: 14, skillCalcType: 1,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 50
     },
 
     427 : {
@@ -372,17 +439,17 @@ var SkillDatabase = {
         skillFuncArg1: 1.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    484: {
+        name: "Wall of the Brave", skillType: 5, skillFunc: 12, skillCalcType: 0,
+        skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 50
+    },
     
     99000 : {
         name : "Raging Flames", skillType: 2, skillFunc: 3, skillCalcType: 3,
         skillFuncArg1: 2.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
-    },
-    
-    99001 : {
-        name : "Rippling Flame", skillType: 2, skillFunc: 3, skillCalcType: 1,
-        skillFuncArg1: 1.85, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"   
     },
     
     99002 : {
@@ -395,11 +462,5 @@ var SkillDatabase = {
         name : "Niten Ichi-ryu", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
-    },
-    
-    99004 : {
-        name : "Flash", skillType: 2, skillFunc: 3, skillCalcType: 2,
-        skillFuncArg1: 2.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 16, maxProbability: 30, ward: "MAGICAL"  
     },
 };

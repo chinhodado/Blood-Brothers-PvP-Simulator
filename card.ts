@@ -11,7 +11,8 @@ class Card {
     
     openingSkill : Skill;
     attackSkill : Skill;
-    protectSkill :Skill;
+    protectSkill: Skill;
+    defenseSkill: Skill;
     
     formationColumn : number; // 0 to 4
     formationRow : ENUM.FormationRow; // 1, 2 or 3
@@ -34,14 +35,17 @@ class Card {
         for (var i = 0; i < skills.length; i++) {
             var skill = skills[i];
             if (skill) {
-                if (skill.skillType == 1) {
+                if (skill.skillType == ENUM.SkillType.OPENING) {
                     this.openingSkill = skill;
                 }
-                else if (skill.skillType == 2) {
+                else if (skill.skillType == ENUM.SkillType.ATTACK) {
                     this.attackSkill = skill;
                 }
-                else if  (skill.skillType == 5) {
+                else if (skill.skillType == ENUM.SkillType.PROTECT) {
                     this.protectSkill = skill;
+                }
+                else if (skill.skillType == ENUM.SkillType.DEFENSE) {
+                    this.defenseSkill = skill;
                 }
             }
         }

@@ -250,8 +250,7 @@ class BattleModel {
     }
 
     executeRandomAttackSkill (executor : Card) {
-    	var skill = executor.attackSkill;
-        var skillMod = skill.skillFuncArg1;
+    	var skill = executor.attackSkill;        
         var numTarget = (<EnemyRandomRange>skill.range).numTarget;
         
         for (var i = 0; i < numTarget; i++) {
@@ -264,107 +263,135 @@ class BattleModel {
             }
     
             var targetCard = this.oppositePlayerCards[targetIndex];
-            var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
-    
-            var baseDamage : number;
-            
-            switch (skill.skillCalcType) {
-                case (ENUM.SkillCalcType.DEFAULT) :
-                case (ENUM.SkillCalcType.WIS) :
-                    baseDamage = getDamageCalculatedByWIS(executor, targetCard);
-                    break;
-                case (ENUM.SkillCalcType.ATK) :
-                    baseDamage = getDamageCalculatedByATK(executor, targetCard, ignorePosition);
-                    break;
-                case (ENUM.SkillCalcType.AGI) :
-                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, ignorePosition);
-                    break;
-            }
-            
-            // apply the multiplier
-            var damage = skillMod * baseDamage;
-            
-            // apply the target's ward
-            switch (skill.ward) {
-                case ("PHYSICAL") :
-                    damage = Math.round(damage * (1 - targetCard.status.attackResistance));
-                    break;
-                case ("MAGICAL") :
-                    damage = Math.round(damage * (1 - targetCard.status.magicResistance));
-                    break;
-                case ("BREATH") :
-                    damage = Math.round(damage * (1 - targetCard.status.breathResistance));
-                    break;
-                default :
-                    throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
-            }
-    
-            targetCard.changeHP(-1 * damage);
-            
-            var description = targetCard.name + " lost " + damage + "hp (remaining " + targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
-            this.logger.addMinorEvent(executor, targetCard, "HP", (-1) * damage, description);
-            if (targetCard.getHP() <= 0) {
-                this.logger.displayMinorEvent(targetCard.name + " is dead");
-                targetCard.isDead = true;
+            var protectSkillActivated = this.processProtect(executor, targetCard, skill);
+
+            // if not protected, proceed with the attack as normal
+            if (!protectSkillActivated) {
+                this.damageToTarget(executor, targetCard, skill, null);
             }
         }
     }
+
+    /**
+     * Process the protecting sequence. Return true if a protect has been executed
+     * or false if no protect has been executed
+     */
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill): boolean {
+        // now check if someone on the enemy side can protect before the damage is dealt
+        var enemyCards = this.getEnemyCards(attacker.player);
+        var protectSkillActivated = false; //<- has any protect skill been activated yet?
+        for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
+            if (enemyCards[i].isDead) {
+                continue;
+            }
+            var protectSkill = enemyCards[i].protectSkill;
+            if (protectSkill) {
+                // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
+                if (this.isSameCard(targetCard, enemyCards[i]) && protectSkill.skillRange != 21) {
+                    continue;
+                }
+
+                // first check if it can be activated
+                var defenseTargets = protectSkill.range.getTargets(enemyCards[i]);
+                if (this.isCardInList(targetCard, defenseTargets)) {
+                    if (Math.random() * 100 <= protectSkill.maxProbability) {
+                        // ok, so now activate the protect skill
+                        protectSkillActivated = true;
+
+                        // first redirect the original attack to the protecting fam
+                        var additionalDesc = enemyCards[i].name + " procs " + protectSkill.name + " to protect " +
+                            targetCard.name + ". ";
+                        this.damageToTarget(attacker, enemyCards[i], attackSkill, additionalDesc);
+                    }
+                }
+            }
+            else {
+                // this fam doesn't have a protect skill, move on to the next one
+                continue;
+            }
+        }
+        return protectSkillActivated;
+    }
     
-    // TODO: abstract out the similar parts with random attack
+    /**
+     * Return true if a card is in a list of cards, or false if not
+     */
+    isCardInList(card: Card, list: Card[]): boolean {
+        var isIn: boolean = false;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].id == card.id) {
+                isIn = true;
+                break;
+            }
+        }
+        return isIn;
+    }
+
+    isSameCard(card1: Card, card2: Card): boolean {
+        return card1.id == card2.id;
+    }
+
+    damageToTarget(attacker : Card, target : Card, skill : Skill, additionalDescription : string) {
+        var skillMod = skill.skillFuncArg1;
+        var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
+    
+        var baseDamage : number;
+            
+        switch (skill.skillCalcType) {
+            case (ENUM.SkillCalcType.DEFAULT) :
+            case (ENUM.SkillCalcType.WIS) :
+                baseDamage = getDamageCalculatedByWIS(attacker, target);
+                break;
+            case (ENUM.SkillCalcType.ATK) :
+                baseDamage = getDamageCalculatedByATK(attacker, target, ignorePosition);
+                break;
+            case (ENUM.SkillCalcType.AGI) :
+                baseDamage = getDamageCalculatedByAGI(attacker, target, ignorePosition);
+                break;
+        }
+            
+        // apply the multiplier
+        var damage = skillMod * baseDamage;
+            
+        // apply the target's ward
+        switch (skill.ward) {
+            case ("PHYSICAL") :
+                damage = Math.round(damage * (1 - target.status.attackResistance));
+                break;
+            case ("MAGICAL") :
+                damage = Math.round(damage * (1 - target.status.magicResistance));
+                break;
+            case ("BREATH") :
+                damage = Math.round(damage * (1 - target.status.breathResistance));
+                break;
+            default :
+                throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
+        }
+    
+        target.changeHP(-1 * damage);
+                
+        if (!additionalDescription) {
+            additionalDescription = "";
+        }
+        var description = additionalDescription +
+            target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
+        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description);
+        if (target.getHP() <= 0) {
+            this.logger.displayMinorEvent(target.name + " is dead");
+            target.isDead = true;
+        }
+    }
+    
     /**
      * Execute an attack skill that has the targets obtained from its range
      */
     executeAttackSkillWithRangeTargets (executor : Card) {
         var skill = executor.attackSkill;
-        var skillMod = skill.skillFuncArg1;
         var targets : Card[] = skill.range.getTargets(executor);
         
         for (var i = 0; i < targets.length; i++) {
-
             var targetCard = targets[i];
-            var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
-    
-            var baseDamage : number;
-            
-            switch (skill.skillCalcType) {
-                case (ENUM.SkillCalcType.DEFAULT) :
-                case (ENUM.SkillCalcType.WIS) :
-                    baseDamage = getDamageCalculatedByWIS(executor, targetCard);
-                    break;
-                case (ENUM.SkillCalcType.ATK) :
-                    baseDamage = getDamageCalculatedByATK(executor, targetCard, ignorePosition);
-                    break;
-                case (ENUM.SkillCalcType.AGI) :
-                    baseDamage = getDamageCalculatedByAGI(executor, targetCard, ignorePosition);
-                    break;
-            }
-            
-            // apply the multiplier
-            var damage = skillMod * baseDamage;
-            
-            // apply the target's ward
-            switch (skill.ward) {
-                case ("PHYSICAL") :
-                    damage = Math.round(damage * (1 - targetCard.status.attackResistance));
-                    break;
-                case ("MAGICAL") :
-                    damage = Math.round(damage * (1 - targetCard.status.magicResistance));
-                    break;
-                case ("BREATH") :
-                    damage = Math.round(damage * (1 - targetCard.status.breathResistance));
-                    break;
-                default :
-                    throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
-            }
-    
-            targetCard.changeHP(-1 * damage);
-            
-            var description = targetCard.name + " lost " + damage + "hp (remaining " + targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
-            this.logger.addMinorEvent(executor, targetCard, "HP", (-1) * damage, description);
-            if (targetCard.getHP() <= 0) {
-                this.logger.displayMinorEvent(targetCard.name + " is dead");
-                targetCard.isDead = true;
-            }
+            this.damageToTarget(executor, targetCard, skill, null);
         }
     }
     
@@ -457,28 +484,23 @@ class BattleModel {
         }        
     }
     
-    executeNormalAttack (attacker : Card) {
+    executeNormalAttack(attacker: Card) {
+        this.logger.addMajorEvent(attacker.name + " attacks!");
+
+        // create a default auto attack skill
+        var autoSkill: Skill = new Skill(0);
         
-        var targetCard = this.getNearestSingleOpponentTarget(attacker);
+        var targets: Card[] = autoSkill.range.getTargets(attacker);
 
-        if (targetCard == null) {
-            // no valid target, miss a turn, continue to next card
-            return;
-        }
+        for (var i = 0; i < targets.length; i++) {
+            var targetCard = targets[i];
 
-        var damage = getDamageCalculatedByATK(attacker, targetCard, false);
-        damage = Math.round(damage * (1 - targetCard.status.attackResistance)); // apply physical ward
+            var protectSkillActivated = this.processProtect(attacker, targetCard, autoSkill);
 
-        targetCard.changeHP(-1 * damage);
-        this.logger.addMajorEvent(attacker.name + " attacks " + targetCard.name);
-        var description = targetCard.name + " lost " + damage + "hp (remaining " + 
-            targetCard.getHP() + "/" + targetCard.originalStats.hp + ")";
-        this.logger.addMinorEvent(attacker, targetCard, "HP", damage * (-1), description);
-        
-        if (targetCard.getHP() <= 0) {
-            // maybe we also need to log an event
-            this.logger.displayMinorEvent(targetCard.name + " is dead");
-            targetCard.isDead = true;
+            // if not protected, proceed with the attack as normal
+            if (!protectSkillActivated) {
+                this.damageToTarget(attacker, targetCard, autoSkill, null);
+            }
         }
     }
 
