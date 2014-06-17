@@ -15,6 +15,7 @@ class Skill {
     skillRange : number;
     maxProbability : number;
     ward : string;
+    contact: number;
 
     range : BaseRange;
     
@@ -35,6 +36,13 @@ class Skill {
         this.skillRange = skillData.skillRange;
         this.maxProbability = skillData.maxProbability;
         this.ward = skillData.ward;
+
+        if (typeof skillData.contact === undefined) {
+            this.contact = -1;
+        }
+        else {
+            this.contact = skillData.contact;
+        }
         
         this.range = BattleModel.rangeFactory.getRange(this.skillRange);
     }
