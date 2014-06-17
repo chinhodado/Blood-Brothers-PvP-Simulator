@@ -17,6 +17,9 @@ function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
+/**
+ * Shuffle an array. The argument array will be modified.
+ */
 function shuffle(array : any[]) {
     var currentIndex = array.length
         , temporaryValue
@@ -37,4 +40,18 @@ function shuffle(array : any[]) {
     }
 
     return array;
+}
+
+/**
+ * Get a random element from an array
+ */
+function getRandomElement(myArray: any) {
+    return myArray[Math.floor(Math.random() * myArray.length)];
+}
+
+/**
+ * Remove an element with the supplied index from an array.
+ */
+function removeElementAtIndex(array: any, index: number): void {
+    array.splice(index, 1);
 }
