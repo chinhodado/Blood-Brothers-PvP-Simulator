@@ -253,7 +253,7 @@ class BattleModel {
     	var skill = executor.attackSkill;        
         var numTarget = (<EnemyRandomRange>skill.range).numTarget;
         
-        for (var i = 0; i < numTarget; i++) {
+        for (var i = 0; i < numTarget && !executor.isDead; i++) {
 
             var targetIndex = this.getValidSingleTarget(this.oppositePlayerCards);
     
@@ -261,7 +261,9 @@ class BattleModel {
                 // no valid target, miss a turn, continue to next card
                 return;
             }
-    
+            
+            // since we get a valid index with every iteration of the loop, there's no need
+            // to check if the target is dead here
             var targetCard = this.oppositePlayerCards[targetIndex];
             var protectSkillActivated = this.processProtect(executor, targetCard, skill, null);
 
@@ -315,6 +317,12 @@ class BattleModel {
                         // update the targetsAttacked if necessary
                         if (targetsAttacked) {
                             targetsAttacked[protector.id] = true;
+                        }
+
+                        // counter phase
+                        if (!protector.isDead && protectSkill.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER) {
+                            var additionalDesc = protector.name + " counters " + attacker.name + "! ";
+                            this.damageToTarget(protector, attacker, protectSkill, additionalDesc);
                         }
                     }
                 }
@@ -403,7 +411,7 @@ class BattleModel {
         var skill = executor.attackSkill;
         var targets : Card[] = skill.range.getTargets(executor);
 
-        if (skill.contact == 0) {
+        if (skill.contact == 0 || typeof skill.contact === undefined) {
             // if the skill doesn't make contact, it must be AoE, so only one fam can be protected
 
             // NOTE: the algorithm used here for protection may not be correct, since it makes the 
@@ -424,8 +432,13 @@ class BattleModel {
             // attacked, it cannot protect another fam later on 
             var targetsAttacked = {};
 
-            for (var i = 0; i < targets.length; i++) {
+            for (var i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
                 var targetCard = targets[i];
+
+                // a target can be dead, for example from protecting another fam
+                if (targetCard.isDead) {
+                    continue;
+                }
 
                 var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
 
@@ -451,8 +464,13 @@ class BattleModel {
         else {
             // skill makes contact, must be fork/sweeping etc., so just proceed as normal
             // i.e. multiple protection is possible
-            for (var i = 0; i < targets.length; i++) {
+            for (var i = 0; i < targets.length && !executor.isDead; i++) {
                 var targetCard = targets[i];
+
+                // a target can be dead, for example from protecting another fam
+                if (targetCard.isDead) {
+                    continue;
+                }
 
                 var protectSkillActivated = this.processProtect(executor, targetCard, skill, null);
 
@@ -561,8 +579,13 @@ class BattleModel {
         
         var targets: Card[] = autoSkill.range.getTargets(attacker);
 
-        for (var i = 0; i < targets.length; i++) {
+        for (var i = 0; i < targets.length && !attacker.isDead; i++) {
             var targetCard = targets[i];
+
+            // a target can be dead, for example from protecting another fam
+            if (targetCard.isDead) {
+                continue;
+            }
 
             var protectSkillActivated = this.processProtect(attacker, targetCard, autoSkill, null);
 

@@ -2,8 +2,11 @@
 /**
  * Some notes:
  * - For attack skills, there has to be a "ward" attribute, which takes a value of "PHYSICAL", "BREATH" or "MAGICAL"
+ *   Counter skills also need the above, even though the ward will always be "PHYSICAL" for those skills
+ *
  * - For skills with PHYSICAL ward and not random multihitting (like fork, AoE...), there has to be a 
  *   "contact" attribute with 1 being "has/does contact"
+ *
  * - There is no need for the baseProbability
  */
 var SkillDatabase = {
@@ -59,7 +62,7 @@ var SkillDatabase = {
     61: {
         name: "Cloak & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 2, maxProbability: 50
+        skillRange: 2, maxProbability: 50, ward: "PHYSICAL"
     },
 
     62: {
@@ -107,7 +110,7 @@ var SkillDatabase = {
     125: {
         name: "Shield & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 50
+        skillRange: 4, maxProbability: 50, ward: "PHYSICAL"
     },
     
     134 : {
@@ -137,7 +140,7 @@ var SkillDatabase = {
     154: {
         name: "Cloak & Dagger 2", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 2, maxProbability: 50
+        skillRange: 2, maxProbability: 50, ward: "PHYSICAL"
     },
 
     156 : {
@@ -167,7 +170,7 @@ var SkillDatabase = {
     180: {
         name: "Proxy Counter", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 28, maxProbability: 50
+        skillRange: 28, maxProbability: 50, ward: "PHYSICAL"
     },
     
     196 : {
@@ -401,7 +404,7 @@ var SkillDatabase = {
     425: {
         name: "Lese Majesty", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 50
+        skillRange: 4, maxProbability: 50, ward: "PHYSICAL"
     },
 
     427 : {

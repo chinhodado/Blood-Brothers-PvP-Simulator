@@ -15,10 +15,18 @@ var famDatabase = {
         {name: "Ammit",         hp: 18306, atk: 23495, def: 18501, wis: 18490, agi: 18057, skills: [325],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031343/bloodbrothersgame/images/thumb/f/f9/Ammit%2C_Soul_Destroyer_II_Figure.png/60px-Ammit%2C_Soul_Destroyer_II_Figure.png"},
     
+    "Archduke Ose II" :
+        {name: "Archduke Ose",  hp: 16995, atk: 14395, def: 15023, wis: 14850, agi: 11990, skills: [154],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130314191037/bloodbrothersgame/images/thumb/0/00/Archduke_Ose_II_Figure.png/60px-Archduke_Ose_II_Figure.png"},
+
     "Balgo, the Cursed Flame II" : 
         {name: "Balgo",         hp: 18585, atk: 16037, def: 13962, wis: 5799,  agi: 13510, skills: [349],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140122120902/bloodbrothersgame/images/thumb/f/fd/Balgo%2C_the_Cursed_Flame_II_Figure.png/60px-Balgo%2C_the_Cursed_Flame_II_Figure.png"},
     
+    "Bunga, the Stalwart II" :
+        {name: "Bunga",         hp: 12269, atk: 11049, def: 14182, wis: 9612,  agi: 10343, skills: [125],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130107205042/bloodbrothersgame/images/thumb/5/5d/Bunga%2C_the_Stalwart_II_Figure.png/60px-Bunga%2C_the_Stalwart_II_Figure.png"},
+
     "Cat Sith Chillweaver II" : 
         {name: "Cat Sith",      hp: 13293, atk: 13196, def: 10611, wis: 16144, agi: 14489, skills: [2],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131215131933/bloodbrothersgame/images/thumb/b/b2/Cat_Sith_Chillweaver_II_Figure.png/60px-Cat_Sith_Chillweaver_II_Figure.png"},
@@ -27,6 +35,10 @@ var famDatabase = {
         {name: "Desna",         hp: 13146, atk: 15089, def: 14287, wis: 12137, agi: 12378, skills: [124],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130106235645/bloodbrothersgame/images/thumb/4/45/Desna%2C_Mythic_Wendigo_II_Figure.png/60px-Desna%2C_Mythic_Wendigo_II_Figure.png"},
     
+    "Fenrir II" :
+        {name: "Fenrir",        hp: 15099, atk: 16865, def: 22498, wis: 13008, agi: 11167, skills: [154],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130420124059/bloodbrothersgame/images/thumb/d/dd/Fenrir_II_Figure.png/60px-Fenrir_II_Figure.png"},
+
     "Flame Dragon II" : 
         {name: "Flame Dragon",  hp: 14601, atk: 14449, def: 13756, wis: 15153, agi: 13940, skills: [23],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130107210805/bloodbrothersgame/images/thumb/8/8e/Flame_Dragon_II_Figure.png/60px-Flame_Dragon_II_Figure.png"},
@@ -63,6 +75,10 @@ var famDatabase = {
         {name: "Linnorm",       hp: 12326, atk: 11102, def: 11979, wis: 16605, agi: 16497, skills: [313],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131210233903/bloodbrothersgame/images/thumb/0/0b/Linnorm%2C_the_Hailstorm_II_Figure.png/60px-Linnorm%2C_the_Hailstorm_II_Figure.png"},
     
+    "Marraco, Crusted Wyrm II":
+        {name: "Marraco",       hp: 18716, atk: 15876, def: 17254, wis: 7381,  agi: 8809,  skills: [61, 167],
+            imageLink: "http://img4.wikia.nocookie.net/__cb20131115131303/bloodbrothersgame/images/thumb/7/7b/Marraco%2C_Crusted_Wyrm_II_Figure.png/60px-Marraco%2C_Crusted_Wyrm_II_Figure.png"},
+
     "Moni the Dismemberer II" :
         {name: "Moni",          hp: 13562, atk: 15537, def: 12121, wis: 10234, agi: 16448, skills: [340],
         imageLink: "http://img3.wikia.nocookie.net/__cb20140110075315/bloodbrothersgame/images/thumb/4/43/Moni_the_Dismemberer_II_Figure.png/60px-Moni_the_Dismemberer_II_Figure.png"},
@@ -86,6 +102,10 @@ var famDatabase = {
     "Reinforced Brass Gorilla II" :
         {name: "Brass Gorilla", hp: 18996, atk: 9760,  def: 18096, wis: 12684, agi: 8319,  skills: [398],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140318135240/bloodbrothersgame/images/thumb/6/6b/Reinforced_Brass_Gorilla_II_Figure.png/60px-Reinforced_Brass_Gorilla_II_Figure.png"},
+
+    "Sagacious Treant II" :
+        {name: "Treant",        hp: 18566, atk: 17017, def: 22542, wis: 13626, agi: 8014, skills: [154],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20131215131956/bloodbrothersgame/images/thumb/6/67/Sagacious_Treant_II_Figure.png/60px-Sagacious_Treant_II_Figure.png"},
 
     "Sea Serpent II" :
         {name: "Sea Serpent",   hp: 16020, atk: 12012, def: 15121, wis: 19259, agi: 17103, skills: [302],
