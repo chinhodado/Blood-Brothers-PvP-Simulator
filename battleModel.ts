@@ -68,19 +68,38 @@ class BattleModel {
                 player1cardsInfo[i].def, player1cardsInfo[i].wis, player1cardsInfo[i].agi);
             var stats2 = new Stats(player2cardsInfo[i].hp, player2cardsInfo[i].atk, 
                 player2cardsInfo[i].def, player2cardsInfo[i].wis, player2cardsInfo[i].agi);
+
+            var auto1: Skill;
+            if (player1cardsInfo[i].autoAttack) {
+                auto1 = new Skill(player1cardsInfo[i].autoAttack);
+            }
+            else {
+                auto1 = new Skill(0);
+            }
+
+            var auto2: Skill;
+            if (player2cardsInfo[i].autoAttack) {
+                auto2 = new Skill(player2cardsInfo[i].autoAttack);
+            }
+            else {
+                auto2 = new Skill(0);
+            }
+
             
             this.player1Cards[i] = new Card(player1cardsInfo[i].name,
                                         stats1, 
                                         player1Skills, 
                                         this.player1,
                                         i,
-                                        player1cardsInfo[i].imageLink); //my cards
+                                        player1cardsInfo[i].imageLink,
+                                        auto1); //my cards
             this.player2Cards[i] = new Card(player2cardsInfo[i].name, 
                                         stats2,
                                         player2Skills, 
                                         this.player2,
                                         i,
-                                        player2cardsInfo[i].imageLink); // opp card
+                                        player2cardsInfo[i].imageLink,
+                                        auto2);  // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
         }
@@ -575,7 +594,7 @@ class BattleModel {
         this.logger.addMajorEvent(attacker.name + " attacks!");
 
         // create a default auto attack skill
-        var autoSkill: Skill = new Skill(0);
+        var autoSkill: Skill = attacker.autoAttack;
         
         var targets: Card[] = autoSkill.range.getTargets(attacker);
 

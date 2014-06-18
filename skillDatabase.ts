@@ -364,6 +364,12 @@ var SkillDatabase = {
         skillFuncArg1: 1.85, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    366 : {
+        name: "Bone Chill", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 32, maxProbability: 30, ward: "BREATH"
+    },
     
     380 : {
         name : "Feral Claws", skillType: 2, skillFunc: 3, skillCalcType: 3,
@@ -447,6 +453,12 @@ var SkillDatabase = {
         name: "Wall of the Brave", skillType: 5, skillFunc: 12, skillCalcType: 0,
         skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 4, maxProbability: 50
+    },
+
+    10007: { // use this for normal wis-based auto skill
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL"
     },
     
     99000 : {

@@ -8,6 +8,8 @@ class Card {
     skills : Skill[];
     player : Player;
     isDead : boolean;
+
+    autoAttack: Skill;
     
     openingSkill : Skill;
     attackSkill : Skill;
@@ -19,7 +21,7 @@ class Card {
     
     imageLink : string
     
-    constructor(name : string, stats : Stats, skills : Skill[], player : Player, formationColumn, imageLink : string) {
+    constructor(name: string, stats: Stats, skills: Skill[], player: Player, formationColumn, imageLink: string, autoAttack: Skill) {
         this.name = name;
         this.stats = stats; // this will be modified during the battle
         this.status = new Status();
@@ -51,6 +53,8 @@ class Card {
         }
         
         this.imageLink = imageLink;
+        this.autoAttack = autoAttack;
+
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }
     

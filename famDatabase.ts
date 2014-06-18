@@ -123,6 +123,10 @@ var famDatabase = {
         {name: "Tomoe",         hp: 13889, atk: 16010, def: 13110, wis: 8285,  agi: 16622, skills: [406],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140326090713/bloodbrothersgame/images/thumb/b/b5/Tomoe%2C_the_Lightning_Arrow_II_Figure.png/60px-Tomoe%2C_the_Lightning_Arrow_II_Figure.png"},
     
+    "Tormented Bone Beast II" :
+        {name: "Bone Beast",    hp: 12001, atk: 9905,  def: 12207, wis: 17000, agi: 16803, skills: [366], autoAttack: 10007,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140206151442/bloodbrothersgame/images/thumb/1/15/Tormented_Bone_Beast_II_Figure.png/60px-Tormented_Bone_Beast_II_Figure.png"},
+
     "Wolfert, Grave Keeper II" :
         {name : "Wolfert",      hp: 14189, atk: 23972, def: 13723, wis: 13290, agi: 13431, skills: [118],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130313194006/bloodbrothersgame/images/thumb/9/91/Wolfert%2C_Grave_Keeper_II_Figure.png/60px-Wolfert%2C_Grave_Keeper_II_Figure.png"},
