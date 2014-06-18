@@ -1,4 +1,14 @@
-"use strict";
+/// <reference path="battleLogger.ts"/>
+/// <reference path="card.ts"/>
+/// <reference path="enums.ts"/>
+/// <reference path="famDatabase.ts"/>
+/// <reference path="formation.ts"/>
+/// <reference path="player.ts"/>
+/// <reference path="skill.ts"/>
+/// <reference path="skillCalcType.ts"/>
+/// <reference path="skillDatabase.ts"/>
+/// <reference path="skillRange.ts"/>
+/// <reference path="util.ts"/>
 
 class BattleModel {
 
@@ -585,6 +595,10 @@ class BattleModel {
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
                     this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");
+                }
+                else if (this.isAllDead(this.currentPlayerCards)) {
+                    finished = true;
+                    this.logger.addMajorEvent(this.oppositePlayer.name + " has won");
                 }
             }
         }        

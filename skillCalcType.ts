@@ -1,3 +1,15 @@
+/// <reference path="battleLogger.ts"/>
+/// <reference path="battleModel.ts"/>
+/// <reference path="card.ts"/>
+/// <reference path="enums.ts"/>
+/// <reference path="famDatabase.ts"/>
+/// <reference path="formation.ts"/>
+/// <reference path="player.ts"/>
+/// <reference path="skill.ts"/>
+/// <reference path="skillDatabase.ts"/>
+/// <reference path="skillRange.ts"/>
+/// <reference path="util.ts"/>
+
 function getDamageCalculatedByATK(attacker : Card, defender : Card, ignorePosition : boolean) {
     var ATTACK_FACTOR = 0.3;
     var DIFF_FACTOR = 0.2;

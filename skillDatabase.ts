@@ -191,6 +191,12 @@ var SkillDatabase = {
         skillRange: 6, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
+    217 : {
+        name: "Harrowing Trial", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL"
+    },
+
     221 : {
         name: "Skittering Darkness", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -407,6 +413,18 @@ var SkillDatabase = {
         skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 0
     },
 
+    407 : {
+        name: "Allure of the Rose", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL"
+    },
+
+    408 : {
+        name: "Covenant of the Rose", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.15, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 3, maxProbability: 70
+    },
+
     425: {
         name: "Lese Majesty", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -477,5 +495,5 @@ var SkillDatabase = {
         name : "Niten Ichi-ryu", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
-    },
+    }
 };

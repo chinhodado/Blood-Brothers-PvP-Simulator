@@ -1,3 +1,16 @@
+/// <reference path="battleModel.ts"/>
+/// <reference path="card.ts"/>
+/// <reference path="enums.ts"/>
+/// <reference path="famDatabase.ts"/>
+/// <reference path="formation.ts"/>
+/// <reference path="player.ts"/>
+/// <reference path="skill.ts"/>
+/// <reference path="skillCalcType.ts"/>
+/// <reference path="skillDatabase.ts"/>
+/// <reference path="skillRange.ts"/>
+/// <reference path="util.ts"/>
+/// <reference path="lib/svgjs.d.ts"/>
+
 /**
  * Handle the logging and displaying of information
  */
@@ -19,11 +32,6 @@ class BattleLogger {
         2 : []  // and player 2
     };
     
-    imageHeight = {
-        1 : [],
-        2 : []
-    }
-        
     private static _instance : BattleLogger = null;
 
     constructor() {
@@ -216,7 +224,7 @@ class BattleLogger {
                     physicalResist : "PW: " + status.attackResistance,
                     magicalResist : "MW: " + status.magicResistance,
                     breathResist : "BW: " + status.breathResistance
-                }
+                };
                 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
@@ -253,8 +261,8 @@ class BattleLogger {
                 if (this.minorEventLog[index] && this.minorEventLog[index][0].executor == playerCards[fam].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
-                
-                var finalFamInfo = infoText.name + "<br>" +
+
+                htmlelem.innerHTML = infoText.name + "<br>" +
                                     infoText.hp  + "<br>" +
                                     infoText.atk + "<br>" +
                                     infoText.def + "<br>" +
@@ -262,8 +270,7 @@ class BattleLogger {
                                     infoText.agi + "<br>" +
                                     infoText.physicalResist + ", " +
                                     infoText.magicalResist + ", " +
-                                    infoText.breathResist + " "
-                htmlelem.innerHTML = finalFamInfo;
+                                    infoText.breathResist + " ";
                 
                 // display hp on canvas
                 this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
@@ -276,6 +283,7 @@ class BattleLogger {
     
     /**
      * Decorate a string by bolding it and make it red or green
+     * @param text the text to decorate
      * @param isNegative true if you want the text to be red, false if green
      */
     decorateText(text : string, isNegative : boolean) {

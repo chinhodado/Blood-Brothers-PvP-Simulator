@@ -1,3 +1,15 @@
+/// <reference path="battleLogger.ts"/>
+/// <reference path="battleModel.ts"/>
+/// <reference path="card.ts"/>
+/// <reference path="enums.ts"/>
+/// <reference path="famDatabase.ts"/>
+/// <reference path="player.ts"/>
+/// <reference path="skill.ts"/>
+/// <reference path="skillCalcType.ts"/>
+/// <reference path="skillDatabase.ts"/>
+/// <reference path="skillRange.ts"/>
+/// <reference path="util.ts"/>
+
 class Formation {
 
     static FORMATION_CONFIG = {
@@ -10,7 +22,7 @@ class Formation {
         REAR_5   : [3,3,3,3,3],
         PIKE_5   : [3,3,1,3,3],
         SHIELD_5 : [1,1,3,1,1],
-        PINCER_5 : [3,1,3,1,3],
+        PINCER_5 : [3,1,3,1,3]
     };
        
     type : string;
