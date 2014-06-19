@@ -50,25 +50,36 @@ class BattleModel {
         BattleModel.rangeFactory = new RangeFactory();
         this.logger = new BattleLogger();
         
-        var player1formation = getURLParameter("p1formation");
-        var player2formation = getURLParameter("p2formation");
+        var player1formation: string;
+        var player2formation: string;
+        var player1cardsInfo = [];
+        var player2cardsInfo = [];
+        
+        if ("random" == getURLParameter("mode")) {
+            player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
+            player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
+            for (var i = 0; i < 5; i++) {
+                player1cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
+                player2cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
+            }        
+        }
+        else {
+            player1formation = getURLParameter("p1formation");
+            player2formation = getURLParameter("p2formation");
+            
+            for (var i = 0; i < 5; i++) {
+                player1cardsInfo.push(famDatabase[getURLParameter("p1fam" + i)]);
+                player2cardsInfo.push(famDatabase[getURLParameter("p2fam" + i)]);
+            }
+        }        
+        
         this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
         this.player2 = new Player(2, "Player 2", new Formation(player2formation), 1); // opp
         
         // initialize the cards
         this.player1Cards = [];
         this.player2Cards = [];
-        this.allCards = [];
-        
-        var player1cardsInfo = [];
-        for (var i = 0; i < 5; i++) {
-            player1cardsInfo.push(famDatabase[getURLParameter("p1fam" + i)]);
-        }
-        
-        var player2cardsInfo = [];
-        for (var i = 0; i < 5; i++) {
-            player2cardsInfo.push(famDatabase[getURLParameter("p2fam" + i)]);
-        }
+        this.allCards = [];        
         
         for (var i = 0; i < 5; i++) {
             var player1Skills = this.makeSkillArray(player1cardsInfo[i].skills);
