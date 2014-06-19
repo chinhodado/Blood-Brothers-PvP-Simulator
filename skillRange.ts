@@ -29,6 +29,7 @@ class RangeFactory {
 
         19: "EnemyRandomRange",
         20: "EnemyRandomRange",
+        21: "SelfRange",
 
         23: "EnemyRandomRange",
         
@@ -142,6 +143,22 @@ class BothSidesRange extends BaseRange {
             targets.push(rightCard);
         }
         
+        return targets;
+    }
+}
+
+class SelfRange extends BaseRange {
+    constructor(id: number) {
+        super(id);
+    }
+
+    getTargets(executor: Card): Card[] {
+        var targets = [];
+
+        if (!executor.isDead) { // should always be true
+            targets.push(executor);
+        }
+
         return targets;
     }
 }

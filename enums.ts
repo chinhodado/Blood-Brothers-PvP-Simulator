@@ -17,7 +17,7 @@ module ENUM {
      * Is the skill buff, attack, magic, etc.
      */
     export enum SkillFunc {
-        BUFF = 1,
+        BUFF = 1, // arg1: multiplier, arg2: status
         DEBUFF = 2,
         ATTACK = 3,
         MAGIC = 4, // anything that ignores position

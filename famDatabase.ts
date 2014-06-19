@@ -31,6 +31,10 @@ var famDatabase = {
         {name: "Bunga",         hp: 12269, atk: 11049, def: 14182, wis: 9612,  agi: 10343, skills: [125],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130107205042/bloodbrothersgame/images/thumb/5/5d/Bunga%2C_the_Stalwart_II_Figure.png/60px-Bunga%2C_the_Stalwart_II_Figure.png"},
 
+    "Canhel, Guardian Dragon II":
+        {name: "Canhel",        hp: 15608, atk: 19606, def: 17992, wis: 11329, agi: 16399, skills: [293],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131122150727/bloodbrothersgame/images/thumb/5/54/Canhel%2C_Guardian_Dragon_II_Figure.png/60px-Canhel%2C_Guardian_Dragon_II_Figure.png"},
+
     "Cat Sith Chillweaver II" : 
         {name: "Cat Sith",      hp: 13293, atk: 13196, def: 10611, wis: 16144, agi: 14489, skills: [2],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131215131933/bloodbrothersgame/images/thumb/b/b2/Cat_Sith_Chillweaver_II_Figure.png/60px-Cat_Sith_Chillweaver_II_Figure.png"},
@@ -39,6 +43,14 @@ var famDatabase = {
         {name: "Desna",         hp: 13146, atk: 15089, def: 14287, wis: 12137, agi: 12378, skills: [124],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130106235645/bloodbrothersgame/images/thumb/4/45/Desna%2C_Mythic_Wendigo_II_Figure.png/60px-Desna%2C_Mythic_Wendigo_II_Figure.png"},
     
+    "Djinn of the Lamp II":
+        {name: "Djinn",         hp: 14048, atk: 17363, def: 13333, wis: 19422, agi: 16605, skills: [319, 320],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20131227221855/bloodbrothersgame/images/thumb/8/8d/Djinn_of_the_Lamp_II_Figure.png/60px-Djinn_of_the_Lamp_II_Figure.png"},
+
+    "Empusa, the Death Scythe":
+        {name: "Empusa", hp: 20706, atk: 12623, def: 16110, wis: 20999, agi: 17510, skills: [447], autoAttack: 10016,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140508115333/bloodbrothersgame/images/thumb/0/0a/Empusa%2C_the_Death_Scythe_Figure.png/60px-Empusa%2C_the_Death_Scythe_Figure.png"},
+
     "Fenrir II" :
         {name: "Fenrir",        hp: 15099, atk: 16865, def: 22498, wis: 13008, agi: 11167, skills: [154],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130420124059/bloodbrothersgame/images/thumb/d/dd/Fenrir_II_Figure.png/60px-Fenrir_II_Figure.png"},
@@ -67,10 +79,26 @@ var famDatabase = {
         {name: "Hel",           hp: 14709, atk: 17450, def: 14709, wis: 15771, agi: 18057, skills: [239, 240],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130921074034/bloodbrothersgame/images/thumb/e/e8/Hel%2C_Goddess_of_Death_II_Figure.png/60px-Hel%2C_Goddess_of_Death_II_Figure.png"},
     
+    "Hippocamp II" :
+        {name: "Hippocamp", hp: 14514, atk:	16486, def:	14926, wis:	19855, agi:	15002, skills: [360, 167],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140129062341/bloodbrothersgame/images/thumb/f/f8/Hippocamp_II_Figure.png/60px-Hippocamp_II_Figure.png"},
+
+    "Hollofernyiges II" :
+        {name: "Hollofernyiges", hp: 16551, atk: 16757, def: 13875, wis: 14568, agi: 16941, skills: [33],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130321232308/bloodbrothersgame/images/thumb/2/20/Hollofernyiges_II_Figure.png/60px-Hollofernyiges_II_Figure.png"},
+
+    "Hoska, the Firestroke II" :
+        {name: "Hoska",         hp: 18996, atk: 7906,  def: 15096, wis: 17023, agi: 8881,  skills: [484, 485], autoAttack: 10007,
+            imageLink: "http://img2.wikia.nocookie.net/__cb20140613080813/bloodbrothersgame/images/thumb/6/6c/Hoska%2C_the_Firestroke_II_Figure.png/60px-Hoska%2C_the_Firestroke_II_Figure.png"},
+
     "Kangana, the Maelstrom II" :
         {name: "Kangana",       hp: 15803, atk: 18750, def: 14872, wis: 12813, agi: 13247, skills: [216],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130726121448/bloodbrothersgame/images/thumb/b/b1/Kangana%2C_the_Maelstrom_II_Figure.png/60px-Kangana%2C_the_Maelstrom_II_Figure.png"},
     
+    "Kekro, Demiwyrm Magus II" :
+        {name: "Kekro", hp: 17992, atk:	12001, def:	15002, wis:	19660, agi:	16302, skills: [379], autoAttack: 10007,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140221092259/bloodbrothersgame/images/thumb/3/3b/Kekro%2C_Demiwyrm_Magus_II_Figure.png/60px-Kekro%2C_Demiwyrm_Magus_II_Figure.png"},
+
     "Kyteler the Corrupted II" :
         {name: "Kyteler",       hp: 11721, atk: 12524, def: 9892,  wis: 17254, agi: 16416, skills: [258],
         imageLink: "http://img4.wikia.nocookie.net/__cb20140120233253/bloodbrothersgame/images/thumb/d/d4/Kyteler_the_Corrupted_II_Figure.png/60px-Kyteler_the_Corrupted_II_Figure.png"},
@@ -86,6 +114,10 @@ var famDatabase = {
     "Millarca, Lady of Thorns II" :
         {name: "Millarca",     hp: 15305, atk: 10668, def: 15565, wis: 21393, agi: 18046, skills: [407, 408], autoAttack: 10007,
         imageLink: "http://img2.wikia.nocookie.net/__cb20140325120640/bloodbrothersgame/images/thumb/f/ff/Millarca%2C_Lady_of_Thorns_II_Figure.png/60px-Millarca%2C_Lady_of_Thorns_II_Figure.png"},
+
+    "Neith, Goddess of War II" :
+        {name: "Neith", hp: 18999, atk:	19660, def:	15002, wis:	12001, agi:	15305, skills: [326],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131221031333/bloodbrothersgame/images/thumb/3/3b/Neith%2C_Goddess_of_War_II_Figure.png/60px-Neith%2C_Goddess_of_War_II_Figure.png"},
 
     "Moni the Dismemberer II" :
         {name: "Moni",          hp: 13562, atk: 15537, def: 12121, wis: 10234, agi: 16448, skills: [340],
@@ -127,6 +159,10 @@ var famDatabase = {
         {name: "Tanba",         hp: 17580, atk: 23213, def: 17883, wis: 23289, agi: 18057, skills: [236],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130921071545/bloodbrothersgame/images/thumb/f/f6/Tanba%2C_Founder_of_Ninja_II_Figure.png/60px-Tanba%2C_Founder_of_Ninja_II_Figure.png"},
     
+    "Tiamat, Mother of Dragons II" :
+        {name: "Tiamat", hp: 13702, atk: 14698, def: 16497, wis: 18869, agi: 15738, skills: [280],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131112085546/bloodbrothersgame/images/thumb/c/c5/Tiamat%2C_Mother_of_Dragons_II_Figure.png/60px-Tiamat%2C_Mother_of_Dragons_II_Figure.png"},
+
     "Thor, God of Lightning II" :
         {name: "Thor",          hp: 10343, atk: 13245, def: 11807, wis: 13842, agi: 11917, skills: [114],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130106214125/bloodbrothersgame/images/thumb/a/a1/Thor%2C_God_of_Lightning_II_Figure.png/60px-Thor%2C_God_of_Lightning_II_Figure.png"},
@@ -138,6 +174,10 @@ var famDatabase = {
     "Tormented Bone Beast II" :
         {name: "Bone Beast",    hp: 12001, atk: 9905,  def: 12207, wis: 17000, agi: 16803, skills: [366], autoAttack: 10007,
         imageLink: "http://img1.wikia.nocookie.net/__cb20140206151442/bloodbrothersgame/images/thumb/1/15/Tormented_Bone_Beast_II_Figure.png/60px-Tormented_Bone_Beast_II_Figure.png"},
+
+    "Vezat, Dragonbone Warrior II" :
+        {name: "Vezat", hp: 16648, atk:	18165, def:	14709, wis:	13431, agi:	17721, skills: [214],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130721141820/bloodbrothersgame/images/thumb/2/29/Vezat%2C_Dragonbone_Warrior_II_Figure.png/60px-Vezat%2C_Dragonbone_Warrior_II_Figure.png"},
 
     "Wolfert, Grave Keeper II" :
         {name : "Wolfert",      hp: 14189, atk: 23972, def: 13723, wis: 13290, agi: 13431, skills: [118],
