@@ -32,6 +32,8 @@ class BattleLogger {
         2 : []  // and player 2
     };
     
+    IMAGE_WIDTH = 70;
+    
     private static _instance : BattleLogger = null;
 
     constructor() {
@@ -400,11 +402,10 @@ class BattleLogger {
             var imageLinksArray = [];
             var initialField = JSON.parse(this.initialFieldInfo);
             var playerCards = initialField["player" + player + "Cards"]; // get the cards of this player
-            for (var fam = 0; fam < 5; fam++) { // for each card
-                imageLinksArray.push(playerCards[fam].imageLink);
-            }
             
-            var IMAGE_WIDTH = 60;            
+            for (var fam = 0; fam < 5; fam++) { // for each card
+                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH));
+            }
             
             // calculate the coordinate for fam images
             for (var i = 0; i < 5; i++) {
@@ -415,16 +416,16 @@ class BattleLogger {
                     this.imageCoordinate[player][i][2] = "UP";
                 }
                 else if (coordArray[i][1] > verticalStep / 2 * 3) { // if y is greater than 3/4 the height of the canvas
-                    this.imageCoordinate[player][i][1] = SVG_HEIGHT - IMAGE_WIDTH * 1.5;
+                    this.imageCoordinate[player][i][1] = SVG_HEIGHT - this.IMAGE_WIDTH * 1.5;
                     this.imageCoordinate[player][i][2] = "DOWN";
                 }
                 else { // middle
-                    this.imageCoordinate[player][i][1] = coordArray[i][1] - IMAGE_WIDTH * 1.5 / 2;
+                    this.imageCoordinate[player][i][1] = coordArray[i][1] - this.IMAGE_WIDTH * 1.5 / 2;
                     this.imageCoordinate[player][i][2] = "MID";
                 }
                 
                 // the x coordinate is 1/2 image width to the left of the bullet
-                this.imageCoordinate[player][i][0] = coordArray[i][0] - IMAGE_WIDTH / 2;
+                this.imageCoordinate[player][i][0] = coordArray[i][0] - this.IMAGE_WIDTH / 2;
             }
             
             // display fam images
@@ -443,15 +444,15 @@ class BattleLogger {
         var xstart = Math.round(this.imageCoordinate[player][index][0]);
 
         if (this.imageCoordinate[player][index][2] != "DOWN") {
-            // display hp on top of the fam
-            var ystart: number = this.imageCoordinate[player][index][1] + 90;
+            // display hp on bottom of the fam
+            var ystart: number = this.imageCoordinate[player][index][1] + this.IMAGE_WIDTH * 1.5;
         }
         else {
-            // diaply hp at bottom of fam            
+            // diaply hp at top of fam            
             var ystart: number = this.imageCoordinate[player][index][1] - 20;
         }
 
-        var width = 60; // width of the health bar
+        var width = this.IMAGE_WIDTH; // width of the health bar
         var height = 5; // height of the health bar
 
         if (percent < 0) {
