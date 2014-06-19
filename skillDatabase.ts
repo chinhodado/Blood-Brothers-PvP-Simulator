@@ -99,25 +99,43 @@ var SkillDatabase = {
     123 : {
         name: "Flame Fist", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy fire damage to three random targets."
     },
 
     124 : {
         name: "Ice Fist", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ice damage to three random targets."
     },
 
     125: {
         name: "Shield & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 50, ward: "PHYSICAL"
+        skillRange: 4, maxProbability: 50, ward: "PHYSICAL",
+        description: "Take damage in place of any ally and counter."
+    },
+
+    132 : {
+        name: "Boon of Blade & Wind 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.2, skillFuncArg2: 1, skillFuncArg3: 4, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 70,
+        description: "Raise ATK and AGI of all party members."
+    },
+
+    133 : {
+        name: "Blade Ward 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.4, skillFuncArg2: 5, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 70,
+        description: "Reduce physical damage taken by all allies."
     },
     
     134 : {
         name: "Magic Ward 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.4, skillFuncArg2: 6, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 70
+        skillRange: 4, maxProbability: 70,
+        description: "Reduce magic damage taken by all allies."
     },
     
     138 : {
@@ -130,6 +148,13 @@ var SkillDatabase = {
         name: "Mad Dash", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    141 : {
+        name: "Burning Rage", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 0.9, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Engulf six random foes in flames."
     },
     
     142 : {
@@ -217,6 +242,20 @@ var SkillDatabase = {
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    224 : {
+        name: "Feather Shot", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to three random foes."
+    },
+
+    227 : {
+        name: "Muscle Play", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.65, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 7, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal massive ATK-based damage to three foes."
+    },
+
     229 : {
         name: "Spirit Word", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -245,6 +284,13 @@ var SkillDatabase = {
         name : "Midnight Smile", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.2, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 3, maxProbability: 70
+    },
+
+    244 : {
+        name : "High Spirits", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes, regardless of position."
     },
 
     249 : {
@@ -343,14 +389,14 @@ var SkillDatabase = {
         name: "Magic Overwhelming", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1.55, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 19, maxProbability: 30, ward: "MAGICAL",
-        description: "Deal heavy WIS-based damage to four random foes, regardless of position.",
+        description: "Deal heavy WIS-based damage to four random foes, regardless of position."
     },
 
     320: {
         name: "Mystic Teachings", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.1, skillFuncArg2: 3, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 3, maxProbability: 70,
-        description: "Raise WIS of self and adjacent familiars at beginning of battle.",
+        description: "Raise WIS of self and adjacent familiars at beginning of battle."
     },
 
     321 : {
@@ -450,9 +496,23 @@ var SkillDatabase = {
     },
 
     383 : {
-        name: "Flame of Cinders", skillType: 2, skillFunc: 3, skillCalcType: 1, 
-        skillFuncArg1: 1.65, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        name: "Flame of Cinders", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.65, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    385 : {
+        name: "Prominence", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to five random foes."
+    },
+
+    386 : {
+        name: "Sun's Mercy", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.15, skillFuncArg2: 1, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 3, maxProbability: 70,
+        description: "Raise ATK of self and adjacent familiars."
     },
 
     390 : {
@@ -485,6 +545,13 @@ var SkillDatabase = {
         skillRange: 3, maxProbability: 70
     },
 
+    418 : {
+        name: "Nemesis", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 7, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to up to three foes, ignoring position."
+    },
+
     425: {
         name: "Lese Majesty", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -495,6 +562,13 @@ var SkillDatabase = {
         name: "Funerary Rush", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    437 : {
+        name: "Mjolnir", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 32, maxProbability: 30, ward: "PHYSICAL", contact: 0,
+        description: "Deal heavy ATK-based damage to up to four foes, ignoring position."
     },
 
     443 : {
