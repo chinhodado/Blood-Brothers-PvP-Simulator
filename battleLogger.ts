@@ -92,6 +92,11 @@ class BattleLogger {
      * is just a string, there's no actual data change associated with a major event
      */
     addMajorEvent (data : string) {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         this.majorEventLog.push(data);
         this.displayMajorEvent(this.majorEventLog.length - 1);
     }
@@ -100,6 +105,11 @@ class BattleLogger {
      * Log a new turn
      */
     bblogTurn(data) {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         var battleEventDiv = document.getElementById("battleEventDiv");
         var newEvent = document.createElement("p");
         newEvent.innerHTML = data;
@@ -110,6 +120,11 @@ class BattleLogger {
      * Display a minor event on screen
      */
     displayMinorEvent (data) {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         var id = "turn" + this.currentTurn + "events";
         
         // the list of events of this turn
@@ -316,6 +331,11 @@ class BattleLogger {
      *  - description: a description in plain text of what happened
      */
     addMinorEvent(executor: Card, target : Card, attribute : string, amount : number, description : string) {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         var index = this.majorEventLog.length - 1;
         
         if (!this.minorEventLog[index]) {
@@ -336,6 +356,11 @@ class BattleLogger {
      * For now it just saves the cards of the two players
      */
     saveInitialField() {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         // save a log of the current field situation
         var toSerialize = {
             player1Cards: BattleModel.getInstance().player1Cards,
@@ -349,6 +374,10 @@ class BattleLogger {
      * Display the two players' formations and their familiars on their canvas
      */
     displayFormationAndFamOnCanvas() {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
 
         var playerFormations = {};
         playerFormations[1] = BattleModel.getInstance().player1.formation.getFormationConfig(); // player1's formation
@@ -375,7 +404,7 @@ class BattleLogger {
 
         for (var player = 1; player <= 2; player ++) { // for each player
             // todo: set the svg size dynamically
-            var draw = SVG('svg' + player).size(600, 150).attr('id', 'player' + player + 'svg');
+            var draw = SVG('svg' + player).size(600, 150).attr('id', 'player' + player + 'svg').attr('class', 'svg');
             var rect = draw.rect(600, 150).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
             
             var SVG_WIDTH = draw.attr("width");
@@ -538,6 +567,11 @@ class BattleLogger {
      * Log the situation at the start of battle and display the initial info
      */
     startBattleLog() {
+
+        if (BattleModel.IS_MASS_SIMULATION) {
+            return;
+        }
+
         this.addMajorEvent("Battle start");
         this.displayMinorEvent("Everything ready");
         this.displayEventLogAtIndex(0);

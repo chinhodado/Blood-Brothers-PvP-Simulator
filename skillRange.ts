@@ -12,30 +12,21 @@
 
 class RangeFactory {
 
-    static RANGE_TYPE = {
-        
-        2 : "BothSidesRange",
-        3 : "SelfBothSidesRange",
-        4 : "AllRange",
-        
-        5 : "EnemyNearRange",
-        6 : "EnemyNearRange",
-        7 : "EnemyNearRange",
-        
-        8 : "EnemyAllRange",
-        
-        16: "EnemyRandomRange",
-        17: "EnemyRandomRange",
+    private static _instance: RangeFactory = null;
 
-        19: "EnemyRandomRange",
-        20: "EnemyRandomRange",
-        21: "SelfRange",
+    public static getInstance(): RangeFactory {
+        if (RangeFactory._instance === null) {
+            RangeFactory._instance = new RangeFactory();
+        }
+        return RangeFactory._instance;
+    }
 
-        23: "EnemyRandomRange",
-        
-        32 : "EnemyNearRange",
-        33 : "EnemyNearRange",
-    };
+    constructor() {
+        if(RangeFactory._instance) {
+            throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
+        }
+        RangeFactory._instance = this;
+    }
 
     static ENEMY_RANDOM_RANGE_TARGET_NUM = {
         16: 3,
@@ -54,7 +45,7 @@ class RangeFactory {
     };
     
     getRange (id) {
-        var range = null;
+        var range: BaseRange = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
         }
@@ -72,8 +63,7 @@ class RangeFactory {
     }
     
     createEnemyRandomRange (id) {
-        var rangeClass = this.getRangeClass(id);
-        return new window[rangeClass](id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]); 
+        return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
     }
     
     isEnemyNearRange (id) {
@@ -81,23 +71,24 @@ class RangeFactory {
     }
     
     createEnemyNearRange (id) {
-        var rangeClass = this.getRangeClass(id);
-        return new window[rangeClass](id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]); 
-    }
-    
-    getRangeClass (id) {
-        var rangeClass = RangeFactory.RANGE_TYPE[id];
-        
-        if (!rangeClass) {
-            throw new Error("invalid rangeId : " + id + " or not implemented");
-        }
-        
-        return RangeFactory.RANGE_TYPE[id];
+        return new EnemyNearRange(id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]);
     }
     
     createRange (id) {
-        var rangeClass = this.getRangeClass(id);
-        return new window[rangeClass](id);
+        switch (id) {
+            case 2 :
+                return new BothSidesRange(id);
+            case 3 :
+                return new SelfBothSidesRange(id);
+            case 4 :
+                return new AllRange(id);
+            case 8 :
+                return new EnemyAllRange(id);
+            case 21:
+                return new SelfRange(id);
+            default:
+                throw new Error("Invalid range or not implemented");
+        }
     }
 }
 

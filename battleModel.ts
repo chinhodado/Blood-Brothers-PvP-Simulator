@@ -12,7 +12,11 @@
 
 class BattleModel {
 
-    static rangeFactory : RangeFactory;
+    // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
+    static IS_MASS_SIMULATION = false;
+    mode: string;
+
+    static rangeFactory: RangeFactory = RangeFactory.getInstance();
     logger : BattleLogger;
     
     player1: Player;
@@ -41,15 +45,14 @@ class BattleModel {
         }
         return BattleModel._instance;
     }
-        
-    constructor(mode?: string) {
+
+    constructor(data?: GameData, mode?: string) {
     
         if(BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
         BattleModel._instance = this;
-        
-        BattleModel.rangeFactory = new RangeFactory();
+
         this.logger = BattleLogger.getInstance();
         
         var player1formation: string;
@@ -66,13 +69,11 @@ class BattleModel {
             }        
         }
         else {
-            player1formation = getURLParameter("p1formation");
-            player2formation = getURLParameter("p2formation");
-            
-            for (var i = 0; i < 5; i++) {
-                player1cardsInfo.push(famDatabase[getURLParameter("p1fam" + i)]);
-                player2cardsInfo.push(famDatabase[getURLParameter("p2fam" + i)]);
-            }
+            player1formation = data.player1formation;
+            player2formation = data.player2formation;
+
+            player1cardsInfo = data.player1cardsInfo;
+            player2cardsInfo = data.player2cardsInfo;
         }        
         
         this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
@@ -683,4 +684,11 @@ class BattleModel {
             }
         }
     }
+}
+
+interface GameData {
+    player1formation: string;
+    player2formation: string;
+    player1cardsInfo: any[];
+    player2cardsInfo: any[];
 }

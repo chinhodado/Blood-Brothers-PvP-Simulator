@@ -10,5 +10,5 @@
 /bin
 /obj
 /compiled
-/*.js
+/compiled.js
 /.idea
