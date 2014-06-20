@@ -4,6 +4,8 @@
 *.csproj
 *.user
 *.config
+*.sln
+*.suo
 /.settings
 /bin
 /obj

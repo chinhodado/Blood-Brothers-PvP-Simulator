@@ -96,6 +96,13 @@ var SkillDatabase = {
         skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
+    120 : {
+        name: "Boon of Mind & Shield 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.2, skillFuncArg2: 3, skillFuncArg3: 2, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 70,
+        description: "Raise WIS and DEF of all party members."
+    },
+
     123 : {
         name: "Flame Fist", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -141,7 +148,8 @@ var SkillDatabase = {
     138 : {
         name: "Head Bash", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 23, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy physical damage to two random targets."
     },
     
     139 : {
@@ -302,7 +310,8 @@ var SkillDatabase = {
     251 : {
         name: "Hungry Beak", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to five random foes."
     },
 
     253 : {
@@ -332,7 +341,15 @@ var SkillDatabase = {
     264 : {
         name: "Bone Crush", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to three random foes."
+    },
+
+    269 : {
+        name: "Tears of the Hideous", skillType: 2, skillFunc: 4, skillCalcType: 3, 
+        skillFuncArg1: 2.05, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive AGI-based damage to three random foes regardless of position."
     },
 
     280: {
@@ -340,6 +357,13 @@ var SkillDatabase = {
         skillFuncArg1: 2.05, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive WIS-based damage to three random foes, regardless of position."
+    },
+
+    288: {
+        name: "Chain Attack", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 0.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to six random foes, regardless of position."
     },
 
     293: {
@@ -353,6 +377,13 @@ var SkillDatabase = {
         name: "Mocking Laugh", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    297 : {
+        name: "Awe of the Wild", skillType: 2, skillFunc: 4, skillCalcType: 3, 
+        skillFuncArg1: 2.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive AGI-based damage to three random foes, regardless of position."
     },
     
     302 : {
@@ -383,6 +414,13 @@ var SkillDatabase = {
         name: "Fearless Laugh", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 32, maxProbability: 30, ward: "PHYSICAL", contact: 1
+    },
+
+    315 : {
+        name: "Trembling Horn", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to four random foes."
     },
 
     319: {
@@ -468,6 +506,13 @@ var SkillDatabase = {
         name: "Rite of Vengeance", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.85, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    365 : {
+        name: "Bug Attack", skillType: 2, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 1.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to three random foes, regardless of position."
     },
 
     366 : {
@@ -611,18 +656,40 @@ var SkillDatabase = {
     484: {
         name: "Wall of the Brave", skillType: 5, skillFunc: 12, skillCalcType: 0,
         skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 50
+        skillRange: 4, maxProbability: 50,
+        description: "Take damage in place of allies"
     },
 
     485: {
         name: "Shield of the Coward", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 1, skillFuncArg2: 2, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 21, maxProbability: 70
+        skillRange: 21, maxProbability: 70,
+        description: "Raise DEF of self at start of battle."
+    },
+
+    489: {
+        name: "Hardened Steel", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.7, skillFuncArg2: 5, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 21, maxProbability: 70,
+        description: "Reduce physical damage taken by self greatly."
+    },
+
+    490: {
+        name: "Steel Hooves", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to five random foes."
     },
 
     10007: { // use this for normal wis-based auto skill
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL"
+    },
+
+    10008: { // 65% Mod, Single Hit, WIS-based, position independent
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 0.65, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 5, maxProbability: 100, ward: "MAGICAL"
     },
 
