@@ -49,6 +49,14 @@ class BattleLogger {
         }
         return BattleLogger._instance;
     }
+
+    /**
+     * Allows to create a new instance
+     * Used for testing only
+     */
+    static removeInstance() {
+        BattleLogger._instance = null;
+    }
     
     /**
      * Display a major event on screen (the left side list)

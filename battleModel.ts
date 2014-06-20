@@ -15,8 +15,10 @@ class BattleModel {
     static rangeFactory : RangeFactory;
     logger : BattleLogger;
     
-    player1 : Player;
-    player2 : Player;
+    player1: Player;
+    player2: Player;
+
+    playerWon: Player = null;
     
     // the two players' cards. The order of the cards in these two arrays should never be changed
     player1Cards : Card[];
@@ -40,7 +42,7 @@ class BattleModel {
         return BattleModel._instance;
     }
         
-    constructor() {
+    constructor(mode?: string) {
     
         if(BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
@@ -48,14 +50,14 @@ class BattleModel {
         BattleModel._instance = this;
         
         BattleModel.rangeFactory = new RangeFactory();
-        this.logger = new BattleLogger();
+        this.logger = BattleLogger.getInstance();
         
         var player1formation: string;
         var player2formation: string;
         var player1cardsInfo = [];
         var player2cardsInfo = [];
         
-        if ("random" == getURLParameter("mode")) {
+        if ("random" == getURLParameter("mode") || mode == "random") {
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
@@ -131,6 +133,23 @@ class BattleModel {
         this.logger.saveInitialField();
         
         this.logger.displayFormationAndFamOnCanvas();
+    }
+
+    /**
+     * Resets everything
+     * Used for testing only
+     */
+    static resetAll() {
+        BattleModel.removeInstance();
+        BattleLogger.removeInstance();
+    }
+
+    /**
+     * Allows to create a new instance
+     * Used for testing only
+     */
+    static removeInstance() {
+        BattleModel._instance = null;
     }
     
     sortAllCards() {
@@ -605,14 +624,17 @@ class BattleModel {
 
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
-                    this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");
+                    this.playerWon = this.currentPlayer;
+                    this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");                    
                 }
                 else if (this.isAllDead(this.currentPlayerCards)) {
                     finished = true;
+                    this.playerWon = this.oppositePlayer;
                     this.logger.addMajorEvent(this.oppositePlayer.name + " has won");
                 }
             }
-        }        
+        }
+        return this.playerWon.name;
     }
     
     executeNormalAttack(attacker: Card) {
