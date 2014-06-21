@@ -9,7 +9,7 @@
 /// <reference path="skillDatabase.ts"/>
 /// <reference path="skillRange.ts"/>
 /// <reference path="util.ts"/>
-/// <reference path="lib/svgjs.d.ts"/>
+/// <reference path="../lib/svgjs.d.ts"/>
 
 /**
  * Handle the logging and displaying of information
@@ -17,7 +17,7 @@
 class BattleLogger {
 
     // an object that has keys as indices of majorEventLog
-    // and values as the things that happened under that major event
+    // and values as arrays containg the things that happened under that major event
     minorEventLog = {};
 
     // just an array of strings
@@ -211,7 +211,7 @@ class BattleLogger {
      * of the screen with information after the event that you clicked on has been processed. That event
      * is represented by the index argument supplied into this function.
      */
-    displayEventLogAtIndex(index) { // <- the index of the event in the event log
+    displayEventLogAtIndex(index) { // <- the index of the event in the major event log
 
         // first deserialize the initial field info into a nice object that we will modify later
         var initialField = JSON.parse(this.initialFieldInfo);
@@ -224,7 +224,7 @@ class BattleLogger {
             }
         }
         
-        // now prepares the info and print them outS
+        // now prepares the info and print them out
         for (var player = 1; player <=2; player++) { // for each player
             var playerCards = initialField["player" + player + "Cards"]; // get the cards of that player
             for (var fam = 0; fam < 5; fam++) { // for each card

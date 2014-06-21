@@ -670,14 +670,14 @@ var SkillDatabase = {
     440 : {
         name: "Thunderstroke", skillType: 2, skillFunc: 4, skillCalcType: 3, 
         skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 23, maxProbability: 30, ward: "MAGICAL"
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive AGI-based damage to two random foes, ignoring position."
     },
     
     441 : {
         name: "Bolt of Judgment", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 2.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 23, maxProbability: 30, ward: "MAGICAL"
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive WIS-based damage to two random foes, ignoring position."
     },    
 
