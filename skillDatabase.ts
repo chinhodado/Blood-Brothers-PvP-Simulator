@@ -198,13 +198,21 @@ var SkillDatabase = {
     179 : {
         name: "Sword of Justice", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 23, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive AGI-based damage to two random foes."
     },
 
     180: {
         name: "Proxy Counter", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 28, maxProbability: 50, ward: "PHYSICAL"
+    },
+
+    195 : {
+        name: "Warrior's Wrath", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 23, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to two random foes."
     },
     
     196 : {
@@ -241,7 +249,8 @@ var SkillDatabase = {
     221 : {
         name: "Skittering Darkness", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to three foes."
     },
 
     222 : {
@@ -359,6 +368,13 @@ var SkillDatabase = {
         description: "Deal massive WIS-based damage to three random foes, regardless of position."
     },
 
+    282: {
+        name: "Corpse Hymn", skillType: 2, skillFunc: 4, skillCalcType: 3,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal AGI-based damage to five random foes, regardless of position."
+    },
+
     288: {
         name: "Chain Attack", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 0.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -376,7 +392,8 @@ var SkillDatabase = {
     294 : {
         name: "Mocking Laugh", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 23, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to two random foes."
     },
 
     297 : {
@@ -396,6 +413,13 @@ var SkillDatabase = {
         name: "Chill Horn", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 1.9, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    305 : {
+        name: "Dancing Flame", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "BREATH",
+        description: "Deal WIS-based damage to four random foes, regardless of position."
     },
 
     307 : {
@@ -590,11 +614,25 @@ var SkillDatabase = {
         skillRange: 3, maxProbability: 70
     },
 
+    416 : {
+        name: "Bone Smasher", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes, regardless of position."
+    },
+
     418 : {
         name: "Nemesis", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 7, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive WIS-based damage to up to three foes, ignoring position."
+    },
+
+    419 : {
+        name: "Ichthocannon", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
 
     425: {
@@ -634,6 +672,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    465 : {
+        name : "Stormcaller Pinion", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "BREATH",
+        description: "Deal WIS-based damage to five random foes, ignoring position."
+    },
     
     466 : {
         name : "Blade of Judgment", skillType: 2, skillFunc: 4, skillCalcType: 1,
@@ -651,6 +696,13 @@ var SkillDatabase = {
         name: "Entomb", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    476 : {
+        name: "Furious Horns", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to three random foes, ignoring position."
     },
 
     484: {

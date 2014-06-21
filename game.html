@@ -138,7 +138,10 @@
                     document.getElementById("progressBar").setAttribute("value", event.data.progress);
                 }
                 else if (event.data.status == "done") {
-                    document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount + "<br> Player 1 won: " + event.data.p1WinCount);
+                    document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount +
+                        "<br> Player 1 won: " + event.data.p1WinCount + 
+                        "<br><a href=setting.html>Go back to main page </a>");
+                    worker.terminate();
                 }
             };
             worker.postMessage(data);
