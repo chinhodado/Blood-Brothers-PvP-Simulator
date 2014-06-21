@@ -360,6 +360,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive AGI-based damage to three random foes regardless of position."
     },
+    
+    275 : {
+        name: "Blinding Light", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to three random foes, regardless of position."
+    },
 
     280: {
         name: "Snake Charmer", skillType: 2, skillFunc: 4, skillCalcType: 2,
