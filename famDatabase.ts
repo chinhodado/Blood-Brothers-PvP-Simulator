@@ -223,6 +223,9 @@ var famDatabase = {
         {name: "Pisces", hp: 13041, atk: 8621, def:	14796, wis:	17114, agi:	14991, skills: [419], autoAttack: 10007,
         imageLink: "http://img1.wikia.nocookie.net/__cb20140411023129/bloodbrothersgame/images/thumb/2/22/Paladin_of_Pisces_II_Figure.png/40px-Paladin_of_Pisces_II_Figure.png"},
 
+    "Pegasus, the Light Divine II":
+        {name: "Pegasus", hp: 8756, atk: 10200, def: 8843, wis: 10880, agi: 9181, skills: [111],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130301003405/bloodbrothersgame/images/thumb/6/69/Pegasus%2C_the_Light_Divine_II_Figure.png/60px-Pegasus%2C_the_Light_Divine_II_Figure.png
     "Phoenix, the Metempsychosis II":
         {name: "Phoenix", hp: 14005, atk: 11188, def: 12033, wis: 19010, agi: 12185, skills: [305],
         imageLink: "http://img1.wikia.nocookie.net/__cb20131129143510/bloodbrothersgame/images/thumb/2/25/Phoenix%2C_the_Metempsychosis_II_Figure.png/40px-Phoenix%2C_the_Metempsychosis_II_Figure.png"},
