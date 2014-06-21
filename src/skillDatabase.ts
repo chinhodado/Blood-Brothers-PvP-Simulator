@@ -174,8 +174,16 @@ var SkillDatabase = {
     142 : {
         name: "Barrage", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 0.9, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal physical damage to five random targets."
     },
+
+    144 : { 
+	    name: "Windcrush", skillType: 2, skillFunc: 4, skillCalcType: 2,  
+	    skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+	    skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+	    description: "Deal heavy damage to four foes." 
+	},  
 
     154: {
         name: "Cloak & Dagger 2", skillType: 5, skillFunc: 14, skillCalcType: 1,
@@ -632,6 +640,13 @@ var SkillDatabase = {
         name: "Covenant of the Rose", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.15, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 3, maxProbability: 70
+    },
+
+    412 : {
+        name: "Fires of Thirst", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to five random foes, regardless of position."
     },
 
     416 : {
