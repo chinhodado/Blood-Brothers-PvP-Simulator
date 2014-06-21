@@ -78,6 +78,12 @@ var SkillDatabase = {
         skillRange: 4, maxProbability: 50
     },
 
+    111 : {
+        name: "Whorl of Wisdom", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL"
+    },
+
     112 : {
         name: "Whorl of Attack", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
