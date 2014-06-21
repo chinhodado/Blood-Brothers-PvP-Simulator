@@ -95,6 +95,10 @@ var famDatabase = {
         {name: "Flame Dragon",  hp: 14601, atk: 14449, def: 13756, wis: 15153, agi: 13940, skills: [23],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130107210805/bloodbrothersgame/images/thumb/8/8e/Flame_Dragon_II_Figure.png/60px-Flame_Dragon_II_Figure.png"},
 
+    "Fomor the Savage II" : 
+        {name: "Fomor",  hp: 13052, atk: 14465, def: 11928, wis: 9967, agi: 9781, skills: [138],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130208175749/bloodbrothersgame/images/thumb/4/43/Fomor_the_Savage_II_Figure.png/40px-Fomor_the_Savage_II_Figure.png"},
+    
     "Freyr, God of the Harvest II":
         {name: "Freyr", hp: 16562, atk:	19909, def:	15370, wis:	12943, agi:	15998, skills: [385, 386],
         imageLink: "http://img1.wikia.nocookie.net/__cb20140301012048/bloodbrothersgame/images/thumb/5/51/Freyr%2C_God_of_the_Harvest_II_Figure.png/60px-Freyr%2C_God_of_the_Harvest_II_Figure.png"},
@@ -207,10 +211,18 @@ var famDatabase = {
         {name: "Neith", hp: 18999, atk:	19660, def:	15002, wis:	12001, agi:	15305, skills: [326],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031333/bloodbrothersgame/images/thumb/3/3b/Neith%2C_Goddess_of_War_II_Figure.png/60px-Neith%2C_Goddess_of_War_II_Figure.png"},
 
+    "Nergal, Abyssal Overseer II" :
+        {name: "Nergal", hp: 13008, atk: 15392, def: 11947, wis: 11643, agi: 16518, skills: [282],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20131108145626/bloodbrothersgame/images/thumb/7/75/Nergal%2C_Abyssal_Overseer_II_Figure.png/40px-Nergal%2C_Abyssal_Overseer_II_Figure.png"},    
+    
     "Niu Mo Wang II":
         {name: "Niu Mo Wang", hp: 14276, atk: 17071, def: 15998, wis: 13420, agi: 13138, skills: [133],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130709182652/bloodbrothersgame/images/thumb/2/26/Niu_Mo_Wang_II_Figure.png/60px-Niu_Mo_Wang_II_Figure.png"},
     
+    "Odin, God of Victory II":
+        {name: "Odin", hp: 15110, atk: 16562, def: 13875, wis: 17363, agi: 18057, skills: [440, 441],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140430101913/bloodbrothersgame/images/thumb/6/65/Odin%2C_God_of_Victory_II_Figure.png/40px-Odin%2C_God_of_Victory_II_Figure.png"},
+
     "Olitiau, the Great Bat II":
         {name: "Otilau", hp: 14081, atk: 15760, def: 11676, wis: 11232, agi: 15197, skills: [221],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130731090323/bloodbrothersgame/images/thumb/3/33/Olitiau%2C_the_Great_Bat_II_Figure.png/40px-Olitiau%2C_the_Great_Bat_II_Figure.png"},
@@ -226,6 +238,7 @@ var famDatabase = {
     "Pegasus, the Light Divine II":
         {name: "Pegasus", hp: 8756, atk: 10200, def: 8843, wis: 10880, agi: 9181, skills: [111],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130301003405/bloodbrothersgame/images/thumb/6/69/Pegasus%2C_the_Light_Divine_II_Figure.png/60px-Pegasus%2C_the_Light_Divine_II_Figure.png
+   
     "Phoenix, the Metempsychosis II":
         {name: "Phoenix", hp: 14005, atk: 11188, def: 12033, wis: 19010, agi: 12185, skills: [305],
         imageLink: "http://img1.wikia.nocookie.net/__cb20131129143510/bloodbrothersgame/images/thumb/2/25/Phoenix%2C_the_Metempsychosis_II_Figure.png/40px-Phoenix%2C_the_Metempsychosis_II_Figure.png"},
@@ -278,6 +291,10 @@ var famDatabase = {
         {name: "Sugaar", hp: 13110, atk: 7481, def:	14293, wis:	16950, agi:	16097, skills: [465], autoAttack: 10007,
         imageLink: "http://img1.wikia.nocookie.net/__cb20140520140320/bloodbrothersgame/images/thumb/9/9b/Sugaar%2C_the_Thunderstorm_II_Figure.png/40px-Sugaar%2C_the_Thunderstorm_II_Figure.png"},
 
+    "Surtr the Fervent II":
+        {name: "Surtr", hp: 15439, atk: 17108, def:	15085, wis:	7016, agi:	12891, skills: [383], 
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140301022355/bloodbrothersgame/images/thumb/5/5b/Surtr_the_Fervent_II_Figure.png/40px-Surtr_the_Fervent_II_Figure.png"},    
+    
     "Tanba, Founder of Ninja II" :
         {name: "Tanba",         hp: 17580, atk: 23213, def: 17883, wis: 23289, agi: 18057, skills: [236],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130921071545/bloodbrothersgame/images/thumb/f/f6/Tanba%2C_Founder_of_Ninja_II_Figure.png/60px-Tanba%2C_Founder_of_Ninja_II_Figure.png"},
@@ -302,6 +319,10 @@ var famDatabase = {
         {name: "Bone Beast",    hp: 12001, atk: 9905,  def: 12207, wis: 17000, agi: 16803, skills: [366], autoAttack: 10007,
         imageLink: "http://img1.wikia.nocookie.net/__cb20140206151442/bloodbrothersgame/images/thumb/1/15/Tormented_Bone_Beast_II_Figure.png/60px-Tormented_Bone_Beast_II_Figure.png"},
 
+    "Venusia, the Grace II" :
+        {name: "Venusia",    hp: 14514, atk: 18273,  def: 13333, wis: 10831, agi: 11492, skills: [361], 
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140131053558/bloodbrothersgame/images/thumb/0/03/Venusia%2C_the_Grace_II_Figure.png/40px-Venusia%2C_the_Grace_II_Figure.png"},    
+    
     "Vezat, Dragonbone Warrior II" :
         {name: "Vezat", hp: 16648, atk:	18165, def:	14709, wis:	13431, agi:	17721, skills: [214],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130721141820/bloodbrothersgame/images/thumb/2/29/Vezat%2C_Dragonbone_Warrior_II_Figure.png/60px-Vezat%2C_Dragonbone_Warrior_II_Figure.png"},
