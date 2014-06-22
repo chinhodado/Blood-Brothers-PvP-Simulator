@@ -63,7 +63,7 @@ class BattleModel {
         var player1cardsInfo = [];
         var player2cardsInfo = [];
         
-        if ("random" == getURLParameter("mode") || mode == "random") {
+        if (mode == "random") {
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {

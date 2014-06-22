@@ -411,11 +411,11 @@ class BattleLogger {
         for (var player = 1; player <= 2; player++) { // for each player
             // todo: set the svg size dynamically
             var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
-            var rect = draw.rect(600, 300).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
+            
             
             // as I'm writing this comment, I don't know myself what these number are. Just know that change them
             // will change the "compactity" of the formation. Forgive me...
-            var PLAYER_GROUP_WIDTH = 500;
+            var PLAYER_GROUP_WIDTH = 350;
             var PLAYER_GROUP_HEIGHT = 80;
 
             var horizontalStep = PLAYER_GROUP_WIDTH / 10;
@@ -480,7 +480,7 @@ class BattleLogger {
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
             }            
-            groupPlayer.move(50, 100);
+            groupPlayer.move(30, 100);
         }
     }
 

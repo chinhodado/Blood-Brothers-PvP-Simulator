@@ -1,4 +1,4 @@
-<html style="width:100%; height:100%;">
+<html>
 
 <head>
     <title>Blood Brothers simulator</title>
@@ -11,6 +11,9 @@
         * {
             font-family: "Consolas";
             font-size: 12px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
         }
         .wrapper {
             display: table;
@@ -35,16 +38,24 @@
         }
         #battleEventDiv {
             float: left; 
-            margin-right: 30px; 
             width: 40%; 
             height: 100%; 
             overflow: auto;
         }
         #rightSide {
-            width:50%; 
+            padding-left: 20px;
+            width:60%;
             height:100%; 
             float: left; 
             overflow: auto;
+            overflow-x: hidden;
+        }
+        #svgWrapper {
+            margin: 0 auto;
+            width: 400;
+            height: 600;
+            background-image: url('img/bg01.png');
+            background-size: 100%;
         }
 
     </style>
@@ -62,7 +73,7 @@
     </script>
 </head>
 
-<body style="width:100%; height:100%;">
+<body>
     <div id="battleEventDiv">
     </div>
 
@@ -86,8 +97,10 @@
             </div>
         </div>
 
-        <div id="svg2"></div>
-        <div id="svg1"></div>
+        <div id="svgWrapper">
+            <div id="svg2"></div>
+            <div id="svg1"></div>
+        </div>
 
         <div id="player1Fam" style="margin-bottom:30px; margin-top: 30px; " class="wrapper">
             <center>Player 1</center>
@@ -134,6 +147,10 @@
         var mode = getURLParameter("mode");
         if (mode == "normal") {
             var newGame = new BattleModel(data, null);
+            newGame.startBattle();
+        }
+        else if (mode == "random") {
+            var newGame = new BattleModel(null, "random");
             newGame.startBattle();
         }
         else if (mode == "sim") {
