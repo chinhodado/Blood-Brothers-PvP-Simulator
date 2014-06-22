@@ -16,9 +16,8 @@
  */
 class BattleLogger {
 
-    // an object that has keys as indices of majorEventLog
-    // and values as arrays containg the things that happened under that major event
-    minorEventLog = {};
+    // an array of arrays of MinorEvent objects, describing the things that happened under that major event
+    minorEventLog: MinorEvent[][] = [];
 
     // just an array of strings
     majorEventLog : string[] = [];
@@ -32,7 +31,11 @@ class BattleLogger {
         2 : []  // and player 2
     };
     
-    IMAGE_WIDTH = 70;
+    static IMAGE_WIDTH = 70;
+    IMAGE_WIDTH_BIG = 120;
+
+    // an array of groups of card images and hpbar
+    cardImageGroups = [];
     
     private static _instance : BattleLogger = null;
 
@@ -212,6 +215,9 @@ class BattleLogger {
      * is represented by the index argument supplied into this function.
      */
     displayEventLogAtIndex(index) { // <- the index of the event in the major event log
+
+        // display turn animation
+        this.displayTurnAnimation(index);
 
         // first deserialize the initial field info into a nice object that we will modify later
         var initialField = JSON.parse(this.initialFieldInfo);
@@ -402,15 +408,15 @@ class BattleLogger {
         }
         playerFormations[2] = temp;
 
-        for (var player = 1; player <= 2; player ++) { // for each player
+        for (var player = 1; player <= 2; player++) { // for each player
             // todo: set the svg size dynamically
-            var draw = SVG('svg' + player).size(600, 150).attr('id', 'player' + player + 'svg').attr('class', 'svg');
-            var rect = draw.rect(600, 150).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
+            var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
+            var rect = draw.rect(600, 300).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
             
             var SVG_WIDTH = draw.attr("width");
             var SVG_HEIGHT = draw.attr("height");
             var horizontalStep = SVG_WIDTH / 10;
-            var verticalStep = SVG_HEIGHT / 2;
+            var verticalStep = 150 / 2;
             
             var coordArray = [];
             
@@ -441,7 +447,7 @@ class BattleLogger {
             var playerCards = initialField["player" + player + "Cards"]; // get the cards of this player
             
             for (var fam = 0; fam < 5; fam++) { // for each card
-                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH));
+                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH_BIG));
             }
             
             // calculate the coordinate for fam images
@@ -453,23 +459,31 @@ class BattleLogger {
                     this.imageCoordinate[player][i][2] = "UP";
                 }
                 else if (coordArray[i][1] > verticalStep / 2 * 3) { // if y is greater than 3/4 the height of the canvas
-                    this.imageCoordinate[player][i][1] = SVG_HEIGHT - this.IMAGE_WIDTH * 1.5;
+                    this.imageCoordinate[player][i][1] = 150 - BattleLogger.IMAGE_WIDTH * 1.5;
                     this.imageCoordinate[player][i][2] = "DOWN";
                 }
                 else { // middle
-                    this.imageCoordinate[player][i][1] = coordArray[i][1] - this.IMAGE_WIDTH * 1.5 / 2;
+                    this.imageCoordinate[player][i][1] = coordArray[i][1] - BattleLogger.IMAGE_WIDTH * 1.5 / 2;
                     this.imageCoordinate[player][i][2] = "MID";
                 }
                 
                 // the x coordinate is 1/2 image width to the left of the bullet
-                this.imageCoordinate[player][i][0] = coordArray[i][0] - this.IMAGE_WIDTH / 2;
+                this.imageCoordinate[player][i][0] = coordArray[i][0] - BattleLogger.IMAGE_WIDTH / 2;
             }
             
             // display fam images
             for (var i = 0; i < 5; i++) {
-                draw.image(imageLinksArray[i])
+                var image = draw.image(imageLinksArray[i])
                     .move(this.imageCoordinate[player][i][0], this.imageCoordinate[player][i][1])
-                    .attr('id', 'player' + player + 'fam' + i + 'image');
+                    .attr('id', 'player' + player + 'fam' + i + 'image')
+                    .loaded(function (loader) {
+                        this.size(BattleLogger.IMAGE_WIDTH);
+                    });
+
+                // make a svg group for the image + hp bar
+                var group = draw.group();
+                group.add(image).attr('id', 'player' + player + 'fam' + i + 'group');
+                this.cardImageGroups.push(group);
             }
         }
     }
@@ -482,14 +496,14 @@ class BattleLogger {
 
         if (this.imageCoordinate[player][index][2] != "DOWN") {
             // display hp on bottom of the fam
-            var ystart: number = this.imageCoordinate[player][index][1] + this.IMAGE_WIDTH * 1.5;
+            var ystart: number = this.imageCoordinate[player][index][1] + BattleLogger.IMAGE_WIDTH * 1.5;
         }
         else {
             // diaply hp at top of fam            
             var ystart: number = this.imageCoordinate[player][index][1] - 20;
         }
 
-        var width = this.IMAGE_WIDTH; // width of the health bar
+        var width = BattleLogger.IMAGE_WIDTH; // width of the health bar
         var height = 5; // height of the health bar
 
         if (percent < 0) {
@@ -506,6 +520,11 @@ class BattleLogger {
                 .style({ 'stroke-width': 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
+            var groupId = 'player' + player + 'fam' + index + 'group';
+
+            // add the hpbar to the group
+            var group = SVG.get(groupId);
+            group.add(hpbar);
         }
 
         // now we deal with the background gradient used for displaying the HP
@@ -515,15 +534,15 @@ class BattleLogger {
         if (!hpGradient) {
             // draw for full HP
             hpGradient = draw.gradient('linear', function (stop) {
-                stop.at({ offset: '100%', color: '#00ff00' })
-                stop.at({ offset: '100%', color: 'transparent' })
+                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1') //<- hp gradient stop
+                stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2')
             }).attr('id', hpGradientId);
         }
         else {
-            hpGradient.update(function (stop) {
-                stop.at({ offset: percent + '%', color: '#00ff00' })
-                stop.at({ offset: percent + '%', color: 'transparent' })
-            })
+            var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
+            var s2 = SVG.get('p' + player + 'f' + index + 'hpgs2');
+            s1.animate('1s').update({ offset: percent + '%' });
+            s2.animate('1s').update({ offset: percent + '%' });
         }
 
         hpbar.fill(hpGradient);
@@ -562,6 +581,56 @@ class BattleLogger {
             image.unfilter();
         }
     }
+
+    displayTurnAnimation(index: number) {
+
+        // need to make sure eventLog[index] exists, in case this is an empty event (like the "Battle start" event);
+        for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
+            var data: MinorEvent = this.minorEventLog[index][j];
+            var executor = BattleModel.getInstance().getCardById(data.executor);
+            var group: any = this.getCardImageGroupOnCanvas(executor);
+
+            // scale from center
+            var scaleFactor = 1.3;
+            var cx = group.cx();
+            var cy = group.cy();
+
+            group.animate({ duration: '1s' })
+                .transform({
+                    a: scaleFactor,
+                    b: 0,
+                    c: 0,
+                    d: scaleFactor,
+                    e: cx - scaleFactor * cx,
+                    f: cy - scaleFactor * cy
+                })
+                .after(function () {
+                    this.animate({ duration: '1s', delay: '0.5s' })
+                        .transform({
+                            a: 1,
+                            b: 0,
+                            c: 0,
+                            d: 1,
+                            e: cx - 1 * cx,
+                            f: cy - 1 * cy
+                        });
+                });
+        }
+    }
+
+    /**
+     * Given a card, return the image of that card on the canvas
+     */
+    getCardImageOnCanvas(card: Card) {
+        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'image');
+    }
+
+    /**
+     * Given a card, return the image group of that card on the canvas
+     */
+    getCardImageGroupOnCanvas(card: Card) {
+        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'group');
+    }
     
     /**
      * Log the situation at the start of battle and display the initial info
@@ -576,4 +645,12 @@ class BattleLogger {
         this.displayMinorEvent("Everything ready");
         this.displayEventLogAtIndex(0);
     }
+}
+
+interface MinorEvent {
+    executor: number;    // the card id of the executor
+    target: number;      // the card id of the target
+    attribute: string;   // can be "HP" or a ENUM.StatusType "key" (a string)
+    amount: number;      // the amount changed
+    description: string; // description of the event in plain text
 }

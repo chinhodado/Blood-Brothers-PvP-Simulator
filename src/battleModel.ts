@@ -29,7 +29,10 @@ class BattleModel {
     player2Cards : Card[];
     
     // contains all cards in play. Should be re-sorted every turn
-    allCards : Card[];
+    allCards: Card[];
+
+    // only used for quickly get a card by its id
+    allCardsById: any = {};
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer : Player;
@@ -126,6 +129,9 @@ class BattleModel {
                                         auto2);  // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
+
+            this.allCardsById[this.player1Cards[i].id] = this.player1Cards[i];
+            this.allCardsById[this.player2Cards[i].id] = this.player2Cards[i];
         }
     
         this.sortAllCards();
@@ -196,6 +202,13 @@ class BattleModel {
         }
     }
     
+    /**
+     * Get a card by its id
+     */
+    getCardById(id: number): Card {
+        return this.allCardsById[id];
+    }
+
     /**
      * Given an array of skill ids, return an array of Skills
      */
