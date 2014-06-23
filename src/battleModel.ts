@@ -620,7 +620,11 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability) {
-                        this.logger.addMajorEvent(currentCard.name + " procs " + attackSkill.name);
+                        this.logger.addMajorEvent({
+                            description: currentCard.name + " procs " + attackSkill.name,
+                            executorId: currentCard.id,
+                            skillId: attackSkill.id
+                        });
                         if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
                             this.executeRandomAttackSkill(currentCard);
                         }
@@ -639,12 +643,16 @@ class BattleModel {
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
                     this.playerWon = this.currentPlayer;
-                    this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");                    
+                    this.logger.addMajorEvent({
+                        description: currentCard.getPlayerName() + " has won"
+                    });                    
                 }
                 else if (this.isAllDead(this.currentPlayerCards)) {
                     finished = true;
                     this.playerWon = this.oppositePlayer;
-                    this.logger.addMajorEvent(this.oppositePlayer.name + " has won");
+                    this.logger.addMajorEvent({
+                        description: this.oppositePlayer.name + " has won"
+                    });
                 }
             }
         }
@@ -652,7 +660,10 @@ class BattleModel {
     }
     
     executeNormalAttack(attacker: Card) {
-        this.logger.addMajorEvent(attacker.name + " attacks!");
+        this.logger.addMajorEvent({
+            description: attacker.name + " attacks!",
+            // we may consider adding the attacker id and auto id later on
+        });
 
         // create a default auto attack skill
         var autoSkill: Skill = attacker.autoAttack;
@@ -681,7 +692,11 @@ class BattleModel {
             var skill1 = this.player1Cards[i].openingSkill;
             if (skill1) {
                 if (Math.random() * 100 < skill1.maxProbability) {
-                    this.logger.addMajorEvent(this.player1Cards[i].name + " procs " + skill1.name);
+                    this.logger.addMajorEvent({
+                        description: this.player1Cards[i].name + " procs " + skill1.name,
+                        executorId: this.player1Cards[i].id,
+                        skillId: skill1.id
+                    });
                     this.executeOpeningSkill(this.player1Cards[i]);
                 }
             }
@@ -691,7 +706,11 @@ class BattleModel {
             var skill2 = this.player2Cards[i].openingSkill;
             if (skill2) {
                 if (Math.random() * 100 < skill2.maxProbability) {
-                    this.logger.addMajorEvent(this.player2Cards[i].name + " procs " + skill2.name);
+                    this.logger.addMajorEvent({
+                        description: this.player2Cards[i].name + " procs " + skill2.name,
+                        executorId: this.player2Cards[i].id,
+                        skillId: skill2.id
+                    });
                     this.executeOpeningSkill(this.player2Cards[i]);
                 }
             }

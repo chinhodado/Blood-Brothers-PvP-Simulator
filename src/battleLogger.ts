@@ -20,7 +20,7 @@ class BattleLogger {
     minorEventLog: MinorEvent[][] = [];
 
     // just an array of strings
-    majorEventLog : string[] = [];
+    majorEventLog : MajorEvent[] = [];
     
     currentTurn : number = 0;
     initialFieldInfo;
@@ -78,7 +78,7 @@ class BattleLogger {
         }
 
         var newEvent = document.createElement("li");
-        newEvent.innerHTML = "<a>" + data + "</a>";
+        newEvent.innerHTML = "<a>" + data.description + "</a>";
         newEvent.setAttribute("tabindex", index + "");
         newEvent.setAttribute("id", index + "");
         
@@ -94,7 +94,7 @@ class BattleLogger {
      * thought of as logging the main action in a fam's turn. The data to log here
      * is just a string, there's no actual data change associated with a major event
      */
-    addMajorEvent (data : string) {
+    addMajorEvent (data: MajorEvent) {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -411,7 +411,20 @@ class BattleLogger {
         for (var player = 1; player <= 2; player++) { // for each player
             // todo: set the svg size dynamically
             var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
-            
+
+            // draw the skill name background, don't show them yet
+            if (player == 2) {
+                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 5).attr('id', 'p2SkillBg');
+                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                               .attr('id', 'p2SkillText');
+                draw.group().attr('id', 'p2SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+            }
+            else if (player == 1) {
+                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
+                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                               .attr('id', 'p1SkillText');
+                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+            }
             
             // as I'm writing this comment, I don't know myself what these number are. Just know that change them
             // will change the "compactity" of the formation. Forgive me...
@@ -591,6 +604,22 @@ class BattleLogger {
             var cx = group.cx();
             var cy = group.cy();
 
+            if (this.majorEventLog[index].skillId) {
+                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
+                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+
+                var yOffset = executor.getPlayerId() == 1 ? 272 : 8;
+
+                var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;                
+                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yOffset);
+
+                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
+                            .after(function () {
+                                this.animate({ duration: '0.5s', delay: '1.5s' })
+                                    .opacity(0)
+                            });
+            }
+
             group.animate({ duration: '1s' })
                 .transform({
                     a: scaleFactor,
@@ -637,7 +666,7 @@ class BattleLogger {
             return;
         }
 
-        this.addMajorEvent("Battle start");
+        this.addMajorEvent({description: "Battle start"});
         this.displayMinorEvent("Everything ready");
         this.displayEventLogAtIndex(0);
     }
@@ -649,4 +678,10 @@ interface MinorEvent {
     attribute: string;   // can be "HP" or a ENUM.StatusType "key" (a string)
     amount: number;      // the amount changed
     description: string; // description of the event in plain text
+}
+
+interface MajorEvent {
+    description: string;
+    executorId?: number;
+    skillId?: number;
 }
