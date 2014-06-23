@@ -74,6 +74,7 @@ declare module svgjs {
 
         animate(duration?:number, ease?:string, delay?:number):Animation;
         animate(info:{ease?:string; duration?:number; delay?:number}):Animation;
+        animate(info:{ease?:string; duration?:string; delay?:string}):Animation;
 
         attr(name:string):any;
         attr(obj:Object):Element;
@@ -152,6 +153,7 @@ declare module svgjs {
         before(element:Element):Element;
         after(element:Element):Element;
 
+        loaded(args);
 
         click(cb:Function):void;
         on(event:string, cb:Function):void;
@@ -198,7 +200,10 @@ declare module svgjs {
         size(w:number, h:number, anchor?:boolean):Animation;
         during(cb:(pos:number)=>void):Animation;
         to(value:number):Animation;
-        after(cb:()=>void):Animation;
+        after(cb: () => void): Animation;
+
+        opacity(o: number);
+        update(arg);
 
         // TODO style, etc, bbox... 
     }
