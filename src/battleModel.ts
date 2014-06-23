@@ -29,7 +29,10 @@ class BattleModel {
     player2Cards : Card[];
     
     // contains all cards in play. Should be re-sorted every turn
-    allCards : Card[];
+    allCards: Card[];
+
+    // only used for quickly get a card by its id
+    allCardsById: any = {};
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer : Player;
@@ -60,7 +63,7 @@ class BattleModel {
         var player1cardsInfo = [];
         var player2cardsInfo = [];
         
-        if ("random" == getURLParameter("mode") || mode == "random") {
+        if (mode == "random") {
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
@@ -126,6 +129,9 @@ class BattleModel {
                                         auto2);  // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
+
+            this.allCardsById[this.player1Cards[i].id] = this.player1Cards[i];
+            this.allCardsById[this.player2Cards[i].id] = this.player2Cards[i];
         }
     
         this.sortAllCards();
@@ -196,6 +202,13 @@ class BattleModel {
         }
     }
     
+    /**
+     * Get a card by its id
+     */
+    getCardById(id: number): Card {
+        return this.allCardsById[id];
+    }
+
     /**
      * Given an array of skill ids, return an array of Skills
      */
@@ -457,7 +470,7 @@ class BattleModel {
         }
         var description = additionalDescription +
             target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
-        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description);
+        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description, skill.id);
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
@@ -573,7 +586,7 @@ class BattleModel {
             for (var i = 0; i < targets.length; i++) {
                 targets[i].changeStatus(thingToBuff, buffAmount);
                 var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
-                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description);
+                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
             }
         }
     }
@@ -607,7 +620,11 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability) {
-                        this.logger.addMajorEvent(currentCard.name + " procs " + attackSkill.name);
+                        this.logger.addMajorEvent({
+                            description: currentCard.name + " procs " + attackSkill.name,
+                            executorId: currentCard.id,
+                            skillId: attackSkill.id
+                        });
                         if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
                             this.executeRandomAttackSkill(currentCard);
                         }
@@ -626,12 +643,16 @@ class BattleModel {
                 if (this.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
                     this.playerWon = this.currentPlayer;
-                    this.logger.addMajorEvent(currentCard.getPlayerName() + " has won");                    
+                    this.logger.addMajorEvent({
+                        description: currentCard.getPlayerName() + " has won"
+                    });                    
                 }
                 else if (this.isAllDead(this.currentPlayerCards)) {
                     finished = true;
                     this.playerWon = this.oppositePlayer;
-                    this.logger.addMajorEvent(this.oppositePlayer.name + " has won");
+                    this.logger.addMajorEvent({
+                        description: this.oppositePlayer.name + " has won"
+                    });
                 }
             }
         }
@@ -639,7 +660,10 @@ class BattleModel {
     }
     
     executeNormalAttack(attacker: Card) {
-        this.logger.addMajorEvent(attacker.name + " attacks!");
+        this.logger.addMajorEvent({
+            description: attacker.name + " attacks!",
+            // we may consider adding the attacker id and auto id later on
+        });
 
         // create a default auto attack skill
         var autoSkill: Skill = attacker.autoAttack;
@@ -668,7 +692,11 @@ class BattleModel {
             var skill1 = this.player1Cards[i].openingSkill;
             if (skill1) {
                 if (Math.random() * 100 < skill1.maxProbability) {
-                    this.logger.addMajorEvent(this.player1Cards[i].name + " procs " + skill1.name);
+                    this.logger.addMajorEvent({
+                        description: this.player1Cards[i].name + " procs " + skill1.name,
+                        executorId: this.player1Cards[i].id,
+                        skillId: skill1.id
+                    });
                     this.executeOpeningSkill(this.player1Cards[i]);
                 }
             }
@@ -678,7 +706,11 @@ class BattleModel {
             var skill2 = this.player2Cards[i].openingSkill;
             if (skill2) {
                 if (Math.random() * 100 < skill2.maxProbability) {
-                    this.logger.addMajorEvent(this.player2Cards[i].name + " procs " + skill2.name);
+                    this.logger.addMajorEvent({
+                        description: this.player2Cards[i].name + " procs " + skill2.name,
+                        executorId: this.player2Cards[i].id,
+                        skillId: skill2.id
+                    });
                     this.executeOpeningSkill(this.player2Cards[i]);
                 }
             }

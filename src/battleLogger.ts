@@ -16,23 +16,26 @@
  */
 class BattleLogger {
 
-    // an object that has keys as indices of majorEventLog
-    // and values as arrays containg the things that happened under that major event
-    minorEventLog = {};
+    // an array of arrays of MinorEvent objects, describing the things that happened under that major event
+    minorEventLog: MinorEvent[][] = [];
 
     // just an array of strings
-    majorEventLog : string[] = [];
+    majorEventLog : MajorEvent[] = [];
     
     currentTurn : number = 0;
     initialFieldInfo;
-    
-    imageCoordinate = {
-        // array of 5 arrays of 3 elements: x, y and ytype ("UP", "MID" or "DOWN")
-        1 : [], // for player 1
-        2 : []  // and player 2
+
+    // holds the coordinates of the bullets of the formation
+    coordArray: any = {
+        1: [], 
+        2: []
     };
-    
-    IMAGE_WIDTH = 70;
+
+    static IMAGE_WIDTH = 70;
+    IMAGE_WIDTH_BIG = 120;
+
+    // an array of groups of card images and hpbar
+    cardImageGroups = [];
     
     private static _instance : BattleLogger = null;
 
@@ -75,7 +78,7 @@ class BattleLogger {
         }
 
         var newEvent = document.createElement("li");
-        newEvent.innerHTML = "<a>" + data + "</a>";
+        newEvent.innerHTML = "<a>" + data.description + "</a>";
         newEvent.setAttribute("tabindex", index + "");
         newEvent.setAttribute("id", index + "");
         
@@ -91,7 +94,7 @@ class BattleLogger {
      * thought of as logging the main action in a fam's turn. The data to log here
      * is just a string, there's no actual data change associated with a major event
      */
-    addMajorEvent (data : string) {
+    addMajorEvent (data: MajorEvent) {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -213,6 +216,9 @@ class BattleLogger {
      */
     displayEventLogAtIndex(index) { // <- the index of the event in the major event log
 
+        // display turn animation
+        this.displayTurnAnimation(index);
+
         // first deserialize the initial field info into a nice object that we will modify later
         var initialField = JSON.parse(this.initialFieldInfo);
         
@@ -330,7 +336,7 @@ class BattleLogger {
      *  - amount: the amount changed
      *  - description: a description in plain text of what happened
      */
-    addMinorEvent(executor: Card, target : Card, attribute : string, amount : number, description : string) {
+    addMinorEvent(executor: Card, target: Card, attribute: string, amount: number, description: string, skillId: number) {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -346,7 +352,8 @@ class BattleLogger {
             target : target.id,       // the card id of the target
             attribute : attribute,    // can be "HP" or a ENUM.StatusType "key" (a string)
             amount : amount,          // the amount changed
-            description : description // description of the event in plain text
+            description: description, // description of the event in plain text
+            skillId: skillId
         });
         this.displayMinorEvent(description);
     }
@@ -402,23 +409,43 @@ class BattleLogger {
         }
         playerFormations[2] = temp;
 
-        for (var player = 1; player <= 2; player ++) { // for each player
+        for (var player = 1; player <= 2; player++) { // for each player
             // todo: set the svg size dynamically
-            var draw = SVG('svg' + player).size(600, 150).attr('id', 'player' + player + 'svg').attr('class', 'svg');
-            var rect = draw.rect(600, 150).attr({ 'stroke-width': 1, 'stroke': '#000000', 'fill': '#FFFFFF'});
+            var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
+
+            // draw the skill name background, don't show them yet
+            if (player == 2) {
+                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 5).attr('id', 'p2SkillBg');
+                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                               .attr('id', 'p2SkillText');
+                draw.group().attr('id', 'p2SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+            }
+            else if (player == 1) {
+                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
+                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                               .attr('id', 'p1SkillText');
+                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+            }
             
-            var SVG_WIDTH = draw.attr("width");
-            var SVG_HEIGHT = draw.attr("height");
-            var horizontalStep = SVG_WIDTH / 10;
-            var verticalStep = SVG_HEIGHT / 2;
+            // as I'm writing this comment, I don't know myself what these number are. Just know that change them
+            // will change the "compactity" of the formation. Forgive me...
+            var PLAYER_GROUP_WIDTH = 350;
+            var PLAYER_GROUP_HEIGHT = 80;
+
+            var horizontalStep = PLAYER_GROUP_WIDTH / 10;
+            var verticalStep   = PLAYER_GROUP_HEIGHT / 2;
             
             var coordArray = [];
+            this.coordArray[player] = coordArray;    
+
+            // a svg group for everything belonging to that player: fam image, hp, formation, etc.
+            var groupPlayer = draw.group()
+                                  .attr('id', 'p' + player + 'group');
             
             // calculate the bullets coord
             for (var i = 0; i < 5; i++) {
                 var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
                 var bulletY = (playerFormations[player][i] - 1) * verticalStep;
-                bulletY = bulletY < verticalStep? bulletY + 15 : (bulletY > verticalStep? bulletY - 15 : bulletY);
                 
                 coordArray.push([bulletX, bulletY]);
             }
@@ -428,11 +455,13 @@ class BattleLogger {
                 var diameter = 10;
                 var dot = draw.circle(diameter)
                               .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
+                groupPlayer.add(dot);
             }
 
             for (var i = 0; i < 4; i++) {
                 var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
                                .stroke({ width: 1 });
+                groupPlayer.add(line);
             }
             
             // grab the image links of the curent player's fam
@@ -441,36 +470,31 @@ class BattleLogger {
             var playerCards = initialField["player" + player + "Cards"]; // get the cards of this player
             
             for (var fam = 0; fam < 5; fam++) { // for each card
-                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH));
-            }
-            
-            // calculate the coordinate for fam images
-            for (var i = 0; i < 5; i++) {
-                this.imageCoordinate[player][i] = [];
-                
-                if (coordArray[i][1] < verticalStep / 2) { // if y is less than 1/4 the height of the canvas
-                    this.imageCoordinate[player][i][1] = 0;
-                    this.imageCoordinate[player][i][2] = "UP";
-                }
-                else if (coordArray[i][1] > verticalStep / 2 * 3) { // if y is greater than 3/4 the height of the canvas
-                    this.imageCoordinate[player][i][1] = SVG_HEIGHT - this.IMAGE_WIDTH * 1.5;
-                    this.imageCoordinate[player][i][2] = "DOWN";
-                }
-                else { // middle
-                    this.imageCoordinate[player][i][1] = coordArray[i][1] - this.IMAGE_WIDTH * 1.5 / 2;
-                    this.imageCoordinate[player][i][2] = "MID";
-                }
-                
-                // the x coordinate is 1/2 image width to the left of the bullet
-                this.imageCoordinate[player][i][0] = coordArray[i][0] - this.IMAGE_WIDTH / 2;
+                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH_BIG));
             }
             
             // display fam images
             for (var i = 0; i < 5; i++) {
-                draw.image(imageLinksArray[i])
-                    .move(this.imageCoordinate[player][i][0], this.imageCoordinate[player][i][1])
-                    .attr('id', 'player' + player + 'fam' + i + 'image');
-            }
+                // the x coordinate is 1/2 image width to the left of the bullet
+                var image_x_coord = coordArray[i][0] - BattleLogger.IMAGE_WIDTH / 2;
+
+                // the y coordinate is 1/2 image height above the bullet
+                var image_y_coord = coordArray[i][1] - BattleLogger.IMAGE_WIDTH * 1.5 / 2;
+
+                var image = draw.image(imageLinksArray[i])
+                    .move(image_x_coord, image_y_coord)
+                    .attr('id', 'player' + player + 'fam' + i + 'image')
+                    .loaded(function (loader) {
+                        this.size(BattleLogger.IMAGE_WIDTH);
+                    });
+
+                // make a svg group for the image + hp bar
+                var group = draw.group();
+                group.add(image).attr('id', 'player' + player + 'fam' + i + 'group');
+                this.cardImageGroups.push(group);
+                groupPlayer.add(group);
+            }            
+            groupPlayer.move(30, 100);
         }
     }
 
@@ -478,18 +502,18 @@ class BattleLogger {
 
         var draw = SVG.get('player' + player + 'svg');
 
-        var xstart = Math.round(this.imageCoordinate[player][index][0]);
+        // the x coordinate is 1/2 image width to the left of the bullet
+        var image_x_coord = this.coordArray[player][index][0] - BattleLogger.IMAGE_WIDTH / 2;
 
-        if (this.imageCoordinate[player][index][2] != "DOWN") {
-            // display hp on bottom of the fam
-            var ystart: number = this.imageCoordinate[player][index][1] + this.IMAGE_WIDTH * 1.5;
-        }
-        else {
-            // diaply hp at top of fam            
-            var ystart: number = this.imageCoordinate[player][index][1] - 20;
-        }
+        // the y coordinate is 1/2 image height above the bullet
+        var image_y_coord = this.coordArray[player][index][1] - BattleLogger.IMAGE_WIDTH * 1.5 / 2;
 
-        var width = this.IMAGE_WIDTH; // width of the health bar
+        var xstart = Math.round(image_x_coord);
+
+        // display hp on bottom of the fam
+        var ystart: number = image_y_coord + BattleLogger.IMAGE_WIDTH * 1.5;
+
+        var width = BattleLogger.IMAGE_WIDTH; // width of the health bar
         var height = 5; // height of the health bar
 
         if (percent < 0) {
@@ -506,6 +530,11 @@ class BattleLogger {
                 .style({ 'stroke-width': 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
+            var groupId = 'player' + player + 'fam' + index + 'group';
+
+            // add the hpbar to the group
+            var group = SVG.get(groupId);
+            group.add(hpbar);
         }
 
         // now we deal with the background gradient used for displaying the HP
@@ -515,15 +544,15 @@ class BattleLogger {
         if (!hpGradient) {
             // draw for full HP
             hpGradient = draw.gradient('linear', function (stop) {
-                stop.at({ offset: '100%', color: '#00ff00' })
-                stop.at({ offset: '100%', color: 'transparent' })
+                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1') //<- hp gradient stop
+                stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2')
             }).attr('id', hpGradientId);
         }
         else {
-            hpGradient.update(function (stop) {
-                stop.at({ offset: percent + '%', color: '#00ff00' })
-                stop.at({ offset: percent + '%', color: 'transparent' })
-            })
+            var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
+            var s2 = SVG.get('p' + player + 'f' + index + 'hpgs2');
+            s1.animate('1s').update({ offset: percent + '%' });
+            s2.animate('1s').update({ offset: percent + '%' });
         }
 
         hpbar.fill(hpGradient);
@@ -562,6 +591,82 @@ class BattleLogger {
             image.unfilter();
         }
     }
+
+    displayTurnAnimation(index: number) {
+
+        // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
+        for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
+            var data: MinorEvent = this.minorEventLog[index][j];
+            var executor = BattleModel.getInstance().getCardById(data.executor);
+            var group: any = this.getCardImageGroupOnCanvas(executor);
+
+            // scale from center
+            var scaleFactor = 1.3;
+            var cx = group.cx();
+            var cy = group.cy();
+            
+            group.animate({ duration: '1s' })
+                .transform({
+                    a: scaleFactor,
+                    b: 0,
+                    c: 0,
+                    d: scaleFactor,
+                    e: cx - scaleFactor * cx,
+                    f: cy - scaleFactor * cy
+                })
+                .after(function () {
+                    this.animate({ duration: '1s', delay: '0.5s' })
+                        .transform({
+                            a: 1,
+                            b: 0,
+                            c: 0,
+                            d: 1,
+                            e: cx - 1 * cx,
+                            f: cy - 1 * cy
+                        });
+                });
+
+            // display the skill name
+            if (this.majorEventLog[index].skillId) {
+                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
+                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+
+                // the y-coordinate of the text, depending on whether this is player 1 or 2
+                var yText = executor.getPlayerId() == 1 ? 272 : 8;
+
+                // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
+                if (data.executor == this.majorEventLog[index].executorId) {
+                    var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;
+                }
+                else {
+                    var skillName: string = SkillDatabase[data.skillId].name;
+                }
+                
+                // center the text inside the background
+                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+
+                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
+                            .after(function () {
+                                this.animate({ duration: '0.5s', delay: '1.5s' })
+                                    .opacity(0)
+                            });
+            }
+        }
+    }
+
+    /**
+     * Given a card, return the image of that card on the canvas
+     */
+    getCardImageOnCanvas(card: Card) {
+        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'image');
+    }
+
+    /**
+     * Given a card, return the image group of that card on the canvas
+     */
+    getCardImageGroupOnCanvas(card: Card) {
+        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'group');
+    }
     
     /**
      * Log the situation at the start of battle and display the initial info
@@ -572,8 +677,23 @@ class BattleLogger {
             return;
         }
 
-        this.addMajorEvent("Battle start");
+        this.addMajorEvent({description: "Battle start"});
         this.displayMinorEvent("Everything ready");
         this.displayEventLogAtIndex(0);
     }
+}
+
+interface MinorEvent {
+    executor: number;    // the card id of the executor
+    target: number;      // the card id of the target
+    attribute: string;   // can be "HP" or a ENUM.StatusType "key" (a string)
+    amount: number;      // the amount changed
+    description: string; // description of the event in plain text
+    skillId: number;     // the skill associated with this MinorEvent
+}
+
+interface MajorEvent {
+    description: string;
+    executorId?: number;
+    skillId?: number;
 }
