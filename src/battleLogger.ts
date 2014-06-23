@@ -336,7 +336,7 @@ class BattleLogger {
      *  - amount: the amount changed
      *  - description: a description in plain text of what happened
      */
-    addMinorEvent(executor: Card, target : Card, attribute : string, amount : number, description : string) {
+    addMinorEvent(executor: Card, target: Card, attribute: string, amount: number, description: string, skillId: number) {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -352,7 +352,8 @@ class BattleLogger {
             target : target.id,       // the card id of the target
             attribute : attribute,    // can be "HP" or a ENUM.StatusType "key" (a string)
             amount : amount,          // the amount changed
-            description : description // description of the event in plain text
+            description: description, // description of the event in plain text
+            skillId: skillId
         });
         this.displayMinorEvent(description);
     }
@@ -593,7 +594,7 @@ class BattleLogger {
 
     displayTurnAnimation(index: number) {
 
-        // need to make sure eventLog[index] exists, in case this is an empty event (like the "Battle start" event);
+        // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
             var data: MinorEvent = this.minorEventLog[index][j];
             var executor = BattleModel.getInstance().getCardById(data.executor);
@@ -603,23 +604,7 @@ class BattleLogger {
             var scaleFactor = 1.3;
             var cx = group.cx();
             var cy = group.cy();
-
-            if (this.majorEventLog[index].skillId) {
-                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
-                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
-
-                var yOffset = executor.getPlayerId() == 1 ? 272 : 8;
-
-                var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;                
-                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yOffset);
-
-                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
-                            .after(function () {
-                                this.animate({ duration: '0.5s', delay: '1.5s' })
-                                    .opacity(0)
-                            });
-            }
-
+            
             group.animate({ duration: '1s' })
                 .transform({
                     a: scaleFactor,
@@ -640,6 +625,32 @@ class BattleLogger {
                             f: cy - 1 * cy
                         });
                 });
+
+            // display the skill name
+            if (this.majorEventLog[index].skillId) {
+                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
+                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+
+                // the y-coordinate of the text, depending on whether this is player 1 or 2
+                var yText = executor.getPlayerId() == 1 ? 272 : 8;
+
+                // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
+                if (data.executor == this.majorEventLog[index].executorId) {
+                    var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;
+                }
+                else {
+                    var skillName: string = SkillDatabase[data.skillId].name;
+                }
+                
+                // center the text inside the background
+                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+
+                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
+                            .after(function () {
+                                this.animate({ duration: '0.5s', delay: '1.5s' })
+                                    .opacity(0)
+                            });
+            }
         }
     }
 
@@ -678,6 +689,7 @@ interface MinorEvent {
     attribute: string;   // can be "HP" or a ENUM.StatusType "key" (a string)
     amount: number;      // the amount changed
     description: string; // description of the event in plain text
+    skillId: number;     // the skill associated with this MinorEvent
 }
 
 interface MajorEvent {

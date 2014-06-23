@@ -470,7 +470,7 @@ class BattleModel {
         }
         var description = additionalDescription +
             target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
-        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description);
+        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description, skill.id);
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
@@ -586,7 +586,7 @@ class BattleModel {
             for (var i = 0; i < targets.length; i++) {
                 targets[i].changeStatus(thingToBuff, buffAmount);
                 var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
-                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description);
+                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
             }
         }
     }
