@@ -60,7 +60,7 @@ module ENUM {
         BUFF = 5,
         DEBUFF = 6,
         REFLECT = 7
-    };
+    }
     
     export enum StatType {
         HP, ATK, DEF, WIS, AGI

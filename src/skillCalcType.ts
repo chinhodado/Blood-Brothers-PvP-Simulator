@@ -1,25 +1,13 @@
-/// <reference path="battleLogger.ts"/>
-/// <reference path="battleModel.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skill.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="skillRange.ts"/>
-/// <reference path="util.ts"/>
-
 function getDamageCalculatedByATK(attacker : Card, defender : Card, ignorePosition : boolean) {
     var ATTACK_FACTOR = 0.3;
     var DIFF_FACTOR = 0.2;
     
-    var POS_ATTACK_FACTOR = {}
+    var POS_ATTACK_FACTOR = {};
     POS_ATTACK_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
     POS_ATTACK_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_ATTACK_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
     
-    var POS_DAMAGE_FACTOR = {}
+    var POS_DAMAGE_FACTOR = {};
     POS_DAMAGE_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
@@ -46,12 +34,12 @@ function getDamageCalculatedByAGI(attacker : Card, defender : Card, ignorePositi
     var ATTACK_FACTOR = 0.3;
     var DIFF_FACTOR = 0.2;
     
-    var POS_ATTACK_FACTOR = {}
+    var POS_ATTACK_FACTOR = {};
     POS_ATTACK_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
     POS_ATTACK_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_ATTACK_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
     
-    var POS_DAMAGE_FACTOR = {}
+    var POS_DAMAGE_FACTOR = {};
     POS_DAMAGE_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.MID]   = 1;
     POS_DAMAGE_FACTOR[ENUM.FormationRow.FRONT] = 1.2;

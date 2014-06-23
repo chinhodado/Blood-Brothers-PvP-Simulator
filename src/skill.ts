@@ -1,15 +1,3 @@
-/// <reference path="battleLogger.ts"/>
-/// <reference path="battleModel.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skillCalcType.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="skillRange.ts"/>
-/// <reference path="util.ts"/>
-
 class Skill {
 
     id : number;
@@ -54,7 +42,7 @@ class Skill {
             this.contact = skillData.contact;
         }
         
-        this.range = BattleModel.rangeFactory.getRange(this.skillRange);
+        this.range = RangeFactory.getInstance().getRange(this.skillRange);
     }
     
     getSkillFuncArg(argnum : number) {

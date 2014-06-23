@@ -1,5 +1,6 @@
 /// <reference path="battleLogger.ts"/>
 /// <reference path="card.ts"/>
+/// <reference path="cardManager.ts"/>
 /// <reference path="enums.ts"/>
 /// <reference path="famDatabase.ts"/>
 /// <reference path="formation.ts"/>
@@ -14,10 +15,10 @@ class BattleModel {
 
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
-    mode: string;
 
-    static rangeFactory: RangeFactory = RangeFactory.getInstance();
+    rangeFactory: RangeFactory;
     logger : BattleLogger;
+    cardManager: CardManager;
     
     player1: Player;
     player2: Player;
@@ -55,8 +56,9 @@ class BattleModel {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
         BattleModel._instance = this;
-
+        this.rangeFactory = RangeFactory.getInstance();
         this.logger = BattleLogger.getInstance();
+        this.cardManager = CardManager.getInstance();
         
         var player1formation: string;
         var player2formation: string;
@@ -133,8 +135,8 @@ class BattleModel {
             this.allCardsById[this.player1Cards[i].id] = this.player1Cards[i];
             this.allCardsById[this.player2Cards[i].id] = this.player2Cards[i];
         }
-    
-        this.sortAllCards();
+
+        this.cardManager.sortAllCards();
         
         // save the initial field snapshot
         this.logger.saveInitialField();
@@ -159,56 +161,6 @@ class BattleModel {
         BattleModel._instance = null;
     }
     
-    sortAllCards() {
-        // sort the cards
-        this.allCards.sort(function (a, b) {
-            return b.getAGI() - a.getAGI(); // descending based on agi
-        });
-    }
-    
-    /**
-     * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost 
-     * position in the formation
-     */
-    getLeftSideCard (card : Card) : Card {
-        var playerCards = this.getPlayerCards(card.player);
-        var column = card.formationColumn;
-        if (column == 0) { // leftmost position
-            return null;
-        }
-        else if (column <= 4 && column >= 1) { // just to be safe
-            return playerCards[column - 1];
-        }
-        else {
-            throw new Error("Invalid card index");
-        }
-    }
-    
-    /**
-     * Get the card to the right of a supplied card. Return null if the supplied card is at the rightmost 
-     * position in the formation
-     */
-    getRightSideCard (card : Card) : Card {
-        var playerCards = this.getPlayerCards(card.player);
-        var column = card.formationColumn;
-        if (column == 4) { // rightmost position
-            return null;
-        }
-        else if (column >= 0 && column <= 3) { // just to be safe
-            return playerCards[column + 1];
-        }
-        else {
-            throw new Error("Invalid card index");
-        }
-    }
-    
-    /**
-     * Get a card by its id
-     */
-    getCardById(id: number): Card {
-        return this.allCardsById[id];
-    }
-
     /**
      * Given an array of skill ids, return an array of Skills
      */
@@ -236,99 +188,13 @@ class BattleModel {
         }
     }
 
-    /**
-     * Get all the cards that belong to a player
-     */
-    getPlayerCards (player : Player) {
-        if (player === this.player1) {
-            return this.player1Cards;
-        }
-        else if (player === this.player2) {
-            return this.player2Cards;
-        }
-        else {
-            throw new Error("Invalid player");
-        }
-    }
-    
-    getEnemyCards (player : Player) {
-        if (player === this.player1) {
-            return this.player2Cards;
-        }
-        else if (player === this.player2) {
-            return this.player1Cards;
-        }
-        else {
-            throw new Error("Invalid player");
-        }
-    }
-
-    getValidSingleTarget (cards : Card[]) {
-        var possibleIndices = [];
-        for (var i = 0; i < 5; i++) {
-            if (!cards[i].isDead) {
-                possibleIndices.push(i);
-            }
-        }
-
-        if (possibleIndices.length === 0) {
-            return -1; // no valid index
-        }
-
-        // get a random index from the list of possible indices
-        var randomIndex = getRandomInt(0, possibleIndices.length - 1); 
-
-        return possibleIndices[randomIndex];
-    }
-    
-    getNearestSingleOpponentTarget (executor : Card) : Card {
-        var oppCards : Card[] = this.getPlayerCards(this.getOppositePlayer(executor.player));
-        var executorIndex = executor.formationColumn;
-        
-        var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
-        
-        for (var i = 0; i < offsetArray.length; i++) {
-            var currentOppCard = oppCards[executorIndex + offsetArray[i]];
-            if (currentOppCard && !currentOppCard.isDead) {
-                return currentOppCard;
-            }
-        }
-        
-        // if it reaches this point, there's no target, so return null
-        return null;
-    }
-
-    isAllDeadPlayer (player : Player) {
-        if (player === this.player1) {
-            return this.isAllDead(this.player1Cards);
-        }
-        else if (player === this.player2) {
-            return this.isAllDead(this.player2Cards);
-        }
-        else {
-            throw new Error("Invalid player");
-        }
-    }
-
-    isAllDead (cards : Card[]) {
-        var isAllDead = true;
-        for (var i = 0; i < 5; i++) {
-            // assume no null card
-            if (!cards[i].isDead) {
-                isAllDead = false;
-                break;
-            }
-        }
-        return isAllDead;
-    }
-
     executeRandomAttackSkill (executor : Card) {
     	var skill = executor.attackSkill;        
         var numTarget = (<EnemyRandomRange>skill.range).numTarget;
         
         for (var i = 0; i < numTarget && !executor.isDead; i++) {
 
-            var targetIndex = this.getValidSingleTarget(this.oppositePlayerCards);
+            var targetIndex = this.cardManager.getValidSingleTarget(this.oppositePlayerCards);
     
             if (targetIndex == -1) {
                 // no valid target, miss a turn, continue to next card
@@ -355,7 +221,7 @@ class BattleModel {
      */
     processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any): boolean {
         // now check if someone on the enemy side can protect before the damage is dealt
-        var enemyCards = this.getEnemyCards(attacker.player);
+        var enemyCards = this.cardManager.getEnemyCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
         for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
             if (enemyCards[i].isDead) {
@@ -366,7 +232,7 @@ class BattleModel {
                 var protector = enemyCards[i];
 
                 // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
-                if (this.isSameCard(targetCard, protector) && protectSkill.skillRange != 21) {
+                if (this.cardManager.isSameCard(targetCard, protector) && protectSkill.skillRange != 21) {
                     continue;
                 }
 
@@ -377,7 +243,7 @@ class BattleModel {
 
                 // now check if the original target is in the protect range of the protector
                 var defenseTargets = protectSkill.range.getTargets(protector);
-                if (this.isCardInList(targetCard, defenseTargets)) {
+                if (this.cardManager.isCardInList(targetCard, defenseTargets)) {
                     if (Math.random() * 100 <= protectSkill.maxProbability) {
                         // ok, so now activate the protect skill
                         protectSkillActivated = true;
@@ -406,24 +272,6 @@ class BattleModel {
             }
         }
         return protectSkillActivated;
-    }
-    
-    /**
-     * Return true if a card is in a list of cards, or false if not
-     */
-    isCardInList(card: Card, list: Card[]): boolean {
-        var isIn: boolean = false;
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].id == card.id) {
-                isIn = true;
-                break;
-            }
-        }
-        return isIn;
-    }
-
-    isSameCard(card1: Card, card2: Card): boolean {
-        return card1.id == card2.id;
     }
 
     damageToTarget(attacker : Card, target : Card, skill : Skill, additionalDescription : string) {
@@ -595,7 +443,7 @@ class BattleModel {
         this.logger.startBattleLog();
         
         this.performOpeningSkills();
-        this.sortAllCards();
+        this.cardManager.sortAllCards();
 
         var finished = false;
 
@@ -608,9 +456,9 @@ class BattleModel {
             for (var i = 0; i < 10 && !finished; i++) {
                 var currentCard = this.allCards[i];
                 this.currentPlayer = currentCard.player;
-                this.currentPlayerCards = this.getPlayerCards(this.currentPlayer); // cards of the attacking player
+                this.currentPlayerCards = this.cardManager.getPlayerCards(this.currentPlayer); // cards of the attacking player
                 this.oppositePlayer = this.getOppositePlayer(this.currentPlayer);
-                this.oppositePlayerCards = this.getPlayerCards(this.oppositePlayer);
+                this.oppositePlayerCards = this.cardManager.getPlayerCards(this.oppositePlayer);
 
                 if (!currentCard || currentCard.isDead) {
                     continue;
@@ -625,7 +473,7 @@ class BattleModel {
                             executorId: currentCard.id,
                             skillId: attackSkill.id
                         });
-                        if (BattleModel.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
+                        if (this.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
                             this.executeRandomAttackSkill(currentCard);
                         }
                         else {
@@ -640,14 +488,14 @@ class BattleModel {
                     this.executeNormalAttack(currentCard);
                 }
 
-                if (this.isAllDead(this.oppositePlayerCards)) {
+                if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
                     finished = true;
                     this.playerWon = this.currentPlayer;
                     this.logger.addMajorEvent({
                         description: currentCard.getPlayerName() + " has won"
                     });                    
                 }
-                else if (this.isAllDead(this.currentPlayerCards)) {
+                else if (this.cardManager.isAllDead(this.currentPlayerCards)) {
                     finished = true;
                     this.playerWon = this.oppositePlayer;
                     this.logger.addMajorEvent({
@@ -661,7 +509,7 @@ class BattleModel {
     
     executeNormalAttack(attacker: Card) {
         this.logger.addMajorEvent({
-            description: attacker.name + " attacks!",
+            description: attacker.name + " attacks!"
             // we may consider adding the attacker id and auto id later on
         });
 

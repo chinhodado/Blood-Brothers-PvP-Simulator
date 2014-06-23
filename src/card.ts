@@ -1,14 +1,4 @@
-/// <reference path="battleLogger.ts"/>
-/// <reference path="battleModel.ts"/>
 /// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skill.ts"/>
-/// <reference path="skillCalcType.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="skillRange.ts"/>
-/// <reference path="util.ts"/>
 
 class Card {
 
@@ -31,7 +21,7 @@ class Card {
     formationColumn : number; // 0 to 4
     formationRow : ENUM.FormationRow; // 1, 2 or 3
     
-    imageLink : string
+    imageLink : string;
     
     constructor(name: string, stats: Stats, skills: Skill[], player: Player, formationColumn, imageLink: string, autoAttack: Skill) {
         this.name = name;

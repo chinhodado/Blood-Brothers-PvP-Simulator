@@ -1,15 +1,3 @@
-/// <reference path="battleLogger.ts"/>
-/// <reference path="battleModel.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skill.ts"/>
-/// <reference path="skillCalcType.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="util.ts"/>
-
 class RangeFactory {
 
     private static _instance: RangeFactory = null;
@@ -124,12 +112,12 @@ class BothSidesRange extends BaseRange {
     getTargets(executor : Card) : Card[] {
         var targets = [];
         
-        var leftCard : Card = BattleModel.getInstance().getLeftSideCard(executor);
+        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = BattleModel.getInstance().getRightSideCard(executor);
+        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
@@ -167,12 +155,12 @@ class SelfBothSidesRange extends BaseRange {
             targets.push(executor);
         }
         
-        var leftCard : Card = BattleModel.getInstance().getLeftSideCard(executor);
+        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = BattleModel.getInstance().getRightSideCard(executor);
+        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
@@ -188,7 +176,7 @@ class AllRange extends BaseRange {
     
     getTargets(executor : Card) : Card[] {
         var targets = [];
-        var partyCards = BattleModel.getInstance().getPlayerCards(executor.player);
+        var partyCards = CardManager.getInstance().getPlayerCards(executor.player);
         
         for (var i = 0; i < partyCards.length; i++) {
             if (!partyCards[i].isDead) {
@@ -206,7 +194,7 @@ class EnemyNearRange extends BaseRange {
         3 : 1,
         4 : 2,
         5 : 2
-    }
+    };
     
     // specific to an instance, the max distance from the center enemy
     maxDistance : number;
@@ -218,8 +206,8 @@ class EnemyNearRange extends BaseRange {
     
     getTargets (executor : Card) : Card[] {
         // get center enemy
-        var centerEnemy = BattleModel.getInstance().getNearestSingleOpponentTarget(executor);
-        var enemyCards = BattleModel.getInstance().getEnemyCards(executor.player);
+        var centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
+        var enemyCards = CardManager.getInstance().getEnemyCards(executor.player);
         
         // only upto 2 and not 4 since the max distance is 2 anyway
         var offsetArray = [0, -1, 1, -2, 2];
@@ -249,7 +237,7 @@ class EnemyAllRange extends BaseRange {
     }
     
     getTargets (executor : Card) : Card[]{
-        var enemyCards = BattleModel.getInstance().getEnemyCards(executor.player);
+        var enemyCards = CardManager.getInstance().getEnemyCards(executor.player);
         var targets = [];
         for (var i = 0; i < enemyCards.length; i++) {
             var currentEnemyCard = enemyCards[i];

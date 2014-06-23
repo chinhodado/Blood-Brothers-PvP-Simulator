@@ -1,14 +1,3 @@
-/// <reference path="battleModel.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skill.ts"/>
-/// <reference path="skillCalcType.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="skillRange.ts"/>
-/// <reference path="util.ts"/>
 /// <reference path="../lib/svgjs.d.ts"/>
 
 /**
@@ -597,7 +586,7 @@ class BattleLogger {
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
             var data: MinorEvent = this.minorEventLog[index][j];
-            var executor = BattleModel.getInstance().getCardById(data.executor);
+            var executor = BattleModel.getInstance().cardManager.getCardById(data.executor);
             var group: any = this.getCardImageGroupOnCanvas(executor);
 
             // scale from center
