@@ -77,6 +77,14 @@
 
 <body>
     <div id="battleEventDiv">
+        <div style="display: none;" id="simDiv">
+            Simulation: 100,000 battles
+            <br>
+            Simulation progress:
+            <progress value="0" max="100000" id="progressBar" style="width: 300px;"></progress>
+            <div id="simResultDiv">
+            </div>
+        </div>
     </div>
 
     <div id="rightSide">
@@ -121,15 +129,6 @@
             <div id="player1Fam4">
                 <p>player1 fam 4 </p>         
             </div>
-        </div>
-    </div>
-
-    <div style="display: none;" id="simDiv">
-        Simulation: 100,000 battles
-        <br>
-        Simulation progress:
-        <progress value="0" max="100000" id="progressBar" style="width: 300px;"></progress>
-        <div id="simResultDiv">
         </div>
     </div>
 
