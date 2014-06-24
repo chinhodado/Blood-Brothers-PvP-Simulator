@@ -102,6 +102,13 @@ var SkillDatabase = {
         skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1
     },
 
+    119 : {
+        name: "Flash of Rage", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 0.9, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Call down six random lightning bolts on foes."
+    },
+
     120 : {
         name: "Boon of Mind & Shield 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.2, skillFuncArg2: 3, skillFuncArg3: 2, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -179,10 +186,10 @@ var SkillDatabase = {
     },
 
     144 : { 
-	    name: "Windcrush", skillType: 2, skillFunc: 4, skillCalcType: 2,  
-	    skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
-	    skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
-	    description: "Deal heavy damage to four foes." 
+	name: "Windcrush", skillType: 2, skillFunc: 4, skillCalcType: 2,  
+	skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+	description: "Deal heavy damage to four foes." 
 	},  
 
     154: {
