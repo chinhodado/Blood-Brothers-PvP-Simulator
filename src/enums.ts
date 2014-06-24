@@ -82,6 +82,15 @@ module ENUM {
 
         HP_SHIELD = 17,
     }
+
+    export enum AfflictionType {
+        POISON = 1,
+        PARALYSIS = 2,
+        FROZEN = 3,
+        DISABLE = 4,
+        SILENT = 5,
+        BLIND = 7
+    }
     
     export enum FormationRow {
         REAR = 3,
