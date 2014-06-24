@@ -300,6 +300,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    234 : {
+        name: "Lightning Spirits", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to five random foes."
+    },
+
     236: {
         name: "Flash", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 2.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -387,6 +394,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "MAGICAL",
         description: "Deal heavy WIS-based damage to three random foes, regardless of position."
+    },
+
+    276 : {
+        name: "Divine Grief", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal Massive WIS-based damage to two random foes, regardless of position."
     },
 
     280: {
