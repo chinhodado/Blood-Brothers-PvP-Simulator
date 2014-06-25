@@ -293,6 +293,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    232 : {
+        name: "Lightning web", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.15, skillFuncArg2: 2, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage and sometimes paralyze three foes."
+    },
+
     236: {
         name: "Flash", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 2.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -415,6 +422,20 @@ var SkillDatabase = {
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal massive ATK-based damage to two random foes."
+    },
+
+    295 : {
+        name: "Dream Lure", skillType: 1, skillFunc: 19, skillCalcType: 0, 
+        skillFuncArg1: 0, skillFuncArg2: 4, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 70,
+        description: "Sometimes disable three foes at start of battle."
+    },
+
+    296 : {
+        name: "Blood Offering", skillType: 2, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 1.2, skillFuncArg2: 4, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage and disable six random foes, regardless of position."
     },
 
     297 : {

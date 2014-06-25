@@ -1,21 +1,5 @@
 class RangeFactory {
 
-    private static _instance: RangeFactory = null;
-
-    public static getInstance(): RangeFactory {
-        if (RangeFactory._instance === null) {
-            RangeFactory._instance = new RangeFactory();
-        }
-        return RangeFactory._instance;
-    }
-
-    constructor() {
-        if(RangeFactory._instance) {
-            throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
-        }
-        RangeFactory._instance = this;
-    }
-
     static ENEMY_RANDOM_RANGE_TARGET_NUM = {
         16: 3,
         17: 6,
@@ -32,7 +16,7 @@ class RangeFactory {
         33: 5
     };
     
-    getRange (id) {
+    static getRange (id) {
         var range: BaseRange = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
@@ -46,23 +30,23 @@ class RangeFactory {
         return range;
     }
 
-    isEnemyRandomRange (id) {
+    static isEnemyRandomRange (id) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
     }
     
-    createEnemyRandomRange (id) {
+    static createEnemyRandomRange (id) {
         return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
     }
     
-    isEnemyNearRange (id) {
+    static isEnemyNearRange (id) {
         return !!RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
     }
     
-    createEnemyNearRange (id) {
+    static createEnemyNearRange (id) {
         return new EnemyNearRange(id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]);
     }
     
-    createRange (id) {
+    static createRange (id) {
         switch (id) {
             case 2 :
                 return new BothSidesRange(id);

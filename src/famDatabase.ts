@@ -147,6 +147,10 @@ var famDatabase = {
         {name: "Guillaume",     hp: 21515, atk: 20887, def: 16308, wis: 12948, agi: 18505, skills: [466, 467],
         imageLink: "http://img1.wikia.nocookie.net/__cb20140520122326/bloodbrothersgame/images/thumb/2/22/Guillaume%2C_Fanatic_Figure.png/60px-Guillaume%2C_Fanatic_Figure.png"},
 
+    "Haokah, the Lightning Brave II":
+        {name: "Haokah", hp: 13476, atk: 13928, def: 11111, wis: 15706, agi: 13245, skills: [232],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130901131933/bloodbrothersgame/images/thumb/9/98/Haokah%2C_the_Lightning_Brave_II_Figure.png/40px-Haokah%2C_the_Lightning_Brave_II_Figure.png"},
+
     "Hecatoncheir the Adamantine II":
         {name: "Hecatoncheir", hp: 11807, atk: 13902, def: 14768, wis: 13928, agi: 13366, skills: [264],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131010170211/bloodbrothersgame/images/thumb/8/88/Hecatoncheir_the_Adamantine_II_Figure.png/40px-Hecatoncheir_the_Adamantine_II_Figure.png"},
@@ -346,6 +350,10 @@ var famDatabase = {
     "Vivian Griffinrider II":
         {name: "Vivian", hp: 14677, atk: 17851, def: 15229, wis: 13095, agi: 14677, skills: [224],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130816162357/bloodbrothersgame/images/thumb/5/5f/Vivian_Griffinrider_II_Figure.png/60px-Vivian_Griffinrider_II_Figure.png"},
+
+    "Vlad the Impaler II":
+        {name: "Vlad", hp: 16323, atk: 19508, def: 13680, wis: 14709, agi: 16529, skills: [295, 296],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131122044220/bloodbrothersgame/images/thumb/5/56/Vlad_the_Impaler_II_Figure.png/40px-Vlad_the_Impaler_II_Figure.png"},
 
     "Wolfert, Grave Keeper II" :
         {name : "Wolfert",      hp: 14189, atk: 23972, def: 13723, wis: 13290, agi: 13431, skills: [118],

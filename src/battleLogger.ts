@@ -426,8 +426,8 @@ class BattleLogger {
 
         // save a log of the current field situation
         var toSerialize = {
-            player1Cards: BattleModel.getInstance().player1Cards,
-            player2Cards: BattleModel.getInstance().player2Cards
+            player1Cards: getSerializableObjectArray(BattleModel.getInstance().player1Cards),
+            player2Cards: getSerializableObjectArray(BattleModel.getInstance().player2Cards)
         };
         
         this.initialFieldInfo = JSON.stringify(toSerialize);

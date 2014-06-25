@@ -62,6 +62,35 @@ class Card {
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }
     
+    getSerializableObject() {
+        return {
+            name: this.name,
+            stats: this.stats,
+            id: this.id,
+            originalStats: this.originalStats,
+            status: this.status,
+            skills: getSerializableObjectArray(this.skills),
+            player: this.player,
+            isDead: this.isDead,
+
+            affliction: this.affliction,
+
+            autoAttack: this.autoAttack.getSerializableObject(),
+    
+            openingSkill: this.openingSkill? this.openingSkill.getSerializableObject() : null,
+            attackSkill: this.attackSkill? this.attackSkill.getSerializableObject() : null,
+            protectSkill: this.protectSkill? this.protectSkill.getSerializableObject() : null,
+            defenseSkill: this.defenseSkill? this.defenseSkill.getSerializableObject() : null,
+    
+            formationColumn: this.formationColumn,
+            formationRow : this.formationRow,
+    
+            imageLink: this.imageLink
+        }
+    }
+
+
+
     getName() {
         return this.name;
     }

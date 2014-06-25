@@ -1,3 +1,4 @@
+/// <reference path="affliction.ts"/>
 /// <reference path="battleLogger.ts"/>
 /// <reference path="card.ts"/>
 /// <reference path="cardManager.ts"/>
@@ -8,6 +9,7 @@
 /// <reference path="skill.ts"/>
 /// <reference path="skillCalcType.ts"/>
 /// <reference path="skillDatabase.ts"/>
+/// <reference path="skillFunc.ts"/>
 /// <reference path="skillRange.ts"/>
 /// <reference path="util.ts"/>
 
@@ -16,7 +18,6 @@ class BattleModel {
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
 
-    rangeFactory: RangeFactory;
     logger : BattleLogger;
     cardManager: CardManager;
     
@@ -56,7 +57,6 @@ class BattleModel {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
         BattleModel._instance = this;
-        this.rangeFactory = RangeFactory.getInstance();
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
         
@@ -188,96 +188,6 @@ class BattleModel {
         }
     }
 
-    executeRandomAttackSkill (executor : Card) {
-    	var skill = executor.attackSkill;        
-        var numTarget = (<EnemyRandomRange>skill.range).numTarget;
-        
-        for (var i = 0; i < numTarget && !executor.isDead; i++) {
-
-            var targetIndex = this.cardManager.getValidSingleTarget(this.oppositePlayerCards);
-    
-            if (targetIndex == -1) {
-                // no valid target, miss a turn, continue to next card
-                return;
-            }
-            
-            // since we get a valid index with every iteration of the loop, there's no need
-            // to check if the target is dead here
-            var targetCard = this.oppositePlayerCards[targetIndex];
-            var protectSkillActivated = this.processProtect(executor, targetCard, skill, null);
-
-            // if not protected, proceed with the attack as normal
-            if (!protectSkillActivated) {
-                this.damageToTarget(executor, targetCard, skill, null);
-            }
-        }
-    }
-
-    /**
-     * Process the protecting sequence. Return true if a protect has been executed
-     * or false if no protect has been executed
-     *
-     * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
-     */
-    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any): boolean {
-        // now check if someone on the enemy side can protect before the damage is dealt
-        var enemyCards = this.cardManager.getEnemyCards(attacker.player);
-        var protectSkillActivated = false; //<- has any protect skill been activated yet?
-        for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
-            if (enemyCards[i].isDead) {
-                continue;
-            }
-            var protectSkill = enemyCards[i].protectSkill;
-            if (protectSkill) {
-                var protector = enemyCards[i];
-
-                // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
-                if (this.cardManager.isSameCard(targetCard, protector) && protectSkill.skillRange != 21) {
-                    continue;
-                }
-
-                // if a fam that has been attacked is not allowed to protect (like in the case of AoE), continue
-                if (targetsAttacked && targetsAttacked[protector.id]) {
-                    continue;
-                }
-
-                if (!protector.canUseSkill()) {
-                    continue;
-                }
-
-                // now check if the original target is in the protect range of the protector
-                var defenseTargets = protectSkill.range.getTargets(protector);
-                if (this.cardManager.isCardInList(targetCard, defenseTargets)) {
-                    if (Math.random() * 100 <= protectSkill.maxProbability) {
-                        // ok, so now activate the protect skill
-                        protectSkillActivated = true;
-
-                        // first redirect the original attack to the protecting fam
-                        var additionalDesc = protector.name + " procs " + protectSkill.name + " to protect " +
-                            targetCard.name + ". ";
-                        this.damageToTarget(attacker, protector, attackSkill, additionalDesc);
-
-                        // update the targetsAttacked if necessary
-                        if (targetsAttacked) {
-                            targetsAttacked[protector.id] = true;
-                        }
-
-                        // counter phase
-                        if (!protector.isDead && protectSkill.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER) {
-                            var additionalDesc = protector.name + " counters " + attacker.name + "! ";
-                            this.damageToTarget(protector, attacker, protectSkill, additionalDesc);
-                        }
-                    }
-                }
-            }
-            else {
-                // this fam doesn't have a protect skill, move on to the next one
-                continue;
-            }
-        }
-        return protectSkillActivated;
-    }
-
     damageToTarget(attacker : Card, target : Card, skill : Skill, additionalDescription : string) {
         var skillMod = skill.skillFuncArg1;
         var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
@@ -358,122 +268,7 @@ class BattleModel {
             this.logger.addMinorEvent(executor, target, ENUM.MinorEventType.AFFLICTION, ENUM.AfflictionType[type], maxTurn, description, 0);
         }
     }
-    
-    /**
-     * Execute an attack skill that has the targets obtained from its range
-     */
-    executeAttackSkillWithRangeTargets (executor : Card) {
-        var skill = executor.attackSkill;
-        var targets : Card[] = skill.range.getTargets(executor);
-
-        if (skill.contact == 0 || typeof skill.contact === undefined) {
-            // if the skill doesn't make contact, it must be AoE, so only one fam can be protected
-
-            // NOTE: the algorithm used here for protection may not be correct, since it makes the 
-            // proc rate not really what it should be. For example, if two cards, one can protect (A)
-            // and one not (B), are hit by an AoE, B only has 35% chance of being protected, and not 70%,
-            // since there's 50% that A will be hit first and therefore unable to protect later on when B
-            // is the target (this is based on the assumption that a fam cannot be hit twice in an AoE)
-
-            // shuffle the targets. This serves two purposes. First, we can iterate
-            // through the array in a random manner. Second, since the order is not
-            // simply left-to-right anymore, it reminds us that this is an AoE skill
-            shuffle(targets);
-
-            // assume only one protection can be proc during an AoE skill. Is it true?
-            var aoeProtectSkillActivated = false; //<- has any protect skill activated during this whole AoE?
-
-            // keep track of targets attacked, to make sure a fam can only be attacked once. So if a fam has already been
-            // attacked, it cannot protect another fam later on 
-            var targetsAttacked = {};
-
-            for (var i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
-                var targetCard = targets[i];
-
-                // a target can be dead, for example from protecting another fam
-                if (targetCard.isDead) {
-                    continue;
-                }
-
-                var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
-
-                // if no protect skill has been activated at all during this AoE, we can try to
-                // protect this target, otherwise no protect can be activated to protect this target
-                // also, if the target has already been attacked (i.e. it protected another card before), then
-                // don't try to protect it
-                if (!aoeProtectSkillActivated && !targetsAttacked[targetCard.id]) {
-                    protectSkillActivated = this.processProtect(executor, targetCard, skill, targetsAttacked);
-                    if (protectSkillActivated) {
-                        aoeProtectSkillActivated = true;
-                    }
-                }
-
-                // if not protected, proceed with the attack as normal
-                // also need to make sure the target is not already attacked
-                if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
-                    this.damageToTarget(executor, targetCard, skill, null);
-                    targetsAttacked[targetCard.id] = true;
-                }
-            }
-        }
-        else {
-            // skill makes contact, must be fork/sweeping etc., so just proceed as normal
-            // i.e. multiple protection is possible
-            for (var i = 0; i < targets.length && !executor.isDead; i++) {
-                var targetCard = targets[i];
-
-                // a target can be dead, for example from protecting another fam
-                if (targetCard.isDead) {
-                    continue;
-                }
-
-                var protectSkillActivated = this.processProtect(executor, targetCard, skill, null);
-
-                // if not protected, proceed with the attack as normal
-                if (!protectSkillActivated) {
-                    this.damageToTarget(executor, targetCard, skill, null);
-                }
-            }
-        }        
-    }
-    
-    executeOpeningSkill (executor : Card) {
-        var skill = executor.openingSkill;
-        
-        for (var skillFuncArgNum = 2; skillFuncArgNum <= 5; skillFuncArgNum++) {
-            if (skill.getSkillFuncArg(skillFuncArgNum) == 0) {
-                continue;
-            }
-            switch (skill.getSkillFuncArg(skillFuncArgNum)) {
-                case ENUM.StatusType.ATK :
-                case ENUM.StatusType.DEF :
-                case ENUM.StatusType.WIS :
-                case ENUM.StatusType.AGI :
-                    var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-                    var skillMod = skill.skillFuncArg1;
-                    var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
-                    break;
-                case ENUM.StatusType.ATTACK_RESISTANCE :
-                case ENUM.StatusType.MAGIC_RESISTANCE :
-                case ENUM.StatusType.BREATH_RESISTANCE :
-                    var buffAmount = skill.skillFuncArg1;
-                    break;
-                default :
-                    throw new Error("Wrong status type or not implemented");
-            }
-            
-            var thingToBuff = skill.getSkillFuncArg(skillFuncArgNum);        
-            var targets : Card[] = skill.range.getTargets(executor);
-            
-            for (var i = 0; i < targets.length; i++) {
-                targets[i].changeStatus(thingToBuff, buffAmount);
-                var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
-                this.logger.addMinorEvent(executor, targets[i], ENUM.MinorEventType.STATUS,
-                    ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
-            }
-        }
-    }
-
+   
     startBattle () {
         this.logger.startBattleLog();
         
@@ -503,17 +298,10 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability && currentCard.canUseSkill()) {
-                        this.logger.addMajorEvent({
-                            description: currentCard.name + " procs " + attackSkill.name,
-                            executorId: currentCard.id,
-                            skillId: attackSkill.id
+                        attackSkill.execute({
+                            executor: currentCard,
+                            skill: attackSkill
                         });
-                        if (this.rangeFactory.isEnemyRandomRange(attackSkill.skillRange)) {
-                            this.executeRandomAttackSkill(currentCard);
-                        }
-                        else {
-                            this.executeAttackSkillWithRangeTargets(currentCard);
-                        }
                     }
                     else {
                         this.executeNormalAttack(currentCard);
@@ -597,6 +385,63 @@ class BattleModel {
         }
     }
 
+    /**
+     * Process the protecting sequence. Return true if a protect has been executed
+     * or false if no protect has been executed
+     *
+     * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
+     */
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any): boolean {
+        // now check if someone on the enemy side can protect before the damage is dealt
+        var enemyCards = this.cardManager.getEnemyCards(attacker.player);
+        var protectSkillActivated = false; //<- has any protect skill been activated yet?
+        for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
+            if (enemyCards[i].isDead) {
+                continue;
+            }
+            var protectSkill = enemyCards[i].protectSkill;
+            if (protectSkill) {
+                var protector = enemyCards[i];
+
+                // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
+                if (this.cardManager.isSameCard(targetCard, protector) && protectSkill.skillRange != 21) {
+                    continue;
+                }
+
+                // if a fam that has been attacked is not allowed to protect (like in the case of AoE), continue
+                if (targetsAttacked && targetsAttacked[protector.id]) {
+                    continue;
+                }
+
+                if (!protector.canUseSkill()) {
+                    continue;
+                }
+
+                // now check if the original target is in the protect range of the protector
+                var defenseTargets = protectSkill.range.getTargets(protector);
+                if (this.cardManager.isCardInList(targetCard, defenseTargets)) {
+                    if (Math.random() * 100 <= protectSkill.maxProbability) {
+                        // ok, so now activate the protect skill
+                        protectSkillActivated = true;
+                        protectSkill.execute({
+                            executor: protector,
+                            skill: protectSkill,
+                            attacker: attacker,    // for protect
+                            attackSkill: attackSkill, // for protect
+                            targetCard: targetCard,  // for protect
+                            targetsAttacked: targetsAttacked  // for protect
+                        });
+                    }
+                }
+            }
+            else {
+                // this fam doesn't have a protect skill, move on to the next one
+                continue;
+            }
+        }
+        return protectSkillActivated;
+    }
+
     performOpeningSkills () {
         for (var i = 0; i < this.player1Cards.length; i++) {
             var skill1 = this.player1Cards[i].openingSkill;
@@ -607,7 +452,10 @@ class BattleModel {
                         executorId: this.player1Cards[i].id,
                         skillId: skill1.id
                     });
-                    this.executeOpeningSkill(this.player1Cards[i]);
+                    skill1.execute({
+                        executor: this.player1Cards[i],
+                        skill: skill1
+                    });
                 }
             }
         }
@@ -621,7 +469,10 @@ class BattleModel {
                         executorId: this.player2Cards[i].id,
                         skillId: skill2.id
                     });
-                    this.executeOpeningSkill(this.player2Cards[i]);
+                    skill2.execute({
+                        executor: this.player2Cards[i],
+                        skill: skill2
+                    });
                 }
             }
         }

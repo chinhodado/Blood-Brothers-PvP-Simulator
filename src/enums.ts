@@ -35,7 +35,7 @@ module ENUM {
         CLEAR_BUFF = 16,
         SUICIDE = 17,
         HEAL = 18,
-        AFFLICTION = 19,
+        AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
         PATIENCE = 20,
         DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
         DEBUFFINDIRECT = 22,
