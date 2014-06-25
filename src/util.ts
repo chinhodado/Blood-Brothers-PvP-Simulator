@@ -96,3 +96,11 @@ function getScaledWikiaImageLink (link: string, newWidth: number): string {
     var newScaledLink: string = originalLink + newScaledName;
     return newScaledLink;
 }
+
+function getSerializableObjectArray(array: any[]) {
+    var toReturn = [];
+    for (var i = 0; i < array.length; i++) {
+        toReturn.push(array[i].getSerializableObject());
+    }
+    return toReturn;
+}

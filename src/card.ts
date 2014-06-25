@@ -9,7 +9,9 @@ class Card {
     status : Status;
     skills : Skill[];
     player : Player;
-    isDead : boolean;
+    isDead: boolean;
+
+    affliction: Affliction;
 
     autoAttack: Skill;
     
@@ -60,6 +62,35 @@ class Card {
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }
     
+    getSerializableObject() {
+        return {
+            name: this.name,
+            stats: this.stats,
+            id: this.id,
+            originalStats: this.originalStats,
+            status: this.status,
+            skills: getSerializableObjectArray(this.skills),
+            player: this.player,
+            isDead: this.isDead,
+
+            affliction: this.affliction,
+
+            autoAttack: this.autoAttack.getSerializableObject(),
+    
+            openingSkill: this.openingSkill? this.openingSkill.getSerializableObject() : null,
+            attackSkill: this.attackSkill? this.attackSkill.getSerializableObject() : null,
+            protectSkill: this.protectSkill? this.protectSkill.getSerializableObject() : null,
+            defenseSkill: this.defenseSkill? this.defenseSkill.getSerializableObject() : null,
+    
+            formationColumn: this.formationColumn,
+            formationRow : this.formationRow,
+    
+            imageLink: this.imageLink
+        }
+    }
+
+
+
     getName() {
         return this.name;
     }
@@ -98,6 +129,65 @@ class Card {
         else {
             throw new Error ("Invalid stat type");
         }
+    }
+
+    // affliction
+    setAffliction(type: ENUM.AfflictionType, optParam?) {
+        if (!optParam) {
+            optParam = [null, null];
+        }
+        if(this.affliction){
+            if (this.affliction.getType() === type){
+                this.affliction.add(optParam[0], optParam[1]);
+                return;
+            }
+            else {
+                this.clearAffliction();
+            }
+        }
+        this.affliction = AfflictionFactory.getAffliction(type);
+        this.affliction.add(optParam[0], optParam[1]);
+    }
+
+    clearAffliction(){
+        if(!this.affliction){
+            return;
+        }
+        this.affliction.clear();
+        this.affliction = null;
+    }
+
+    canAttack(){
+        return (this.affliction) ? this.affliction.canAttack() : true;
+    }
+
+    canUseSkill(){
+        return (this.affliction) ? this.affliction.canUseSkill() : true;
+    }
+
+    canMiss() {
+        return (this.affliction) ? this.affliction.canMiss() : false;
+    }
+
+    getAfflictionType(){
+        return this.affliction ? this.affliction.getType() : null;
+    }
+
+    // return true if an affliction was cleared
+    updateAffliction(): boolean{
+        if(!this.affliction){
+            return false;
+        }
+
+        this.affliction.update(this);
+        
+        if(this.affliction && this.affliction.isFinished()){
+            this.clearAffliction();
+            return true;
+        }
+
+        // still have affliction
+        return false;
     }
     
     changeStatus(statusType : ENUM.StatusType, amount : number) : void {

@@ -12,11 +12,13 @@ class Skill {
     skillFuncArg5 : number;
     skillRange : number;
     maxProbability : number;
-    ward : string;
+    ward: string;
+
     contact: number;
 
     range : BaseRange;
-    
+    logic: SkillLogic;
+
     constructor (skillId : number) {
     
         var skillData = SkillDatabase[skillId];
@@ -41,8 +43,30 @@ class Skill {
         else {
             this.contact = skillData.contact;
         }
+
+        this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);
         
-        this.range = RangeFactory.getInstance().getRange(this.skillRange);
+        this.range = RangeFactory.getRange(this.skillRange);
+    }
+
+    getSerializableObject() {
+        return {
+            id: this.id,
+            name: this.name,
+            skillType: this.skillType,
+            skillFunc: this.skillFunc,
+            skillCalcType: this.skillCalcType,
+            skillFuncArg1: this.skillFuncArg1,
+            skillFuncArg2: this.skillFuncArg2,
+            skillFuncArg3: this.skillFuncArg3,
+            skillFuncArg4: this.skillFuncArg4,
+            skillFuncArg5: this.skillFuncArg5,
+            skillRange: this.skillRange,
+            maxProbability: this.maxProbability,
+            ward: this.ward,
+
+            contact: this.contact
+        }
     }
     
     getSkillFuncArg(argnum : number) {
@@ -61,5 +85,9 @@ class Skill {
         else if (argnum == 5) {
             return this.skillFuncArg5;
         }
+    }
+
+    execute(data: SkillLogicData) {
+        this.logic.execute(data);
     }
 }

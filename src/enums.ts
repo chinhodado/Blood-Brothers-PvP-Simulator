@@ -19,7 +19,8 @@ module ENUM {
     export enum SkillFunc {
         BUFF = 1, // arg1: multiplier, arg2: status
         DEBUFF = 2,
-        ATTACK = 3,
+        ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
+                    // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
         MAGIC = 4, // anything that ignores position
         COOP = 5,
         REVIVE = 6,
@@ -34,7 +35,7 @@ module ENUM {
         CLEAR_BUFF = 16,
         SUICIDE = 17,
         HEAL = 18,
-        AFFLICTION = 19,
+        AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
         PATIENCE = 20,
         DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
         DEBUFFINDIRECT = 22,
@@ -82,11 +83,27 @@ module ENUM {
 
         HP_SHIELD = 17,
     }
+
+    export enum AfflictionType {
+        POISON = 1,
+        PARALYSIS = 2,
+        FROZEN = 3,
+        DISABLE = 4,
+        SILENT = 5,
+        BLIND = 7
+    }
     
     export enum FormationRow {
         REAR = 3,
         MID = 2,
         FRONT = 1
+    }
+
+    export enum MinorEventType {
+        HP = 1,
+        STATUS = 2,
+        AFFLICTION = 3,
+        DESCRIPTION = 4
     }
 }
 
