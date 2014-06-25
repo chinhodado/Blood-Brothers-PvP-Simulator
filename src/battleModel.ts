@@ -241,6 +241,10 @@ class BattleModel {
                     continue;
                 }
 
+                if (!protector.canUseSkill()) {
+                    continue;
+                }
+
                 // now check if the original target is in the protect range of the protector
                 var defenseTargets = protectSkill.range.getTargets(protector);
                 if (this.cardManager.isCardInList(targetCard, defenseTargets)) {
@@ -312,16 +316,46 @@ class BattleModel {
         }
     
         target.changeHP(-1 * damage);
+
+        this.processAffliction(attacker, target, skill); 
                 
         if (!additionalDescription) {
             additionalDescription = "";
         }
         var description = additionalDescription +
             target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
-        this.logger.addMinorEvent(attacker, target, "HP", (-1) * damage, description, skill.id);
+        this.logger.addMinorEvent(attacker, target, ENUM.MinorEventType.HP, "HP", (-1) * damage, description, skill.id);
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
+        }
+    }
+
+    processAffliction(executor: Card, target: Card, skill: Skill) {
+        var type: ENUM.AfflictionType = skill.skillFuncArg2
+        var prob: number = skill.skillFuncArg3;
+
+        if (!type) {
+            return;
+        }
+
+        if (skill.skillFuncArg4 || skill.skillFuncArg5) {
+            // arg4: number of turns for silent & blind, % for venom
+            // arg5: miss prob. for blind
+            var optParam = [skill.skillFuncArg4, skill.skillFuncArg5];
+        }
+            
+        if(Math.random() <= prob){
+            target.setAffliction(type, optParam);
+            var description = target.name + " is now " + ENUM.AfflictionType[type];
+            var maxTurn = 1;
+            if (type == ENUM.AfflictionType.BLIND || type == ENUM.AfflictionType.SILENT) {
+                maxTurn = skill.skillFuncArg4;
+            }
+            else if (type == ENUM.AfflictionType.POISON) {
+                maxTurn = -1;
+            }
+            this.logger.addMinorEvent(executor, target, ENUM.MinorEventType.AFFLICTION, ENUM.AfflictionType[type], maxTurn, description, 0);
         }
     }
     
@@ -434,7 +468,8 @@ class BattleModel {
             for (var i = 0; i < targets.length; i++) {
                 targets[i].changeStatus(thingToBuff, buffAmount);
                 var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
-                this.logger.addMinorEvent(executor, targets[i], ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
+                this.logger.addMinorEvent(executor, targets[i], ENUM.MinorEventType.STATUS,
+                    ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
             }
         }
     }
@@ -467,7 +502,7 @@ class BattleModel {
                 // procs active skill if we can
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
-                    if (Math.random() * 100 <= attackSkill.maxProbability) {
+                    if (Math.random() * 100 <= attackSkill.maxProbability && currentCard.canUseSkill()) {
                         this.logger.addMajorEvent({
                             description: currentCard.name + " procs " + attackSkill.name,
                             executorId: currentCard.id,
@@ -503,11 +538,38 @@ class BattleModel {
                     });
                 }
             }
+
+            if (finished) {
+                break;
+            }
+
+            // process end turn events: afflictions, etc.
+            this.logger.addMajorEvent({
+                description: "Turn end"
+            });
+
+            for (var i = 0; i < 10 && !finished; i++) {
+                var currentCard = this.allCards[i];
+                if (currentCard.isDead) {
+                    continue;
+                }
+                var cured = currentCard.updateAffliction();
+                    // if cured, make a log
+                    if (!currentCard.affliction && cured) {
+                        var desc = currentCard.name + " is cured of affliction!";
+                        this.logger.addMinorEvent(currentCard, currentCard, ENUM.MinorEventType.AFFLICTION, "NONE", -2, desc, 0);
+                    }
+            }
         }
         return this.playerWon.name;
     }
     
     executeNormalAttack(attacker: Card) {
+
+        if (!attacker.canAttack()) {
+            return;
+        }
+
         this.logger.addMajorEvent({
             description: attacker.name + " attacks!"
             // we may consider adding the attacker id and auto id later on
@@ -539,7 +601,7 @@ class BattleModel {
         for (var i = 0; i < this.player1Cards.length; i++) {
             var skill1 = this.player1Cards[i].openingSkill;
             if (skill1) {
-                if (Math.random() * 100 < skill1.maxProbability) {
+                if (Math.random() * 100 < skill1.maxProbability && this.player1Cards[i].canUseSkill()) {
                     this.logger.addMajorEvent({
                         description: this.player1Cards[i].name + " procs " + skill1.name,
                         executorId: this.player1Cards[i].id,
@@ -553,7 +615,7 @@ class BattleModel {
         for (var i = 0; i < this.player2Cards.length; i++) {
             var skill2 = this.player2Cards[i].openingSkill;
             if (skill2) {
-                if (Math.random() * 100 < skill2.maxProbability) {
+                if (Math.random() * 100 < skill2.maxProbability && this.player2Cards[i].canUseSkill()) {
                     this.logger.addMajorEvent({
                         description: this.player2Cards[i].name + " procs " + skill2.name,
                         executorId: this.player2Cards[i].id,

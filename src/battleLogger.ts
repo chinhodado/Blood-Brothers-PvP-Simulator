@@ -145,25 +145,28 @@ class BattleLogger {
     /**
      * Apply an event to the supplied data
      */
-    applyMinorEvent(event, toApply) {
+    applyMinorEvent(event: MinorEvent, toApply) {
+
         // get the card
         var card;
         for (var i = 0; i<5; i++) {
-            if (toApply.player1Cards[i].id == event.target) {
+            if (toApply.player1Cards[i].id == event.targetId) {
                 card = toApply.player1Cards[i];
                 break;
             }
-            if (toApply.player2Cards[i].id == event.target) {
+            if (toApply.player2Cards[i].id == event.targetId) {
                 card = toApply.player2Cards[i];
                 break;
             }
         }
-        
-        // TODO: abstract this... please, future me, make it nicer :(
-        if (event.attribute == "HP") {
+                
+        if (event.type == ENUM.MinorEventType.HP) {
+            if (event.attribute != "HP") {
+                throw new Error("Invalid MinorEvent!");
+            }
             card.stats.hp += event.amount;
         }
-        else {
+        else if (event.type == ENUM.MinorEventType.STATUS) {
             switch (ENUM.StatusType[<string>event.attribute]) {
                 case ENUM.StatusType.ATK :
                     card.status.atk += event.amount;
@@ -190,8 +193,39 @@ class BattleLogger {
                     card.status.skillProbability = event.amount;
                     break;
                 default :
-                    throw new Error("Unknown attribute");
+                    throw new Error("Unknown status attribute");
                     break;
+            }
+        }
+        else if (event.type == ENUM.MinorEventType.AFFLICTION) {
+            if (event.amount == 0) { // the affliction finished
+                card.affliction = null;
+                return;
+            }
+            switch (event.attribute) {
+                case "BLIND":
+                    card.affliction = { type: "Blind", duration: event.amount };
+                    break;
+                case "DISABLE":
+                    card.affliction = { type: "Disable", duration: event.amount };
+                    break;
+                case "FROZEN":
+                    card.affliction = { type: "Frozen", duration: event.amount };
+                    break;
+                case "PARALYSIS":
+                    card.affliction = { type: "Paralyzed", duration: event.amount };
+                    break;
+                case "POISON":
+                    card.affliction = { type: "Poison", duration: event.amount };
+                    break;
+                case "SILENT":
+                    card.affliction = { type: "Silent", duration: event.amount };
+                    break;
+                case "NONE":
+                    card.affliction = null;
+                    break;
+                default:
+                    throw new Error("Invalid affliction type!");
             }
         }
     }
@@ -226,6 +260,8 @@ class BattleLogger {
                 var stats = playerCards[fam].stats;
                 var originalStats = playerCards[fam].originalStats;
                 var status = playerCards[fam].status;
+                var afflict = playerCards[fam].affliction; // not the same thing as in the original card class
+
                 var htmlelem = document.getElementById("player" + player + "Fam" + fam); // <- the box to display info of the current fam
                 
                 // the stats of the fam after the buffs/debuffs are added in
@@ -234,51 +270,77 @@ class BattleLogger {
                 var addedWIS = stats.wis + status.wis;
                 var addedAGI = stats.agi + status.agi;
                 
-                var infoText = {
+                var infoText: any = {
                     name : playerCards[fam].name,
                     hp : "HP: " + stats.hp,
                     atk : "ATK: " + addedATK,
                     def : "DEF: " + addedDEF,
                     wis : "WIS: " + addedWIS,
                     agi : "AGI: " + addedAGI,
-                    physicalResist : "PW: " + status.attackResistance,
-                    magicalResist : "MW: " + status.magicResistance,
-                    breathResist : "BW: " + status.breathResistance
                 };
+
+                if (status.attackResistance != 0) {
+                    infoText.physicalResist = "PW: " + status.attackResistance;
+                }
+
+                if (status.magicResistance != 0) {
+                    infoText.magicalResist = "MW: " + status.magicResistance;
+                }
+
+                if (status.breathResistance != 0) {
+                    infoText.breathResist = "BW: " + status.breathResistance;
+                }
+
+                if (afflict) {
+                    infoText.affliction = "Affliction: " + afflict.type + " (" + afflict.duration + " turn)";
+                }
                 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
                 for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
                     var tempEvent = this.minorEventLog[index][j]; // a minor event
-                    if (tempEvent.target == playerCards[fam].id) {
-                        if (tempEvent.attribute == "HP") {
-                            infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
+                    if (tempEvent.targetId == playerCards[fam].id) {
+                        if (tempEvent.type == ENUM.MinorEventType.HP) {
+                            if (tempEvent.attribute == "HP") {
+                                infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
+                            }
+                            else throw new Error("Invalid event attribute");
                         }
-                        else if (tempEvent.attribute == "ATK") {
-                            infoText.atk = this.decorateText(infoText.atk, tempEvent.amount < 0);
+                        else if (tempEvent.type == ENUM.MinorEventType.STATUS) {
+                            if (tempEvent.attribute == "HP") {
+                                infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
+                            }
+                            else if (tempEvent.attribute == "ATK") {
+                                infoText.atk = this.decorateText(infoText.atk, tempEvent.amount < 0);
+                            }
+                            else if (tempEvent.attribute == "DEF") {
+                                infoText.def = this.decorateText(infoText.def, tempEvent.amount < 0);
+                            }
+                            else if (tempEvent.attribute == "WIS") {
+                                infoText.wis = this.decorateText(infoText.wis, tempEvent.amount < 0);
+                            }
+                            else if (tempEvent.attribute == "AGI") {
+                                infoText.agi = this.decorateText(infoText.agi, tempEvent.amount < 0);
+                            }
+                            else if (tempEvent.attribute == "ATTACK_RESISTANCE") {
+                                infoText.physicalResist = this.decorateText(infoText.physicalResist, false);
+                            }
+                            else if (tempEvent.attribute == "MAGIC_RESISTANCE") {
+                                infoText.magicalResist = this.decorateText(infoText.magicalResist, false);
+                            }
+                            else if (tempEvent.attribute == "BREATH_RESISTANCE") {
+                                infoText.breathResist = this.decorateText(infoText.breathResist, false);
+                            }
                         }
-                        else if (tempEvent.attribute == "DEF") {
-                            infoText.def = this.decorateText(infoText.def, tempEvent.amount < 0);
-                        }
-                        else if (tempEvent.attribute == "WIS") {
-                            infoText.wis = this.decorateText(infoText.wis, tempEvent.amount < 0);
-                        }
-                        else if (tempEvent.attribute == "AGI") {
-                            infoText.agi = this.decorateText(infoText.agi, tempEvent.amount < 0);
-                        }
-                        else if (tempEvent.attribute == "ATTACK_RESISTANCE") {
-                            infoText.physicalResist = this.decorateText(infoText.physicalResist, false);
-                        }
-                        else if (tempEvent.attribute == "MAGIC_RESISTANCE") {
-                            infoText.magicalResist = this.decorateText(infoText.magicalResist, false);
-                        }
-                        else if (tempEvent.attribute == "BREATH_RESISTANCE") {
-                            infoText.breathResist = this.decorateText(infoText.breathResist, false);
+                        else if (tempEvent.type == ENUM.MinorEventType.AFFLICTION) {
+                            if (tempEvent.attribute != "NONE") {
+                                infoText.affliction = this.decorateText(infoText.affliction, false);
+                            }
                         }
                     }
                 }
                 
-                if (this.minorEventLog[index] && this.minorEventLog[index][0].executor == playerCards[fam].id) {
+                if (this.minorEventLog[index] && this.minorEventLog[index][0].executorId == playerCards[fam].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
 
@@ -287,10 +349,11 @@ class BattleLogger {
                                     infoText.atk + "<br>" +
                                     infoText.def + "<br>" +
                                     infoText.wis + "<br>" +
-                                    infoText.agi + "<br>" +
-                                    infoText.physicalResist + ", " +
-                                    infoText.magicalResist + ", " +
-                                    infoText.breathResist + " ";
+                                    infoText.agi +
+                                    (infoText.physicalResist? ( "<br>" + infoText.physicalResist) : "") +
+                                    (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
+                                    (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
+                                    (infoText.affliction? ( "<br>" + infoText.affliction) : "");
                 
                 // display hp on canvas
                 this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
@@ -318,14 +381,17 @@ class BattleLogger {
     }
     
     /**
-     * Add a minor event to our minor event log. A minor event must have:
-     *  - an executor/attacker/caster: whom the action in this event comes from
-     *  - a target/defender: the one affected in this event
-     *  - attribute: the thing belonging to the target that has been changed in this event
-     *  - amount: the amount changed
-     *  - description: a description in plain text of what happened
+     * Add a minor event to our minor event log.
+     * @param executor    whom the action in this event comes from
+     * @param target      the one affected in this event
+     * @param type        the type of this event
+     * @param attribute   the thing belonging to the target that has been changed in this event
+     * @param amount      the amount changed
+     * @param description a description in plain text of what happened
+     * @param skillId     the skill involved in this event
      */
-    addMinorEvent(executor: Card, target: Card, attribute: string, amount: number, description: string, skillId: number) {
+    addMinorEvent(executor: Card, target: Card, type: ENUM.MinorEventType, attribute: string,
+                                        amount: number, description: string, skillId: number) {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -337,11 +403,12 @@ class BattleLogger {
             this.minorEventLog[index] = [];
         }
         this.minorEventLog[index].push({
-            executor : executor.id,   // the card id of the executor
-            target : target.id,       // the card id of the target
-            attribute : attribute,    // can be "HP" or a ENUM.StatusType "key" (a string)
-            amount : amount,          // the amount changed
-            description: description, // description of the event in plain text
+            executorId : executor.id,
+            targetId : target.id,
+            type: type,
+            attribute: attribute,
+            amount : amount,
+            description: description,
             skillId: skillId
         });
         this.displayMinorEvent(description);
@@ -586,7 +653,7 @@ class BattleLogger {
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
             var data: MinorEvent = this.minorEventLog[index][j];
-            var executor = BattleModel.getInstance().cardManager.getCardById(data.executor);
+            var executor = BattleModel.getInstance().cardManager.getCardById(data.executorId);
             var group: any = this.getCardImageGroupOnCanvas(executor);
 
             // scale from center
@@ -624,7 +691,7 @@ class BattleLogger {
                 var yText = executor.getPlayerId() == 1 ? 272 : 8;
 
                 // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
-                if (data.executor == this.majorEventLog[index].executorId) {
+                if (data.executorId == this.majorEventLog[index].executorId) {
                     var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;
                 }
                 else {
@@ -673,10 +740,11 @@ class BattleLogger {
 }
 
 interface MinorEvent {
-    executor: number;    // the card id of the executor
-    target: number;      // the card id of the target
-    attribute: string;   // can be "HP" or a ENUM.StatusType "key" (a string)
-    amount: number;      // the amount changed
+    executorId: number;  // the card id of the executor
+    targetId: number;    // the card id of the target
+    type: ENUM.MinorEventType;        // HP, STATUS or AFFLICTION or DESCRIPTION
+    attribute: string;   // HP, a StatusType or AfflictionType
+    amount: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description: string; // description of the event in plain text
     skillId: number;     // the skill associated with this MinorEvent
 }

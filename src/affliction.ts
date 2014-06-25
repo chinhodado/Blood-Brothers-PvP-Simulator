@@ -1,3 +1,24 @@
+class AfflictionFactory {
+    static getAffliction(type: ENUM.AfflictionType): Affliction {
+        switch (type) {
+            case ENUM.AfflictionType.BLIND:
+                return new BlindAffliction();
+            case ENUM.AfflictionType.DISABLE:
+                return new DisabledAffliction();
+            case ENUM.AfflictionType.FROZEN:
+                return new FrozenAffliction();
+            case ENUM.AfflictionType.PARALYSIS:
+                return new ParalysisAffliction();
+            case ENUM.AfflictionType.POISON:
+                return new PoisonAffliction();
+            case ENUM.AfflictionType.SILENT:
+                return new SilentAffliction();
+            default:
+                throw new Error("Invalid affliction type!");
+        }
+    }
+}
+
 class Affliction {
     type: ENUM.AfflictionType;
     finished: boolean;
@@ -7,8 +28,9 @@ class Affliction {
         this.finished = false;
     }
 
-    canAttack(){
+    canAttack(): boolean{
         // implement this
+        return false;
     }
 
     canUseSkill(){
@@ -132,7 +154,7 @@ class SilentAffliction extends Affliction {
         this.validTurnNum = 0;
     }
 
-    canAttack(){
+    canAttack(): boolean{
         return true;
     }
 
@@ -146,7 +168,7 @@ class SilentAffliction extends Affliction {
         }
     }
     
-    add(turnNum){
+    add(turnNum: number){
         this.validTurnNum = turnNum;
     }
 }

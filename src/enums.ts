@@ -19,7 +19,8 @@ module ENUM {
     export enum SkillFunc {
         BUFF = 1, // arg1: multiplier, arg2: status
         DEBUFF = 2,
-        ATTACK = 3,
+        ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
+                    // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
         MAGIC = 4, // anything that ignores position
         COOP = 5,
         REVIVE = 6,
@@ -96,6 +97,13 @@ module ENUM {
         REAR = 3,
         MID = 2,
         FRONT = 1
+    }
+
+    export enum MinorEventType {
+        HP = 1,
+        STATUS = 2,
+        AFFLICTION = 3,
+        DESCRIPTION = 4
     }
 }
 
