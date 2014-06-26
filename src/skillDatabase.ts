@@ -396,6 +396,20 @@ var SkillDatabase = {
         description: "Deal massive AGI-based damage to three random foes regardless of position."
     },
     
+    270 : {
+        name: "Withering Flame", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes, regardless of position."
+    },
+    
+    271 : {
+        name: "Scales of Tranquility", skillType: 1, skillFunc: 19, skillCalcType: 0, 
+        skillFuncArg1: 0, skillFuncArg2: 5, skillFuncArg3: 0.45, skillFuncArg4: 1, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 70,
+        description: "Chance to silence three foes for one turn at start of battle."
+    },
+    
     275 : {
         name: "Blinding Light", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -408,6 +422,13 @@ var SkillDatabase = {
         skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "MAGICAL",
         description: "Deal Massive WIS-based damage to two random foes, regardless of position."
+    },
+    
+    277 : {
+        name: "Nightmarish Notion", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.1, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 20, maxProbability: 30, ward: "BREATH",
+        description: "Deal WIS-based damage and sometimes freeze five random foes, regardless of position."
     },
 
     280: {
@@ -666,6 +687,13 @@ var SkillDatabase = {
         skillRange: 4, maxProbability: 50
     },
     
+    404 : {
+        name : "Niten Ichi-ryu", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to three random foes."
+    },
+    
     406 : {
         name: "Piercing Arrow", skillType: 2, skillFunc: 4, skillCalcType: 1, 
         skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -763,6 +791,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
     },
+    
+    463 : {
+        name : "Absolute Zero", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.7, skillFuncArg2: 3, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 32, maxProbability: 30, ward: "BREATH",
+        description: "Deal heavy WIS-based damage and sometimes freeze up to four foes, ignoring position."
+    },
+    
+    464 : {
+        name : "Chariot Rush", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 1.8, skillFuncArg2: 2, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL", // check
+        description: "Deal heavy AGI-based damage to and sometimes paralyze three random foes."
+    },
 
     465 : {
         name : "Stormcaller Pinion", skillType: 2, skillFunc: 4, skillCalcType: 2,
@@ -781,6 +823,20 @@ var SkillDatabase = {
         name : "Atonement", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.3, skillFuncArg2: 5, skillFuncArg3: 7, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 4, maxProbability: 70
+    },
+    
+    471 : {
+        name: "Darkflame", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+    
+    472 : {
+        name: "Nightveil", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 0.1, skillFuncArg2: 1, skillFuncArg3: 3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 3, maxProbability: 70,
+        description: "Raise WIS and ATK of self and adjacent familiars at start of battle."
     },
 
     473 : {
@@ -852,11 +908,5 @@ var SkillDatabase = {
         name : "Inferno", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
-    },
-    
-    99003 : {
-        name : "Niten Ichi-ryu", skillType: 2, skillFunc: 3, skillCalcType: 1, 
-        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
-    }
+    }    
 };

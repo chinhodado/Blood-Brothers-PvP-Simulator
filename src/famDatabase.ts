@@ -23,6 +23,10 @@ var famDatabase = {
         {name: "Alluring Merrow", hp: 16811, atk: 14709, def: 13723, wis: 17537, agi: 17320, skills: [217],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130725105247/bloodbrothersgame/images/thumb/6/6d/Alluring_Merrow_II_Figure.png/60px-Alluring_Merrow_II_Figure.png"},
 
+    "Alp, Dynast of Darkness II":
+        {name: "Alp", hp: 11917, atk: 14120, def: 10928, wis: 17168, agi: 13366, skills: [277],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131101130545/bloodbrothersgame/images/thumb/0/0d/Alp%2C_Dynast_of_Darkness_II_Figure.png/40px-Alp%2C_Dynast_of_Darkness_II_Figure.png"}, 
+    
     "Amazon Warfist II" :
         {name: "Amazon Warfist", hp: 10904, atk: 11417, def: 10466, wis: 10660, agi: 11830, skills: [156],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130414034805/bloodbrothersgame/images/thumb/1/1a/Amazon_Warfist_II_Figure.png/40px-Amazon_Warfist_II_Figure.png"},
@@ -47,6 +51,10 @@ var famDatabase = {
         {name: "Apocalyptic Beast", hp: 14189, atk:	15977, def:	15413, wis:	13420, agi:	14969, skills: [123],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130227203821/bloodbrothersgame/images/thumb/5/5a/Apocalyptic_Beast_II_Figure.png/60px-Apocalyptic_Beast_II_Figure.png"},
 
+    "Arcanan Chariot II":
+        {name: "Arcanan Chariot", hp: 17342, atk: 19346, def: 16453, wis: 10376, agi: 17472, skills: [464],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140520122105/bloodbrothersgame/images/thumb/d/da/Arcanan_Chariot_II_Figure.png/40px-Arcanan_Chariot_II_Figure.png"},
+    
     "Archduke Ose II" :
         {name: "Archduke Ose",  hp: 16995, atk: 14395, def: 15023, wis: 14850, agi: 11990, skills: [154],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130314191037/bloodbrothersgame/images/thumb/0/00/Archduke_Ose_II_Figure.png/60px-Archduke_Ose_II_Figure.png"},
@@ -251,6 +259,10 @@ var famDatabase = {
         {name: "Iseult", hp: 12731, atk: 10977, def: 11708, wis: 15865, agi: 14193, skills: [144],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130629202258/bloodbrothersgame/images/thumb/f/f2/Iseult%2C_the_Redeemer_II_Figure.png/40px-Iseult%2C_the_Redeemer_II_Figure.png"},   
    
+    "Jabberwock, Phantom Dragon II":
+        {name: "Jabberwock", hp: 13994, atk: 16193, def: 13008, wis: 19508, agi: 18024, skills: [270, 271],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20131023124841/bloodbrothersgame/images/thumb/1/1f/Jabberwock%2C_Phantom_Dragon_II_Figure.png/40px-Jabberwock%2C_Phantom_Dragon_II_Figure.png"},
+    
     "Kalevan, the Forest Green II":
         {name: "Kalevan", hp: 12629, atk: 18013, def: 11914, wis: 12055, agi: 13821, skills: [297, 240],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131122044155/bloodbrothersgame/images/thumb/b/bd/Kalevan%2C_the_Forest_Green_II_Figure.png/40px-Kalevan%2C_the_Forest_Green_II_Figure.png"},
@@ -283,6 +295,10 @@ var famDatabase = {
         {name: "Magdal", hp: 13929, atk: 15110, def: 15132, wis: 13810, agi: 15359, skills: [120],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130210215236/bloodbrothersgame/images/thumb/c/c0/Magdal_Dragonheart_II_Figure.png/40px-Magdal_Dragonheart_II_Figure.png"},
 
+    "Managarmr, the Frost Moon II":
+        {name: "Managarmr", hp: 20007, atk: 21599, def: 17396, wis: 23907, agi: 18100, skills: [463], autoAttack: 10007,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140521080600/bloodbrothersgame/images/thumb/2/2b/Managarmr%2C_the_Frost_Moon_II_Figure.png/40px-Managarmr%2C_the_Frost_Moon_II_Figure.png"},
+    
     "Marraco, Crusted Wyrm II":
         {name: "Marraco",       hp: 18716, atk: 15876, def: 17254, wis: 7381,  agi: 8809,  skills: [61, 167],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131115131303/bloodbrothersgame/images/thumb/7/7b/Marraco%2C_Crusted_Wyrm_II_Figure.png/60px-Marraco%2C_Crusted_Wyrm_II_Figure.png"},
@@ -304,7 +320,7 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130125001433/bloodbrothersgame/images/thumb/6/6b/Mordred%2C_Drake_Knight_Figure.png/40px-Mordred%2C_Drake_Knight_Figure.png"},
 
     "Musashi, the Twinblade II" :
-        {name: "Musashi",       hp: 20592, atk: 24752, def: 19151, wis: 17981, agi: 18024, skills: [99003],
+        {name: "Musashi",       hp: 20592, atk: 24752, def: 19151, wis: 17981, agi: 18024, skills: [404],
         imageLink: "http://img1.wikia.nocookie.net/__cb20140326090459/bloodbrothersgame/images/thumb/1/1f/Musashi%2C_the_Twinblade_II_Figure.png/60px-Musashi%2C_the_Twinblade_II_Figure.png"}, 
 
     "Naberius II":
@@ -319,6 +335,10 @@ var famDatabase = {
         {name: "Neith", hp: 18999, atk:	19660, def:	15002, wis:	12001, agi:	15305, skills: [326],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031333/bloodbrothersgame/images/thumb/3/3b/Neith%2C_Goddess_of_War_II_Figure.png/60px-Neith%2C_Goddess_of_War_II_Figure.png"},
 
+    "Nephthys, Ruler of Death":
+        {name: "Nephthys", hp: 21015, atk: 11985, def: 18202, wis: 22005, agi: 16912, skills: [471, 472], autoAttack: 10007,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140528102649/bloodbrothersgame/images/thumb/1/16/Nephthys%2C_Ruler_of_Death_Figure.png/40px-Nephthys%2C_Ruler_of_Death_Figure.png"},
+    
     "Nergal, Abyssal Overseer II":
         {name: "Nergal", hp: 13008, atk: 15392, def: 11947, wis: 11643, agi: 16518, skills: [282],
         imageLink: "http://img1.wikia.nocookie.net/__cb20131108145626/bloodbrothersgame/images/thumb/7/75/Nergal%2C_Abyssal_Overseer_II_Figure.png/40px-Nergal%2C_Abyssal_Overseer_II_Figure.png"},
