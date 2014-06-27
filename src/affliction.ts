@@ -84,7 +84,8 @@ class PoisonAffliction extends Affliction {
         if(damage > PoisonAffliction.MAX_DAMAGE){
             damage = PoisonAffliction.MAX_DAMAGE;
         }
-        // damage the card here
+        // damage the card
+        BattleModel.getInstance().damageToTargetDirectly(card, damage, "poison");
     }
 
     add(percent?: number){

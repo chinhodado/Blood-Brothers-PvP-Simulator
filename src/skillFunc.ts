@@ -91,24 +91,18 @@ class AfflictionSkillLogic extends SkillLogic {
 
 class AttackSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
-        this.logger.addMajorEvent({
-            description: data.executor.name + " procs " + data.skill.name,
-            executorId: data.executor.id,
-            skillId: data.skill.id
-        });
         if (RangeFactory.isEnemyRandomRange(data.skill.skillRange)) {
-            this.executeRandomAttackSkill(data.executor);
+            this.executeRandomAttackSkill(data);
         }
         else {
-            this.executeAttackSkillWithRangeTargets(data.executor);
+            this.executeAttackSkillWithRangeTargets(data);
         }
     }
 
-    executeRandomAttackSkill (executor : Card) {
-    	var skill = executor.attackSkill;        
-        var numTarget = (<EnemyRandomRange>skill.range).numTarget;
+    executeRandomAttackSkill (data: SkillLogicData) {
+        var numTarget = (<EnemyRandomRange>data.skill.range).numTarget;
         
-        for (var i = 0; i < numTarget && !executor.isDead; i++) {
+        for (var i = 0; i < numTarget && !data.executor.isDead; i++) {
 
             var targetIndex = this.cardManager.getValidSingleTarget(this.battleModel.oppositePlayerCards);
     
@@ -120,11 +114,11 @@ class AttackSkillLogic extends SkillLogic {
             // since we get a valid index with every iteration of the loop, there's no need
             // to check if the target is dead here
             var targetCard = this.battleModel.oppositePlayerCards[targetIndex];
-            var protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, null);
+            var protectSkillActivated = this.battleModel.processProtect(data.executor, targetCard, data.skill, null);
 
             // if not protected, proceed with the attack as normal
             if (!protectSkillActivated) {
-                this.battleModel.damageToTarget(executor, targetCard, skill, null);
+                this.battleModel.damageToTarget(data.executor, targetCard, data.skill, null);
             }
         }
     }
@@ -132,8 +126,9 @@ class AttackSkillLogic extends SkillLogic {
     /**
      * Execute an attack skill that has the targets obtained from its range
      */
-    executeAttackSkillWithRangeTargets (executor : Card) {
-        var skill = executor.attackSkill;
+    executeAttackSkillWithRangeTargets (data: SkillLogicData) {
+        var skill = data.skill;
+        var executor = data.executor;
         var targets : Card[] = skill.range.getTargets(executor);
 
         if (skill.contact == 0 || typeof skill.contact === undefined) {

@@ -751,6 +751,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    438 : {
+        name: "Poison Torrent", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.3, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to and sometimes poison four random foes."
+    },
     
     440 : {
         name: "Thunderstroke", skillType: 2, skillFunc: 4, skillCalcType: 3, 
@@ -884,6 +891,12 @@ var SkillDatabase = {
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 5, maxProbability: 100, ward: "MAGICAL"
+    },
+
+    10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
+        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL"
     },
 
     10008: { // 65% Mod, Single Hit, WIS-based, position independent

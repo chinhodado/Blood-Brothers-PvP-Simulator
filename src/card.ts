@@ -3,7 +3,7 @@
 class Card {
 
     name : string;
-    stats : Stats;
+    private stats: Stats;
     id : number; // id for this simulator, not the id in game
     originalStats : Stats;
     status : Status;
@@ -149,7 +149,7 @@ class Card {
         this.affliction.add(optParam[0], optParam[1]);
     }
 
-    clearAffliction(){
+    clearAffliction(): void{
         if(!this.affliction){
             return;
         }
@@ -157,19 +157,19 @@ class Card {
         this.affliction = null;
     }
 
-    canAttack(){
+    canAttack(): boolean {
         return (this.affliction) ? this.affliction.canAttack() : true;
     }
 
-    canUseSkill(){
+    canUseSkill():boolean {
         return (this.affliction) ? this.affliction.canUseSkill() : true;
     }
 
-    canMiss() {
+    canMiss(): boolean {
         return (this.affliction) ? this.affliction.canMiss() : false;
     }
 
-    getAfflictionType(){
+    getAfflictionType(): ENUM.AfflictionType {
         return this.affliction ? this.affliction.getType() : null;
     }
 

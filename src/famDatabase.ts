@@ -263,6 +263,10 @@ var famDatabase = {
         {name: "Jabberwock", hp: 13994, atk: 16193, def: 13008, wis: 19508, agi: 18024, skills: [270, 271],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131023124841/bloodbrothersgame/images/thumb/1/1f/Jabberwock%2C_Phantom_Dragon_II_Figure.png/40px-Jabberwock%2C_Phantom_Dragon_II_Figure.png"},
     
+    "Jormungandr, World Serpent II":
+        {name: "Jormungandr", hp: 13024, atk: 16768, def: 11756, wis: 10112, agi: 15889, skills: [438], autoAttack: 10012,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140430101914/bloodbrothersgame/images/thumb/9/97/Jormungandr%2C_World_Serpent_II_Figure.png/40px-Jormungandr%2C_World_Serpent_II_Figure.png"},
+
     "Kalevan, the Forest Green II":
         {name: "Kalevan", hp: 12629, atk: 18013, def: 11914, wis: 12055, agi: 13821, skills: [297, 240],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131122044155/bloodbrothersgame/images/thumb/b/bd/Kalevan%2C_the_Forest_Green_II_Figure.png/40px-Kalevan%2C_the_Forest_Green_II_Figure.png"},

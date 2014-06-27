@@ -241,6 +241,18 @@ class BattleModel {
         }
     }
 
+    // todo: move this to Card?
+    damageToTargetDirectly(target: Card, damage: number, reason: string) {
+        target.changeHP(-1 * damage);
+
+        var description = target.name + " lost " + damage + " HP because of " + reason;
+        this.logger.addMinorEvent(target, target, ENUM.MinorEventType.HP, "HP", (-1) * damage, description, 0);
+        if (target.getHP() <= 0) {
+            this.logger.displayMinorEvent(target.name + " is dead");
+            target.isDead = true;
+        }
+    }
+
     processAffliction(executor: Card, target: Card, skill: Skill) {
         var type: ENUM.AfflictionType = skill.skillFuncArg2
         var prob: number = skill.skillFuncArg3;
@@ -298,6 +310,12 @@ class BattleModel {
                 var attackSkill = currentCard.attackSkill;
                 if (attackSkill) {
                     if (Math.random() * 100 <= attackSkill.maxProbability && currentCard.canUseSkill()) {
+                        this.logger.addMajorEvent({
+                            description: currentCard.name + " procs " + attackSkill.name,
+                            executorId: currentCard.id,
+                            skillId: attackSkill.id
+                        });
+
                         attackSkill.execute({
                             executor: currentCard,
                             skill: attackSkill
@@ -309,6 +327,11 @@ class BattleModel {
                 }
                 else {
                     this.executeNormalAttack(currentCard);
+                }
+
+                // update poison status
+                if (!currentCard.isDead && currentCard.getAfflictionType() == ENUM.AfflictionType.POISON) {
+                    currentCard.updateAffliction();
                 }
 
                 if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
@@ -327,29 +350,38 @@ class BattleModel {
                 }
             }
 
-            if (finished) {
-                break;
-            }
-
-            // process end turn events: afflictions, etc.
-            this.logger.addMajorEvent({
-                description: "Turn end"
-            });
-
-            for (var i = 0; i < 10 && !finished; i++) {
-                var currentCard = this.allCards[i];
-                if (currentCard.isDead) {
-                    continue;
-                }
-                var cured = currentCard.updateAffliction();
-                    // if cured, make a log
-                    if (!currentCard.affliction && cured) {
-                        var desc = currentCard.name + " is cured of affliction!";
-                        this.logger.addMinorEvent(currentCard, currentCard, ENUM.MinorEventType.AFFLICTION, "NONE", -2, desc, 0);
-                    }
+            if (!finished) {
+                this.processEndTurn();
             }
         }
         return this.playerWon.name;
+    }
+
+    /**
+     * Called at the end of two player's turn
+     */
+    processEndTurn() {
+        // process end turn events: afflictions, etc.
+        this.logger.addMajorEvent({
+            description: "Turn end"
+        });
+
+        for (var i = 0; i < 10; i++) {
+            var currentCard = this.allCards[i];
+            if (currentCard.isDead) {
+                continue;
+            }
+
+            // poison is updated at fam's turn end instead
+            if (currentCard.getAfflictionType() != ENUM.AfflictionType.POISON) {
+                var cured = currentCard.updateAffliction();
+                // if cured, make a log
+                if (!currentCard.affliction && cured) {
+                    var desc = currentCard.name + " is cured of affliction!";
+                    this.logger.addMinorEvent(currentCard, currentCard, ENUM.MinorEventType.AFFLICTION, "NONE", -2, desc, 0);
+                }
+            }
+        }
     }
     
     executeNormalAttack(attacker: Card) {
@@ -363,26 +395,10 @@ class BattleModel {
             // we may consider adding the attacker id and auto id later on
         });
 
-        // create a default auto attack skill
-        var autoSkill: Skill = attacker.autoAttack;
-        
-        var targets: Card[] = autoSkill.range.getTargets(attacker);
-
-        for (var i = 0; i < targets.length && !attacker.isDead; i++) {
-            var targetCard = targets[i];
-
-            // a target can be dead, for example from protecting another fam
-            if (targetCard.isDead) {
-                continue;
-            }
-
-            var protectSkillActivated = this.processProtect(attacker, targetCard, autoSkill, null);
-
-            // if not protected, proceed with the attack as normal
-            if (!protectSkillActivated) {
-                this.damageToTarget(attacker, targetCard, autoSkill, null);
-            }
-        }
+        attacker.autoAttack.execute({
+            executor: attacker,
+            skill: attacker.autoAttack
+        });
     }
 
     /**
