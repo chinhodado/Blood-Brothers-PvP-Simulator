@@ -71,9 +71,19 @@ class BuffSkillLogic extends SkillLogic {
             
             for (var i = 0; i < targets.length; i++) {
                 targets[i].changeStatus(thingToBuff, buffAmount);
-                var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;                
-                this.logger.addMinorEvent(executor, targets[i], ENUM.MinorEventType.STATUS,
-                    ENUM.StatusType[thingToBuff], buffAmount, description, skill.id);
+                var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;
+                
+                this.logger.addMinorEvent({
+                    executorId: executor.id, 
+                    targetId: targets[i].id, 
+                    type: ENUM.MinorEventType.STATUS, 
+                    status: {
+                        type: thingToBuff,
+                    },
+                    description: description, 
+                    amount: buffAmount,
+                    skillId: skill.id
+                });
             }
         }
     }

@@ -80,7 +80,7 @@ class PoisonAffliction extends Affliction {
     }
 
     update(card: Card){
-        var damage: number = Math.floor(card.getHP() * this.percent / 100);
+        var damage: number = Math.floor(card.originalStats.hp * this.percent / 100);
         if(damage > PoisonAffliction.MAX_DAMAGE){
             damage = PoisonAffliction.MAX_DAMAGE;
         }

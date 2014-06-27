@@ -234,7 +234,15 @@ class BattleModel {
         }
         var description = additionalDescription +
             target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
-        this.logger.addMinorEvent(attacker, target, ENUM.MinorEventType.HP, "HP", (-1) * damage, description, skill.id);
+        this.logger.addMinorEvent({
+            executorId: attacker.id, 
+            targetId: target.id, 
+            type: ENUM.MinorEventType.HP, 
+            amount: (-1) * damage, 
+            description: description, 
+            skillId: skill.id
+        });
+    
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
@@ -246,7 +254,14 @@ class BattleModel {
         target.changeHP(-1 * damage);
 
         var description = target.name + " lost " + damage + " HP because of " + reason;
-        this.logger.addMinorEvent(target, target, ENUM.MinorEventType.HP, "HP", (-1) * damage, description, 0);
+        
+        this.logger.addMinorEvent({
+            targetId: target.id, 
+            type: ENUM.MinorEventType.HP, 
+            amount: (-1) * damage, 
+            description: description, 
+        });
+        
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
@@ -277,7 +292,18 @@ class BattleModel {
             else if (type == ENUM.AfflictionType.POISON) {
                 maxTurn = -1;
             }
-            this.logger.addMinorEvent(executor, target, ENUM.MinorEventType.AFFLICTION, ENUM.AfflictionType[type], maxTurn, description, 0);
+            
+            this.logger.addMinorEvent({
+                executorId: executor.id, 
+                targetId: target.id, 
+                type: ENUM.MinorEventType.AFFLICTION, 
+                affliction: {
+                    type: type,
+                    duration: maxTurn 
+                },
+                description: description, 
+                
+            });
         }
     }
    
@@ -378,7 +404,17 @@ class BattleModel {
                 // if cured, make a log
                 if (!currentCard.affliction && cured) {
                     var desc = currentCard.name + " is cured of affliction!";
-                    this.logger.addMinorEvent(currentCard, currentCard, ENUM.MinorEventType.AFFLICTION, "NONE", -2, desc, 0);
+                    
+                    this.logger.addMinorEvent({
+                        targetId: currentCard.id, 
+                        type: ENUM.MinorEventType.AFFLICTION, 
+                        affliction: {
+                            type: currentCard.getAfflictionType(),
+                            isFinished: true,
+                        },
+                        description: desc, 
+                        
+                    });
                 }
             }
         }
