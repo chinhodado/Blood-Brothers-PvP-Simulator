@@ -99,6 +99,19 @@ module ENUM {
         FRONT = 1
     }
 
+    export enum FormationType {
+        SKEIN_5  = 0,
+        VALLEY_5 = 1,
+        TOOTH_5  = 2,
+        WAVE_5   = 3,
+        FRONT_5  = 4,
+        MID_5    = 5,
+        REAR_5   = 6,
+        PIKE_5   = 7,
+        SHIELD_5 = 8,
+        PINCER_5 = 9
+    }
+
     export enum MinorEventType {
         HP = 1,
         STATUS = 2,

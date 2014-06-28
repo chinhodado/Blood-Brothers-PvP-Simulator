@@ -21,45 +21,45 @@
     <form action="game.html" method="GET">
 
         <p>Player 2</p>
-        <select name="p2fam0" class="famSelect randomize"></select>
-        <select name="p2fam1" class="famSelect randomize"></select>
-        <select name="p2fam2" class="famSelect randomize"></select>
-        <select name="p2fam3" class="famSelect randomize"></select>
-        <select name="p2fam4" class="famSelect randomize"></select>
+        <select name="f10" class="famSelect randomize"></select>
+        <select name="f11" class="famSelect randomize"></select>
+        <select name="f12" class="famSelect randomize"></select>
+        <select name="f13" class="famSelect randomize"></select>
+        <select name="f14" class="famSelect randomize"></select>
         <br><br>
-        <select name="p2formation" class="randomize">
-            <option value="SKEIN_5">5-Skein</option>
-            <option value="VALLEY_5">5-Valley</option>
-            <option value="TOOTH_5">5-Tooth</option>
-            <option value="WAVE_5">5-Wave</option>
-            <option value="FRONT_5">5-Front</option>
-            <option value="MID_5">5-Mid</option>
-            <option value="REAR_5">5-Rear</option>
-            <option value="PIKE_5">5-Pike</option>
-            <option value="SHIELD_5">5-Shield</option>
-            <option value="PINCER_5">5-Pincer</option>
+        <select name="2f" class="randomize">
+            <option value="0">5-Skein</option>
+            <option value="1">5-Valley</option>
+            <option value="2">5-Tooth</option>
+            <option value="3">5-Wave</option>
+            <option value="4">5-Front</option>
+            <option value="5">5-Mid</option>
+            <option value="6">5-Rear</option>
+            <option value="7">5-Pike</option>
+            <option value="8">5-Shield</option>
+            <option value="9">5-Pincer</option>
         </select>
 
         <br><br><br><br>
 
         <p>Player 1</p>
-        <select name="p1fam0" class="famSelect randomize"></select>
-        <select name="p1fam1" class="famSelect randomize"></select>
-        <select name="p1fam2" class="famSelect randomize"></select>
-        <select name="p1fam3" class="famSelect randomize"></select>
-        <select name="p1fam4" class="famSelect randomize"></select>
+        <select name="f0" class="famSelect randomize"></select>
+        <select name="f1" class="famSelect randomize"></select>
+        <select name="f2" class="famSelect randomize"></select>
+        <select name="f3" class="famSelect randomize"></select>
+        <select name="f4" class="famSelect randomize"></select>
         <br><br>
-        <select name="p1formation" class="randomize">
-            <option value="SKEIN_5">5-Skein</option>
-            <option value="VALLEY_5">5-Valley</option>
-            <option value="TOOTH_5">5-Tooth</option>
-            <option value="WAVE_5">5-Wave</option>
-            <option value="FRONT_5">5-Front</option>
-            <option value="MID_5">5-Mid</option>
-            <option value="REAR_5">5-Rear</option>
-            <option value="PIKE_5">5-Pike</option>
-            <option value="SHIELD_5">5-Shield</option>
-            <option value="PINCER_5">5-Pincer</option>
+        <select name="1f" class="randomize">
+            <option value="0">5-Skein</option>
+            <option value="1">5-Valley</option>
+            <option value="2">5-Tooth</option>
+            <option value="3">5-Wave</option>
+            <option value="4">5-Front</option>
+            <option value="5">5-Mid</option>
+            <option value="6">5-Rear</option>
+            <option value="7">5-Pike</option>
+            <option value="8">5-Shield</option>
+            <option value="9">5-Pincer</option>
         </select>
 
         <br><br>
@@ -75,7 +75,7 @@
                 for (var key in famDatabase) {
                     var option = document.createElement("option");
                     option.value = key;
-                    option.text = key;
+                    option.text = famDatabase[key].fullName;
                     selects[i].add(option);
                 }
             };

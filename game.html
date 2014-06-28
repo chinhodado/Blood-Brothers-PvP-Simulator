@@ -134,14 +134,14 @@
 
     <script type="text/javascript">
         var data = {};
-        data.player1formation = getURLParameter("p1formation");
-        data.player2formation = getURLParameter("p2formation");
+        data.player1formation = getURLParameter("1f");
+        data.player2formation = getURLParameter("2f");
         data.player1cardsInfo = [];
         data.player2cardsInfo = [];
 
         for (var i = 0; i < 5; i++) {
-            data.player1cardsInfo.push(famDatabase[getURLParameter("p1fam" + i)]);
-            data.player2cardsInfo.push(famDatabase[getURLParameter("p2fam" + i)]);
+            data.player1cardsInfo.push(famDatabase[getURLParameter("f" + i)]);
+            data.player2cardsInfo.push(famDatabase[getURLParameter("f" + (i + 10))]);
         }
         var worker = null;
 
