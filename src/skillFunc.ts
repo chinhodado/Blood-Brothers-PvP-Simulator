@@ -243,9 +243,15 @@ class ProtectCounterSkillLogic extends SkillLogic {
         var protectSkill = data.skill;
 
         // first redirect the original attack to the protecting fam
-        var additionalDesc = protector.name + " procs " + protectSkill.name + " to protect " +
+        var desc = protector.name + " procs " + protectSkill.name + " to protect " +
             data.targetCard.name + ". ";
-        this.battleModel.damageToTarget(data.attacker, protector, data.attackSkill, additionalDesc);
+        this.logger.addMinorEvent({
+            executorId: protector.id, 
+            type: ENUM.MinorEventType.DESCRIPTION, 
+            description: desc,
+            skillId: protectSkill.id
+        });
+        this.battleModel.damageToTarget(data.attacker, protector, data.attackSkill, null);
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {

@@ -389,6 +389,13 @@ var SkillDatabase = {
         description: "Deal massive ATK-based damage to three random foes."
     },
 
+    267 : {
+        name: "Swordmaster", skillType: 2, skillFunc: 3, skillCalcType: 3, 
+        skillFuncArg1: 2.4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal massive AGI-based damage to three foes."
+    },
+
     269 : {
         name: "Tears of the Hideous", skillType: 2, skillFunc: 4, skillCalcType: 3, 
         skillFuncArg1: 2.05, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -450,6 +457,13 @@ var SkillDatabase = {
         skillFuncArg1: 0.95, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 17, maxProbability: 30, ward: "MAGICAL",
         description: "Deal WIS-based damage to six random foes, regardless of position."
+    },
+
+    292: {
+        name: "Golden Rule", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 7, maxProbability: 30, ward: "PHYSICAL", contact: 0,
+        description: "Deal massive ATK-based damage to three foes, regardless of position."
     },
 
     293: {
@@ -595,6 +609,13 @@ var SkillDatabase = {
         name: "Sword of Fealty", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    353 : {
+        name: "Icerend Claws", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.45, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to three random foes and sometimes freeze them."
     },
 
     359 : {
@@ -849,7 +870,15 @@ var SkillDatabase = {
     473 : {
         name: "Entomb", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 20, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to five random foes."
+    },
+
+    474 : {
+        name: "Embalm", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 0.3, skillFuncArg2: 5, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 3, maxProbability: 70,
+        description: "Reduce physical damage taken by self and adjacent familiars."
     },
 
     476 : {
@@ -885,6 +914,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal ATK-based damage to five random foes."
+    },
+
+    491: {
+        name: "Primitive Rage", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 32, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal ATK-based damage to up to four foes."
+    },
+
+    492: {
+        name: "Razor Pinion", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
 
     10007: { // use this for normal wis-based auto skill

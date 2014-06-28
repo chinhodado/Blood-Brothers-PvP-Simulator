@@ -71,8 +71,19 @@
 
         <script type="text/javascript">
             var selects = document.getElementsByClassName("famSelect");
+
+            // create an array of fam id and sort it based on the fam's full name
+            var famIdArray = [];
+            for (var key in famDatabase) {
+                famIdArray.push(key);
+            }
+            famIdArray.sort(function (a, b) {
+                return famDatabase[a].fullName.localeCompare(famDatabase[b].fullName);
+            });
+
             for (var i = 0; i < selects.length; i++) {
-                for (var key in famDatabase) {
+                for (var index = 0; index < famIdArray.length; index++) {
+                    var key = famIdArray[index];
                     var option = document.createElement("option");
                     option.value = key;
                     option.text = famDatabase[key].fullName;
