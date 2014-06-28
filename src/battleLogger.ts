@@ -665,7 +665,7 @@ class BattleLogger {
                 });
 
             // display the skill name
-            if (data.skillId) {
+            if (data.skillId && !SkillDatabase[data.skillId].isAutoAttack) {
                 var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
                 var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
 

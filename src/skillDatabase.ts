@@ -14,7 +14,7 @@ var SkillDatabase = {
     0: {
         name: "Default auto", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 5, maxProbability: 100, ward: "PHYSICAL"
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
 
     2 : {
@@ -890,25 +890,25 @@ var SkillDatabase = {
     10007: { // use this for normal wis-based auto skill
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 5, maxProbability: 100, ward: "MAGICAL"
-    },
-
-    10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
-        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
-        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 5, maxProbability: 100, ward: "PHYSICAL"
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
     },
 
     10008: { // 65% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 0.65, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 5, maxProbability: 100, ward: "MAGICAL"
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
+    },
+
+    10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
+        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
 
     10016: { // same as 10007, but with flame animation
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 5, maxProbability: 100, ward: "MAGICAL"
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
     },
     
     99000 : {

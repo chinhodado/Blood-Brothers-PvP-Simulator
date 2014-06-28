@@ -13,6 +13,7 @@ class Skill {
     skillRange : number;
     maxProbability : number;
     ward: string;
+    isAutoAttack: boolean;
 
     contact: number;
 
@@ -36,6 +37,7 @@ class Skill {
         this.skillRange = skillData.skillRange;
         this.maxProbability = skillData.maxProbability;
         this.ward = skillData.ward;
+        this.isAutoAttack = skillData.isAutoAttack;
 
         if (typeof skillData.contact === undefined) {
             this.contact = -1;

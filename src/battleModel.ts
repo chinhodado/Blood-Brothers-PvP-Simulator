@@ -227,8 +227,6 @@ class BattleModel {
     
         target.changeHP(-1 * damage);
 
-        this.processAffliction(attacker, target, skill); 
-                
         if (!additionalDescription) {
             additionalDescription = "";
         }
@@ -242,11 +240,13 @@ class BattleModel {
             description: description, 
             skillId: skill.id
         });
-    
+
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
         }
+
+        this.processAffliction(attacker, target, skill);
     }
 
     // todo: move this to Card?
@@ -301,8 +301,7 @@ class BattleModel {
                     type: type,
                     duration: maxTurn 
                 },
-                description: description, 
-                
+                description: description,                 
             });
         }
     }
