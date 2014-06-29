@@ -173,6 +173,15 @@ class Card {
         return this.affliction ? this.affliction.getType() : null;
     }
 
+    getPoisonPercent(): number {
+        if (!this.affliction || this.affliction.type != ENUM.AfflictionType.POISON) {
+            return undefined;
+        }
+        else {
+            return (<PoisonAffliction>this.affliction).percent;    
+        }
+    }
+
     // return true if an affliction was cleared
     updateAffliction(): boolean{
         if(!this.affliction){

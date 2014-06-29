@@ -1,10 +1,12 @@
 /**
  * Some notes:
+ * - Order the familiars by the fullName
  * - Use the POPE stats
  * - The "name" attribute is a short name for the fam. If multiple fams have the same short name,
  *   append the rarity at the end (e.g. "Thor" and "Thor L")
  * - The order of the skills doesn't matter
- * - For the image, use the 60px thumbnail version
+ * - If the familiar has a special autoAttack, add it
+ * - For the image, use the wikia thumbnail version
  */
 var famDatabase = {
     11099: {
@@ -72,6 +74,13 @@ var famDatabase = {
         skills: [473, 474],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140528102650/bloodbrothersgame/images/thumb/4/47/Anubis%2C_Keeper_of_the_Dead_II_Figure.png/40px-Anubis%2C_Keeper_of_the_Dead_II_Figure.png",
         fullName: "Anubis, Keeper of the Dead II"
+    },
+    21288: {
+        name: "Apep", hp: 20543, atk: 20975, def: 15503, wis: 14302, agi: 16729,
+        skills: [468],
+        autoAttack: 10017,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140528104324/bloodbrothersgame/images/thumb/1/16/Apep%2C_the_Chaotic_Figure.png/40px-Apep%2C_the_Chaotic_Figure.png",
+        fullName: "Apep, the Chaotic"
     },
     10593: {
         name: "Apocalyptic Beast", hp: 14189, atk: 15977, def: 15413, wis: 13420, agi: 14969,
@@ -157,6 +166,12 @@ var famDatabase = {
         skills: [2],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131215131933/bloodbrothersgame/images/thumb/b/b2/Cat_Sith_Chillweaver_II_Figure.png/60px-Cat_Sith_Chillweaver_II_Figure.png",
         fullName: "Cat Sith Chillweaver II"
+    },
+    11213: {
+        name: "Cegila", hp: 13149, atk:	11492, def:	9498, wis: 17504, agi: 16995,
+        skills: [354],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140110084814/bloodbrothersgame/images/thumb/a/a5/Cegila%2C_Dragonian_Incantator_II_Figure.png/40px-Cegila%2C_Dragonian_Incantator_II_Figure.png",
+        fullName: "Cegila, Dragonian Incantator II"
     },
     10409: {
         name: "Magma Giant", hp: 12832, atk: 12380, def: 13097, wis: 11477, agi: 11928,
@@ -254,6 +269,12 @@ var famDatabase = {
         skills: [253],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131002005230/bloodbrothersgame/images/thumb/5/52/Flesh_Collector_Golem_II_Figure.png/40px-Flesh_Collector_Golem_II_Figure.png",
         fullName: "Flesh Collector Golem II"
+    },
+    11911: {
+        name: "Freyja", hp: 14709, atk:	17125, def:	14027, wis:	10213, agi:	12380,
+        skills: [387],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140301012048/bloodbrothersgame/images/thumb/c/c8/Freyja%2C_Earth_Goddess_II_Figure.png/40px-Freyja%2C_Earth_Goddess_II_Figure.png",
+        fullName: "Freyja, Earth Goddess II"
     },
     11190: {
         name: "Freyr", hp: 16562, atk: 19909, def: 15370, wis: 12943, agi: 15998,
@@ -369,6 +390,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130921074034/bloodbrothersgame/images/thumb/e/e8/Hel%2C_Goddess_of_Death_II_Figure.png/60px-Hel%2C_Goddess_of_Death_II_Figure.png",
         fullName: "Hel, Goddess of Death II"
     },
+    10895: {
+        name: "Hercinia", hp: 14062, atk: 13414, def: 12562, wis: 12686, agi: 15876,
+        skills: [225],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130819222302/bloodbrothersgame/images/thumb/a/a4/Hercinia_the_Blest_II_Figure.png/40px-Hercinia_the_Blest_II_Figure.png",
+        fullName: "Hercinia the Blest II"
+    },
     11073: {
         name: "Hippocamp", hp: 14514, atk: 16486, def: 14926, wis: 19855, agi: 15002,
         skills: [360, 167],
@@ -394,6 +421,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130927185735/bloodbrothersgame/images/thumb/c/cd/Hraesvelg%2C_Corpse_Feaster_II_Figure.png/40px-Hraesvelg%2C_Corpse_Feaster_II_Figure.png",
         fullName: "Hraesvelg, Corpse Feaster II"
     },
+    10970: {
+        name: "Hypnos", hp: 16291, atk:	17277, def:	15446, wis:	12488, agi:	17992,
+        skills: [274],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20131101130655/bloodbrothersgame/images/thumb/3/3b/Hypnos%2C_Lord_of_Dreams_II_Figure.png/40px-Hypnos%2C_Lord_of_Dreams_II_Figure.png",
+        fullName: "Hypnos, Lord of Dreams II"
+    },
     10319: {
         name: "Peryton", hp: 10904, atk: 9674, def: 10490, wis: 10490, agi: 12952,
         skills: [33],
@@ -418,12 +451,25 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131023124841/bloodbrothersgame/images/thumb/1/1f/Jabberwock%2C_Phantom_Dragon_II_Figure.png/40px-Jabberwock%2C_Phantom_Dragon_II_Figure.png",
         fullName: "Jabberwock, Phantom Dragon II"
     },
+    11169: {
+        name: "Jack o' Frost", hp: 13507, atk: 9000, def: 12196, wis: 16204, agi: 16995,
+        skills: [333],
+        autoAttack: 10009,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20131227221921/bloodbrothersgame/images/thumb/0/0b/Jack_o%27_Frost_II_Figure.png/40px-Jack_o%27_Frost_II_Figure.png",
+        fullName: "Jack o' Frost II"
+    },
     11266: {
         name: "Jormungandr", hp: 13024, atk: 16768, def: 11756, wis: 10112, agi: 15889,
         skills: [438],
         autoAttack: 10012,
         imageLink: "http://img3.wikia.nocookie.net/__cb20140430101914/bloodbrothersgame/images/thumb/9/97/Jormungandr%2C_World_Serpent_II_Figure.png/40px-Jormungandr%2C_World_Serpent_II_Figure.png",
         fullName: "Jormungandr, World Serpent II"
+    },
+    10510: {
+        name: "Kagemaru", hp: 14319, atk: 16973, def: 13940, wis: 13420, agi: 14568,
+        skills: [137],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130114201626/bloodbrothersgame/images/thumb/3/30/Kagemaru%2C_Master_Ninja_II_Figure.png/40px-Kagemaru%2C_Master_Ninja_II_Figure.png",
+        fullName: "Kagemaru, Master Ninja II"
     },
     11121: {
         name: "Kalevan", hp: 12629, atk: 18013, def: 11914, wis: 12055, agi: 13821,
@@ -481,11 +527,23 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20140521080600/bloodbrothersgame/images/thumb/2/2b/Managarmr%2C_the_Frost_Moon_II_Figure.png/40px-Managarmr%2C_the_Frost_Moon_II_Figure.png",
         fullName: "Managarmr, the Frost Moon II"
     },
+    11136: {
+        name: "Marcus", hp: 12317, atk:	16534, def:	14255, wis:	8991, agi: 15438,
+        skills: [358],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140129062109/bloodbrothersgame/images/thumb/5/53/Marcus%2C_Brave_of_Liberation_II_Figure.png/40px-Marcus%2C_Brave_of_Liberation_II_Figure.png",
+        fullName: "Marcus, Brave of Liberation II"
+    },
     11013: {
         name: "Marraco", hp: 18716, atk: 15876, def: 17254, wis: 7381, agi: 8809,
         skills: [61, 167],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131115131303/bloodbrothersgame/images/thumb/7/7b/Marraco%2C_Crusted_Wyrm_II_Figure.png/60px-Marraco%2C_Crusted_Wyrm_II_Figure.png",
         fullName: "Marraco, Crusted Wyrm II"
+    },
+    10656: {
+        name: "Mathilda", hp: 11841, atk: 15172, def: 10639, wis: 12718, agi: 15218,
+        skills: [115],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130430104152/bloodbrothersgame/images/thumb/6/68/Mathilda_the_Tarantula_II_Figure.png/40px-Mathilda_the_Tarantula_II_Figure.png",
+        fullName: "Mathilda the Tarantula II"
     },
     10705: {
         name: "Melanippe", hp: 16139, atk: 16800, def: 13929, wis: 11849, agi: 15132,
@@ -586,6 +644,13 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20140606074954/bloodbrothersgame/images/thumb/f/f4/Paladin_of_Capricorn_II_Figure.png/40px-Paladin_of_Capricorn_II_Figure.png",
         fullName: "Paladin of Capricorn II"
     },
+    11277: {
+        name: "Leo", hp: 15121, atk: 15002, def: 14200, wis: 7440, agi:	16811,
+        skills: [448],
+        autoAttack: 10014,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140508115334/bloodbrothersgame/images/thumb/9/91/Paladin_of_Leo_II_Figure.png/40px-Paladin_of_Leo_II_Figure.png",
+        fullName: "Paladin of Leo II"
+    },
     11229: {
         name: "Pisces", hp: 13041, atk: 8621, def: 14796, wis: 17114, agi: 14991,
         skills: [419],
@@ -677,6 +742,13 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20131215131956/bloodbrothersgame/images/thumb/6/67/Sagacious_Treant_II_Figure.png/60px-Sagacious_Treant_II_Figure.png",
         fullName: "Sagacious Treant II"
     },
+    11234: {
+        name: "Saizo", hp: 16128, atk: 12055, def: 16367, wis: 19422, agi: 16995,
+        skills: [405],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140326090514/bloodbrothersgame/images/thumb/4/41/Saizo%2C_Phantom_Ninja_II_Figure.png/40px-Saizo%2C_Phantom_Ninja_II_Figure.png",
+        fullName: "Saizo, Phantom Ninja II"
+    },
     10966: {
         name: "Saurva", hp: 14958, atk: 15305, def: 11329, wis: 11362, agi: 15002,
         skills: [259],
@@ -702,12 +774,25 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131221031323/bloodbrothersgame/images/thumb/0/03/Selk%2C_Desert_King_II_Figure.png/40px-Selk%2C_Desert_King_II_Figure.png",
         fullName: "Selk, Desert King II"
     },
+    11219: {
+        name: "Sigiled Corpse Beast", hp: 17006, atk: 12954, def: 14926, wis: 19855, agi: 16042,
+        skills: [414, 415],
+        autoAttack: 10007,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140402124522/bloodbrothersgame/images/thumb/f/f6/Sigiled_Corpse_Beast_II_Figure.png/40px-Sigiled_Corpse_Beast_II_Figure.png",
+        fullName: "Sigiled Corpse Beast II"
+    },
     11220: {
         name: "Sigiled Axeman", hp: 14644, atk: 9076, def: 12987, wis: 18338, agi: 13409,
         skills: [416],
         autoAttack: 10007,
         imageLink: "http://img3.wikia.nocookie.net/__cb20140402124523/bloodbrothersgame/images/thumb/9/9e/Sigiled_Skeleton_Axeman_II_Figure.png/40px-Sigiled_Skeleton_Axeman_II_Figure.png",
         fullName: "Sigiled Skeleton Axeman II"
+    },
+    10850: {
+        name: "Stalo", hp: 16269, atk: 16280, def: 16681, wis: 12792, agi: 13496,
+        skills: [241],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130917111955/bloodbrothersgame/images/thumb/9/96/Stalo%2C_Glacial_Giant_II_Figure.png/40px-Stalo%2C_Glacial_Giant_II_Figure.png",
+        fullName: "Stalo, Glacial Giant II"
     },
     10955: {
         name: "Sugaar", hp: 13110, atk: 7481, def: 14293, wis: 16950, agi: 16097,
@@ -733,6 +818,12 @@ var famDatabase = {
         skills: [236],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130921071545/bloodbrothersgame/images/thumb/f/f6/Tanba%2C_Founder_of_Ninja_II_Figure.png/60px-Tanba%2C_Founder_of_Ninja_II_Figure.png",
         fullName: "Tanba, Founder of Ninja II"
+    },
+    11122: {
+        name: "Tannin", hp: 13669, atk:	15500, def:	12683, wis:	19541, agi:	17894,
+        skills: [298],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131125102957/bloodbrothersgame/images/thumb/4/4a/Tannin%2C_Sea_Dragon_II_Figure.png/40px-Tannin%2C_Sea_Dragon_II_Figure.png",
+        fullName: "Tannin, Sea Dragon II"
     },
     695: {
         name: "Tawiscara", hp: 11914, atk: 14513, def: 14395, wis: 11366, agi: 15630,
@@ -777,6 +868,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20131002005418/bloodbrothersgame/images/thumb/0/04/Unicorn%2C_Spirit_Eater_II_Figure.png/60px-Unicorn%2C_Spirit_Eater_II_Figure.png",
         fullName: "Unicorn, Spirit Eater II"
     },
+    10896: {
+        name: "Valin", hp: 15500, atk: 16865, def: 22953, wis: 12716, agi: 11167,
+        skills: [263],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131010170703/bloodbrothersgame/images/thumb/4/4a/Valin_the_Terrible_II_Figure.png/40px-Valin_the_Terrible_II_Figure.png",
+        fullName: "Valin the Terrible II"
+    },
     11137: {
         name: "Venusia", hp: 14514, atk: 18273, def: 13333, wis: 10831, agi: 11492,
         skills: [361],
@@ -800,6 +897,12 @@ var famDatabase = {
         skills: [295, 296],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131122044220/bloodbrothersgame/images/thumb/5/56/Vlad_the_Impaler_II_Figure.png/40px-Vlad_the_Impaler_II_Figure.png",
         fullName: "Vlad the Impaler II"
+    },
+    10675: {
+        name: "Void Yaksha", hp: 15706, atk: 18013, def: 14471, wis: 14276, agi: 15814,
+        skills: [199],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130607215051/bloodbrothersgame/images/thumb/9/97/Void_Yaksha_II_Figure.png/40px-Void_Yaksha_II_Figure.png",
+        fullName: "Void Yaksha II"
     },
     10570: {
         name: "Wolfert", hp: 14189, atk: 23972, def: 13723, wis: 13290, agi: 13431,

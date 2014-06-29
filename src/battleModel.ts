@@ -60,8 +60,8 @@ class BattleModel {
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
         
-        var player1formation: string;
-        var player2formation: string;
+        var player1formation: any;
+        var player2formation: any;
         var player1cardsInfo = [];
         var player2cardsInfo = [];
         
@@ -287,10 +287,10 @@ class BattleModel {
             var description = target.name + " is now " + ENUM.AfflictionType[type];
             var maxTurn = 1;
             if (type == ENUM.AfflictionType.BLIND || type == ENUM.AfflictionType.SILENT) {
-                maxTurn = skill.skillFuncArg4;
+                var maxTurn = skill.skillFuncArg4;
             }
             else if (type == ENUM.AfflictionType.POISON) {
-                maxTurn = -1;
+                var percent = target.getPoisonPercent();
             }
             
             this.logger.addMinorEvent({
@@ -299,7 +299,8 @@ class BattleModel {
                 type: ENUM.MinorEventType.AFFLICTION, 
                 affliction: {
                     type: type,
-                    duration: maxTurn 
+                    duration: maxTurn,
+                    percent: percent
                 },
                 description: description,                 
             });

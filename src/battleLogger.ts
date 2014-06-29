@@ -213,7 +213,7 @@ class BattleLogger {
                     card.affliction = { type: "Paralyzed", duration: event.affliction.duration };
                     break;
                 case ENUM.AfflictionType.POISON:
-                    card.affliction = { type: "Poison", duration: event.affliction.percent };
+                    card.affliction = { type: "Poison", percent: event.affliction.percent };
                     break;
                 case ENUM.AfflictionType.SILENT:
                     card.affliction = { type: "Silent", duration: event.affliction.duration };
@@ -286,7 +286,13 @@ class BattleLogger {
                 }
 
                 if (afflict) {
-                    infoText.affliction = "Affliction: " + afflict.type + " (" + afflict.duration + " turn)";
+                    infoText.affliction = "Affliction: " + afflict.type
+                    if (afflict.type != "Poison") {
+                        infoText.affliction += (" (" + afflict.duration + " turn)");
+                    }
+                    else {
+                        infoText.affliction += (" (" + afflict.percent + " %)");
+                    }
                 }
                 
                 // grab all minor events under the latest major event

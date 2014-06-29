@@ -87,19 +87,29 @@ var SkillDatabase = {
     112 : {
         name: "Whorl of Attack", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to three foes."
     },
     
     114 : {
         name: "Electric Shock", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 7, maxProbability: 30, ward: "MAGICAL"
+        skillRange: 7, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy lightning damage to three foes."
+    },
+
+    115 : {
+        name: "Venomstorm", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.5, skillFuncArg2: 1, skillFuncArg3: 1, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy poison damage to three foes."
     },
     
     118 : {
         name: "Slashing Blade", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal ATK-based damage to all foes."
     },
 
     119 : {
@@ -157,6 +167,13 @@ var SkillDatabase = {
         skillRange: 4, maxProbability: 70,
         description: "Reduce magic damage taken by all allies."
     },
+
+    137 : {
+        name: "Binding Arcana", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 5, skillFuncArg3: 0.3, skillFuncArg4: 3, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal four physical strikes that sometimes silence foes."
+    },
     
     138 : {
         name: "Head Bash", skillType: 2, skillFunc: 3, skillCalcType: 1, 
@@ -185,11 +202,11 @@ var SkillDatabase = {
         description: "Deal physical damage to five random targets."
     },
 
-    144 : { 
-	name: "Windcrush", skillType: 2, skillFunc: 4, skillCalcType: 2,  
-	skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+    144 : {
+	    name: "Windcrush", skillType: 2, skillFunc: 4, skillCalcType: 2,  
+	    skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
         skillRange: 19, maxProbability: 30, ward: "MAGICAL",
-	description: "Deal heavy damage to four foes." 
+	    description: "Deal heavy damage to four foes." 
 	},  
 
     154: {
@@ -241,6 +258,13 @@ var SkillDatabase = {
         skillFuncArg1: 0.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    199 : {
+        name: "Cruelest Touch", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 0.75, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage and sometimes poison six random foes."
+    },
     
     212 : {
         name: "Ghasthunt", skillType: 2, skillFunc: 3, skillCalcType: 2, 
@@ -285,6 +309,13 @@ var SkillDatabase = {
         skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal massive ATK-based damage to three random foes."
+    },
+
+    225 : {
+        name: "Wings of Winter", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 0.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage to five random foes."
     },
 
     227 : {
@@ -335,7 +366,15 @@ var SkillDatabase = {
     240 : {
         name : "Midnight Smile", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.2, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 3, maxProbability: 70
+        skillRange: 3, maxProbability: 70,
+        description: "Raise AGI of self and adjacent familiars at start of battle."
+    },
+
+    241 : {
+        name : "Chillling Blast", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.7, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage and sometimes freeze three random foes."
     },
 
     244 : {
@@ -367,19 +406,29 @@ var SkillDatabase = {
     256 : {
         name: "Silent Madness", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to three foes."
     },
     
     258 : {
         name: "Fatal Kiss", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 8, maxProbability: 30, ward: "MAGICAL"
+        skillRange: 8, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to all foes, regardless of position."
     },
 
     259 : {
         name: "Hell Spark", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to four random foes."
+    },
+
+    263 : {
+        name: "Judgment", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal heavy ATK-based damage to up to three foes."
     },
 
     264 : {
@@ -415,6 +464,13 @@ var SkillDatabase = {
         skillFuncArg1: 0, skillFuncArg2: 5, skillFuncArg3: 0.45, skillFuncArg4: 1, skillFuncArg5: 0, 
         skillRange: 7, maxProbability: 70,
         description: "Chance to silence three foes for one turn at start of battle."
+    },
+
+    274 : {
+        name: "Eternal Sleep", skillType: 2, skillFunc: 3, skillCalcType: 3, 
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 32, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal heavy AGI-based damage to up to four foes."
     },
     
     275 : {
@@ -499,6 +555,13 @@ var SkillDatabase = {
         skillFuncArg1: 2.15, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive AGI-based damage to three random foes, regardless of position."
+    },
+
+    298 : {
+        name: "Freezing Scales", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.35, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "MAGICAL", contact: 0,
+        description: "Deal WIS-based damage to all foes and sometimes freeze them, regardless of position."
     },
     
     302 : {
@@ -586,6 +649,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to three random foes."
     },
+
+    333 : {
+        name: "Cold-Blooded Smile", skillType: 2, skillFunc: 3, skillCalcType: 3, 
+        skillFuncArg1: 1.2, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal AGI-based damage and sometimes freeze all foes."
+    },
     
     340 : {
         name: "Penance", skillType: 2, skillFunc: 3, skillCalcType: 1, 
@@ -608,7 +678,8 @@ var SkillDatabase = {
     351 : {
         name: "Sword of Fealty", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to four random foes."
     },
 
     353 : {
@@ -618,10 +689,25 @@ var SkillDatabase = {
         description: "Deal ATK-based damage to three random foes and sometimes freeze them."
     },
 
+    354 : {
+        name: "Venomspray Staff", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.9, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to two random foes and sometimes envenom them."
+    },
+
+    358 : {
+        name: "Call of Steel", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.3, skillFuncArg2: 5, skillFuncArg3: 0.1, skillFuncArg4: 3, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage and sometimes silence four random foes."
+    },
+
     359 : {
         name: "Seeping Darkness", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.25, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to three random foes."
     },
 
     360: {
@@ -696,6 +782,13 @@ var SkillDatabase = {
         description: "Raise ATK of self and adjacent familiars."
     },
 
+    387 : {
+        name: "Earth's Fury", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to four random foes."
+    },
+
     390 : {
         name: "Libra's Retribution", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -713,6 +806,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to three random foes."
+    },
+
+    405 : {
+        name : "Visions of Terror", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.65, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to and sometimes poison four random foes, regardless of position."
     },
     
     406 : {
@@ -738,6 +838,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 20, maxProbability: 30, ward: "MAGICAL",
         description: "Deal WIS-based damage to five random foes, regardless of position."
+    },
+
+    414 : {
+        name: "Putrid Stench", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.2, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deals WIS-based damage to and sometimes poison five random foes, regardless of position."
+    },
+
+    415 : {
+        name: "Sigiled Sanctuary", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.11, skillFuncArg2: 3, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 3, maxProbability: 70,
+        description: "Raise WIS of self and adjacent familiars at start of battle."
     },
 
     416 : {
@@ -817,7 +931,8 @@ var SkillDatabase = {
     448 : {
         name: "Leo's Claws", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage to four random foes."
     },
     
     463 : {
@@ -851,6 +966,13 @@ var SkillDatabase = {
         name : "Atonement", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.3, skillFuncArg2: 5, skillFuncArg3: 7, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 4, maxProbability: 70
+    },
+
+    468 : {
+        name : "Rain of Death", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.7, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 10, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage and sometimes envenom three random foes."
     },
     
     471 : {
@@ -942,9 +1064,21 @@ var SkillDatabase = {
         skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
     },
 
+    10009: { // 100% Mod, Single Hit, WIS-based, position independent, freeze
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1, skillFuncArg2: 3, skillFuncArg3: 0.1, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
+    },
+
     10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
         name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
+    },
+
+    10014: { // 100% Mod, Single Hit, ATK-based, position dependent, paralyze
+        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 2, skillFuncArg3: 0.4, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
 
@@ -952,6 +1086,12 @@ var SkillDatabase = {
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
+    },
+
+    10017: { // 100% Mod, Single Hit, ATK-based, position dependent, envenom
+        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 10, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
     
     99000 : {
