@@ -443,10 +443,10 @@ class BattleLogger {
         }
         playerFormations[2] = temp;
 
-        for (var player = 1; player <= 2; player++) { // for each player
-            // todo: set the svg size dynamically
-            var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
+        var draw = SVG('svg').size(400, 600).attr('id', 'mainSvg').attr('class', 'svg');
 
+        for (var player = 1; player <= 2; player++) { // for each player
+            
             // draw the skill name background, don't show them yet
             if (player == 2) {
                 var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 5).attr('id', 'p2SkillBg');
@@ -458,7 +458,7 @@ class BattleLogger {
                 var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
                 var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
                                .attr('id', 'p1SkillText');
-                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, 300);
             }
             
             // as I'm writing this comment, I don't know myself what these number are. Just know that change them
@@ -475,6 +475,12 @@ class BattleLogger {
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
             var groupPlayer = draw.group()
                                   .attr('id', 'p' + player + 'group');
+            if (player == 1) {
+                groupPlayer.move(30, 400);    
+            }
+            else if (player == 2) {
+                groupPlayer.move(30, 100);    
+            }
             
             // calculate the bullets coord
             for (var i = 0; i < 5; i++) {
@@ -527,14 +533,13 @@ class BattleLogger {
                 group.add(image).attr('id', 'player' + player + 'fam' + i + 'group');
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
-            }            
-            groupPlayer.move(30, 100);
+            }
         }
     }
 
     displayHPOnCanvas(percent, player, index) {
 
-        var draw = SVG.get('player' + player + 'svg');
+        var draw = SVG.get('mainSvg');
 
         // the x coordinate is 1/2 image width to the left of the bullet
         var image_x_coord = this.coordArray[player][index][0] - BattleLogger.IMAGE_WIDTH / 2;
@@ -626,6 +631,7 @@ class BattleLogger {
         }
     }
 
+    // index: a major event index
     displayTurnAnimation(index: number) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
@@ -640,7 +646,7 @@ class BattleLogger {
                 continue; //damage from poison, and maybe other things
             }
             
-            var executor = BattleModel.getInstance().cardManager.getCardById(data.executorId);
+            var executor = CardManager.getInstance().getCardById(data.executorId);
             var group: any = this.getCardImageGroupOnCanvas(executor);
 
             // enlarge the executor, then shrink it
