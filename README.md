@@ -4,6 +4,7 @@ bb pvp simulator
 ### What is this?
 This is a pvp simulator for the Blood Brothers game.
 I code it for fun and also for playing with TypeScript.
+[Link](http://chinhodado.github.io/bb_pvp/setting.html)
 
-### Should I read your code?
-You probably shouldn't. The code is ugly. You have been warned.
+### Progress
+See the [wiki](https://github.com/chinhodado/bb_pvp_simulator/wiki/What-is-implemented-and-what-is-not) for what has been implemented and what not.
