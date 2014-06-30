@@ -344,9 +344,6 @@ class BattleLogger {
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
 
-                // display dead or alive familiar
-                this.displayDeadAliveFamiliar(player, fam, stats.hp <= 0);
-
                 // display last event's HP
                 var lastEventCard = lastEventField["player" + player + "Cards"][fam];
                 this.displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);
@@ -618,6 +615,9 @@ class BattleLogger {
         }
 
         hpbar.fill(hpGradient);
+
+        // display dead or alive familiar
+        this.displayDeadAliveFamiliar(player, index, percent <= 0);
     }
     
     displayDeadAliveFamiliar(player, fam, isDead) {
