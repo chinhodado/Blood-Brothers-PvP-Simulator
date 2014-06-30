@@ -236,20 +236,15 @@ class BattleLogger {
         // display turn animation
         this.displayTurnAnimation(index);
 
-        // first deserialize the initial field info into a nice object that we will modify later
-        var initialField = JSON.parse(this.initialFieldInfo);
-        
-        // apply events to initial field up to the specified event
-        for (var i = 0; i <=  index; i++) {
-            // need to make sure eventLog[i] exists, in case this is an empty event (like the "Battle start" event);
-            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
-                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
-            }
-        }
+        // for displaying last turn's HP
+        var lastEventIndex = index == 0? 0 : index - 1;
+        var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
+         
+        var field = this.getFieldAtMajorIndex(index);
         
         // now prepares the info and print them out
         for (var player = 1; player <=2; player++) { // for each player
-            var playerCards = initialField["player" + player + "Cards"]; // get the cards of that player
+            var playerCards = field["player" + player + "Cards"]; // get the cards of that player
             for (var fam = 0; fam < 5; fam++) { // for each card
                 var stats = playerCards[fam].stats;
                 var originalStats = playerCards[fam].originalStats;
@@ -348,16 +343,33 @@ class BattleLogger {
                                     (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
-                
-                // display hp on canvas
-                this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
 
                 // display dead or alive familiar
                 this.displayDeadAliveFamiliar(player, fam, stats.hp <= 0);
+
+                // display last event's HP
+                var lastEventCard = lastEventField["player" + player + "Cards"][fam];
+                this.displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);
             }
         }
     }
     
+    // get the field situation at a major event index
+    getFieldAtMajorIndex(majorIndex: number) {
+        // deserialize the initial field info
+        var initialField = JSON.parse(this.initialFieldInfo);
+        
+        // apply events to initial field up to the specified event
+        for (var i = 0; i <=  majorIndex; i++) {
+            // need to make sure minorEventLog[i] exists, in case this is an empty event (like the "Battle start" event);
+            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
+                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
+            }
+        }
+
+        return initialField;
+    }
+
     /**
      * Decorate a string by bolding it and make it red or green
      * @param text the text to decorate
@@ -537,7 +549,7 @@ class BattleLogger {
         }
     }
 
-    displayHPOnCanvas(percent, player, index) {
+    displayHPOnCanvas(percent: number, player: number, index: number, animDuration?: number) {
 
         var draw = SVG.get('mainSvg');
 
@@ -579,6 +591,11 @@ class BattleLogger {
         // now we deal with the background gradient used for displaying the HP
         var hpGradientId = 'player' + player + 'fam' + index + 'hpGradient';
         var hpGradient : any = SVG.get(hpGradientId);
+        
+        var duration = 1;
+        if (!isNaN(animDuration)) {
+            duration = animDuration;
+        }
 
         if (!hpGradient) {
             // draw for full HP
@@ -590,8 +607,8 @@ class BattleLogger {
         else {
             var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
             var s2 = SVG.get('p' + player + 'f' + index + 'hpgs2');
-            s1.animate('1s').update({ offset: percent + '%' });
-            s2.animate('1s').update({ offset: percent + '%' });
+            s1.animate(duration + 's').update({ offset: percent + '%' });
+            s2.animate(duration + 's').update({ offset: percent + '%' });
         }
 
         hpbar.fill(hpGradient);
@@ -741,9 +758,18 @@ class BattleLogger {
         // move the executor's group to the front
         SVG.get('p' + executor.getPlayerId() + 'group').front();
 
+        var field = this.getFieldAtMajorIndex(majorIndex);
+        var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
+        var stats = targetInfo.stats;
+        var originalStats = targetInfo.originalStats;
+
         executorGroup.animate({ duration: '0.5s' })
             .move(x - x1, y - y1)
             .after(function () {
+                // display hp on canvas
+                BattleLogger.getInstance()
+                    .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+
                 this.animate({ duration: '0.5s'})
                     .move(0, 0)
                     .after(function () {
