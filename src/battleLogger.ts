@@ -525,7 +525,7 @@ class BattleLogger {
                 imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH_BIG));
             }
             
-            // display fam images
+            // display fam images and other effects
             for (var i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
                 var image_x_coord = coordArray[i][0] - BattleLogger.IMAGE_WIDTH / 2;
@@ -535,14 +535,20 @@ class BattleLogger {
 
                 var image = draw.image(imageLinksArray[i])
                     .move(image_x_coord, image_y_coord)
-                    .attr('id', 'player' + player + 'fam' + i + 'image')
+                    .attr('id', 'p' + player + 'f' + i + 'image')
                     .loaded(function (loader) {
                         this.size(BattleLogger.IMAGE_WIDTH);
                     });
 
+                var explosion = draw.image('img/explosion.png', 70, 70)
+                                    .move(image_x_coord, image_y_coord)
+                                    .attr('id', 'p' + player + 'f' + i + 'explosion')
+                                    .opacity(0)
+
                 // make a svg group for the image + hp bar
-                var group = draw.group();
-                group.add(image).attr('id', 'player' + player + 'fam' + i + 'group');
+                var group = draw.group();                
+                group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
+                group.add(explosion);
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
             }
@@ -573,7 +579,7 @@ class BattleLogger {
 
         // first draw the (empty) hp bar
         // try to get the bar if it exist, or create if not
-        var hpbarId = 'player' + player + 'fam' + index + 'hp';
+        var hpbarId = 'p' + player + 'f' + index + 'hp';
         var hpbar = SVG.get(hpbarId);
         
         if (!hpbar) {
@@ -581,7 +587,7 @@ class BattleLogger {
                 .style({ 'stroke-width': 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
-            var groupId = 'player' + player + 'fam' + index + 'group';
+            var groupId = 'p' + player + 'f' + index + 'group';
 
             // add the hpbar to the group
             var group = SVG.get(groupId);
@@ -589,7 +595,7 @@ class BattleLogger {
         }
 
         // now we deal with the background gradient used for displaying the HP
-        var hpGradientId = 'player' + player + 'fam' + index + 'hpGradient';
+        var hpGradientId = 'p' + player + 'f' + index + 'hpGradient';
         var hpGradient : any = SVG.get(hpGradientId);
         
         var duration = 1;
@@ -615,7 +621,7 @@ class BattleLogger {
     }
     
     displayDeadAliveFamiliar(player, fam, isDead) {
-        var image : any = SVG.get('player' + player + 'fam' + fam + 'image');
+        var image : any = SVG.get('p' + player + 'f' + fam + 'image');
         var filter = SVG.get('darkenFilter');
         if (isDead) {
             if (!filter) {
@@ -733,7 +739,8 @@ class BattleLogger {
     }
 
     // a recursive function. I hate callback.
-    displayAttackAnimation(majorIndex: number, minorIndex: number) {
+    // noAttackAnim: don't display attack anim anymore (for AoE)
+    displayAttackAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
@@ -744,7 +751,7 @@ class BattleLogger {
             
         if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
-                this.displayAttackAnimation(majorIndex, minorIndex + 1);
+                this.displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                 return;
             }
             else return; // for now
@@ -754,7 +761,7 @@ class BattleLogger {
         if (data.type == ENUM.MinorEventType.DESCRIPTION) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 this.displayProcSkill(data.executorId, data.skillId, function() {
-                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1);
+                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                 }, 0.5);
                 
                 return;
@@ -783,33 +790,95 @@ class BattleLogger {
         var stats = targetInfo.stats;
         var originalStats = targetInfo.originalStats;
 
-        executorGroup.animate({ duration: '0.5s' })
-            .move(x - x1, y - y1)
-            .after(function () {
-                // display hp on canvas
+        var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
+
+        if (Skill.isAoeSkill(data.skillId)) {
+            var draw = SVG.get('mainSvg');
+            var exploSet = draw.set();
+
+            // add targets to the set
+            var aoeTargets = this.getTargetsInMajorEvent(majorIndex);
+            for (var i = 0; i < aoeTargets.length; i++) {
+                var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
+                exploSet.add(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
+            }
+
+            if (noAttackAnim) {
+                // display hp change
                 BattleLogger.getInstance()
                     .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+            }
+            else {
+                exploSet.animate({ duration: '0.2s' })
+                         .opacity(1)
+                         .after(function() {
+                            exploSet.opacity(0);
+                            // display hp change
+                            BattleLogger.getInstance()
+                                .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+                         });
+            }
+        }
+        else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE
+            explosion.animate({ duration: '0.2s' })
+                     .opacity(1)
+                     .after(function() {
+                        explosion.opacity(0);
+                        // display hp change
+                        BattleLogger.getInstance()
+                            .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                     });
+        }
+        else {
+            // attack with contact, move the executor forward and back
+            executorGroup.animate({ duration: '0.5s' })
+                .move(x - x1, y - y1)
+                .after(function () {
+                    explosion.opacity(1);
+                    // display hp change
+                    BattleLogger.getInstance()
+                        .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
 
-                this.animate({ duration: '0.5s'})
-                    .move(0, 0)
-                    .after(function () {
-                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1);
-                    });
-            });
+                    this.animate({ duration: '0.5s'})
+                        .move(0, 0)
+                        .after(function () {
+                            explosion.opacity(0);
+                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        });
+                });
+        }
+    }
+
+    /**
+     * Should only call this when need the targets for an AoE attack
+     * Return an array of target id's
+     */
+    getTargetsInMajorEvent(majorIndex: number): number[] {
+        var targets = [];
+        for (var i = 0; i < this.minorEventLog[majorIndex].length; i++) {
+            var tmpData = this.minorEventLog[majorIndex][i];
+            if (tmpData.executorId == this.majorEventLog[majorIndex].executorId) {
+                targets.push(tmpData.targetId);
+            }
+        }
+        return targets;
     }
 
     /**
      * Given a card, return the image of that card on the canvas
      */
     getCardImageOnCanvas(card: Card) {
-        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'image');
+        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'image');
     }
 
     /**
      * Given a card, return the image group of that card on the canvas
      */
     getCardImageGroupOnCanvas(card: Card) {
-        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'group');
+        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
     }
     
     /**

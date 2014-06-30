@@ -45,6 +45,16 @@ class RangeFactory {
     static createEnemyNearRange (id) {
         return new EnemyNearRange(id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]);
     }
+
+    static canBeAoeRange(rangeId: number): boolean {
+        var canBe = false;
+        
+        if (this.isEnemyNearRange(rangeId) || rangeId == 8) {
+            canBe = true;    
+        }
+
+        return canBe;    
+    }
     
     static createRange (id) {
         switch (id) {

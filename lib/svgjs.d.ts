@@ -158,6 +158,8 @@ declare module svgjs {
         click(cb:Function):void;
         on(event:string, cb:Function):void;
         off(event:string, cb:Function):void;
+
+        set();
     }
 
     export interface Mask extends Element {

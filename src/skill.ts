@@ -66,6 +66,36 @@ class Skill {
         return isAttackSkill;
     }
 
+    static isIndirectSkill(skillId: number): boolean {
+        var isIndirect = true;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.contact == 1) {
+            isIndirect = false;
+        }
+
+        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
+            skillInfo.skillFunc == ENUM.SkillFunc.COUNTER ||
+            skillInfo.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER) 
+        {
+            isIndirect = false;    
+        }
+        
+        return isIndirect;
+    }
+
+    // mainly used to determine the animation
+    static isAoeSkill(skillId: number): boolean {
+        var isAoe = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (RangeFactory.canBeAoeRange(skillInfo.skillRange) && this.isIndirectSkill(skillId)) {
+            isAoe = true;    
+        }
+
+        return isAoe;
+    }
+
     getSerializableObject() {
         return {
             id: this.id,
