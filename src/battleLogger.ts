@@ -632,16 +632,16 @@ class BattleLogger {
     }
 
     // index: a major event index
-    displayTurnAnimation(index: number) {
+    displayTurnAnimation(majorIndex: number) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
-        for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
-            var data: MinorEvent = this.minorEventLog[index][j];
+        for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length; j++) {
+            var data: MinorEvent = this.minorEventLog[majorIndex][j];
             
             if (data.type == ENUM.MinorEventType.AFFLICTION) {
                 continue; // for now
             }
-            
+
             if (!data.executorId) {
                 continue; //damage from poison, and maybe other things
             }
@@ -673,6 +673,9 @@ class BattleLogger {
                             d: 1,
                             e: cx - 1 * cx,
                             f: cy - 1 * cy
+                        })
+                        .after(function(){
+                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
                         });
                 });
 
@@ -685,8 +688,8 @@ class BattleLogger {
                 var yText = executor.getPlayerId() == 1 ? 272 : 8;
 
                 // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
-                if (data.executorId == this.majorEventLog[index].executorId) {
-                    var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;
+                if (data.executorId == this.majorEventLog[majorIndex].executorId) {
+                    var skillName: string = SkillDatabase[this.majorEventLog[majorIndex].skillId].name;
                 }
                 else {
                     var skillName: string = SkillDatabase[data.skillId].name;
@@ -702,6 +705,51 @@ class BattleLogger {
                             });
             }
         }
+    }
+
+    // a recursive function. I hate callback.
+    displayAttackAnimation(majorIndex: number, minorIndex: number) {
+
+        // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
+        if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
+            return;    
+        }
+
+        var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
+            
+        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                this.displayAttackAnimation(majorIndex, minorIndex + 1);
+                return;
+            }
+            else return; // for now
+        }
+
+        // going and attack physically
+        var executor = CardManager.getInstance().getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroupOnCanvas(executor);
+
+        var target = CardManager.getInstance().getCardById(data.targetId);
+        var targetGroup: any = this.getCardImageGroupOnCanvas(target);
+
+        var x = targetGroup.rbox().x;
+        var y = targetGroup.rbox().y;
+
+        var x1 = executorGroup.rbox().x;
+        var y1 = executorGroup.rbox().y;
+
+        // move the executor's group to the front
+        SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        executorGroup.animate({ duration: '0.5s' })
+            .move(x - x1, y - y1)
+            .after(function () {
+                this.animate({ duration: '0.5s'})
+                    .move(0, 0)
+                    .after(function () {
+                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1);
+                    });
+            });
     }
 
     /**
