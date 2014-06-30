@@ -367,6 +367,18 @@ class BattleLogger {
         return initialField;
     }
 
+    getFieldAtMinorIndex(majorIndex: number, minorIndex: number) {
+        // get last major index's field
+        var lastField = this.getFieldAtMajorIndex(majorIndex - 1);
+
+        // then apply the current major index's minor events upon it
+        for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length && j <= minorIndex; j++) {
+            this.applyMinorEvent(this.minorEventLog[majorIndex][j], lastField);
+        }
+
+        return lastField;
+    }
+
     /**
      * Decorate a string by bolding it and make it red or green
      * @param text the text to decorate
@@ -785,7 +797,7 @@ class BattleLogger {
         // move the executor's group to the front
         SVG.get('p' + executor.getPlayerId() + 'group').front();
 
-        var field = this.getFieldAtMajorIndex(majorIndex);
+        var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
         var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
         var stats = targetInfo.stats;
         var originalStats = targetInfo.originalStats;
