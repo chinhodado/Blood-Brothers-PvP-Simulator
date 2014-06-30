@@ -206,6 +206,7 @@ declare module svgjs {
 
         opacity(o: number);
         update(arg);
+        rotate(arg);
 
         // TODO style, etc, bbox... 
     }

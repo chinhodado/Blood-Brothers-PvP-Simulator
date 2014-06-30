@@ -554,10 +554,16 @@ class BattleLogger {
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
                                     .opacity(0)
 
+                var spellCircle = draw.image('img/circle_blue.png', 150, 150)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'spellCircle')
+                                    .opacity(0)
+
                 // make a svg group for the image + hp bar
                 var group = draw.group();                
                 group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
                 group.add(explosion);
+                group.add(spellCircle);
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
             }
@@ -689,7 +695,7 @@ class BattleLogger {
         }
     }
 
-    // enlarge the fam, display the skill name
+    // enlarge the fam, display the skill name, display spell circle
     // durationRatio: e.g. 0.5 means half the animation duration
     displayProcSkill(executorId: number, skillId: number, callback?, durationRatio?: number) {
         var executor = CardManager.getInstance().getCardById(executorId);
@@ -706,6 +712,14 @@ class BattleLogger {
             D1 *= durationRatio;
             D05 *= durationRatio;
         }
+
+        var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+        spellCircle.opacity(1);
+        spellCircle.animate({duration: '3s'})
+                   .rotate(180)
+                   .after(function(){
+                        this.rotate(0);//reset the rotation
+                   });
 
         group.animate({ duration: D1 + 's' })
             .transform({
@@ -727,6 +741,7 @@ class BattleLogger {
                         f: cy - 1 * cy
                     })
                     .after(function(){
+                        spellCircle.opacity(0);
                         if (callback) callback();
                     });
             });
@@ -822,10 +837,15 @@ class BattleLogger {
                 BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
             }
             else {
-                exploSet.animate({ duration: '0.2s' })
+                var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                if (Skill.isWisAutoAttack(data.skillId)) {
+                    spellCircle.opacity(1);
+                }
+                exploSet.animate({ duration: '0.4s' })
                          .opacity(1)
                          .after(function() {
                             exploSet.opacity(0);
+                            spellCircle.opacity(0);
                             // display hp change
                             BattleLogger.getInstance()
                                 .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
@@ -833,7 +853,7 @@ class BattleLogger {
                          });
             }
         }
-        else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE
+        else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
             explosion.animate({ duration: '0.2s' })
                      .opacity(1)
                      .after(function() {

@@ -84,6 +84,23 @@ class Skill {
         return isIndirect;
     }
 
+    // mainly for displaying the wis circle when attack
+    static isWisAutoAttack(skillId: number): boolean {
+        var isWisAutoAttack = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (this.isAutoAttackSkill(skillId) && skillInfo.skillCalcType == ENUM.SkillCalcType.WIS) {
+            isWisAutoAttack = true;    
+        }
+
+        return isWisAutoAttack;
+    }
+
+    static isAutoAttackSkill(skillId: number): boolean {
+        // either return true or undefined
+        return SkillDatabase[skillId].isAutoAttack;
+    }
+
     // mainly used to determine the animation
     static isAoeSkill(skillId: number): boolean {
         var isAoe = false;
