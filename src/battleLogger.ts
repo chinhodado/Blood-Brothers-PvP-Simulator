@@ -671,30 +671,36 @@ class BattleLogger {
             var scaleFactor = 1.3;
             var cx = group.cx();
             var cy = group.cy();
-            
-            group.animate({ duration: '1s' })
-                .transform({
-                    a: scaleFactor,
-                    b: 0,
-                    c: 0,
-                    d: scaleFactor,
-                    e: cx - scaleFactor * cx,
-                    f: cy - scaleFactor * cy
-                })
-                .after(function () {
-                    this.animate({ duration: '1s', delay: '0.5s' })
-                        .transform({
-                            a: 1,
-                            b: 0,
-                            c: 0,
-                            d: 1,
-                            e: cx - 1 * cx,
-                            f: cy - 1 * cy
-                        })
-                        .after(function(){
-                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
-                        });
-                });
+
+            if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
+                // don't enlarge the fam, etc.
+                BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+            }
+            else {
+                group.animate({ duration: '1s' })
+                    .transform({
+                        a: scaleFactor,
+                        b: 0,
+                        c: 0,
+                        d: scaleFactor,
+                        e: cx - scaleFactor * cx,
+                        f: cy - scaleFactor * cy
+                    })
+                    .after(function () {
+                        this.animate({ duration: '1s', delay: '0.5s' })
+                            .transform({
+                                a: 1,
+                                b: 0,
+                                c: 0,
+                                d: 1,
+                                e: cx - 1 * cx,
+                                f: cy - 1 * cy
+                            })
+                            .after(function(){
+                                BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                            });
+                    });
+            }
 
             // display the skill name
             if (data.skillId && !SkillDatabase[data.skillId].isAutoAttack) {
