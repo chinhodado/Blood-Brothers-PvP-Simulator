@@ -428,8 +428,8 @@ class BattleModel {
 
         this.logger.addMajorEvent({
             description: attacker.name + " attacks!",
-            skillId: attacker.autoAttack.id
-            // we may consider adding the attacker id later on
+            skillId: attacker.autoAttack.id,
+            executorId: attacker.id
         });
 
         attacker.autoAttack.execute({

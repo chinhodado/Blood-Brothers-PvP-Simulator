@@ -651,85 +651,85 @@ class BattleLogger {
     // index: a major event index
     displayTurnAnimation(majorIndex: number) {
 
-        // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
-        for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length; j++) {
-            var data: MinorEvent = this.minorEventLog[majorIndex][j];
+        var executorId = this.majorEventLog[majorIndex].executorId;
+        if (!executorId) {
+            return; //description event like battle start, etc
+        }
             
-            if (data.type == ENUM.MinorEventType.AFFLICTION) {
-                continue; // for now
+        if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
+            // don't enlarge the fam, etc.
+            this.displayAttackAnimation(majorIndex, 0);
+        }
+        else {
+            var callback = null;
+            if (Skill.isAttackSkill(this.majorEventLog[majorIndex].skillId)) {
+                callback = function() {
+                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                }
             }
+            this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, callback);
+        }
+    }
 
-            if (!data.executorId) {
-                continue; //damage from poison, and maybe other things
-            }
-            
-            var executor = CardManager.getInstance().getCardById(data.executorId);
-            var group: any = this.getCardImageGroupOnCanvas(executor);
+    // enlarge the fam, display the skill name
+    // durationRatio: e.g. 0.5 means half the animation duration
+    displayProcSkill(executorId: number, skillId: number, callback?, durationRatio?: number) {
+        var executor = CardManager.getInstance().getCardById(executorId);
+        var group: any = this.getCardImageGroupOnCanvas(executor);
 
-            // enlarge the executor, then shrink it
-            // scale from center
-            var scaleFactor = 1.3;
-            var cx = group.cx();
-            var cy = group.cy();
+        // enlarge the executor, then shrink it
+        // scale from center
+        var scaleFactor = 1.3;
+        var cx = group.cx();
+        var cy = group.cy();
 
-            if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
-                // don't enlarge the fam, etc.
-                BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
-            }
-            else {
-                group.animate({ duration: '1s' })
+        var D1 = 1, D05 = 0.5;
+        if (durationRatio) {
+            D1 *= durationRatio;
+            D05 *= durationRatio;
+        }
+
+        group.animate({ duration: D1 + 's' })
+            .transform({
+                a: scaleFactor,
+                b: 0,
+                c: 0,
+                d: scaleFactor,
+                e: cx - scaleFactor * cx,
+                f: cy - scaleFactor * cy
+            })
+            .after(function () {
+                this.animate({ duration: D1 + 's', delay: D05 + 's' })
                     .transform({
-                        a: scaleFactor,
+                        a: 1,
                         b: 0,
                         c: 0,
-                        d: scaleFactor,
-                        e: cx - scaleFactor * cx,
-                        f: cy - scaleFactor * cy
+                        d: 1,
+                        e: cx - 1 * cx,
+                        f: cy - 1 * cy
                     })
-                    .after(function () {
-                        this.animate({ duration: '1s', delay: '0.5s' })
-                            .transform({
-                                a: 1,
-                                b: 0,
-                                c: 0,
-                                d: 1,
-                                e: cx - 1 * cx,
-                                f: cy - 1 * cy
-                            })
-                            .after(function(){
-                                if (Skill.isAttackSkill(BattleLogger.getInstance().majorEventLog[majorIndex].skillId)) {
-                                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
-                                }
-                            });
+                    .after(function(){
+                        if (callback) callback();
                     });
-            }
+            });
 
-            // display the skill name
-            if (data.skillId && !SkillDatabase[data.skillId].isAutoAttack) {
-                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
-                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+            // display skill name
+            var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
+            var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
 
-                // the y-coordinate of the text, depending on whether this is player 1 or 2
-                var yText = executor.getPlayerId() == 1 ? 272 : 8;
+            // the y-coordinate of the text, depending on whether this is player 1 or 2
+            var yText = executor.getPlayerId() == 1 ? 272 : 8;
 
-                // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
-                if (data.executorId == this.majorEventLog[majorIndex].executorId) {
-                    var skillName: string = SkillDatabase[this.majorEventLog[majorIndex].skillId].name;
-                }
-                else {
-                    var skillName: string = SkillDatabase[data.skillId].name;
-                }
+            var skillName: string = SkillDatabase[skillId].name;
                 
-                // center the text inside the background
-                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+            // center the text inside the background
+            svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
 
-                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
-                            .after(function () {
-                                this.animate({ duration: '0.5s', delay: '1.5s' })
-                                    .opacity(0)
-                            });
-            }
-        }
+            groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
+                        .after(function () {
+                            this.animate({ duration: '0.5s', delay: '1.5s' })
+                                .opacity(0)
+                        });
     }
 
     // a recursive function. I hate callback.
@@ -748,6 +748,18 @@ class BattleLogger {
                 return;
             }
             else return; // for now
+        }
+
+        // a protect/defense, show it
+        if (data.type == ENUM.MinorEventType.DESCRIPTION) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                this.displayProcSkill(data.executorId, data.skillId, function() {
+                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1);
+                }, 0.5);
+                
+                return;
+            }
+            else return;
         }
 
         // going and attack physically
