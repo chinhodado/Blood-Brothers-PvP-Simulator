@@ -697,7 +697,9 @@ class BattleLogger {
                                 f: cy - 1 * cy
                             })
                             .after(function(){
-                                BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                                if (Skill.isAttackSkill(BattleLogger.getInstance().majorEventLog[majorIndex].skillId)) {
+                                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                                }
                             });
                     });
             }

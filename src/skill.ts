@@ -51,6 +51,21 @@ class Skill {
         this.range = RangeFactory.getRange(this.skillRange);
     }
 
+    static isAttackSkill(skillId: number): boolean {
+        var isAttackSkill = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
+            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFATTACK ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT) 
+        {
+            isAttackSkill = true;    
+        }
+
+        return isAttackSkill;
+    }
+
     getSerializableObject() {
         return {
             id: this.id,
