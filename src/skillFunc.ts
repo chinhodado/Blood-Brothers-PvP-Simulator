@@ -226,7 +226,8 @@ class ProtectSkillLogic extends SkillLogic {
             executorId: protector.id, 
             type: ENUM.MinorEventType.PROTECT,
             protect: {
-               protectedId: data.targetCard.id     
+                protectedId: data.targetCard.id,
+                counteredSkillId: data.attackSkill.id
             },
             description: desc,
             skillId: protectSkill.id
@@ -253,6 +254,8 @@ class ProtectCounterSkillLogic extends SkillLogic {
             type: ENUM.MinorEventType.PROTECT, 
             protect: {
                 protectedId: data.targetCard.id,
+                counter: true,
+                counteredSkillId: data.attackSkill.id
             },
             description: desc,
             skillId: protectSkill.id

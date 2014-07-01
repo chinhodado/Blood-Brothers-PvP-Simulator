@@ -859,19 +859,29 @@ class BattleLogger {
                 var x_protected = protectedGroup.rbox().x;
                 var y_protected = protectedGroup.rbox().y;
 
-                //todo: display the skill text, but not proc effect
+                //display the skill text, but not proc effect
                 this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
 
                 var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
                 if (executor.getPlayerId() == 1) {
                     y_offset *= -1; //reverse for p1
                 }
+
+                var moveTime = 0.5;
                 var waitTime = 0.6; // time to wait before going back to position after protect
+                var moveBackTime = 0.5;
+                if (data.protect.counter) {
+                    if (Skill.isIndirectSkill(data.protect.counteredSkillId)) {
+                        moveTime = 0.1;
+                        waitTime = 0.1;
+                        moveBackTime = 0.1;
+                    }
+                }
                 
-                executorGroup.animate({ duration: '0.5s' })
+                executorGroup.animate({ duration: moveTime + 's' })
                     .move(x_protected - x1, y_protected - y1 + y_offset)
                     .after(function () {
-                        this.animate({ duration: '0.5s', delay: waitTime + 's'})
+                        this.animate({ duration: moveBackTime + 's', delay: waitTime + 's'})
                             .move(0, 0)
                         BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                     });
@@ -1018,6 +1028,8 @@ interface MinorEvent {
     };
     protect?: {
         protectedId: number;
+        counter?: boolean;
+        counteredSkillId: number;
     };
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description?: string; // description of the event in plain text
