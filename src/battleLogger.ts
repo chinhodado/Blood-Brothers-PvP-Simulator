@@ -749,6 +749,8 @@ class BattleLogger {
         else {
             var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
         }
+
+        SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
         
         procEffect.opacity(1);
         procEffect.animate({duration: '3s'})
