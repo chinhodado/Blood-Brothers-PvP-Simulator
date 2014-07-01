@@ -101,6 +101,23 @@ class Skill {
         return SkillDatabase[skillId].isAutoAttack;
     }
 
+    // mainly used to determine whether to use the magic circle
+    static isMagicSkill(skillId: number): boolean {
+        var isMagicSkill = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.skillCalcType == ENUM.SkillCalcType.WIS ||
+            skillInfo.skillFunc == ENUM.SkillFunc.AFFLICTION ||
+            skillInfo.skillFunc == ENUM.SkillFunc.BUFF ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFF ||
+            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC)
+        {
+            isMagicSkill = true;    
+        }
+
+        return isMagicSkill;
+    }
+
     // mainly used to determine the animation
     static isAoeSkill(skillId: number): boolean {
         var isAoe = false;

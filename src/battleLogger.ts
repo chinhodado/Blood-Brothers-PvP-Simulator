@@ -559,11 +559,18 @@ class BattleLogger {
                                     .attr('id', 'p' + player + 'f' + i + 'spellCircle')
                                     .opacity(0)
 
-                // make a svg group for the image + hp bar
+                var procSpark = draw.image('img/lineSpark.png', 150, 150)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'lineSpark')
+                                    .opacity(0)
+
+                // make a svg group for the image + hp bar + explosion + proc spark + spell circle
                 var group = draw.group();                
                 group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
                 group.add(explosion);
                 group.add(spellCircle);
+                group.add(procSpark);
+
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
             }
@@ -713,9 +720,15 @@ class BattleLogger {
             D05 *= durationRatio;
         }
 
-        var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
-        spellCircle.opacity(1);
-        spellCircle.animate({duration: '3s'})
+        if (Skill.isMagicSkill(skillId)) {
+            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+        }
+        else {
+            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
+        }
+        
+        procEffect.opacity(1);
+        procEffect.animate({duration: '3s'})
                    .rotate(180)
                    .after(function(){
                         this.rotate(0);//reset the rotation
@@ -741,7 +754,7 @@ class BattleLogger {
                         f: cy - 1 * cy
                     })
                     .after(function(){
-                        spellCircle.opacity(0);
+                        procEffect.opacity(0);
                         if (callback) callback();
                     });
             });
