@@ -23,6 +23,8 @@ class BattleLogger {
     static IMAGE_WIDTH = 70;
     IMAGE_WIDTH_BIG = 120;
 
+    static playMode = 'no_auto';
+
     // an array of groups of card images and hpbar
     cardImageGroups = [];
     
@@ -72,7 +74,7 @@ class BattleLogger {
         newEvent.setAttribute("id", index + "");
         
         // populate right section with the field situation
-        newEvent.onfocus = function () {
+        newEvent.onclick = function () {
             BattleLogger.getInstance().displayEventLogAtIndex(this.id);
         };
         turnEventList.appendChild(newEvent);    
@@ -682,8 +684,24 @@ class BattleLogger {
     // index: a major event index
     displayTurnAnimation(majorIndex: number) {
 
+        if (majorIndex >= this.majorEventLog.length) {
+            return;    
+        }
+
+        if (!this.majorEventLog[majorIndex]) {
+            if (BattleLogger.playMode == 'auto') {
+                var nextIndex = +majorIndex + 1;
+                this.displayTurnAnimation(nextIndex);
+            }
+            return; //description event like battle start, etc
+        }
+
         var executorId = this.majorEventLog[majorIndex].executorId;
         if (!executorId) {
+            if (BattleLogger.playMode == 'auto') {
+                var nextIndex = +majorIndex + 1;
+                this.displayTurnAnimation(nextIndex);
+            }
             return; //description event like battle start, etc
         }
             
@@ -696,6 +714,11 @@ class BattleLogger {
             if (Skill.isAttackSkill(this.majorEventLog[majorIndex].skillId)) {
                 callback = function() {
                     BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                }
+            }
+            else if (BattleLogger.playMode == 'auto') {
+                callback = function() {
+                    BattleLogger.getInstance().displayTurnAnimation(++majorIndex);
                 }
             }
             this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, callback);
@@ -783,8 +806,20 @@ class BattleLogger {
     displayAttackAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
-        if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
-            return;    
+        if (BattleLogger.playMode == 'auto') {
+            if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
+                var nextIndex = +majorIndex + 1;
+                this.displayTurnAnimation(nextIndex);
+                return;
+            }
+            else if (majorIndex >= this.majorEventLog.length) {
+                return;    
+            }
+        }
+        else {
+            if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
+                return;    
+            }
         }
 
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
