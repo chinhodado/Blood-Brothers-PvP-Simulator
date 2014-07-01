@@ -158,6 +158,8 @@ declare module svgjs {
         click(cb:Function):void;
         on(event:string, cb:Function):void;
         off(event:string, cb:Function):void;
+
+        set();
     }
 
     export interface Mask extends Element {
@@ -204,6 +206,7 @@ declare module svgjs {
 
         opacity(o: number);
         update(arg);
+        rotate(arg);
 
         // TODO style, etc, bbox... 
     }

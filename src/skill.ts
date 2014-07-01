@@ -51,6 +51,85 @@ class Skill {
         this.range = RangeFactory.getRange(this.skillRange);
     }
 
+    static isAttackSkill(skillId: number): boolean {
+        var isAttackSkill = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
+            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFATTACK ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT) 
+        {
+            isAttackSkill = true;    
+        }
+
+        return isAttackSkill;
+    }
+
+    static isIndirectSkill(skillId: number): boolean {
+        var isIndirect = true;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.contact == 1) {
+            isIndirect = false;
+        }
+
+        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
+            skillInfo.skillFunc == ENUM.SkillFunc.COUNTER ||
+            skillInfo.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER) 
+        {
+            isIndirect = false;    
+        }
+        
+        return isIndirect;
+    }
+
+    // mainly for displaying the wis circle when attack
+    static isWisAutoAttack(skillId: number): boolean {
+        var isWisAutoAttack = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (this.isAutoAttackSkill(skillId) && skillInfo.skillCalcType == ENUM.SkillCalcType.WIS) {
+            isWisAutoAttack = true;    
+        }
+
+        return isWisAutoAttack;
+    }
+
+    static isAutoAttackSkill(skillId: number): boolean {
+        // either return true or undefined
+        return SkillDatabase[skillId].isAutoAttack;
+    }
+
+    // mainly used to determine whether to use the magic circle
+    static isMagicSkill(skillId: number): boolean {
+        var isMagicSkill = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.skillCalcType == ENUM.SkillCalcType.WIS ||
+            skillInfo.skillFunc == ENUM.SkillFunc.AFFLICTION ||
+            skillInfo.skillFunc == ENUM.SkillFunc.BUFF ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFF ||
+            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC)
+        {
+            isMagicSkill = true;    
+        }
+
+        return isMagicSkill;
+    }
+
+    // mainly used to determine the animation
+    static isAoeSkill(skillId: number): boolean {
+        var isAoe = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (RangeFactory.canBeAoeRange(skillInfo.skillRange) && this.isIndirectSkill(skillId)) {
+            isAoe = true;    
+        }
+
+        return isAoe;
+    }
+
     getSerializableObject() {
         return {
             id: this.id,

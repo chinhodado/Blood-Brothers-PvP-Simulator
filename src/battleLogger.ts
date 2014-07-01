@@ -236,20 +236,15 @@ class BattleLogger {
         // display turn animation
         this.displayTurnAnimation(index);
 
-        // first deserialize the initial field info into a nice object that we will modify later
-        var initialField = JSON.parse(this.initialFieldInfo);
-        
-        // apply events to initial field up to the specified event
-        for (var i = 0; i <=  index; i++) {
-            // need to make sure eventLog[i] exists, in case this is an empty event (like the "Battle start" event);
-            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
-                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
-            }
-        }
+        // for displaying last turn's HP
+        var lastEventIndex = index == 0? 0 : index - 1;
+        var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
+         
+        var field = this.getFieldAtMajorIndex(index);
         
         // now prepares the info and print them out
         for (var player = 1; player <=2; player++) { // for each player
-            var playerCards = initialField["player" + player + "Cards"]; // get the cards of that player
+            var playerCards = field["player" + player + "Cards"]; // get the cards of that player
             for (var fam = 0; fam < 5; fam++) { // for each card
                 var stats = playerCards[fam].stats;
                 var originalStats = playerCards[fam].originalStats;
@@ -348,16 +343,42 @@ class BattleLogger {
                                     (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
-                
-                // display hp on canvas
-                this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, player, fam);
 
-                // display dead or alive familiar
-                this.displayDeadAliveFamiliar(player, fam, stats.hp <= 0);
+                // display last event's HP
+                var lastEventCard = lastEventField["player" + player + "Cards"][fam];
+                this.displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);
             }
         }
     }
     
+    // get the field situation at a major event index
+    getFieldAtMajorIndex(majorIndex: number) {
+        // deserialize the initial field info
+        var initialField = JSON.parse(this.initialFieldInfo);
+        
+        // apply events to initial field up to the specified event
+        for (var i = 0; i <=  majorIndex; i++) {
+            // need to make sure minorEventLog[i] exists, in case this is an empty event (like the "Battle start" event);
+            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
+                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
+            }
+        }
+
+        return initialField;
+    }
+
+    getFieldAtMinorIndex(majorIndex: number, minorIndex: number) {
+        // get last major index's field
+        var lastField = this.getFieldAtMajorIndex(majorIndex - 1);
+
+        // then apply the current major index's minor events upon it
+        for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length && j <= minorIndex; j++) {
+            this.applyMinorEvent(this.minorEventLog[majorIndex][j], lastField);
+        }
+
+        return lastField;
+    }
+
     /**
      * Decorate a string by bolding it and make it red or green
      * @param text the text to decorate
@@ -443,10 +464,10 @@ class BattleLogger {
         }
         playerFormations[2] = temp;
 
-        for (var player = 1; player <= 2; player++) { // for each player
-            // todo: set the svg size dynamically
-            var draw = SVG('svg' + player).size(600, 300).attr('id', 'player' + player + 'svg').attr('class', 'svg');
+        var draw = SVG('svg').size(400, 600).attr('id', 'mainSvg').attr('class', 'svg');
 
+        for (var player = 1; player <= 2; player++) { // for each player
+            
             // draw the skill name background, don't show them yet
             if (player == 2) {
                 var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 5).attr('id', 'p2SkillBg');
@@ -458,7 +479,7 @@ class BattleLogger {
                 var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
                 var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
                                .attr('id', 'p1SkillText');
-                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0);
+                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, 300);
             }
             
             // as I'm writing this comment, I don't know myself what these number are. Just know that change them
@@ -475,6 +496,12 @@ class BattleLogger {
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
             var groupPlayer = draw.group()
                                   .attr('id', 'p' + player + 'group');
+            if (player == 1) {
+                groupPlayer.move(30, 400);    
+            }
+            else if (player == 2) {
+                groupPlayer.move(30, 100);    
+            }
             
             // calculate the bullets coord
             for (var i = 0; i < 5; i++) {
@@ -507,7 +534,7 @@ class BattleLogger {
                 imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, this.IMAGE_WIDTH_BIG));
             }
             
-            // display fam images
+            // display fam images and other effects
             for (var i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
                 var image_x_coord = coordArray[i][0] - BattleLogger.IMAGE_WIDTH / 2;
@@ -517,24 +544,42 @@ class BattleLogger {
 
                 var image = draw.image(imageLinksArray[i])
                     .move(image_x_coord, image_y_coord)
-                    .attr('id', 'player' + player + 'fam' + i + 'image')
+                    .attr('id', 'p' + player + 'f' + i + 'image')
                     .loaded(function (loader) {
                         this.size(BattleLogger.IMAGE_WIDTH);
                     });
 
-                // make a svg group for the image + hp bar
-                var group = draw.group();
-                group.add(image).attr('id', 'player' + player + 'fam' + i + 'group');
+                var explosion = draw.image('img/explosion.png', 70, 70)
+                                    .move(image_x_coord, image_y_coord)
+                                    .attr('id', 'p' + player + 'f' + i + 'explosion')
+                                    .opacity(0)
+
+                var spellCircle = draw.image('img/circle_blue.png', 150, 150)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'spellCircle')
+                                    .opacity(0)
+
+                var procSpark = draw.image('img/lineSpark.png', 150, 150)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'lineSpark')
+                                    .opacity(0)
+
+                // make a svg group for the image + hp bar + explosion + proc spark + spell circle
+                var group = draw.group();                
+                group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
+                group.add(explosion);
+                group.add(spellCircle);
+                group.add(procSpark);
+
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
-            }            
-            groupPlayer.move(30, 100);
+            }
         }
     }
 
-    displayHPOnCanvas(percent, player, index) {
+    displayHPOnCanvas(percent: number, player: number, index: number, animDuration?: number) {
 
-        var draw = SVG.get('player' + player + 'svg');
+        var draw = SVG.get('mainSvg');
 
         // the x coordinate is 1/2 image width to the left of the bullet
         var image_x_coord = this.coordArray[player][index][0] - BattleLogger.IMAGE_WIDTH / 2;
@@ -556,7 +601,7 @@ class BattleLogger {
 
         // first draw the (empty) hp bar
         // try to get the bar if it exist, or create if not
-        var hpbarId = 'player' + player + 'fam' + index + 'hp';
+        var hpbarId = 'p' + player + 'f' + index + 'hp';
         var hpbar = SVG.get(hpbarId);
         
         if (!hpbar) {
@@ -564,7 +609,7 @@ class BattleLogger {
                 .style({ 'stroke-width': 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
-            var groupId = 'player' + player + 'fam' + index + 'group';
+            var groupId = 'p' + player + 'f' + index + 'group';
 
             // add the hpbar to the group
             var group = SVG.get(groupId);
@@ -572,8 +617,13 @@ class BattleLogger {
         }
 
         // now we deal with the background gradient used for displaying the HP
-        var hpGradientId = 'player' + player + 'fam' + index + 'hpGradient';
+        var hpGradientId = 'p' + player + 'f' + index + 'hpGradient';
         var hpGradient : any = SVG.get(hpGradientId);
+        
+        var duration = 1;
+        if (!isNaN(animDuration)) {
+            duration = animDuration;
+        }
 
         if (!hpGradient) {
             // draw for full HP
@@ -585,15 +635,18 @@ class BattleLogger {
         else {
             var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
             var s2 = SVG.get('p' + player + 'f' + index + 'hpgs2');
-            s1.animate('1s').update({ offset: percent + '%' });
-            s2.animate('1s').update({ offset: percent + '%' });
+            s1.animate(duration + 's').update({ offset: percent + '%' });
+            s2.animate(duration + 's').update({ offset: percent + '%' });
         }
 
         hpbar.fill(hpGradient);
+
+        // display dead or alive familiar
+        this.displayDeadAliveFamiliar(player, index, percent <= 0);
     }
     
     displayDeadAliveFamiliar(player, fam, isDead) {
-        var image : any = SVG.get('player' + player + 'fam' + fam + 'image');
+        var image : any = SVG.get('p' + player + 'f' + fam + 'image');
         var filter = SVG.get('darkenFilter');
         if (isDead) {
             if (!filter) {
@@ -626,90 +679,251 @@ class BattleLogger {
         }
     }
 
-    displayTurnAnimation(index: number) {
+    // index: a major event index
+    displayTurnAnimation(majorIndex: number) {
+
+        var executorId = this.majorEventLog[majorIndex].executorId;
+        if (!executorId) {
+            return; //description event like battle start, etc
+        }
+            
+        if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
+            // don't enlarge the fam, etc.
+            this.displayAttackAnimation(majorIndex, 0);
+        }
+        else {
+            var callback = null;
+            if (Skill.isAttackSkill(this.majorEventLog[majorIndex].skillId)) {
+                callback = function() {
+                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                }
+            }
+            this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, callback);
+        }
+    }
+
+    // enlarge the fam, display the skill name, display spell circle
+    // durationRatio: e.g. 0.5 means half the animation duration
+    displayProcSkill(executorId: number, skillId: number, callback?, durationRatio?: number) {
+        var executor = CardManager.getInstance().getCardById(executorId);
+        var group: any = this.getCardImageGroupOnCanvas(executor);
+
+        // enlarge the executor, then shrink it
+        // scale from center
+        var scaleFactor = 1.3;
+        var cx = group.cx();
+        var cy = group.cy();
+
+        var D1 = 1, D05 = 0.5;
+        if (durationRatio) {
+            D1 *= durationRatio;
+            D05 *= durationRatio;
+        }
+
+        if (Skill.isMagicSkill(skillId)) {
+            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+        }
+        else {
+            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
+        }
+        
+        procEffect.opacity(1);
+        procEffect.animate({duration: '3s'})
+                   .rotate(180)
+                   .after(function(){
+                        this.rotate(0);//reset the rotation
+                   });
+
+        group.animate({ duration: D1 + 's' })
+            .transform({
+                a: scaleFactor,
+                b: 0,
+                c: 0,
+                d: scaleFactor,
+                e: cx - scaleFactor * cx,
+                f: cy - scaleFactor * cy
+            })
+            .after(function () {
+                this.animate({ duration: D1 + 's', delay: D05 + 's' })
+                    .transform({
+                        a: 1,
+                        b: 0,
+                        c: 0,
+                        d: 1,
+                        e: cx - 1 * cx,
+                        f: cy - 1 * cy
+                    })
+                    .after(function(){
+                        procEffect.opacity(0);
+                        if (callback) callback();
+                    });
+            });
+
+            // display skill name
+            var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
+            var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+
+            // the y-coordinate of the text, depending on whether this is player 1 or 2
+            var yText = executor.getPlayerId() == 1 ? 272 : 8;
+
+            var skillName: string = SkillDatabase[skillId].name;
+                
+            // center the text inside the background
+            svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+
+            groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
+                        .after(function () {
+                            this.animate({ duration: '0.5s', delay: '1.5s' })
+                                .opacity(0)
+                        });
+    }
+
+    // a recursive function. I hate callback.
+    // noAttackAnim: don't display attack anim anymore (for AoE)
+    displayAttackAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
-        for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
-            var data: MinorEvent = this.minorEventLog[index][j];
+        if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
+            return;    
+        }
+
+        var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
-            if (data.type == ENUM.MinorEventType.AFFLICTION) {
-                continue; // for now
+        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                this.displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                return;
             }
-            
-            if (!data.executorId) {
-                continue; //damage from poison, and maybe other things
-            }
-            
-            var executor = BattleModel.getInstance().cardManager.getCardById(data.executorId);
-            var group: any = this.getCardImageGroupOnCanvas(executor);
+            else return; // for now
+        }
 
-            // enlarge the executor, then shrink it
-            // scale from center
-            var scaleFactor = 1.3;
-            var cx = group.cx();
-            var cy = group.cy();
-            
-            group.animate({ duration: '1s' })
-                .transform({
-                    a: scaleFactor,
-                    b: 0,
-                    c: 0,
-                    d: scaleFactor,
-                    e: cx - scaleFactor * cx,
-                    f: cy - scaleFactor * cy
-                })
-                .after(function () {
-                    this.animate({ duration: '1s', delay: '0.5s' })
-                        .transform({
-                            a: 1,
-                            b: 0,
-                            c: 0,
-                            d: 1,
-                            e: cx - 1 * cx,
-                            f: cy - 1 * cy
-                        });
-                });
-
-            // display the skill name
-            if (data.skillId && !SkillDatabase[data.skillId].isAutoAttack) {
-                var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
-                var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
-
-                // the y-coordinate of the text, depending on whether this is player 1 or 2
-                var yText = executor.getPlayerId() == 1 ? 272 : 8;
-
-                // determine the name of the skill. It can be the MajorEvent's executor's skill, or the MinorEvent's executor's
-                if (data.executorId == this.majorEventLog[index].executorId) {
-                    var skillName: string = SkillDatabase[this.majorEventLog[index].skillId].name;
-                }
-                else {
-                    var skillName: string = SkillDatabase[data.skillId].name;
-                }
+        // a protect/defense, show it
+        if (data.type == ENUM.MinorEventType.DESCRIPTION) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                this.displayProcSkill(data.executorId, data.skillId, function() {
+                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                }, 0.5);
                 
-                // center the text inside the background
-                svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+                return;
+            }
+            else return;
+        }
 
-                groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
-                            .after(function () {
-                                this.animate({ duration: '0.5s', delay: '1.5s' })
-                                    .opacity(0)
-                            });
+        // going and attack physically
+        var executor = CardManager.getInstance().getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroupOnCanvas(executor);
+
+        var target = CardManager.getInstance().getCardById(data.targetId);
+        var targetGroup: any = this.getCardImageGroupOnCanvas(target);
+
+        var x = targetGroup.rbox().x;
+        var y = targetGroup.rbox().y;
+
+        var x1 = executorGroup.rbox().x;
+        var y1 = executorGroup.rbox().y;
+
+        // move the executor's group to the front
+        SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
+        var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
+        var stats = targetInfo.stats;
+        var originalStats = targetInfo.originalStats;
+
+        var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
+
+        if (Skill.isAoeSkill(data.skillId)) {
+            var draw = SVG.get('mainSvg');
+            var exploSet = draw.set();
+
+            // add targets to the set
+            var aoeTargets = this.getTargetsInMajorEvent(majorIndex);
+            for (var i = 0; i < aoeTargets.length; i++) {
+                var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
+                exploSet.add(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
+            }
+
+            if (noAttackAnim) {
+                // display hp change
+                BattleLogger.getInstance()
+                    .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+            }
+            else {
+                var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                if (Skill.isWisAutoAttack(data.skillId)) {
+                    spellCircle.opacity(1);
+                }
+                exploSet.animate({ duration: '0.4s' })
+                         .opacity(1)
+                         .after(function() {
+                            exploSet.opacity(0);
+                            spellCircle.opacity(0);
+                            // display hp change
+                            BattleLogger.getInstance()
+                                .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+                         });
             }
         }
+        else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
+            explosion.animate({ duration: '0.2s' })
+                     .opacity(1)
+                     .after(function() {
+                        explosion.opacity(0);
+                        // display hp change
+                        BattleLogger.getInstance()
+                            .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                     });
+        }
+        else {
+            // attack with contact, move the executor forward and back
+            executorGroup.animate({ duration: '0.5s' })
+                .move(x - x1, y - y1)
+                .after(function () {
+                    explosion.opacity(1);
+                    // display hp change
+                    BattleLogger.getInstance()
+                        .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+
+                    this.animate({ duration: '0.5s'})
+                        .move(0, 0)
+                        .after(function () {
+                            explosion.opacity(0);
+                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        });
+                });
+        }
+    }
+
+    /**
+     * Should only call this when need the targets for an AoE attack
+     * Return an array of target id's
+     */
+    getTargetsInMajorEvent(majorIndex: number): number[] {
+        var targets = [];
+        for (var i = 0; i < this.minorEventLog[majorIndex].length; i++) {
+            var tmpData = this.minorEventLog[majorIndex][i];
+            if (tmpData.executorId == this.majorEventLog[majorIndex].executorId) {
+                targets.push(tmpData.targetId);
+            }
+        }
+        return targets;
     }
 
     /**
      * Given a card, return the image of that card on the canvas
      */
     getCardImageOnCanvas(card: Card) {
-        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'image');
+        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'image');
     }
 
     /**
      * Given a card, return the image group of that card on the canvas
      */
     getCardImageGroupOnCanvas(card: Card) {
-        return SVG.get('player' + card.getPlayerId() + 'fam' + card.formationColumn + 'group');
+        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
     }
     
     /**
