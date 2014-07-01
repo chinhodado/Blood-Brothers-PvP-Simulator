@@ -721,68 +721,73 @@ class BattleLogger {
                     BattleLogger.getInstance().displayTurnAnimation(++majorIndex);
                 }
             }
-            this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, callback);
+            this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, {callback: callback});
         }
     }
 
     // enlarge the fam, display the skill name, display spell circle
     // durationRatio: e.g. 0.5 means half the animation duration
-    displayProcSkill(executorId: number, skillId: number, callback?, durationRatio?: number) {
+    displayProcSkill(executorId: number, skillId: number, additionalParam: {callback?; 
+                                                                            durationRatio?: number; 
+                                                                            noProcEffect?: boolean}) {
         var executor = CardManager.getInstance().getCardById(executorId);
         var group: any = this.getCardImageGroupOnCanvas(executor);
 
-        // enlarge the executor, then shrink it
-        // scale from center
-        var scaleFactor = 1.3;
-        var cx = group.cx();
-        var cy = group.cy();
+        // display the proc effect: spell circle or light spark
+        if (!additionalParam.noProcEffect) {
+            // enlarge the executor, then shrink it
+            // scale from center
+            var scaleFactor = 1.3;
+            var cx = group.cx();
+            var cy = group.cy();
 
-        var D1 = 1, D05 = 0.5;
-        if (durationRatio) {
-            D1 *= durationRatio;
-            D05 *= durationRatio;
-        }
+            var D1 = 1, D05 = 0.5;
+            if (additionalParam.durationRatio) {
+                D1  *= additionalParam.durationRatio;
+                D05 *= additionalParam.durationRatio;
+            }
 
-        if (Skill.isMagicSkill(skillId)) {
-            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
-        }
-        else {
-            var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
-        }
+            if (Skill.isMagicSkill(skillId)) {
+                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+            }
+            else {
+                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
+            }
 
-        SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
+            SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
         
-        procEffect.opacity(1);
-        procEffect.animate({duration: '3s'})
-                   .rotate(180)
-                   .after(function(){
-                        this.rotate(0);//reset the rotation
-                   });
+            procEffect.opacity(1);
+            procEffect.animate({duration: '3s'})
+                       .rotate(180)
+                       .after(function(){
+                            this.rotate(0);//reset the rotation
+                       });
 
-        group.animate({ duration: D1 + 's' })
-            .transform({
-                a: scaleFactor,
-                b: 0,
-                c: 0,
-                d: scaleFactor,
-                e: cx - scaleFactor * cx,
-                f: cy - scaleFactor * cy
-            })
-            .after(function () {
-                this.animate({ duration: D1 + 's', delay: D05 + 's' })
-                    .transform({
-                        a: 1,
-                        b: 0,
-                        c: 0,
-                        d: 1,
-                        e: cx - 1 * cx,
-                        f: cy - 1 * cy
-                    })
-                    .after(function(){
-                        procEffect.opacity(0);
-                        if (callback) callback();
-                    });
-            });
+            group.animate({ duration: D1 + 's' })
+                .transform({
+                    a: scaleFactor,
+                    b: 0,
+                    c: 0,
+                    d: scaleFactor,
+                    e: cx - scaleFactor * cx,
+                    f: cy - scaleFactor * cy
+                })
+                .after(function () {
+                    this.animate({ duration: D1 + 's', delay: D05 + 's' })
+                        .transform({
+                            a: 1,
+                            b: 0,
+                            c: 0,
+                            d: 1,
+                            e: cx - 1 * cx,
+                            f: cy - 1 * cy
+                        })
+                        .after(function(){
+                            procEffect.opacity(0);
+                            if (additionalParam.callback) additionalParam.callback();
+                        });
+                });
+            }
 
             // display skill name
             var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
@@ -826,7 +831,7 @@ class BattleLogger {
 
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
-        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
+        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId || data.type == ENUM.MinorEventType.DESCRIPTION) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 this.displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                 return;
@@ -834,33 +839,53 @@ class BattleLogger {
             else return; // for now
         }
 
-        // a protect/defense, show it
-        if (data.type == ENUM.MinorEventType.DESCRIPTION) {
-            if (minorIndex < this.minorEventLog[majorIndex].length) {
-                this.displayProcSkill(data.executorId, data.skillId, function() {
-                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
-                }, 0.5);
-                
-                return;
-            }
-            else return;
-        }
-
         // going and attack physically
         var executor = CardManager.getInstance().getCardById(data.executorId);
         var executorGroup: any = this.getCardImageGroupOnCanvas(executor);
-
-        var target = CardManager.getInstance().getCardById(data.targetId);
-        var targetGroup: any = this.getCardImageGroupOnCanvas(target);
-
-        var x = targetGroup.rbox().x;
-        var y = targetGroup.rbox().y;
+        executorGroup.front();
 
         var x1 = executorGroup.rbox().x;
         var y1 = executorGroup.rbox().y;
 
         // move the executor's group to the front
         SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        // a protect/defense, show it
+        if (data.type == ENUM.MinorEventType.PROTECT) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                var protectedCard = CardManager.getInstance().getCardById(data.protect.protectedId);
+                var protectedGroup: any = this.getCardImageGroupOnCanvas(protectedCard);
+
+                var x_protected = protectedGroup.rbox().x;
+                var y_protected = protectedGroup.rbox().y;
+
+                //todo: display the skill text, but not proc effect
+                this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
+
+                var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
+                if (executor.getPlayerId() == 1) {
+                    y_offset *= -1; //reverse for p1
+                }
+                var waitTime = 0.6; // time to wait before going back to position after protect
+                
+                executorGroup.animate({ duration: '0.5s' })
+                    .move(x_protected - x1, y_protected - y1 + y_offset)
+                    .after(function () {
+                        this.animate({ duration: '0.5s', delay: waitTime + 's'})
+                            .move(0, 0)
+                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                    });
+
+                return;
+            }
+            else return;
+        }
+
+        var target = CardManager.getInstance().getCardById(data.targetId);
+        var targetGroup: any = this.getCardImageGroupOnCanvas(target);
+
+        var x = targetGroup.rbox().x;
+        var y = targetGroup.rbox().y;
 
         var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
         var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
@@ -981,7 +1006,7 @@ class BattleLogger {
 interface MinorEvent {
     executorId?: number;  // the card id of the executor
     targetId?: number;    // the card id of the target
-    type?: ENUM.MinorEventType;        // HP, STATUS or AFFLICTION or DESCRIPTION
+    type?: ENUM.MinorEventType;
     affliction?: {
         type: ENUM.AfflictionType;
         percent?: number;
@@ -990,6 +1015,9 @@ interface MinorEvent {
     };
     status?: {
         type: ENUM.StatusType;
+    };
+    protect?: {
+        protectedId: number;
     };
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description?: string; // description of the event in plain text

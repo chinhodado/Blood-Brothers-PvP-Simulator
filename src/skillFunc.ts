@@ -224,7 +224,10 @@ class ProtectSkillLogic extends SkillLogic {
             data.targetCard.name + ". ";
         this.logger.addMinorEvent({
             executorId: protector.id, 
-            type: ENUM.MinorEventType.DESCRIPTION, 
+            type: ENUM.MinorEventType.PROTECT,
+            protect: {
+               protectedId: data.targetCard.id     
+            },
             description: desc,
             skillId: protectSkill.id
         });
@@ -247,7 +250,10 @@ class ProtectCounterSkillLogic extends SkillLogic {
             data.targetCard.name + ". ";
         this.logger.addMinorEvent({
             executorId: protector.id, 
-            type: ENUM.MinorEventType.DESCRIPTION, 
+            type: ENUM.MinorEventType.PROTECT, 
+            protect: {
+                protectedId: data.targetCard.id,
+            },
             description: desc,
             skillId: protectSkill.id
         });

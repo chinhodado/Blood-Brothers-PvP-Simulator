@@ -79,6 +79,7 @@
             border-radius: 4px;
             -webkit-appearance: button;
             text-transform: none;
+            display: none;
         }
 
     </style>
@@ -173,6 +174,7 @@
                 document.getElementById('player2Fam').style.display = 'none';
                 document.getElementById('player1Fam').style.display = 'none';
                 document.getElementById('rightSide').style.width = '100%';
+                document.getElementById('startButton').style.display = 'block';
                 document.getElementById('startButton').onclick = function () {
                     BattleLogger.getInstance().displayTurnAnimation(0);
                 }
@@ -187,6 +189,7 @@
                 document.getElementById('player2Fam').style.display = 'none';
                 document.getElementById('player1Fam').style.display = 'none';
                 document.getElementById('rightSide').style.width = '100%';
+                document.getElementById('startButton').style.display = 'block';
                 document.getElementById('startButton').onclick = function () {
                     BattleLogger.getInstance().displayTurnAnimation(0);
                 }

@@ -116,7 +116,8 @@ module ENUM {
         HP = 1,
         STATUS = 2,
         AFFLICTION = 3,
-        DESCRIPTION = 4
+        PROTECT = 4,
+        DESCRIPTION = 5,
     }
 }
 
