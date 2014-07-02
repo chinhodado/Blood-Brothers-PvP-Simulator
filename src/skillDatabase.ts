@@ -629,6 +629,13 @@ var SkillDatabase = {
         description: "Deal heavy ATK-based damage to four random foes."
     },
 
+    316 : {
+        name: "Healing Prism", skillType: 3, skillFunc: 11, skillCalcType: 1, 
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 3, maxProbability: 30,
+        description: "Convert damage to heal self and adjacent familiars"
+    },
+
     319: {
         name: "Magic Overwhelming", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1.55, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -769,6 +776,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
         description: "Chance to unleash a counter attack when struck."
+    },
+
+    374 : {
+        name: "Streaming Feathers", skillType: 3, skillFunc: 11, skillCalcType: 1, 
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 3, maxProbability: 50,
+        description: "Convert damage to heal self and adjacent familiars."
+    },
+
+    375 : {
+        name: "Windcutter Blade", skillType: 2, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to three random foes, regardless of position."
     },
 
     379 : {

@@ -538,6 +538,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130210215236/bloodbrothersgame/images/thumb/c/c0/Magdal_Dragonheart_II_Figure.png/40px-Magdal_Dragonheart_II_Figure.png",
         fullName: "Magdal Dragonheart II"
     },
+    10365: {
+        name: "Makalipon", hp: 10250, atk: 8330, def: 10515, wis: 12168, agi: 10250,
+        skills: [60],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130202230532/bloodbrothersgame/images/thumb/f/f1/Makalipon%2C_Sacred_Fruit_II_Figure.png/40px-Makalipon%2C_Sacred_Fruit_II_Figure.png",
+        fullName: "Makalipon, Sacred Fruit II"
+    },
     11280: {
         name: "Managarmr M", hp: 20007, atk: 21599, def: 17396, wis: 23907, agi: 18100,
         skills: [463],
@@ -568,6 +574,12 @@ var famDatabase = {
         skills: [195],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130708160233/bloodbrothersgame/images/thumb/4/4f/Melanippe%2C_Wolfrider_II_Figure.png/40px-Melanippe%2C_Wolfrider_II_Figure.png",
         fullName: "Melanippe, Wolfrider II"
+    },
+    11214: {
+        name: "Melek", hp: 19097, atk: 16107, def: 21545, wis: 12792, agi: 10094,
+        skills: [374, 375],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140213035118/bloodbrothersgame/images/thumb/1/19/Melek%2C_the_Black_Peacock_II_Figure.png/40px-Melek%2C_the_Black_Peacock_II_Figure.png",
+        fullName: "Melek, the Black Peacock II"
     },
     11305: {
         name: "Microraptor", hp: 16172, atk: 18577, def: 14406, wis: 14092, agi: 17753,
@@ -687,6 +699,12 @@ var famDatabase = {
         skills: [111],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130301003405/bloodbrothersgame/images/thumb/6/69/Pegasus%2C_the_Light_Divine_II_Figure.png/60px-Pegasus%2C_the_Light_Divine_II_Figure.png",
         fullName: "Pegasus, the Light Divine II"
+    },
+    10013: {
+        name: "Pendragon", hp: 9844, atk: 10317, def: 10751, wis: 12357, agi: 10861,
+        skills: [60],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130301160021/bloodbrothersgame/images/thumb/4/45/Pendragon%2C_the_Scourge_II_Figure.png/40px-Pendragon%2C_the_Scourge_II_Figure.png",
+        fullName: "Pendragon, the Scourge II"
     },
     11022: {
         name: "Phantom Knight", hp: 19877, atk:	23213, def:	19270, wis:	19682, agi:	18057,

@@ -188,7 +188,43 @@ class BattleModel {
         }
     }
 
-    damageToTarget(attacker : Card, target : Card, skill : Skill, additionalDescription : string) {
+    /**
+     * if damage is not supplied, it will be calculated automatically
+     * otherwise, damage will be done directly
+     */
+    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number}) {
+        
+        var damage = data.damage;
+
+        if (!damage) {
+            damage = this.getWouldBeDamage(data.attacker, data.target, data.skill);
+        }            
+    
+        data.target.changeHP(-1 * damage);
+
+        if (!data.additionalDescription) {
+            data.additionalDescription = "";
+        }
+        var description = data.additionalDescription +
+            data.target.name + " lost " + damage + "hp (remaining " + data.target.getHP() + "/" + data.target.originalStats.hp + ")";
+        this.logger.addMinorEvent({
+            executorId: data.attacker.id, 
+            targetId: data.target.id, 
+            type: ENUM.MinorEventType.HP, 
+            amount: (-1) * damage, 
+            description: description, 
+            skillId: data.skill.id
+        });
+
+        if (data.target.getHP() <= 0) {
+            this.logger.displayMinorEvent(data.target.name + " is dead");
+            data.target.isDead = true;
+        }
+
+        this.processAffliction(data.attacker, data.target, data.skill);
+    }
+
+    getWouldBeDamage(attacker : Card, target : Card, skill : Skill): number {
         var skillMod = skill.skillFuncArg1;
         var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
     
@@ -224,36 +260,21 @@ class BattleModel {
             default :
                 throw new Error ("Wrong type of ward. Maybe you forgot to include in the skill?");
         }
-    
-        target.changeHP(-1 * damage);
 
-        if (!additionalDescription) {
-            additionalDescription = "";
-        }
-        var description = additionalDescription +
-            target.name + " lost " + damage + "hp (remaining " + target.getHP() + "/" + target.originalStats.hp + ")";
-        this.logger.addMinorEvent({
-            executorId: attacker.id, 
-            targetId: target.id, 
-            type: ENUM.MinorEventType.HP, 
-            amount: (-1) * damage, 
-            description: description, 
-            skillId: skill.id
-        });
-
-        if (target.getHP() <= 0) {
-            this.logger.displayMinorEvent(target.name + " is dead");
-            target.isDead = true;
-        }
-
-        this.processAffliction(attacker, target, skill);
+        return damage;
     }
 
     // todo: move this to Card?
+    // use this when there's no executorId for the MinorEvent, like for poison
     damageToTargetDirectly(target: Card, damage: number, reason: string) {
         target.changeHP(-1 * damage);
 
-        var description = target.name + " lost " + damage + " HP because of " + reason;
+        var descVerb = " lost ";
+        if (damage < 0) {
+            descVerb = " gained ";
+        }
+
+        var description = target.name + descVerb + Math.abs(damage) + " HP because of " + reason;
         
         this.logger.addMinorEvent({
             targetId: target.id, 

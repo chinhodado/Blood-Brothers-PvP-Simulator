@@ -240,6 +240,16 @@ class Card {
     }
     changeHP (amount : number) {
         this.stats.hp += amount;
+
+        if (this.stats.hp > this.originalStats.hp) {
+            this.stats.hp = this.originalStats.hp;
+        }
+    }
+    isFullHealth(): boolean {
+        return this.stats.hp == this.originalStats.hp;
+    }
+    getHPRatio(): number {
+        return this.stats.hp/this.originalStats.hp;
     }
     
     getATK () {

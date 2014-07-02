@@ -164,6 +164,9 @@ class BattleLogger {
                 
         if (event.type == ENUM.MinorEventType.HP) {
             card.stats.hp += event.amount;
+            if (card.stats.hp > card.originalStats.hp) {
+                card.stats.hp = card.originalStats.hp;
+            }
         }
         else if (event.type == ENUM.MinorEventType.STATUS) {
             switch (event.status.type) {
@@ -236,7 +239,7 @@ class BattleLogger {
     displayEventLogAtIndex(index) { // <- the index of the event in the major event log
 
         // display turn animation
-        this.displayTurnAnimation(index);
+        this.displayMajorEventAnimation(index);
 
         // for displaying last turn's HP
         var lastEventIndex = index == 0? 0 : index - 1;
@@ -682,7 +685,7 @@ class BattleLogger {
     }
 
     // index: a major event index
-    displayTurnAnimation(majorIndex: number) {
+    displayMajorEventAnimation(majorIndex: number) {
 
         if (majorIndex >= this.majorEventLog.length) {
             return;    
@@ -691,7 +694,7 @@ class BattleLogger {
         if (!this.majorEventLog[majorIndex]) {
             if (BattleLogger.playMode == 'auto') {
                 var nextIndex = +majorIndex + 1;
-                this.displayTurnAnimation(nextIndex);
+                this.displayMajorEventAnimation(nextIndex);
             }
             return; //description event like battle start, etc
         }
@@ -700,25 +703,25 @@ class BattleLogger {
         if (!executorId) {
             if (BattleLogger.playMode == 'auto') {
                 var nextIndex = +majorIndex + 1;
-                this.displayTurnAnimation(nextIndex);
+                this.displayMajorEventAnimation(nextIndex);
             }
             return; //description event like battle start, etc
         }
             
         if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
             // don't enlarge the fam, etc.
-            this.displayAttackAnimation(majorIndex, 0);
+            this.displayMinorEventAnimation(majorIndex, 0);
         }
         else {
             var callback = null;
             if (Skill.isAttackSkill(this.majorEventLog[majorIndex].skillId)) {
                 callback = function() {
-                    BattleLogger.getInstance().displayAttackAnimation(majorIndex, 0);
+                    BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, 0);
                 }
             }
             else if (BattleLogger.playMode == 'auto') {
                 callback = function() {
-                    BattleLogger.getInstance().displayTurnAnimation(++majorIndex);
+                    BattleLogger.getInstance().displayMajorEventAnimation(++majorIndex);
                 }
             }
             this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, {callback: callback});
@@ -810,13 +813,13 @@ class BattleLogger {
 
     // a recursive function. I hate callback.
     // noAttackAnim: don't display attack anim anymore (for AoE)
-    displayAttackAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
+    displayMinorEventAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (BattleLogger.playMode == 'auto') {
             if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
                 var nextIndex = +majorIndex + 1;
-                this.displayTurnAnimation(nextIndex);
+                this.displayMajorEventAnimation(nextIndex);
                 return;
             }
             else if (majorIndex >= this.majorEventLog.length) {
@@ -831,12 +834,27 @@ class BattleLogger {
 
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
-        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
+        if (data.type == ENUM.MinorEventType.AFFLICTION || (!data.executorId && data.type != ENUM.MinorEventType.HP)) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
-                this.displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                 return;
             }
             else return; // for now
+        }
+
+        if (data.type == ENUM.MinorEventType.HP && !data.executorId) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                var target = CardManager.getInstance().getCardById(data.targetId);
+                var targetGroup: any = this.getCardImageGroupOnCanvas(target);
+                var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
+                var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
+
+                // display hp change
+                this.displayHPOnCanvas (targetInfo.stats.hp / targetInfo.originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
+                return;
+            }
+            else return;
         }
 
         // going and attack physically
@@ -855,7 +873,7 @@ class BattleLogger {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 this.displayProcSkill(executor.id, data.skillId, {
                     callback: function() {
-                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                     },
                     durationRatio: 0.5
                 });
@@ -897,7 +915,7 @@ class BattleLogger {
                     .after(function () {
                         this.animate({ duration: moveBackTime + 's', delay: waitTime + 's'})
                             .move(0, 0)
-                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                     });
 
                 return;
@@ -931,9 +949,8 @@ class BattleLogger {
 
             if (noAttackAnim) {
                 // display hp change
-                BattleLogger.getInstance()
-                    .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+                this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
             }
             else {
                 var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
@@ -948,7 +965,7 @@ class BattleLogger {
                             // display hp change
                             BattleLogger.getInstance()
                                 .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, true);
+                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
                          });
             }
         }
@@ -960,7 +977,7 @@ class BattleLogger {
                         // display hp change
                         BattleLogger.getInstance()
                             .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                      });
         }
         else {
@@ -977,7 +994,7 @@ class BattleLogger {
                         .move(0, 0)
                         .after(function () {
                             explosion.opacity(0);
-                            BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                         });
                 });
         }

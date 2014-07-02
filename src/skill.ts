@@ -179,4 +179,8 @@ class Skill {
     execute(data: SkillLogicData) {
         this.logic.execute(data);
     }
+
+    getTargets(executor: Card): Card[] {
+        return this.range.getTargets(executor);
+    }
 }

@@ -14,6 +14,8 @@
                 return new ProtectCounterSkillLogic();
             case ENUM.SkillFunc.COUNTER:
                 return new CounterSkillLogic();
+            case ENUM.SkillFunc.DRAIN:
+                return new DrainSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -136,12 +138,20 @@ class AttackSkillLogic extends SkillLogic {
 
             // if not protected, proceed with the attack as normal
             if (!protectSkillActivated) {
-                this.battleModel.damageToTarget(data.executor, targetCard, data.skill, null);
+                var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
+
+                this.battleModel.damageToTarget({
+                    attacker: data.executor, 
+                    target: targetCard, 
+                    skill: data.skill,
+                    damage: wouldBeDamage
+                });
 
                 var defenseData: SkillLogicData = {
                     executor: targetCard,
                     skill: targetCard.defenseSkill,
-                    attacker:  data.executor
+                    attacker:  data.executor,
+                    wouldBeDamage: wouldBeDamage
                 }
                 if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
                     targetCard.defenseSkill.execute(defenseData);    
@@ -203,7 +213,14 @@ class AttackSkillLogic extends SkillLogic {
                 // if not protected, proceed with the attack as normal
                 // also need to make sure the target is not already attacked
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
-                    this.battleModel.damageToTarget(executor, targetCard, skill, null);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
+
+                    this.battleModel.damageToTarget({
+                        attacker: executor, 
+                        target: targetCard, 
+                        skill: skill,
+                        damage: wouldBeDamage
+                    });
                     targetsAttacked[targetCard.id] = true;
 
                     if (!aoeReactiveSkillActivated) {
@@ -211,7 +228,8 @@ class AttackSkillLogic extends SkillLogic {
                         var defenseData: SkillLogicData = {
                             executor: targetCard,
                             skill: targetCard.defenseSkill,
-                            attacker:  data.executor
+                            attacker:  data.executor,
+                            wouldBeDamage: wouldBeDamage
                         }
                         if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
                             targetCard.defenseSkill.execute(defenseData);
@@ -236,12 +254,20 @@ class AttackSkillLogic extends SkillLogic {
 
                 // if not protected, proceed with the attack as normal
                 if (!protectSkillActivated) {
-                    this.battleModel.damageToTarget(executor, targetCard, skill, null);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
+
+                    this.battleModel.damageToTarget({
+                        attacker: executor, 
+                        target: targetCard, 
+                        skill: skill,
+                        damage: wouldBeDamage
+                    });
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
                         skill: targetCard.defenseSkill,
-                        attacker:  data.executor
+                        attacker:  data.executor,
+                        wouldBeDamage: wouldBeDamage
                     }
                     if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
                         targetCard.defenseSkill.execute(defenseData);    
@@ -271,7 +297,11 @@ class ProtectSkillLogic extends SkillLogic {
             description: desc,
             skillId: protectSkill.id
         });
-        this.battleModel.damageToTarget(data.attacker, protector, data.attackSkill, null);
+        this.battleModel.damageToTarget({
+            attacker: data.attacker, 
+            target: protector, 
+            skill: data.attackSkill
+        });
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {
@@ -299,7 +329,12 @@ class ProtectCounterSkillLogic extends SkillLogic {
             description: desc,
             skillId: protectSkill.id
         });
-        this.battleModel.damageToTarget(data.attacker, protector, data.attackSkill, null);
+
+        this.battleModel.damageToTarget({
+            attacker: data.attacker, 
+            target: protector, 
+            skill: data.attackSkill
+        });
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {
@@ -309,7 +344,12 @@ class ProtectCounterSkillLogic extends SkillLogic {
         // counter phase
         if (!protector.isDead) {
             var additionalDesc = protector.name + " counters " + data.attacker.name + "! ";
-            this.battleModel.damageToTarget(protector, data.attacker, protectSkill, additionalDesc);
+            this.battleModel.damageToTarget({
+                attacker: protector, 
+                target: data.attacker, 
+                skill: protectSkill, 
+                additionalDescription: additionalDesc
+            });
         }
     }
 }
@@ -328,13 +368,70 @@ class CounterSkillLogic extends SkillLogic {
 
         // counter phase
         var additionalDesc = data.executor.name + " counters " + data.attacker.name + "! ";
-        this.battleModel.damageToTarget(data.executor, data.attacker, data.skill, additionalDesc);
+        this.battleModel.damageToTarget({
+            attacker: data.executor, 
+            target: data.attacker, 
+            skill: data.skill, 
+            additionalDescription: additionalDesc
+        });
+    }
+}
+
+class DrainSkillLogic extends SkillLogic {
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        var hasValidTarget = false;
+        var targets = data.skill.getTargets(data.executor);
+        if (targets && targets.length > 0) {
+            for (var i = 0; i < targets.length; i++) {
+                if (!targets[i].isFullHealth()) {
+                    hasValidTarget = true;
+                    break;
+                }
+            }
+        }
+
+        return super.willBeExecuted(data) && hasValidTarget;
+    }
+
+    getValidTargets(data: SkillLogicData): Card[] {
+        var rangeTargets = data.skill.getTargets(data.executor);
+        var validTargets = [];
+
+        for (var i = 0; i < rangeTargets.length; i++) {
+            if (!rangeTargets[i].isFullHealth()) {
+                validTargets.push(rangeTargets[i]);
+            }
+        }
+
+        return validTargets;
+    }
+
+    execute(data: SkillLogicData) {
+
+        var targets = this.getValidTargets(data);
+
+        var desc = data.executor.name + " procs " + data.skill.name + ". ";
+        this.logger.addMinorEvent({
+            executorId: data.executor.id, 
+            type: ENUM.MinorEventType.DESCRIPTION,
+            description: desc,
+            skillId: data.skill.id
+        });
+
+        // don't worry about length == 0, it would not have gotten into here anyway
+        var eachTargetHealAmount = Math.floor(data.wouldBeDamage / targets.length);
+
+        for (var i = 0; i < targets.length; i++) {
+            this.battleModel.damageToTargetDirectly(targets[i], -1 * eachTargetHealAmount, " healing");
+        }        
     }
 }
 
 interface SkillLogicData {
     executor: Card;
     skill?: Skill;
+    wouldBeDamage?: number; // the would-be damage, for defense
     attacker?: Card;    // for protect/counter
     attackSkill?: Skill // for protect/counter
     targetCard?: Card;  // for protect
