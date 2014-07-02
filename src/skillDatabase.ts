@@ -60,6 +60,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
 
+    60: {
+        name: "Syphon", skillType: 3, skillFunc: 11, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 1, maxProbability: 50,
+        description: "Heal an adjacent familiar for the amount of damage taken."
+    },
+
     61: {
         name: "Cloak & Dagger", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -76,6 +83,13 @@ var SkillDatabase = {
         name: "Shroud", skillType: 5, skillFunc: 12, skillCalcType: 0,
         skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 4, maxProbability: 50
+    },
+
+    64: {
+        name: "Riposte", skillType: 3, skillFunc: 13, skillCalcType: 1,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 1, maxProbability: 50, ward: "PHYSICAL",
+        description: "Counterattack after receiving an attack."
     },
 
     111 : {
@@ -225,6 +239,13 @@ var SkillDatabase = {
         name: "Shadow Strike", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    166 : {
+        name: "Payback", skillType: 3, skillFunc: 13, skillCalcType: 1,
+        skillFuncArg1: 2.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
+        description: "Chance to unleash a massive counter attack when struck."
     },
     
     167 : {
@@ -741,6 +762,13 @@ var SkillDatabase = {
         name: "Bone Chill", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 32, maxProbability: 30, ward: "BREATH"
+    },
+
+    372 : {
+        name: "Curse Foil", skillType: 3, skillFunc: 13, skillCalcType: 1, 
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
+        description: "Chance to unleash a counter attack when struck."
     },
 
     379 : {

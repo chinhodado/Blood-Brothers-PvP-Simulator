@@ -9,6 +9,18 @@
  * - For the image, use the wikia thumbnail version
  */
 var famDatabase = {
+    10613: {
+        name: "Adara", hp: 16024, atk: 12134, def: 17620, wis: 10857, agi: 9370,
+        skills: [166],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130408194639/bloodbrothersgame/images/thumb/6/68/Adara_Luck_Shot_II_Figure.png/40px-Adara_Luck_Shot_II_Figure.png",
+        fullName: "Adara Luck Shot II"
+    },
+    358: {
+        name: "Aegis", hp: 14560, atk: 11280, def: 15530, wis: 10600, agi: 10100,
+        skills: [64],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130125001448/bloodbrothersgame/images/thumb/3/35/Aegis%2C_the_Bulwark_Figure.png/40px-Aegis%2C_the_Bulwark_Figure.png",
+        fullName: "Aegis, the Bulwark"
+    },
     11099: {
         name: "Adranus", hp: 20223, atk: 23517, def: 19855, wis: 18609, agi: 18046,
         skills: [99000],
@@ -341,6 +353,12 @@ var famDatabase = {
         skills: [144],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130208175748/bloodbrothersgame/images/thumb/0/08/Gregoire%2C_Weaponmaster_II_Figure.png/40px-Gregoire%2C_Weaponmaster_II_Figure.png",
         fullName: "Gregoire, Weaponmaster II"
+    },
+    11131: {
+        name: "Gregory", hp: 16192, atk: 16121, def: 15558, wis: 9794, agi:	10294,
+        skills: [372],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140213035030/bloodbrothersgame/images/thumb/4/48/Gregory%2C_the_Masked_Slayer_II_Figure.png/40px-Gregory%2C_the_Masked_Slayer_II_Figure.png",
+        fullName: "Gregory, the Masked Slayer II"
     },
     10791: {
         name: "Grellas", hp: 12066, atk: 14769, def: 10636, wis: 17374, agi: 13073,

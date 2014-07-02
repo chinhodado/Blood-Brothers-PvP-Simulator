@@ -831,7 +831,7 @@ class BattleLogger {
 
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
-        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId || data.type == ENUM.MinorEventType.DESCRIPTION) {
+        if (data.type == ENUM.MinorEventType.AFFLICTION || !data.executorId) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 this.displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
                 return;
@@ -849,6 +849,20 @@ class BattleLogger {
 
         // move the executor's group to the front
         SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        // a description of a skill proc
+        if (data.type == ENUM.MinorEventType.DESCRIPTION) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                this.displayProcSkill(executor.id, data.skillId, {
+                    callback: function() {
+                        BattleLogger.getInstance().displayAttackAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                    },
+                    durationRatio: 0.5
+                });
+                return;
+            }
+            else return;
+        }
 
         // a protect/defense, show it
         if (data.type == ENUM.MinorEventType.PROTECT) {

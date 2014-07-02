@@ -130,6 +130,10 @@ class Skill {
         return isAoe;
     }
 
+    isIndirectSkill(): boolean {
+        return Skill.isIndirectSkill(this.id);
+    }
+
     getSerializableObject() {
         return {
             id: this.id,
@@ -166,6 +170,10 @@ class Skill {
         else if (argnum == 5) {
             return this.skillFuncArg5;
         }
+    }
+
+    willBeExecuted(data: SkillLogicData) {
+        return this.logic.willBeExecuted(data);
     }
 
     execute(data: SkillLogicData) {

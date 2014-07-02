@@ -21,22 +21,22 @@ module ENUM {
         DEBUFF = 2,
         ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
                     // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
-        MAGIC = 4, // anything that ignores position
+        MAGIC = 4, // anything that ignores position, args: same as ATTACK
         COOP = 5,
         REVIVE = 6,
         KILL = 7,
         STEAL = 8,
         CHARGE = 9,
-        DRAIN = 11,
+        DRAIN = 11, //arg1: always 1?
         PROTECT = 12,
-        COUNTER = 13,
+        COUNTER = 13, // arg1: multi
         PROTECT_COUNTER = 14,
         TREASURE_HUNTER = 15,
         CLEAR_BUFF = 16,
         SUICIDE = 17,
         HEAL = 18,
         AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
-        PATIENCE = 20,
+        PATIENCE = 20, //arg1: HP threshold percent
         DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
         DEBUFFINDIRECT = 22,
 

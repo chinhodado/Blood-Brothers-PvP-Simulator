@@ -58,6 +58,8 @@ class RangeFactory {
     
     static createRange (id) {
         switch (id) {
+            case 1:
+                return new EitherSideRange(id); // either side, but not both
             case 2 :
                 return new BothSidesRange(id);
             case 3 :
@@ -96,6 +98,36 @@ class EnemyRandomRange extends BaseRange {
         super(id);
         this.numTarget = numTarget;    
     }   
+}
+
+class EitherSideRange extends BaseRange {
+    constructor(id : number) {
+        super(id);
+    }
+    
+    getTargets(executor : Card) : Card[] {
+        var targets = [];
+        
+        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
+        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
+
+        if (leftCard && !leftCard.isDead && (!rightCard || rightCard.isDead)) {
+            targets.push(leftCard);
+        }
+        else if (rightCard && !rightCard.isDead && (!leftCard || leftCard.isDead)) {
+            targets.push(rightCard);
+        }
+        else if (rightCard && !rightCard.isDead && leftCard && !leftCard.isDead) {
+            if (Math.random() <= 0.5) {
+                targets.push(leftCard);
+            }
+            else {
+                targets.push(rightCard);
+            }
+        }
+        
+        return targets;
+    }
 }
 
 class BothSidesRange extends BaseRange {

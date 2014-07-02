@@ -12,6 +12,8 @@
                 return new ProtectSkillLogic();
             case ENUM.SkillFunc.PROTECT_COUNTER:
                 return new ProtectCounterSkillLogic();
+            case ENUM.SkillFunc.COUNTER:
+                return new CounterSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -28,6 +30,12 @@ class SkillLogic {
         this.battleModel = BattleModel.getInstance();
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
+    }
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        return (!data.executor.isDead && 
+            data.executor.canUseSkill() && 
+            Math.random() * 100 < data.skill.maxProbability);
     }
 
     execute(data: SkillLogicData) {
@@ -129,6 +137,15 @@ class AttackSkillLogic extends SkillLogic {
             // if not protected, proceed with the attack as normal
             if (!protectSkillActivated) {
                 this.battleModel.damageToTarget(data.executor, targetCard, data.skill, null);
+
+                var defenseData: SkillLogicData = {
+                    executor: targetCard,
+                    skill: targetCard.defenseSkill,
+                    attacker:  data.executor
+                }
+                if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
+                    targetCard.defenseSkill.execute(defenseData);    
+                }
             }
         }
     }
@@ -141,8 +158,8 @@ class AttackSkillLogic extends SkillLogic {
         var executor = data.executor;
         var targets : Card[] = skill.range.getTargets(executor);
 
-        if (skill.contact == 0 || typeof skill.contact === undefined) {
-            // if the skill doesn't make contact, it must be AoE, so only one fam can be protected
+        if (skill.isIndirectSkill()) {
+            // if the skill is indirect and of range type, it must be AoE, so only one reactive skill can be proc
 
             // NOTE: the algorithm used here for protection may not be correct, since it makes the 
             // proc rate not really what it should be. For example, if two cards, one can protect (A)
@@ -155,8 +172,8 @@ class AttackSkillLogic extends SkillLogic {
             // simply left-to-right anymore, it reminds us that this is an AoE skill
             shuffle(targets);
 
-            // assume only one protection can be proc during an AoE skill. Is it true?
-            var aoeProtectSkillActivated = false; //<- has any protect skill activated during this whole AoE?
+            // assume only one reactive can be proc during an AoE skill. Is it true?
+            var aoeReactiveSkillActivated = false; //<- has any reactive skill proc during this whole AoE?
 
             // keep track of targets attacked, to make sure a fam can only be attacked once. So if a fam has already been
             // attacked, it cannot protect another fam later on 
@@ -172,14 +189,14 @@ class AttackSkillLogic extends SkillLogic {
 
                 var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
 
-                // if no protect skill has been activated at all during this AoE, we can try to
+                // if no reactive skill has been activated at all during this AoE, we can try to
                 // protect this target, otherwise no protect can be activated to protect this target
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
-                if (!aoeProtectSkillActivated && !targetsAttacked[targetCard.id]) {
+                if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
                     protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked);
                     if (protectSkillActivated) {
-                        aoeProtectSkillActivated = true;
+                        aoeReactiveSkillActivated = true;
                     }
                 }
 
@@ -188,6 +205,19 @@ class AttackSkillLogic extends SkillLogic {
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
                     this.battleModel.damageToTarget(executor, targetCard, skill, null);
                     targetsAttacked[targetCard.id] = true;
+
+                    if (!aoeReactiveSkillActivated) {
+                        // try to proc post-damage skills
+                        var defenseData: SkillLogicData = {
+                            executor: targetCard,
+                            skill: targetCard.defenseSkill,
+                            attacker:  data.executor
+                        }
+                        if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
+                            targetCard.defenseSkill.execute(defenseData);
+                            aoeReactiveSkillActivated = true; 
+                        }
+                    }
                 }
             }
         }
@@ -207,6 +237,15 @@ class AttackSkillLogic extends SkillLogic {
                 // if not protected, proceed with the attack as normal
                 if (!protectSkillActivated) {
                     this.battleModel.damageToTarget(executor, targetCard, skill, null);
+
+                    var defenseData: SkillLogicData = {
+                        executor: targetCard,
+                        skill: targetCard.defenseSkill,
+                        attacker:  data.executor
+                    }
+                    if (targetCard.defenseSkill && targetCard.defenseSkill.willBeExecuted(defenseData)) {
+                        targetCard.defenseSkill.execute(defenseData);    
+                    }
                 }
             }
         }        
@@ -275,11 +314,29 @@ class ProtectCounterSkillLogic extends SkillLogic {
     }
 }
 
+class CounterSkillLogic extends SkillLogic {
+
+    execute(data: SkillLogicData) {
+
+        var desc = data.executor.name + " procs " + data.skill.name + ". ";
+        this.logger.addMinorEvent({
+            executorId: data.executor.id, 
+            type: ENUM.MinorEventType.DESCRIPTION,
+            description: desc,
+            skillId: data.skill.id
+        });
+
+        // counter phase
+        var additionalDesc = data.executor.name + " counters " + data.attacker.name + "! ";
+        this.battleModel.damageToTarget(data.executor, data.attacker, data.skill, additionalDesc);
+    }
+}
+
 interface SkillLogicData {
     executor: Card;
     skill?: Skill;
-    attacker?: Card;    // for protect
-    attackSkill?: Skill // for protect
+    attacker?: Card;    // for protect/counter
+    attackSkill?: Skill // for protect/counter
     targetCard?: Card;  // for protect
     targetsAttacked?: any;  // for protect
 }
