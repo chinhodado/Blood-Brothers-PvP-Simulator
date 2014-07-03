@@ -445,6 +445,18 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131101130655/bloodbrothersgame/images/thumb/3/3b/Hypnos%2C_Lord_of_Dreams_II_Figure.png/40px-Hypnos%2C_Lord_of_Dreams_II_Figure.png",
         fullName: "Hypnos, Lord of Dreams II"
     },
+    21104: {
+        name: "Impregnable Iron Golem", hp: 23155, atk:	19935, def:	21027, wis:	8440, agi: 17505,
+        skills: [444, 445],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140505115108/bloodbrothersgame/images/thumb/5/5f/Impregnable_Iron_Golem_Figure.png/40px-Impregnable_Iron_Golem_Figure.png",
+        fullName: "Impregnable Iron Golem"
+    },
+    11120: {
+        name: "Infested Minotaur", hp: 13691, atk: 15294, def: 16031, wis: 9390, agi: 14070,
+        skills: [299, 301],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140426092258/bloodbrothersgame/images/thumb/d/d3/Infested_Minotaur_II_Figure_2.png/40px-Infested_Minotaur_II_Figure_2.png",
+        fullName: "Infested Minotaur II"
+    },
     10319: {
         name: "Peryton", hp: 10904, atk: 9674, def: 10490, wis: 10490, agi: 12952,
         skills: [33],
@@ -798,6 +810,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20140411023129/bloodbrothersgame/images/thumb/b/b1/Scathing_Hierophant_Figure.png/60px-Scathing_Hierophant_Figure.png",
         fullName: "Scathing Hierophant"
     },
+    10676: {
+        name: "Scirocco", hp: 15002, atk: 14503, def: 14503, wis: 18999, agi: 16497,
+        skills: [331, 301],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131228021319/bloodbrothersgame/images/thumb/d/d5/Scirocco%2C_Father_of_Winds_II_Figure.png/40px-Scirocco%2C_Father_of_Winds_II_Figure.png",
+        fullName: "Scirocco, Father of Winds II"
+    },
     11036: {
         name: "Sea Serpent", hp: 16020, atk: 12012, def: 15121, wis: 19259, agi: 17103,
         skills: [302],
@@ -897,6 +915,12 @@ var famDatabase = {
         autoAttack: 10007,
         imageLink: "http://img1.wikia.nocookie.net/__cb20140206151442/bloodbrothersgame/images/thumb/1/15/Tormented_Bone_Beast_II_Figure.png/60px-Tormented_Bone_Beast_II_Figure.png",
         fullName: "Tormented Bone Beast II"
+    },
+    10647: {
+        name: "Tuniq", hp: 13635, atk: 16709, def: 12062, wis: 12086, agi: 9794,
+        skills: [150],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130308154138/bloodbrothersgame/images/thumb/9/9c/Tuniq%2C_Guardian_Colossus_II_Figure.png/40px-Tuniq%2C_Guardian_Colossus_II_Figure.png",
+        fullName: "Tuniq, Guardian Colossus II"
     },
     10920: {
         name: "Unicorn", hp: 10807, atk: 12600, def: 8770, wis: 11721, agi: 12001,

@@ -221,7 +221,14 @@ var SkillDatabase = {
 	    skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
         skillRange: 19, maxProbability: 30, ward: "MAGICAL",
 	    description: "Deal heavy damage to four foes." 
-	},  
+	},
+
+    150 : {
+	    name: "Grin and Bear It", skillType: 3, skillFunc: 20, skillCalcType: 0,  
+	    skillFuncArg1: 0.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 21, maxProbability: 70,
+	    description: "Survive devastating damage as long as HP is above 50%." 
+	},
 
     154: {
         name: "Cloak & Dagger 2", skillType: 5, skillFunc: 14, skillCalcType: 1,
@@ -536,6 +543,13 @@ var SkillDatabase = {
         description: "Deal WIS-based damage to six random foes, regardless of position."
     },
 
+    291 : {
+	    name: "Grin and Bear It 2", skillType: 3, skillFunc: 20, skillCalcType: 0,  
+	    skillFuncArg1: 0.01, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 21, maxProbability: 70,
+	    description: "Survive devastating damage as long as HP is above 1%." 
+	},
+
     292: {
         name: "Golden Rule", skillType: 2, skillFunc: 4, skillCalcType: 1,
         skillFuncArg1: 2.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -584,6 +598,20 @@ var SkillDatabase = {
         skillRange: 8, maxProbability: 30, ward: "MAGICAL", contact: 0,
         description: "Deal WIS-based damage to all foes and sometimes freeze them, regardless of position."
     },
+
+    299 : {
+        name: "Crazed Axe", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to three random foes."
+    },
+
+    301 : {
+	    name: "Fortitude", skillType: 3, skillFunc: 20, skillCalcType: 0,  
+	    skillFuncArg1: 0.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 21, maxProbability: 70,
+	    description: "Survive devastating damage as long as HP is above 20%." 
+	},
     
     302 : {
         name: "Ice Wall", skillType: 2, skillFunc: 4, skillCalcType: 2, 
@@ -676,6 +704,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to three random foes."
+    },
+
+    331 : {
+        name: "Light Divine", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to six random foes, regardless of position."
     },
 
     333 : {
@@ -969,6 +1004,20 @@ var SkillDatabase = {
         skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    444 : {
+        name: "Cruel Swing", skillType: 2, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 1.45, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 0,
+        description: "Deal ATK-based damage to all foes, ignoring position."
+    },
+
+    445 : {
+	    name: "Bastion", skillType: 3, skillFunc: 20, skillCalcType: 0,  
+	    skillFuncArg1: 0.1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 21, maxProbability: 70,
+	    description: "Survive devastating damage as long as HP is above 10%." 
+	},
 
     447 : {
         name: "Looming Nightmare", skillType: 2, skillFunc: 4, skillCalcType: 2, 
