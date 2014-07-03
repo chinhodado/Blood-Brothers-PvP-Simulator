@@ -354,18 +354,18 @@ class BattleModel {
                 }
 
                 // procs active skill if we can
-                var attackSkill = currentCard.attackSkill;
-                if (attackSkill) {
-                    if (Math.random() * 100 <= attackSkill.maxProbability && currentCard.canUseSkill()) {
+                var activeSkill = currentCard.getRandomActiveSkill();
+                if (activeSkill) {
+                    if (Math.random() * 100 <= activeSkill.maxProbability && currentCard.canUseSkill()) {
                         this.logger.addMajorEvent({
-                            description: currentCard.name + " procs " + attackSkill.name,
+                            description: currentCard.name + " procs " + activeSkill.name,
                             executorId: currentCard.id,
-                            skillId: attackSkill.id
+                            skillId: activeSkill.id
                         });
 
-                        attackSkill.execute({
+                        activeSkill.execute({
                             executor: currentCard,
-                            skill: attackSkill
+                            skill: activeSkill
                         });
                     }
                     else {
@@ -473,7 +473,7 @@ class BattleModel {
             if (enemyCards[i].isDead) {
                 continue;
             }
-            var protectSkill = enemyCards[i].protectSkill;
+            var protectSkill = enemyCards[i].getRandomProtectSkill();
             if (protectSkill) {
                 var protector = enemyCards[i];
 
@@ -518,7 +518,7 @@ class BattleModel {
 
     performOpeningSkills () {
         for (var i = 0; i < this.player1Cards.length; i++) {
-            var skill1 = this.player1Cards[i].openingSkill;
+            var skill1 = this.player1Cards[i].getRandomOpeningSkill();
             if (skill1) {
                 if (Math.random() * 100 < skill1.maxProbability && this.player1Cards[i].canUseSkill()) {
                     this.logger.addMajorEvent({
@@ -535,7 +535,7 @@ class BattleModel {
         }
         
         for (var i = 0; i < this.player2Cards.length; i++) {
-            var skill2 = this.player2Cards[i].openingSkill;
+            var skill2 = this.player2Cards[i].getRandomOpeningSkill();
             if (skill2) {
                 if (Math.random() * 100 < skill2.maxProbability && this.player2Cards[i].canUseSkill()) {
                     this.logger.addMajorEvent({

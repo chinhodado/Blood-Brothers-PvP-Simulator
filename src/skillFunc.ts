@@ -38,6 +38,7 @@ class SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
         return (!data.executor.isDead && 
+            data.executor.canAttack() &&
             data.executor.canUseSkill() && 
             Math.random() * 100 < data.skill.maxProbability);
     }
@@ -140,19 +141,19 @@ class AttackSkillLogic extends SkillLogic {
 
             // if not protected, proceed with the attack as normal
             if (!protectSkillActivated) {
-                var defenseSkill = targetCard.defenseSkill;
+                var defenseSkill = targetCard.getRandomDefenseSkill();
                 var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
 
                 var defenseData: SkillLogicData = {
                     executor: targetCard,
-                    skill: targetCard.defenseSkill,
+                    skill: defenseSkill,
                     attacker:  data.executor,
                     wouldBeDamage: wouldBeDamage
                 }
 
-                if (targetCard.defenseSkill && targetCard.defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
-                     targetCard.defenseSkill.willBeExecuted(defenseData)) {
-                    targetCard.defenseSkill.execute(defenseData);
+                if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
+                     defenseSkill.willBeExecuted(defenseData)) {
+                    defenseSkill.execute(defenseData);
                     wouldBeDamage = targetCard.getHP() - 1;
                 }
 
@@ -165,7 +166,7 @@ class AttackSkillLogic extends SkillLogic {
 
 
                 if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
-                    targetCard.defenseSkill.execute(defenseData);    
+                    defenseSkill.execute(defenseData);    
                 }
             }
         }
@@ -224,22 +225,22 @@ class AttackSkillLogic extends SkillLogic {
                 // if not protected, proceed with the attack as normal
                 // also need to make sure the target is not already attacked
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
-                    var defenseSkill = targetCard.defenseSkill;
+                    var defenseSkill = targetCard.getRandomDefenseSkill();
                     var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
-                        skill: targetCard.defenseSkill,
+                        skill: defenseSkill,
                         attacker:  data.executor,
                         wouldBeDamage: wouldBeDamage
                     }
 
-                    if (targetCard.defenseSkill && 
-                        targetCard.defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
-                        targetCard.defenseSkill.willBeExecuted(defenseData) && 
+                    if (defenseSkill && 
+                        defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
+                        defenseSkill.willBeExecuted(defenseData) && 
                         !aoeReactiveSkillActivated) 
                     {
-                        targetCard.defenseSkill.execute(defenseData);
+                        defenseSkill.execute(defenseData);
                         wouldBeDamage = targetCard.getHP() - 1;
                         aoeReactiveSkillActivated = true;
                     }
@@ -256,7 +257,7 @@ class AttackSkillLogic extends SkillLogic {
                     if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && 
                         defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE && !aoeReactiveSkillActivated) 
                     {
-                        targetCard.defenseSkill.execute(defenseData);
+                        defenseSkill.execute(defenseData);
                         aoeReactiveSkillActivated = true; 
                     }
                 }
@@ -277,19 +278,19 @@ class AttackSkillLogic extends SkillLogic {
 
                 // if not protected, proceed with the attack as normal
                 if (!protectSkillActivated) {
-                    var defenseSkill = targetCard.defenseSkill;
+                    var defenseSkill = targetCard.getRandomDefenseSkill();
                     var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
-                        skill: targetCard.defenseSkill,
+                        skill: defenseSkill,
                         attacker:  data.executor,
                         wouldBeDamage: wouldBeDamage
                     }
 
-                    if (targetCard.defenseSkill && targetCard.defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
-                         targetCard.defenseSkill.willBeExecuted(defenseData)) {
-                        targetCard.defenseSkill.execute(defenseData);
+                    if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
+                        defenseSkill.willBeExecuted(defenseData)) {
+                        defenseSkill.execute(defenseData);
                         wouldBeDamage = targetCard.getHP() - 1;
                     }
 
@@ -302,7 +303,7 @@ class AttackSkillLogic extends SkillLogic {
 
 
                     if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
-                        targetCard.defenseSkill.execute(defenseData);    
+                        defenseSkill.execute(defenseData);    
                     }
                 }
             }

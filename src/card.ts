@@ -15,10 +15,10 @@ class Card {
 
     autoAttack: Skill;
     
-    openingSkill : Skill;
-    attackSkill : Skill;
-    protectSkill: Skill;
-    defenseSkill: Skill;
+    private openingSkills: Skill[] = [];
+    private activeSkills:  Skill[] = [];
+    private protectSkills: Skill[] = [];
+    private defenseSkills: Skill[] = [];
     
     formationColumn : number; // 0 to 4
     formationRow : ENUM.FormationRow; // 1, 2 or 3
@@ -42,16 +42,16 @@ class Card {
             var skill = skills[i];
             if (skill) {
                 if (skill.skillType == ENUM.SkillType.OPENING) {
-                    this.openingSkill = skill;
+                    this.openingSkills.push(skill);
                 }
-                else if (skill.skillType == ENUM.SkillType.ATTACK) {
-                    this.attackSkill = skill;
+                else if (skill.skillType == ENUM.SkillType.ACTIVE) {
+                    this.activeSkills.push(skill);
                 }
                 else if (skill.skillType == ENUM.SkillType.PROTECT) {
-                    this.protectSkill = skill;
+                    this.protectSkills.push(skill);
                 }
                 else if (skill.skillType == ENUM.SkillType.DEFENSE) {
-                    this.defenseSkill = skill;
+                    this.defenseSkills.push(skill);
                 }
             }
         }
@@ -77,10 +77,10 @@ class Card {
 
             autoAttack: this.autoAttack.getSerializableObject(),
     
-            openingSkill: this.openingSkill? this.openingSkill.getSerializableObject() : null,
-            attackSkill: this.attackSkill? this.attackSkill.getSerializableObject() : null,
-            protectSkill: this.protectSkill? this.protectSkill.getSerializableObject() : null,
-            defenseSkill: this.defenseSkill? this.defenseSkill.getSerializableObject() : null,
+            openingSkills: getSerializableObjectArray(this.openingSkills),
+            activeSkills:  getSerializableObjectArray(this.activeSkills),
+            protectSkills: getSerializableObjectArray(this.protectSkills),
+            defenseSkills: getSerializableObjectArray(this.defenseSkills),
     
             formationColumn: this.formationColumn,
             formationRow : this.formationRow,
@@ -89,7 +89,41 @@ class Card {
         }
     }
 
+    getRandomOpeningSkill(): Skill {
+        if (this.openingSkills.length === 0) {
+            return null;
+        }
+        else {
+            return getRandomElement(this.openingSkills);
+        }
+    }
 
+    getRandomActiveSkill(): Skill {
+        if (this.activeSkills.length === 0) {
+            return null;
+        }
+        else {
+            return getRandomElement(this.activeSkills);
+        }
+    }
+
+    getRandomDefenseSkill(): Skill {
+        if (this.defenseSkills.length === 0) {
+            return null;
+        }
+        else {
+            return getRandomElement(this.defenseSkills);
+        }
+    }
+
+    getRandomProtectSkill(): Skill {
+        if (this.protectSkills.length === 0) {
+            return null;
+        }
+        else {
+            return getRandomElement(this.protectSkills);
+        }
+    }
 
     getName() {
         return this.name;

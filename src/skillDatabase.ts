@@ -23,6 +23,13 @@ var SkillDatabase = {
         skillRange: 3, maxProbability: 70
     },
 
+    10 : {
+        name: "Scythe Storm", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal heavy AGI-based damage to all foes."
+    },
+
     17 : {
         name: "Berserk", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 0.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -48,6 +55,20 @@ var SkillDatabase = {
         description: "Deal heavy AGI-based damage to three foes."
     },
 
+    34 : {
+        name: "Massive Assault", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 5, maxProbability: 30, ward: "PHYSICAL", contact: 1,
+        description: "Deal massive damage to one foe."
+    },
+
+    40 : {
+        name: "Firestrike", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 5, maxProbability: 30, ward: "MAGICAL", contact: 0,
+        description: "Deal heavy damage to one foe."
+    },
+
     43 : {
         name: "Windlash", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -57,7 +78,8 @@ var SkillDatabase = {
     46 : {
         name: "Brawl", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Attack three foes."
     },
 
     60: {
@@ -104,6 +126,13 @@ var SkillDatabase = {
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal ATK-based damage to three foes."
     },
+
+    113 : {
+        name: "Thundercloud", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1, skillFuncArg2: 2, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 7, maxProbability: 30, ward: "MAGICAL", contact: 0,
+        description: "Deal damage and sometimes paralyze three foes."
+    },
     
     114 : {
         name: "Electric Shock", skillType: 2, skillFunc: 4, skillCalcType: 2, 
@@ -117,6 +146,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, skillFuncArg2: 1, skillFuncArg3: 1, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy poison damage to three foes."
+    },
+
+    116 : {
+        name: "Mass Greater Heal", skillType: 2, skillFunc: 18, skillCalcType: 4, 
+        skillFuncArg1: 0.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 4, maxProbability: 30,
+        description: "Restore a fixed amount of HP to all party members."
     },
     
     118 : {

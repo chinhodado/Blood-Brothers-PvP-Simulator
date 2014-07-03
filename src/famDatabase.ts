@@ -891,6 +891,48 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20131112085546/bloodbrothersgame/images/thumb/c/c5/Tiamat%2C_Mother_of_Dragons_II_Figure.png/60px-Tiamat%2C_Mother_of_Dragons_II_Figure.png",
         fullName: "Tiamat, Mother of Dragons II"
     },
+    1: {
+        name: "Black Brute", hp: 14254, atk: 17131, def: 13848, wis: 11794, agi: 11699,
+        skills: [34],
+        isWarlord: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130210090020/bloodbrothersgame/images/thumb/6/6f/The_Black_Brute_Figure.png/169px-The_Black_Brute_Figure.png",
+        fullName: "The Black Brute"
+    },
+    2: {
+        name: "Blue Beard", hp: 12982, atk:	11344, def:	15588, wis:	15554, agi: 13527,
+        skills: [118],
+        isWarlord: true,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130210090031/bloodbrothersgame/images/thumb/0/0a/The_Blue_Beard_Figure.png/169px-The_Blue_Beard_Figure.png",
+        fullName: "The Blue Beard"
+    },
+    3: {
+        name: "Golden Lance", hp: 14462, atk: 13994, def: 11951, wis: 12227, agi: 16809,
+        skills: [10],
+        isWarlord: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130210090046/bloodbrothersgame/images/thumb/d/d6/The_Golden_Lance_Figure.png/169px-The_Golden_Lance_Figure.png",
+        fullName: "The Golden Lance"
+    },
+    5: {
+        name: "Grey Mage", hp: 13415, atk: 13838, def: 10712, wis: 15865, agi: 16602,
+        skills: [40],
+        isWarlord: true,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130210090142/bloodbrothersgame/images/thumb/4/48/The_Grey_Mage_Figure.png/169px-The_Grey_Mage_Figure.png",
+        fullName: "The Grey Mage"
+    },
+    6: {
+        name: "Purple Knife", hp: 13735, atk: 16281, def: 10712, wis: 15779, agi: 13595,
+        skills: [113],
+        isWarlord: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130210090107/bloodbrothersgame/images/thumb/e/ee/The_Purple_Knife_Figure.png/169px-The_Purple_Knife_Figure.png",
+        fullName: "The Purple Knife"
+    },
+    7: {
+        name: "Red Samurai", hp: 13432, atk: 14783, def: 13961, wis: 12869, agi: 14333,
+        skills: [46],
+        isWarlord: true,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130210090126/bloodbrothersgame/images/thumb/a/ad/The_Red_Samurai_Figure.png/169px-The_Red_Samurai_Figure.png",
+        fullName: "The Red Samurai"
+    },
     10480: {
         name: "Thor", hp: 10343, atk: 13245, def: 11807, wis: 13842, agi: 11917,
         skills: [114],

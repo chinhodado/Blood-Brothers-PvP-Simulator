@@ -5,7 +5,7 @@ module ENUM {
      */
     export enum SkillType {
         OPENING = 1,
-        ATTACK = 2, // aka active
+        ACTIVE = 2, // attack, active healing
         DEFENSE = 3,
         FIELD = 4,
         PROTECT = 5,
@@ -34,7 +34,7 @@ module ENUM {
         TREASURE_HUNTER = 15,
         CLEAR_BUFF = 16,
         SUICIDE = 17,
-        HEAL = 18,
+        HEAL = 18, //arg1: multi, arg2: 0 if heal based on caster's wis, 1 if heal based on target's max HP
         AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
         SURVIVE = 20, //arg1: HP threshold percent
         DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
