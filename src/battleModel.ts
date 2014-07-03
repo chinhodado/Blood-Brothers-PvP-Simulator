@@ -356,17 +356,18 @@ class BattleModel {
                 // procs active skill if we can
                 var activeSkill = currentCard.getRandomActiveSkill();
                 if (activeSkill) {
-                    if (Math.random() * 100 <= activeSkill.maxProbability && currentCard.canUseSkill()) {
+                    var data: SkillLogicData = {
+                        executor: currentCard,
+                        skill: activeSkill
+                    }
+                    if (activeSkill.willBeExecuted(data)) {
                         this.logger.addMajorEvent({
                             description: currentCard.name + " procs " + activeSkill.name,
                             executorId: currentCard.id,
                             skillId: activeSkill.id
                         });
 
-                        activeSkill.execute({
-                            executor: currentCard,
-                            skill: activeSkill
-                        });
+                        activeSkill.execute(data);
                     }
                     else {
                         this.executeNormalAttack(currentCard);
@@ -520,16 +521,17 @@ class BattleModel {
         for (var i = 0; i < this.player1Cards.length; i++) {
             var skill1 = this.player1Cards[i].getRandomOpeningSkill();
             if (skill1) {
-                if (Math.random() * 100 < skill1.maxProbability && this.player1Cards[i].canUseSkill()) {
+                var data: SkillLogicData = {
+                    executor: this.player1Cards[i],
+                    skill: skill1
+                }
+                if (skill1.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
                         description: this.player1Cards[i].name + " procs " + skill1.name,
                         executorId: this.player1Cards[i].id,
                         skillId: skill1.id
                     });
-                    skill1.execute({
-                        executor: this.player1Cards[i],
-                        skill: skill1
-                    });
+                    skill1.execute(data);
                 }
             }
         }
@@ -537,16 +539,17 @@ class BattleModel {
         for (var i = 0; i < this.player2Cards.length; i++) {
             var skill2 = this.player2Cards[i].getRandomOpeningSkill();
             if (skill2) {
-                if (Math.random() * 100 < skill2.maxProbability && this.player2Cards[i].canUseSkill()) {
+                var data: SkillLogicData = {
+                    executor: this.player2Cards[i],
+                    skill: skill2
+                }
+                if (skill2.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
                         description: this.player2Cards[i].name + " procs " + skill2.name,
                         executorId: this.player2Cards[i].id,
                         skillId: skill2.id
                     });
-                    skill2.execute({
-                        executor: this.player2Cards[i],
-                        skill: skill2
-                    });
+                    skill2.execute(data);
                 }
             }
         }

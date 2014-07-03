@@ -18,6 +18,8 @@
                 return new DrainSkillLogic();
             case ENUM.SkillFunc.SURVIVE:
                 return new SurviveSkillLogic();
+            case ENUM.SkillFunc.HEAL:
+                return new HealSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -38,7 +40,7 @@ class SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
         return (!data.executor.isDead && 
-            data.executor.canAttack() &&
+            data.executor.canAttack() && // if cannot attack -> cannot use skill, so the same. If can attack, true, doesn't matter
             data.executor.canUseSkill() && 
             Math.random() * 100 < data.skill.maxProbability);
     }
@@ -474,6 +476,20 @@ class SurviveSkillLogic extends SkillLogic {
             description: desc,
             skillId: data.skill.id
         });
+    }
+}
+
+class HealSkillLogic extends SkillLogic {
+    execute(data: SkillLogicData) {
+        var targets = data.skill.getTargets(data.executor);
+        var baseHealAmount = getHealAmount(data.executor);
+
+        var multiplier = data.skill.skillFuncArg1;
+        var healAmount = Math.floor(multiplier * baseHealAmount);
+
+        for (var i = 0; i < targets.length; i++) {
+            this.battleModel.damageToTargetDirectly(targets[i], -1 * healAmount, " healing");
+        }     
     }
 }
 

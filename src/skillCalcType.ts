@@ -1,4 +1,4 @@
-function getDamageCalculatedByATK(attacker : Card, defender : Card, ignorePosition : boolean) {
+function getDamageCalculatedByATK(attacker: Card, defender: Card, ignorePosition: boolean): number {
     var ATTACK_FACTOR = 0.3;
     var DIFF_FACTOR = 0.2;
     
@@ -30,7 +30,7 @@ function getDamageCalculatedByATK(attacker : Card, defender : Card, ignorePositi
     return damage;
 }
 
-function getDamageCalculatedByAGI(attacker : Card, defender : Card, ignorePosition : boolean) {
+function getDamageCalculatedByAGI(attacker: Card, defender: Card, ignorePosition: boolean): number {
     var ATTACK_FACTOR = 0.3;
     var DIFF_FACTOR = 0.2;
     
@@ -62,7 +62,7 @@ function getDamageCalculatedByAGI(attacker : Card, defender : Card, ignorePositi
     return damage;
 }
 
-function getDamageCalculatedByWIS(attacker : Card, defender : Card) {
+function getDamageCalculatedByWIS(attacker: Card, defender: Card): number {
     var ATTACK_FACTOR = 0.3;
     var WIS_DEF_FACTOR = 0.5;
     var DIFF_FACTOR = 0.2;
@@ -79,4 +79,13 @@ function getDamageCalculatedByWIS(attacker : Card, defender : Card) {
     damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
 
     return damage;
+}
+
+function getHealAmount(executor: Card): number {
+    var HEAL_FACTOR: number = 0.3;
+    var amount = executor.getWIS() + HEAL_FACTOR;
+
+    amount = Math.floor(amount * getRandomArbitary(0.9, 1.1));
+
+    return amount
 }

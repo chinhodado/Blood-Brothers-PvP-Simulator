@@ -117,7 +117,8 @@ var SkillDatabase = {
     111 : {
         name: "Whorl of Wisdom", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
-        skillRange: 16, maxProbability: 30, ward: "MAGICAL"
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to three foes."
     },
 
     112 : {

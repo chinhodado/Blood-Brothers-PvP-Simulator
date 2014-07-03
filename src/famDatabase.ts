@@ -912,6 +912,13 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130210090046/bloodbrothersgame/images/thumb/d/d6/The_Golden_Lance_Figure.png/169px-The_Golden_Lance_Figure.png",
         fullName: "The Golden Lance"
     },
+    4: {
+        name: "Green Healer", hp: 13770, atk: 10556, def: 16359, wis: 15329, agi: 13596,
+        skills: [116, 111],
+        isWarlord: true,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130210090056/bloodbrothersgame/images/thumb/6/65/The_Green_Healer_Figure.png/169px-The_Green_Healer_Figure.png",
+        fullName: "The Green Healer"
+    },
     5: {
         name: "Grey Mage", hp: 13415, atk: 13838, def: 10712, wis: 15865, agi: 16602,
         skills: [40],
