@@ -707,23 +707,22 @@ class BattleLogger {
             }
             return; //description event like battle start, etc
         }
+
+        if (BattleLogger.playMode == 'auto') {
+            var autoCallback = function() {
+                BattleLogger.getInstance().displayMajorEventAnimation(majorIndex + 1);
+            }
+        }
             
         if (SkillDatabase[this.majorEventLog[majorIndex].skillId].isAutoAttack) {
             // don't enlarge the fam, etc.
-            this.displayMinorEventAnimation(majorIndex, 0);
+            this.displayMinorEventAnimation(majorIndex, 0,{callback: autoCallback});
         }
         else {
-            var callback = null;
-            if (Skill.isAttackSkill(this.majorEventLog[majorIndex].skillId)) {
-                callback = function() {
-                    BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, 0);
-                }
+            var callback = function() {
+                BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
             }
-            else if (BattleLogger.playMode == 'auto') {
-                callback = function() {
-                    BattleLogger.getInstance().displayMajorEventAnimation(++majorIndex);
-                }
-            }
+
             this.displayProcSkill(executorId, this.majorEventLog[majorIndex].skillId, {callback: callback});
         }
     }
@@ -813,30 +812,24 @@ class BattleLogger {
 
     // a recursive function. I hate callback.
     // noAttackAnim: don't display attack anim anymore (for AoE)
-    displayMinorEventAnimation(majorIndex: number, minorIndex: number, noAttackAnim?: boolean) {
+    displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; callback?} = {}) {
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
-        if (BattleLogger.playMode == 'auto') {
-            if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
-                var nextIndex = +majorIndex + 1;
-                this.displayMajorEventAnimation(nextIndex);
-                return;
+        if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
+            if (option.callback) {
+                option.callback();
             }
-            else if (majorIndex >= this.majorEventLog.length) {
-                return;    
-            }
-        }
-        else {
-            if (!this.minorEventLog[majorIndex] || minorIndex >= this.minorEventLog[majorIndex].length) {
-                return;    
-            }
+            return;
         }
 
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
-        if (data.type == ENUM.MinorEventType.AFFLICTION || (!data.executorId && data.type != ENUM.MinorEventType.HP)) {
+        if (data.type == ENUM.MinorEventType.AFFLICTION || 
+            data.type == ENUM.MinorEventType.STATUS ||
+            (!data.executorId && data.type != ENUM.MinorEventType.HP)) 
+        {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
             }
             else return; // for now
@@ -851,7 +844,7 @@ class BattleLogger {
 
                 // display hp change
                 this.displayHPOnCanvas (targetInfo.stats.hp / targetInfo.originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
             }
             else return;
@@ -873,7 +866,7 @@ class BattleLogger {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 this.displayProcSkill(executor.id, data.skillId, {
                     callback: function() {
-                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                     },
                     durationRatio: 0.5
                 });
@@ -886,10 +879,16 @@ class BattleLogger {
         if (data.type == ENUM.MinorEventType.PROTECT) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 var protectedCard = CardManager.getInstance().getCardById(data.protect.protectedId);
-                var protectedGroup: any = this.getCardImageGroupOnCanvas(protectedCard);
+                var protectedGroup = this.getCardImageGroupOnCanvas(protectedCard);
+
+                var attackerCard = CardManager.getInstance().getCardById(data.protect.attackerId);
+                var attackerGroup = this.getCardImageGroupOnCanvas(attackerCard);
 
                 var x_protected = protectedGroup.rbox().x;
                 var y_protected = protectedGroup.rbox().y;
+
+                var x_attacker = attackerGroup.rbox().x;
+                var y_attacker = attackerGroup.rbox().y;
 
                 //display the skill text, but not proc effect
                 this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
@@ -900,22 +899,65 @@ class BattleLogger {
                 }
 
                 var moveTime = 0.5;
-                var waitTime = 0.6; // time to wait before going back to position after protect
                 var moveBackTime = 0.5;
-                if (data.protect.counter) {
-                    if (Skill.isIndirectSkill(data.protect.counteredSkillId)) {
-                        moveTime = 0.1;
-                        waitTime = 0.1;
-                        moveBackTime = 0.1;
-                    }
+                if (data.protect.counter && Skill.isIndirectSkill(data.protect.counteredSkillId)) {
+                    moveTime = 0.1;
+                    moveBackTime = 0.1;
                 }
+
+                var nextData = this.minorEventLog[majorIndex][minorIndex + 1];
+                var explosion = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'explosion');
+
+                var nextField = this.getFieldAtMinorIndex(majorIndex, minorIndex + 1);
+                var nextTargetInfo = nextField["player" + executor.getPlayerId() + "Cards"][executor.formationColumn];
+                var nextStats = nextTargetInfo.stats;
+                var nextOriginalStats = nextTargetInfo.originalStats;
                 
+                // animation for the protect. Also use the next MinorEvent's information.
+                // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
+                // if the protect fam is dead or if there's no counter
+                //
+                // e.g. if counter: [x procs y to protect z] -> [x receives n damage] -> [x counters w, w lost k damage]
+                //      if not counter or dead, third event becomes [something do something]
                 executorGroup.animate({ duration: moveTime + 's' })
-                    .move(x_protected - x1, y_protected - y1 + y_offset)
+                    .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
                     .after(function () {
-                        this.animate({ duration: moveBackTime + 's', delay: waitTime + 's'})
-                            .move(0, 0)
-                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
+                            explosion.animate({ duration: '0.2s' }).opacity(1)
+                                .after(function() {
+                                    explosion.opacity(0);
+                                    // display hp change
+                                    BattleLogger.getInstance()
+                                        .displayHPOnCanvas (nextStats.hp / nextOriginalStats.hp * 100, executor.getPlayerId(), executor.formationColumn);
+                                    
+                                    executorGroup.animate({ duration: moveBackTime + 's'})
+                                        .move(0, 0)
+                                        .after(function(){                                    
+                                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                        });
+                                });                            
+                        }
+                        else { // receive damage physically - need to move the attacker also
+                            SVG.get('p' + attackerCard.getPlayerId() + 'group').front();
+                            attackerGroup.animate({ duration: '0.5s' })
+                                .move(executorGroup.rbox().x - x_attacker, executorGroup.rbox().y - y_attacker)
+                                .after(function () {
+                                    explosion.opacity(1);           
+                                            
+                                    // display hp change
+                                    BattleLogger.getInstance()
+                                        .displayHPOnCanvas (nextStats.hp / nextOriginalStats.hp * 100, executor.getPlayerId(), executor.formationColumn);
+
+                                    attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
+
+                                    executorGroup.animate({ duration: moveBackTime + 's'})
+                                        .move(0, 0)
+                                        .after(function(){
+                                            explosion.opacity(0);                               
+                                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                        });
+                                });    
+                        }
                     });
 
                 return;
@@ -937,8 +979,7 @@ class BattleLogger {
         var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
 
         if (Skill.isAoeSkill(data.skillId)) {
-            var draw = SVG.get('mainSvg');
-            var exploSet = draw.set();
+            var exploSet = SVG.get('mainSvg').set();
 
             // add targets to the set
             var aoeTargets = this.getTargetsInMajorEvent(majorIndex);
@@ -947,17 +988,21 @@ class BattleLogger {
                 exploSet.add(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
             }
 
-            if (noAttackAnim) {
+            if (option.noAttackAnim) {
                 // display hp change
                 this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
             else {
                 var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                var exploDuration = 0.4;
                 if (Skill.isWisAutoAttack(data.skillId)) {
-                    spellCircle.opacity(1);
+                    spellCircle.animate({duration: '0.2s'}).opacity(1);
+                    exploDuration = 0.8;
                 }
-                exploSet.animate({ duration: '0.4s' })
+                option.noAttackAnim = true;
+
+                exploSet.animate({ duration: exploDuration + 's' })
                          .opacity(1)
                          .after(function() {
                             exploSet.opacity(0);
@@ -965,7 +1010,8 @@ class BattleLogger {
                             // display hp change
                             BattleLogger.getInstance()
                                 .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, true);
+                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1,
+                                option);
                          });
             }
         }
@@ -977,7 +1023,7 @@ class BattleLogger {
                         // display hp change
                         BattleLogger.getInstance()
                             .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
-                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                        BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                      });
         }
         else {
@@ -994,7 +1040,7 @@ class BattleLogger {
                         .move(0, 0)
                         .after(function () {
                             explosion.opacity(0);
-                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, noAttackAnim);
+                            BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                         });
                 });
         }
@@ -1061,6 +1107,7 @@ interface MinorEvent {
         protectedId: number;
         counter?: boolean;
         counteredSkillId: number;
+        attackerId: number
     };
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description?: string; // description of the event in plain text

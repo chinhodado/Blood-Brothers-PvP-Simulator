@@ -326,11 +326,13 @@ class ProtectSkillLogic extends SkillLogic {
             type: ENUM.MinorEventType.PROTECT,
             protect: {
                 protectedId: data.targetCard.id,
-                counteredSkillId: data.attackSkill.id
+                counteredSkillId: data.attackSkill.id,
+                attackerId: data.attacker.id
             },
             description: desc,
             skillId: protectSkill.id
         });
+
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
@@ -358,7 +360,8 @@ class ProtectCounterSkillLogic extends SkillLogic {
             protect: {
                 protectedId: data.targetCard.id,
                 counter: true,
-                counteredSkillId: data.attackSkill.id
+                counteredSkillId: data.attackSkill.id,
+                attackerId: data.attacker.id
             },
             description: desc,
             skillId: protectSkill.id
