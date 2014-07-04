@@ -4,4 +4,4 @@ node_js:
 install:
   - "npm install -g typescript"
 script:
-  - "tsc ./src/battleModel.ts --out compiled.js"
+  - "tsc ./src/battleModel.ts --out compiled.js --removeComments --target ES5"

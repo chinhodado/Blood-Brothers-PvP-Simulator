@@ -83,7 +83,7 @@ function getDamageCalculatedByWIS(attacker: Card, defender: Card): number {
 
 function getHealAmount(executor: Card): number {
     var HEAL_FACTOR: number = 0.3;
-    var amount = executor.getWIS() + HEAL_FACTOR;
+    var amount = executor.getWIS() * HEAL_FACTOR;
 
     amount = Math.floor(amount * getRandomArbitary(0.9, 1.1));
 

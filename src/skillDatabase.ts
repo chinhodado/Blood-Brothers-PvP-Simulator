@@ -48,6 +48,20 @@ var SkillDatabase = {
         skillRange: 7, maxProbability: 30, ward: "BREATH"
     },
 
+    26 : {
+        name: "Greater Heal", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 2, maxProbability: 30,
+        description: "Restore a fixed amount of HP to adjacent familiars."
+    },
+
+    27 : {
+        name: "Greater Healing Sage", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 2, maxProbability: 30,
+        description: "Restore a fixed amount of HP to adjacent familiars."
+    },
+
     33 : {
         name: "Whirlwind", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 2.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
@@ -60,6 +74,20 @@ var SkillDatabase = {
         skillFuncArg1: 4, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 5, maxProbability: 30, ward: "PHYSICAL", contact: 1,
         description: "Deal massive damage to one foe."
+    },
+
+    38 : {
+        name: "Heal", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 1, maxProbability: 30,
+        description: "Restore a fixed amount of HP to an adjacent familiar."
+    },
+
+    39 : {
+        name: "Healing Sage", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 1, maxProbability: 30,
+        description: "Restore a fixed amount of HP to an adjacent familiar."
     },
 
     40 : {
@@ -260,6 +288,13 @@ var SkillDatabase = {
 	    description: "Deal heavy damage to four foes." 
 	},
 
+    145 : {
+	    name: "Mass Greater Heal 2", skillType: 2, skillFunc: 18, skillCalcType: 4,  
+	    skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
+        skillRange: 4, maxProbability: 30,
+	    description: "Restore a fixed amount of HP to all party members." 
+	},
+
     150 : {
 	    name: "Grin and Bear It", skillType: 3, skillFunc: 20, skillCalcType: 0,  
 	    skillFuncArg1: 0.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,  
@@ -322,6 +357,13 @@ var SkillDatabase = {
         name: "Spark Shot", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 0.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    197 : {
+        name: "Revitalize", skillType: 2, skillFunc: 18, skillCalcType: 4, 
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 4, maxProbability: 30,
+        description: "Restore HP to all party members."
     },
 
     199 : {
@@ -571,6 +613,13 @@ var SkillDatabase = {
         skillFuncArg1: 1, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
         skillRange: 20, maxProbability: 30, ward: "MAGICAL",
         description: "Deal AGI-based damage to five random foes, regardless of position."
+    },
+
+    287: {
+        name: "Staff of Knowledge", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 1.3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 3, maxProbability: 70,
+        description: "High chance to restore HP to self and adjacent familiars."
     },
 
     288: {
@@ -999,7 +1048,15 @@ var SkillDatabase = {
     425: {
         name: "Lese Majesty", skillType: 5, skillFunc: 14, skillCalcType: 1,
         skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
-        skillRange: 4, maxProbability: 50, ward: "PHYSICAL"
+        skillRange: 4, maxProbability: 50, ward: "PHYSICAL",
+        description: "Take damage in place of any ally and unleash a heavy counterattack."
+    },
+
+    426: {
+        name: "Imperial Gift", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 21, maxProbability: 50,
+        description: "Restore HP to self."
     },
 
     427 : {

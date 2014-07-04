@@ -106,6 +106,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20140520122105/bloodbrothersgame/images/thumb/d/da/Arcanan_Chariot_II_Figure.png/40px-Arcanan_Chariot_II_Figure.png",
         fullName: "Arcanan Chariot II"
     },
+    11239: {
+        name: "Arcanan Emperor", hp: 18577, atk: 17916, def: 17786, wis: 10809, agi: 14590,
+        skills: [425, 426],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140417053801/bloodbrothersgame/images/thumb/0/02/Arcanan_Emperor_II_Figure.png/40px-Arcanan_Emperor_II_Figure.webp",
+        fullName: "Arcanan Emperor II"
+    },
     10600: {
         name: "Archduke Ose", hp: 16995, atk: 14395, def: 15023, wis: 14850, agi: 11990,
         skills: [154],
@@ -526,6 +532,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20140221092259/bloodbrothersgame/images/thumb/3/3b/Kekro%2C_Demiwyrm_Magus_II_Figure.png/60px-Kekro%2C_Demiwyrm_Magus_II_Figure.png",
         fullName: "Kekro, Demiwyrm Magus II"
     },
+    10767: {
+        name: "Kelaino", hp: 12538, atk: 12707, def: 10490, wis: 15047, agi: 14999,
+        skills: [197],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130609105750/bloodbrothersgame/images/thumb/0/05/Kelaino%2C_the_Dark_Cloud_II_Figure.png/40px-Kelaino%2C_the_Dark_Cloud_II_Figure.webp",
+        fullName: "Kelaino, the Dark Cloud II"
+    },
     10911: {
         name: "Kyteler", hp: 11721, atk: 12524, def: 9892, wis: 17254, agi: 16416,
         skills: [258],
@@ -841,6 +853,18 @@ var famDatabase = {
         autoAttack: 10007,
         imageLink: "http://img3.wikia.nocookie.net/__cb20140402124523/bloodbrothersgame/images/thumb/9/9e/Sigiled_Skeleton_Axeman_II_Figure.png/40px-Sigiled_Skeleton_Axeman_II_Figure.png",
         fullName: "Sigiled Skeleton Axeman II"
+    },
+    10566: {
+        name: "Bedwyr", hp: 12235, atk: 11318, def: 12221, wis: 13510, agi: 10598,
+        skills: [145],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130212204233/bloodbrothersgame/images/thumb/2/21/Sir_Bedwyr_of_the_Garden_II_Figure.png/40px-Sir_Bedwyr_of_the_Garden_II_Figure.webp",
+        fullName: "Sir Bedwyr of the Garden II"
+    },
+    10941: {
+        name: "Soura", hp: 12012, atk: 12261, def: 7917, wis: 16930, agi: 17667,
+        skills: [287, 291],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20131207210036/bloodbrothersgame/images/thumb/f/f1/Soura%2C_Inferno_Shaman_II_Figure.png/40px-Soura%2C_Inferno_Shaman_II_Figure.webp",
+        fullName: "Soura, Inferno Shaman II"
     },
     10850: {
         name: "Stalo", hp: 16269, atk: 16280, def: 16681, wis: 12792, agi: 13496,
