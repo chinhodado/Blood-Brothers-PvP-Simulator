@@ -15,8 +15,6 @@ class Skill {
     ward: string;
     isAutoAttack: boolean;
 
-    contact: number;
-
     range : BaseRange;
     logic: SkillLogic;
 
@@ -38,13 +36,6 @@ class Skill {
         this.maxProbability = skillData.maxProbability;
         this.ward = skillData.ward;
         this.isAutoAttack = skillData.isAutoAttack;
-
-        if (typeof skillData.contact === undefined) {
-            this.contact = -1;
-        }
-        else {
-            this.contact = skillData.contact;
-        }
 
         this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);
         
@@ -69,10 +60,6 @@ class Skill {
     static isIndirectSkill(skillId: number): boolean {
         var isIndirect = true;
         var skillInfo = SkillDatabase[skillId];
-
-        if (skillInfo.contact == 1) {
-            isIndirect = false;
-        }
 
         if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
             skillInfo.skillFunc == ENUM.SkillFunc.COUNTER ||
@@ -149,8 +136,6 @@ class Skill {
             skillRange: this.skillRange,
             maxProbability: this.maxProbability,
             ward: this.ward,
-
-            contact: this.contact
         }
     }
     

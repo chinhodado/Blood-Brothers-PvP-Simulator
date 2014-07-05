@@ -20,6 +20,7 @@ class BattleLogger {
         2: []
     };
 
+    static SHOW_FORMATION_LINE = false;
     static IMAGE_WIDTH = 70;
     IMAGE_WIDTH_BIG = 120;
 
@@ -517,17 +518,19 @@ class BattleLogger {
             }
             
             // now draw lines and bullets
-            for (var i = 0; i < 5; i++) {
-                var diameter = 10;
-                var dot = draw.circle(diameter)
-                              .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
-                groupPlayer.add(dot);
-            }
+            if (BattleLogger.SHOW_FORMATION_LINE) {
+                for (var i = 0; i < 5; i++) {
+                    var diameter = 10;
+                    var dot = draw.circle(diameter)
+                                  .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
+                    groupPlayer.add(dot);
+                }
 
-            for (var i = 0; i < 4; i++) {
-                var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
-                               .stroke({ width: 1 });
-                groupPlayer.add(line);
+                for (var i = 0; i < 4; i++) {
+                    var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
+                                   .stroke({ width: 1 });
+                    groupPlayer.add(line);
+                }
             }
             
             // grab the image links of the curent player's fam
@@ -554,6 +557,12 @@ class BattleLogger {
                         this.size(BattleLogger.IMAGE_WIDTH);
                     });
 
+                var damageText = draw.text('0').font({ size: 22, family: "Cooper Black" })
+                                     .attr({fill:'#fff', stroke: '#000', 'stroke-width': '2px'})
+                                     .center(coordArray[i][0], coordArray[i][1])
+                                     .attr('id', 'p' + player + 'f' + i + 'damageText')
+                                     .opacity(0);
+
                 var explosion = draw.image('img/explosion.png', 70, 70)
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
@@ -572,6 +581,7 @@ class BattleLogger {
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
                 var group = draw.group();                
                 group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
+                group.add(damageText);
                 group.add(explosion);
                 group.add(spellCircle);
                 group.add(procSpark);
@@ -650,6 +660,25 @@ class BattleLogger {
         this.displayDeadAliveFamiliar(player, index, percent <= 0);
     }
     
+    displayDamageTextAndHP(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
+        var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
+        var targetInfo = field["player" + playerId + "Cards"][famIndex];
+        var stats = targetInfo.stats;
+        var originalStats = targetInfo.originalStats;
+
+        var center_x = this.coordArray[playerId][famIndex][0];
+        var center_y = this.coordArray[playerId][famIndex][1];
+
+        var amount = this.minorEventLog[majorIndex][minorIndex].amount;
+
+        var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
+        damageText.text(Math.abs(amount) + "");
+        damageText.center(center_x, center_y).opacity(1).front();
+        damageText.animate({duration: '1s'}).opacity(0);
+
+        this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, playerId, famIndex);
+    }
+
     displayDeadAliveFamiliar(player, fam, isDead) {
         var image : any = SVG.get('p' + player + 'f' + fam + 'image');
         var filter = SVG.get('darkenFilter');
@@ -766,24 +795,10 @@ class BattleLogger {
                        });
 
             group.animate({ duration: D1 + 's' })
-                .transform({
-                    a: scaleFactor,
-                    b: 0,
-                    c: 0,
-                    d: scaleFactor,
-                    e: cx - scaleFactor * cx,
-                    f: cy - scaleFactor * cy
-                })
+                .transform({a: scaleFactor, b: 0, c: 0, d: scaleFactor, e: cx - scaleFactor * cx, f: cy - scaleFactor * cy})
                 .after(function () {
                     this.animate({ duration: D1 + 's', delay: D05 + 's' })
-                        .transform({
-                            a: 1,
-                            b: 0,
-                            c: 0,
-                            d: 1,
-                            e: cx - 1 * cx,
-                            f: cy - 1 * cy
-                        })
+                        .transform({a: 1, b: 0, c: 0, d: 1, e: cx - 1 * cx, f: cy - 1 * cy})
                         .after(function(){
                             procEffect.opacity(0);
                             if (additionalParam.callback) additionalParam.callback();
@@ -838,12 +853,9 @@ class BattleLogger {
         if (data.type == ENUM.MinorEventType.HP && !data.executorId) {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 var target = CardManager.getInstance().getCardById(data.targetId);
-                var targetGroup: any = this.getCardImageGroupOnCanvas(target);
-                var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
-                var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
 
                 // display hp change
-                this.displayHPOnCanvas (targetInfo.stats.hp / targetInfo.originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                this.displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
             }
@@ -908,11 +920,6 @@ class BattleLogger {
                 var nextData = this.minorEventLog[majorIndex][minorIndex + 1];
                 var explosion = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'explosion');
 
-                var nextField = this.getFieldAtMinorIndex(majorIndex, minorIndex + 1);
-                var nextTargetInfo = nextField["player" + executor.getPlayerId() + "Cards"][executor.formationColumn];
-                var nextStats = nextTargetInfo.stats;
-                var nextOriginalStats = nextTargetInfo.originalStats;
-                
                 // animation for the protect. Also use the next MinorEvent's information.
                 // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
                 // if the protect fam is dead or if there's no counter
@@ -928,7 +935,7 @@ class BattleLogger {
                                     explosion.opacity(0);
                                     // display hp change
                                     BattleLogger.getInstance()
-                                        .displayHPOnCanvas (nextStats.hp / nextOriginalStats.hp * 100, executor.getPlayerId(), executor.formationColumn);
+                                        .displayDamageTextAndHP(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
                                     
                                     executorGroup.animate({ duration: moveBackTime + 's'})
                                         .move(0, 0)
@@ -946,7 +953,7 @@ class BattleLogger {
                                             
                                     // display hp change
                                     BattleLogger.getInstance()
-                                        .displayHPOnCanvas (nextStats.hp / nextOriginalStats.hp * 100, executor.getPlayerId(), executor.formationColumn);
+                                        .displayDamageTextAndHP(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
 
                                     attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
 
@@ -971,11 +978,6 @@ class BattleLogger {
         var x = targetGroup.rbox().x;
         var y = targetGroup.rbox().y;
 
-        var field = this.getFieldAtMinorIndex(majorIndex, minorIndex);
-        var targetInfo = field["player" + target.getPlayerId() + "Cards"][target.formationColumn];
-        var stats = targetInfo.stats;
-        var originalStats = targetInfo.originalStats;
-
         var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
 
         if (Skill.isAoeSkill(data.skillId)) {
@@ -989,8 +991,7 @@ class BattleLogger {
             }
 
             if (option.noAttackAnim) {
-                // display hp change
-                this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                this.displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
             else {
@@ -1009,7 +1010,7 @@ class BattleLogger {
                             spellCircle.opacity(0);
                             // display hp change
                             BattleLogger.getInstance()
-                                .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                                .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                             BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1,
                                 option);
                          });
@@ -1022,7 +1023,7 @@ class BattleLogger {
                         explosion.opacity(0);
                         // display hp change
                         BattleLogger.getInstance()
-                            .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                            .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                         BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                      });
         }
@@ -1034,7 +1035,7 @@ class BattleLogger {
                     explosion.opacity(1);
                     // display hp change
                     BattleLogger.getInstance()
-                        .displayHPOnCanvas (stats.hp / originalStats.hp * 100, target.getPlayerId(), target.formationColumn);
+                        .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                     this.animate({ duration: '0.5s'})
                         .move(0, 0)

@@ -75,6 +75,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130325180458/bloodbrothersgame/images/thumb/5/52/Andorra_the_Indomitable_II_Figure.png/40px-Andorra_the_Indomitable_II_Figure.png",
         fullName: "Andorra the Indomitable II"
     },
+    10999: {
+        name: "Anne", hp: 12232, atk: 13782, def: 12342, wis: 13510, agi: 15599,
+        skills: [250],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130919144950/bloodbrothersgame/images/thumb/3/3d/Anne%2C_the_Whirlwind_II_Figure.png/40px-Anne%2C_the_Whirlwind_II_Figure.webp",
+        fullName: "Anne, the Whirlwind II"
+    },
     11245: {
         name: "Anneberg", hp: 19097, atk: 18241, def: 17038, wis: 8794, agi: 16518,
         skills: [489, 490],
@@ -124,6 +130,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130222034947/bloodbrothersgame/images/thumb/a/aa/Artemisia_Swiftfoot_II_Figure.png/40px-Artemisia_Swiftfoot_II_Figure.png",
         fullName: "Artemisia Swiftfoot II"
     },
+    10900: {
+        name: "Aurboda", hp: 11903, atk: 15348, def: 11773, wis: 18468, agi: 11015,
+        skills: [261],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131009141347/bloodbrothersgame/images/thumb/1/15/Aurboda%2C_the_Great_Mother_II_Figure.png/40px-Aurboda%2C_the_Great_Mother_II_Figure.webp",
+        fullName: "Aurboda, the Great Mother II"
+    },
     11168: {
         name: "Badalisc", hp: 14092, atk: 16107, def: 11882, wis: 11297, agi: 15218,
         skills: [315],
@@ -147,6 +159,30 @@ var famDatabase = {
         skills: [256],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131002022744/bloodbrothersgame/images/thumb/4/4d/Beheading_Scarecrow_II_Figure.png/40px-Beheading_Scarecrow_II_Figure.png",
         fullName: "Beheading Scarecrow II"
+    },
+    10659: {
+        name: "Behemoth", hp: 12442, atk: 14755, def: 13269, wis: 12380, agi: 12999,
+        skills: [186],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130514143810/bloodbrothersgame/images/thumb/3/30/Behemoth%2C_Thunder_Beast_II_Figure.png/40px-Behemoth%2C_Thunder_Beast_II_Figure.webp",
+        fullName: "Behemoth, Thunder Beast II"
+    },
+    10684: {
+        name: "Biast", hp: 13879, atk: 12655, def: 10163, wis: 13611, agi: 9798,
+        skills: [163],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130402220653/bloodbrothersgame/images/thumb/2/29/Biast_II_Figure.png/40px-Biast_II_Figure.webp",
+        fullName: "Biast II"
+    },
+    10787: {
+        name: "Black Knight", hp: 12647, atk: 16095, def: 11623, wis: 11573, agi: 13841,
+        skills: [211],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130714135313/bloodbrothersgame/images/thumb/9/9e/Black_Knight%2C_Soul_Hunter_II_Figure.png/40px-Black_Knight%2C_Soul_Hunter_II_Figure.webp",
+        fullName: "Black Knight, Soul Hunter II"
+    },
+    10824: {
+        name: "Bolus", hp: 12086, atk: 16889, def: 12427, wis: 11610, agi: 12832,
+        skills: [152],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130816162357/bloodbrothersgame/images/thumb/a/a0/Bolus%2C_the_Blue_Bolt_II_Figure.png/40px-Bolus%2C_the_Blue_Bolt_II_Figure.webp",
+        fullName: "Bolus, the Blue Bolt II"
     },
     10977: {
         name: "Boudica", hp: 9967, atk: 11914, def: 8918, wis: 13110, agi: 12014,
@@ -191,6 +227,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20140110084814/bloodbrothersgame/images/thumb/a/a5/Cegila%2C_Dragonian_Incantator_II_Figure.png/40px-Cegila%2C_Dragonian_Incantator_II_Figure.png",
         fullName: "Cegila, Dragonian Incantator II"
     },
+    10673: {
+        name: "Cernunnos", hp: 16446, atk: 15351, def: 13761, wis: 13181, agi: 14330,
+        skills: [177],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130422194540/bloodbrothersgame/images/thumb/5/5b/Cernunnos_II_Figure.png/40px-Cernunnos_II_Figure.webp",
+        fullName: "Cernunnos II"
+    },
     10409: {
         name: "Magma Giant", hp: 12832, atk: 12380, def: 13097, wis: 11477, agi: 11928,
         skills: [123],
@@ -202,6 +244,12 @@ var famDatabase = {
         skills: [238],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130921071449/bloodbrothersgame/images/thumb/8/83/Chiyome%2C_the_Kamaitachi_II_Figure.png/40px-Chiyome%2C_the_Kamaitachi_II_Figure.png",
         fullName: "Chiyome, the Kamaitachi II"
+    },
+    10303: {
+        name: "Crystal Gillant", hp: 11832, atk: 10896, def: 10439, wis: 10439, agi: 13317,
+        skills: [11],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130106234145/bloodbrothersgame/images/thumb/6/60/Crystal_Gillant_II_Figure.png/40px-Crystal_Gillant_II_Figure.webp",
+        fullName: "Crystal Gillant II"
     },
     10712: {
         name: "Cuelebre", hp: 13702, atk: 16096, def: 12954, wis: 11134, agi: 13572,
@@ -227,6 +275,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130815132429/bloodbrothersgame/images/thumb/7/73/Deborah%2C_Knight_Immaculate_II_Figure.png/40px-Deborah%2C_Knight_Immaculate_II_Figure.png",
         fullName: "Deborah, Knight Immaculate II"
     },
+    11225: {
+        name: "Dein", hp: 14000, atk: 16768, def: 11098, wis: 11683, agi: 14417,
+        skills: [424],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140417053801/bloodbrothersgame/images/thumb/8/8e/Dein%2C_Silent_Bomber_II_Figure.png/40px-Dein%2C_Silent_Bomber_II_Figure.webp",
+        fullName: "Dein, Silent Bomber II"
+    },
     10722: {
         name: "Delphyne", hp: 11990, atk: 14601, def: 11882, wis: 18858, agi: 11080,
         skills: [288],
@@ -251,6 +305,19 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130107210324/bloodbrothersgame/images/thumb/6/68/Doppeladler_II_Figure.png/60px-Doppeladler_II_Figure.png",
         fullName: "Doppeladler II"
     },
+    10691: {
+        name: "Dors", hp: 15435, atk: 9433, def: 13268, wis: 16464, agi: 13019,
+        skills: [446],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140428113705/bloodbrothersgame/images/thumb/1/1d/Dors%2C_Demiwyrm_Warrior_II_Figure.png/40px-Dors%2C_Demiwyrm_Warrior_II_Figure.webp",
+        fullName: "Dors, Demiwyrm Warrior II"
+    },
+    11303: {
+        name: "Dunkleosteus", hp: 14000, atk: 8394, def: 13110, wis: 16620, agi: 15804,
+        skills: [477],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140606074955/bloodbrothersgame/images/thumb/2/22/Dunkleosteus%2C_the_Rendmaw_II_Figure.png/40px-Dunkleosteus%2C_the_Rendmaw_II_Figure.webp",
+        fullName: "Dunkleosteus, the Rendmaw II"
+    },
     10272: {
         name: "Cat Sidhe", hp: 9614, atk: 8322, def: 11959, wis: 11243, agi: 10056,
         skills: [18],
@@ -270,11 +337,42 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20140508115333/bloodbrothersgame/images/thumb/0/0a/Empusa%2C_the_Death_Scythe_Figure.png/60px-Empusa%2C_the_Death_Scythe_Figure.png",
         fullName: "Empusa, the Death Scythe"
     },
+    10317: {
+        name: "Eton", hp: 10904, atk: 10490, def: 10490, wis: 12952, agi: 12952,
+        skills: [94],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130106232503/bloodbrothersgame/images/thumb/7/74/Eton%2C_Eater_of_Darkness_II_Figure.png/40px-Eton%2C_Eater_of_Darkness_II_Figure.webp",
+        fullName: "Eton, Eater of Darkness II"
+    },
+    10708: {
+        name: "Ettin", hp: 16063, atk: 14482, def: 14677, wis: 9498, agi: 13702,
+        skills: [304],
+        autoAttack: 10006,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131129144223/bloodbrothersgame/images/thumb/1/1f/Ettin_II_Figure.png/40px-Ettin_II_Figure.webp",
+        fullName: "Ettin II"
+    },
+    10452: {
+        name: "Evil Eye", hp: 10770, atk: 10394, def: 10490, wis: 12221, agi: 11721,
+        skills: [120],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130205203018/bloodbrothersgame/images/thumb/b/bf/Evil_Eye_II_Figure.png/40px-Evil_Eye_II_Figure.webp",
+        fullName: "Evil Eye II"
+    },
     10674: {
         name: "Fenrir", hp: 15099, atk: 16865, def: 22498, wis: 13008, agi: 11167,
         skills: [154],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130420124059/bloodbrothersgame/images/thumb/d/dd/Fenrir_II_Figure.png/60px-Fenrir_II_Figure.png",
         fullName: "Fenrir II"
+    },
+    10496: {
+        name: "Bat Demon", hp: 12538, atk: 14182, def: 12648, wis: 11928, agi: 12720,
+        skills: [131],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130201171143/bloodbrothersgame/images/thumb/0/0e/Fiendish_Bat_Demon_II_Figure.png/40px-Fiendish_Bat_Demon_II_Figure.webp",
+        fullName: "Fiendish Bat Demon II"
+    },
+    10849: {
+        name: "Fimbul", hp: 12086, atk: 13489, def: 12562, wis: 16743, agi: 12597,
+        skills: [242],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130917112620/bloodbrothersgame/images/thumb/4/4a/Fimbul_Frostclad_II_Figure.png/40px-Fimbul_Frostclad_II_Figure.webp",
+        fullName: "Fimbul Frostclad II"
     },
     10470: {
         name: "Flame Dragon", hp: 14601, atk: 14449, def: 13756, wis: 15153, agi: 13940,
@@ -324,6 +422,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130122044308/bloodbrothersgame/images/thumb/f/fb/Gathgoic_the_Other_II_Figure.png/60px-Gathgoic_the_Other_II_Figure.png",
         fullName: "Gathgoic the Other II"
     },
+    10742: {
+        name: "Gevi", hp: 15565, atk: 15424, def: 18447, wis: 13593, agi: 11015,
+        skills: [180],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130508213020/bloodbrothersgame/images/thumb/5/55/Gevi%2C_Crystal_Troll_Master_II_Figure.png/40px-Gevi%2C_Crystal_Troll_Master_II_Figure.webp",
+        fullName: "Gevi, Crystal Troll Master II"
+    },
     10088: {
         name: "Ghislandi", hp: 12324, atk: 13551, def: 13525, wis: 12212, agi: 12187,
         skills: [17],
@@ -353,6 +457,12 @@ var famDatabase = {
         skills: [167],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130408193159/bloodbrothersgame/images/thumb/5/50/Gorlin_Gold_Helm_II_Figure.png/60px-Gorlin_Gold_Helm_II_Figure.png",
         fullName: "Gorlin Gold Helm II"
+    },
+    10720: {
+        name: "Goviel", hp: 14135, atk: 14547, def: 13604, wis: 14926, agi: 16616,
+        skills: [204],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130613194848/bloodbrothersgame/images/thumb/9/90/Goviel%2C_Hail_Knight_II_Figure.png/40px-Goviel%2C_Hail_Knight_II_Figure.webp",
+        fullName: "Goviel, Hail Knight II"
     },
     10586: {
         name: "Gregoire", hp: 11708, atk: 12121, def: 10318, wis: 14854, agi: 10159,
@@ -384,11 +494,35 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20130222030204/bloodbrothersgame/images/thumb/5/57/Griffin_Mount_II_Figure.png/60px-Griffin_Mount_II_Figure.png",
         fullName: "Griffin Mount II"
     },
+    361: {
+        name: "Griflet", hp: 11520, atk: 12970, def: 11430, wis: 10110, agi: 13780,
+        skills: [10],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130125001834/bloodbrothersgame/images/thumb/b/b1/Griflet%2C_Falcon_Knight_Figure.png/40px-Griflet%2C_Falcon_Knight_Figure.webp",
+        fullName: "Griflet, Falcon Knight"
+    },
+    10276: {
+        name: "Grim", hp: 11001, atk: 13047, def: 8888, wis: 13026, agi: 11060,
+        skills: [109],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130301090046/bloodbrothersgame/images/thumb/7/7f/Grim_Executioner_II_Figure.png/40px-Grim_Executioner_II_Figure.webp",
+        fullName: "Grim Executioner II"
+    },
+    10925: {
+        name: "Grimoire", hp: 15234, atk: 18606, def: 10439, wis: 8064, agi: 15452,
+        skills: [134],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20131115130412/bloodbrothersgame/images/thumb/9/9b/Grimoire_Beast_II_Figure.png/40px-Grimoire_Beast_II_Figure.webp",
+        fullName: "Grimoire Beast II"
+    },
     21285: {
         name: "Guillaume", hp: 21515, atk: 20887, def: 16308, wis: 12948, agi: 18505,
         skills: [466, 467],
         imageLink: "http://img1.wikia.nocookie.net/__cb20140520122326/bloodbrothersgame/images/thumb/2/22/Guillaume%2C_Fanatic_Figure.png/60px-Guillaume%2C_Fanatic_Figure.png",
         fullName: "Guillaume, Fanatic"
+    },
+    10898: {
+        name: "Hamad", hp: 10294, atk: 10367, def: 9881, wis: 16416, agi: 10951,
+        skills: [265],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131010165301/bloodbrothersgame/images/thumb/f/fd/Hamad%2C_the_Sweeping_Wind_II_Figure.png/40px-Hamad%2C_the_Sweeping_Wind_II_Figure.webp",
+        fullName: "Hamad, the Sweeping Wind II"
     },
     10861: {
         name: "Haokah", hp: 13476, atk: 13928, def: 11111, wis: 15706, agi: 13245,
@@ -420,6 +554,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130819222302/bloodbrothersgame/images/thumb/a/a4/Hercinia_the_Blest_II_Figure.png/40px-Hercinia_the_Blest_II_Figure.png",
         fullName: "Hercinia the Blest II"
     },
+    11202: {
+        name: "Hereward", hp: 14927, atk: 14000, def: 12524, wis: 10951, agi: 15498,
+        skills: [391],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140313080213/bloodbrothersgame/images/thumb/0/05/Hereward%2C_Storm_of_Arrows_II_Figure.png/40px-Hereward%2C_Storm_of_Arrows_II_Figure.webp",
+        fullName: "Hereward, Storm of Arrows II"
+    },
     11073: {
         name: "Hippocamp", hp: 14514, atk: 16486, def: 14926, wis: 19855, agi: 15002,
         skills: [360, 167],
@@ -445,11 +585,35 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130927185735/bloodbrothersgame/images/thumb/c/cd/Hraesvelg%2C_Corpse_Feaster_II_Figure.png/40px-Hraesvelg%2C_Corpse_Feaster_II_Figure.png",
         fullName: "Hraesvelg, Corpse Feaster II"
     },
+    10715: {
+        name: "Hrimthurs", hp: 13414, atk: 15572, def: 16144, wis: 9783, agi: 10600,
+        skills: [205],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130613194728/bloodbrothersgame/images/thumb/e/e9/Hrimthurs_the_Blizzard_II_Figure.png/40px-Hrimthurs_the_Blizzard_II_Figure.webp",
+        fullName: "Hrimthurs the Blizzard II"
+    },
     10970: {
         name: "Hypnos", hp: 16291, atk:	17277, def:	15446, wis:	12488, agi:	17992,
         skills: [274],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131101130655/bloodbrothersgame/images/thumb/3/3b/Hypnos%2C_Lord_of_Dreams_II_Figure.png/40px-Hypnos%2C_Lord_of_Dreams_II_Figure.png",
         fullName: "Hypnos, Lord of Dreams II"
+    },
+    10560: {
+        name: "Hippogriff", hp: 9978, atk: 11063, def: 11942, wis: 9295, agi: 10074,
+        skills: [133],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130111170016/bloodbrothersgame/images/thumb/3/3e/Hippogriff_of_Rites_II_Figure.png/40px-Hippogriff_of_Rites_II_Figure.webp",
+        fullName: "Hippogriff of Rites II"
+    },
+    10688: {
+        name: "Ignis", hp: 11022, atk: 11312, def: 10818, wis: 13460, agi: 12859,
+        skills: [164],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130402220709/bloodbrothersgame/images/thumb/2/2f/Ignis_Fatuus_II_Figure.png/40px-Ignis_Fatuus_II_Figure.webp",
+        fullName: "Ignis Fatuus II"
+    },
+    10706: {
+        name: "Ijiraq", hp: 13929, atk: 14536, def: 9791, wis: 17797, agi: 12012,
+        skills: [168],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130412195618/bloodbrothersgame/images/thumb/1/1b/Ijiraq%2C_the_Glacier_II_Figure.png/40px-Ijiraq%2C_the_Glacier_II_Figure.webp",
+        fullName: "Ijiraq, the Glacier II"
     },
     21104: {
         name: "Impregnable Iron Golem", hp: 23155, atk:	19935, def:	21027, wis:	8440, agi: 17505,
@@ -469,11 +633,23 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130106234752/bloodbrothersgame/images/thumb/2/2b/Infested_Peryton_II_Figure.png/40px-Infested_Peryton_II_Figure.png",
         fullName: "Infested Peryton II"
     },
+    693: {
+        name: "Ioskeha", hp: 13138, atk: 13611, def: 11162, wis: 15329, agi: 13675,
+        skills: [160],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130330204311/bloodbrothersgame/images/thumb/2/22/Ioskeha_Figure.png/40px-Ioskeha_Figure.webp",
+        fullName: "Ioskeha"
+    },
     10592: {
         name: "Ira", hp: 12832, atk: 14489, def: 8770, wis: 11172, agi: 17254,
         skills: [138],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130227203822/bloodbrothersgame/images/thumb/6/6c/Ira%2C_Hypnotic_Specter_II_Figure.png/40px-Ira%2C_Hypnotic_Specter_II_Figure.png",
         fullName: "Ira, Hypnotic Specter II"
+    },
+    10681: {
+        name: "Iron Golem", hp: 16778, atk: 13615, def:	17818, wis: 9867, agi: 8848,
+        skills: [152],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130313201229/bloodbrothersgame/images/thumb/9/9f/Iron_Golem_II_Figure.png/40px-Iron_Golem_II_Figure.webp",
+        fullName: "Iron Golem II"
     },
     10746: {
         name: "Iseult", hp: 12731, atk: 10977, def: 11708, wis: 15865, agi: 14193,
@@ -544,17 +720,36 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20140120233253/bloodbrothersgame/images/thumb/d/d4/Kyteler_the_Corrupted_II_Figure.png/60px-Kyteler_the_Corrupted_II_Figure.png",
         fullName: "Kyteler the Corrupted II"
     },
+    10985: {
+        name: "Lahamu", hp: 14024, atk: 10784, def: 15999, wis: 16010, agi: 11001,
+        skills: [281],
+        autoAttack: 10004,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131112084823/bloodbrothersgame/images/thumb/f/fe/Lahamu%2C_Royal_Viper_II_Figure.png/40px-Lahamu%2C_Royal_Viper_II_Figure.webp",
+        fullName: "Lahamu, Royal Viper II"
+    },
     10432: {
         name: "Lanvall", hp: 12914, atk: 14639, def: 12245, wis: 12210, agi: 15040,
         skills: [18],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130106224520/bloodbrothersgame/images/thumb/6/63/Lanvall%2C_Lizard_Cavalier_II_Figure.png/40px-Lanvall%2C_Lizard_Cavalier_II_Figure.png",
         fullName: "Lanvall, Lizard Cavalier II"
     },
+    10852: {
+        name: "Libuse", hp: 11221, atk:	13782, def: 13379, wis: 16048, agi: 13038,
+        skills: [245],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130911123252/bloodbrothersgame/images/thumb/7/7e/Libuse%2C_the_Black_Queen_II_Figure.png/40px-Libuse%2C_the_Black_Queen_II_Figure.webp",
+        fullName: "Libuse, the Black Queen II"
+    },
     10933: {
         name: "Linnorm", hp: 12326, atk: 11102, def: 11979, wis: 16605, agi: 16497,
         skills: [313],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131210233903/bloodbrothersgame/images/thumb/0/0b/Linnorm%2C_the_Hailstorm_II_Figure.png/60px-Linnorm%2C_the_Hailstorm_II_Figure.png",
         fullName: "Linnorm, the Hailstorm II"
+    },
+    10794: {
+        name: "Ma-Gu", hp: 14182, atk: 12437, def: 11476, wis: 15306, agi: 12437,
+        skills: [4],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130709182651/bloodbrothersgame/images/thumb/a/a8/Ma-Gu_the_Enlightened_II_Figure.png/40px-Ma-Gu_the_Enlightened_II_Figure.webp",
+        fullName: "Ma-Gu the Enlightened II"
     },
     10558: {
         name: "Magdal", hp: 13929, atk: 15110, def: 15132, wis: 13810, agi: 15359,
@@ -567,6 +762,12 @@ var famDatabase = {
         skills: [60],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130202230532/bloodbrothersgame/images/thumb/f/f1/Makalipon%2C_Sacred_Fruit_II_Figure.png/40px-Makalipon%2C_Sacred_Fruit_II_Figure.png",
         fullName: "Makalipon, Sacred Fruit II"
+    },
+    10445: {
+        name: "Managarmr", hp: 12210, atk: 12258, def: 13266, wis: 13887, agi: 11688,
+        skills: [108],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130125003049/bloodbrothersgame/images/thumb/5/51/Managarmr_Frost_Touch_II_Figure.png/40px-Managarmr_Frost_Touch_II_Figure.webp",
+        fullName: "Managarmr Frost Touch II"
     },
     11280: {
         name: "Managarmr M", hp: 20007, atk: 21599, def: 17396, wis: 23907, agi: 18100,
@@ -592,6 +793,12 @@ var famDatabase = {
         skills: [115],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130430104152/bloodbrothersgame/images/thumb/6/68/Mathilda_the_Tarantula_II_Figure.png/40px-Mathilda_the_Tarantula_II_Figure.png",
         fullName: "Mathilda the Tarantula II"
+    },
+    10632: {
+        name: "Doog", hp: 10560, atk: 10549, def: 10777, wis: 14330, agi: 11925,
+        skills: [94],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130314191038/bloodbrothersgame/images/thumb/0/09/Mauthe_Doog_II_Figure.png/40px-Mauthe_Doog_II_Figure.webp",
+        fullName: "Mauthe Doog II"
     },
     10705: {
         name: "Melanippe", hp: 16139, atk: 16800, def: 13929, wis: 11849, agi: 15132,
@@ -691,6 +898,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130731090323/bloodbrothersgame/images/thumb/3/33/Olitiau%2C_the_Great_Bat_II_Figure.png/40px-Olitiau%2C_the_Great_Bat_II_Figure.png",
         fullName: "Olitiau, the Great Bat II"
     },
+    10505: {
+        name: "Oniroku", hp: 12207, atk: 13731, def: 12235, wis: 12194, agi: 13621,
+        skills: [115],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130114161242/bloodbrothersgame/images/thumb/9/96/Oniroku_the_Slayer_II_Figure.png/40px-Oniroku_the_Slayer_II_Figure.webp",
+        fullName: "Oniroku the Slayer II"
+    },
     11301: {
         name: "Capricorn", hp: 14937, atk: 8491, def: 13507, wis: 16551, agi: 15099,
         skills: [476],
@@ -772,6 +985,12 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131210233938/bloodbrothersgame/images/thumb/9/97/Ragnar%2C_Dragonslayer_II_Figure.png/60px-Ragnar%2C_Dragonslayer_II_Figure.png",
         fullName: "Ragnar, Dragonslayer II"
     },
+    10664: {
+        name: "Ramiel", hp: 15543, atk: 13929, def: 13431, wis: 16388, agi: 14709,
+        skills: [185],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130514144200/bloodbrothersgame/images/thumb/d/da/Ramiel%2C_Angel_of_the_Storm_II_Figure.png/40px-Ramiel%2C_Angel_of_the_Storm_II_Figure.webp",
+        fullName: "Ramiel, Angel of the Storm II"
+    },
     10699: {
         name: "Rampant Lion", hp: 16291, atk: 17569, def: 16518, wis: 12564, agi: 18035,
         skills: [380, 381],
@@ -834,6 +1053,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20131129152929/bloodbrothersgame/images/thumb/6/65/Sea_Serpent_II_Figure.png/60px-Sea_Serpent_II_Figure.png",
         fullName: "Sea Serpent II"
     },
+    10258: {
+        name: "Sekhmet", hp: 12529, atk: 16780, def: 13843, wis: 13598, agi: 13823,
+        skills: [11],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130106204046/bloodbrothersgame/images/thumb/d/d7/Sekhmet_Aflame_II_Figure.png/40px-Sekhmet_Aflame_II_Figure.webp",
+        fullName: "Sekhmet Aflame II"
+    },
     11056: {
         name: "Selk", hp: 13902, atk: 15852, def: 11976, wis: 11210, agi: 14927,
         skills: [327],
@@ -860,17 +1085,41 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130212204233/bloodbrothersgame/images/thumb/2/21/Sir_Bedwyr_of_the_Garden_II_Figure.png/40px-Sir_Bedwyr_of_the_Garden_II_Figure.webp",
         fullName: "Sir Bedwyr of the Garden II"
     },
+    11038: {
+        name: "Skrimsl", hp: 13049, atk: 11417, def: 12466, wis: 17182, agi: 13379,
+        skills: [303],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131129153025/bloodbrothersgame/images/thumb/7/78/Skrimsl_the_Freezing_II_Figure.png/40px-Skrimsl_the_Freezing_II_Figure.webp",
+        fullName: "Skrimsl the Freezing II"
+    },
+    10450: {
+        name: "Snow Queen", hp: 14070, atk: 13994, def: 13940, wis: 15229, agi: 14449,
+        skills: [128],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130107205830/bloodbrothersgame/images/thumb/9/99/Snow_Queen_II_Figure.png/40px-Snow_Queen_II_Figure.webp",
+        fullName: "Snow Queen II"
+    },
     10941: {
         name: "Soura", hp: 12012, atk: 12261, def: 7917, wis: 16930, agi: 17667,
         skills: [287, 291],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131207210036/bloodbrothersgame/images/thumb/f/f1/Soura%2C_Inferno_Shaman_II_Figure.png/40px-Soura%2C_Inferno_Shaman_II_Figure.webp",
         fullName: "Soura, Inferno Shaman II"
     },
+    10568: {
+        name: "Spellforged Cyclops", hp: 17047, atk: 11683, def: 14096, wis: 11111, agi: 10380,
+        skills: [61],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130220143923/bloodbrothersgame/images/thumb/c/c7/Spellforged_Cyclops_II_Figure.png/40px-Spellforged_Cyclops_II_Figure.webp",
+        fullName: "Spellforged Cyclops II"
+    },
     10850: {
         name: "Stalo", hp: 16269, atk: 16280, def: 16681, wis: 12792, agi: 13496,
         skills: [241],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130917111955/bloodbrothersgame/images/thumb/9/96/Stalo%2C_Glacial_Giant_II_Figure.png/40px-Stalo%2C_Glacial_Giant_II_Figure.png",
         fullName: "Stalo, Glacial Giant II"
+    },
+    414: {
+        name: "Steamwork", hp: 14360, atk: 10800, def: 10600, wis: 12240, agi: 10560,
+        skills: [11],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130125002036/bloodbrothersgame/images/thumb/d/de/Steamwork_Dragon_Figure.png/40px-Steamwork_Dragon_Figure.webp",
+        fullName: "Steamwork Dragon"
     },
     10955: {
         name: "Sugaar", hp: 13110, atk: 7481, def: 14293, wis: 16950, agi: 16097,
@@ -897,6 +1146,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130921071545/bloodbrothersgame/images/thumb/f/f6/Tanba%2C_Founder_of_Ninja_II_Figure.png/60px-Tanba%2C_Founder_of_Ninja_II_Figure.png",
         fullName: "Tanba, Founder of Ninja II"
     },
+    327: {
+        name: "Tangata", hp: 10500, atk: 10800, def: 10630, wis: 10740, agi: 12480,
+        skills: [110],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130120191546/bloodbrothersgame/images/thumb/b/b4/Tangata_Manu_Figure.png/40px-Tangata_Manu_Figure.webp",
+        fullName: "Tangata Manu"
+    },
     11122: {
         name: "Tannin", hp: 13669, atk:	15500, def:	12683, wis:	19541, agi:	17894,
         skills: [298],
@@ -908,6 +1163,12 @@ var famDatabase = {
         skills: [161],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130330204311/bloodbrothersgame/images/thumb/f/f5/Tawiscara_Figure.png/40px-Tawiscara_Figure.png",
         fullName: "Tawiscara"
+    },
+    10582: {
+        name: "Tepaxtl", hp: 10831, atk: 13562, def: 9209, wis: 13110, agi: 12100,
+        skills: [115],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130308154140/bloodbrothersgame/images/thumb/7/7d/Tepaxtl%2C_Fatal_Fang_II_Figure.png/40px-Tepaxtl%2C_Fatal_Fang_II_Figure.webp",
+        fullName: "Tepaxtl, Fatal Fang II"
     },
     11103: {
         name: "Tiamat", hp: 13702, atk: 14698, def: 16497, wis: 18869, agi: 15738,
@@ -1002,11 +1263,30 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130308154138/bloodbrothersgame/images/thumb/9/9c/Tuniq%2C_Guardian_Colossus_II_Figure.png/40px-Tuniq%2C_Guardian_Colossus_II_Figure.png",
         fullName: "Tuniq, Guardian Colossus II"
     },
+    10735: {
+        name: "Typhon", hp: 14677, atk: 13355, def: 14341, wis: 17959, agi: 13626,
+        skills: [117],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130531211236/bloodbrothersgame/images/thumb/8/83/Typhon_II_Figure.png/40px-Typhon_II_Figure.webp",
+        fullName: "Typhon II"
+    },
+    10344: {
+        name: "Hydarnes", hp: 11928, atk: 12832, def: 10587, wis: 14182, agi: 11928,
+        skills: [114],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130106225027/bloodbrothersgame/images/thumb/f/fd/Undead_General%2C_Hydarnes_II_Figure.png/40px-Undead_General%2C_Hydarnes_II_Figure.webp",
+        fullName: "Undead General, Hydarnes II"
+    },
     10920: {
         name: "Unicorn", hp: 10807, atk: 12600, def: 8770, wis: 11721, agi: 12001,
         skills: [156],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131002005418/bloodbrothersgame/images/thumb/0/04/Unicorn%2C_Spirit_Eater_II_Figure.png/60px-Unicorn%2C_Spirit_Eater_II_Figure.png",
         fullName: "Unicorn, Spirit Eater II"
+    },
+    11124: {
+        name: "Ushabti", hp: 12434, atk: 16475, def: 14655, wis: 10062, agi: 14027,
+        skills: [317],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131221031230/bloodbrothersgame/images/thumb/1/1d/Ushabti_II_Figure.png/40px-Ushabti_II_Figure.webp",
+        fullName: "Ushabti II"
     },
     10896: {
         name: "Valin", hp: 15500, atk: 16865, def: 22953, wis: 12716, agi: 11167,
@@ -1049,6 +1329,12 @@ var famDatabase = {
         skills: [118],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130313194006/bloodbrothersgame/images/thumb/9/91/Wolfert%2C_Grave_Keeper_II_Figure.png/60px-Wolfert%2C_Grave_Keeper_II_Figure.png",
         fullName: "Wolfert, Grave Keeper II"
+    },
+    10798: {
+        name: "Wu Chang", hp: 10294, atk: 14182, def: 10977, wis: 10599, agi: 11927,
+        skills: [115],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130709182653/bloodbrothersgame/images/thumb/6/65/Wu_Chang_the_Infernal_II_Figure.png/40px-Wu_Chang_the_Infernal_II_Figure.webp",
+        fullName: "Wu Chang the Infernal II"
     },
     11218: {
         name: "Xaphan", hp: 13013, atk: 9415, def: 12573, wis: 17000, agi: 15537,
