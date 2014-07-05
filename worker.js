@@ -9,7 +9,7 @@ function runSimulation(data) {
     var p2WinCount = 0;
     for (var i = 0; i < 100000; i++) {
         BattleModel.IS_MASS_SIMULATION = true;
-        var newGame = new BattleModel(data, null);
+        var newGame = new BattleModel(data);
         var playerWon = newGame.startBattle();
         BattleModel.resetAll();
         if (playerWon == "Player 1") {

@@ -10,8 +10,8 @@ for (var i = 0; i < 1000; i++) {
 
 function isPlayerNameReturned() {
     BattleModel.IS_MASS_SIMULATION = true;
-    var newGame = new BattleModel(null, "random");
-    var playerWon = newGame.startBattle();
     BattleModel.resetAll();
+    var newGame = new BattleModel({}, {p1random: true, p2random: true});
+    var playerWon = newGame.startBattle();
     return (playerWon == "Player 1" || playerWon == "Player 2");
 }

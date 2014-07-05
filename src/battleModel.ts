@@ -46,12 +46,12 @@ class BattleModel {
 
     public static getInstance() : BattleModel {
         if (BattleModel._instance === null) {
-            BattleModel._instance = new BattleModel();
+            throw new Error("Error: you should not make this object this way");
         }
         return BattleModel._instance;
     }
 
-    constructor(data?: GameData, mode?: string) {
+    constructor(data: GameData, option: GameOption = {}) {
     
         if(BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
@@ -67,24 +67,37 @@ class BattleModel {
         var player1warlordSkillArray: number[] = [];
         var player2warlordSkillArray: number[] = [];
         
-        if (mode == "random") {
+        if (option.p1random) {
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
-            player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
                 player1cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
-                player2cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
-            }        
+            }
+
+            for (var i = 0; i < 3; i++) {
+                player1warlordSkillArray.push(+pickRandomProperty(SkillDatabase));
+            }
         }
         else {
             player1formation = data.player1formation;
-            player2formation = data.player2formation;
-
             player1cardsInfo = data.player1cardsInfo;
-            player2cardsInfo = data.player2cardsInfo;
-
             player1warlordSkillArray = data.player1warlordSkillArray;
+        }
+
+        if (option.p2random) {
+            player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
+            for (var i = 0; i < 5; i++) {
+                player2cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
+            }
+
+            for (var i = 0; i < 3; i++) {
+                player2warlordSkillArray.push(+pickRandomProperty(SkillDatabase));
+            }
+        }
+        else {
+            player2formation = data.player2formation;
+            player2cardsInfo = data.player2cardsInfo;
             player2warlordSkillArray = data.player2warlordSkillArray;
-        }        
+        }
         
         this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
         this.player2 = new Player(2, "Player 2", new Formation(player2formation), 1); // opp
@@ -128,7 +141,6 @@ class BattleModel {
             else {
                 auto2 = new Skill(0);
             }
-
             
             this.player1Cards[i] = new Card(player1cardsInfo[i].name,
                                         stats1, 
@@ -578,4 +590,9 @@ interface GameData {
     player2cardsInfo: any[];
     player1warlordSkillArray: number[];
     player2warlordSkillArray: number[];
+}
+
+interface GameOption {
+    p1random?: boolean;
+    p2random?: boolean;
 }

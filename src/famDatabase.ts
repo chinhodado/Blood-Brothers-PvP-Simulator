@@ -964,6 +964,13 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20130210090126/bloodbrothersgame/images/thumb/a/ad/The_Red_Samurai_Figure.png/169px-The_Red_Samurai_Figure.png",
         fullName: "The Red Samurai"
     },
+    8: {
+        name: "White Knight", hp: 13916, atk: 14332, def: 15311, wis: 12851, agi: 13466,
+        skills: [46], // todo: change this to 14 later
+        isWarlord: true,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130210090154/bloodbrothersgame/images/thumb/2/25/The_White_Knight_Figure.png/169px-The_White_Knight_Figure.png",
+        fullName: "The White Knight"
+    },
     10480: {
         name: "Thor", hp: 10343, atk: 13245, def: 11807, wis: 13842, agi: 11917,
         skills: [114],

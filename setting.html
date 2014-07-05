@@ -18,16 +18,16 @@
 <body style="width: 100%; text-align: center;">
 <div style="display: inline-block;">
     <h1>Blood Brothers Simulator</h1>
-    <form action="game.html" method="GET">
+    <form action="game.html" method="GET" onsubmit="return validateForm()" name="mainForm">
 
         <p>Player 2</p>
-        <select name="f10" class="famSelect randomize"></select>
-        <select name="f11" class="famSelect randomize"></select>
-        <select name="f12" class="famSelect randomize"></select>
-        <select name="f13" class="famSelect randomize"></select>
-        <select name="f14" class="famSelect randomize"></select>
+        <select name="f10" class="famSelect randomize p2"></select>
+        <select name="f11" class="famSelect randomize p2"></select>
+        <select name="f12" class="famSelect randomize p2"></select>
+        <select name="f13" class="famSelect randomize p2"></select>
+        <select name="f14" class="famSelect randomize p2"></select>
         <br><br>
-        <select name="2f" class="randomize">
+        <select name="2f" class="randomize p2">
             <option value="0">5-Skein</option>
             <option value="1">5-Valley</option>
             <option value="2">5-Tooth</option>
@@ -42,20 +42,23 @@
         <br /><br />
         Warlord Skills: 
 
-        Skill 1: <select name="s20" class="skillSelect randomize"></select>
-        Skill 2: <select name="s21" class="skillSelect randomize"></select>
-        Skill 3: <select name="s22" class="skillSelect randomize"></select>
+        Skill 1: <select name="s20" class="skillSelect randomize p2"></select>
+        Skill 2: <select name="s21" class="skillSelect randomize p2"></select>
+        Skill 3: <select name="s22" class="skillSelect randomize p2"></select>
+
+        <br /><br />
+        Random <input type="checkbox" name="r2" onchange="toogleDisable(2, this.checked)"/>
 
         <br><br><br><br>
 
         <p>Player 1</p>
-        <select name="f0" class="famSelect randomize"></select>
-        <select name="f1" class="famSelect randomize"></select>
-        <select name="f2" class="famSelect randomize"></select>
-        <select name="f3" class="famSelect randomize"></select>
-        <select name="f4" class="famSelect randomize"></select>
+        <select name="f0" class="famSelect randomize p1"></select>
+        <select name="f1" class="famSelect randomize p1"></select>
+        <select name="f2" class="famSelect randomize p1"></select>
+        <select name="f3" class="famSelect randomize p1"></select>
+        <select name="f4" class="famSelect randomize p1"></select>
         <br><br>
-        <select name="1f" class="randomize">
+        <select name="1f" class="randomize p1">
             <option value="0">5-Skein</option>
             <option value="1">5-Valley</option>
             <option value="2">5-Tooth</option>
@@ -70,9 +73,12 @@
         <br /><br />
         Warlord Skills:
 
-        Skill 1: <select name="s10" class="skillSelect randomize"></select>
-        Skill 2: <select name="s11" class="skillSelect randomize"></select>
-        Skill 3: <select name="s12" class="skillSelect randomize"></select>
+        Skill 1: <select name="s10" class="skillSelect randomize p1"></select>
+        Skill 2: <select name="s11" class="skillSelect randomize p1"></select>
+        Skill 3: <select name="s12" class="skillSelect randomize p1"></select>
+
+        <br /><br />
+        Random <input type="checkbox" name="r1"  onchange="toogleDisable(1, this.checked)" />
 
         <br><br>
         Mode:
@@ -129,6 +135,18 @@
                     skillSelects[i].add(option);
                 }
             };
+
+            function toogleDisable(player, isSelected) {
+                var elems = document.getElementsByClassName("p" + player);
+                for (var i = 0; i < elems.length; i++) {
+                    if (isSelected) {
+                        elems[i].disabled = true;
+                    }
+                    else {
+                        elems[i].disabled = false;
+                    }
+                }
+            }
         </script>
 
         <br><br><br>
@@ -152,6 +170,15 @@
                 var options = selects[i].getElementsByTagName("option");
                 options[Math.floor(Math.random() * options.length)].selected = true;
             };
+        }
+
+        function validateForm() {
+            var form = document.forms["mainForm"];
+            if (form["mode"].value == "sim" && (form["r1"].checked == true || form["r2"].checked == true)) {
+                alert("You cannot choose Random with Simulation mode");
+                return false;
+            }
+            return true;
         }
     </script>
 </div>

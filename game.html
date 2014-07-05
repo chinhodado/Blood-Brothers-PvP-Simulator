@@ -154,7 +154,16 @@
     </div>
 
     <script type="text/javascript">
-        var data = {};
+        var data = {}, option = {};
+
+        if (getURLParameter("r1")) {
+            option.p1random = true;
+        }
+
+        if (getURLParameter("r2")) {
+            option.p2random = true;
+        }
+
         data.player1formation = getURLParameter("1f");
         data.player2formation = getURLParameter("2f");
         data.player1cardsInfo = [];
@@ -173,7 +182,7 @@
         var worker = null;
 
         var mode = getURLParameter("mode");
-        if (mode == "normal") {
+        if (mode !== "sim") {
             if (!getURLParameter("debug")) {
                 BattleLogger.playMode = 'auto';
                 document.getElementById('battleEventDiv').style.display = 'none';
@@ -185,27 +194,12 @@
                     BattleLogger.getInstance().displayMajorEventAnimation(0);
                 }
             }
-            var newGame = new BattleModel(data, null);
-            newGame.startBattle();
-        }
-        else if (mode == "random") {
-            if (!getURLParameter("debug")) {
-                BattleLogger.playMode = 'auto';
-                document.getElementById('battleEventDiv').style.display = 'none';
-                document.getElementById('player2Fam').style.display = 'none';
-                document.getElementById('player1Fam').style.display = 'none';
-                document.getElementById('rightSide').style.width = '100%';
-                document.getElementById('startButton').style.display = 'block';
-                document.getElementById('startButton').onclick = function () {
-                    BattleLogger.getInstance().displayMajorEventAnimation(0);
-                }
-            }
-            var newGame = new BattleModel(null, "random");
+            var newGame = new BattleModel(data, option);
             newGame.startBattle();
         }
         else if (mode == "sim") {
             // create a new game just to display the fam and formation
-            var newGame = new BattleModel(data, null);
+            var newGame = new BattleModel(data);
 
             // hide/show some elements on the page
             document.getElementById("simDiv").setAttribute("style", "display: block;");

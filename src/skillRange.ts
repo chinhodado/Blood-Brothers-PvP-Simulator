@@ -70,6 +70,8 @@ class RangeFactory {
                 return new EnemyAllRange(id);
             case 21:
                 return new SelfRange(id);
+            case 28:
+                return new RightRange(id);
             default:
                 throw new Error("Invalid range or not implemented");
         }
@@ -146,6 +148,25 @@ class BothSidesRange extends BaseRange {
         var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
+        }
+        
+        return targets;
+    }
+}
+
+class RightRange extends BaseRange {
+    constructor(id : number) {
+        super(id);
+    }
+    
+    getTargets(executor : Card) : Card[] {
+        var targets = [];
+        var partyCards = CardManager.getInstance().getPlayerCards(executor.player);
+        
+        for (var i = executor.formationColumn + 1; i < 5; i++) {
+            if (!partyCards[i].isDead) {
+                targets.push(partyCards[i]);
+            }
         }
         
         return targets;
