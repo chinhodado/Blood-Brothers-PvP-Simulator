@@ -39,6 +39,12 @@
             <option value="8">5-Shield</option>
             <option value="9">5-Pincer</option>
         </select>
+        <br /><br />
+        Warlord Skills: 
+
+        Skill 1: <select name="s20" class="skillSelect randomize"></select>
+        Skill 2: <select name="s21" class="skillSelect randomize"></select>
+        Skill 3: <select name="s22" class="skillSelect randomize"></select>
 
         <br><br><br><br>
 
@@ -61,6 +67,12 @@
             <option value="8">5-Shield</option>
             <option value="9">5-Pincer</option>
         </select>
+        <br /><br />
+        Warlord Skills:
+
+        Skill 1: <select name="s10" class="skillSelect randomize"></select>
+        Skill 2: <select name="s11" class="skillSelect randomize"></select>
+        Skill 3: <select name="s12" class="skillSelect randomize"></select>
 
         <br><br>
         Mode:
@@ -72,7 +84,7 @@
         <input type="checkbox" name="debug" value="true">Debug 
 
         <script type="text/javascript">
-            var selects = document.getElementsByClassName("famSelect");
+            var famSelects = document.getElementsByClassName("famSelect");
 
             // create an array of fam id and sort it based on the fam's full name
             var famIdArray = [];
@@ -83,13 +95,38 @@
                 return famDatabase[a].fullName.localeCompare(famDatabase[b].fullName);
             });
 
-            for (var i = 0; i < selects.length; i++) {
+            for (var i = 0; i < famSelects.length; i++) {
                 for (var index = 0; index < famIdArray.length; index++) {
                     var key = famIdArray[index];
                     var option = document.createElement("option");
                     option.value = key;
                     option.text = famDatabase[key].fullName;
-                    selects[i].add(option);
+                    famSelects[i].add(option);
+                }
+            };
+
+            //////////////skills////////////////////////////////
+
+            var skillSelects = document.getElementsByClassName("skillSelect");
+
+            // create an array of skill id and sort it based on the skill's name
+            var skillIdArray = [];
+            for (var key in SkillDatabase) {
+                if (!SkillDatabase[key].isAutoAttack) {
+                    skillIdArray.push(key);
+                }                
+            }
+            skillIdArray.sort(function (a, b) {
+                return SkillDatabase[a].name.localeCompare(SkillDatabase[b].name);
+            });
+
+            for (var i = 0; i < skillSelects.length; i++) {
+                for (var index = 0; index < skillIdArray.length; index++) {
+                    var key = skillIdArray[index];
+                    var option = document.createElement("option");
+                    option.value = key;
+                    option.text = SkillDatabase[key].name;
+                    skillSelects[i].add(option);
                 }
             };
         </script>

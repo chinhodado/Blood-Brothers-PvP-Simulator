@@ -64,6 +64,8 @@ class BattleModel {
         var player2formation: any;
         var player1cardsInfo = [];
         var player2cardsInfo = [];
+        var player1warlordSkillArray: number[] = [];
+        var player2warlordSkillArray: number[] = [];
         
         if (mode == "random") {
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
@@ -79,6 +81,9 @@ class BattleModel {
 
             player1cardsInfo = data.player1cardsInfo;
             player2cardsInfo = data.player2cardsInfo;
+
+            player1warlordSkillArray = data.player1warlordSkillArray;
+            player2warlordSkillArray = data.player2warlordSkillArray;
         }        
         
         this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
@@ -90,8 +95,18 @@ class BattleModel {
         this.allCards = [];        
         
         for (var i = 0; i < 5; i++) {
-            var player1Skills = this.makeSkillArray(player1cardsInfo[i].skills);
-            var player2Skills = this.makeSkillArray(player2cardsInfo[i].skills);
+            var p1fSkillIdArray: number[] = player1cardsInfo[i].skills;
+            if (player1cardsInfo[i].isWarlord) {
+                p1fSkillIdArray = player1warlordSkillArray;
+            }
+
+            var p2fSkillIdArray: number[] = player2cardsInfo[i].skills;
+            if (player2cardsInfo[i].isWarlord) {
+                p2fSkillIdArray = player2warlordSkillArray;
+            }
+
+            var player1Skills = this.makeSkillArray(p1fSkillIdArray);
+            var player2Skills = this.makeSkillArray(p2fSkillIdArray);
             
             var stats1 = new Stats(player1cardsInfo[i].hp, player1cardsInfo[i].atk, 
                 player1cardsInfo[i].def, player1cardsInfo[i].wis, player1cardsInfo[i].agi);
@@ -561,4 +576,6 @@ interface GameData {
     player2formation: string;
     player1cardsInfo: any[];
     player2cardsInfo: any[];
+    player1warlordSkillArray: number[];
+    player2warlordSkillArray: number[];
 }

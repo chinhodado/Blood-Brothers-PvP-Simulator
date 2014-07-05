@@ -159,10 +159,16 @@
         data.player2formation = getURLParameter("2f");
         data.player1cardsInfo = [];
         data.player2cardsInfo = [];
+        data.player1warlordSkillArray = [];
+        data.player2warlordSkillArray = [];
 
         for (var i = 0; i < 5; i++) {
             data.player1cardsInfo.push(famDatabase[getURLParameter("f" + i)]);
             data.player2cardsInfo.push(famDatabase[getURLParameter("f" + (i + 10))]);
+        }
+        for (var i = 0; i < 3; i++) {
+            data.player1warlordSkillArray.push(getURLParameter("s1" + i));
+            data.player2warlordSkillArray.push(getURLParameter("s2" + i));
         }
         var worker = null;
 
