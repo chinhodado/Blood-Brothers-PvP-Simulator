@@ -169,6 +169,7 @@
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
                                     .opacity(0)
 
+                // can't move these proc effects out atm since that will make the fam group sizes different
                 var spellCircle = draw.image('img/circle_blue.png', 150, 150)
                                     .center(coordArray[i][0], coordArray[i][1])
                                     .attr('id', 'p' + player + 'f' + i + 'spellCircle')
@@ -179,28 +180,12 @@
                                     .attr('id', 'p' + player + 'f' + i + 'lineSpark')
                                     .opacity(0)
 
-                var physicalWard = draw.image('img/physical_ward.png', 70, 70)
-                                    .center(coordArray[i][0], coordArray[i][1])
-                                    .attr('id', 'p' + player + 'f' + i + 'physicalWard')
-                                    .opacity(0)
-
-                var magicalWard = draw.image('img/magical_ward.png', 70, 70)
-                                    .center(coordArray[i][0], coordArray[i][1])
-                                    .attr('id', 'p' + player + 'f' + i + 'magicalWard')
-                                    .opacity(0)
-
-                var breathWard = draw.image('img/breath_ward.png', 70, 70)
-                                    .center(coordArray[i][0], coordArray[i][1])
-                                    .attr('id', 'p' + player + 'f' + i + 'breathWard')
-                                    .opacity(0)
-
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
-                var group = draw.group();                
-                group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
+                var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');                
+                group.add(image);
                 group.add(damageText);
                 group.add(explosion);
                 group.add(spellCircle); group.add(procSpark);
-                group.add(physicalWard); group.add(magicalWard); group.add(breathWard);
 
                 groupPlayer.add(group);
             }
@@ -297,22 +282,22 @@
     displayWard(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var data = this.logger.minorEventLog[majorIndex][minorIndex];
 
-        var wardTxt;
+        var type;
         switch (data.wardUsed) {
             case "PHYSICAL":
-                wardTxt = "physicalWard";
+                type = ENUM.StatusType.ATTACK_RESISTANCE;
                 break;
             case "MAGICAL":
-                wardTxt = "magicalWard";
+                type = ENUM.StatusType.MAGIC_RESISTANCE;
                 break;
             case "BREATH":
-                wardTxt = "breathWard";
+                type = ENUM.StatusType.BREATH_RESISTANCE;
                 break;
             default:
                 return; // no ward was used
         }
 
-        var wardImg = SVG.get('p' + playerId + 'f' + famIndex + wardTxt);
+        var wardImg = this.getWard(playerId, famIndex, type);
         wardImg.opacity(1).animate({delay: '0.5s'}).opacity(0);
     }
 
@@ -525,16 +510,11 @@
                 var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-                if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE) {
-                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'physicalWard');
-                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
-                }
-                else if (data.status.type == ENUM.StatusType.MAGIC_RESISTANCE) {
-                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'magicalWard');
-                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
-                }
-                else if (data.status.type == ENUM.StatusType.BREATH_RESISTANCE) {
-                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'breathWard');
+                if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE ||
+                    data.status.type == ENUM.StatusType.MAGIC_RESISTANCE ||
+                    data.status.type == ENUM.StatusType.BREATH_RESISTANCE) 
+                {
+                    var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type); 
                     ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
                 }
                 else {
@@ -746,5 +726,37 @@
      */
     getCardImageGroupOnCanvas(card: Card) {
         return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
+    }
+
+    getWard(playerId: number, famIndex: number, type: ENUM.StatusType) {
+        var wardTxt, wardFileName;
+        switch(type) {
+            case ENUM.StatusType.ATTACK_RESISTANCE:
+                wardTxt = "physicalWard";
+                wardFileName = "physical_ward.png"
+                break;
+            case ENUM.StatusType.MAGIC_RESISTANCE:
+                wardTxt = "magicalWard";
+                wardFileName = "magical_ward.png"
+                break;
+            case ENUM.StatusType.BREATH_RESISTANCE:
+                wardTxt = "breathWard";
+                wardFileName = "breath_ward.png"
+                break;
+            default:
+                throw new Error("Invalid type of ward");
+        }
+
+        var ward = SVG.get('p' + playerId + 'f' + famIndex + wardTxt);
+
+        if (!ward) {
+            ward = SVG.get('mainSvg').image('img/' + wardFileName, 70, 70)
+                        .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
+                        .attr('id', 'p' + playerId + 'f' + famIndex + wardTxt)
+                        .opacity(0)
+            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(ward);
+        }
+
+        return ward;
     }
 }
