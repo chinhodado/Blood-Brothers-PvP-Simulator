@@ -59,6 +59,7 @@ class BattleModel {
         BattleModel._instance = this;
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
+        var graphic = new BattleGraphic();
         
         var player1formation: any;
         var player2formation: any;
@@ -168,7 +169,7 @@ class BattleModel {
         // save the initial field snapshot
         this.logger.saveInitialField();
         
-        this.logger.displayFormationAndFamOnCanvas();
+        graphic.displayFormationAndFamOnCanvas();
     }
 
     /**
@@ -178,6 +179,7 @@ class BattleModel {
     static resetAll() {
         BattleModel.removeInstance();
         BattleLogger.removeInstance();
+        BattleGraphic.removeInstance();
     }
 
     /**

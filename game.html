@@ -184,14 +184,14 @@
         var mode = getURLParameter("mode");
         if (mode !== "sim") {
             if (!getURLParameter("debug")) {
-                BattleLogger.playMode = 'auto';
+                BattleGraphic.PLAY_MODE = 'AUTO';
                 document.getElementById('battleEventDiv').style.display = 'none';
                 document.getElementById('player2Fam').style.display = 'none';
                 document.getElementById('player1Fam').style.display = 'none';
                 document.getElementById('rightSide').style.width = '100%';
                 document.getElementById('startButton').style.display = 'block';
                 document.getElementById('startButton').onclick = function () {
-                    BattleLogger.getInstance().displayMajorEventAnimation(0);
+                    BattleGraphic.getInstance().displayMajorEventAnimation(0);
                 }
             }
             var newGame = new BattleModel(data, option);
