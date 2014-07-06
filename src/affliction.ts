@@ -28,6 +28,25 @@ class Affliction {
         this.finished = false;
     }
 
+    static getAfflictionAdjective(type: ENUM.AfflictionType) {
+        switch (type) {
+            case ENUM.AfflictionType.BLIND:
+                return "Blinded";
+            case ENUM.AfflictionType.DISABLE:
+                return "Disabled";
+            case ENUM.AfflictionType.FROZEN:
+                return "Frozen";
+            case ENUM.AfflictionType.PARALYSIS:
+                return "Paralyzed";
+            case ENUM.AfflictionType.POISON:
+                return "Poisoned";
+            case ENUM.AfflictionType.SILENT:
+                return "Silent";
+            default:
+                throw new Error("Invalid affliction type!");
+        }
+    }
+
     canAttack(): boolean{
         // implement this
         return false;

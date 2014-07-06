@@ -301,6 +301,38 @@
         wardImg.opacity(1).animate({delay: '0.5s'}).opacity(0);
     }
 
+    displayAfflictionText(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
+        var data = this.logger.minorEventLog[majorIndex][minorIndex];       
+        var svgAfflictTxt = this.getAfflictionText(playerId, famIndex);
+
+        if (data.affliction.isFinished) {
+            svgAfflictTxt.hide();
+        }
+        else {
+            var text = Affliction.getAfflictionAdjective(data.affliction.type);
+            svgAfflictTxt.text(text).show();
+        }
+    }
+
+    displayAllAfflictionText(majorIndex: number) {
+        var field = this.logger.getFieldAtMajorIndex(majorIndex);
+
+        for (var player = 1; player <= 2; player++) {
+            for (var fam = 0; fam < 5; fam++) {
+                var svgAfflictTxt = this.getAfflictionText(player, fam);
+                var data = field["player" + player + "Cards"][fam];
+
+                if (!data.affliction) {
+                    svgAfflictTxt.hide();
+                }
+                else {
+                    var text = data.affliction.type;
+                    svgAfflictTxt.text(text).show();
+                }
+            }
+        }
+    }
+
     /**
      * Display hp change, ward, hp text
      */
@@ -363,13 +395,6 @@
         }
 
         var executorId = majorLog[majorIndex].executorId;
-        if (!executorId) {
-            if (BattleGraphic.PLAY_MODE == 'AUTO') {
-                var nextIndex = +majorIndex + 1;
-                this.displayMajorEventAnimation(nextIndex);
-            }
-            return; //description event like battle start, etc
-        }
 
         if (BattleGraphic.PLAY_MODE == 'AUTO') {
             var autoCallback = function() {
@@ -377,7 +402,7 @@
             }
         }
             
-        if (SkillDatabase[majorLog[majorIndex].skillId].isAutoAttack) {
+        if (majorLog[majorIndex].skillId && SkillDatabase[majorLog[majorIndex].skillId].isAutoAttack) {
             // don't enlarge the fam, etc.
             this.displayMinorEventAnimation(majorIndex, 0,{callback: autoCallback});
         }
@@ -396,8 +421,17 @@
      * durationRatio: e.g. 0.5 means half the animation duration
      */   
     displayProcSkill(executorId: number, skillId: number, option: {callback?; 
-                                                                            durationRatio?: number; 
-                                                                            noProcEffect?: boolean}) {
+                                                                    durationRatio?: number; 
+                                                                    noProcEffect?: boolean}) 
+    {
+
+        if (!executorId || !skillId) {
+            if (option.callback) {
+                option.callback();
+            }
+            return;
+        }
+
         var executor = CardManager.getInstance().getCardById(executorId);
         var group: any = this.getCardImageGroupOnCanvas(executor);
 
@@ -482,9 +516,7 @@
 
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
             
-        if (data.type == ENUM.MinorEventType.AFFLICTION || 
-            (!data.executorId && data.type != ENUM.MinorEventType.HP)) 
-        {
+        if (!data.executorId && data.type != ENUM.MinorEventType.HP && data.type != ENUM.MinorEventType.AFFLICTION) {
             if (minorIndex < minorLog[majorIndex].length) {
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
@@ -523,6 +555,17 @@
                     damageText.text(ENUM.StatusType[data.status.type] + " Up").center(center_x, center_y).font({ size: 18})
                         .opacity(1).animate({delay: '0.5s'}).opacity(0);
                 }
+
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
+        if (data.type == ENUM.MinorEventType.AFFLICTION) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                var target = CardManager.getInstance().getCardById(data.targetId);
+                this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
@@ -758,5 +801,21 @@
         }
 
         return ward;
+    }
+
+    getAfflictionText(playerId: number, famIndex: number) {
+        var txt = SVG.get('p' + playerId + 'f' + famIndex + 'afflictText');
+
+        if (!txt) {
+            txt = SVG.get('mainSvg').text('Paralyzed').font({ size: 14, family: "Cooper Black" })
+                                .attr({fill:'#fff', stroke: '#000', 'stroke-width': '2px'})
+                                .center(this.coordArray[playerId][famIndex][0], 
+                                        this.coordArray[playerId][famIndex][1] + BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + 20)
+                                .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')
+                                .hide();
+            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);        
+        }
+
+        return txt;
     }
 }

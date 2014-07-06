@@ -192,10 +192,10 @@ class BattleLogger {
             }
             switch (event.affliction.type) {
                 case ENUM.AfflictionType.BLIND:
-                    card.affliction = { type: "Blind", duration: event.affliction.duration };
+                    card.affliction = { type: "Blinded", duration: event.affliction.duration };
                     break;
                 case ENUM.AfflictionType.DISABLE:
-                    card.affliction = { type: "Disable", duration: event.affliction.duration };
+                    card.affliction = { type: "Disabled", duration: event.affliction.duration };
                     break;
                 case ENUM.AfflictionType.FROZEN:
                     card.affliction = { type: "Frozen", duration: event.affliction.duration };
@@ -204,7 +204,7 @@ class BattleLogger {
                     card.affliction = { type: "Paralyzed", duration: event.affliction.duration };
                     break;
                 case ENUM.AfflictionType.POISON:
-                    card.affliction = { type: "Poison", percent: event.affliction.percent };
+                    card.affliction = { type: "Poisoned", percent: event.affliction.percent };
                     break;
                 case ENUM.AfflictionType.SILENT:
                     card.affliction = { type: "Silent", duration: event.affliction.duration };
@@ -216,22 +216,21 @@ class BattleLogger {
     }
     
     /**
-     * --- This function is a clusterfuck. I apologize if you are reading this, especially to myself in the future. ---
-     * 
      * This is called when you click on an event in the event list. It updates the field on the right side
      * of the screen with information after the event that you clicked on has been processed. That event
      * is represented by the index argument supplied into this function.
      */
-    displayEventLogAtIndex(index) { // <- the index of the event in the major event log
+    displayEventLogAtIndex(majorIndex) {
 
         // display turn animation
-        BattleGraphic.getInstance().displayMajorEventAnimation(index);
+        BattleGraphic.getInstance().displayAllAfflictionText(majorIndex - 1);
+        BattleGraphic.getInstance().displayMajorEventAnimation(majorIndex);
 
         // for displaying last turn's HP
-        var lastEventIndex = index == 0? 0 : index - 1;
+        var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
         var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
          
-        var field = this.getFieldAtMajorIndex(index);
+        var field = this.getFieldAtMajorIndex(majorIndex);
         
         // now prepares the info and print them out
         for (var player = 1; player <=2; player++) { // for each player
@@ -283,8 +282,8 @@ class BattleLogger {
                 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
-                for (var j = 0; this.minorEventLog[index] && j < this.minorEventLog[index].length; j++) {
-                    var tempEvent = this.minorEventLog[index][j]; // a minor event
+                for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length; j++) {
+                    var tempEvent = this.minorEventLog[majorIndex][j]; // a minor event
                     if (tempEvent.targetId == playerCards[fam].id) {
                         if (tempEvent.type == ENUM.MinorEventType.HP) {
                             infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
@@ -320,7 +319,7 @@ class BattleLogger {
                     }
                 }
                 
-                if (this.minorEventLog[index] && this.minorEventLog[index][0].executorId == playerCards[fam].id) {
+                if (this.minorEventLog[majorIndex] && this.minorEventLog[majorIndex][0].executorId == playerCards[fam].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
 
@@ -337,7 +336,7 @@ class BattleLogger {
 
                 // display last event's HP
                 var lastEventCard = lastEventField["player" + player + "Cards"][fam];
-                BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);
+                BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);                
             }
         }
     }
