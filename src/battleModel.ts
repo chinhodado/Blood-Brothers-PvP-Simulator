@@ -232,6 +232,12 @@ class BattleModel {
         if (!data.additionalDescription) {
             data.additionalDescription = "";
         }
+
+        // this probably should not be here, but wtv...
+        if (data.target.hasWardOfType(data.skill.ward)) {
+            var wardUsed = data.skill.ward;
+        }
+
         var description = data.additionalDescription +
             data.target.name + " lost " + damage + "hp (remaining " + data.target.getHP() + "/" + data.target.originalStats.hp + ")";
         this.logger.addMinorEvent({
@@ -240,7 +246,8 @@ class BattleModel {
             type: ENUM.MinorEventType.HP, 
             amount: (-1) * damage, 
             description: description, 
-            skillId: data.skill.id
+            skillId: data.skill.id,
+            wardUsed: wardUsed
         });
 
         if (data.target.getHP() <= 0) {

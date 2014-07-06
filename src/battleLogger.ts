@@ -578,13 +578,28 @@ class BattleLogger {
                                     .attr('id', 'p' + player + 'f' + i + 'lineSpark')
                                     .opacity(0)
 
+                var physicalWard = draw.image('img/physical_ward.png', 70, 70)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'physicalWard')
+                                    .opacity(0)
+
+                var magicalWard = draw.image('img/magic_ward.png', 70, 70)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'magicalWard')
+                                    .opacity(0)
+
+                var breathWard = draw.image('img/breath_ward.png', 70, 70)
+                                    .center(coordArray[i][0], coordArray[i][1])
+                                    .attr('id', 'p' + player + 'f' + i + 'breathWard')
+                                    .opacity(0)
+
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
                 var group = draw.group();                
                 group.add(image).attr('id', 'p' + player + 'f' + i + 'group');
                 group.add(damageText);
                 group.add(explosion);
-                group.add(spellCircle);
-                group.add(procSpark);
+                group.add(spellCircle); group.add(procSpark);
+                group.add(physicalWard); group.add(magicalWard); group.add(breathWard);
 
                 this.cardImageGroups.push(group);
                 groupPlayer.add(group);
@@ -672,11 +687,41 @@ class BattleLogger {
         var amount = this.minorEventLog[majorIndex][minorIndex].amount;
 
         var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
-        damageText.text(Math.abs(amount) + "");
-        damageText.center(center_x, center_y).opacity(1).front();
+        damageText.text(Math.abs(amount) + "").font({ size: 22})
+                  .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '1s'}).opacity(0);
 
         this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, playerId, famIndex);
+    }
+
+    displayWard(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
+        var data = this.minorEventLog[majorIndex][minorIndex];
+
+        var wardTxt;
+        switch (data.wardUsed) {
+            case "PHYSICAL":
+                wardTxt = "physicalWard";
+                break;
+            case "MAGICAL":
+                wardTxt = "magicalWard";
+                break;
+            case "BREATH":
+                wardTxt = "breathWard";
+                break;
+            default:
+                return; // no ward was used
+        }
+
+        var wardImg = SVG.get('p' + playerId + 'f' + famIndex + wardTxt);
+        wardImg.opacity(1).animate({delay: '0.5s'}).opacity(0);
+    }
+
+    /**
+     * Display hp change, ward, hp text
+     */
+    displayPostDamage(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
+        this.displayWard(playerId, famIndex, majorIndex, minorIndex);
+        this.displayDamageTextAndHP(playerId, famIndex, majorIndex, minorIndex);
     }
 
     displayDeadAliveFamiliar(player, fam, isDead) {
@@ -840,7 +885,6 @@ class BattleLogger {
         var data: MinorEvent = this.minorEventLog[majorIndex][minorIndex];
             
         if (data.type == ENUM.MinorEventType.AFFLICTION || 
-            data.type == ENUM.MinorEventType.STATUS ||
             (!data.executorId && data.type != ENUM.MinorEventType.HP)) 
         {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
@@ -854,8 +898,39 @@ class BattleLogger {
             if (minorIndex < this.minorEventLog[majorIndex].length) {
                 var target = CardManager.getInstance().getCardById(data.targetId);
 
-                // display hp change
-                this.displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
+        if (data.type == ENUM.MinorEventType.STATUS) {
+            if (minorIndex < this.minorEventLog[majorIndex].length) {
+                var target = CardManager.getInstance().getCardById(data.targetId);
+
+                var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+                var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+
+                if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE) {
+                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'physicalWard');
+                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
+                }
+                else if (data.status.type == ENUM.StatusType.MAGIC_RESISTANCE) {
+                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'magicalWard');
+                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
+                }
+                else if (data.status.type == ENUM.StatusType.BREATH_RESISTANCE) {
+                    var ward = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'breathWard');
+                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
+                }
+                else {
+                    // display status text
+                    var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                    damageText.text(ENUM.StatusType[data.status.type] + " Up").center(center_x, center_y).font({ size: 18})
+                        .opacity(1).animate({delay: '0.5s'}).opacity(0);
+                }
+
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
             }
@@ -933,9 +1008,9 @@ class BattleLogger {
                             explosion.animate({ duration: '0.2s' }).opacity(1)
                                 .after(function() {
                                     explosion.opacity(0);
-                                    // display hp change
+
                                     BattleLogger.getInstance()
-                                        .displayDamageTextAndHP(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+                                        .displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
                                     
                                     executorGroup.animate({ duration: moveBackTime + 's'})
                                         .move(0, 0)
@@ -951,9 +1026,8 @@ class BattleLogger {
                                 .after(function () {
                                     explosion.opacity(1);           
                                             
-                                    // display hp change
                                     BattleLogger.getInstance()
-                                        .displayDamageTextAndHP(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+                                        .displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
 
                                     attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
 
@@ -991,7 +1065,7 @@ class BattleLogger {
             }
 
             if (option.noAttackAnim) {
-                this.displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
             else {
@@ -1008,9 +1082,9 @@ class BattleLogger {
                          .after(function() {
                             exploSet.opacity(0);
                             spellCircle.opacity(0);
-                            // display hp change
+
                             BattleLogger.getInstance()
-                                .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                                .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                             BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1,
                                 option);
                          });
@@ -1021,9 +1095,9 @@ class BattleLogger {
                      .opacity(1)
                      .after(function() {
                         explosion.opacity(0);
-                        // display hp change
+
                         BattleLogger.getInstance()
-                            .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                            .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                         BattleLogger.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                      });
         }
@@ -1033,9 +1107,9 @@ class BattleLogger {
                 .move(x - x1, y - y1)
                 .after(function () {
                     explosion.opacity(1);
-                    // display hp change
+
                     BattleLogger.getInstance()
-                        .displayDamageTextAndHP(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                        .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                     this.animate({ duration: '0.5s'})
                         .move(0, 0)
@@ -1095,6 +1169,7 @@ interface MinorEvent {
     executorId?: number;  // the card id of the executor
     targetId?: number;    // the card id of the target
     type?: ENUM.MinorEventType;
+    wardUsed?: string;
     affliction?: {
         type: ENUM.AfflictionType;
         percent?: number;

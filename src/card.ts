@@ -298,6 +298,19 @@ class Card {
     getAGI () {
         return this.stats.agi + this.status.agi;
     }
+
+    hasWardOfType(type: string): boolean {
+        switch (type) {
+            case "PHYSICAL":
+                return this.status.attackResistance !== 0;
+            case "MAGICAL":
+                return this.status.magicResistance !== 0;
+            case "BREATH":
+                return this.status.breathResistance !== 0;
+            default:
+                throw new Error ("Invalid type of ward!");
+        }
+    }
 }
 
 class Stats {
