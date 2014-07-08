@@ -10,6 +10,8 @@
     static IMAGE_WIDTH = 70;
     static IMAGE_WIDTH_BIG = 120;
     static PLAY_MODE = 'MANUAL';
+    static FONT = 'Alegreya Sans, Cooper Black';
+    static AFFLICTION_TEXT_STROKE_WIDTH = '1px';
 
     logger: BattleLogger;
 
@@ -158,7 +160,7 @@
                         this.size(BattleGraphic.IMAGE_WIDTH);
                     });
 
-                var damageText = draw.text('0').font({ size: 22, family: "Cooper Black" })
+                var damageText = draw.text('0').font({ size: 22, family: BattleGraphic.FONT })
                                      .attr({fill:'#fff', stroke: '#000', 'stroke-width': '2px'})
                                      .center(coordArray[i][0], coordArray[i][1])
                                      .attr('id', 'p' + player + 'f' + i + 'damageText')
@@ -807,8 +809,8 @@
         var txt = SVG.get('p' + playerId + 'f' + famIndex + 'afflictText');
 
         if (!txt) {
-            txt = SVG.get('mainSvg').text('Paralyzed').font({ size: 14, family: "Cooper Black" })
-                                .attr({fill:'#fff', stroke: '#000', 'stroke-width': '2px'})
+            txt = SVG.get('mainSvg').text('Paralyzed').font({ size: 14, family: BattleGraphic.FONT })
+                                .attr({fill:'#fff', stroke: '#000', 'stroke-width': BattleGraphic.AFFLICTION_TEXT_STROKE_WIDTH})
                                 .center(this.coordArray[playerId][famIndex][0], 
                                         this.coordArray[playerId][famIndex][1] + BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + 20)
                                 .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')

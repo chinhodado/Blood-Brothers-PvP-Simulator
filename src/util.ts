@@ -104,3 +104,19 @@ function getSerializableObjectArray(array: any[]) {
     }
     return toReturn;
 }
+
+/**
+ * Return true if the browser is Chrome
+ */
+function isChrome(): boolean {
+    // please note, that IE11 now returns true for window.chrome
+    var isChromium = window.chrome,
+        vendorName = window.navigator.vendor;
+    if(isChromium !== null && vendorName === "Google Inc.") {
+        // is Google chrome
+        return true;
+    } else { 
+        // not Google chrome
+        return false;
+    }
+}
