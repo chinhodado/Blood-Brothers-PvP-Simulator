@@ -63,6 +63,13 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031343/bloodbrothersgame/images/thumb/f/f9/Ammit%2C_Soul_Destroyer_II_Figure.png/60px-Ammit%2C_Soul_Destroyer_II_Figure.png",
         fullName: "Ammit, Soul Destroyer II"
     },
+    10757: {
+        name: "Amphisbaena", hp: 14861, atk: 14850, def: 13030, wis: 19855, agi: 18024,
+        skills: [202, 203],
+        isMounted: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130622163801/bloodbrothersgame/images/thumb/4/46/Amphisbaena_II_Figure.png/168px-Amphisbaena_II_Figure.png",
+        fullName: "Amphisbaena II"
+    },
     11065: {
         name: "Ancient Beetle", hp: 14005, atk: 15901, def: 11903, wis: 11838, agi: 14904,
         skills: [365],
@@ -512,6 +519,13 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131115130412/bloodbrothersgame/images/thumb/9/9b/Grimoire_Beast_II_Figure.png/40px-Grimoire_Beast_II_Figure.png",
         fullName: "Grimoire Beast II"
     },
+    11170: {
+        name: "Gryla", hp: 16529, atk: 11622, def: 15868, wis: 15294, agi: 8740,
+        skills: [308, 316],
+        isMounted: true,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131214151558/bloodbrothersgame/images/thumb/c/c3/Gryla%2C_the_Lullaby_II_Figure.png/40px-Gryla%2C_the_Lullaby_II_Figure.webp",
+        fullName: "Gryla, the Lullaby II"
+    },
     21285: {
         name: "Guillaume", hp: 21515, atk: 20887, def: 16308, wis: 12948, agi: 18505,
         skills: [466, 467],
@@ -714,6 +728,12 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20130609105750/bloodbrothersgame/images/thumb/0/05/Kelaino%2C_the_Dark_Cloud_II_Figure.png/40px-Kelaino%2C_the_Dark_Cloud_II_Figure.png",
         fullName: "Kelaino, the Dark Cloud II"
     },
+    11314: {
+        name: "Kua Fu", hp: 16510, atk: 16561, def: 12207, wis: 9174, agi: 13476,
+        skills: [497],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140628103005/bloodbrothersgame/images/thumb/e/e3/Kua_Fu%2C_Sun_Chaser_II_Figure.png/171px-Kua_Fu%2C_Sun_Chaser_II_Figure.png",
+        fullName: "Kua Fu, Sun Chaser II"
+    },
     10911: {
         name: "Kyteler", hp: 11721, atk: 12524, def: 9892, wis: 17254, agi: 16416,
         skills: [258],
@@ -837,6 +857,13 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130125001433/bloodbrothersgame/images/thumb/6/6b/Mordred%2C_Drake_Knight_Figure.png/40px-Mordred%2C_Drake_Knight_Figure.png",
         fullName: "Mordred, Drake Knight"
     },
+    10625: {
+        name: "Moren", hp: 8502, atk: 11318, def: 7759, wis: 16803, agi: 8039,
+        skills: [71, 85],
+        isMounted: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130418051723/bloodbrothersgame/images/thumb/4/4a/Moren%2C_Rime_Mage_II_Figure.png/40px-Moren%2C_Rime_Mage_II_Figure.webp",
+        fullName: "Moren, Rime Mage II"
+    },
     11233: {
         name: "Musashi", hp: 20592, atk: 24752, def: 19151, wis: 17981, agi: 18024,
         skills: [404],
@@ -892,6 +919,13 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130106211414/bloodbrothersgame/images/thumb/5/5c/Odin_Stormgod_II_Figure.png/40px-Odin_Stormgod_II_Figure.png",
         fullName: "Odin Stormgod II"
     },
+    11267: {
+        name: "Odin L", hp: 15110, atk:	16562, def: 13875, wis: 17363, agi: 18057,
+        skills: [440, 441],
+        isMounted: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140430101913/bloodbrothersgame/images/thumb/6/65/Odin%2C_God_of_Victory_II_Figure.png/40px-Odin%2C_God_of_Victory_II_Figure.png",
+        fullName: "Odin, God of Victory II"
+    },
     10889: {
         name: "Olitiau", hp: 14081, atk: 15760, def: 11676, wis: 11232, agi: 15197,
         skills: [221],
@@ -936,6 +970,13 @@ var famDatabase = {
         skills: [111],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130301003405/bloodbrothersgame/images/thumb/6/69/Pegasus%2C_the_Light_Divine_II_Figure.png/60px-Pegasus%2C_the_Light_Divine_II_Figure.png",
         fullName: "Pegasus, the Light Divine II"
+    },
+    10831: {
+        name: "Pegasus Knight", hp: 15251, atk: 19032, def: 15370, wis: 13073, agi: 18046,
+        skills: [311, 312],
+        isMounted: true,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20131209121232/bloodbrothersgame/images/thumb/e/e4/Pegasus_Knight_II_Figure.png/40px-Pegasus_Knight_II_Figure.png",
+        fullName: "Pegasus Knight II"
     },
     10013: {
         name: "Pendragon", hp: 9844, atk: 10317, def: 10751, wis: 12357, agi: 10861,
@@ -1341,6 +1382,13 @@ var famDatabase = {
         skills: [412],
         imageLink: "http://img4.wikia.nocookie.net/__cb20140402124522/bloodbrothersgame/images/thumb/7/7f/Xaphan%2C_the_Foul_Flame_II_Figure.png/40px-Xaphan%2C_the_Foul_Flame_II_Figure.png",
         fullName: "Xaphan, the Foul Flame II"
+    },
+    11315: {
+        name: "Xuan Wu", hp: 18013, atk: 18609, def: 17038, wis: 13821, agi: 13507,
+        skills: [499, 500],
+        autoAttack: 10020,
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140628103006/bloodbrothersgame/images/thumb/2/25/Xuan_Wu_II_Figure.png/171px-Xuan_Wu_II_Figure.png",
+        fullName: "Xuan Wu II"
     },
     10995: {
         name: "Ymir", hp: 22650, atk: 24600, def: 16464, wis: 20592, agi: 15933,

@@ -158,6 +158,20 @@ var SkillDatabase = {
         description: "Counterattack after receiving an attack."
     },
 
+    71: {
+        name: "Icicle", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 3, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 5, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy damage to one foe."
+    },
+
+    85: {
+        name: "Grace of Winds 2", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.2, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 4, maxProbability: 70,
+        description: "Raise AGI of all familiars."
+    },
+
     94: {
         name: "Grace of Winds 3", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.3, skillFuncArg2: 4, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -498,6 +512,20 @@ var SkillDatabase = {
         skillFuncArg1: 0.75, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal ATK-based damage and sometimes poison six random foes."
+    },
+
+    202 : {
+        name: "Trial by Fire", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 6, maxProbability: 30, ward: "BREATH",
+        description: "Deal massive WIS-based fire damage to two foes."
+    },
+
+    203 : {
+        name: "Trial by Ice", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2, skillFuncArg2: 3, skillFuncArg3: 0.3, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 6, maxProbability: 30, ward: "BREATH",
+        description: "Deal massive WIS-based water damage to two foes."
     },
 
     204 : {
@@ -923,6 +951,27 @@ var SkillDatabase = {
         name: "Evil Wink", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 1.8, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    308 : {
+        name: "Bloodied Hands", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.7, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes."
+    },
+
+    311 : {
+        name: "Black Phantasm", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 6, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to two foes."
+    },
+
+    312 : {
+        name: "Demon Spear", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.75, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0, 
+        skillRange: 6, maxProbability: 30, ward: "PHYSICAL",
+        description: "A spear technique from the West. Deal heavy ATK-based damage to two foes."
     },
     
     313 : {
@@ -1485,6 +1534,27 @@ var SkillDatabase = {
         description: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
 
+    497: {
+        name: "Mighty Stomp", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage to three random foes, ignoring position."
+    },
+
+    499: {
+        name: "Snake Whip", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.5, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage to five random foes, ignoring position."
+    },
+
+    500: {
+        name: "Spiny Carapace", skillType: 3, skillFunc: 13, skillCalcType: 1,
+        skillFuncArg1: 1.2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
+        description: "Chance to unleash a counter attack when struck."
+    },
+
     10004: { // 105% Mod, Single Hit, WIS-based, position independent, paralyze (Lahamu)
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1.05, skillFuncArg2: 2, skillFuncArg3: 0.2, skillFuncArg4: 0, skillFuncArg5: 0,
@@ -1537,6 +1607,12 @@ var SkillDatabase = {
         name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 10, skillFuncArg5: 0,
         skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
+    },
+
+    10020: { // 60% Mod, 2 Random Hits, ATK-based, position dependent
+        name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 0.6, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 23, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
     
     99000 : {

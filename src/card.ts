@@ -5,6 +5,7 @@ class Card {
     name : string;
     private stats: Stats;
     id : number; // id for this simulator, not the id in game
+    isMounted: boolean;
     originalStats : Stats;
     status : Status;
     skills : Skill[];
@@ -25,7 +26,7 @@ class Card {
     
     imageLink : string;
     
-    constructor(name: string, stats: Stats, skills: Skill[], player: Player, formationColumn, imageLink: string, autoAttack: Skill) {
+    constructor(name: string, stats: Stats, skills: Skill[], player: Player, formationColumn, imageLink: string, autoAttack: Skill, isMounted: boolean) {
         this.name = name;
         this.stats = stats; // this will be modified during the battle
         this.status = new Status();
@@ -33,6 +34,7 @@ class Card {
             new Stats(stats.hp, stats.atk, stats.def, stats.wis, stats.agi); // this should never be modified
         this.skills = skills;
         this.player = player; // 1: me, 2: opponent
+        this.isMounted = isMounted;
     
         this.isDead = false;
         this.formationColumn = formationColumn;
@@ -123,6 +125,14 @@ class Card {
         else {
             return getRandomElement(this.protectSkills);
         }
+    }
+    
+    getFirstActiveSkill(): Skill {
+        return this.activeSkills[0];
+    }
+    
+    getSecondActiveSkill(): Skill {
+        return this.activeSkills[1];
     }
 
     getName() {

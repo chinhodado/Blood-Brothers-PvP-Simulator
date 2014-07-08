@@ -110,6 +110,7 @@ function getSerializableObjectArray(array: any[]) {
  */
 function isChrome(): boolean {
     // please note, that IE11 now returns true for window.chrome
+    var window: any = window;
     var isChromium = window.chrome,
         vendorName = window.navigator.vendor;
     if(isChromium !== null && vendorName === "Google Inc.") {

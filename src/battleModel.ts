@@ -150,14 +150,16 @@ class BattleModel {
                                         this.player1,
                                         i,
                                         player1cardsInfo[i].imageLink,
-                                        auto1); //my cards
+                                        auto1,
+                                        player1cardsInfo[i].isMounted); //my cards
             this.player2Cards[i] = new Card(player2cardsInfo[i].name, 
                                         stats2,
                                         player2Skills, 
                                         this.player2,
                                         i,
                                         player2cardsInfo[i].imageLink,
-                                        auto2);  // opp card
+                                        auto2,
+                                        player2cardsInfo[i].isMounted);  // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
 
@@ -391,27 +393,13 @@ class BattleModel {
                 }
 
                 // procs active skill if we can
-                var activeSkill = currentCard.getRandomActiveSkill();
-                if (activeSkill) {
-                    var data: SkillLogicData = {
-                        executor: currentCard,
-                        skill: activeSkill
-                    }
-                    if (activeSkill.willBeExecuted(data)) {
-                        this.logger.addMajorEvent({
-                            description: currentCard.name + " procs " + activeSkill.name,
-                            executorId: currentCard.id,
-                            skillId: activeSkill.id
-                        });
+                this.processActivePhase(currentCard, "FIRST");
+                
+                finished = this.checkFinish();
+                if (finished) break;
 
-                        activeSkill.execute(data);
-                    }
-                    else {
-                        this.executeNormalAttack(currentCard);
-                    }
-                }
-                else {
-                    this.executeNormalAttack(currentCard);
+                if (!currentCard.isDead && currentCard.isMounted) {
+                    this.processActivePhase(currentCard, "SECOND");
                 }
 
                 // update poison status
@@ -419,20 +407,7 @@ class BattleModel {
                     currentCard.updateAffliction();
                 }
 
-                if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
-                    finished = true;
-                    this.playerWon = this.currentPlayer;
-                    this.logger.addMajorEvent({
-                        description: currentCard.getPlayerName() + " has won"
-                    });                    
-                }
-                else if (this.cardManager.isAllDead(this.currentPlayerCards)) {
-                    finished = true;
-                    this.playerWon = this.oppositePlayer;
-                    this.logger.addMajorEvent({
-                        description: this.oppositePlayer.name + " has won"
-                    });
-                }
+                finished = this.checkFinish();
             }
 
             if (!finished) {
@@ -440,6 +415,59 @@ class BattleModel {
             }
         }
         return this.playerWon.name;
+    }
+    
+    checkFinish(): boolean {
+        if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
+            this.playerWon = this.currentPlayer;
+            this.logger.addMajorEvent({
+                description: this.playerWon.name + " has won"
+            });
+            return true;                   
+        }
+        else if (this.cardManager.isAllDead(this.currentPlayerCards)) {
+            this.playerWon = this.oppositePlayer;
+            this.logger.addMajorEvent({
+                description: this.playerWon.name + " has won"
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    processActivePhase(currentCard: Card, nth: string) {
+        var activeSkill = currentCard.getRandomActiveSkill();
+        
+        if (nth === "FIRST" && currentCard.isMounted) {
+            activeSkill = currentCard.getFirstActiveSkill();
+        }
+        else if (nth === "SECOND" && currentCard.isMounted) {
+            activeSkill = currentCard.getSecondActiveSkill();
+        }
+        
+        if (activeSkill) {
+            var data: SkillLogicData = {
+                executor: currentCard,
+                skill: activeSkill
+            }
+            if (activeSkill.willBeExecuted(data)) {
+                this.logger.addMajorEvent({
+                    description: currentCard.name + " procs " + activeSkill.name,
+                    executorId: currentCard.id,
+                    skillId: activeSkill.id
+                });
+
+                activeSkill.execute(data);
+            }
+            else {
+                this.executeNormalAttack(currentCard);
+            }
+        }
+        else {
+            this.executeNormalAttack(currentCard);
+        }
     }
 
     /**
