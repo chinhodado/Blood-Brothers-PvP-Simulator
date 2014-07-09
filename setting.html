@@ -178,11 +178,7 @@
         }
 
         function validateForm() {
-            var form = document.forms["mainForm"];
-            if (form["mode"].value == "sim" && (form["r1"].checked == true || form["r2"].checked == true)) {
-                alert("You cannot choose Random with Simulation mode");
-                return false;
-            }
+            // put any validation for the form here
             return true;
         }
     </script>

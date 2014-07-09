@@ -106,10 +106,10 @@
 <body>
     <div id="battleEventDiv" class="leftSide">
         <div style="display: none;" id="simDiv">
-            Simulation: 100,000 battles
+            Simulation: 10,000 battles
             <br>
             Simulation progress:
-            <progress value="0" max="100000" id="progressBar" style="width: 300px;"></progress>
+            <progress value="0" max="10000" id="progressBar" style="width: 300px;"></progress>
             <div id="simResultDiv">
             </div>
         </div>
@@ -205,7 +205,15 @@
         }
         else if (mode == "sim") {
             // create a new game just to display the fam and formation
-            var newGame = new BattleModel(data);
+            if (option.p1random) {
+                BattleGraphic.HIDE_PLAYER1 = true;
+            }
+
+            if (option.p2random) {
+                BattleGraphic.HIDE_PLAYER2 = true;
+            }
+
+            var newGame = new BattleModel(data, option);
 
             // hide/show some elements on the page
             document.getElementById("simDiv").setAttribute("style", "display: block;");
@@ -219,13 +227,14 @@
                     document.getElementById("progressBar").setAttribute("value", event.data.progress);
                 }
                 else if (event.data.status == "done") {
+                    document.getElementById("progressBar").setAttribute("value", 10000);
                     document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount +
                         "<br> Player 1 won: " + event.data.p1WinCount + 
                         "<br><a href=setting.html>Go back to main page </a>");
                     worker.terminate();
                 }
             };
-            worker.postMessage(data);
+            worker.postMessage([data, option]);
         }
     </script>
 

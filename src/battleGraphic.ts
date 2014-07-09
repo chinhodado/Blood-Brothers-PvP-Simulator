@@ -6,6 +6,10 @@
         2: []
     };
 
+    // mainly for simulation vs random brigs
+    static HIDE_PLAYER1 = false;
+    static HIDE_PLAYER2 = false;
+
     static SHOW_FORMATION_LINE = false;
     static IMAGE_WIDTH = 70;
     static IMAGE_WIDTH_BIG = 120;
@@ -105,6 +109,10 @@
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
             var groupPlayer = draw.group()
                                   .attr('id', 'p' + player + 'group');
+            if ((BattleGraphic.HIDE_PLAYER1 && player == 1) || (BattleGraphic.HIDE_PLAYER2 && player == 2)) {
+                groupPlayer.hide();
+            }
+
             if (player == 1) {
                 groupPlayer.move(30, 400);    
             }

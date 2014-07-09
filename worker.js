@@ -4,12 +4,12 @@ importScripts('compiled.js');
  * Run a heavy simulation in the background
  * @param data The game data
  */
-function runSimulation(data) {
+function runSimulation(args) {
     var p1WinCount = 0;
     var p2WinCount = 0;
-    for (var i = 0; i < 100000; i++) {
+    for (var i = 0; i < 10000; i++) {
         BattleModel.IS_MASS_SIMULATION = true;
-        var newGame = new BattleModel(data);
+        var newGame = new BattleModel(args[0], args[1]);
         var playerWon = newGame.startBattle();
         BattleModel.resetAll();
         if (playerWon == "Player 1") {
