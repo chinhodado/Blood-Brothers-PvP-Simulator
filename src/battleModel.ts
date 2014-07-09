@@ -123,43 +123,9 @@ class BattleModel {
             var player1Skills = this.makeSkillArray(p1fSkillIdArray);
             var player2Skills = this.makeSkillArray(p2fSkillIdArray);
             
-            var stats1 = new Stats(player1cardsInfo[i].hp, player1cardsInfo[i].atk, 
-                player1cardsInfo[i].def, player1cardsInfo[i].wis, player1cardsInfo[i].agi);
-            var stats2 = new Stats(player2cardsInfo[i].hp, player2cardsInfo[i].atk, 
-                player2cardsInfo[i].def, player2cardsInfo[i].wis, player2cardsInfo[i].agi);
+            this.player1Cards[i] = new Card(player1cardsInfo[i], this.player1, i, player1Skills); //my cards
 
-            var auto1: Skill;
-            if (player1cardsInfo[i].autoAttack) {
-                auto1 = new Skill(player1cardsInfo[i].autoAttack);
-            }
-            else {
-                auto1 = new Skill(0);
-            }
-
-            var auto2: Skill;
-            if (player2cardsInfo[i].autoAttack) {
-                auto2 = new Skill(player2cardsInfo[i].autoAttack);
-            }
-            else {
-                auto2 = new Skill(0);
-            }
-            
-            this.player1Cards[i] = new Card(player1cardsInfo[i].name,
-                                        stats1, 
-                                        player1Skills, 
-                                        this.player1,
-                                        i,
-                                        player1cardsInfo[i].imageLink,
-                                        auto1,
-                                        player1cardsInfo[i].isMounted); //my cards
-            this.player2Cards[i] = new Card(player2cardsInfo[i].name, 
-                                        stats2,
-                                        player2Skills, 
-                                        this.player2,
-                                        i,
-                                        player2cardsInfo[i].imageLink,
-                                        auto2,
-                                        player2cardsInfo[i].isMounted);  // opp card
+            this.player2Cards[i] = new Card(player2cardsInfo[i], this.player2, i, player2Skills); // opp card
             this.allCards.push(this.player1Cards[i]);
             this.allCards.push(this.player2Cards[i]);
 

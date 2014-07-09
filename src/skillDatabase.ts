@@ -1409,6 +1409,20 @@ var SkillDatabase = {
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal AGI-based damage to four random foes."
     },
+
+    461 : {
+        name : "Lion's Wrath", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.35, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to four random foes."
+    },
+
+    462 : {
+        name : "Heroic Might", skillType: 2, skillFunc: 18, skillCalcType: 4,
+        skillFuncArg1: 2, skillFuncArg2: 0, skillFuncArg3: 0, skillFuncArg4: 0, skillFuncArg5: 0,
+        skillRange: 113, maxProbability: 50,
+        description: "Restore HP to three random familiars."
+    },
     
     463 : {
         name : "Absolute Zero", skillType: 2, skillFunc: 4, skillCalcType: 2,

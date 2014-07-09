@@ -173,4 +173,7 @@ class CardManager {
         return card1.id == card2.id;
     }
 
+    getAllCards(): Card[] {
+        return BattleModel.getInstance().allCards;
+    }
 }

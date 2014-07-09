@@ -2,14 +2,16 @@
 
 class Card {
 
-    name : string;
+    name: string;
+    fullName: string;
     private stats: Stats;
-    id : number; // id for this simulator, not the id in game
+    id: number; // id for this simulator, not the id in game
     isMounted: boolean;
-    originalStats : Stats;
-    status : Status;
-    skills : Skill[];
-    player : Player;
+    isWarlord: boolean;
+    originalStats: Stats;
+    status: Status;
+    skills: Skill[];
+    player: Player;
     isDead: boolean;
 
     affliction: Affliction;
@@ -21,20 +23,26 @@ class Card {
     private protectSkills: Skill[] = [];
     private defenseSkills: Skill[] = [];
     
-    formationColumn : number; // 0 to 4
-    formationRow : ENUM.FormationRow; // 1, 2 or 3
+    formationColumn: number; // 0 to 4
+    formationRow: ENUM.FormationRow; // 1, 2 or 3
     
-    imageLink : string;
+    imageLink: string;
     
-    constructor(name: string, stats: Stats, skills: Skill[], player: Player, formationColumn, imageLink: string, autoAttack: Skill, isMounted: boolean) {
-        this.name = name;
-        this.stats = stats; // this will be modified during the battle
+    constructor(cardData, player: Player, formationColumn: number, skills: Skill[]) {
+        this.name = cardData.name;
+        this.fullName = cardData.fullName;
+
+        // this will be modified during the battle
+        this.stats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
+        
+        // this should never be modified
+        this.originalStats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
+
         this.status = new Status();
-        this.originalStats = 
-            new Stats(stats.hp, stats.atk, stats.def, stats.wis, stats.agi); // this should never be modified
         this.skills = skills;
         this.player = player; // 1: me, 2: opponent
-        this.isMounted = isMounted;
+        this.isMounted = cardData.isMounted;
+        this.isWarlord = cardData.isWarlord;
     
         this.isDead = false;
         this.formationColumn = formationColumn;
@@ -58,8 +66,14 @@ class Card {
             }
         }
         
-        this.imageLink = imageLink;
-        this.autoAttack = autoAttack;
+        this.imageLink = cardData.imageLink;
+
+        if (cardData.autoAttack) {
+            this.autoAttack = new Skill(cardData.autoAttack);
+        }
+        else {
+            this.autoAttack = new Skill(0);
+        }
 
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
     }

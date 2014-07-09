@@ -125,6 +125,13 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20140417053801/bloodbrothersgame/images/thumb/0/02/Arcanan_Emperor_II_Figure.png/40px-Arcanan_Emperor_II_Figure.png",
         fullName: "Arcanan Emperor II"
     },
+    11284: {
+        name: "Arcanan Might", hp: 18598, atk: 19227, def: 10766, wis: 13301, agi: 17948,
+        skills: [461, 462],
+        isMounted: true,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140516081822/bloodbrothersgame/images/thumb/a/a4/Arcanan_Might_II_Figure.png/171px-Arcanan_Might_II_Figure.png",
+        fullName: "Arcanan Might II"
+    },
     10600: {
         name: "Archduke Ose", hp: 16995, atk: 14395, def: 15023, wis: 14850, agi: 11990,
         skills: [154],

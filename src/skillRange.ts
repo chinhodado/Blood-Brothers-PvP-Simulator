@@ -15,14 +15,80 @@ class RangeFactory {
         32: 4,
         33: 5
     };
+
+    static FRIEND_RANDOM_RANGE_TARGET_NUM = {
+        101: 1,
+        102: 2,
+        103: 3,
+        104: 4,
+        105: 5,
+        106: 6,
+        111: 1,
+        112: 2,
+        113: 3,
+        114: 4,
+        115: 5,
+        116: 6,
+        121: 1,
+        122: 2,
+        123: 3,
+        124: 4,
+        125: 5,
+        126: 6,
+        131: 1,
+        132: 2,
+        133: 3,
+        134: 4,
+        135: 5,
+        136: 6
+    };
+
+    static INCLUDE_SELF = {
+        111: true,
+        112: true,
+        113: true,
+        114: true,
+        115: true,
+        116: true,
+        131: true,
+        132: true,
+        133: true,
+        134: true,
+        135: true,
+        136: true,
+
+        332: true,
+        333: true,
+        334: true,
+        335: true,
+        336: true
+    };
+
+    static IS_UNIQUE = {
+        121: true,
+        122: true,
+        123: true,
+        124: true,
+        125: true,
+        126: true,
+        131: true,
+        132: true,
+        133: true,
+        134: true,
+        135: true,
+        136: true
+    };
     
-    static getRange (id) {
+    static getRange (id: number, selectDead: boolean = false) {
         var range: BaseRange = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
         }
         else if (this.isEnemyNearRange(id)) {
             range = this.createEnemyNearRange(id);
+        }
+        else if (this.isFriendRandomRange(id)) {
+            range = this.createFriendRandomRange(id, selectDead);
         }
         else {
             range = this.createRange(id);            
@@ -33,9 +99,17 @@ class RangeFactory {
     static isEnemyRandomRange (id) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
     }
+
+    static isFriendRandomRange (id) {
+        return !!RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
+    }
     
     static createEnemyRandomRange (id) {
         return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
+    }
+
+    static createFriendRandomRange (id: number, selectDead: boolean) {
+        return new FriendRandomRange(id, RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id], selectDead);
     }
     
     static isEnemyNearRange (id) {
@@ -89,6 +163,33 @@ class BaseRange {
     getTargets(executor : Card) : Card[] {
         // to be overrridden
         return null;
+    }
+
+    getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
+        var allCards = CardManager.getInstance().getAllCards();
+        var baseTargets = [];
+        for (var i = 0; i < allCards.length; i++) {
+            if (condFunc(allCards[i])) {
+                baseTargets.push(allCards[i]);
+            }
+        }
+        return baseTargets;
+    }
+
+    getRandomCard(cards: Card[]): Card {
+        return getRandomElement(cards);
+    }
+
+    // returns a maximum of 'num' unique cards (shuffles and returns first n)
+    getRandomUniqueCards(cards: Card[], num: number) {
+        var len = cards.length;
+        while (len) {
+            var a = Math.floor(Math.random() * len);
+            var b = cards[--len];
+            cards[len] = cards[a];
+            cards[a] = b;
+        }
+        return cards.slice(0, num);
     }
 }
 
@@ -296,4 +397,53 @@ class EnemyAllRange extends BaseRange {
     }
 }
 
+class FriendRandomRange extends BaseRange {
+    numTargets: number;
+    selectDead: boolean;
+    isUnique: boolean;
+
+    constructor(id: number, numTargets: number, selectDead: boolean) {
+        super(id);
+        this.numTargets = numTargets;
+        this.selectDead = selectDead;
+        this.isUnique = RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
+    }
+    
+    getTargets (executor : Card) : Card[]{
+        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
+        var targets: Card[];
+
+        if (baseTargets.length) {
+
+            if (this.isUnique) {
+                targets = this.getRandomUniqueCards(baseTargets, this.numTargets);
+            } 
+            else {
+                for (var i = 0; i < this.numTargets; i++) {
+                    targets.push(this.getRandomCard(baseTargets));
+                }
+            }
+        }
+        return targets;
+    }
+
+    getCondFunc(executor: Card): (x: Card)=>boolean {
+        var selectDead = this.selectDead;
+
+        return function (card: Card) {
+            var isValid = true;
+
+            if (card.getPlayerId() != executor.getPlayerId())
+                return false;
+
+            if (card.id === executor.id && !RangeFactory.INCLUDE_SELF)
+                return false;
+
+            if (selectDead && !card.isDead)
+                return false;
+
+            return isValid;
+        };
+    }
+}
 
