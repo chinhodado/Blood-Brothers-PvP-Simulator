@@ -72,7 +72,7 @@ class Card {
             this.autoAttack = new Skill(cardData.autoAttack);
         }
         else {
-            this.autoAttack = new Skill(0);
+            this.autoAttack = new Skill(10000);
         }
 
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204

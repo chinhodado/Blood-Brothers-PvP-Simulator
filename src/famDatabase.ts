@@ -424,6 +424,13 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20140112201013/bloodbrothersgame/images/thumb/5/5b/Frost_Bearwolf_II_Figure.png/40px-Frost_Bearwolf_II_Figure.png",
         fullName: "Frost Bearwolf II"
     },
+    10022: {
+        name: "Galahad", hp: 6543, atk: 7271, def: 7349, wis: 6842, agi: 6478,
+        skills: [10000, 33, 5],
+        isMounted: true,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130228233340/bloodbrothersgame/images/thumb/e/e2/Galahad%2C_Drake_Knight_II_Figure.png/40px-Galahad%2C_Drake_Knight_II_Figure.png",
+        fullName: "Galahad, Drake Knight II"
+    },
     201: {
         name: "Gan Ceann", hp: 7950, atk: 10530, def: 8830, wis: 8910, agi: 8540,
         skills: [33],
@@ -691,6 +698,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20131227221921/bloodbrothersgame/images/thumb/0/0b/Jack_o%27_Frost_II_Figure.png/40px-Jack_o%27_Frost_II_Figure.png",
         fullName: "Jack o' Frost II"
     },
+    10569: {
+        name: "Jinx-eye", hp: 14709, atk: 15998, def: 13832, wis: 13832, agi: 14915,
+        skills: [146],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130220115250/bloodbrothersgame/images/thumb/c/c4/Jinx-eye_Dragon_II_Figure.png/40px-Jinx-eye_Dragon_II_Figure.png",
+        fullName: "Jinx-eye Dragon II"
+    },
     11266: {
         name: "Jormungandr", hp: 13024, atk: 16768, def: 11756, wis: 10112, agi: 15889,
         skills: [438],
@@ -866,7 +879,7 @@ var famDatabase = {
     },
     10625: {
         name: "Moren", hp: 8502, atk: 11318, def: 7759, wis: 16803, agi: 8039,
-        skills: [71, 85],
+        skills: [10000, 71, 85], // hacky
         isMounted: true,
         imageLink: "http://img3.wikia.nocookie.net/__cb20130418051723/bloodbrothersgame/images/thumb/4/4a/Moren%2C_Rime_Mage_II_Figure.png/40px-Moren%2C_Rime_Mage_II_Figure.webp",
         fullName: "Moren, Rime Mage II"
@@ -1062,6 +1075,12 @@ var famDatabase = {
         skills: [398],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140318135240/bloodbrothersgame/images/thumb/6/6b/Reinforced_Brass_Gorilla_II_Figure.png/60px-Reinforced_Brass_Gorilla_II_Figure.png",
         fullName: "Reinforced Brass Gorilla II"
+    },
+    11066: {
+        name: "Ruprecht", hp: 12911, atk: 15316, def: 11795, wis: 17504, agi: 11199,
+        skills: [330, 334],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20131221031407/bloodbrothersgame/images/thumb/7/79/Ruprecht_the_Punisher_II_Figure.png/40px-Ruprecht_the_Punisher_II_Figure.png",
+        fullName: "Ruprecht the Punisher II"
     },
     11063: {
         name: "Treant", hp: 18566, atk: 17017, def: 22542, wis: 13626, agi: 8014,
