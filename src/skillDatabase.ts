@@ -132,6 +132,13 @@ var SkillDatabase = {
         description: "Attack three foes."
     },
 
+    47 : {
+        name: "Blastwave", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2,  
+        skillRange: 12, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy damage to all foes in the front line."
+    },
+
     60: {
         name: "Syphon", skillType: 3, skillFunc: 11, skillCalcType: 1,
         skillFuncArg1: 1, 
@@ -275,6 +282,13 @@ var SkillDatabase = {
         skillFuncArg1: 0.2, skillFuncArg2: 3, skillFuncArg3: 2,
         skillRange: 4, maxProbability: 70,
         description: "Raise WIS and DEF of all party members."
+    },
+
+    122 : {
+        name: "Frontal Onslaught", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.5, 
+        skillRange: 12, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy damage to the front line."
     },
 
     123 : {
@@ -771,6 +785,13 @@ var SkillDatabase = {
         name: "Brutal Fist", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 2.1,  
         skillRange: 23, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    254 : {
+        name: "Roving Fang", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 1.6, 
+        skillRange: 12, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy AGI-based damage to all foes in the front line."
     },
 
     256 : {
@@ -1424,6 +1445,13 @@ var SkillDatabase = {
         name: "Covenant of the Rose", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.15, skillFuncArg2: 4, 
         skillRange: 3, maxProbability: 70
+    },
+
+    411 : {
+        name: "Winds of Lust", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 2.1, 
+        skillRange: 12, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to all foes in the front line, regardless of position."
     },
 
     412 : {

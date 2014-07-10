@@ -75,6 +75,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031343/bloodbrothersgame/images/thumb/f/f9/Ammit%2C_Soul_Destroyer_II_Figure.png/60px-Ammit%2C_Soul_Destroyer_II_Figure.png",
         fullName: "Ammit, Soul Destroyer II"
     },
+    10717: {
+        name: "Amon", hp: 13171, atk: 16128, def: 10755, wis: 14861, agi: 13214,
+        skills: [47],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130809222440/bloodbrothersgame/images/thumb/8/86/Amon%2C_Marquis_of_Blaze_II_Figure.png/40px-Amon%2C_Marquis_of_Blaze_II_Figure.png",
+        fullName: "Amon, Marquis of Blaze II"
+    },
     10757: {
         name: "Amphisbaena", hp: 14861, atk: 14850, def: 13030, wis: 19855, agi: 18024,
         skills: [202, 203],
@@ -344,6 +350,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130106235645/bloodbrothersgame/images/thumb/4/45/Desna%2C_Mythic_Wendigo_II_Figure.png/60px-Desna%2C_Mythic_Wendigo_II_Figure.png",
         fullName: "Desna, Mythic Wendigo II"
     },
+    10914: {
+        name: "Dharva", hp: 14096, atk: 13742, def: 12280, wis: 11942, agi: 15427,
+        skills: [254],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131002004805/bloodbrothersgame/images/thumb/9/97/Dharva_Fangclad_II_Figure.png/40px-Dharva_Fangclad_II_Figure.png",
+        fullName: "Dharva Fangclad II"
+    },
     11096: {
         name: "Djinn", hp: 14048, atk: 17363, def: 13333, wis: 19422, agi: 16605,
         skills: [319, 320],
@@ -480,6 +492,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20131023124814/bloodbrothersgame/images/thumb/7/77/Gargoyle_Gatekeeper_II_Figure.png/40px-Gargoyle_Gatekeeper_II_Figure.png",
         fullName: "Gargoyle Gatekeeper II"
     },
+    10609: {
+        name: "Garuda", hp: 14417, atk: 14677, def: 14081, wis: 15814, agi: 15023,
+        skills: [47],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130322102239/bloodbrothersgame/images/thumb/b/bf/Garuda_II_Figure.png/40px-Garuda_II_Figure.png",
+        fullName: "Garuda II"
+    },
     10571: {
         name: "Gathgoic", hp: 14839, atk: 16128, def: 14980, wis: 17948, agi: 14709,
         skills: [141],
@@ -551,6 +569,13 @@ var famDatabase = {
         skills: [212],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130714135315/bloodbrothersgame/images/thumb/1/11/Grellas_Fellstaff_II_Figure.png/40px-Grellas_Fellstaff_II_Figure.png",
         fullName: "Grellas Fellstaff II"
+    },
+    21216: {
+        name: "Gremory", hp: 18466, atk: 12819, def: 18945, wis: 20426, agi: 17009,
+        skills: [411],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140403112446/bloodbrothersgame/images/thumb/0/0b/Gremory%2C_the_Vermilion_Moon_Figure.png/40px-Gremory%2C_the_Vermilion_Moon_Figure.png",
+        fullName: "Gremory, the Vermilion Moon"
     },
     10784: {
         name: "Gretch", hp: 16280, atk: 15305, def: 12683, wis: 15652, agi: 13875,
@@ -888,6 +913,12 @@ var famDatabase = {
         skills: [358],
         imageLink: "http://img3.wikia.nocookie.net/__cb20140129062109/bloodbrothersgame/images/thumb/5/53/Marcus%2C_Brave_of_Liberation_II_Figure.png/40px-Marcus%2C_Brave_of_Liberation_II_Figure.png",
         fullName: "Marcus, Brave of Liberation II"
+    },
+    332: {
+        name: "Mari", hp: 10500, atk: 10980, def: 10850, wis: 13370, agi: 11500,
+        skills: [47],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130125001827/bloodbrothersgame/images/thumb/e/e4/Mari_the_Witch_Figure.png/40px-Mari_the_Witch_Figure.png",
+        fullName: "Mari the Witch"
     },
     11013: {
         name: "Marraco", hp: 18716, atk: 15876, def: 17254, wis: 7381, agi: 8809,
@@ -1439,11 +1470,23 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20140206151442/bloodbrothersgame/images/thumb/1/15/Tormented_Bone_Beast_II_Figure.png/60px-Tormented_Bone_Beast_II_Figure.png",
         fullName: "Tormented Bone Beast II"
     },
+    10747: {
+        name: "Tristan", hp: 13832, atk: 16193, def: 15197, wis: 13052, agi: 15771,
+        skills: [122],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130629202258/bloodbrothersgame/images/thumb/a/ad/Tristan%2C_the_Sorrowful_II_Figure.png/40px-Tristan%2C_the_Sorrowful_II_Figure.png",
+        fullName: "Tristan, the Sorrowful II"
+    },
     10647: {
         name: "Tuniq", hp: 13635, atk: 16709, def: 12062, wis: 12086, agi: 9794,
         skills: [150],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130308154138/bloodbrothersgame/images/thumb/9/9c/Tuniq%2C_Guardian_Colossus_II_Figure.png/40px-Tuniq%2C_Guardian_Colossus_II_Figure.png",
         fullName: "Tuniq, Guardian Colossus II"
+    },
+    10454: {
+        name: "Stormwyrm", hp: 11025, atk: 11514, def: 9646, wis: 14489, agi: 11318,
+        skills: [47],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130301083740/bloodbrothersgame/images/thumb/e/ee/Two-Headed_Stormwyrm_II_Figure.png/40px-Two-Headed_Stormwyrm_II_Figure.png",
+        fullName: "Two-Headed Stormwyrm II"
     },
     10735: {
         name: "Typhon", hp: 14677, atk: 13355, def: 14341, wis: 17959, agi: 13626,

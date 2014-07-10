@@ -121,7 +121,7 @@ class RangeFactory {
     }
 
     static isRowBasedRange(rangeId: number): boolean {
-        if (rangeId === 15) {
+        if (rangeId === 15 || rangeId === 12) {
             return true;
         }
 
@@ -150,6 +150,8 @@ class RangeFactory {
                 return new AllRange(id);
             case 8 :
                 return new EnemyAllRange(id);
+            case 12:
+                return new EnemyFrontAllRange(id);
             case 15:
                 return new EnemyFrontMidAllRange(id);
             case 21:
@@ -527,6 +529,16 @@ class EnemyFrontMidAllRange extends BaseRowRange {
             } else {
                 candidates = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
             }
+        }
+        return candidates;
+    }
+}
+
+class EnemyFrontAllRange extends BaseRowRange {
+    getTargets(executor : Card) : Card[] {
+        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        if (candidates.length) {
+            candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);
         }
         return candidates;
     }
