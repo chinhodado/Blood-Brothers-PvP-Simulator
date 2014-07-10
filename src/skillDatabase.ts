@@ -388,6 +388,13 @@ var SkillDatabase = {
 	    description: "Chance to silence all foes at beginning of battle." 
 	},
 
+    149 : {
+        name: "Spiteful Strike", skillType: 2, skillFunc: 21, skillCalcType: 1, 
+        skillFuncArg1: 1, skillFuncArg2: 2, skillFuncArg3: 0.3, skillFuncArg4: 0.2, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal damage to all foes and sometimes lower DEF."
+    },
+
     150 : {
 	    name: "Grin and Bear It", skillType: 3, skillFunc: 20, skillCalcType: 0,  
 	    skillFuncArg1: 0.5,   
@@ -407,6 +414,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, 
         skillRange: 2, maxProbability: 50, ward: "PHYSICAL",
         description: "Take heavy damage in place of nearby ally and counter."
+    },
+
+    155 : {
+        name: "Firecell Roar", skillType: 2, skillFunc: 22, skillCalcType: 2, 
+        skillFuncArg1: 1.5, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.2, 
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Three random fire strikes that sometimes lower ATK."
     },
 
     156 : {
@@ -442,6 +456,13 @@ var SkillDatabase = {
         skillFuncArg1: 0.2, skillFuncArg2: 1, skillFuncArg3: 3, 
         skillRange: 4, maxProbability: 70,
         description: "Raise the ATK and WIS of all party members."
+    },
+
+    165 : {
+        name: "Furious Cannon", skillType: 2, skillFunc: 22, skillCalcType: 2, 
+        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.5, 
+        skillRange: 8, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal fire damage to all foes and sometimes lower ATK."
     },
 
     166 : {
@@ -556,6 +577,13 @@ var SkillDatabase = {
         description: "Deal physical damage and sometimes freeze all foes"
     },
 
+    210 : {
+        name: "Poison Spout", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.2, skillFuncArg2: 1, skillFuncArg3: 0.3, 
+        skillRange: 19, maxProbability: 30, ward: "BREATH",
+        description: "Deal WIS-based damage and sometimes poison four random foes."
+    },
+
     211 : {
         name: "Requiem", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1, skillFuncArg2: 5, skillFuncArg3: 0.3, skillFuncArg4: 3, 
@@ -587,6 +615,13 @@ var SkillDatabase = {
         name: "Harrowing Trial", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 2.5, 
         skillRange: 23, maxProbability: 30, ward: "MAGICAL"
+    },
+
+    219 : {
+        name: "Evil Eye", skillType: 2, skillFunc: 21, skillCalcType: 3, 
+        skillFuncArg1: 1.2, skillFuncArg2: 4, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage and lower AGI of all foes."
     },
 
     221 : {
@@ -628,6 +663,13 @@ var SkillDatabase = {
         name: "Spirit Word", skillType: 2, skillFunc: 3, skillCalcType: 2, 
         skillFuncArg1: 2.1,  
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    231 : {
+        name: "Rolling Thunder", skillType: 2, skillFunc: 21, skillCalcType: 3, 
+        skillFuncArg1: 1.25, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.2, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage to all foes and sometimes lower ATK."
     },
 
     232 : {
@@ -743,6 +785,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.1,  
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal ATK-based damage to four random foes."
+    },
+
+    260 : {
+        name: "Curse of Ages", skillType: 2, skillFunc: 21, skillCalcType: 3, 
+        skillFuncArg1: 0.7, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.2, 
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage to six random foes and sometimes lower ATK."
     },
 
     261 : {
@@ -1103,6 +1152,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.15,  
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL"
     },
+
+    343 : {
+        name: "Curiosity", skillType: 2, skillFunc: 21, skillCalcType: 2, 
+        skillFuncArg1: 1.5, skillFuncArg2: 4, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy WIS-based damage to all foes, sometimes lowering AGI."
+    },
     
     349 : {
         name : "Staff of Tyranny", skillType: 2, skillFunc: 3, skillCalcType: 1,
@@ -1199,6 +1255,13 @@ var SkillDatabase = {
         description: "Deal massive ATK-based damage to three random foes, regardless of position."
     },
 
+    378 : {
+        name: "Blade Flurry", skillType: 2, skillFunc: 21, skillCalcType: 3, 
+        skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
+        skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal AGI-based damage to four random foes and sometimes lower ATK."
+    },
+
     379 : {
         name: "Dragon Aura", skillType: 2, skillFunc: 4, skillCalcType: 2, 
         skillFuncArg1: 1.9,  
@@ -1266,6 +1329,20 @@ var SkillDatabase = {
         name: "Knuckle Guard", skillType: 5, skillFunc: 12, skillCalcType: 0,
         skillFuncArg1: 0, 
         skillRange: 4, maxProbability: 50
+    },
+
+    400 : {
+        name : "Hatred Blade", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.15, skillFuncArg2: 1, skillFuncArg3: 0.3,
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to five random foes and sometimes poison them."
+    },
+
+    401 : {
+        name : "Shield of Ruin", skillType: 1, skillFunc: 19, skillCalcType: 0, 
+        skillFuncArg1: 0, skillFuncArg2: 1, skillFuncArg3: 0.5, skillFuncArg4: 10,
+        skillRange: 7, maxProbability: 70,
+        description: "Chance to poison up to three foes at the start of battle."
     },
     
     404 : {
@@ -1490,6 +1567,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.7, skillFuncArg2: 1, skillFuncArg3: 0.25, skillFuncArg4: 10,
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage and sometimes envenom three random foes."
+    },
+
+    469 : {
+        name: "Sand Blade", skillType: 2, skillFunc: 21, skillCalcType: 1, 
+        skillFuncArg1: 1.2, skillFuncArg2: 1, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
+        skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to all foes and sometimes reduce ATK."
     },
     
     471 : {

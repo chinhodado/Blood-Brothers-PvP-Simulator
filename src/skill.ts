@@ -63,7 +63,8 @@ class Skill {
 
         if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
             skillInfo.skillFunc == ENUM.SkillFunc.COUNTER ||
-            skillInfo.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER) 
+            skillInfo.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER ||
+            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFATTACK) 
         {
             isIndirect = false;    
         }

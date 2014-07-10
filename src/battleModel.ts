@@ -225,13 +225,11 @@ class BattleModel {
             this.logger.displayMinorEvent(data.target.name + " is dead");
             data.target.isDead = true;
         }
-
-        this.processAffliction(data.attacker, data.target, data.skill);
     }
 
     getWouldBeDamage(attacker : Card, target : Card, skill : Skill): number {
         var skillMod = skill.skillFuncArg1;
-        var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC);
+        var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC || skill.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT);
     
         var baseDamage : number;
             
@@ -333,6 +331,40 @@ class BattleModel {
         }
     }
    
+    processDebuff(executor: Card, target: Card, skill: Skill) {
+        var status: ENUM.StatusType, multi: number;
+
+        if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+            status = skill.skillFuncArg2;
+            multi  = skill.skillFuncArg4;
+        }
+        else if (skill.skillFunc === ENUM.SkillFunc.DEBUFF) {
+            status = skill.skillFuncArg2;
+            multi  = skill.skillFuncArg1;
+        }
+        else {
+            throw new Error("Wrong skill to use with processDebuff()");
+        }
+
+        var baseAmount = getDebuffAmount(executor, target);
+        var amount = Math.floor(baseAmount * multi);
+
+        target.changeStatus(status, amount);
+        var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
+
+        this.logger.addMinorEvent({
+            executorId: executor.id, 
+            targetId: target.id, 
+            type: ENUM.MinorEventType.STATUS, 
+            status: {
+                type: status,
+            },
+            description: description, 
+            amount: amount,
+            skillId: skill.id
+        });
+    }
+
     startBattle () {
         this.logger.startBattleLog();
         

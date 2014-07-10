@@ -272,7 +272,7 @@ class BattleLogger {
 
                 if (afflict) {
                     infoText.affliction = "Affliction: " + afflict.type
-                    if (afflict.type != "Poison") {
+                    if (afflict.type != "Poisoned") {
                         infoText.affliction += (" (" + afflict.duration + " turn)");
                     }
                     else {

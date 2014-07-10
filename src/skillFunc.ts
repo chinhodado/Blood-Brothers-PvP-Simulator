@@ -7,6 +7,8 @@
                 return new AfflictionSkillLogic();
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.MAGIC:
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DEBUFFINDIRECT:
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();
@@ -166,6 +168,14 @@ class AttackSkillLogic extends SkillLogic {
                     damage: wouldBeDamage
                 });
 
+                if (data.skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || data.skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                    if (Math.random() <= data.skill.skillFuncArg3) {
+                        this.battleModel.processDebuff(data.executor, targetCard, data.skill);
+                    }
+                }
+                else {
+                    this.battleModel.processAffliction(data.executor, targetCard, data.skill);
+                }
 
                 if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
                     defenseSkill.execute(defenseData);    
@@ -228,12 +238,12 @@ class AttackSkillLogic extends SkillLogic {
                 // also need to make sure the target is not already attacked
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
                     var defenseSkill = targetCard.getRandomDefenseSkill();
-                    var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill);
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
                         skill: defenseSkill,
-                        attacker:  data.executor,
+                        attacker: executor,
                         wouldBeDamage: wouldBeDamage
                     }
 
@@ -254,6 +264,15 @@ class AttackSkillLogic extends SkillLogic {
                         damage: wouldBeDamage
                     });
                     targetsAttacked[targetCard.id] = true;
+
+                    if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                        if (Math.random() <= skill.skillFuncArg3) {
+                            this.battleModel.processDebuff(executor, targetCard, skill);
+                        }
+                    }
+                    else {
+                        this.battleModel.processAffliction(executor, targetCard, skill);
+                    }
 
                     // try to proc post-damage skills
                     if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && 
@@ -281,12 +300,12 @@ class AttackSkillLogic extends SkillLogic {
                 // if not protected, proceed with the attack as normal
                 if (!protectSkillActivated) {
                     var defenseSkill = targetCard.getRandomDefenseSkill();
-                    var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill);
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
                         skill: defenseSkill,
-                        attacker:  data.executor,
+                        attacker:  executor,
                         wouldBeDamage: wouldBeDamage
                     }
 
@@ -297,12 +316,20 @@ class AttackSkillLogic extends SkillLogic {
                     }
 
                     this.battleModel.damageToTarget({
-                        attacker: data.executor, 
+                        attacker: executor, 
                         target: targetCard, 
-                        skill: data.skill,
+                        skill: skill,
                         damage: wouldBeDamage
                     });
 
+                    if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                        if (Math.random() <= skill.skillFuncArg3) {
+                            this.battleModel.processDebuff(executor, targetCard, skill);
+                        }
+                    }
+                    else {
+                        this.battleModel.processAffliction(executor, targetCard, skill);
+                    }
 
                     if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
                         defenseSkill.execute(defenseData);    
@@ -317,6 +344,7 @@ class ProtectSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var protector = data.executor;
         var protectSkill = data.skill;
+        var attackSkill = data.attackSkill;
 
         // first redirect the original attack to the protecting fam
         var desc = protector.name + " procs " + protectSkill.name + " to protect " +
@@ -326,7 +354,7 @@ class ProtectSkillLogic extends SkillLogic {
             type: ENUM.MinorEventType.PROTECT,
             protect: {
                 protectedId: data.targetCard.id,
-                counteredSkillId: data.attackSkill.id,
+                counteredSkillId: attackSkill.id,
                 attackerId: data.attacker.id
             },
             description: desc,
@@ -336,8 +364,12 @@ class ProtectSkillLogic extends SkillLogic {
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
-            skill: data.attackSkill
+            skill: attackSkill
         });
+
+        if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
+            this.battleModel.processAffliction(data.attacker, protector, attackSkill);
+        }
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {
@@ -350,6 +382,7 @@ class ProtectCounterSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var protector = data.executor;
         var protectSkill = data.skill;
+        var attackSkill = data.attackSkill;
 
         // first redirect the original attack to the protecting fam
         var desc = protector.name + " procs " + protectSkill.name + " to protect " +
@@ -360,7 +393,7 @@ class ProtectCounterSkillLogic extends SkillLogic {
             protect: {
                 protectedId: data.targetCard.id,
                 counter: true,
-                counteredSkillId: data.attackSkill.id,
+                counteredSkillId: attackSkill.id,
                 attackerId: data.attacker.id
             },
             description: desc,
@@ -370,8 +403,12 @@ class ProtectCounterSkillLogic extends SkillLogic {
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
-            skill: data.attackSkill
+            skill: attackSkill
         });
+
+        if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
+            this.battleModel.processAffliction(data.attacker, protector, attackSkill);
+        }
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {

@@ -89,3 +89,16 @@ function getHealAmount(executor: Card): number {
 
     return amount
 }
+
+function getDebuffAmount(executor: Card, target: Card): number {
+    var FACTOR = 1.0;
+
+    var value = (executor.getWIS() - target.getWIS()) * FACTOR;
+    var min = executor.getWIS() * 0.1;
+
+    if (value < min) {
+        value = min;
+    }
+
+    return -1 * value;
+}

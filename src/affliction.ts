@@ -113,6 +113,7 @@ class PoisonAffliction extends Affliction {
         }
         this.percent += percent;
 
+        // there's a bug in here. Not my fault though
         var maxPercent = percent * PoisonAffliction.MAX_STACK_NUM;
         if(this.percent > maxPercent){
             this.percent = maxPercent;
