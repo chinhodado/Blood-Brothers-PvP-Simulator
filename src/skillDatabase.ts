@@ -486,6 +486,13 @@ var SkillDatabase = {
         description: "Deal damage and sometimes freeze six random foes."
     },
 
+    170 : {
+        name: "War Dance", skillType: 2, skillFunc: 4, skillCalcType: 3,
+        skillFuncArg1: 1.5,
+        skillRange: 15, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy AGI-based damage to foes in front and middle."
+    },
+
     177 : {
         name: "Divine Shield", skillType: 1, skillFunc: 1, skillCalcType: 0,
         skillFuncArg1: 0.65, skillFuncArg2: 5, 
@@ -829,6 +836,13 @@ var SkillDatabase = {
         description: "Deal massive AGI-based damage to three foes."
     },
 
+    268 : {
+        name: "Gaoler's Torment", skillType: 2, skillFunc: 3, skillCalcType: 3, 
+        skillFuncArg1: 1.65,  
+        skillRange: 15, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy AGI-based damage to front/middle lines."
+    },
+
     269 : {
         name: "Tears of the Hideous", skillType: 2, skillFunc: 4, skillCalcType: 3, 
         skillFuncArg1: 2.05,  
@@ -911,6 +925,13 @@ var SkillDatabase = {
         skillFuncArg1: 0.95, 
         skillRange: 17, maxProbability: 30, ward: "MAGICAL",
         description: "Deal WIS-based damage to six random foes, regardless of position."
+    },
+
+    289: {
+        name: "Quakeblade", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.35, 
+        skillRange: 15, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage front/middle lines."
     },
 
     291 : {
@@ -1092,6 +1113,13 @@ var SkillDatabase = {
         description: "Deal WIS-based damage to six random foes."
     },
 
+    322 : {
+        name: "Cruel Dance", skillType: 2, skillFunc: 4, skillCalcType: 3, 
+        skillFuncArg1: 1.5,  
+        skillRange: 15, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy AGI-based damage to front/middle lines, regardless of position."
+    },
+
     325: {
         name: "Rippling Flame", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1.85, 
@@ -1139,6 +1167,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, 
         skillRange: 16, maxProbability: 30, ward: "MAGICAL",
         description: "Deal heavy WIS-based damage to three random foes."
+    },
+
+    339 : {
+        name: "Burning Scales", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2,  
+        skillRange: 15, maxProbability: 30, ward: "BREATH",
+        description: "Deal massive WIS-based damage to all foes in the front/middle lines, regardless of position."
     },
     
     340 : {
@@ -1325,6 +1360,20 @@ var SkillDatabase = {
         description: "Deal AGI-based damage to up to four foes, regardless of position."
     },
 
+    394 : {
+        name: "Glance", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.7,  
+        skillRange: 15, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
+    },
+
+    395 : {
+        name : "Imperial Audience", skillType: 1, skillFunc: 19, skillCalcType: 0, 
+        skillFuncArg1: 0, skillFuncArg2: 5, skillFuncArg3: 0.45, skillFuncArg4: 1,
+        skillRange: 7, maxProbability: 70,
+        description: "Chance to silence up to three foes for one turn at the start of battle."
+    },
+
     398: {
         name: "Knuckle Guard", skillType: 5, skillFunc: 12, skillCalcType: 0,
         skillFuncArg1: 0, 
@@ -1417,6 +1466,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, 
         skillRange: 19, maxProbability: 30, ward: "MAGICAL",
         description: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    420 : {
+        name: "Breaking Wave", skillType: 2, skillFunc: 3, skillCalcType: 1,
+        skillFuncArg1: 1.35, 
+        skillRange: 15, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to all foes in the front/middle line."
     },
 
     424: {
@@ -1679,6 +1735,12 @@ var SkillDatabase = {
         skillFuncArg1: 1.2, 
         skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
         description: "Chance to unleash a counter attack when struck."
+    },
+
+    10001: { // 100% Mod, Single Hit, WIS-based, position independent
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1,
+        skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
     },
 
     10004: { // 105% Mod, Single Hit, WIS-based, position independent, paralyze (Lahamu)

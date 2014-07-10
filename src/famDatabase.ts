@@ -137,6 +137,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20140417053801/bloodbrothersgame/images/thumb/0/02/Arcanan_Emperor_II_Figure.png/40px-Arcanan_Emperor_II_Figure.png",
         fullName: "Arcanan Emperor II"
     },
+    11211: {
+        name: "Arcanan Empress", hp: 15197, atk: 12380, def: 15348, wis: 19422, agi: 17168,
+        skills: [394, 395],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140314150633/bloodbrothersgame/images/thumb/0/04/Arcanan_Empress_II_Figure.png/40px-Arcanan_Empress_II_Figure.png",
+        fullName: "Arcanan Empress II"
+    },
     11284: {
         name: "Arcanan Might", hp: 18598, atk: 19227, def: 10766, wis: 13301, agi: 17948,
         skills: [461, 462],
@@ -289,6 +295,12 @@ var famDatabase = {
         skills: [11],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130106234145/bloodbrothersgame/images/thumb/6/60/Crystal_Gillant_II_Figure.png/40px-Crystal_Gillant_II_Figure.png",
         fullName: "Crystal Gillant II"
+    },
+    11095: {
+        name: "Roc", hp: 12073, atk: 14879, def: 12559, wis: 11501, agi: 16510,
+        skills: [322],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131227221759/bloodbrothersgame/images/thumb/2/20/Crystalwing_Roc_II_Figure.png/40px-Crystalwing_Roc_II_Figure.png",
+        fullName: "Crystalwing Roc II"
     },
     10712: {
         name: "Cuelebre", hp: 13702, atk: 16096, def: 12954, wis: 11134, agi: 13572,
@@ -462,6 +474,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130224083941/bloodbrothersgame/images/thumb/c/ca/Gan_Ceann_Figure.png/60px-Gan_Ceann_Figure.png",
         fullName: "Gan Ceann"
     },
+    10842: {
+        name: "Gargoyle Gatekeeper", hp: 15608, atk: 17602, def: 14503, wis: 15002, agi: 18035,
+        skills: [268],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131023124814/bloodbrothersgame/images/thumb/7/77/Gargoyle_Gatekeeper_II_Figure.png/40px-Gargoyle_Gatekeeper_II_Figure.png",
+        fullName: "Gargoyle Gatekeeper II"
+    },
     10571: {
         name: "Gathgoic", hp: 14839, atk: 16128, def: 14980, wis: 17948, agi: 14709,
         skills: [141],
@@ -625,6 +643,12 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20140129062341/bloodbrothersgame/images/thumb/f/f8/Hippocamp_II_Figure.png/60px-Hippocamp_II_Figure.png",
         fullName: "Hippocamp II"
     },
+    10560: {
+        name: "Hippogriff", hp: 9978, atk: 11063, def: 11942, wis: 9295, agi: 10074,
+        skills: [133],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20130111170016/bloodbrothersgame/images/thumb/3/3e/Hippogriff_of_Rites_II_Figure.png/40px-Hippogriff_of_Rites_II_Figure.png",
+        fullName: "Hippogriff of Rites II"
+    },
     10635: {
         name: "Hollofernyiges", hp: 16551, atk: 16757, def: 13875, wis: 14568, agi: 16941,
         skills: [33],
@@ -650,17 +674,17 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130613194728/bloodbrothersgame/images/thumb/e/e9/Hrimthurs_the_Blizzard_II_Figure.png/40px-Hrimthurs_the_Blizzard_II_Figure.png",
         fullName: "Hrimthurs the Blizzard II"
     },
+    10980: {
+        name: "Hundred-eyed Warrior", hp: 17385, atk: 18501, def: 15641, wis: 10452, agi: 17634,
+        skills: [289],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131115130425/bloodbrothersgame/images/thumb/2/21/Hundred-eyed_Warrior_II_Figure.png/40px-Hundred-eyed_Warrior_II_Figure.png",
+        fullName: "Hundred-eyed Warrior II"
+    },
     10970: {
         name: "Hypnos", hp: 16291, atk:	17277, def:	15446, wis:	12488, agi:	17992,
         skills: [274],
         imageLink: "http://img4.wikia.nocookie.net/__cb20131101130655/bloodbrothersgame/images/thumb/3/3b/Hypnos%2C_Lord_of_Dreams_II_Figure.png/40px-Hypnos%2C_Lord_of_Dreams_II_Figure.png",
         fullName: "Hypnos, Lord of Dreams II"
-    },
-    10560: {
-        name: "Hippogriff", hp: 9978, atk: 11063, def: 11942, wis: 9295, agi: 10074,
-        skills: [133],
-        imageLink: "http://img4.wikia.nocookie.net/__cb20130111170016/bloodbrothersgame/images/thumb/3/3e/Hippogriff_of_Rites_II_Figure.png/40px-Hippogriff_of_Rites_II_Figure.png",
-        fullName: "Hippogriff of Rites II"
     },
     10688: {
         name: "Ignis", hp: 11022, atk: 11312, def: 10818, wis: 13460, agi: 12859,
@@ -920,6 +944,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20140110075315/bloodbrothersgame/images/thumb/4/43/Moni_the_Dismemberer_II_Figure.png/60px-Moni_the_Dismemberer_II_Figure.png",
         fullName: "Moni the Dismemberer II"
     },
+    10621: {
+        name: "Montu", hp: 12952, atk: 12904, def: 12269, wis: 12269, agi: 15306,
+        skills: [170],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130414021249/bloodbrothersgame/images/thumb/1/1d/Montu%2C_God_of_War_II_Figure.png/40px-Montu%2C_God_of_War_II_Figure.png",
+        fullName: "Montu, God of War II"
+    },
     308: {
         name: "Mordred", hp: 11000, atk: 12050, def: 10950, wis: 11000, agi: 12500,
         skills: [18],
@@ -1039,6 +1069,12 @@ var famDatabase = {
         skills: [390],
         imageLink: "http://img4.wikia.nocookie.net/__cb20140313080212/bloodbrothersgame/images/thumb/8/86/Paladin_of_Libra_II_Figure.png/40px-Paladin_of_Libra_II_Figure.png",
         fullName: "Paladin of Libra II"
+    },
+    11231: {
+        name: "Palna", hp: 14999, atk: 15509, def: 14606, wis: 8991, agi: 13807,
+        skills: [420],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140411023129/bloodbrothersgame/images/thumb/f/fb/Palna%2C_the_Vanguard_II_Figure.png/40px-Palna%2C_the_Vanguard_II_Figure.png",
+        fullName: "Palna, the Vanguard II"
     },
     10348: {
         name: "Pegasus", hp: 8756, atk: 10200, def: 8843, wis: 10880, agi: 9181,
@@ -1506,6 +1542,13 @@ var famDatabase = {
         skills: [134],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130110210701/bloodbrothersgame/images/thumb/4/41/Yulia%2C_Snakesage_II_Figure.png/60px-Yulia%2C_Snakesage_II_Figure.png",
         fullName: "Yulia, Snakesage II"
+    },
+    11077: {
+        name: "Zahhak", hp: 16789, atk: 10051, def: 19151, wis: 17797, agi: 17168,
+        skills: [339],
+        autoAttack: 10001,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140110075312/bloodbrothersgame/images/thumb/9/94/Zahhak%2C_Dragon_Marshal_II_Figure.png/40px-Zahhak%2C_Dragon_Marshal_II_Figure.png",
+        fullName: "Zahhak, Dragon Marshal II"
     },
     10869: {
         name: "Zanga", hp: 10218, atk: 10787, def: 9692, wis: 9511, agi: 12779,

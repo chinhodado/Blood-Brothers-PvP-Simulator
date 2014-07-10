@@ -120,10 +120,18 @@ class RangeFactory {
         return new EnemyNearRange(id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]);
     }
 
+    static isRowBasedRange(rangeId: number): boolean {
+        if (rangeId === 15) {
+            return true;
+        }
+
+        return false;
+    }
+
     static canBeAoeRange(rangeId: number): boolean {
         var canBe = false;
         
-        if (this.isEnemyNearRange(rangeId) || rangeId == 8) {
+        if (this.isEnemyNearRange(rangeId) || this.isRowBasedRange(rangeId) || rangeId == 8) {
             canBe = true;    
         }
 
@@ -142,6 +150,8 @@ class RangeFactory {
                 return new AllRange(id);
             case 8 :
                 return new EnemyAllRange(id);
+            case 15:
+                return new EnemyFrontMidAllRange(id);
             case 21:
                 return new SelfRange(id);
             case 28:
@@ -190,6 +200,19 @@ class BaseRange {
             cards[a] = b;
         }
         return cards.slice(0, num);
+    }
+
+    getCondFunc(executor: Card): (x: Card)=>boolean {
+        // by default, valid if card is not dead and belongs to the enemy
+        return function (card: Card) {
+            var isValid = true;
+
+            if (card.isDead || (card.getPlayerId() === executor.getPlayerId())) {
+                return false;
+            }
+
+            return isValid;
+        };
     }
 }
 
@@ -447,3 +470,64 @@ class FriendRandomRange extends BaseRange {
     }
 }
 
+class BaseRowRange extends BaseRange {
+
+    static ROW_TYPE_COUNT = 3;
+    
+    getSameRowCards(cards: Card[], row: ENUM.FormationRow) {
+        var returnArr = [];
+
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            if (card.getFormationRow() === row) {
+                returnArr.push(card);
+            }
+        }
+
+        return returnArr;
+    }
+
+    getRowCandidates(cards: Card[], row: ENUM.FormationRow, isAsc: boolean) {
+        var candidates = [];
+        if (!cards || cards.length === 0) {
+            return candidates;
+        }
+
+        var currentRow = row;
+        while (!candidates.length) {
+            var sameRowCards = this.getSameRowCards(cards, currentRow);
+            for (var i = 0; i < sameRowCards.length; i++) {
+                candidates.push(sameRowCards[i]);
+            }
+
+            currentRow = (isAsc) ? currentRow % BaseRowRange.ROW_TYPE_COUNT + 1 : currentRow - 1;
+
+            if (currentRow < 1) {
+                currentRow = ENUM.FormationRow.REAR;
+            }
+
+            if (currentRow === row) {
+                break;
+            }
+        }
+
+        return candidates;
+    }
+}
+
+class EnemyFrontMidAllRange extends BaseRowRange {
+    getTargets(executor : Card) : Card[] {
+        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        if (candidates.length) {
+            var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
+            var centerCards = this.getSameRowCards(candidates, ENUM.FormationRow.MID);
+
+            if (frontCards.length > 0 || centerCards.length > 0) {
+                candidates = frontCards.concat(centerCards);
+            } else {
+                candidates = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
+            }
+        }
+        return candidates;
+    }
+}
