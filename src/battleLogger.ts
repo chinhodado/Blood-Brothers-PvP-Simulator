@@ -180,6 +180,9 @@ class BattleLogger {
                 case ENUM.StatusType.SKILL_PROBABILITY :
                     card.status.skillProbability = event.amount;
                     break;
+                case ENUM.StatusType.WILL_ATTACK_AGAIN :
+                    card.status.willAttackAgain = event.amount;
+                    break;
                 default :
                     throw new Error("Unknown status attribute");
                     break;
@@ -270,6 +273,10 @@ class BattleLogger {
                     infoText.breathResist = "BW: " + status.breathResistance;
                 }
 
+                if (status.willAttackAgain != 0) {
+                    infoText.willAttackAgain = "Extra action: Yes";
+                }
+
                 if (afflict) {
                     infoText.affliction = "Affliction: " + afflict.type
                     if (afflict.type != "Poisoned") {
@@ -310,6 +317,9 @@ class BattleLogger {
                             else if (tempEvent.status.type == ENUM.StatusType.BREATH_RESISTANCE) {
                                 infoText.breathResist = this.decorateText(infoText.breathResist, false);
                             }
+                            else if (tempEvent.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                                infoText.willAttackAgain = this.decorateText(infoText.willAttackAgain, false);
+                            }
                         }
                         else if (tempEvent.type == ENUM.MinorEventType.AFFLICTION) {
                             if (!tempEvent.affliction.isFinished) {
@@ -332,6 +342,7 @@ class BattleLogger {
                                     (infoText.physicalResist? ( "<br>" + infoText.physicalResist) : "") +
                                     (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
+                                    (infoText.willAttackAgain? ( "<br>" + infoText.willAttackAgain) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
 
                 // display last event's HP

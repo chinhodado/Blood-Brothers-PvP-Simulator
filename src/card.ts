@@ -81,8 +81,11 @@ class Card {
     getSerializableObject() {
         return {
             name: this.name,
+            fullName: this.fullName,
             stats: this.stats,
             id: this.id,
+            isMounted: this.isMounted,
+            isWarlord: this.isWarlord,
             originalStats: this.originalStats,
             status: this.status,
             skills: getSerializableObjectArray(this.skills),
@@ -288,6 +291,9 @@ class Card {
         else if (statusType === ENUM.StatusType.SKILL_PROBABILITY) {
             this.status.skillProbability += amount;
         }
+        else if (statusType === ENUM.StatusType.WILL_ATTACK_AGAIN) {
+            this.status.willAttackAgain = amount;
+        }
         else {
             throw new Error ("Invalid status type");
         }
@@ -339,13 +345,13 @@ class Card {
 
 class Stats {
 
-    hp : number;
-    atk : number;
-    def : number;
-    wis : number;
-    agi : number;
+    hp: number;
+    atk: number;
+    def: number;
+    wis: number;
+    agi: number;
     
-    constructor(hp : number, atk : number, def : number, wis : number, agi : number) {
+    constructor(hp: number, atk: number, def: number, wis: number, agi: number) {
         this.hp = hp;
         this.atk = atk;
         this.def = def;
@@ -356,14 +362,16 @@ class Stats {
 
 class Status {
     // the amount changed because of buffs or debuffs
-    atk : number = 0;
-    def : number = 0;
-    wis : number = 0;
-    agi : number = 0;
+    atk: number = 0;
+    def: number = 0;
+    wis: number = 0;
+    agi: number = 0;
 
-    attackResistance : number = 0;
-    magicResistance :  number = 0;
-    breathResistance : number = 0;
+    attackResistance: number = 0;
+    magicResistance:  number = 0;
+    breathResistance: number = 0;
 
-    skillProbability : number = 0;
+    skillProbability: number = 0;
+
+    willAttackAgain: number = 0;
 }

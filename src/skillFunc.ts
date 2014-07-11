@@ -77,6 +77,7 @@ class BuffSkillLogic extends SkillLogic {
                 case ENUM.StatusType.ATTACK_RESISTANCE :
                 case ENUM.StatusType.MAGIC_RESISTANCE :
                 case ENUM.StatusType.BREATH_RESISTANCE :
+                case ENUM.StatusType.WILL_ATTACK_AGAIN:
                     var buffAmount = skill.skillFuncArg1;
                     break;
                 default :

@@ -561,9 +561,17 @@
                 }
                 else {
                     // display status text
-                    var upDownText = data.amount < 0? " Down" : " Up";
+
+                    if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                        var displayText = "EXTRA ACT";
+                    }
+                    else {
+                        var upDownText = data.amount < 0? " Down" : " Up";
+                        var displayText = ENUM.StatusType[data.status.type] + upDownText;
+                    }
+                    
                     var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
-                    damageText.text(ENUM.StatusType[data.status.type] + upDownText).center(center_x, center_y).font({ size: 18})
+                    damageText.text(displayText).center(center_x, center_y).font({ size: 18})
                         .opacity(1).animate({delay: '0.5s'}).opacity(0);
                 }
 

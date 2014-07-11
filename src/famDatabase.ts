@@ -1074,6 +1074,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130114161242/bloodbrothersgame/images/thumb/9/96/Oniroku_the_Slayer_II_Figure.png/40px-Oniroku_the_Slayer_II_Figure.png",
         fullName: "Oniroku the Slayer II"
     },
+        11310: {
+        name: "Cancer", hp: 16627, atk: 17201, def: 10408, wis: 7494, agi: 16908,
+        skills: [478, 479],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140606074955/bloodbrothersgame/images/thumb/4/4e/Paladin_of_Cancer_II_Figure.png/40px-Paladin_of_Cancer_II_Figure.png",
+        fullName: "Paladin of Cancer II"
+    },
     11301: {
         name: "Capricorn", hp: 14937, atk: 8491, def: 13507, wis: 16551, agi: 15099,
         skills: [476],
@@ -1346,6 +1352,12 @@ var famDatabase = {
         skills: [383],
         imageLink: "http://img1.wikia.nocookie.net/__cb20140301022355/bloodbrothersgame/images/thumb/5/5b/Surtr_the_Fervent_II_Figure.png/40px-Surtr_the_Fervent_II_Figure.png",
         fullName: "Surtr the Fervent II"
+    },
+    11017: {
+        name: "Svadilfari", hp: 15977, atk: 19595, def: 13442, wis: 15998, agi: 14503,
+        skills: [369, 370],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140214090015/bloodbrothersgame/images/thumb/c/ce/Svadilfari_II_Figure.png/40px-Svadilfari_II_Figure.png",
+        fullName: "Svadilfari II"
     },
     11000: {
         name: "Tanba", hp: 17580, atk: 23213, def: 17883, wis: 23289, agi: 18057,

@@ -82,6 +82,7 @@ module ENUM {
         ACTION_ON_DEATH = 16,
 
         HP_SHIELD = 17,
+        WILL_ATTACK_AGAIN = 18
     }
 
     export enum AfflictionType {

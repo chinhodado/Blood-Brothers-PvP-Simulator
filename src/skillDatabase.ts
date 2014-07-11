@@ -1290,6 +1290,20 @@ var SkillDatabase = {
         skillRange: 32, maxProbability: 30, ward: "BREATH"
     },
 
+    369 : {
+        name: "Stone Rain", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.45,  
+        skillRange: 7, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage up to three foes."
+    },
+
+    370 : {
+        name: "Dust Cloud", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 1, skillFuncArg2: 18,  
+        skillRange: 132, maxProbability: 70,
+        description: "Allows two random allies to perform an extra action during the next turn."
+    },
+
     372 : {
         name: "Curse Foil", skillType: 3, skillFunc: 13, skillCalcType: 1, 
         skillFuncArg1: 1.3,  
@@ -1700,6 +1714,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, skillFuncArg2: 3, skillFuncArg3: 0.3, 
         skillRange: 32, maxProbability: 30, ward: "BREATH",
         description: "Deal heavy WIS-based damage to and sometimes freeze up to four foes, ignoring position."
+    },
+
+    478 : {
+        name: "Cancer's Claws", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 1.65, skillFuncArg2: 5, skillFuncArg3: 0.5, skillFuncArg4: 1, 
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy ATK-based damage and sometimes silence three random foes."
+    },
+
+    479 : {
+        name: "Infiltrate", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 1, skillFuncArg2: 18, skillFuncArg3: 0, skillFuncArg4: 0, 
+        skillRange: 121, maxProbability: 70,
+        description: "Allows a random ally to perform an extra action during the next turn."
     },
 
     484: {

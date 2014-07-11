@@ -391,14 +391,15 @@ class BattleModel {
                 }
 
                 // procs active skill if we can
-                this.processActivePhase(currentCard, "FIRST");
-                
-                finished = this.checkFinish();
+                finished = this.processActivePhase(currentCard, "FIRST");                
                 if (finished) break;
 
-                if (!currentCard.isDead && currentCard.isMounted) {
-                    this.processActivePhase(currentCard, "SECOND");
-                }
+                if (!currentCard.isDead && currentCard.status.willAttackAgain != 0) {
+                    finished = this.processActivePhase(currentCard, "FIRST");
+                    // todo: send a minor event log and handle it
+                    currentCard.status.willAttackAgain = 0;
+                    if (finished) break;
+                }                
 
                 // update poison status
                 if (!currentCard.isDead && currentCard.getAfflictionType() == ENUM.AfflictionType.POISON) {
@@ -435,7 +436,8 @@ class BattleModel {
         }
     }
 
-    processActivePhase(currentCard: Card, nth: string) {
+    // return true if battle has ended, false if not
+    processActivePhase(currentCard: Card, nth: string): boolean {
         var activeSkill = currentCard.getRandomActiveSkill();
         
         if (nth === "FIRST" && currentCard.isMounted) {
@@ -465,6 +467,16 @@ class BattleModel {
         }
         else {
             this.executeNormalAttack(currentCard);
+        }
+
+        if (this.checkFinish()) {
+            return true;
+        }
+        else if (nth === "FIRST" && currentCard.isMounted && !currentCard.isDead) {
+            return this.processActivePhase(currentCard, "SECOND");
+        }
+        else {
+            return false;
         }
     }
 
