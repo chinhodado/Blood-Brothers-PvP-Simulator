@@ -638,6 +638,13 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20131010170211/bloodbrothersgame/images/thumb/8/88/Hecatoncheir_the_Adamantine_II_Figure.png/40px-Hecatoncheir_the_Adamantine_II_Figure.png",
         fullName: "Hecatoncheir the Adamantine II"
     },
+    21312: {
+        name: "Hei Long", hp: 20486, atk: 13485, def: 16192, wis: 20881, agi: 17113,
+        skills: [496],
+        autoAttack: 10019,
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140628103009/bloodbrothersgame/images/thumb/b/bd/Hei_Long%2C_the_New_Moon_Figure.png/171px-Hei_Long%2C_the_New_Moon_Figure.png",
+        fullName: "Hei Long, the New Moon"
+    },
     10465: {
         name: "Heinrich", hp: 16887, atk: 13940, def: 15132, wis: 13290, agi: 14005,
         skills: [133],
@@ -673,6 +680,12 @@ var famDatabase = {
         skills: [133],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130111170016/bloodbrothersgame/images/thumb/3/3e/Hippogriff_of_Rites_II_Figure.png/40px-Hippogriff_of_Rites_II_Figure.png",
         fullName: "Hippogriff of Rites II"
+    },
+    10726: {
+        name: "Hlokk", hp: 14331, atk: 14463, def: 12832, wis: 9349, agi: 17132,
+        skills: [502, 503],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140630102857/bloodbrothersgame/images/thumb/7/7a/Hlokk%2C_Blade_of_Thunder_II_Figure.png/171px-Hlokk%2C_Blade_of_Thunder_II_Figure.png",
+        fullName: "Hlokk, Blade of Thunder II"
     },
     10635: {
         name: "Hollofernyiges", hp: 16551, atk: 16757, def: 13875, wis: 14568, agi: 16941,
@@ -870,6 +883,12 @@ var famDatabase = {
         skills: [313],
         imageLink: "http://img3.wikia.nocookie.net/__cb20131210233903/bloodbrothersgame/images/thumb/0/0b/Linnorm%2C_the_Hailstorm_II_Figure.png/60px-Linnorm%2C_the_Hailstorm_II_Figure.png",
         fullName: "Linnorm, the Hailstorm II"
+    },
+    11316: {
+        name: "Long Feng", hp: 15164, atk: 17125, def: 13539, wis: 10452, agi: 12207,
+        skills: [501],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140628103006/bloodbrothersgame/images/thumb/a/ad/Long_Feng%2C_the_Dragon_Fist_II_Figure.png/171px-Long_Feng%2C_the_Dragon_Fist_II_Figure.png",
+        fullName: "Long Feng, the Dragon Fist II"
     },
     10794: {
         name: "Ma-Gu", hp: 14182, atk: 12437, def: 11476, wis: 15306, agi: 12437,
@@ -1107,6 +1126,12 @@ var famDatabase = {
         imageLink: "http://img4.wikia.nocookie.net/__cb20140313080212/bloodbrothersgame/images/thumb/8/86/Paladin_of_Libra_II_Figure.png/40px-Paladin_of_Libra_II_Figure.png",
         fullName: "Paladin of Libra II"
     },
+    11334: {
+        name: "Sagittarius", hp: 15578, atk: 15218, def: 12163, wis: 8415, agi: 17255,
+        skills: [507, 508],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140709072736/bloodbrothersgame/images/thumb/c/c0/Paladin_of_Sagittarius_II_Figure.png/171px-Paladin_of_Sagittarius_II_Figure.png",
+        fullName: "Paladin of Sagittarius II"
+    },
     11231: {
         name: "Palna", hp: 14999, atk: 15509, def: 14606, wis: 8991, agi: 13807,
         skills: [420],
@@ -1254,6 +1279,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20131129152929/bloodbrothersgame/images/thumb/6/65/Sea_Serpent_II_Figure.png/60px-Sea_Serpent_II_Figure.png",
         fullName: "Sea Serpent II"
     },
+    11204: {
+        name: "Seismo Worm", hp: 18999, atk: 19097, def: 15056, wis: 11015, agi: 16800,
+        skills: [433],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140425214716/bloodbrothersgame/images/thumb/c/ce/Seismo_Worm_Figure_2.png/172px-Seismo_Worm_Figure_2.png",
+        fullName: "Seismo Worm"
+    },
     10258: {
         name: "Sekhmet", hp: 12529, atk: 16780, def: 13843, wis: 13598, agi: 13823,
         skills: [11],
@@ -1291,6 +1322,12 @@ var famDatabase = {
         skills: [145],
         imageLink: "http://img3.wikia.nocookie.net/__cb20130212204233/bloodbrothersgame/images/thumb/2/21/Sir_Bedwyr_of_the_Garden_II_Figure.png/40px-Sir_Bedwyr_of_the_Garden_II_Figure.png",
         fullName: "Sir Bedwyr of the Garden II"
+    },
+    11074: {
+        name: "Skoll", hp: 15002, atk: 13160, def: 15153, wis: 9000, agi: 16302,
+        skills: [301, 367],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140206150854/bloodbrothersgame/images/thumb/e/e8/Skoll%2C_Dark_Wolf_II_Figure.png/171px-Skoll%2C_Dark_Wolf_II_Figure.png",
+        fullName: "Skoll, Dark Wolf II"
     },
     11038: {
         name: "Skrimsl", hp: 13049, atk: 11417, def: 12466, wis: 17182, agi: 13379,
@@ -1524,6 +1561,12 @@ var famDatabase = {
         skills: [317],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131221031230/bloodbrothersgame/images/thumb/1/1d/Ushabti_II_Figure.png/40px-Ushabti_II_Figure.png",
         fullName: "Ushabti II"
+    },
+    11268: {
+        name: "Vafthruthnir", hp: 15500, atk: 17732, def: 13008, wis: 9997, agi: 12228,
+        skills: [442],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140430101913/bloodbrothersgame/images/thumb/2/2b/Vafthruthnir%2C_Elder_Giant_II_Figure.png/171px-Vafthruthnir%2C_Elder_Giant_II_Figure.png",
+        fullName: "Vafthruthnir, Elder Giant II"
     },
     10896: {
         name: "Valin", hp: 15500, atk: 16865, def: 22953, wis: 12716, agi: 11167,

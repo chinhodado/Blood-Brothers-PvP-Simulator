@@ -514,6 +514,7 @@ class SurviveSkillLogic extends SkillLogic {
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
+            noProcEffect: true,
             description: desc,
             skillId: data.skill.id
         });

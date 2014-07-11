@@ -1289,6 +1289,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.7,  
         skillRange: 32, maxProbability: 30, ward: "BREATH"
     },
+    
+    367 : {
+        name: "Howl", skillType: 2, skillFunc: 3, skillCalcType: 3, 
+        skillFuncArg1: 0.9,  
+        skillRange: 20, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal Agi-based damage to five random foes."
+    },
 
     369 : {
         name: "Stone Rain", skillType: 2, skillFunc: 3, skillCalcType: 1, 
@@ -1543,6 +1550,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5,  
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
     },
+    
+    433 : {
+        name: "Deep Rumble", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 0.95,  
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to six random foes."
+    },
 
     438 : {
         name: "Poison Torrent", skillType: 2, skillFunc: 3, skillCalcType: 1, 
@@ -1570,6 +1584,13 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, 
         skillRange: 32, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to up to four foes, ignoring position."
+    },
+    
+    442 : {
+        name: "Masterstroke", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.05, 
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to six random foes, ignoring position."
     },
 
     443 : {
@@ -1771,6 +1792,13 @@ var SkillDatabase = {
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
+    
+    496: {
+        name: "Flame Cloud", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 2.05, 
+        skillRange: 16, maxProbability: 30, ward: "BREATH",
+        description: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
 
     497: {
         name: "Mighty Stomp", skillType: 2, skillFunc: 4, skillCalcType: 1,
@@ -1791,6 +1819,41 @@ var SkillDatabase = {
         skillFuncArg1: 1.2, 
         skillRange: 21, maxProbability: 50, ward: "PHYSICAL",
         description: "Chance to unleash a counter attack when struck."
+    },
+    
+    501: {
+        name: "Dragon Strike", skillType: 2, skillFunc: 22, skillCalcType: 1,
+        skillFuncArg1: 1.65, skillFuncArg2: 2, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Heavy ATK-based damage to four random foes and sometimes lower DEF, ignoring position."
+    },
+    
+    502: {
+        name: "Flashing Blade", skillType: 2, skillFunc: 3, skillCalcType: 3,
+        skillFuncArg1: 1.6,
+        skillRange: 16, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal heavy AGI-based damage to three random foes."
+    },
+    
+    503: {
+        name: "Wing Aegis", skillType: 3, skillFunc: 20, skillCalcType: 0,
+        skillFuncArg1: 0.15,
+        skillRange: 21, maxProbability: 70,
+        description: "Survive devastating damage as long as HP is above 15%."
+    },
+    
+    507: {
+        name: "Sagittarius' Arrow", skillType: 2, skillFunc: 4, skillCalcType: 3,
+        skillFuncArg1: 1.2, 
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal AGI-based damage to five random foes."
+    },
+    
+    508: {
+        name: "Sage's Wisdom", skillType: 1, skillFunc: 1, skillCalcType: 0,
+        skillFuncArg1: 0.5, skillFuncArg2: 6, 
+        skillRange: 3, maxProbability: 70,
+        description: "Reduce magic damage taken by self and adjacent familiars."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -1851,6 +1914,12 @@ var SkillDatabase = {
         name: "Standard Action", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1, skillFuncArg2: 1, skillFuncArg3: 0.4, skillFuncArg4: 10,
         skillRange: 5, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
+    },
+    
+    10019: { // 100% Mod, Single Hit, WIS-based, position independent, breath based
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1,
+        skillRange: 5, maxProbability: 100, ward: "BREATH", isAutoAttack: true
     },
 
     10020: { // 60% Mod, 2 Random Hits, ATK-based, position dependent

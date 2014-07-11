@@ -606,12 +606,23 @@
         // a description of a skill proc
         if (data.type == ENUM.MinorEventType.DESCRIPTION) {
             if (minorIndex < minorLog[majorIndex].length) {
-                this.displayProcSkill(executor.id, data.skillId, {
-                    callback: function() {
-                        BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                    },
-                    durationRatio: 0.5
-                });
+                
+                if (!data.noProcEffect) {
+                    this.displayProcSkill(executor.id, data.skillId, {
+                        callback: function() {
+                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                        },
+                        durationRatio: 0.5,
+                    });                
+                }
+                else {
+                    // just need to display the skill text, and have to call the next event ourselves
+                    this.displayProcSkill(executor.id, data.skillId, {
+                        noProcEffect: true
+                    });
+                    this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                }
+
                 return;
             }
             else return;
