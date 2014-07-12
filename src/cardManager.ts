@@ -69,7 +69,7 @@ class CardManager {
         return BattleModel.getInstance().allCardsById[id];
     }
     
-        /**
+    /**
      * Get all the cards that belong to a player
      */
     getPlayerCards (player : Player) {

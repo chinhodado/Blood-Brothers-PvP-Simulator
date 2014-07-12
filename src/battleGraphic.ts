@@ -146,10 +146,9 @@
             
             // grab the image links of the curent player's fam
             var imageLinksArray = [];
-            var initialField = JSON.parse(this.logger.initialFieldInfo);
-            var playerCards = initialField["player" + player + "Cards"]; // get the cards of this player
+            var playerCards = CardManager.getInstance().getPlayerCards(BattleModel.getInstance().getPlayerById(player));
             
-            for (var fam = 0; fam < 5; fam++) { // for each card
+            for (var fam = 0; fam < playerCards.length; fam++) {
                 imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
             }
             
@@ -336,7 +335,7 @@
                     svgAfflictTxt.hide();
                 }
                 else {
-                    var text = data.affliction.type;
+                    var text = Affliction.getAfflictionAdjective(data.affliction.type);
                     svgAfflictTxt.text(text).show();
                 }
             }

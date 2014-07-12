@@ -120,6 +120,7 @@ module ENUM {
         AFFLICTION = 3,
         PROTECT = 4,
         DESCRIPTION = 5,
+        TEXT = 6 // used for displaying text in the debugger that has nothing to do with the battle
     }
 }
 

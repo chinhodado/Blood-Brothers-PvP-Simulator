@@ -8,13 +8,15 @@ class BattleLogger {
     // an array of arrays of MinorEvent objects, describing the things that happened under that major event
     minorEventLog: MinorEvent[][] = [];
 
-    // just an array of strings
-    majorEventLog : MajorEvent[] = [];
-    
-    currentTurn : number = 0;
-    initialFieldInfo;
+    // an array of arrays of Field objects, storing the fields after each minor events
+    minorEventFields: string[][] = [];
 
-    private static _instance : BattleLogger = null;
+    // just an array of strings
+    majorEventLog: MajorEvent[] = [];
+    
+    currentTurn: number = 0;
+
+    private static _instance: BattleLogger = null;
 
     constructor() {
         if (BattleLogger._instance) {
@@ -23,7 +25,7 @@ class BattleLogger {
         BattleLogger._instance = this;
     }
 
-    public static getInstance() : BattleLogger {
+    public static getInstance(): BattleLogger {
         if(BattleLogger._instance === null) {
             BattleLogger._instance = new BattleLogger();
         }
@@ -129,99 +131,7 @@ class BattleLogger {
         newEvent.innerHTML = "<a>" + data + "</a>";
         subEventList.appendChild(newEvent);        
     }
-    
-    /**
-     * Apply an event to the supplied data
-     */
-    applyMinorEvent(event: MinorEvent, toApply) {
-
-        // get the card
-        var card;
-        for (var i = 0; i<5; i++) {
-            if (toApply.player1Cards[i].id == event.targetId) {
-                card = toApply.player1Cards[i];
-                break;
-            }
-            if (toApply.player2Cards[i].id == event.targetId) {
-                card = toApply.player2Cards[i];
-                break;
-            }
-        }
-                
-        if (event.type == ENUM.MinorEventType.HP) {
-            card.stats.hp += event.amount;
-            if (card.stats.hp > card.originalStats.hp) {
-                card.stats.hp = card.originalStats.hp;
-            }
-        }
-        else if (event.type == ENUM.MinorEventType.STATUS) {
-            if (event.status.isNewLogic) {
-                card.status.isNewLogic[event.status.type] = true;
-            }
-
-            switch (event.status.type) {
-                case ENUM.StatusType.ATK :
-                    card.status.atk += event.amount;
-                    break;
-                case ENUM.StatusType.DEF :
-                    card.status.def += event.amount;
-                    break;
-                case ENUM.StatusType.WIS :
-                    card.status.wis += event.amount;
-                    break;
-                case ENUM.StatusType.AGI :
-                    card.status.agi += event.amount;
-                    break;
-                case ENUM.StatusType.ATTACK_RESISTANCE :
-                    card.status.attackResistance = event.amount;
-                    break;  
-                case ENUM.StatusType.MAGIC_RESISTANCE :
-                    card.status.magicResistance = event.amount;
-                    break;
-                case ENUM.StatusType.BREATH_RESISTANCE :
-                    card.status.breathResistance = event.amount;
-                    break;
-                case ENUM.StatusType.SKILL_PROBABILITY :
-                    card.status.skillProbability = event.amount;
-                    break;
-                case ENUM.StatusType.WILL_ATTACK_AGAIN :
-                    card.status.willAttackAgain = event.amount;
-                    break;
-                default :
-                    throw new Error("Unknown status attribute");
-                    break;
-            }
-        }
-        else if (event.type == ENUM.MinorEventType.AFFLICTION) {
-            if (event.affliction.isFinished) { // the affliction finished
-                card.affliction = null;
-                return;
-            }
-            switch (event.affliction.type) {
-                case ENUM.AfflictionType.BLIND:
-                    card.affliction = { type: "Blinded", duration: event.affliction.duration };
-                    break;
-                case ENUM.AfflictionType.DISABLE:
-                    card.affliction = { type: "Disabled", duration: event.affliction.duration };
-                    break;
-                case ENUM.AfflictionType.FROZEN:
-                    card.affliction = { type: "Frozen", duration: event.affliction.duration };
-                    break;
-                case ENUM.AfflictionType.PARALYSIS:
-                    card.affliction = { type: "Paralyzed", duration: event.affliction.duration };
-                    break;
-                case ENUM.AfflictionType.POISON:
-                    card.affliction = { type: "Poisoned", percent: event.affliction.percent };
-                    break;
-                case ENUM.AfflictionType.SILENT:
-                    card.affliction = { type: "Silent", duration: event.affliction.duration };
-                    break;
-                default:
-                    throw new Error("Invalid affliction type!");
-            }
-        }
-    }
-    
+   
     /**
      * This is called when you click on an event in the event list. It updates the field on the right side
      * of the screen with information after the event that you clicked on has been processed. That event
@@ -229,26 +139,27 @@ class BattleLogger {
      */
     displayEventLogAtIndex(majorIndex) {
 
+        var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
+
         // display turn animation
-        BattleGraphic.getInstance().displayAllAfflictionText(majorIndex - 1);
+        BattleGraphic.getInstance().displayAllAfflictionText(lastEventIndex);
         BattleGraphic.getInstance().displayMajorEventAnimation(majorIndex);
 
-        // for displaying last turn's HP
-        var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
+        // for displaying last turn's HP        
         var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
          
         var field = this.getFieldAtMajorIndex(majorIndex);
         
         // now prepares the info and print them out
-        for (var player = 1; player <=2; player++) { // for each player
-            var playerCards = field["player" + player + "Cards"]; // get the cards of that player
-            for (var fam = 0; fam < 5; fam++) { // for each card
-                var stats = playerCards[fam].stats;
-                var originalStats = playerCards[fam].originalStats;
-                var status = playerCards[fam].status;
-                var afflict = playerCards[fam].affliction; // not the same thing as in the original card class
+        for (var p = 1; p <=2; p++) { // for each player
+            var playerCards = field["player" + p + "Cards"]; // get the cards of that player
+            for (var f = 0; f < 5; f++) { // for each card
+                var stats = playerCards[f].stats;
+                var originalStats = playerCards[f].originalStats;
+                var status = playerCards[f].status;
+                var afflict = playerCards[f].affliction; // not the same thing as in the original card class
 
-                var htmlelem = document.getElementById("player" + player + "Fam" + fam); // <- the box to display info of the current fam
+                var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
                 
                 // the stats of the fam after the buffs/debuffs are added in
                 var addedATK = this.getAdjustedStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK]);
@@ -257,7 +168,7 @@ class BattleLogger {
                 var addedAGI = this.getAdjustedStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI]);
                 
                 var infoText: any = {
-                    name : playerCards[fam].name,
+                    name : playerCards[f].name,
                     hp : "HP: " + stats.hp,
                     atk : "ATK: " + addedATK,
                     def : "DEF: " + addedDEF,
@@ -282,12 +193,15 @@ class BattleLogger {
                 }
 
                 if (afflict) {
-                    infoText.affliction = "Affliction: " + afflict.type
-                    if (afflict.type != "Poisoned") {
-                        infoText.affliction += (" (" + afflict.duration + " turn)");
+                    infoText.affliction = "Affliction: " + Affliction.getAfflictionAdjective(afflict.type);
+                    if (afflict.type === ENUM.AfflictionType.SILENT) {
+                        infoText.affliction += (" (" + afflict.validTurnNum + " turn)");
                     }
-                    else {
+                    else if (afflict.type === ENUM.AfflictionType.POISON){
                         infoText.affliction += (" (" + afflict.percent + " %)");
+                    }
+                    else { // frozen, disabled, paralyzed
+                        infoText.affliction += " (1 turn)";
                     }
                 }
                 
@@ -295,7 +209,7 @@ class BattleLogger {
                 // need to make sure eventLog[index] exists
                 for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length; j++) {
                     var tempEvent = this.minorEventLog[majorIndex][j]; // a minor event
-                    if (tempEvent.targetId == playerCards[fam].id) {
+                    if (tempEvent.targetId == playerCards[f].id) {
                         if (tempEvent.type == ENUM.MinorEventType.HP) {
                             infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
                         }
@@ -333,7 +247,7 @@ class BattleLogger {
                     }
                 }
                 
-                if (this.minorEventLog[majorIndex] && this.minorEventLog[majorIndex][0].executorId == playerCards[fam].id) {
+                if (this.minorEventLog[majorIndex] && this.minorEventLog[majorIndex][0].executorId == playerCards[f].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
 
@@ -350,8 +264,8 @@ class BattleLogger {
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
 
                 // display last event's HP
-                var lastEventCard = lastEventField["player" + player + "Cards"][fam];
-                BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);                
+                var lastEventCard = lastEventField["player" + p + "Cards"][f];
+                BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
             }
         }
     }
@@ -373,30 +287,24 @@ class BattleLogger {
     
     // get the field situation at a major event index
     getFieldAtMajorIndex(majorIndex: number) {
-        // deserialize the initial field info
-        var initialField = JSON.parse(this.initialFieldInfo);
-        
-        // apply events to initial field up to the specified event
-        for (var i = 0; i <=  majorIndex; i++) {
-            // need to make sure minorEventLog[i] exists, in case this is an empty event (like the "Battle start" event);
-            for (var j = 0; this.minorEventLog[i] && j < this.minorEventLog[i].length; j++) {
-                this.applyMinorEvent(this.minorEventLog[i][j], initialField);
-            }
+
+        // for empty major events like opening proc with no success target
+        if (!this.minorEventLog[majorIndex]) {
+            return this.getFieldAtMajorIndex(majorIndex - 1);
         }
 
-        return initialField;
+        var minorLogLength = this.minorEventLog[majorIndex].length;
+        var minorFieldsLength = this.minorEventFields[majorIndex].length;
+
+        if (minorLogLength !== minorFieldsLength) {
+            throw new Error ("Log length and stored fields length are not equal!");
+        }
+
+        return JSON.parse(this.minorEventFields[majorIndex][minorFieldsLength - 1]);
     }
 
     getFieldAtMinorIndex(majorIndex: number, minorIndex: number) {
-        // get last major index's field
-        var lastField = this.getFieldAtMajorIndex(majorIndex - 1);
-
-        // then apply the current major index's minor events upon it
-        for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length && j <= minorIndex; j++) {
-            this.applyMinorEvent(this.minorEventLog[majorIndex][j], lastField);
-        }
-
-        return lastField;
+        return JSON.parse(this.minorEventFields[majorIndex][minorIndex]);
     }
 
     /**
@@ -430,26 +338,22 @@ class BattleLogger {
             this.minorEventLog[index] = [];
         }
         this.minorEventLog[index].push(event);
+        
+        if (!this.minorEventFields[index]) {
+            this.minorEventFields[index] = [];
+        }
+        this.minorEventFields[index].push(this.getCurrentFieldJSON());
+
         this.displayMinorEvent(event.description);
     }
-    
-    /**
-     * Save the initial situation of the field
-     * For now it just saves the cards of the two players
-     */
-    saveInitialField() {
 
-        if (BattleModel.IS_MASS_SIMULATION) {
-            return;
-        }
-
-        // save a log of the current field situation
+    getCurrentFieldJSON() {
         var toSerialize = {
             player1Cards: getSerializableObjectArray(BattleModel.getInstance().player1Cards),
             player2Cards: getSerializableObjectArray(BattleModel.getInstance().player2Cards)
         };
-        
-        this.initialFieldInfo = JSON.stringify(toSerialize);
+
+        return JSON.stringify(toSerialize);
     }
     
     /**
@@ -477,7 +381,10 @@ class BattleLogger {
         }
 
         this.addMajorEvent({description: "Battle start"});
-        this.displayMinorEvent("Everything ready");
+        this.addMinorEvent({
+            type: ENUM.MinorEventType.TEXT,
+            description: "Everything ready"
+        });
         this.displayEventLogAtIndex(0);
     }
 }

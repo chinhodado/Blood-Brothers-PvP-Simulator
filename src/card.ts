@@ -305,6 +305,35 @@ class Card {
         }
     }
     
+    clearAllStatus() {
+        // for now, only clear beneficial status
+        if (this.status.atk > 0) this.status.atk = 0;
+        if (this.status.def > 0) this.status.def = 0;
+        if (this.status.wis > 0) this.status.wis = 0;
+        if (this.status.agi > 0) this.status.agi = 0;
+
+        if (this.status.attackResistance > 0) this.status.attackResistance = 0;
+        if (this.status.magicResistance > 0) this.status.magicResistance = 0;
+        if (this.status.breathResistance > 0) this.status.breathResistance = 0;
+
+        if (this.status.skillProbability > 0) this.status.skillProbability = 0;
+        if (this.status.willAttackAgain > 0) this.status.willAttackAgain = 0;
+    }
+
+    hasPositiveStatus() {
+        var hasPositiveStatus = false;
+        var status = this.status;
+
+        if (status.atk > 0 || status.def > 0 || status.wis > 0 || status.agi > 0 ||
+            status.attackResistance > 0 || status.magicResistance > 0 || status.breathResistance > 0 ||
+            status.skillProbability > 0 || status.willAttackAgain > 0) 
+        {
+            hasPositiveStatus = true;
+        }
+
+        return hasPositiveStatus;
+    }
+
     getHP () {
         return this.stats.hp;
     }

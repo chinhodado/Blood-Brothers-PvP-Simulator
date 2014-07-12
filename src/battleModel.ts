@@ -135,9 +135,6 @@ class BattleModel {
 
         this.cardManager.sortAllCards();
         
-        // save the initial field snapshot
-        this.logger.saveInitialField();
-        
         graphic.displayFormationAndFamOnCanvas();
     }
 
@@ -172,6 +169,19 @@ class BattleModel {
         }
         
         return skillArray;
+    }
+
+    
+    getPlayerById(id: number) {
+        if (id === 1) {
+            return this.player1;
+        }
+        else if (id === 2) {
+            return this.player2;
+        }
+        else {
+            throw new Error("Invalid player");
+        }
     }
     
     getOppositePlayer (player : Player) {
@@ -419,17 +429,21 @@ class BattleModel {
     checkFinish(): boolean {
         if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
             this.playerWon = this.currentPlayer;
-            this.logger.addMajorEvent({
-                description: this.playerWon.name + " has won"
-            });
-            return true;                   
         }
         else if (this.cardManager.isAllDead(this.currentPlayerCards)) {
             this.playerWon = this.oppositePlayer;
+        }
+
+        if (this.playerWon) {
             this.logger.addMajorEvent({
                 description: this.playerWon.name + " has won"
             });
-            return true;
+
+            this.logger.addMinorEvent({
+                type: ENUM.MinorEventType.TEXT,
+                description: "Battle ended"
+            });
+            return true;        
         }
         else {
             return false;
@@ -515,6 +529,11 @@ class BattleModel {
                 }
             }
         }
+
+        this.logger.addMinorEvent({
+            type: ENUM.MinorEventType.TEXT,
+            description: "Turn end"
+        });
     }
     
     executeNormalAttack(attacker: Card) {
