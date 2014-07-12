@@ -5,6 +5,8 @@
                 return new BuffSkillLogic();
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
                 return new CasterBasedDebuffSkillLogic();
+            case ENUM.SkillFunc.DISPELL:
+                return new DispellSkillLogic();
             case ENUM.SkillFunc.AFFLICTION:
                 return new AfflictionSkillLogic();
             case ENUM.SkillFunc.ATTACK:
@@ -54,11 +56,6 @@ class SkillLogic {
 }
 
 class BuffSkillLogic extends SkillLogic {
-
-    constructor() {
-        super();
-    }
-
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
@@ -151,6 +148,47 @@ class CasterBasedDebuffSkillLogic extends SkillLogic {
                     skillId: skill.id
                 });
             }
+        }
+    }
+}
+
+class DispellSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = this.getValidTargets(data);
+        return super.willBeExecuted(data) && (targets.length > 0);
+    }
+
+    getValidTargets(data: SkillLogicData): Card[] {
+        var rangeTargets = data.skill.getTargets(data.executor);
+        var validTargets = [];
+
+        for (var i = 0; i < rangeTargets.length; i++) {
+            if (rangeTargets[i].hasPositiveStatus()) {
+                validTargets.push(rangeTargets[i]);
+            }
+        }
+
+        return validTargets;
+    }
+
+    execute(data: SkillLogicData) {
+        var targets = this.getValidTargets(data);
+
+        for (var i = 0; i < targets.length; i++) {
+            targets[i].clearAllPositiveStatus();
+
+            var desc = targets[i].name + " is dispelled.";
+            this.logger.addMinorEvent({
+                executorId: data.executor.id,
+                targetId: targets[i].id,
+                type: ENUM.MinorEventType.STATUS,
+                status: {
+                    type: 0, //dummy
+                    isDispelled: true,
+                },
+                description: desc,
+                skillId: data.skill.id
+            });
         }
     }
 }
@@ -503,18 +541,8 @@ class CounterSkillLogic extends SkillLogic {
 class DrainSkillLogic extends SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasValidTarget = false;
-        var targets = data.skill.getTargets(data.executor);
-        if (targets && targets.length > 0) {
-            for (var i = 0; i < targets.length; i++) {
-                if (!targets[i].isFullHealth()) {
-                    hasValidTarget = true;
-                    break;
-                }
-            }
-        }
-
-        return super.willBeExecuted(data) && hasValidTarget;
+        var targets = this.getValidTargets(data);
+        return super.willBeExecuted(data) && (targets.length > 0);
     }
 
     getValidTargets(data: SkillLogicData): Card[] {

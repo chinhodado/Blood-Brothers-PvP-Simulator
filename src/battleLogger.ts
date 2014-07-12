@@ -404,6 +404,7 @@ interface MinorEvent {
     status?: {
         type: ENUM.StatusType;
         isNewLogic?: boolean;
+        isDispelled?: boolean;
     };
     protect?: {
         protectedId: number;

@@ -62,6 +62,12 @@ var SkillDatabase = {
         skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal AGI-based damage to six random targets."
     },
+
+    19 : {
+        name: "Dispell", skillType: 2, skillFunc: 16, skillCalcType: 0, 
+        skillRange: 8, maxProbability: 70,
+        description: "Remove the buffs of all foes."
+    },
     
     23 : {
         name: "Breath of Flame", skillType: 2, skillFunc: 4, skillCalcType: 2, 

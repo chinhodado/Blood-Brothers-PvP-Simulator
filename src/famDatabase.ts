@@ -1630,6 +1630,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130607215051/bloodbrothersgame/images/thumb/9/97/Void_Yaksha_II_Figure.png/40px-Void_Yaksha_II_Figure.png",
         fullName: "Void Yaksha II"
     },
+    11046: {
+        name: "Waheela", hp: 17006, atk: 13008, def: 16204, wis: 16692, agi: 18100,
+        skills: [19, 134],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20131210234034/bloodbrothersgame/images/thumb/d/dc/Waheela%2C_Dire_Wolf_II_Figure.png/40px-Waheela%2C_Dire_Wolf_II_Figure.png",
+        fullName: "Waheela, Dire Wolf II"
+    },
     10570: {
         name: "Wolfert", hp: 14189, atk: 23972, def: 13723, wis: 13290, agi: 13431,
         skills: [118],

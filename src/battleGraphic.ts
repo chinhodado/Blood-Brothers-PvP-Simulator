@@ -572,8 +572,10 @@
                 }
                 else {
                     // display status text
-
-                    if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                    if (data.status.isDispelled){
+                        var displayText = "dispelled";
+                    }
+                    else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
                         var displayText = "EXTRA ACT";
                     }
                     else {

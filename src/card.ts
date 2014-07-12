@@ -305,7 +305,7 @@ class Card {
         }
     }
     
-    clearAllStatus() {
+    clearAllPositiveStatus() {
         // for now, only clear beneficial status
         if (this.status.atk > 0) this.status.atk = 0;
         if (this.status.def > 0) this.status.def = 0;

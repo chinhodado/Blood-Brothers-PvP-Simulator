@@ -32,7 +32,7 @@ module ENUM {
         COUNTER = 13, // arg1: multi
         PROTECT_COUNTER = 14,
         TREASURE_HUNTER = 15,
-        CLEAR_BUFF = 16,
+        DISPELL = 16, //arg1-5: 0
         SUICIDE = 17,
         HEAL = 18, //arg1: multi, arg2: 0 if heal based on caster's wis, 1 if heal based on target's max HP
         AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
