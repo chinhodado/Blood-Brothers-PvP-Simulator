@@ -45,7 +45,7 @@ module ENUM {
         IMITATE = 26,
         EVADE = 27,
         PROTECT_REFLECT = 28,
-        PROTECT_DISPEL = 29,
+        COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ??
         TURN_ORDER_CHANGE = 31,
         CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2: status
     }

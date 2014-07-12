@@ -20,6 +20,8 @@
                 return new ProtectCounterSkillLogic();
             case ENUM.SkillFunc.COUNTER:
                 return new CounterSkillLogic();
+            case ENUM.SkillFunc.COUNTER_DISPELL:
+                return new CounterDispellSkillLogic()
             case ENUM.SkillFunc.DRAIN:
                 return new DrainSkillLogic();
             case ENUM.SkillFunc.SURVIVE:
@@ -535,6 +537,79 @@ class CounterSkillLogic extends SkillLogic {
             skill: data.skill, 
             additionalDescription: additionalDesc
         });
+    }
+}
+
+class CounterDispellSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = this.getValidTargets(data);
+        return super.willBeExecuted(data) && (targets.length > 0);
+    }
+
+    getValidTargets(data: SkillLogicData): Card[] {
+        // nearly similar to DispellSkillLogic, but careful with the range
+        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
+        var rangeTargets = range.getTargets(data.executor);
+        var validTargets = [];
+
+        for (var i = 0; i < rangeTargets.length; i++) {
+            if (rangeTargets[i].hasPositiveStatus()) {
+                validTargets.push(rangeTargets[i]);
+            }
+        }
+
+        return validTargets;
+    }
+
+    execute(data: SkillLogicData) {
+        var attackSkill = data.attackSkill;
+
+        // first take the damage
+        this.battleModel.damageToTarget({
+            attacker: data.attacker, 
+            target: data.executor, 
+            skill: attackSkill
+        });
+
+        if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
+            this.battleModel.processAffliction(data.attacker, data.executor, attackSkill);
+        }
+
+        // update the targetsAttacked if necessary
+        if (data.targetsAttacked) {
+            data.targetsAttacked[data.executor.id] = true;
+        }
+
+        if (data.executor.isDead || !data.executor.canUseSkill()) {
+            return;
+        }
+
+        // now process the dispell
+        this.logger.addMinorEvent({
+            executorId: data.executor.id, 
+            type: ENUM.MinorEventType.DESCRIPTION,
+            description: data.executor.name + " procs " + data.skill.name,
+            skillId: data.skill.id
+        });
+
+        var targets = this.getValidTargets(data);
+
+        for (var i = 0; i < targets.length; i++) {
+            targets[i].clearAllPositiveStatus();
+
+            var desc = targets[i].name + " is dispelled.";
+            this.logger.addMinorEvent({
+                executorId: data.executor.id,
+                targetId: targets[i].id,
+                type: ENUM.MinorEventType.STATUS,
+                status: {
+                    type: 0, //dummy
+                    isDispelled: true,
+                },
+                description: desc,
+                skillId: data.skill.id
+            });
+        }
     }
 }
 

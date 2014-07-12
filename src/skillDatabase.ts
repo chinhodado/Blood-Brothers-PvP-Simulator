@@ -1530,6 +1530,20 @@ var SkillDatabase = {
         description: "Deal ATK-based damage to all foes in the front/middle line."
     },
 
+    421 : {
+        name: "Light of Virtue", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.9, skillFuncArg2: 3, skillFuncArg3: 0.5,
+        skillRange: 16, maxProbability: 30, ward: "BREATH",
+        description: "Deal heavy WIS-based damage and sometimes freeze three random foes, ignoring position."
+    },
+
+    422 : {
+        name: "Maiden's Prayer", skillType: 5, skillFunc: 29, skillCalcType: 0,
+        skillFuncArg1: 0, skillFuncArg2: 0, skillFuncArg3: 8, skillFuncArg4: 1,
+        skillRange: 21, maxProbability: 50,
+        description: "Remove the buffs of all foes after receiving an attack."
+    },
+
     423 : {
         name: "Wail of Sorrow", skillType: 1, skillFunc: 32, skillCalcType: 0,
         skillFuncArg1: 0.2, skillFuncArg2: 2,

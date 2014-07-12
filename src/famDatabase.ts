@@ -1158,6 +1158,13 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20140709072736/bloodbrothersgame/images/thumb/c/c0/Paladin_of_Sagittarius_II_Figure.png/171px-Paladin_of_Sagittarius_II_Figure.png",
         fullName: "Paladin of Sagittarius II"
     },
+    11241: {
+        name: "Virgo", hp: 15500, atk: 6118, def: 12380, wis: 17797, agi: 16822,
+        skills: [421, 422],
+        autoAttack: 10007,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140411023129/bloodbrothersgame/images/thumb/c/cf/Paladin_of_Virgo_II_Figure.png/40px-Paladin_of_Virgo_II_Figure.png",
+        fullName: "Paladin of Virgo II"
+    },
     11231: {
         name: "Palna", hp: 14999, atk: 15509, def: 14606, wis: 8991, agi: 13807,
         skills: [420],
