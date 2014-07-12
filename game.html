@@ -88,6 +88,11 @@
             display: none;
         }
 
+        #startButton:disabled {
+            color: GrayText;
+            background-color: #dddddd;
+        }
+
     </style>
 
     <script>
@@ -200,6 +205,8 @@
                 document.getElementById('rightSide').style.width = '100%';
                 document.getElementById('startButton').style.display = 'block';
                 document.getElementById('startButton').onclick = function () {
+                    this.disabled = true;
+                    BattleGraphic.getInstance().resetInitialField();
                     BattleGraphic.getInstance().displayMajorEventAnimation(0);
                 }
             }

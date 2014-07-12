@@ -79,7 +79,7 @@
 
         var draw = SVG('svg').size(400, 600).attr('id', 'mainSvg').attr('class', 'svg');
 
-        for (var player = 1; player <= 2; player++) { // for each player
+        for (var player = 1; player <= 2; player++) {
             
             // draw the skill name background, don't show them yet
             if (player == 2) {
@@ -95,8 +95,7 @@
                 draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, 300);
             }
             
-            // as I'm writing this comment, I don't know myself what these number are. Just know that change them
-            // will change the "compactity" of the formation. Forgive me...
+            // change these to change the "compactity" of the formation
             var PLAYER_GROUP_WIDTH = 350;
             var PLAYER_GROUP_HEIGHT = 80;
 
@@ -197,6 +196,18 @@
                 group.add(spellCircle); group.add(procSpark);
 
                 groupPlayer.add(group);
+            }
+        }
+    }
+
+    /**
+     * Reset HP to full, make all fam alive, remove all affliction text, etc.
+     */
+    resetInitialField() {
+        for (var player = 1; player <= 2; player++) {
+            for (var index = 0; index < 5; index++) {
+                this.displayHPOnCanvas(100, player, index, 0);
+                this.getAfflictionText(player, index).hide();
             }
         }
     }
@@ -391,6 +402,7 @@
         var majorLog = this.logger.majorEventLog;
 
         if (majorIndex >= majorLog.length) {
+            document.getElementById("startButton").disabled = false;
             return;    
         }
 
