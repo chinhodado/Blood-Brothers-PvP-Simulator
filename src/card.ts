@@ -2,6 +2,8 @@
 
 class Card {
 
+    static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
+
     name: string;
     fullName: string;
     private stats: Stats;
@@ -260,7 +262,11 @@ class Card {
         return false;
     }
     
-    changeStatus(statusType : ENUM.StatusType, amount : number) : void {
+    changeStatus(statusType: ENUM.StatusType, amount: number, isNewLogic?: boolean): void {
+        if (isNewLogic) {
+            this.status.isNewLogic[statusType] = true;
+        }
+
         if (statusType === ENUM.StatusType.ATK) {
             this.status.atk += amount;
         }
@@ -317,16 +323,56 @@ class Card {
     }
     
     getATK () {
-        return this.stats.atk + this.status.atk;
+        var value = this.stats.atk + this.status.atk;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        value = this.adjustByNewDebuffLogic(ENUM.StatusType.ATK, value, this.originalStats.atk);
+
+        return value;
     }
     getDEF () {
-        return this.stats.def + this.status.def;
+        var value = this.stats.def + this.status.def;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        value = this.adjustByNewDebuffLogic(ENUM.StatusType.DEF, value, this.originalStats.def);
+
+        return value;
     }
     getWIS () {
-        return this.stats.wis + this.status.wis;
+        var value = this.stats.wis + this.status.wis;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        value = this.adjustByNewDebuffLogic(ENUM.StatusType.WIS, value, this.originalStats.wis);
+
+        return value;
     }
     getAGI () {
-        return this.stats.agi + this.status.agi;
+        var value = this.stats.agi + this.status.agi;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        value = this.adjustByNewDebuffLogic(ENUM.StatusType.AGI, value, this.originalStats.agi);
+
+        return value;
+    }
+
+    adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number) {
+        if (this.status.isNewLogic[type]) {
+            var lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
+            value = (value > lowerLimit) ? value : lowerLimit;
+        }
+        return value;
     }
 
     hasWardOfType(type: string): boolean {
@@ -374,4 +420,6 @@ class Status {
     skillProbability: number = 0;
 
     willAttackAgain: number = 0;
+
+    isNewLogic = {};
 }

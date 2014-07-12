@@ -149,6 +149,12 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20140314150633/bloodbrothersgame/images/thumb/0/04/Arcanan_Empress_II_Figure.png/40px-Arcanan_Empress_II_Figure.png",
         fullName: "Arcanan Empress II"
     },
+    11242: {
+        name: "Arcanan Lovers", hp: 16908, atk: 13875, def: 12705, wis: 19021, agi: 17006,
+        skills: [430, 431],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140414082018/bloodbrothersgame/images/thumb/f/fb/Arcanan_Lovers_II_Figure.png/40px-Arcanan_Lovers_II_Figure.png",
+        fullName: "Arcanan Lovers II"
+    },
     11284: {
         name: "Arcanan Might", hp: 18598, atk: 19227, def: 10766, wis: 13301, agi: 17948,
         skills: [461, 462],
@@ -233,6 +239,13 @@ var famDatabase = {
         skills: [276],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131101130430/bloodbrothersgame/images/thumb/a/ab/Boudica%2C_the_Dawn_Chief_II_Figure.png/40px-Boudica%2C_the_Dawn_Chief_II_Figure.png",
         fullName: "Boudica, the Dawn Chief II"
+    },
+    11223: {
+        name: "Brang", hp: 18826, atk: 18544, def: 14027, wis: 18208, agi: 10105,
+        skills: [423],
+        autoAttack: 10010,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140417053801/bloodbrothersgame/images/thumb/f/f3/Brang_Two-Heads_II_Figure.png/40px-Brang_Two-Heads_II_Figure.png",
+        fullName: "Brang Two-Heads II"
     },
     11171: {
         name: "Bronzeclad Hyena", hp: 14644, atk: 10766, def: 11860, wis: 18923, agi: 12228,
@@ -325,6 +338,13 @@ var famDatabase = {
         skills: [292],
         imageLink: "http://img1.wikia.nocookie.net/__cb20131122150756/bloodbrothersgame/images/thumb/e/e2/Danniel%2C_Golden_Paladin_II_Figure.png/40px-Danniel%2C_Golden_Paladin_II_Figure.png",
         fullName: "Danniel, Golden Paladin II"
+    },
+    21308: {
+        name: "Justice", hp: 20795, atk: 11717, def: 17470, wis: 22225, agi: 18005,
+        skills: [494, 495],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140619104322/bloodbrothersgame/images/thumb/7/7c/Dauntless_Justice_Figure.png/40px-Dauntless_Justice_Figure.png",
+        fullName: "Dauntless Justice"
     },
     10967: {
         name: "Deborah", hp: 13550, atk: 14157, def: 13442, wis: 12987, agi: 13929,
@@ -515,6 +535,12 @@ var famDatabase = {
         skills: [17],
         imageLink: "http://img4.wikia.nocookie.net/__cb20130106212217/bloodbrothersgame/images/thumb/6/68/Ghislandi%2C_Iron_Heart_II_Figure.png/60px-Ghislandi%2C_Iron_Heart_II_Figure.png",
         fullName: "Ghislandi, Iron Heart II"
+    },
+    11271: {
+        name: "Ghislandi L", hp: 18533, atk: 20234, def: 14590, wis: 10235, agi: 16204,
+        skills: [455, 456],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20140515012432/bloodbrothersgame/images/thumb/9/91/Ghislandi%2C_the_Unchained_II_Figure.png/40px-Ghislandi%2C_the_Unchained_II_Figure.png",
+        fullName: "Ghislandi, the Unchained II"
     },
     11304: {
         name: "Gigantopithecus", hp: 24210, atk: 25055, def: 21946, wis: 13994, agi: 15998,

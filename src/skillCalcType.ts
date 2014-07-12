@@ -102,3 +102,11 @@ function getDebuffAmount(executor: Card, target: Card): number {
 
     return -1 * value;
 }
+
+function getCasterBasedDebuffAmount(executor: Card): number {
+    var FACTOR = 1.2;
+
+    var value = executor.getWIS() * FACTOR;
+
+    return -1 * value;
+}

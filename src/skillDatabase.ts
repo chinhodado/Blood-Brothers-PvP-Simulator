@@ -1524,6 +1524,13 @@ var SkillDatabase = {
         description: "Deal ATK-based damage to all foes in the front/middle line."
     },
 
+    423 : {
+        name: "Wail of Sorrow", skillType: 1, skillFunc: 32, skillCalcType: 0,
+        skillFuncArg1: 0.2, skillFuncArg2: 2,
+        skillRange: 7, maxProbability: 70,
+        description: "Greatly lower DEF of up to three foes."
+    },
+
     424: {
         name: "Ultrasonic", skillType: 2, skillFunc: 4, skillCalcType: 1,
         skillFuncArg1: 1.85, skillFuncArg2: 2, skillFuncArg3: 0.2,
@@ -1549,6 +1556,20 @@ var SkillDatabase = {
         name: "Funerary Rush", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.5,  
         skillRange: 16, maxProbability: 30, ward: "PHYSICAL"
+    },
+
+    430 : {
+        name: "Broken Vow", skillType: 1, skillFunc: 32, skillCalcType: 0, 
+        skillFuncArg1: 0.22, skillFuncArg2: 3,
+        skillRange: 7, maxProbability: 70,
+        description: "Greatly lower WIS of up to three foes."
+    },
+
+    431 : {
+        name: "Lovers' Arrows", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.2,  
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to six random foes, ignoring position."
     },
     
     433 : {
@@ -1632,6 +1653,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.3,  
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal AGI-based damage to four random foes."
+    },
+
+    455 : {
+        name: "Berserker Rage", skillType: 2, skillFunc: 3, skillCalcType: 1, 
+        skillFuncArg1: 0.85,  
+        skillRange: 17, maxProbability: 30, ward: "PHYSICAL",
+        description: "Deal ATK-based damage to six random foes."
+    },
+
+    456 : {
+        name: "Chain Lash", skillType: 1, skillFunc: 32, skillCalcType: 0, 
+        skillFuncArg1: 0.5, skillFuncArg2: 1,
+        skillRange: 7, maxProbability: 70,
+        description: "Greatly lower ATK of up to three foes."
     },
 
     461 : {
@@ -1792,6 +1827,20 @@ var SkillDatabase = {
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
+
+    494: {
+        name: "Hand of Justice", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.65, 
+        skillRange: 19, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    495: {
+        name: "Soul Prison", skillType: 1, skillFunc: 32, skillCalcType: 0,
+        skillFuncArg1: 0.25, skillFuncArg2: 4, 
+        skillRange: 7, maxProbability: 70,
+        description: "Greatly lower AGI of up to three foes."
+    },
     
     496: {
         name: "Flame Cloud", skillType: 2, skillFunc: 4, skillCalcType: 2,
@@ -1890,6 +1939,12 @@ var SkillDatabase = {
         name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 2,
         skillFuncArg1: 1, skillFuncArg2: 3, skillFuncArg3: 0.1,
         skillRange: 5, maxProbability: 100, ward: "MAGICAL", isAutoAttack: true
+    },
+
+    10010: { // 110% Mod, Three Hit Cone, ATK-based, position independent (Brang)   
+        name: "Standard Action", skillType: 2, skillFunc: 4, skillCalcType: 1,
+        skillFuncArg1: 1.1,
+        skillRange: 7, maxProbability: 100, ward: "PHYSICAL", isAutoAttack: true
     },
 
     10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison

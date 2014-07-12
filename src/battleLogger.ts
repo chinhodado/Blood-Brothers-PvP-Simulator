@@ -155,6 +155,10 @@ class BattleLogger {
             }
         }
         else if (event.type == ENUM.MinorEventType.STATUS) {
+            if (event.status.isNewLogic) {
+                card.status.isNewLogic[event.status.type] = true;
+            }
+
             switch (event.status.type) {
                 case ENUM.StatusType.ATK :
                     card.status.atk += event.amount;
@@ -247,10 +251,10 @@ class BattleLogger {
                 var htmlelem = document.getElementById("player" + player + "Fam" + fam); // <- the box to display info of the current fam
                 
                 // the stats of the fam after the buffs/debuffs are added in
-                var addedATK = stats.atk + status.atk;
-                var addedDEF = stats.def + status.def;
-                var addedWIS = stats.wis + status.wis;
-                var addedAGI = stats.agi + status.agi;
+                var addedATK = this.getAdjustedStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK]);
+                var addedDEF = this.getAdjustedStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF]);
+                var addedWIS = this.getAdjustedStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS]);
+                var addedAGI = this.getAdjustedStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI]);
                 
                 var infoText: any = {
                     name : playerCards[fam].name,
@@ -350,6 +354,21 @@ class BattleLogger {
                 BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, player, fam, 0);                
             }
         }
+    }
+
+    // after adjusted new debuff
+    getAdjustedStat(original: number, statusAmount: number, isNewLogic: boolean) {
+        var value = original + statusAmount;
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        if (isNewLogic) {
+            var lowerLimit = original * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
+            value = (value > lowerLimit) ? value : lowerLimit;
+        }
+        return value;    
     }
     
     // get the field situation at a major event index
@@ -477,6 +496,7 @@ interface MinorEvent {
     };
     status?: {
         type: ENUM.StatusType;
+        isNewLogic?: boolean;
     };
     protect?: {
         protectedId: number;

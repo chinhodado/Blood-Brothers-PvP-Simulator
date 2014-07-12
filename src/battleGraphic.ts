@@ -735,10 +735,15 @@
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
             else {
-                var spellCircle = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
                 var exploDuration = 0.4;
                 if (Skill.isWisAutoAttack(data.skillId)) {
-                    spellCircle.animate({duration: '0.2s'}).opacity(1);
+                    procEffect.animate({duration: '0.2s'}).opacity(1);
+                    exploDuration = 0.8;
+                }
+                else if (Skill.isAtkIndepAutoAttack(data.skillId)) {
+                    procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark')
+                    procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
                 option.noAttackAnim = true;
@@ -747,7 +752,7 @@
                          .opacity(1)
                          .after(function() {
                             exploSet.opacity(0);
-                            spellCircle.opacity(0);
+                            procEffect.opacity(0);
 
                             BattleGraphic.getInstance()
                                 .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);

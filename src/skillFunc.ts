@@ -3,6 +3,8 @@
         switch (skillFunc) {
             case ENUM.SkillFunc.BUFF:
                 return new BuffSkillLogic();
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
+                return new CasterBasedDebuffSkillLogic();
             case ENUM.SkillFunc.AFFLICTION:
                 return new AfflictionSkillLogic();
             case ENUM.SkillFunc.ATTACK:
@@ -97,6 +99,52 @@ class BuffSkillLogic extends SkillLogic {
                     type: ENUM.MinorEventType.STATUS, 
                     status: {
                         type: thingToBuff,
+                    },
+                    description: description, 
+                    amount: buffAmount,
+                    skillId: skill.id
+                });
+            }
+        }
+    }
+}
+
+class CasterBasedDebuffSkillLogic extends SkillLogic {
+    execute(data: SkillLogicData) {
+        var skill = data.skill;
+        var executor = data.executor;
+
+        for (var skillFuncArgNum = 2; skillFuncArgNum <= 5; skillFuncArgNum++) {
+            var type: ENUM.StatusType = skill.getSkillFuncArg(skillFuncArgNum);
+            if (type == 0) {
+                continue;
+            }
+            switch (type) {
+                case ENUM.StatusType.ATK :
+                case ENUM.StatusType.DEF :
+                case ENUM.StatusType.WIS :
+                case ENUM.StatusType.AGI :
+                    var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+                    var skillMod = skill.skillFuncArg1;
+                    var buffAmount = Math.round(skillMod * getCasterBasedDebuffAmount(executor));
+                    break;
+                default :
+                    throw new Error("Wrong status type for greatly debuff or not implemented");
+            }
+            
+            var targets : Card[] = skill.range.getTargets(executor);
+            
+            for (var i = 0; i < targets.length; i++) {
+                targets[i].changeStatus(type, buffAmount, true);
+                var description = targets[i].name + "'s " + ENUM.StatusType[type] + " decreased by " + Math.abs(buffAmount);
+                
+                this.logger.addMinorEvent({
+                    executorId: executor.id, 
+                    targetId: targets[i].id, 
+                    type: ENUM.MinorEventType.STATUS, 
+                    status: {
+                        type: type,
+                        isNewLogic: true
                     },
                     description: description, 
                     amount: buffAmount,

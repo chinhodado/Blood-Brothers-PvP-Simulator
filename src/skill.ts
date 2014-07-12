@@ -84,6 +84,13 @@ class Skill {
         return isWisAutoAttack;
     }
 
+    static isAtkIndepAutoAttack(skillId: number): boolean {
+        var skillInfo = SkillDatabase[skillId];
+
+        return this.isAutoAttackSkill(skillId) && skillInfo.skillCalcType == ENUM.SkillCalcType.ATK
+                                               && skillInfo.skillFunc == ENUM.SkillFunc.MAGIC;
+    }
+
     static isAutoAttackSkill(skillId: number): boolean {
         // either return true or undefined
         return SkillDatabase[skillId].isAutoAttack;

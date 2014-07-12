@@ -46,7 +46,8 @@ module ENUM {
         EVADE = 27,
         PROTECT_REFLECT = 28,
         PROTECT_DISPEL = 29,
-        TURN_ORDER_CHANGE = 31
+        TURN_ORDER_CHANGE = 31,
+        CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2: status
     }
     
     /**
