@@ -426,12 +426,14 @@ class FriendRandomRange extends BaseRange {
     numTargets: number;
     selectDead: boolean;
     isUnique: boolean;
+    includeSelf: boolean;
 
     constructor(id: number, numTargets: number, selectDead: boolean) {
         super(id);
         this.numTargets = numTargets;
         this.selectDead = selectDead;
         this.isUnique = RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
+        this.includeSelf = RangeFactory.INCLUDE_SELF[id];
     }
     
     getTargets (executor : Card) : Card[]{
@@ -454,6 +456,7 @@ class FriendRandomRange extends BaseRange {
 
     getCondFunc(executor: Card): (x: Card)=>boolean {
         var selectDead = this.selectDead;
+        var includeSelf = this.includeSelf;
 
         return function (card: Card) {
             var isValid = true;
@@ -461,7 +464,7 @@ class FriendRandomRange extends BaseRange {
             if (card.getPlayerId() != executor.getPlayerId())
                 return false;
 
-            if (card.id === executor.id && !RangeFactory.INCLUDE_SELF)
+            if (card.id === executor.id && !includeSelf)
                 return false;
 
             if (selectDead && !card.isDead)
