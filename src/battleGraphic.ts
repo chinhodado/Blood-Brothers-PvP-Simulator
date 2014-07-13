@@ -641,6 +641,27 @@
             else return;
         }
 
+        // revive
+        if (data.type == ENUM.MinorEventType.REVIVE) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                var target = CardManager.getInstance().getCardById(data.targetId);
+                var playerId = target.getPlayerId();
+                var index = target.formationColumn;
+                var center_x = this.coordArray[playerId][index][0];
+                var center_y = this.coordArray[playerId][index][1];
+
+                var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
+                damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
+                    .opacity(1).animate({delay: '0.5s'}).opacity(0);
+                this.displayHPOnCanvas(100, playerId, index);
+                this.getAfflictionText(playerId, index).hide();
+
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
         // a protect/defense, show it
         if (data.type == ENUM.MinorEventType.PROTECT) {
             if (minorIndex < minorLog[majorIndex].length) {

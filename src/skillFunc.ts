@@ -28,6 +28,8 @@
                 return new SurviveSkillLogic();
             case ENUM.SkillFunc.HEAL:
                 return new HealSkillLogic();
+            case ENUM.SkillFunc.REVIVE:
+                return new ReviveSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -694,6 +696,30 @@ class HealSkillLogic extends SkillLogic {
         for (var i = 0; i < targets.length; i++) {
             this.battleModel.damageToTargetDirectly(targets[i], -1 * healAmount, " healing");
         }     
+    }
+}
+
+class ReviveSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = data.skill.getTargets(data.executor);
+        return super.willBeExecuted(data) && targets && (targets.length > 0);
+    }
+
+    execute(data: SkillLogicData) {
+
+        var targets = data.skill.getTargets(data.executor);
+
+        for (var i = 0; i < targets.length; i++) {
+            targets[i].revive();
+
+            this.logger.addMinorEvent({
+                executorId: data.executor.id,
+                targetId: targets[i].id,
+                type: ENUM.MinorEventType.REVIVE,
+                description: targets[i].name + " is revived!",
+                skillId: data.skill.id
+            });
+        }        
     }
 }
 

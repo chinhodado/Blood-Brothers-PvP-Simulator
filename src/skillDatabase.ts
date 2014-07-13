@@ -49,6 +49,13 @@ var SkillDatabase = {
         description: "Deal heavy damage to all foes."
     },
 
+    16 : {
+        name: "Greater Recall", skillType: 2, skillFunc: 6, skillCalcType: 0,
+        skillFuncArg1: 1, 
+        skillRange: 2, maxProbability: 50,
+        description: "Revive and fully restore HP of adjacent familiars."
+    },
+
     17 : {
         name: "Berserk", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 0.8, 
@@ -891,6 +898,20 @@ var SkillDatabase = {
         description: "Chance to silence three foes for one turn at start of battle."
     },
 
+    272 : {
+        name: "Bewitching Wings", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.5,
+        skillRange: 23, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to two random foes, regardless of position."
+    },
+
+    273 : {
+        name: "Stirring Kiss", skillType: 2, skillFunc: 6, skillCalcType: 0, 
+        skillFuncArg1: 1,
+        skillRange: 2, maxProbability: 50,
+        description: "Revive and fully restore HP of adjacent familiars."
+    },
+
     274 : {
         name: "Eternal Sleep", skillType: 2, skillFunc: 3, skillCalcType: 3, 
         skillFuncArg1: 1.5,  
@@ -1220,6 +1241,20 @@ var SkillDatabase = {
         skillFuncArg1: 1.5, skillFuncArg2: 4, skillFuncArg3: 0.3, skillFuncArg4: 0.3, 
         skillRange: 8, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal heavy WIS-based damage to all foes, sometimes lowering AGI."
+    },
+
+    345 : {
+        name: "Wheel of Death", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 2.2,
+        skillRange: 16, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal massive WIS-based damage to three random foes, regardless of position."
+    },
+
+    346 : {
+        name: "Hellish Rebirth", skillType: 2, skillFunc: 6, skillCalcType: 0, 
+        skillFuncArg1: 1,
+        skillRange: 101, maxProbability: 50,
+        description: "Revive and fully restore HP of 1 random familiar."
     },
     
     349 : {

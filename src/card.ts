@@ -351,6 +351,16 @@ class Card {
         return this.stats.hp/this.originalStats.hp;
     }
     
+    revive() {
+        if (!this.isDead) {
+            throw new Error("You can't revive a card that is not dead!");
+        }
+
+        this.isDead = false;
+        this.status = new Status();
+        this.stats.hp = this.originalStats.hp;
+    }
+
     getATK () {
         var value = this.stats.atk + this.status.atk;
 

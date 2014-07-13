@@ -39,7 +39,11 @@ class Skill {
 
         this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);
         
-        this.range = RangeFactory.getRange(this.skillRange);
+        var selectDead = false;
+        if (this.skillFunc === ENUM.SkillFunc.REVIVE) {
+            selectDead = true;
+        }
+        this.range = RangeFactory.getRange(this.skillRange, selectDead);
     }
 
     static isAttackSkill(skillId: number): boolean {

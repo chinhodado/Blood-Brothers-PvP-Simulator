@@ -100,6 +100,14 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20130325180458/bloodbrothersgame/images/thumb/5/52/Andorra_the_Indomitable_II_Figure.png/40px-Andorra_the_Indomitable_II_Figure.png",
         fullName: "Andorra the Indomitable II"
     },
+    10947: {
+        name: "Ankou", hp: 17017, atk: 9628, def: 16854, wis: 14308, agi: 10246,
+        skills: [345, 346],
+        autoAttack: 10007,
+        isMounted: true,
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140116043959/bloodbrothersgame/images/thumb/d/d6/Ankou%2C_Harbinger_of_Death_II_Figure.png/40px-Ankou%2C_Harbinger_of_Death_II_Figure.png",
+        fullName: "Ankou, Harbinger of Death II"
+    },
     10999: {
         name: "Anne", hp: 12232, atk: 13782, def: 12342, wis: 13510, agi: 15599,
         skills: [250],
@@ -474,6 +482,12 @@ var famDatabase = {
         skills: [387],
         imageLink: "http://img3.wikia.nocookie.net/__cb20140301012048/bloodbrothersgame/images/thumb/c/c8/Freyja%2C_Earth_Goddess_II_Figure.png/40px-Freyja%2C_Earth_Goddess_II_Figure.png",
         fullName: "Freyja, Earth Goddess II"
+    },
+    10473: {
+        name: "Freila", hp: 11928, atk: 10490, def: 12453, wis: 12221, agi: 11417,
+        skills: [16],
+        imageLink: "http://img3.wikia.nocookie.net/__cb20130209140811/bloodbrothersgame/images/thumb/f/f2/Freila_the_Bountiful_II_Figure.png/40px-Freila_the_Bountiful_II_Figure.png",
+        fullName: "Freila the Bountiful II"
     },
     11190: {
         name: "Freyr", hp: 16562, atk: 19909, def: 15370, wis: 12943, agi: 15998,
@@ -916,6 +930,12 @@ var famDatabase = {
         imageLink: "http://img2.wikia.nocookie.net/__cb20140628103006/bloodbrothersgame/images/thumb/a/ad/Long_Feng%2C_the_Dragon_Fist_II_Figure.png/171px-Long_Feng%2C_the_Dragon_Fist_II_Figure.png",
         fullName: "Long Feng, the Dragon Fist II"
     },
+    10754: {
+        name: "Lucia", hp: 17106, atk: 13878, def: 16633, wis: 9880, agi: 10857,
+        skills: [16],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20130428112723/bloodbrothersgame/images/thumb/9/97/Lucia%2C_Petal-Shears_II_Figure.png/40px-Lucia%2C_Petal-Shears_II_Figure.png",
+        fullName: "Lucia, Petal-Shears II"
+    },
     10794: {
         name: "Ma-Gu", hp: 14182, atk: 12437, def: 11476, wis: 15306, agi: 12437,
         skills: [4],
@@ -1190,6 +1210,12 @@ var famDatabase = {
         imageLink: "http://img3.wikia.nocookie.net/__cb20130301160021/bloodbrothersgame/images/thumb/4/45/Pendragon%2C_the_Scourge_II_Figure.png/40px-Pendragon%2C_the_Scourge_II_Figure.png",
         fullName: "Pendragon, the Scourge II"
     },
+    11020: {
+        name: "Phantasmal Succubus", hp: 18013, atk: 13604, def: 20007, wis: 17190, agi: 10701,
+        skills: [272, 273],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20131025125352/bloodbrothersgame/images/thumb/f/fb/Phantasmal_Succubus_II_Figure.png/40px-Phantasmal_Succubus_II_Figure.png",
+        fullName: "Phantasmal Succubus II"
+    },
     11022: {
         name: "Phantom Knight", hp: 19877, atk:	23213, def:	19270, wis:	19682, agi:	18057,
         skills: [267],
@@ -1207,6 +1233,12 @@ var famDatabase = {
         skills: [229, 167],
         imageLink: "http://img2.wikia.nocookie.net/__cb20130823004421/bloodbrothersgame/images/thumb/b/bd/Pontifex_Antiquus_II_Figure.png/60px-Pontifex_Antiquus_II_Figure.png",
         fullName: "Pontifex Antiquus II"
+    },
+    10075: {
+        name: "Pouliquen", hp: 7890, atk: 6271, def: 8910, wis: 9439, agi: 7843,
+        skills: [16],
+        imageLink: "http://img2.wikia.nocookie.net/__cb20130126053738/bloodbrothersgame/images/thumb/6/6c/Pouliquen%2C_Archibishop_II_Figure.png/40px-Pouliquen%2C_Archibishop_II_Figure.png",
+        fullName: "Pouliquen, Archibishop II"
     },
     10785: {
         name: "Premyslid", hp: 13626, atk: 16984, def: 14926, wis: 18772, agi: 11232,

@@ -170,8 +170,7 @@ class BattleModel {
         
         return skillArray;
     }
-
-    
+        
     getPlayerById(id: number) {
         if (id === 1) {
             return this.player1;

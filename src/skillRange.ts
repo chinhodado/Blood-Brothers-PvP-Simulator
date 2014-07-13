@@ -91,7 +91,7 @@ class RangeFactory {
             range = this.createFriendRandomRange(id, selectDead);
         }
         else {
-            range = this.createRange(id);            
+            range = this.createRange(id, selectDead);            
         }
         return range;
     }
@@ -138,12 +138,12 @@ class RangeFactory {
         return canBe;    
     }
     
-    static createRange (id) {
+    static createRange (id: number, selectDead: boolean) {
         switch (id) {
             case 1:
-                return new EitherSideRange(id); // either side, but not both
+                return new EitherSideRange(id, selectDead); // either side, but not both
             case 2 :
-                return new BothSidesRange(id);
+                return new BothSidesRange(id, selectDead);
             case 3 :
                 return new SelfBothSidesRange(id);
             case 4 :
@@ -155,7 +155,7 @@ class RangeFactory {
             case 15:
                 return new EnemyFrontMidAllRange(id);
             case 21:
-                return new SelfRange(id);
+                return new SelfRange(id, selectDead);
             case 28:
                 return new RightRange(id);
             default:
@@ -216,6 +216,34 @@ class BaseRange {
             return isValid;
         };
     }
+
+    satisfyDeadCondition(card: Card, selectDead: boolean): boolean {
+        return (card.isDead && selectDead) || (!card.isDead && !selectDead);
+    }
+}
+
+class BothSidesRange extends BaseRange {
+    selectDead: boolean;
+    constructor(id : number, selectDead: boolean) {
+        super(id);
+        this.selectDead = selectDead;
+    }
+    
+    getTargets(executor: Card): Card[] {
+        var targets = [];
+        
+        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
+        if (leftCard && this.satisfyDeadCondition(leftCard, this.selectDead)) {
+            targets.push(leftCard);
+        }
+        
+        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
+        if (rightCard && this.satisfyDeadCondition(rightCard, this.selectDead)) {
+            targets.push(rightCard);
+        }
+        
+        return targets;
+    }
 }
 
 class EnemyRandomRange extends BaseRange {
@@ -228,55 +256,17 @@ class EnemyRandomRange extends BaseRange {
     }   
 }
 
-class EitherSideRange extends BaseRange {
-    constructor(id : number) {
-        super(id);
-    }
+class EitherSideRange extends BothSidesRange {
     
-    getTargets(executor : Card) : Card[] {
-        var targets = [];
+    getTargets(executor: Card): Card[] {
+        var targets = super.getTargets(executor);
         
-        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
-        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
-
-        if (leftCard && !leftCard.isDead && (!rightCard || rightCard.isDead)) {
-            targets.push(leftCard);
+        if (targets.length === 0) {
+            return [];
         }
-        else if (rightCard && !rightCard.isDead && (!leftCard || leftCard.isDead)) {
-            targets.push(rightCard);
+        else {
+            return [getRandomElement(targets)];
         }
-        else if (rightCard && !rightCard.isDead && leftCard && !leftCard.isDead) {
-            if (Math.random() <= 0.5) {
-                targets.push(leftCard);
-            }
-            else {
-                targets.push(rightCard);
-            }
-        }
-        
-        return targets;
-    }
-}
-
-class BothSidesRange extends BaseRange {
-    constructor(id : number) {
-        super(id);
-    }
-    
-    getTargets(executor : Card) : Card[] {
-        var targets = [];
-        
-        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
-        if (leftCard && !leftCard.isDead) {
-            targets.push(leftCard);
-        }
-        
-        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
-        if (rightCard && !rightCard.isDead) {
-            targets.push(rightCard);
-        }
-        
-        return targets;
     }
 }
 
@@ -300,14 +290,16 @@ class RightRange extends BaseRange {
 }
 
 class SelfRange extends BaseRange {
-    constructor(id: number) {
+    selectDead: boolean;
+    constructor(id: number, selectDead: boolean) {
         super(id);
+        this.selectDead = selectDead;
     }
 
     getTargets(executor: Card): Card[] {
         var targets = [];
 
-        if (!executor.isDead) { // should always be true
+        if (this.satisfyDeadCondition(executor, this.selectDead)) {
             targets.push(executor);
         }
 

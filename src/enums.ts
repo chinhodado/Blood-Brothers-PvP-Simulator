@@ -23,7 +23,7 @@ module ENUM {
                     // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
         MAGIC = 4, // anything that ignores position, args: same as ATTACK
         COOP = 5,
-        REVIVE = 6,
+        REVIVE = 6, // arg1: hp heal ratio on revive (always 1)
         KILL = 7,
         STEAL = 8,
         CHARGE = 9,
@@ -120,7 +120,8 @@ module ENUM {
         AFFLICTION = 3,
         PROTECT = 4,
         DESCRIPTION = 5,
-        TEXT = 6 // used for displaying text in the debugger that has nothing to do with the battle
+        TEXT = 6, // used for displaying text in the debugger that has nothing to do with the battle
+        REVIVE = 7,
     }
 }
 
