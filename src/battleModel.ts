@@ -572,35 +572,23 @@ class BattleModel {
             if (protectSkill) {
                 var protector = enemyCards[i];
 
-                // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
-                if (this.cardManager.isSameCard(targetCard, protector) && protectSkill.skillRange != 21) {
-                    continue;
-                }
-
                 // if a fam that has been attacked is not allowed to protect (like in the case of AoE), continue
                 if (targetsAttacked && targetsAttacked[protector.id]) {
                     continue;
                 }
 
-                if (!protector.canUseSkill()) {
-                    continue;
+                var protectData: SkillLogicData = {
+                    executor: protector,
+                    skill: protectSkill,
+                    attacker: attacker,    // for protect
+                    attackSkill: attackSkill, // for protect
+                    targetCard: targetCard,  // for protect
+                    targetsAttacked: targetsAttacked  // for protect
                 }
 
-                // now check if the original target is in the protect range of the protector
-                var defenseTargets = protectSkill.range.getTargets(protector);
-                if (this.cardManager.isCardInList(targetCard, defenseTargets)) {
-                    if (Math.random() * 100 <= protectSkill.maxProbability) {
-                        // ok, so now activate the protect skill
-                        protectSkillActivated = true;
-                        protectSkill.execute({
-                            executor: protector,
-                            skill: protectSkill,
-                            attacker: attacker,    // for protect
-                            attackSkill: attackSkill, // for protect
-                            targetCard: targetCard,  // for protect
-                            targetsAttacked: targetsAttacked  // for protect
-                        });
-                    }
+                if (protectSkill.willBeExecuted(protectData)) {
+                    protectSkillActivated = true;
+                    protectSkill.execute(protectData);
                 }
             }
             else {

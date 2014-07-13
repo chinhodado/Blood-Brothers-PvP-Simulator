@@ -430,6 +430,17 @@ class AttackSkillLogic extends SkillLogic {
 }
 
 class ProtectSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = data.skill.getTargets(data.executor);
+
+        // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != 21) {
+            return false;
+        }
+
+        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, targets);
+    }
+
     execute(data: SkillLogicData) {
         var protector = data.executor;
         var protectSkill = data.skill;
@@ -467,7 +478,7 @@ class ProtectSkillLogic extends SkillLogic {
     }
 }
 
-class ProtectCounterSkillLogic extends SkillLogic {
+class ProtectCounterSkillLogic extends ProtectSkillLogic {
     execute(data: SkillLogicData) {
         var protector = data.executor;
         var protectSkill = data.skill;
@@ -481,7 +492,7 @@ class ProtectCounterSkillLogic extends SkillLogic {
             type: ENUM.MinorEventType.PROTECT, 
             protect: {
                 protectedId: data.targetCard.id,
-                counter: true,
+                counter: true, // <- different from Protect
                 counteredSkillId: attackSkill.id,
                 attackerId: data.attacker.id
             },
