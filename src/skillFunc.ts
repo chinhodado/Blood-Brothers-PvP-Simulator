@@ -49,7 +49,10 @@ class SkillLogic {
     }
 
     willBeExecuted(data: SkillLogicData): boolean {
-        return (!data.executor.isDead && 
+        var deadCond = (data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
+                       (!data.executor.isDead && data.skill.skillType !== ENUM.SkillType.ACTION_ON_DEATH)
+
+        return (deadCond && 
             data.executor.canAttack() && // if cannot attack -> cannot use skill, so the same. If can attack, true, doesn't matter
             data.executor.canUseSkill() && 
             Math.random() * 100 < data.skill.maxProbability);
@@ -208,6 +211,12 @@ class AfflictionSkillLogic extends SkillLogic {
 }
 
 class AttackSkillLogic extends SkillLogic {
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = data.skill.getTargets(data.executor);
+        return super.willBeExecuted(data) && targets && (targets.length > 0);
+    }
+
     execute(data: SkillLogicData) {
         if (RangeFactory.isEnemyRandomRange(data.skill.skillRange)) {
             this.executeRandomAttackSkill(data);
@@ -534,11 +543,10 @@ class CounterSkillLogic extends SkillLogic {
 
     execute(data: SkillLogicData) {
 
-        var desc = data.executor.name + " procs " + data.skill.name + ". ";
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
-            description: desc,
+            description: data.executor.name + " procs " + data.skill.name + ". ",
             skillId: data.skill.id
         });
 

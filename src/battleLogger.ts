@@ -362,9 +362,29 @@ class BattleLogger {
      */
     getTargetsInMajorEvent(majorIndex: number): number[] {
         var targets = [];
+        var majorEvent = this.majorEventLog[majorIndex];
         for (var i = 0; i < this.minorEventLog[majorIndex].length; i++) {
             var tmpData = this.minorEventLog[majorIndex][i];
-            if (tmpData.executorId == this.majorEventLog[majorIndex].executorId) {
+            if (tmpData.executorId === majorEvent.executorId && tmpData.skillId === majorEvent.skillId) {
+                targets.push(tmpData.targetId);
+            }
+        }
+        return targets;
+    }
+
+    /**
+     * Used for getting the targets in a nested attack
+     * Return an array of target id's
+     */
+    getNestedTargetsInMajorEvent(majorIndex: number, minorIndex: number): number[] {
+        var targets = [];
+        var initialAttackLog = this.minorEventLog[majorIndex][minorIndex];
+        var executorId = initialAttackLog.executorId;
+        var skillId = initialAttackLog.skillId;
+
+        for (var i = minorIndex; i < this.minorEventLog[majorIndex].length; i++) {
+            var tmpData = this.minorEventLog[majorIndex][i];
+            if (tmpData.executorId === executorId && tmpData.skillId === skillId) {
                 targets.push(tmpData.targetId);
             }
         }

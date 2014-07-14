@@ -526,6 +526,7 @@
      */
     displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; callback?} = {}) {
         var minorLog = this.logger.minorEventLog;
+        var majorLog = this.logger.majorEventLog;
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (!minorLog[majorIndex] || minorIndex >= minorLog[majorIndex].length) {
@@ -758,13 +759,19 @@
             var exploSet = SVG.get('mainSvg').set();
 
             // add targets to the set
-            var aoeTargets = this.logger.getTargetsInMajorEvent(majorIndex);
+            if (data.executorId === majorLog[majorIndex].executorId && data.skillId === majorLog[majorIndex].skillId) {
+                var aoeTargets = this.logger.getTargetsInMajorEvent(majorIndex);
+            }
+            else { //hacky, for slagh
+                var aoeTargets = this.logger.getNestedTargetsInMajorEvent(majorIndex, minorIndex);
+                var isNested = true;
+            }
             for (var i = 0; i < aoeTargets.length; i++) {
                 var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
                 exploSet.add(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
             }
 
-            if (option.noAttackAnim) {
+            if (option.noAttackAnim && !isNested) {
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }

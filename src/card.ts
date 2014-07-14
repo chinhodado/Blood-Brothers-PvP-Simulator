@@ -5,70 +5,53 @@ class Card {
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
 
     name: string;
-    fullName: string;
-    private stats: Stats;
+    fullName: string;    
     id: number; // id for this simulator, not the id in game
     isMounted: boolean;
     isWarlord: boolean;
+    imageLink: string;
+
+    private stats: Stats;
     originalStats: Stats;
     status: Status;
-    skills: Skill[];
-    player: Player;
+    affliction: Affliction;
     isDead: boolean;
 
-    affliction: Affliction;
+    player: Player;
+    formationColumn: number; // 0 to 4
+    formationRow: ENUM.FormationRow; // 1, 2 or 3
 
+    skills: Skill[];
     autoAttack: Skill;
     
     private openingSkills: Skill[] = [];
     private activeSkills:  Skill[] = [];
     private protectSkills: Skill[] = [];
     private defenseSkills: Skill[] = [];
-    
-    formationColumn: number; // 0 to 4
-    formationRow: ENUM.FormationRow; // 1, 2 or 3
-    
-    imageLink: string;
+    private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     
     constructor(cardData, player: Player, formationColumn: number, skills: Skill[]) {
         this.name = cardData.name;
         this.fullName = cardData.fullName;
+        this.id = player.id * 100 + formationColumn; // 100-104, 200-204
+        this.isMounted = cardData.isMounted;
+        this.isWarlord = cardData.isWarlord;
+        this.imageLink = cardData.imageLink;
 
-        // this will be modified during the battle
+        // the HP will be modified during the battle
         this.stats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
         
         // this should never be modified
         this.originalStats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
 
         this.status = new Status();
-        this.skills = skills;
-        this.player = player; // 1: me, 2: opponent
-        this.isMounted = cardData.isMounted;
-        this.isWarlord = cardData.isWarlord;
-    
         this.isDead = false;
+
+        this.player = player; // 1: me, 2: opponent
         this.formationColumn = formationColumn;
         this.formationRow = player.formation.getCardRow(formationColumn);
-        
-        for (var i = 0; i < skills.length; i++) {
-            var skill = skills[i];
-            if (skill) {
-                if (skill.skillType == ENUM.SkillType.OPENING) {
-                    this.openingSkills.push(skill);
-                }
-                else if (skill.skillType == ENUM.SkillType.ACTIVE) {
-                    this.activeSkills.push(skill);
-                }
-                else if (skill.skillType == ENUM.SkillType.PROTECT) {
-                    this.protectSkills.push(skill);
-                }
-                else if (skill.skillType == ENUM.SkillType.DEFENSE) {
-                    this.defenseSkills.push(skill);
-                }
-            }
-        }
-        
-        this.imageLink = cardData.imageLink;
+
+        this.skills = skills;
 
         if (cardData.autoAttack) {
             this.autoAttack = new Skill(cardData.autoAttack);
@@ -77,36 +60,55 @@ class Card {
             this.autoAttack = new Skill(10000);
         }
 
-        this.id = player.id * 100 + formationColumn; // 100-104, 200-204
+        for (var i = 0; i < skills.length; i++) {
+            var skill = skills[i];
+            if (skill) {
+                if (skill.skillType === ENUM.SkillType.OPENING) {
+                    this.openingSkills.push(skill);
+                }
+                else if (skill.skillType === ENUM.SkillType.ACTIVE) {
+                    this.activeSkills.push(skill);
+                }
+                else if (skill.skillType === ENUM.SkillType.PROTECT) {
+                    this.protectSkills.push(skill);
+                }
+                else if (skill.skillType === ENUM.SkillType.DEFENSE) {
+                    this.defenseSkills.push(skill);
+                }
+                else if (skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) {
+                    this.ondeathSkills[1] = skill;
+                }
+            }
+        }
     }
     
     getSerializableObject() {
         return {
             name: this.name,
-            fullName: this.fullName,
-            stats: this.stats,
+            fullName: this.fullName,            
             id: this.id,
             isMounted: this.isMounted,
             isWarlord: this.isWarlord,
+            imageLink: this.imageLink,
+
+            stats: this.stats,
             originalStats: this.originalStats,
             status: this.status,
-            skills: getSerializableObjectArray(this.skills),
-            player: this.player,
-            isDead: this.isDead,
-
             affliction: this.affliction,
+            isDead: this.isDead,
+                     
+            player: this.player,
+            formationColumn: this.formationColumn,
+            formationRow : this.formationRow,
 
+            skills: getSerializableObjectArray(this.skills),
             autoAttack: this.autoAttack.getSerializableObject(),
     
             openingSkills: getSerializableObjectArray(this.openingSkills),
             activeSkills:  getSerializableObjectArray(this.activeSkills),
             protectSkills: getSerializableObjectArray(this.protectSkills),
             defenseSkills: getSerializableObjectArray(this.defenseSkills),
-    
-            formationColumn: this.formationColumn,
-            formationRow : this.formationRow,
-    
-            imageLink: this.imageLink
+            ondeathSkills: getSerializableObjectArray(this.ondeathSkills),
         }
     }
 
@@ -152,6 +154,17 @@ class Card {
     
     getSecondActiveSkill(): Skill {
         return this.activeSkills[1];
+    }
+
+    // ondeath skills
+    getBuffOnDeathSkill(): Skill {
+        return this.ondeathSkills[0];
+    }
+    getInherentOnDeathSkill(): Skill {
+        return this.ondeathSkills[1];
+    }
+    hasOnDeathSkill(): boolean {
+       return (this.ondeathSkills[0] != null) || (this.ondeathSkills[1] != null);
     }
 
     getName() {

@@ -1724,6 +1724,27 @@ var SkillDatabase = {
         description: "Greatly lower ATK of up to three foes."
     },
 
+    457 : {
+        name: "Brink of Death", skillType: 16, skillFunc: 4, skillCalcType: 1, 
+        skillFuncArg1: 3.5,
+        skillRange: 5, maxProbability: 70, ward: "PHYSICAL",
+        description: "Deal massive ATK-based damage, ignoring position, to one foe upon its death."
+    },
+
+    459 : {
+        name: "Fleet of Foot", skillType: 2, skillFunc: 4, skillCalcType: 3, 
+        skillFuncArg1: 1.3,
+        skillRange: 8, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal AGI-based damage to all foes, ignoring position."
+    },
+
+    460 : {
+        name : "Void Strike", skillType: 16, skillFunc: 19, skillCalcType: 0,
+        skillFuncArg1: 0, skillFuncArg2: 5, skillFuncArg3: 0.6, skillFuncArg4: 1,
+        skillRange: 8, maxProbability: 70,
+        description: "High chance to silence all foes for one turn upon his death."
+    },
+
     461 : {
         name : "Lion's Wrath", skillType: 2, skillFunc: 3, skillCalcType: 1,
         skillFuncArg1: 1.35, 
@@ -1853,6 +1874,20 @@ var SkillDatabase = {
         skillFuncArg1: 1, skillFuncArg2: 2, 
         skillRange: 21, maxProbability: 70,
         description: "Raise DEF of self at start of battle."
+    },
+
+    487: {
+        name: "Dance of Farewell", skillType: 2, skillFunc: 4, skillCalcType: 2,
+        skillFuncArg1: 1.1,
+        skillRange: 17, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+
+    488: {
+        name: "Dance of Reunion", skillType: 16, skillFunc: 6, skillCalcType: 0,
+        skillFuncArg1: 1,
+        skillRange: 121, maxProbability: 50,
+        description: "Revive one random ally upon her death."
     },
 
     489: {

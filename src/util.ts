@@ -100,7 +100,12 @@ function getScaledWikiaImageLink (link: string, newWidth: number): string {
 function getSerializableObjectArray(array: any[]) {
     var toReturn = [];
     for (var i = 0; i < array.length; i++) {
-        toReturn.push(array[i].getSerializableObject());
+        if (array[i] == null) {
+            toReturn.push(null);
+        }
+        else {
+            toReturn.push(array[i].getSerializableObject());
+        }
     }
     return toReturn;
 }

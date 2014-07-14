@@ -253,7 +253,12 @@ class EnemyRandomRange extends BaseRange {
     constructor(id : number, numTarget : number) {
         super(id);
         this.numTarget = numTarget;    
-    }   
+    }
+
+    // use this for determining if there is a target only
+    getTargets(executor : Card) : Card[] {
+        return this.getBaseTargets(this.getCondFunc(executor));
+    }
 }
 
 class EitherSideRange extends BothSidesRange {
@@ -372,6 +377,11 @@ class EnemyNearRange extends BaseRange {
     getTargets (executor : Card) : Card[] {
         // get center enemy
         var centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
+
+        if (!centerEnemy) {
+            return [];
+        }
+
         var enemyCards = CardManager.getInstance().getEnemyCards(executor.player);
         
         // only upto 2 and not 4 since the max distance is 2 anyway

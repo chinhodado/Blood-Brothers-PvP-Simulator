@@ -9,6 +9,12 @@
  * - For the image, use the wikia thumbnail version
  */
 var famDatabase = {
+    11282: {
+        name: "Achilles", hp: 13593, atk: 15630, def: 11362, wis: 10603, agi: 16562,
+        skills: [459, 460],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140514075703/bloodbrothersgame/images/thumb/c/c7/Achilles%2C_Fallen_Hero_II_Figure.png/40px-Achilles%2C_Fallen_Hero_II_Figure.png",
+        fullName: "Achilles, Fallen Hero II"
+    },
     10613: {
         name: "Adara", hp: 16024, atk: 12134, def: 17620, wis: 10857, agi: 9370,
         skills: [166],
@@ -316,6 +322,13 @@ var famDatabase = {
         skills: [238],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130921071449/bloodbrothersgame/images/thumb/8/83/Chiyome%2C_the_Kamaitachi_II_Figure.png/40px-Chiyome%2C_the_Kamaitachi_II_Figure.png",
         fullName: "Chiyome, the Kamaitachi II"
+    },
+    11306: {
+        name: "Circe", hp: 15002, atk: 7776, def: 11947, wis: 17017, agi: 16009,
+        skills: [487, 488],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140612092914/bloodbrothersgame/images/thumb/0/0f/Circe%2C_Fallen_Heroine_II_Figure.png/171px-Circe%2C_Fallen_Heroine_II_Figure.png",
+        fullName: "Circe, Fallen Heroine II"
     },
     10303: {
         name: "Crystal Gillant", hp: 11832, atk: 10896, def: 10439, wis: 10439, agi: 13317,
@@ -1399,6 +1412,12 @@ var famDatabase = {
         skills: [303],
         imageLink: "http://img2.wikia.nocookie.net/__cb20131129153025/bloodbrothersgame/images/thumb/7/78/Skrimsl_the_Freezing_II_Figure.png/40px-Skrimsl_the_Freezing_II_Figure.png",
         fullName: "Skrimsl the Freezing II"
+    },
+    11273: {
+        name: "Slagh", hp: 12978, atk: 16561, def: 11098, wis: 11683, agi: 15631,
+        skills: [457],
+        imageLink: "http://img1.wikia.nocookie.net/__cb20140515012351/bloodbrothersgame/images/thumb/3/3c/Slagh%2C_Carnage_Incarnate_II_Figure.png/171px-Slagh%2C_Carnage_Incarnate_II_Figure.png",
+        fullName: "Slagh, Carnage Incarnate II"
     },
     10450: {
         name: "Snow Queen", hp: 14070, atk: 13994, def: 13940, wis: 15229, agi: 14449,

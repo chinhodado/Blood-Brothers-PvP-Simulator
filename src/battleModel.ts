@@ -36,6 +36,9 @@ class BattleModel {
 
     // only used for quickly get a card by its id
     allCardsById: any = {};
+
+    // store recently dead cards with ondeath skills waiting to proc
+    onDeathCards: Card[] = [];
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer : Player;
@@ -233,6 +236,7 @@ class BattleModel {
         if (data.target.getHP() <= 0) {
             this.logger.displayMinorEvent(data.target.name + " is dead");
             data.target.isDead = true;
+            this.addOnDeathCard(data.target);
         }
     }
 
@@ -298,6 +302,7 @@ class BattleModel {
         if (target.getHP() <= 0) {
             this.logger.displayMinorEvent(target.name + " is dead");
             target.isDead = true;
+            this.addOnDeathCard(target);
         }
     }
 
@@ -413,6 +418,7 @@ class BattleModel {
                 // update poison status
                 if (!currentCard.isDead && currentCard.getAfflictionType() == ENUM.AfflictionType.POISON) {
                     currentCard.updateAffliction();
+                    this.processOnDeathPhase();
                 }
 
                 finished = this.checkFinish();
@@ -424,12 +430,19 @@ class BattleModel {
         }
         return this.playerWon.name;
     }
+
+    addOnDeathCard(card: Card) {
+        if (card.hasOnDeathSkill()) {
+            this.onDeathCards.push(card);
+        }
+    }
     
     checkFinish(): boolean {
-        if (this.cardManager.isAllDead(this.oppositePlayerCards)) {
+        var noOnDeathRemain = this.onDeathCards.length === 0;
+        if (this.cardManager.isAllDead(this.oppositePlayerCards) && noOnDeathRemain) {
             this.playerWon = this.currentPlayer;
         }
-        else if (this.cardManager.isAllDead(this.currentPlayerCards)) {
+        else if (this.cardManager.isAllDead(this.currentPlayerCards) && noOnDeathRemain) {
             this.playerWon = this.oppositePlayer;
         }
 
@@ -482,6 +495,8 @@ class BattleModel {
             this.executeNormalAttack(currentCard);
         }
 
+        this.processOnDeathPhase();
+
         if (this.checkFinish()) {
             return true;
         }
@@ -490,6 +505,54 @@ class BattleModel {
         }
         else {
             return false;
+        }
+    }
+
+    processOnDeathPhase() {
+        // make a copy
+        var hasOnDeath: Card[] = [];
+        for (var i = 0; i < this.onDeathCards.length; i++) {
+            hasOnDeath.push(this.onDeathCards[i]);
+        }
+
+        this.onDeathCards = [];
+
+        for (var i = 0; i < hasOnDeath.length; i++) {
+            var card = hasOnDeath[i];
+            var skill = card.getInherentOnDeathSkill();
+            var data: SkillLogicData = {
+                executor: card,
+                skill: skill
+            }
+            if (skill && skill.willBeExecuted(data)) {
+                this.logger.addMinorEvent({
+                    executorId: card.id, 
+                    type: ENUM.MinorEventType.DESCRIPTION,
+                    description: card.name + " procs " + skill.name + ". ",
+                    skillId: skill.id
+                });
+                skill.execute(data);
+            }
+
+            skill = card.getBuffOnDeathSkill();
+            var data: SkillLogicData = {
+                executor: card,
+                skill: skill
+            }
+            if (skill && skill.willBeExecuted(data)) {
+                this.logger.addMinorEvent({
+                    executorId: card.id, 
+                    type: ENUM.MinorEventType.DESCRIPTION,
+                    description: card.name + " procs " + skill.name + ". ",
+                    skillId: skill.id
+                });
+                skill.execute(data);
+            }
+        }
+
+        // at the end, if there are newly addition to recentlyDeadCards, recursively repeat the process 
+        if (this.onDeathCards.length !== 0) {
+            this.processOnDeathPhase();
         }
     }
 
