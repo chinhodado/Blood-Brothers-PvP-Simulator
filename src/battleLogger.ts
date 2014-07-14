@@ -432,6 +432,7 @@ interface MinorEvent {
         counteredSkillId: number;
         attackerId: number
     };
+    reviveHPRatio?: number; // for revive
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description?: string; // description of the event in plain text
     skillId?: number;     // the skill associated with this MinorEvent

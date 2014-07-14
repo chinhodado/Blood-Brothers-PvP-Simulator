@@ -4,7 +4,7 @@
  * - Use the POPE stats
  * - The "name" attribute is a short name for the fam. If multiple fams have the same short name,
  *   append the rarity at the end (e.g. "Thor" and "Thor L")
- * - The order of the skills doesn't matter
+ * - The order of the skills only matters for mounted familiars
  * - If the familiar has a special autoAttack, add it
  * - For the image, use the wikia thumbnail version
  */
@@ -1152,7 +1152,14 @@ var famDatabase = {
         imageLink: "http://img1.wikia.nocookie.net/__cb20130114161242/bloodbrothersgame/images/thumb/9/96/Oniroku_the_Slayer_II_Figure.png/40px-Oniroku_the_Slayer_II_Figure.png",
         fullName: "Oniroku the Slayer II"
     },
-        11310: {
+    11286: {
+        name: "Aquarius", hp: 16323, atk: 7494, def: 11448, wis: 17363, agi: 16009,
+        skills: [450, 451],
+        autoAttack: 10007,
+        imageLink: "http://img2.wikia.nocookie.net/__cb20140508115333/bloodbrothersgame/images/thumb/b/b9/Paladin_of_Aquarius_II_Figure.png/40px-Paladin_of_Aquarius_II_Figure.png",
+        fullName: "Paladin of Aquarius II"
+    },
+    11310: {
         name: "Cancer", hp: 16627, atk: 17201, def: 10408, wis: 7494, agi: 16908,
         skills: [478, 479],
         imageLink: "http://img2.wikia.nocookie.net/__cb20140606074955/bloodbrothersgame/images/thumb/4/4e/Paladin_of_Cancer_II_Figure.png/40px-Paladin_of_Cancer_II_Figure.png",
@@ -1743,6 +1750,12 @@ var famDatabase = {
         skills: [161],
         imageLink: "http://img1.wikia.nocookie.net/__cb20130630141907/bloodbrothersgame/images/thumb/c/cf/Zanga%2C_the_Iron_Storm_II_Figure.png/60px-Zanga%2C_the_Iron_Storm_II_Figure.png",
         fullName: "Zanga, the Iron Storm II"
+    },
+    10992: {
+        name: "Zeruel", hp: 16995, atk: 19573, def: 13886, wis: 13507, agi: 16984,
+        skills: [351, 352],
+        imageLink: "http://img4.wikia.nocookie.net/__cb20140122120951/bloodbrothersgame/images/thumb/a/a7/Zeruel%2C_Angel_of_War_II_Figure.png/40px-Zeruel%2C_Angel_of_War_II_Figure.png",
+        fullName: "Zeruel, Angel of War II"
     },
     10474: {
         name: "Zuniga", hp: 12987, atk: 15132, def: 14276, wis: 14839, agi: 14709,

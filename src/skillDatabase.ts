@@ -1270,6 +1270,13 @@ var SkillDatabase = {
         description: "Deal ATK-based damage to four random foes."
     },
 
+    352 : {
+        name: "Spell of Revival", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 355, skillFuncArg2: 16, 
+        skillRange: 3, maxProbability: 70,
+        description: "Self and adjacent allies are automatically revived after being killed."
+    },
+
     353 : {
         name: "Icerend Claws", skillType: 2, skillFunc: 3, skillCalcType: 1, 
         skillFuncArg1: 1.45, skillFuncArg2: 3, skillFuncArg3: 0.3, 
@@ -1282,6 +1289,12 @@ var SkillDatabase = {
         skillFuncArg1: 2.9, skillFuncArg2: 1, skillFuncArg3: 0.3, 
         skillRange: 23, maxProbability: 30, ward: "MAGICAL",
         description: "Deal massive WIS-based damage to two random foes and sometimes envenom them."
+    },
+
+    355 : {
+        name: "Dawn's Light", skillType: 16, skillFunc: 6, skillCalcType: 0, 
+        skillFuncArg1: 0.5,
+        skillRange: 21, maxProbability: 100
     },
 
     358 : {
@@ -1708,6 +1721,26 @@ var SkillDatabase = {
         skillFuncArg1: 1.3,  
         skillRange: 19, maxProbability: 30, ward: "PHYSICAL",
         description: "Deal AGI-based damage to four random foes."
+    },
+
+    450 : {
+        name: "Aquarius Unleashed", skillType: 2, skillFunc: 4, skillCalcType: 2, 
+        skillFuncArg1: 1.25,  
+        skillRange: 20, maxProbability: 30, ward: "MAGICAL",
+        description: "Deal WIS-based damage to five random foes, ignoring position."
+    },
+
+    451 : {
+        name: "Endless Deluge", skillType: 1, skillFunc: 1, skillCalcType: 0, 
+        skillFuncArg1: 452, skillFuncArg2: 16,
+        skillRange: 101, maxProbability: 70,
+        description: "One random ally is automatically revived after being killed."
+    },
+
+    452 : {
+        name: "Dawn's Tear", skillType: 16, skillFunc: 6, skillCalcType: 0, 
+        skillFuncArg1: 1,
+        skillRange: 21, maxProbability: 100
     },
 
     455 : {

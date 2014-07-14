@@ -84,6 +84,7 @@ class BuffSkillLogic extends SkillLogic {
                 case ENUM.StatusType.MAGIC_RESISTANCE :
                 case ENUM.StatusType.BREATH_RESISTANCE :
                 case ENUM.StatusType.WILL_ATTACK_AGAIN:
+                case ENUM.StatusType.ACTION_ON_DEATH:
                     var buffAmount = skill.skillFuncArg1;
                     break;
                 default :
@@ -716,15 +717,17 @@ class ReviveSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
 
         var targets = data.skill.getTargets(data.executor);
+        var hpRatio = data.skill.skillFuncArg1;
 
         for (var i = 0; i < targets.length; i++) {
-            targets[i].revive();
+            targets[i].revive(hpRatio);
 
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 targetId: targets[i].id,
                 type: ENUM.MinorEventType.REVIVE,
-                description: targets[i].name + " is revived!",
+                reviveHPRatio: hpRatio,
+                description: targets[i].name + " is revived with " + hpRatio * 100 + "% HP!",
                 skillId: data.skill.id
             });
         }        

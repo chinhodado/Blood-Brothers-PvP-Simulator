@@ -579,6 +579,9 @@
                     else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
                         var displayText = "EXTRA ACT";
                     }
+                    else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
+                        var displayText = "Revive On"; // for now
+                    }
                     else {
                         var upDownText = data.amount < 0? " Down" : " Up";
                         var displayText = ENUM.StatusType[data.status.type] + upDownText;
@@ -654,7 +657,7 @@
                 var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
                 damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
                     .opacity(1).animate({delay: '0.5s'}).opacity(0);
-                this.displayHPOnCanvas(100, playerId, index);
+                this.displayHPOnCanvas(data.reviveHPRatio * 100, playerId, index);
                 this.getAfflictionText(playerId, index).hide();
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);

@@ -539,6 +539,8 @@ class BattleModel {
                 executor: card,
                 skill: skill
             }
+            // clear it
+            card.clearBuffOnDeathSkill();
             if (skill && skill.willBeExecuted(data)) {
                 this.logger.addMinorEvent({
                     executorId: card.id, 

@@ -166,6 +166,9 @@ class Card {
     hasOnDeathSkill(): boolean {
        return (this.ondeathSkills[0] != null) || (this.ondeathSkills[1] != null);
     }
+    clearBuffOnDeathSkill(): void {
+        this.ondeathSkills[0] = null;
+    }
 
     getName() {
         return this.name;
@@ -313,6 +316,11 @@ class Card {
         else if (statusType === ENUM.StatusType.WILL_ATTACK_AGAIN) {
             this.status.willAttackAgain = amount;
         }
+        else if (statusType === ENUM.StatusType.ACTION_ON_DEATH) {
+            var skill = new Skill(amount);
+            this.ondeathSkills[0] = skill;
+            this.status.actionOnDeath = amount;
+        }
         else {
             throw new Error ("Invalid status type");
         }
@@ -330,6 +338,10 @@ class Card {
         if (this.status.breathResistance > 0) this.status.breathResistance = 0;
 
         if (this.status.skillProbability > 0) this.status.skillProbability = 0;
+
+        if (this.status.actionOnDeath > 0) this.status.actionOnDeath = 0;
+        this.clearBuffOnDeathSkill();
+
         if (this.status.willAttackAgain > 0) this.status.willAttackAgain = 0;
     }
 
@@ -339,7 +351,7 @@ class Card {
 
         if (status.atk > 0 || status.def > 0 || status.wis > 0 || status.agi > 0 ||
             status.attackResistance > 0 || status.magicResistance > 0 || status.breathResistance > 0 ||
-            status.skillProbability > 0 || status.willAttackAgain > 0) 
+            status.skillProbability > 0 || status.actionOnDeath > 0 || status.willAttackAgain > 0) 
         {
             hasPositiveStatus = true;
         }
@@ -364,14 +376,14 @@ class Card {
         return this.stats.hp/this.originalStats.hp;
     }
     
-    revive() {
+    revive(hpRatio: number) {
         if (!this.isDead) {
             throw new Error("You can't revive a card that is not dead!");
         }
 
         this.isDead = false;
         this.status = new Status();
-        this.stats.hp = this.originalStats.hp;
+        this.stats.hp = this.originalStats.hp * hpRatio;
     }
 
     getATK () {
@@ -470,6 +482,8 @@ class Status {
     breathResistance: number = 0;
 
     skillProbability: number = 0;
+
+    actionOnDeath: number = 0;
 
     willAttackAgain: number = 0;
 
