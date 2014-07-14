@@ -36,13 +36,13 @@ class Card {
         this.id = player.id * 100 + formationColumn; // 100-104, 200-204
         this.isMounted = cardData.isMounted;
         this.isWarlord = cardData.isWarlord;
-        this.imageLink = cardData.imageLink;
+        this.imageLink = cardData.img;
 
         // the HP will be modified during the battle
-        this.stats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
+        this.stats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
         
         // this should never be modified
-        this.originalStats = new Stats(cardData.hp, cardData.atk, cardData.def, cardData.wis, cardData.agi);
+        this.originalStats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
 
         this.status = new Status();
         this.isDead = false;
@@ -439,13 +439,13 @@ class Card {
         return value;
     }
 
-    hasWardOfType(type: string): boolean {
+    hasWardOfType(type: ENUM.WardType): boolean {
         switch (type) {
-            case "PHYSICAL":
+            case ENUM.WardType.PHYSICAL:
                 return this.status.attackResistance !== 0;
-            case "MAGICAL":
+            case ENUM.WardType.MAGICAL:
                 return this.status.magicResistance !== 0;
-            case "BREATH":
+            case ENUM.WardType.BREATH:
                 return this.status.breathResistance !== 0;
             default:
                 throw new Error ("Invalid type of ward!");

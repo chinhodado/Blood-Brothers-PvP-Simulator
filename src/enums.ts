@@ -86,6 +86,12 @@ module ENUM {
         WILL_ATTACK_AGAIN = 18
     }
 
+    export enum WardType {
+        PHYSICAL = 1,
+        MAGICAL = 2,
+        BREATH = 3
+    }
+
     export enum AfflictionType {
         POISON = 1,
         PARALYSIS = 2,

@@ -304,13 +304,13 @@
 
         var type;
         switch (data.wardUsed) {
-            case "PHYSICAL":
+            case ENUM.WardType.PHYSICAL:
                 type = ENUM.StatusType.ATTACK_RESISTANCE;
                 break;
-            case "MAGICAL":
+            case ENUM.WardType.MAGICAL:
                 type = ENUM.StatusType.MAGIC_RESISTANCE;
                 break;
-            case "BREATH":
+            case ENUM.WardType.BREATH:
                 type = ENUM.StatusType.BREATH_RESISTANCE;
                 break;
             default:

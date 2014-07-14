@@ -1,39 +1,39 @@
 class Skill {
 
-    id : number;
-    name : string;
-    skillType : number;
-    skillFunc : number;
-    skillCalcType : number;
-    skillFuncArg1 : number;
-    skillFuncArg2 : number;
-    skillFuncArg3 : number;
-    skillFuncArg4 : number;
-    skillFuncArg5 : number;
-    skillRange : number;
-    maxProbability : number;
-    ward: string;
+    id: number;
+    name: string;
+    skillType: number;
+    skillFunc: number;
+    skillCalcType: number;
+    skillFuncArg1: number;
+    skillFuncArg2: number;
+    skillFuncArg3: number;
+    skillFuncArg4: number;
+    skillFuncArg5: number;
+    skillRange: number;
+    maxProbability: number;
+    ward: ENUM.WardType;
     isAutoAttack: boolean;
 
-    range : BaseRange;
+    range: BaseRange;
     logic: SkillLogic;
 
-    constructor (skillId : number) {
+    constructor (skillId: number) {
     
         var skillData = SkillDatabase[skillId];
         
         this.id = skillId;
         this.name = skillData.name;
-        this.skillType = skillData.skillType;
-        this.skillFunc = skillData.skillFunc;
-        this.skillCalcType = skillData.skillCalcType;
-        this.skillFuncArg1 = skillData.skillFuncArg1? skillData.skillFuncArg1 : 0;
-        this.skillFuncArg2 = skillData.skillFuncArg2? skillData.skillFuncArg2 : 0;
-        this.skillFuncArg3 = skillData.skillFuncArg3? skillData.skillFuncArg3 : 0;
-        this.skillFuncArg4 = skillData.skillFuncArg4? skillData.skillFuncArg4 : 0;
-        this.skillFuncArg5 = skillData.skillFuncArg5? skillData.skillFuncArg5 : 0;
-        this.skillRange = skillData.skillRange;
-        this.maxProbability = skillData.maxProbability;
+        this.skillType = skillData.type;
+        this.skillFunc = skillData.func;
+        this.skillCalcType = skillData.calc;
+        this.skillFuncArg1 = skillData.arg1? skillData.arg1 : 0;
+        this.skillFuncArg2 = skillData.arg2? skillData.arg2 : 0;
+        this.skillFuncArg3 = skillData.arg3? skillData.arg3 : 0;
+        this.skillFuncArg4 = skillData.arg4? skillData.arg4 : 0;
+        this.skillFuncArg5 = skillData.arg5? skillData.arg5 : 0;
+        this.skillRange = skillData.range;
+        this.maxProbability = skillData.prob;
         this.ward = skillData.ward;
         this.isAutoAttack = skillData.isAutoAttack;
 
@@ -50,10 +50,10 @@ class Skill {
         var isAttackSkill = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
-            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC ||
-            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFATTACK ||
-            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT) 
+        if (skillInfo.func == ENUM.SkillFunc.ATTACK || 
+            skillInfo.func == ENUM.SkillFunc.MAGIC ||
+            skillInfo.func == ENUM.SkillFunc.DEBUFFATTACK ||
+            skillInfo.func == ENUM.SkillFunc.DEBUFFINDIRECT) 
         {
             isAttackSkill = true;    
         }
@@ -65,10 +65,10 @@ class Skill {
         var isIndirect = true;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.skillFunc == ENUM.SkillFunc.ATTACK || 
-            skillInfo.skillFunc == ENUM.SkillFunc.COUNTER ||
-            skillInfo.skillFunc == ENUM.SkillFunc.PROTECT_COUNTER ||
-            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFFATTACK) 
+        if (skillInfo.func == ENUM.SkillFunc.ATTACK || 
+            skillInfo.func == ENUM.SkillFunc.COUNTER ||
+            skillInfo.func == ENUM.SkillFunc.PROTECT_COUNTER ||
+            skillInfo.func == ENUM.SkillFunc.DEBUFFATTACK) 
         {
             isIndirect = false;    
         }
@@ -81,7 +81,7 @@ class Skill {
         var isWisAutoAttack = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (this.isAutoAttackSkill(skillId) && skillInfo.skillCalcType == ENUM.SkillCalcType.WIS) {
+        if (this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.WIS) {
             isWisAutoAttack = true;    
         }
 
@@ -91,8 +91,8 @@ class Skill {
     static isAtkIndepAutoAttack(skillId: number): boolean {
         var skillInfo = SkillDatabase[skillId];
 
-        return this.isAutoAttackSkill(skillId) && skillInfo.skillCalcType == ENUM.SkillCalcType.ATK
-                                               && skillInfo.skillFunc == ENUM.SkillFunc.MAGIC;
+        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK
+                                               && skillInfo.func == ENUM.SkillFunc.MAGIC;
     }
 
     static isAutoAttackSkill(skillId: number): boolean {
@@ -105,11 +105,11 @@ class Skill {
         var isMagicSkill = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.skillCalcType == ENUM.SkillCalcType.WIS ||
-            skillInfo.skillFunc == ENUM.SkillFunc.AFFLICTION ||
-            skillInfo.skillFunc == ENUM.SkillFunc.BUFF ||
-            skillInfo.skillFunc == ENUM.SkillFunc.DEBUFF ||
-            skillInfo.skillFunc == ENUM.SkillFunc.MAGIC)
+        if (skillInfo.calc == ENUM.SkillCalcType.WIS ||
+            skillInfo.func == ENUM.SkillFunc.AFFLICTION ||
+            skillInfo.func == ENUM.SkillFunc.BUFF ||
+            skillInfo.func == ENUM.SkillFunc.DEBUFF ||
+            skillInfo.func == ENUM.SkillFunc.MAGIC)
         {
             isMagicSkill = true;    
         }
@@ -122,7 +122,7 @@ class Skill {
         var isAoe = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (RangeFactory.canBeAoeRange(skillInfo.skillRange) && this.isIndirectSkill(skillId)) {
+        if (RangeFactory.canBeAoeRange(skillInfo.range) && this.isIndirectSkill(skillId)) {
             isAoe = true;    
         }
 

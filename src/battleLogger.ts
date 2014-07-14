@@ -454,7 +454,7 @@ interface MinorEvent {
     targetId?: number;    // the card id of the target
     type?: ENUM.MinorEventType;
     noProcEffect?: boolean; // specify true if don't want the proc effect to be displayed
-    wardUsed?: string;
+    wardUsed?: ENUM.WardType;
     affliction?: {
         type: ENUM.AfflictionType;
         percent?: number;

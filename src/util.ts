@@ -72,28 +72,24 @@ function pickRandomProperty(obj: {}): string {
 }
 
 /**
- * Given a link to a (already scaled) wikia image, return a new scaled version with the specified width
- * @param link The link to the original scaled wikia image
+ * Change a shortened link used in fam database to a thumbnail link
+ * @param link The shortened link
  * @param newWidth The width of the new image
  * @return The link to the new scaled image
  */
 function getScaledWikiaImageLink (link: string, newWidth: number): string {
-    // TODO: maybe we should use regex...
-    var lastSlash: number = link.lastIndexOf("/");
-    var scaledName: string = link.substring(lastSlash + 1); // the original scaled image name
+    // first un-shorten the link
+    link = link.replace("$1", ".wikia.nocookie.net");
+    link = link.replace("$2", "bloodbrothersgame/images/thumb");
 
-    // get the original image name
-    var firstOriginalImageNamePosition: number = scaledName.indexOf("px-") + 3;
-    var originalName: string = scaledName.substring(firstOriginalImageNamePosition);
+    var lastSlash: number = link.lastIndexOf("/");
+    var originalName: string = link.substring(lastSlash + 1); // the original image name
 
     // the new scaled image new
     var newScaledName: string = newWidth + "px-" + originalName;
 
-    // original image link with the slash
-    var originalLink: string = link.substring(0, lastSlash + 1);
-
     // complete new link
-    var newScaledLink: string = originalLink + newScaledName;
+    var newScaledLink: string = "http://" + link + "/" + newScaledName;
     return newScaledLink;
 }
 

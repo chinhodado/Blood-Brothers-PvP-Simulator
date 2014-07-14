@@ -272,13 +272,13 @@ class BattleModel {
             
         // apply the target's ward
         switch (skill.ward) {
-            case ("PHYSICAL") :
+            case ENUM.WardType.PHYSICAL:
                 damage = Math.round(damage * (1 - target.status.attackResistance));
                 break;
-            case ("MAGICAL") :
+            case ENUM.WardType.MAGICAL:
                 damage = Math.round(damage * (1 - target.status.magicResistance));
                 break;
-            case ("BREATH") :
+            case ENUM.WardType.BREATH:
                 damage = Math.round(damage * (1 - target.status.breathResistance));
                 break;
             default :
