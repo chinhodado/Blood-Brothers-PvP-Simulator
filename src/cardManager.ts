@@ -145,7 +145,7 @@ class CardManager {
 
     isAllDead (cards : Card[]) {
         var isAllDead = true;
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < cards.length; i++) {
             // assume no null card
             if (!cards[i].isDead) {
                 isAllDead = false;
@@ -175,5 +175,18 @@ class CardManager {
 
     getAllCards(): Card[] {
         return BattleModel.getInstance().allCards;
+    }
+
+    /**
+     * Get a string that represents a player's brig
+     */
+    getPlayerBrigString(player: Player): string {
+        var cards = this.getPlayerCards(player);
+        var brigStr = cards[0].name;
+        for (var i = 1; i < cards.length; i++) {
+            brigStr += (" - " + cards[i].name);
+        }
+
+        return brigStr;
     }
 }

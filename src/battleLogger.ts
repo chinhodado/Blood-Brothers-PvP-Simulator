@@ -5,6 +5,8 @@
  */
 class BattleLogger {
 
+    static IS_DEBUG_MODE = true;
+
     // an array of arrays of MinorEvent objects, describing the things that happened under that major event
     minorEventLog: MinorEvent[][] = [];
 
@@ -44,6 +46,11 @@ class BattleLogger {
      * Display a major event on screen (the left side list)
      */
     displayMajorEvent (index : number) : void {
+
+        if (!BattleLogger.IS_DEBUG_MODE) {
+            return;
+        }
+
         var data = this.majorEventLog[index];
         var id = "turn" + this.currentTurn + "events";
         var battleEventDiv = document.getElementById("battleEventDiv");
@@ -88,7 +95,7 @@ class BattleLogger {
      */
     bblogTurn(data) {
 
-        if (BattleModel.IS_MASS_SIMULATION) {
+        if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
         }
 
@@ -103,7 +110,7 @@ class BattleLogger {
      */
     displayMinorEvent (data) {
 
-        if (BattleModel.IS_MASS_SIMULATION) {
+        if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
         }
 
@@ -138,6 +145,10 @@ class BattleLogger {
      * is represented by the index argument supplied into this function.
      */
     displayEventLogAtIndex(majorIndex) {
+
+        if (!BattleLogger.IS_DEBUG_MODE) {
+            return;
+        }
 
         var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
 
@@ -267,6 +278,35 @@ class BattleLogger {
                 var lastEventCard = lastEventField["player" + p + "Cards"][f];
                 BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
             }
+        }
+    }
+
+    /**
+     * Display the info text for normal mode
+     */
+    displayInfoText() {
+        var cardManager = CardManager.getInstance();
+        var battle = BattleModel.getInstance();
+        var p1randTxt = battle.p1Random? "a random" : "";
+        var p2randTxt = battle.p2Random? "a random" : "";
+
+        var infoDiv = document.getElementById("infoDiv");
+        infoDiv.innerHTML = "You are watching <br> " + p2randTxt+ "  Player 2 (" + 
+            cardManager.getPlayerBrigString(battle.player2) + ") <br> vs <br> " + 
+            p1randTxt + " Player 1 (" + cardManager.getPlayerBrigString(battle.player1) + ") <br><br>";
+
+        var refreshText = document.getElementById("refreshText");
+        if (battle.p1Random && battle.p2Random) {
+            refreshText.innerHTML = "between two random opponents"
+        }
+        else if (battle.p1Random) {
+            refreshText.innerHTML = "between Player 2 and a random opponent"
+        }
+        else if (battle.p2Random) {
+            refreshText.innerHTML = "between Player 1 and a random opponent"
+        }
+        else {
+            refreshText.innerHTML = "between Player 1 and Player 2"
         }
     }
 

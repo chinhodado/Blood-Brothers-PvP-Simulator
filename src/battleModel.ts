@@ -18,6 +18,8 @@ class BattleModel {
 
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
+    p1Random: boolean;
+    p2Random: boolean;
 
     logger : BattleLogger;
     cardManager: CardManager;
@@ -73,6 +75,7 @@ class BattleModel {
         var player2warlordSkillArray: number[] = [];
         
         if (option.p1random) {
+            this.p1Random = true;
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
                 player1cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
@@ -89,6 +92,7 @@ class BattleModel {
         }
 
         if (option.p2random) {
+            this.p2Random = true;
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
                 player2cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
@@ -139,6 +143,10 @@ class BattleModel {
         this.cardManager.sortAllCards();
         
         graphic.displayFormationAndFamOnCanvas();
+
+        if (!BattleLogger.IS_DEBUG_MODE) {
+            this.logger.displayInfoText();
+        }
     }
 
     /**
