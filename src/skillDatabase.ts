@@ -707,7 +707,7 @@ var SkillDatabase = {
     },
 
     232 : {
-        name: "Lightning web", type: 2, func: 4, calc: 2, 
+        name: "Lightning Web", type: 2, func: 4, calc: 2, 
         arg1: 2.15, arg2: 2, arg3: 0.3, 
         range: 16, prob: 30, ward: 2,
         desc: "Deal massive WIS-based damage and sometimes paralyze three foes."

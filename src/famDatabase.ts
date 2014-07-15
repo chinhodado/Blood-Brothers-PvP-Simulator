@@ -509,7 +509,7 @@ var famDatabase = {
         fullName: "Freyr, God of the Harvest II"
     },
     10606: {
-        name: "Fomor", stats: [13052, 14465, 11928, 9967, 9781],
+        name: "Fomor", stats: [13052, 14645, 11928, 9967, 9781],
         skills: [138],
         img: "img1$1/__cb20130208175749/$2/4/43/Fomor_the_Savage_II_Figure.png",
         fullName: "Fomor the Savage II"
@@ -618,7 +618,7 @@ var famDatabase = {
         fullName: "Gregory, the Masked Slayer II"
     },
     10791: {
-        name: "Grellas", stats: [12066, 14769, 10636, 17374, 13073],
+        name: "Grellas", stats: [12066, 14796, 10636, 17374, 13073],
         skills: [212],
         img: "img2$1/__cb20130714135315/$2/1/11/Grellas_Fellstaff_II_Figure.png",
         fullName: "Grellas Fellstaff II"
@@ -1200,7 +1200,7 @@ var famDatabase = {
         fullName: "Paladin of Libra II"
     },
     11334: {
-        name: "Sagittarius", stats: [15578, 15218, 12163, 8415, 17255],
+        name: "Sagittarius", stats: [15587, 15218, 12163, 8415, 17255],
         skills: [507, 508],
         img: "img3$1/__cb20140709072736/$2/c/c0/Paladin_of_Sagittarius_II_Figure.png",
         fullName: "Paladin of Sagittarius II"
