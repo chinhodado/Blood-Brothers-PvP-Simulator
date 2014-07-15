@@ -11,7 +11,8 @@ var SkillDatabase = {
     10000: {
         name: "Default auto", type: 2, func: 3, calc: 1,
         arg1: 1, 
-        range: 5, prob: 100, ward: 1, isAutoAttack: true
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     2 : {
@@ -135,7 +136,8 @@ var SkillDatabase = {
     43 : {
         name: "Windlash", type: 2, func: 3, calc: 3, 
         arg1: 1,  
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to multiple foes."
     },
 
     46 : {
@@ -169,13 +171,15 @@ var SkillDatabase = {
     62: {
         name: "Cloak", type: 5, func: 12, calc: 1,
         arg1: 1, 
-        range: 2, prob: 50
+        range: 2, prob: 50,
+        desc: "Take damage in place of adjacent familiars."
     },
 
     63: {
         name: "Shroud", type: 5, func: 12, calc: 0,
         arg1: 0, 
-        range: 4, prob: 50
+        range: 4, prob: 50,
+        desc: "Take damage in place of familiars."
     },
 
     64: {
@@ -377,7 +381,8 @@ var SkillDatabase = {
     139 : {
         name: "Mad Dash", type: 2, func: 3, calc: 1, 
         arg1: 2,  
-        range: 23, prob: 30, ward: 1
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal physical damage to two random targets."
     },
 
     141 : {
@@ -643,12 +648,14 @@ var SkillDatabase = {
         name: "Bodycheck", type: 2, func: 3, calc: 1, 
         arg1: 2.5,  
         range: 6, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two foes."
     },
 
     217 : {
         name: "Harrowing Trial", type: 2, func: 4, calc: 2,
         arg1: 2.5, 
-        range: 23, prob: 30, ward: 2
+        range: 23, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to two random foes."
     },
 
     219 : {
@@ -696,7 +703,8 @@ var SkillDatabase = {
     229 : {
         name: "Spirit Word", type: 2, func: 3, calc: 2, 
         arg1: 2.1,  
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal massive WIS-based damage to three random foes."
     },
 
     231 : {
@@ -723,19 +731,22 @@ var SkillDatabase = {
     236: {
         name: "Flash", type: 2, func: 4, calc: 2,
         arg1: 2.25, 
-        range: 16, prob: 30, ward: 2
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three random foes."
     },
 
     238 : {
         name: "Shadow Slash", type: 2, func: 3, calc: 1, 
         arg1: 1.05,  
-        range: 19, prob: 30, ward: 1
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
     },
     
     239 : {
         name : "Dark Rush", type: 2, func: 4, calc: 3,
         arg1: 2, 
-        range: 16, prob: 30, ward: 2
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive AGI-based damage to three random foes, regardless of position."
     },
     
     240 : {
@@ -797,7 +808,8 @@ var SkillDatabase = {
     253 : {
         name: "Brutal Fist", type: 2, func: 3, calc: 1, 
         arg1: 2.1,  
-        range: 23, prob: 30, ward: 1
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
     },
 
     254 : {
@@ -1055,7 +1067,8 @@ var SkillDatabase = {
     302 : {
         name: "Ice Wall", type: 2, func: 4, calc: 2, 
         arg1: 1.4,  
-        range: 8, prob: 30, ward: 3
+        range: 8, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage to all foes, regardless of position."
     },
 
     303 : {
@@ -1082,7 +1095,8 @@ var SkillDatabase = {
     307 : {
         name: "Evil Wink", type: 2, func: 3, calc: 2, 
         arg1: 1.8,  
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy WIS-based damage to three random foes, regardless of position."
     },
 
     308 : {
@@ -1109,7 +1123,8 @@ var SkillDatabase = {
     313 : {
         name: "White Ruin", type: 2, func: 4, calc: 2, 
         arg1: 1.5,  
-        range: 8, prob: 30, ward: 3
+        range: 8, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to all foes, regardless of position."
     },
     
     314 : {
@@ -1228,12 +1243,14 @@ var SkillDatabase = {
         name: "Penance", type: 2, func: 3, calc: 1, 
         arg1: 1.25,  
         range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to all foes."
     },
 
     341 : {
         name: "Staff of Ages", type: 2, func: 3, calc: 3, 
         arg1: 1.15,  
-        range: 19, prob: 30, ward: 1
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to four random foes."
     },
 
     343 : {
@@ -1260,7 +1277,8 @@ var SkillDatabase = {
     349 : {
         name : "Staff of Tyranny", type: 2, func: 3, calc: 1,
         arg1: 1.55, 
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to three random foes."
     },
 
     351 : {
@@ -1328,7 +1346,8 @@ var SkillDatabase = {
     362 : {
         name: "Rite of Vengeance", type: 2, func: 3, calc: 1, 
         arg1: 1.85,  
-        range: 23, prob: 30, ward: 1
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to two random foes."
     },
 
     365 : {
@@ -1341,7 +1360,8 @@ var SkillDatabase = {
     366 : {
         name: "Bone Chill", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
-        range: 32, prob: 30, ward: 3
+        range: 32, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to up to four foes, regardless of position."
     },
     
     367 : {
@@ -1473,7 +1493,8 @@ var SkillDatabase = {
     398: {
         name: "Knuckle Guard", type: 5, func: 12, calc: 0,
         arg1: 0, 
-        range: 4, prob: 50
+        range: 4, prob: 50,
+        desc: "Take damage in place of allies."
     },
 
     400 : {
@@ -1508,18 +1529,21 @@ var SkillDatabase = {
         name: "Piercing Arrow", type: 2, func: 4, calc: 1, 
         arg1: 1.35,  
         range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to all foes, regardless of position."
     },
 
     407 : {
         name: "Allure of the Rose", type: 2, func: 4, calc: 2,
         arg1: 1.3, 
-        range: 20, prob: 30, ward: 2
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to five random foes, regardless of position."
     },
 
     408 : {
         name: "Covenant of the Rose", type: 1, func: 1, calc: 0,
         arg1: 0.15, arg2: 4, 
-        range: 3, prob: 70
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars at start of battle."
     },
 
     411 : {
@@ -1623,7 +1647,8 @@ var SkillDatabase = {
     427 : {
         name: "Funerary Rush", type: 2, func: 3, calc: 1, 
         arg1: 1.5,  
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to three random foes."
     },
 
     430 : {
@@ -1685,7 +1710,8 @@ var SkillDatabase = {
     443 : {
         name: "Fangs of the Devoted", type: 2, func: 3, calc: 3, 
         arg1: 2,  
-        range: 23, prob: 30, ward: 1
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive AGI-based damage to two random foes."
     },
 
     444 : {
@@ -1816,13 +1842,15 @@ var SkillDatabase = {
     466 : {
         name : "Blade of Judgment", type: 2, func: 4, calc: 1,
         arg1: 1.8, 
-        range: 19, prob: 30, ward: 1
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
     
     467 : {
         name : "Atonement", type: 1, func: 1, calc: 0,
         arg1: 0.3, arg2: 5, arg3: 7,
-        range: 4, prob: 70
+        range: 4, prob: 70,
+        desc: "Reduce physical and breath damages taken by all familiars."
     },
 
     468 : {
@@ -2052,85 +2080,99 @@ var SkillDatabase = {
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
     10004: { // 105% Mod, Single Hit, WIS-based, position independent, paralyze (Lahamu)
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1.05, arg2: 2, arg3: 0.2,
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes paralyzing target."
     },
 
     10006: { // 105% Mod, 3 Random Hits, ATK-based, position dependent (Ettin)
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1.05, 
-        range: 16, prob: 100, ward: 1, isAutoAttack: true
+        range: 16, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to three random foes."
     },
 
     10007: { // use this for normal wis-based auto skill
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1, 
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
-    10008: { // 65% Mod, Single Hit, WIS-based, position independent
+    10008: { // 65% Mod, Single Hit, WIS-based, position independent (Hyena)
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 0.65, 
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
-    10009: { // 100% Mod, Single Hit, WIS-based, position independent, freeze
+    10009: { // 100% Mod, Single Hit, WIS-based, position independent, freeze (Jack)
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1, arg2: 3, arg3: 0.1,
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes freezing target."
     },
 
     10010: { // 110% Mod, Three Hit Cone, ATK-based, position independent (Brang)   
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.1,
-        range: 7, prob: 100, ward: 1, isAutoAttack: true
+        range: 7, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage up to three foes."
     },
 
     10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.4,
-        range: 5, prob: 100, ward: 1, isAutoAttack: true
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes poisons target."
     },
 
-    10014: { // 100% Mod, Single Hit, ATK-based, position dependent, paralyze
+    10014: { // 100% Mod, Single Hit, ATK-based, position dependent, paralyze (Leo)
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 2, arg3: 0.4,
-        range: 5, prob: 100, ward: 1, isAutoAttack: true
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes paralyzing target."
     },
 
     10016: { // same as 10007, but with flame animation
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1, 
-        range: 5, prob: 100, ward: 2, isAutoAttack: true
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
-    10017: { // 100% Mod, Single Hit, ATK-based, position dependent, envenom
+    10017: { // 100% Mod, Single Hit, ATK-based, position dependent, envenom (Apep)
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.4, arg4: 10,
-        range: 5, prob: 100, ward: 1, isAutoAttack: true
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes envenoms target."
     },
     
     10019: { // 100% Mod, Single Hit, WIS-based, position independent, breath based
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
-        range: 5, prob: 100, ward: 3, isAutoAttack: true
+        range: 5, prob: 100, ward: 3, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
     10020: { // 60% Mod, 2 Random Hits, ATK-based, position dependent
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 0.6, 
-        range: 23, prob: 100, ward: 1, isAutoAttack: true
+        range: 23, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to two random foes."
     },
 
     10021: { // 120% Mod, Single Hit, ATK-Based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.2, 
-        range: 5, prob: 100, ward: 1, isAutoAttack: true
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe, regardless of position."
     },
     
     99000 : {

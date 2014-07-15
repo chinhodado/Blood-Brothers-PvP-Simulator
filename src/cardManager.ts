@@ -189,4 +189,50 @@ class CardManager {
 
         return brigStr;
     }
+
+    getCardByIndex(playerId: number, index: number) {
+        var cards
+        if (playerId === 1) {
+            cards = this.getPlayerCards(BattleModel.getInstance().player1);
+        }
+        else if (playerId === 2) {
+            cards = this.getPlayerCards(BattleModel.getInstance().player2);
+        }
+
+        return cards[index];
+    }
+
+    getCardInfoForDialog(card: Card) {
+        var skillInfo = [];
+        for (var i = 0; i < card.skills.length; i++) {
+            var skill = card.skills[i];
+            skillInfo.push({
+                "id": skill.id,
+                "name": skill.name,
+                "comment": skill.description,
+                "maxProbability": skill.maxProbability
+            });
+        }
+
+        return {
+        "name": card.fullName,
+        "image": getScaledWikiaImageLink(card.imageLink, 150),
+        //"rarity": 5,
+        //"price": 25850,
+        "hp": card.originalStats.hp,
+        "atk": card.originalStats.atk,
+        "def": card.originalStats.def,
+        "wis": card.originalStats.wis,
+        "agi": card.originalStats.agi,
+        "maxLevel": 99,
+        //"growthType": 1,
+        //"evolution": 2,
+        //"maxEvolution": 2,
+        "skills": skillInfo, 
+        "standardAction": {
+                "name": "Standard Action",
+                "comment": card.autoAttack.description
+            }        
+        }
+    }
 }

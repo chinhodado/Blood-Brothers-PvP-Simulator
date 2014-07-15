@@ -13,6 +13,7 @@ class Skill {
     skillRange: number;
     maxProbability: number;
     ward: ENUM.WardType;
+    description: string;
     isAutoAttack: boolean;
 
     range: BaseRange;
@@ -35,6 +36,7 @@ class Skill {
         this.skillRange = skillData.range;
         this.maxProbability = skillData.prob;
         this.ward = skillData.ward;
+        this.description = skillData.desc;
         this.isAutoAttack = skillData.isAutoAttack;
 
         this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);

@@ -1,4 +1,4 @@
-importScripts('compiled.js');
+importScripts('../compiled.js');
 
 /**
  * Run a heavy simulation in the background

@@ -1,4 +1,6 @@
-﻿class BattleGraphic {
+﻿declare var showCardDetailDialog;
+
+class BattleGraphic {
 
     // holds the coordinates of the bullets of the formation
     coordArray: any = {
@@ -176,24 +178,21 @@
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
                                     .opacity(0)
-
-                // can't move these proc effects out atm since that will make the fam group sizes different
-                var spellCircle = draw.image('img/circle_blue.png', 150, 150)
-                                    .center(coordArray[i][0], coordArray[i][1])
-                                    .attr('id', 'p' + player + 'f' + i + 'spellCircle')
-                                    .opacity(0)
-
-                var procSpark = draw.image('img/lineSpark.png', 150, 150)
-                                    .center(coordArray[i][0], coordArray[i][1])
-                                    .attr('id', 'p' + player + 'f' + i + 'lineSpark')
-                                    .opacity(0)
-
+                
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
                 var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');                
                 group.add(image);
                 group.add(damageText);
                 group.add(explosion);
-                group.add(spellCircle); group.add(procSpark);
+
+                var click = function (arg) {
+                    var cardMan = CardManager.getInstance();
+                    var card = cardMan.getCardByIndex(arg[0], arg[1]);
+                    return function () {
+                        showCardDetailDialog(cardMan.getCardInfoForDialog(card));
+                    };
+                }
+                group.on('click', click([player, i]));
 
                 groupPlayer.add(group);
             }
@@ -471,10 +470,10 @@
             }
 
             if (Skill.isMagicSkill(skillId)) {
-                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
             }
             else {
-                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark');
+                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark');
             }
 
             SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
@@ -484,6 +483,7 @@
                        .rotate(180)
                        .after(function(){
                             this.rotate(0);//reset the rotation
+                            this.remove();
                        });
 
             group.animate({ duration: D1 + 's' })
@@ -492,7 +492,7 @@
                     this.animate({ duration: D1 + 's', delay: D05 + 's' })
                         .transform({a: 1, b: 0, c: 0, d: 1, e: cx - 1 * cx, f: cy - 1 * cy})
                         .after(function(){
-                            procEffect.opacity(0);
+                            procEffect.opacity(0).remove();
                             if (option.callback) option.callback();
                         });
                 });
@@ -779,14 +779,14 @@
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
             else {
-                var procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'spellCircle');
+                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
                 var exploDuration = 0.4;
                 if (Skill.isWisAutoAttack(data.skillId)) {
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
                 else if (Skill.isAtkIndepAutoAttack(data.skillId)) {
-                    procEffect = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'lineSpark')
+                    procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark')
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
@@ -796,7 +796,7 @@
                          .opacity(1)
                          .after(function() {
                             exploSet.opacity(0);
-                            procEffect.opacity(0);
+                            procEffect.opacity(0).remove();
 
                             BattleGraphic.getInstance()
                                 .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
@@ -892,9 +892,21 @@
                                         this.coordArray[playerId][famIndex][1] + BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + 20)
                                 .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')
                                 .hide();
-            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);        
+            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);    
         }
 
         return txt;
+    }
+
+    getProcEffect(playerId: number, famIndex: number, type: string) {
+        var file = type == "spellCircle"? "circle_blue.png" : "lineSpark.png";
+
+        var effect = SVG.get('mainSvg').image('img/' + file, 150, 150)
+                            .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
+                            .attr('id', 'p' + playerId + 'f' + famIndex + 'spellCircle')
+                            .opacity(0)
+        SVG.get('p' + playerId + 'f' + famIndex + 'group').add(effect);
+    
+        return effect;
     }
 }

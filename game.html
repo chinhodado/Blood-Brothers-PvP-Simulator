@@ -5,10 +5,12 @@
     <meta name="description" content="A PvP Simulator for the Blood Brothers RPG game">
     <meta name="keywords" content="blood, brothers, simulator, PvP, RPG">
     <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="dialog.css">
 
     <script src="lib/svg.min.js"></script>
     <script src="lib/svg.filter.min.js"></script>
     <script src="compiled.js"></script>
+    <script src="js/dialog.js"></script>
 
     <style type="text/css">
         * {
@@ -80,7 +82,8 @@
 
     </style>
 
-    <script src="ga.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
+    <script src="js/ga.js"></script>
 </head>
 
 <body>
@@ -99,6 +102,7 @@
 
             <div id="permDiv">
                 Click the <b>Start Battle</b> button below to view the battle. <br /><br />
+                Click on a familiar to see its details. <br /><br />
                 Refresh this page to view another battle <span id="refreshText"></span>.<br /><br />
                 Click <a href="setting.html">here</a> to return to the main page.
             </div>
@@ -173,7 +177,7 @@
             document.getElementById("simDiv").setAttribute("style", "display: block;");
 
             // now make the worker do the simulation in background
-            worker = new Worker("worker.js");
+            worker = new Worker("js/worker.js");
             worker.onmessage = function (event) {
                 if (event.data.status == "ongoing") {
                     document.getElementById("progressBar").setAttribute("value", event.data.progress);
@@ -190,6 +194,43 @@
         }
     </script>
 
+    <div class="mbgaui-container">
+
+        <!-- popup bg -->
+        <div id="dialogBack">
+        </div>
+
+        <!-- popup -->
+        <div id="card-detail-dialog" class="fn-black">
+            <div class="card-detail-dialog">
+                <div class="card-detail-figure">
+                    <img id="card-detail-loading-figure" src="img/loading_figure.png" width="150" height="150">
+                    <img id="card-detail-figure" src="img/loading_figure.png" width="100" height="150">
+                    <!--<div id="card-detail-figure-rarity" class="card-figure-rarity-l-2-2"></div>-->
+                </div>
+                <span class="card-detail-level fnb">Level: 99/99</span>
+                <span class="card-detail-name fnb"></span>
+                <span class="card-detail-skill-name fnb"></span>
+                <span class="card-detail-skill-description"></span>
+                <span class="card-detail-default-action-name fnb"></span>
+                <span class="card-detail-default-action-description"></span>
+                <span class="card-detail-skill-proc">30%</span>
+                <span class="card-detail-max-hp"></span>
+                <span class="card-detail-max-atk"></span>
+                <span class="card-detail-max-def"></span>
+                <span class="card-detail-max-wis"></span>
+                <span class="card-detail-max-agi"></span>
+                <span class="card-detail-growth-type"></span>
+                <span class="card-detail-value">12345</span>
+                <span class="card-detail-current-hp"></span>
+
+                <div class="arrow-left" onclick="prevSkill();" style="visibility: hidden;"></div>
+                <div class="arrow-right" onclick="nextSkill();" style="visibility: hidden;"></div>
+
+                <div class="card-detail-ok-button" onclick="hideCardDetailDialog();"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

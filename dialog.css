@@ -1,0 +1,282 @@
+﻿@font-face {
+    font-family: 'LT Trajanus Roman';
+    src: url('img/trb.ttf');
+}
+
+html {font-size: 62.5%;}
+
+#dialogBack {
+    background-color: rgb(0, 0, 0); 
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    z-index: 10002; 
+    visibility: hidden; 
+    width: 100%; 
+    height: 100%; 
+    opacity: 0.5;
+}
+
+#card-detail-dialog {
+    position: fixed; 
+    left: 524px; 
+    top: 96px; 
+    z-index: 10003; 
+    visibility: hidden;
+}
+
+#card-detail-loading-figure {
+    position: absolute; 
+    visibility: hidden;
+}
+
+#card-detail-figure {
+    position: absolute; 
+    visibility: hidden;
+}
+
+.mbgaui-container {
+	display: block;
+	position: relative;
+	line-height: 1.2;
+	font-family: "LT Trajanus Roman", sans-serif;
+	font-size: 1.4rem;
+    font-weight: bold !important;
+    color: #4c190d;
+}
+
+img { vertical-align: bottom }
+
+.fn-black { color: #000000!important }
+.fnb { font-weight: bold !important }
+
+.card-figure-rarity-m-1-2,
+.card-figure-rarity-m-2-2,
+.card-figure-rarity-l-1-2,
+.card-figure-rarity-l-2-2,
+.card-figure-rarity-l-1-3,
+.card-figure-rarity-l-2-3,
+.card-figure-rarity-l-3-3,
+.card-figure-rarity-ep-1-2,
+.card-figure-rarity-ep-2-2,
+.card-figure-rarity-ep-3-4,
+.card-figure-rarity-ep-4-4 {
+	position: absolute;
+	width: 82px;
+	height: 28px;
+	top: 122px;
+	left: -10px;
+}
+
+	.card-figure-rarity-l-1-2 {
+		background: url('img/sprite_sheet2.png');
+		background-size: 320px auto;
+		background-position: -75px 185px;
+	}
+
+	.card-figure-rarity-l-2-2 {
+		background: url('img/sprite_sheet2.png');
+		background-size: 320px auto;
+		background-position: -75px 129px;
+	}
+
+	.card-figure-rarity-ep-1-2 {
+		background: url('img/sprite_sheet2.png');
+		background-size: 320px auto;
+		background-position: -146px 129px;
+	}
+
+	.card-figure-rarity-ep-2-2 {
+		background: url('img/sprite_sheet2.png');
+		background-size: 320px auto;
+		background-position: -146px 185px;
+	}
+
+	.card-figure-rarity-ep-3-4 {
+		background: url('img/sprite_sheet2.png');
+		width: 122px;
+		background-size: 320px auto;
+		background-position: -75px 157px;
+	}
+
+	.card-figure-rarity-ep-4-4 {
+		background: url('img/sprite_sheet2.png');
+		width: 122px;
+		background-size: 320px auto;
+		background-position: -185px 157px;
+	}
+
+.arrow-left,
+.arrow-right {
+	background-size: 20px auto;
+	width: 20px;
+	height: 30px;
+	position: absolute;
+}
+
+.arrow-left {
+	background: url(img/arrow_left.png) no-repeat;
+	background-size: 20px auto;
+	top: 262px;
+	left: 15px;
+}
+
+.arrow-right {
+	background: url(img/arrow_right.png) no-repeat;
+	background-size: 20px auto;
+	top: 262px;
+	left: 276px;
+}
+
+.card-detail-dialog {
+	background: url(img/card_detail.png) no-repeat;
+	background-size: 317px auto;
+	display: block;
+	width: 317px;
+	height: 460px;
+}
+
+.card-detail-figure {
+	position: absolute;
+	top: 74px;
+	left: 40px;
+	width: 160px;
+	height: 160px;
+	overflow: hidden;
+}
+
+.card-detail-level {
+	position: absolute;
+	top: 63px;
+	left: 172px;
+	text-align: left;
+}
+
+.card-detail-name {
+	position: absolute;
+	top: 39px;
+	width: 317px;
+	text-align: center;
+}
+
+.card-detail-skill-name {
+	position: absolute;
+	top: 248px;
+	left: 63px;
+	text-align: left;
+}
+
+.card-detail-skill-description {
+	position: absolute;
+	top: 269px;
+	left: 37px;
+	width: 244px;
+	text-align: left;
+    font-size: 1.2rem;
+}
+
+.card-detail-default-action-name {
+	position: absolute;
+	top: 352px;
+	left: 63px;
+	text-align: left;
+}
+
+.card-detail-default-action-description {
+	position: absolute;
+	top: 373px;
+	left: 40px;
+	width: 250px;
+	text-align: left;
+    font-size: 1.2rem;
+}
+
+.card-detail-skill-proc {
+	position: absolute;
+	top: 330px;
+	left: 94px;
+	text-align: left;
+}
+
+.card-detail-max-hp {
+	position: absolute;
+	top: 105px;
+	text-align: left;
+	left: 190px;
+}
+
+.card-detail-max-atk {
+	position: absolute;
+	top: 125px;
+	text-align: left;
+	left: 190px;
+}
+
+.card-detail-max-def {
+	position: absolute;
+	top: 145px;
+	text-align: left;
+	left: 190px;
+}
+
+.card-detail-max-wis {
+	position: absolute;
+	top: 165px;
+	text-align: left;
+	left: 190px;
+}
+
+.card-detail-max-agi {
+	position: absolute;
+	top: 185px;
+	text-align: left;
+	left: 190px;
+}
+
+.card-detail-growth-type {
+	position: absolute;
+	top: 204px;
+	width: 317px;
+	text-align: left;
+	left: 200px;
+}
+
+.card-detail-value {
+	position: absolute;
+	top: 225px;
+	width: 317px;
+	text-align: left;
+	left: 196px;
+}
+
+.card-detail-current-hp {
+	position: absolute;
+	top: 232px;
+	width: 83px;
+	text-align: center;
+	left: 50px;
+	color: white;
+	font-size: 11px;
+}
+
+.card-detail-ok-button {
+	background: url(img/ok_btn_n.png) no-repeat;
+	background-size: 140px auto;
+	position: absolute;
+	top: 398px;
+	left: 90px;
+	width: 140px;
+	height: 30px;
+}
+
+.card-detail-ok-button:hover,
+.card-detail-ok-button:active,
+.card-detail-ok-button:focus {
+	background: url(img/ok_btn_p.png) no-repeat;
+	background-size: 140px auto;
+	position: absolute;
+	top: 398px;
+	left: 90px;
+	width: 140px;
+	height: 30px;
+}
