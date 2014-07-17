@@ -51,6 +51,15 @@
             height: 600px;
             background-image: url('img/bg01.png');
             background-size: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        #svg {
+            position: relative;
+            top: 0;
+            left: 0;
         }
 
         #startButton { /*from bootstrap*/
@@ -112,6 +121,44 @@
     <div class="midCol">
         <div id="svgWrapper">
             <div id="svg"></div>
+            <div class="mbgaui-container">
+
+                <!-- popup bg -->
+                <div id="dialogBack">
+                </div>
+
+                <!-- popup -->
+                <div id="card-detail-dialog" class="fn-black">
+                    <div class="card-detail-dialog">
+                        <div class="card-detail-figure">
+                            <img id="card-detail-loading-figure" src="img/loading_figure.png" width="150" height="150">
+                            <img id="card-detail-figure" src="img/loading_figure.png" width="100" height="150">
+                            <!--<div id="card-detail-figure-rarity" class="card-figure-rarity-l-2-2"></div>-->
+                        </div>
+                        <span class="card-detail-level fnb">Level: 99/99</span>
+                        <span class="card-detail-name fnb"></span>
+                        <span class="card-detail-skill-name fnb"></span>
+                        <span class="card-detail-skill-description"></span>
+                        <span class="card-detail-default-action-name fnb"></span>
+                        <span class="card-detail-default-action-description"></span>
+                        <span class="card-detail-skill-proc">30%</span>
+                        <span class="card-detail-max-hp"></span>
+                        <span class="card-detail-max-atk"></span>
+                        <span class="card-detail-max-def"></span>
+                        <span class="card-detail-max-wis"></span>
+                        <span class="card-detail-max-agi"></span>
+                        <span class="card-detail-growth-type"></span>
+                        <span class="card-detail-value">12345</span>
+                        <span class="card-detail-current-hp"></span>
+
+                        <div class="arrow-left" onclick="prevSkill();" style="visibility: hidden;"></div>
+                        <div class="arrow-right" onclick="nextSkill();" style="visibility: hidden;"></div>
+
+                        <div class="card-detail-ok-button" onclick="hideCardDetailDialog();"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <button id="startButton">Start battle</button>
     </div>
@@ -194,43 +241,6 @@
         }
     </script>
 
-    <div class="mbgaui-container">
-
-        <!-- popup bg -->
-        <div id="dialogBack">
-        </div>
-
-        <!-- popup -->
-        <div id="card-detail-dialog" class="fn-black">
-            <div class="card-detail-dialog">
-                <div class="card-detail-figure">
-                    <img id="card-detail-loading-figure" src="img/loading_figure.png" width="150" height="150">
-                    <img id="card-detail-figure" src="img/loading_figure.png" width="100" height="150">
-                    <!--<div id="card-detail-figure-rarity" class="card-figure-rarity-l-2-2"></div>-->
-                </div>
-                <span class="card-detail-level fnb">Level: 99/99</span>
-                <span class="card-detail-name fnb"></span>
-                <span class="card-detail-skill-name fnb"></span>
-                <span class="card-detail-skill-description"></span>
-                <span class="card-detail-default-action-name fnb"></span>
-                <span class="card-detail-default-action-description"></span>
-                <span class="card-detail-skill-proc">30%</span>
-                <span class="card-detail-max-hp"></span>
-                <span class="card-detail-max-atk"></span>
-                <span class="card-detail-max-def"></span>
-                <span class="card-detail-max-wis"></span>
-                <span class="card-detail-max-agi"></span>
-                <span class="card-detail-growth-type"></span>
-                <span class="card-detail-value">12345</span>
-                <span class="card-detail-current-hp"></span>
-
-                <div class="arrow-left" onclick="prevSkill();" style="visibility: hidden;"></div>
-                <div class="arrow-right" onclick="nextSkill();" style="visibility: hidden;"></div>
-
-                <div class="card-detail-ok-button" onclick="hideCardDetailDialog();"></div>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

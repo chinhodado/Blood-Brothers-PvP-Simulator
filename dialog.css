@@ -18,9 +18,9 @@ html {font-size: 62.5%;}
 }
 
 #card-detail-dialog {
-    position: fixed; 
-    left: 524px; 
-    top: 96px; 
+    position: absolute; 
+    left: 50px; 
+    top: 50px; 
     z-index: 10003; 
     visibility: hidden;
 }
@@ -37,7 +37,8 @@ html {font-size: 62.5%;}
 
 .mbgaui-container {
 	display: block;
-	position: relative;
+	position: absolute;
+    top: 0;
 	line-height: 1.2;
 	font-family: "LT Trajanus Roman", sans-serif;
 	font-size: 1.4rem;

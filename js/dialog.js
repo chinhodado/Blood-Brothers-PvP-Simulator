@@ -60,13 +60,7 @@ function updateSkillDisplay() {
 }
 
 function showDialog(dialogId) {
-
-    var dialogWidth = 317;
-    var dialogHeight = 460;
-
     var target = document.getElementById(dialogId);
-    target.style.left = Math.floor((window.innerWidth - dialogWidth) / 2) + 'px';
-    target.style.top = Math.floor((window.innerHeight - dialogHeight) / 2) + 'px';
     target.style.visibility = 'visible';
     var bg = document.getElementById('dialogBack');
     bg.style.width = window.innerWidth + 'px';
