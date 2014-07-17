@@ -705,13 +705,31 @@ class BattleGraphic {
                 //
                 // e.g. if counter: [x procs y to protect z] -> [x receives n damage] -> [x counters w, w lost k damage]
                 //      if not counter or dead, third event becomes [something do something]
+                var that = this;
                 executorGroup.animate({ duration: moveTime + 's' })
                     .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
                     .after(function () {
                         if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
-                            explosion.animate({ duration: '0.2s' }).opacity(1)
+
+                            var exploDuration = 0.2;
+                            if (Skill.isWisAutoAttack(nextData.skillId)) {
+                                var procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'spellCircle');
+                                procEffect.animate({duration: '0.2s'}).opacity(1);
+                                exploDuration = 0.5;
+                            }
+                            else if (Skill.isAtkIndepAutoAttack(nextData.skillId)) {
+                                procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'lineSpark')
+                                procEffect.animate({duration: '0.2s'}).opacity(1);
+                                exploDuration = 0.5;
+                            }
+
+                            explosion.animate({ duration: exploDuration + 's' }).opacity(1)
                                 .after(function() {
                                     explosion.opacity(0);
+                                    
+                                    if (procEffect) {
+                                        procEffect.remove();
+                                    }
 
                                     BattleGraphic.getInstance()
                                         .displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
@@ -759,7 +777,7 @@ class BattleGraphic {
         var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
 
         if (Skill.isAoeSkill(data.skillId)) {
-            var exploSet = SVG.get('mainSvg').set();
+            var exploSet = [];
 
             // add targets to the set
             if (data.executorId === majorLog[majorIndex].executorId && data.skillId === majorLog[majorIndex].skillId) {
@@ -771,17 +789,17 @@ class BattleGraphic {
             }
             for (var i = 0; i < aoeTargets.length; i++) {
                 var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
-                exploSet.add(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
+                exploSet.push(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
             }
 
             if (option.noAttackAnim && !isNested) {
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
-            else {
-                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
+            else {                
                 var exploDuration = 0.4;
                 if (Skill.isWisAutoAttack(data.skillId)) {
+                    var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
@@ -792,17 +810,31 @@ class BattleGraphic {
                 }
                 option.noAttackAnim = true;
 
-                exploSet.animate({ duration: exploDuration + 's' })
-                         .opacity(1)
-                         .after(function() {
-                            exploSet.opacity(0);
-                            procEffect.opacity(0).remove();
+                function getCallback(graphic, majorIndex, minorIndex, option, target, procEffect, exploSet) {
+                    return function() {
+                        for (var i = 0; i < exploSet.length; i++) {
+                            exploSet[i].opacity(0);
+                        }
+                        
+                        if (procEffect) {
+                            procEffect.remove();
+                        }
 
-                            BattleGraphic.getInstance()
-                                .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
-                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1,
-                                option);
-                         });
+                        graphic.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                        graphic.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                    }
+                }
+
+                var that = this;
+
+                for (var i = 0; i < exploSet.length; i++) {
+                    // specify a callback for the last explosion animation
+                    if (i == exploSet.length - 1) {
+                        var callback = getCallback(that, majorIndex, minorIndex, option, target, procEffect, exploSet)
+                    }
+
+                    exploSet[i].animate({ duration: exploDuration + 's' }).opacity(1).after(callback);
+                }
             }
         }
         else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
