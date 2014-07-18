@@ -124,6 +124,11 @@
     </div>
 
     <script type="text/javascript">
+        // fam: player 1: f0 -> f4, f5 -> f9
+        //      player 2: f10 -> f14, f15 -> f19
+        // skills: player 1: s10 -> s12
+        //         player 2: s20 -> s22
+        // formation: player 1: 1f, player 2: 2f
         var data = {}, option = {};
 
         if (getURLParameter("r1")) {
@@ -135,19 +140,33 @@
         }
 
         data.player1formation = getURLParameter("1f");
+        if (!option.p1random) localStorage.setItem("1f", data.player1formation);
+
         data.player2formation = getURLParameter("2f");
+        if (!option.p2random) localStorage.setItem("2f", data.player2formation);
+
         data.player1cardsInfo = [];
         data.player2cardsInfo = [];
         data.player1warlordSkillArray = [];
         data.player2warlordSkillArray = [];
 
         for (var i = 0; i < 5; i++) {
-            data.player1cardsInfo.push(famDatabase[getURLParameter("f" + i)]);
-            data.player2cardsInfo.push(famDatabase[getURLParameter("f" + (i + 10))]);
+            var f1id = getURLParameter("f" + i);
+            var f2id = getURLParameter("f" + (i + 10));
+            data.player1cardsInfo.push(famDatabase[f1id]);
+            data.player2cardsInfo.push(famDatabase[f2id]);
+
+            if (!option.p1random) localStorage.setItem("f" + i, f1id);
+            if (!option.p2random) localStorage.setItem("f" + (i + 10), f2id);
         }
         for (var i = 0; i < 3; i++) {
-            data.player1warlordSkillArray.push(getURLParameter("s1" + i));
-            data.player2warlordSkillArray.push(getURLParameter("s2" + i));
+            var w1s = getURLParameter("s1" + i);
+            var w2s = getURLParameter("s2" + i);
+            data.player1warlordSkillArray.push(w1s);
+            data.player2warlordSkillArray.push(w2s);
+
+            if (!option.p1random) localStorage.setItem("s1" + i, w1s);
+            if (!option.p2random) localStorage.setItem("s2" + i, w2s);
         }
 
         var newGame = new BattleModel(data, option);

@@ -16,13 +16,13 @@
     <form action="game.html" method="GET" onsubmit="return validateForm()" name="mainForm">
 
         <p>Player 2</p>
-        <select name="f10" class="famSelect randomize p2"></select>
-        <select name="f11" class="famSelect randomize p2"></select>
-        <select name="f12" class="famSelect randomize p2"></select>
-        <select name="f13" class="famSelect randomize p2"></select>
-        <select name="f14" class="famSelect randomize p2"></select>
+        <select name="f10" id="f10" class="famSelect randomize p2"></select>
+        <select name="f11" id="f11" class="famSelect randomize p2"></select>
+        <select name="f12" id="f12" class="famSelect randomize p2"></select>
+        <select name="f13" id="f13" class="famSelect randomize p2"></select>
+        <select name="f14" id="f14" class="famSelect randomize p2"></select>
         <br><br>
-        <select name="2f" class="randomize p2">
+        <select name="2f" id="2f" class="randomize p2">
             <option value="0">5-Skein</option>
             <option value="1">5-Valley</option>
             <option value="2">5-Tooth</option>
@@ -37,9 +37,9 @@
         <br /><br />
         Warlord Skills: 
 
-        Skill 1: <select name="s20" class="skillSelect randomize p2"></select>
-        Skill 2: <select name="s21" class="skillSelect randomize p2"></select>
-        Skill 3: <select name="s22" class="skillSelect randomize p2"></select>
+        Skill 1: <select name="s20" id="s20" class="skillSelect randomize p2"></select>
+        Skill 2: <select name="s21" id="s21" class="skillSelect randomize p2"></select>
+        Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select>
 
         <br /><br />
         Random <input type="checkbox" name="r2" onchange="toogleDisable(2, this.checked)"/>
@@ -47,13 +47,13 @@
         <br><br><br><br>
 
         <p>Player 1</p>
-        <select name="f0" class="famSelect randomize p1"></select>
-        <select name="f1" class="famSelect randomize p1"></select>
-        <select name="f2" class="famSelect randomize p1"></select>
-        <select name="f3" class="famSelect randomize p1"></select>
-        <select name="f4" class="famSelect randomize p1"></select>
+        <select name="f0" id="f0" class="famSelect randomize p1"></select>
+        <select name="f1" id="f1" class="famSelect randomize p1"></select>
+        <select name="f2" id="f2" class="famSelect randomize p1"></select>
+        <select name="f3" id="f3" class="famSelect randomize p1"></select>
+        <select name="f4" id="f4" class="famSelect randomize p1"></select>
         <br><br>
-        <select name="1f" class="randomize p1">
+        <select name="1f" id="1f" class="randomize p1">
             <option value="0">5-Skein</option>
             <option value="1">5-Valley</option>
             <option value="2">5-Tooth</option>
@@ -68,9 +68,9 @@
         <br /><br />
         Warlord Skills:
 
-        Skill 1: <select name="s10" class="skillSelect randomize p1"></select>
-        Skill 2: <select name="s11" class="skillSelect randomize p1"></select>
-        Skill 3: <select name="s12" class="skillSelect randomize p1"></select>
+        Skill 1: <select name="s10" id="s10" class="skillSelect randomize p1"></select>
+        Skill 2: <select name="s11" id="s11" class="skillSelect randomize p1"></select>
+        Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select>
 
         <br /><br />
         Random <input type="checkbox" name="r1"  onchange="toogleDisable(1, this.checked)" />
@@ -131,6 +131,8 @@
                 }
             };
 
+            setPreviousChoices();
+
             function toogleDisable(player, isSelected) {
                 var elems = document.getElementsByClassName("p" + player);
                 for (var i = 0; i < elems.length; i++) {
@@ -140,6 +142,46 @@
                     else {
                         elems[i].disabled = false;
                     }
+                }
+            }
+
+            function setPreviousChoices() {
+                // player 1 fams
+                if (localStorage.getItem("f0") && localStorage.getItem("f0") != "null") {
+                    for (var i = 0; i < 5; i++) {
+                        document.getElementById("f" + i).value = localStorage.getItem("f" + i);
+                    }
+                }
+
+                // player 2 fams
+                if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
+                    for (var i = 0; i < 5; i++) {
+                        document.getElementById("f" + (i + 10)).value = localStorage.getItem("f" + (i + 10));
+                    }
+                }
+
+                // player 1 skills
+                if (localStorage.getItem("s10") && localStorage.getItem("s10") != "null") {
+                    for (var i = 0; i < 3; i++) {
+                        document.getElementById("s1" + i).value = localStorage.getItem("s1" + i);
+                    }
+                }
+
+                // player 2 skills
+                if (localStorage.getItem("s20") && localStorage.getItem("s20") != "null") {
+                    for (var i = 0; i < 3; i++) {
+                        document.getElementById("s2" + i).value = localStorage.getItem("s2" + i);
+                    }
+                }
+
+                // player 1 formation
+                if (localStorage.getItem("1f") && localStorage.getItem("1f") != "null") {
+                    document.getElementById("1f").value = localStorage.getItem("1f");
+                }
+
+                // player 2 formation
+                if (localStorage.getItem("2f") && localStorage.getItem("2f") != "null") {
+                    document.getElementById("2f").value = localStorage.getItem("2f");
                 }
             }
         </script>
