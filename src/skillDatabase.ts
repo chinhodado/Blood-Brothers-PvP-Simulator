@@ -1672,6 +1672,13 @@ var SkillDatabase = {
         desc: "Deal ATK-based damage to six random foes."
     },
 
+    434 : {
+        name: "Maelstrom", type: 2, func: 3, calc: 3, 
+        arg1: 1.45,  
+        range: 313, prob: 30, ward: 1,
+        desc: "AGI-based damage to up to three foes. Increased if fewer foes."
+    },
+
     438 : {
         name: "Poison Torrent", type: 2, func: 3, calc: 1, 
         arg1: 1.3, arg2: 1, arg3: 0.25, 
@@ -1747,6 +1754,13 @@ var SkillDatabase = {
         arg1: 1.3,  
         range: 19, prob: 30, ward: 1,
         desc: "Deal AGI-based damage to four random foes."
+    },
+
+    449 : {
+        name: "Whirling Dervish", type: 2, func: 3, calc: 1, 
+        arg1: 1.8,  
+        range: 313, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to up to three foes. Increased if fewer foes."
     },
 
     450 : {
@@ -1979,6 +1993,13 @@ var SkillDatabase = {
         desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
 
+    493: {
+        name: "Big Game Hunt", type: 2, func: 3, calc: 3,
+        arg1: 1.25, 
+        range: 314, prob: 30, ward: 1,
+        desc: "AGI-based damage to up to four foes. Increased if fewer foes."
+    },
+
     494: {
         name: "Hand of Justice", type: 2, func: 4, calc: 2,
         arg1: 1.65, 
@@ -2047,6 +2068,13 @@ var SkillDatabase = {
         arg1: 2.3, arg2: 2, arg3: 0.35,
         range: 16, prob: 30, ward: 2,
         desc: "Deal massive AGI-based damage, sometimes paralyze three random foes, ignoring position."
+    },
+
+    506: {
+        name: "Winds of Perdition", type: 2, func: 4, calc: 2,
+        arg1: 1.85,
+        range: 313, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to up to three foes, ignoring position. Increased if fewer foes."
     },
     
     507: {
@@ -2173,6 +2201,13 @@ var SkillDatabase = {
         arg1: 1.2, 
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe, regardless of position."
+    },
+
+    10023: { // 100% Mod, Single Hit, WIS-based, position independent, wind effect (Bayam)
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1, 
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
     
     99000 : {

@@ -9,6 +9,12 @@
  * - For the image, use the wikia thumbnail version and follow the existing examples
  */
 var famDatabase = {
+    11261: {
+        name: "Rahab", stats: [14073, 12597, 15498, 9004, 16754],
+        skills: [434],
+        img: "img2$1/__cb20140423020347/$2/1/1c/Abyssal_Rahab_II_Figure.png",
+        fullName: "Abyssal Rahab II"
+    },
     11282: {
         name: "Achilles", stats: [13593, 15630, 11362, 10603, 16562],
         skills: [459, 460],
@@ -217,6 +223,13 @@ var famDatabase = {
         skills: [142],
         img: "img4$1/__cb20130227154434/$2/e/e3/Batraz%2C_the_Immortal_Hero_II_Figure.png",
         fullName: "Batraz, the Immortal Hero II"
+    },
+    11371: {
+        name: "Bayam", stats: [13269, 7966, 12804, 17106, 16779],
+        skills: [506],
+        autoAttack: 10023,
+        img: "img1$1/__cb20140709072737/$2/7/71/Bayam_II_Figure.png",
+        fullName: "Bayam II"
     },
     11025: {
         name: "Scarecrow", stats: [10625, 13756, 10490, 11201, 9342],
@@ -894,6 +907,12 @@ var famDatabase = {
         img: "img4$1/__cb20130609105750/$2/0/05/Kelaino%2C_the_Dark_Cloud_II_Figure.png",
         fullName: "Kelaino, the Dark Cloud II"
     },
+    11279: {
+        name: "Kobold", stats: [14207, 14462, 15844, 8442, 14999],
+        skills: [449],
+        img: "img1$1/__cb20140508115333/$2/6/6e/Kobold_Guard_Captain_II_Figure.png",
+        fullName: "Kobold Guard Captain II"
+    },
     11314: {
         name: "Kua Fu", stats: [16510, 16561, 12207, 9174, 13476],
         skills: [497],
@@ -954,6 +973,12 @@ var famDatabase = {
         skills: [4],
         img: "img2$1/__cb20130709182651/$2/a/a8/Ma-Gu_the_Enlightened_II_Figure.png",
         fullName: "Ma-Gu the Enlightened II"
+    },
+    11141: {
+        name: "Lynx", stats: [14207, 14062, 12500, 10014, 17147],
+        skills: [493],
+        img: "img3$1/__cb20140620060851/$2/2/21/Madprowl_Lynx_II_Figure.png",
+        fullName: "Madprowl Lynx II"
     },
     10558: {
         name: "Magdal", stats: [13929, 15110, 15132, 13810, 15359],

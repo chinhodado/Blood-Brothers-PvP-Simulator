@@ -59,6 +59,7 @@ class SkillLogic {
     }
 
     execute(data: SkillLogicData) {
+        throw new Error("Implement this");
     }
 }
 
@@ -291,7 +292,11 @@ class AttackSkillLogic extends SkillLogic {
     executeAttackSkillWithRangeTargets (data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
-        var targets : Card[] = skill.range.getTargets(executor);
+        var targets: Card[] = skill.range.getTargets(executor);
+
+        if (RangeFactory.isEnemyNearScaledRange(skill.skillRange)) {
+            var scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
+        }
 
         if (skill.isIndirectSkill()) {
             // if the skill is indirect and of range type, it must be AoE, so only one reactive skill can be proc
@@ -329,7 +334,7 @@ class AttackSkillLogic extends SkillLogic {
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
                 if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
-                    protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked);
+                    protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio);
                     if (protectSkillActivated) {
                         aoeReactiveSkillActivated = true;
                     }
@@ -339,7 +344,7 @@ class AttackSkillLogic extends SkillLogic {
                 // also need to make sure the target is not already attacked
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
                     var defenseSkill = targetCard.getRandomDefenseSkill();
-                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill, {scaledRatio: scaledRatio});
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
@@ -388,6 +393,7 @@ class AttackSkillLogic extends SkillLogic {
         else {
             // skill makes contact, must be fork/sweeping etc., so just proceed as normal
             // i.e. multiple protection is possible
+            
             for (var i = 0; i < targets.length && !executor.isDead; i++) {
                 var targetCard = targets[i];
 
@@ -396,12 +402,12 @@ class AttackSkillLogic extends SkillLogic {
                     continue;
                 }
 
-                var protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, null);
+                var protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, null, scaledRatio);
 
                 // if not protected, proceed with the attack as normal
                 if (!protectSkillActivated) {
                     var defenseSkill = targetCard.getRandomDefenseSkill();
-                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill);
+                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill, {scaledRatio: scaledRatio});
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
@@ -476,7 +482,8 @@ class ProtectSkillLogic extends SkillLogic {
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
-            skill: attackSkill
+            skill: attackSkill,
+            scaledRatio: data.scaledRatio
         });
 
         if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
@@ -515,7 +522,8 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
-            skill: attackSkill
+            skill: attackSkill,
+            scaledRatio: data.scaledRatio
         });
 
         if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
@@ -590,7 +598,8 @@ class CounterDispellSkillLogic extends SkillLogic {
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: data.executor, 
-            skill: attackSkill
+            skill: attackSkill,
+            scaledRatio: data.scaledRatio
         });
 
         if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
@@ -738,6 +747,7 @@ interface SkillLogicData {
     executor: Card;
     skill?: Skill;
     wouldBeDamage?: number; // the would-be damage, for defense
+    scaledRatio?: number;
     attacker?: Card;    // for protect/counter
     attackSkill?: Skill // for protect/counter
     targetCard?: Card;  // for protect

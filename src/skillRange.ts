@@ -7,6 +7,13 @@ class RangeFactory {
         20: 5,
         23: 2
     };
+
+    static ENEMY_NEAR_SCALED_RANGE_TARGET_NUM = {
+        312: 2,
+        313: 3,
+        314: 4,
+        315: 5
+    };
     
     static ENEMY_NEAR_RANGE_TARGET_NUM = {
          5: 1,
@@ -78,13 +85,39 @@ class RangeFactory {
         135: true,
         136: true
     };
+
+    static ScalePatternParams = {
+        202: [1.5, 1],
+        203: [1.75, 1.25, 1],
+        204: [1.9375, 1.4375, 1.25, 1.13, 1, 1, 1, 1, 1, 1],
+        208: [1.9375, 1.4375, 1.25, 1.13, 1],
+        212: [1, 1, 1, 1, 1],
+        213: [1, 1, 1, 1, 1],
+        214: [1, 1, 1, 1, 1],
+        215: [1, 1, 1, 1, 1],
+        234: [1, 1, 1, 1, 1],
+        312: [1.5, 1],
+        313: [1.75, 1.25, 1],
+        314: [1.875, 1.375, 1.16, 1],
+        315: [1.9375, 1.4375, 1.25, 1.13, 1],
+        322: [1.5, 1],
+        323: [1.75, 1.25, 1],
+        324: [1.875, 1.375, 1.16, 1],
+        325: [1.875, 1.375, 1.16, 1, 1],
+        326: [1.875, 1.375, 1.16, 1, 1, 1],
+        332: [1.5, 1],
+        333: [1.75, 1.25, 1],
+        334: [1.875, 1.375, 1.16, 1],
+        335: [1.9375, 1.4375, 1.25, 1.13, 1],
+        336: [1.9375, 1.4375, 1.25, 1.13, 1, 1]
+    };
     
     static getRange (id: number, selectDead: boolean = false) {
         var range: BaseRange = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
         }
-        else if (this.isEnemyNearRange(id)) {
+        else if (this.isEnemyNearRange(id) || this.isEnemyNearScaledRange(id)) {
             range = this.createEnemyNearRange(id);
         }
         else if (this.isFriendRandomRange(id)) {
@@ -117,7 +150,26 @@ class RangeFactory {
     }
     
     static createEnemyNearRange (id) {
-        return new EnemyNearRange(id, RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id]);
+        if (this.isEnemyNearRange(id)) {
+            var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
+        }
+        else if (this.isEnemyNearScaledRange(id)) {
+            var numTargets = RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
+        }
+        return new EnemyNearRange(id, numTargets);
+    }
+
+    static isEnemyNearScaledRange(id: number) {
+        return !!RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
+    }
+
+    static getScaledRatio(id: number, targetsLeft: number) {
+        var paramArray = RangeFactory.ScalePatternParams[id];
+
+        if (!paramArray) {
+            throw new Error("Invalid range for getting scale ratio");
+        }
+        return paramArray[targetsLeft - 1];
     }
 
     static isRowBasedRange(rangeId: number): boolean {
@@ -131,7 +183,7 @@ class RangeFactory {
     static canBeAoeRange(rangeId: number): boolean {
         var canBe = false;
         
-        if (this.isEnemyNearRange(rangeId) || this.isRowBasedRange(rangeId) || rangeId == 8) {
+        if (this.isEnemyNearRange(rangeId) || this.isEnemyNearScaledRange(rangeId) || this.isRowBasedRange(rangeId) || rangeId == 8) {
             canBe = true;    
         }
 

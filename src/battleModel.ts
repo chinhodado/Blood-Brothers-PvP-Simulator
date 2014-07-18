@@ -210,12 +210,12 @@ class BattleModel {
      * if damage is not supplied, it will be calculated automatically
      * otherwise, damage will be done directly
      */
-    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number}) {
+    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number; scaledRatio?: number}) {
         
         var damage = data.damage;
 
         if (!damage) {
-            damage = this.getWouldBeDamage(data.attacker, data.target, data.skill);
+            damage = this.getWouldBeDamage(data.attacker, data.target, data.skill, {scaledRatio: data.scaledRatio});
         }            
     
         data.target.changeHP(-1 * damage);
@@ -248,7 +248,7 @@ class BattleModel {
         }
     }
 
-    getWouldBeDamage(attacker : Card, target : Card, skill : Skill): number {
+    getWouldBeDamage(attacker: Card, target: Card, skill: Skill, opt?: {scaledRatio?: number}): number {
         var skillMod = skill.skillFuncArg1;
         var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC || skill.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT);
     
@@ -269,6 +269,10 @@ class BattleModel {
             
         // apply the multiplier
         var damage = skillMod * baseDamage;
+
+        if (opt && opt.scaledRatio) {
+            damage *= opt.scaledRatio;
+        }
             
         // apply the target's ward
         switch (skill.ward) {
@@ -632,7 +636,7 @@ class BattleModel {
      *
      * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
      */
-    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any): boolean {
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any, scaledRatio?: number): boolean {
         // now check if someone on the enemy side can protect before the damage is dealt
         var enemyCards = this.cardManager.getEnemyCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
@@ -655,7 +659,8 @@ class BattleModel {
                     attacker: attacker,    // for protect
                     attackSkill: attackSkill, // for protect
                     targetCard: targetCard,  // for protect
-                    targetsAttacked: targetsAttacked  // for protect
+                    targetsAttacked: targetsAttacked,  // for protect
+                    scaledRatio: scaledRatio
                 }
 
                 if (protectSkill.willBeExecuted(protectData)) {
