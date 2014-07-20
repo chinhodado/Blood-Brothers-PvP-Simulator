@@ -441,6 +441,12 @@ var famDatabase = {
         img: "img4$1/__cb20130228073440/$2/4/48/Earl_Cat_Sidhe_II_Figure.png",
         fullName: "Earl Cat Sidhe II"
     },
+    10619: {
+        name: "Ebon", stats: [17493, 15543, 13431, 14330, 13788],
+        skills: [157],
+        img: "img2$1/__cb20130330174610/$2/4/48/Ebon_Dragon_II_Figure.png",
+        fullName: "Ebon Dragon II"
+    },
     10756: {
         name: "Edgardo", stats: [10904, 15485, 14389, 8978, 14755],
         skills: [179],

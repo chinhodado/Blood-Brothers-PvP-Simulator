@@ -17,7 +17,7 @@ module ENUM {
      * Is the skill buff, attack, magic, etc.
      */
     export enum SkillFunc {
-        BUFF = 1, // arg1: multiplier, arg2: status
+        BUFF = 1, // arg1: multiplier, arg2, 3: status
         DEBUFF = 2,
         ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
                     // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
@@ -79,6 +79,7 @@ module ENUM {
         BREATH_RESISTANCE = 7,
 
         SKILL_PROBABILITY = 8,
+        ALL_STATUS = 9,
 
         ACTION_ON_DEATH = 16,
 

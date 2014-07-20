@@ -67,44 +67,64 @@ class BuffSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
+        var targets: Card[] = skill.range.getTargets(executor);
 
-        for (var skillFuncArgNum = 2; skillFuncArgNum <= 5; skillFuncArgNum++) {
-            if (skill.getSkillFuncArg(skillFuncArgNum) == 0) {
-                continue;
+        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
+            var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
+            if (skill.skillFuncArg3 != 0) {
+                statusToBuff.push(skill.skillFuncArg3);
             }
-            switch (skill.getSkillFuncArg(skillFuncArgNum)) {
-                case ENUM.StatusType.ATK :
-                case ENUM.StatusType.DEF :
-                case ENUM.StatusType.WIS :
-                case ENUM.StatusType.AGI :
-                    var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-                    var skillMod = skill.skillFuncArg1;
-                    var buffAmount = Math.round(skillMod * executor.getStat(basedOnStatType));
-                    break;
-                case ENUM.StatusType.ATTACK_RESISTANCE :
-                case ENUM.StatusType.MAGIC_RESISTANCE :
-                case ENUM.StatusType.BREATH_RESISTANCE :
-                case ENUM.StatusType.WILL_ATTACK_AGAIN:
-                case ENUM.StatusType.ACTION_ON_DEATH:
-                    var buffAmount = skill.skillFuncArg1;
-                    break;
-                default :
-                    throw new Error("Wrong status type or not implemented");
-            }
+        }
+        else {
+            statusToBuff = [ENUM.StatusType.ATK, ENUM.StatusType.DEF, ENUM.StatusType.WIS, ENUM.StatusType.AGI];
+        }
+
+        var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+        var baseStat = executor.getStat(basedOnStatType);
+
+        for (var i = 0; i < targets.length; i++) {
+            for (var j = 0; j < statusToBuff.length; j++) {
+                var target = targets[i];
+                var statusType = statusToBuff[j];
+
+                switch (statusType) {
+                    case ENUM.StatusType.ATK :
+                    case ENUM.StatusType.DEF :
+                    case ENUM.StatusType.WIS :
+                    case ENUM.StatusType.AGI :
+                        var skillMod = skill.skillFuncArg1;
+
+                        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
+                            // do nothing - we already calculated the base stat earlier
+                        }
+                        else { // flat based on target's stat (Rally Cry)
+                            basedOnStatType = ENUM.StatusType[statusType];
+                            baseStat = target.getStat(basedOnStatType);
+                        }
+
+                        var buffAmount = Math.round(skillMod * baseStat);
+                        break;
+                    case ENUM.StatusType.ATTACK_RESISTANCE :
+                    case ENUM.StatusType.MAGIC_RESISTANCE :
+                    case ENUM.StatusType.BREATH_RESISTANCE :
+                    case ENUM.StatusType.WILL_ATTACK_AGAIN:
+                    case ENUM.StatusType.ACTION_ON_DEATH:
+                        var buffAmount = skill.skillFuncArg1;
+                        break;
+                    default :
+                        throw new Error("Wrong status type or not implemented");
+                }
             
-            var thingToBuff = skill.getSkillFuncArg(skillFuncArgNum);        
-            var targets : Card[] = skill.range.getTargets(executor);
-            
-            for (var i = 0; i < targets.length; i++) {
-                targets[i].changeStatus(thingToBuff, buffAmount);
-                var description = targets[i].name + "'s " + ENUM.StatusType[thingToBuff] + " increased by " + buffAmount;
+                target.changeStatus(statusType, buffAmount);
+                var description = target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount;
                 
                 this.logger.addMinorEvent({
                     executorId: executor.id, 
-                    targetId: targets[i].id, 
+                    targetId: target.id, 
                     type: ENUM.MinorEventType.STATUS, 
                     status: {
-                        type: thingToBuff,
+                        type: statusType,
+                        isAllUp: skill.skillFuncArg2 == ENUM.StatusType.ALL_STATUS
                     },
                     description: description, 
                     amount: buffAmount,

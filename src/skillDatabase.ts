@@ -462,6 +462,13 @@ var SkillDatabase = {
         desc: "Deal heavy AGI-based damage to two random foes."
     },
 
+    157 : {
+        name: "Rally Cry", type: 1, func: 1, calc: 0, 
+        arg1: 0.1, arg2: 9,  
+        range: 4, prob: 70,
+        desc: "Raise the ATK, DEF, WIS, and AGI of all party members by 10% of target's stats."
+    },
+
     160 : {
         name: "Ice Fang", type: 2, func: 4, calc: 1, 
         arg1: 1.5, arg2: 3, arg3: 0.3, 

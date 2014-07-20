@@ -465,6 +465,7 @@ interface MinorEvent {
         type: ENUM.StatusType;
         isNewLogic?: boolean;
         isDispelled?: boolean;
+        isAllUp?: boolean; // Rally Cry
     };
     protect?: {
         protectedId: number;

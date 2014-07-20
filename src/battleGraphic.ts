@@ -573,22 +573,36 @@ class BattleGraphic {
                 }
                 else {
                     // display status text
+
+                    var fontSize = 18;
+
                     if (data.status.isDispelled){
                         var displayText = "dispelled";
                     }
+                    else if (data.status.isAllUp) {
+                        displayText = "All Stats Up";
+                        fontSize = 15;
+                    }
                     else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
-                        var displayText = "EXTRA ACT";
+                        displayText = "EXTRA ACT";
                     }
                     else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
-                        var displayText = "Revive On"; // for now
+                        displayText = "Revive On"; // for now
                     }
                     else {
+                        // for stats buff, this does not really use the log
                         var upDownText = data.amount < 0? " Down" : " Up";
-                        var displayText = ENUM.StatusType[data.status.type] + upDownText;
+                        displayText = ENUM.StatusType[SkillDatabase[data.skillId].arg2] + upDownText;
+
+                        // hacky
+                        if (SkillDatabase[data.skillId].arg3) {
+                            var displayText2 = ENUM.StatusType[SkillDatabase[data.skillId].arg3] + upDownText;
+                            displayText = displayText + "\n" + displayText2;
+                        }
                     }
                     
                     var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
-                    damageText.text(displayText).center(center_x, center_y).font({ size: 18})
+                    damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
                         .opacity(1).animate({delay: '0.5s'}).opacity(0);
                 }
 
