@@ -41,6 +41,11 @@ class BattleModel {
 
     // store recently dead cards with ondeath skills waiting to proc
     onDeathCards: Card[] = [];
+
+    // turn order info
+    turnOrderBase: ENUM.BattleTurnOrderType = ENUM.BattleTurnOrderType.AGI;
+    turnOrderChangeEffectiveTurns: number = 0;
+    turnOrderChanged: boolean = false;
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer : Player;
@@ -395,14 +400,23 @@ class BattleModel {
         this.logger.startBattleLog();
         
         this.performOpeningSkills();
-        this.cardManager.sortAllCards();
-
+        
         var finished = false;
 
         while (!finished) {
 
             this.logger.currentTurn++;
             this.logger.bblogTurn("Turn " + this.logger.currentTurn);
+
+            // process turn order change
+            if (this.turnOrderChangeEffectiveTurns == 0) {
+                this.turnOrderBase = ENUM.BattleTurnOrderType.AGI;
+            }
+            else {
+                this.turnOrderChangeEffectiveTurns--;
+            }
+
+            this.cardManager.sortAllCards();
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !finished; i++) {
@@ -712,6 +726,9 @@ class BattleModel {
                 }
             }
         }
+
+        // reset the turn order changed flag at the end of opening phase
+        this.turnOrderChanged = false;
     }
 }
 

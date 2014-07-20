@@ -46,7 +46,7 @@ module ENUM {
         EVADE = 27,
         PROTECT_REFLECT = 28,
         COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ??
-        TURN_ORDER_CHANGE = 31,
+        TURN_ORDER_CHANGE = 31, // arg1: new base, arg2: turn num
         CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2: status
     }
     
@@ -101,6 +101,14 @@ module ENUM {
         SILENT = 5,
         BLIND = 7
     }
+
+    export enum BattleTurnOrderType {
+        AGI = 0,
+        ATK = 1,
+        WIS = 2,
+        DEF = 3,
+        HP = 4,
+    }
     
     export enum FormationRow {
         REAR = 3,
@@ -127,6 +135,7 @@ module ENUM {
         AFFLICTION = 3,
         PROTECT = 4,
         DESCRIPTION = 5,
+        BATTLE_DESCRIPTION = 51, // used for displaying things that affect the whole battle
         TEXT = 6, // used for displaying text in the debugger that has nothing to do with the battle
         REVIVE = 7,
     }

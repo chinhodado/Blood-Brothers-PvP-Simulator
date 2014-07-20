@@ -1392,6 +1392,13 @@ var SkillDatabase = {
         desc: "Allows two random allies to perform an extra action during the next turn."
     },
 
+    371 : {
+        name: "Battle Hierarchy", type: 1, func: 31, calc: 0, 
+        arg1: 1, arg2: 1,  
+        range: 4, prob: 70,
+        desc: "Change the attack order by ATK for one turn."
+    },
+
     372 : {
         name: "Curse Foil", type: 3, func: 13, calc: 1, 
         arg1: 1.3,  
@@ -1788,6 +1795,20 @@ var SkillDatabase = {
         name: "Dawn's Tear", type: 16, func: 6, calc: 0, 
         arg1: 1,
         range: 21, prob: 100
+    },
+
+    453 : {
+        name: "Shadow of Death", type: 2, func: 4, calc: 2, 
+        arg1: 1.65,
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    454 : {
+        name: "Shadow of Confusion", type: 1, func: 31, calc: 0, 
+        arg1: 2, arg2: 2,
+        range: 4, prob: 70,
+        desc: "Order of attack is determined by WIS during the next two turns"
     },
 
     455 : {

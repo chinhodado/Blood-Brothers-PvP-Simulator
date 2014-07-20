@@ -557,6 +557,16 @@ class BattleGraphic {
             else return;
         }
 
+        if (data.type == ENUM.MinorEventType.BATTLE_DESCRIPTION) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                var txt = this.getMainBattleEffect().text('Turn Order Changed').center(200, 300)
+                    .opacity(1).animate({duration: '2s'}).opacity(0);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
         if (data.type == ENUM.MinorEventType.STATUS) {
             if (minorIndex < minorLog[majorIndex].length) {
                 var target = CardManager.getInstance().getCardById(data.targetId);
@@ -954,5 +964,19 @@ class BattleGraphic {
         SVG.get('p' + playerId + 'f' + famIndex + 'group').add(effect);
     
         return effect;
+    }
+
+    getMainBattleEffect() {
+        var txt = SVG.get('battleText');
+
+        if (!txt) {
+            txt = SVG.get('mainSvg').text('0').font({ size: 24, family: BattleGraphic.FONT })
+                                    .attr({fill:'#fff', stroke: '#000', 'stroke-width': BattleGraphic.AFFLICTION_TEXT_STROKE_WIDTH})
+                                    .center(200, 300)
+                                    .attr('id', 'battleText')
+                                    .opacity(0);
+        }
+
+        return txt;
     }
 }

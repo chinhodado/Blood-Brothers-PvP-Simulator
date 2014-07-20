@@ -169,6 +169,13 @@ var famDatabase = {
         img: "img1$1/__cb20140314150633/$2/0/04/Arcanan_Empress_II_Figure.png",
         fullName: "Arcanan Empress II"
     },
+    11287: {
+        name: "Arcanan Hermit", stats: [19205, 12066, 12586, 20722, 15002],
+        skills: [453, 454],
+        autoAttack: 10007,
+        img: "img3$1/__cb20140512070142/$2/c/c5/Arcanan_Hermit_II_Figure.png",
+        fullName: "Arcanan Hermit II"
+    },
     11242: {
         name: "Arcanan Lovers", stats: [16908, 13875, 12705, 19021, 17006],
         skills: [430, 431],
@@ -292,6 +299,12 @@ var famDatabase = {
         skills: [125],
         img: "img2$1/__cb20130107205042/$2/5/5d/Bunga%2C_the_Stalwart_II_Figure.png",
         fullName: "Bunga, the Stalwart II"
+    },
+    11129: {
+        name: "Caassimolar", stats: [16009, 24979, 15587, 10625, 12521],
+        skills: [371],
+        img: "img1$1/__cb20140213034945/$2/c/c7/Caassimolar%2C_the_Chimera_II_Figure.png",
+        fullName: "Caassimolar, the Chimera II"
     },
     11119: {
         name: "Canhel", stats: [15608, 19606, 17992, 11329, 16399],

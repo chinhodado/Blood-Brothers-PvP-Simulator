@@ -19,11 +19,33 @@ class CardManager {
         CardManager._instance = this;
     }
 
+    getSortFunc(type: ENUM.BattleTurnOrderType) {
+        switch (type) {
+            case ENUM.BattleTurnOrderType.AGI:
+                return function (a, b) {
+                    return b.getAGI() - a.getAGI(); // descending based on agi
+                }
+            case ENUM.BattleTurnOrderType.ATK:
+                return function (a, b) {
+                    return b.getATK() - a.getATK(); // descending based on atk
+                }
+            case ENUM.BattleTurnOrderType.DEF:
+                return function (a, b) {
+                    return b.getDEF() - a.getDEF(); // descending based on def
+                }
+            case ENUM.BattleTurnOrderType.WIS:
+                return function (a, b) {
+                    return b.getWIS() - a.getWIS(); // descending based on wis
+                }
+            default:
+                // no HP for now
+                throw new Error("Invalid turn order type!");
+        }
+    }
+
     sortAllCards() {
-        // sort the cards
-        BattleModel.getInstance().allCards.sort(function (a, b) {
-            return b.getAGI() - a.getAGI(); // descending based on agi
-        });
+        var sortFunc = this.getSortFunc(BattleModel.getInstance().turnOrderBase);
+        BattleModel.getInstance().allCards.sort(sortFunc);
     }
     
     /**
