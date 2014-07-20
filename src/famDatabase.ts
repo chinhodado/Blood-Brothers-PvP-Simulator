@@ -213,6 +213,12 @@ var famDatabase = {
         img: "img3$1/__cb20131009141347/$2/1/15/Aurboda%2C_the_Great_Mother_II_Figure.png",
         fullName: "Aurboda, the Great Mother II"
     },
+    10657: {
+        name: "Baal", stats: [14677, 15457, 12813, 14482, 16551],
+        skills: [99006],
+        img: "img2$1/__cb20130430102647/$2/2/2f/Baal%2C_Thunder_Lord_of_Hell_II_Figure.png",
+        fullName: "Baal, Thunder Lord of Hell II"
+    },
     11168: {
         name: "Badalisc", stats: [14092, 16107, 11882, 11297, 15218],
         skills: [315],
@@ -312,6 +318,18 @@ var famDatabase = {
         img: "img2$1/__cb20131122150727/$2/5/54/Canhel%2C_Guardian_Dragon_II_Figure.png",
         fullName: "Canhel, Guardian Dragon II"
     },
+    10997: {
+        name: "Cap'n Jolly", stats: [14200, 16594, 14070, 18956, 15424],
+        skills: [99003],
+        img: "img2$1/__cb20130828162829/$2/1/14/Cap%27n_Jolly%2C_Sea_Scourge_II_Figure.png",
+        fullName: "Cap'n Jolly, Sea Scourge II"
+    },
+    11333: {
+        name: "Kidd", stats: [18403, 18046, 12781, 14395, 16085],
+        skills: [157, 518],
+        img: "img4$1/__cb20140717114923/$2/4/42/Captain_Kidd_II_Figure.png",
+        fullName: "Captain Kidd II"
+    },
     11062: {
         name: "Chillweaver", stats: [13293, 13196, 10611, 16144, 14489],
         skills: [2],
@@ -374,6 +392,18 @@ var famDatabase = {
         img: "img2$1/__cb20130916113928/$2/8/8c/Cuelebre_the_Ironscaled_II_Figure.png",
         fullName: "Cuelebre the Ironscaled II"
     },
+    11019: {
+        name: "Cursebone", stats: [14807, 16952, 14146, 15652, 17721],
+        skills: [99009],
+        img: "img3$1/__cb20130926150410/$2/3/3e/Cursebone_Pterosaur_II_Figure.png",
+        fullName: "Cursebone Pterosaur II"
+    },
+    10820: {
+        name: "Cyclops", stats: [15868, 17147, 18360, 13214, 14449],
+        skills: [99007],
+        img: "img3$1/__cb20130801154345/$2/b/ba/Cyclops%2C_the_Rocky_Cliff_II_Figure.png",
+        fullName: "Cyclops, the Rocky Cliff II"
+    },
     10973: {
         name: "Dagr", stats: [12012, 14059, 10712, 17818, 13810],
         skills: [275],
@@ -385,6 +415,12 @@ var famDatabase = {
         skills: [292],
         img: "img1$1/__cb20131122150756/$2/e/e2/Danniel%2C_Golden_Paladin_II_Figure.png",
         fullName: "Danniel, Golden Paladin II"
+    },
+    10905: {
+        name: "Danzo", stats: [14774, 17277, 14872, 17667, 16128],
+        skills: [99012],
+        img: "img4$1/__cb20130921071511/$2/6/64/Danzo%2C_Falcon_Ninja_II_Figure.png",
+        fullName: "Danzo, Falcon Ninja II"
     },
     21308: {
         name: "Justice", stats: [20795, 11717, 17470, 22225, 18005],
@@ -827,6 +863,12 @@ var famDatabase = {
         img: "img1$1/__cb20140505115108/$2/5/5f/Impregnable_Iron_Golem_Figure.png",
         fullName: "Impregnable Iron Golem"
     },
+    11144: {
+        name: "Infested Cyclops", stats: [19508, 19508, 15392, 9997, 15348],
+        skills: [99011],
+        img: "img3$1/__cb20140207111438/$2/d/db/Infested_Cyclops_II_Figure.png",
+        fullName: "Infested Cyclops II"
+    },
     11120: {
         name: "Infested Minotaur", stats: [13691, 15294, 16031, 9390, 14070],
         skills: [299, 301],
@@ -975,6 +1017,12 @@ var famDatabase = {
         img: "img3$1/__cb20131210233903/$2/0/0b/Linnorm%2C_the_Hailstorm_II_Figure.png",
         fullName: "Linnorm, the Hailstorm II"
     },
+    21187: {
+        name: "Loki", stats: [19202, 21231, 16192, 15119, 15806],
+        skills: [99008],
+        img: "img4$1/__cb20140304213357/$2/7/7b/Loki%2C_God_of_Cunning_Figure.png",
+        fullName: "Loki, God of Cunning"
+    },
     11316: {
         name: "Long Feng", stats: [15164, 17125, 13539, 10452, 12207],
         skills: [501],
@@ -1004,6 +1052,12 @@ var famDatabase = {
         skills: [120],
         img: "img1$1/__cb20130210215236/$2/c/c0/Magdal_Dragonheart_II_Figure.png",
         fullName: "Magdal Dragonheart II"
+    },
+    11126: {
+        name: "Magdal M", stats: [18728, 20917, 21491, 23235, 15998],
+        skills: [99001],
+        img: "img3$1/__cb20140221092054/$2/4/46/Magdal%2C_Dragonmaster_II_Figure.png",
+        fullName: "Magdal, Dragonmaster II"
     },
     10365: {
         name: "Makalipon", stats: [10250, 8330, 10515, 12168, 10250],
@@ -1091,6 +1145,12 @@ var famDatabase = {
         img: "img2$1/__cb20140325120640/$2/f/ff/Millarca%2C_Lady_of_Thorns_II_Figure.png",
         fullName: "Millarca, Lady of Thorns II"
     },
+    11134: {
+        name: "Minerva", stats: [14590, 18024, 14438, 15435, 18013],
+        skills: [99014],
+        img: "img2$1/__cb20140129062047/$2/a/a2/Minerva%2C_Goddess_of_War_II_Figure.png",
+        fullName: "Minerva, Goddess of War II"
+    },
     11081: {
         name: "Moni", stats: [13562, 15537, 12121, 10234, 16448],
         skills: [340],
@@ -1164,6 +1224,12 @@ var famDatabase = {
         skills: [341],
         img: "img1$1/__cb20140110075314/$2/6/64/Nightblade%2C_Archsage_of_Winds_II_Figure.png",
         fullName: "Nightblade, Archsage of Winds II"
+    },
+    11369: {
+        name: "Nin-Ridu", stats: [16529, 16215, 11351, 10495, 14005],
+        skills: [505],
+        img: "img2$1/__cb20140709072738/$2/3/39/Nin-Ridu_Figure.png",
+        fullName: "Nin-Ridu"
     },
     10799: {
         name: "Niu Mo Wang", stats: [14276, 17071, 15998, 13420, 13138],
@@ -1330,6 +1396,13 @@ var famDatabase = {
         img: "img4$1/__cb20130314191111/$2/d/dc/Princeps%2C_Angel_of_Doom_II_Figure.png",
         fullName: "Princeps, Angel of Doom II"
     },
+    11203: {
+        name: "Prismatic", stats: [24004, 14438, 20982, 23300, 18024],
+        skills: [99004],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140423020348/$2/f/fe/Prismatic_Wyvern_Figure.png",
+        fullName: "Prismatic Wyvern"
+    },
     11100: {
         name: "Queen Waspmen", stats: [14070, 19898, 13247, 15998, 17829],
         skills: [99002],
@@ -1460,11 +1533,29 @@ var famDatabase = {
         img: "img3$1/__cb20140402124523/$2/9/9e/Sigiled_Skeleton_Axeman_II_Figure.png",
         fullName: "Sigiled Skeleton Axeman II"
     },
+    10987: {
+        name: "Sihn", stats: [12001, 10495, 12001, 17504, 16497],
+        skills: [99010],
+        img: "img4$1/__cb20131108145539/$2/5/53/Sihn%2C_Moonlight_King_II_Figure.png",
+        fullName: "Sihn, Moonlight King II"
+    },
+    11093: {
+        name: "Sinbad", stats: [15868, 18154, 14644, 13853, 17006],
+        skills: [99005],
+        img: "img2$1/__cb20131227221736/$2/9/9e/Sinbad_the_Adventurer_II_Figure.png",
+        fullName: "Sinbad the Adventurer II"
+    },
     10566: {
         name: "Bedwyr", stats: [12235, 11318, 12221, 13510, 10598],
         skills: [145],
         img: "img3$1/__cb20130212204233/$2/2/21/Sir_Bedwyr_of_the_Garden_II_Figure.png",
         fullName: "Sir Bedwyr of the Garden II"
+    },
+    10921: {
+        name: "Brandiles", stats: [17017, 18100, 16269, 13940, 14070],
+        skills: [99013],
+        img: "img1$1/__cb20131002005342/$2/0/06/Sir_Brandiles%2C_the_Flameblade_II_Figure.png",
+        fullName: "Sir Brandiles, the Flameblade II"
     },
     11074: {
         name: "Skoll", stats: [15002, 13160, 15153, 9000, 16302],

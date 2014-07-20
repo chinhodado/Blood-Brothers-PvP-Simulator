@@ -131,6 +131,32 @@ class Skill {
         return isAoe;
     }
 
+    // get the list of stats status modified by the skill
+    static getStatusModified(skillId: number) {
+        var skillInfo = SkillDatabase[skillId];
+        var statuses = [];
+
+        switch (skillInfo.func) {
+            case ENUM.SkillFunc.BUFF:
+                statuses.push(skillInfo.arg2);
+                if (skillInfo.arg3) statuses.push(skillInfo.arg3);
+                break;
+            // todo: add DEBUFF here
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DEBUFFINDIRECT:
+                statuses.push(skillInfo.arg2);
+                break;
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
+                statuses.push(skillInfo.arg2);
+                if (skillInfo.arg3) statuses.push(skillInfo.arg3);
+                break;
+            default:
+                break;
+        }
+
+        return statuses;
+    }
+
     isIndirectSkill(): boolean {
         return Skill.isIndirectSkill(this.id);
     }

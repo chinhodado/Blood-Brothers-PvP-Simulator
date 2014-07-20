@@ -602,11 +602,12 @@ class BattleGraphic {
                     else {
                         // for stats buff, this does not really use the log
                         var upDownText = data.amount < 0? " Down" : " Up";
-                        displayText = ENUM.StatusType[SkillDatabase[data.skillId].arg2] + upDownText;
+                        var statuses = Skill.getStatusModified(data.skillId);
+                        displayText = ENUM.StatusType[statuses[0]] + upDownText;
 
                         // hacky
-                        if (SkillDatabase[data.skillId].arg3) {
-                            var displayText2 = ENUM.StatusType[SkillDatabase[data.skillId].arg3] + upDownText;
+                        if (statuses[1]) {
+                            var displayText2 = ENUM.StatusType[statuses[1]] + upDownText;
                             displayText = displayText + "\n" + displayText2;
                         }
                     }

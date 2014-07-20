@@ -2098,6 +2098,13 @@ var SkillDatabase = {
         desc: "Deal massive AGI-based damage, sometimes paralyze three random foes, ignoring position."
     },
 
+    505: {
+        name: "Fires of Perdition", type: 2, func: 22, calc: 1,
+        arg1: 1.3, arg2: 3, arg3: 0.3, arg4: 0.3,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes, sometimes lowering WIS, ignoring position."
+    },
+
     506: {
         name: "Winds of Perdition", type: 2, func: 4, calc: 2,
         arg1: 1.85,
@@ -2131,6 +2138,13 @@ var SkillDatabase = {
         arg1: 2.1,
         range: 6, prob: 30, ward: 1,
         desc: "Deal massive ATK-based damage to up to two foes, ignoring position."
+    },
+
+    518: {
+        name: "Sabre Dance", type: 2, func: 3, calc: 1,
+        arg1: 1.45,
+        range: 314, prob: 30, ward: 1,
+        desc: "ATK-based damage to up to four foes. Increased if fewer foes."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -2241,12 +2255,105 @@ var SkillDatabase = {
     99000 : {
         name : "Raging Flames", type: 2, func: 3, calc: 3,
         arg1: 2.4, 
-        range: 16, prob: 30, ward: 1
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal massive AGI-based damage to three random foes"
+    },
+
+    99001 : {
+        name : "Golden Flame", type: 2, func: 4, calc: 2,
+        arg1: 1.65, 
+        range: 15, prob: 30, ward: 3, // <-- guess
+        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
     },
     
     99002 : {
         name : "Inferno", type: 2, func: 3, calc: 1,
         arg1: 1.4, 
-        range: 19, prob: 30, ward: 1
-    }    
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
+    },
+
+    99003 : {
+        name : "Pirate's Pride", type: 2, func: 4, calc: 2,
+        arg1: 1.8, arg2: 2, arg3: 0.3, 
+        range: 15, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes paralyze front/middle lines."
+    },
+
+    99004 : {
+        name : "Spectrum", type: 2, func: 4, calc: 2,
+        arg1: 2.25,
+        range: 7, prob: 30, ward: 2, // <- guess
+        desc: "Deal massive WIS-based damage to up to three foes, ignoring position."
+    },
+
+    99005 : {
+        name : "Frontier Spirit", type: 2, func: 3, calc: 1,
+        arg1: 1.1,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
+    },
+
+    99006 : {
+        name : "Light Fist", type: 2, func: 3, calc: 1,
+        arg1: 1.7,
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy lightning damage to three random targets."
+    },
+
+    99007 : {
+        name : "Boulder Toss", type: 2, func: 3, calc: 1,
+        arg1: 1.4, arg2: 2, arg3: 0.3,
+        range: 15, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and paralyze front/middle lines."
+    },
+
+    99008 : {
+        name : "Laevateinn", type: 2, func: 3, calc: 1,
+        arg1: 1.65,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes"
+    },
+
+    99009 : {
+        name : "Venomwing Dance", type: 2, func: 3, calc: 3,
+        arg1: 1.45, arg2: 1, arg3: 0.3,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage and randomly poison four foes."
+    },
+
+    99010 : {
+        name : "Moon Soul", type: 2, func: 4, calc: 2,
+        arg1: 1.45,
+        range: 15, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to front/middle lines, regardless of position."
+    },
+
+    99011 : {
+        name : "Depths of Corruption", type: 2, func: 4, calc: 1,
+        arg1: 1.95,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes, regardless of position."
+    },
+
+    99012 : {
+        name : "Piercing Claws", type: 2, func: 4, calc: 2,
+        arg1: 2.15,
+        range: 7, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three foes, regardless of position."
+    },
+
+    99013 : {
+        name : "Scathing Fire Brand", type: 2, func: 3, calc: 1,
+        arg1: 1.5,
+        range: 15, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to all foes in the front/middle line."
+    },
+
+    99014 : {
+        name : "Welkin Wings", type: 2, func: 3, calc: 3,
+        arg1: 1.75,
+        range: 12, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to all foes in the front line."
+    },
 };
