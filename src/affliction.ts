@@ -64,7 +64,7 @@ class Affliction {
         // implement this
     }
 
-    add(optParam?: number, optParam2?: number) {
+    add(option: AfflectOptParam) {
         // implement this
     }
 
@@ -107,7 +107,8 @@ class PoisonAffliction extends Affliction {
         BattleModel.getInstance().damageToTargetDirectly(card, damage, "poison");
     }
 
-    add(percent?: number){
+    add(option: AfflectOptParam){
+        var percent = option.percent;
         if(!percent){
             percent = PoisonAffliction.DEFAULT_PERCENT;
         }
@@ -189,8 +190,8 @@ class SilentAffliction extends Affliction {
         }
     }
     
-    add(turnNum: number){
-        this.validTurnNum = turnNum;
+    add(option: AfflectOptParam){
+        this.validTurnNum = option.turnNum;
     }
 }
 
@@ -220,8 +221,14 @@ class BlindAffliction extends Affliction {
         }
     }
 
-    add(turnNum: number, missProb: number){
-        this.validTurnNum = turnNum;
-        this.missProb = missProb;
+    add(option: AfflectOptParam){
+        this.validTurnNum = option.turnNum;
+        this.missProb = option.missProb;
     }
+}
+
+interface AfflectOptParam {
+    turnNum?: number; // for silent and blind
+    missProb?: number; // for blind
+    percent?: number; // for poison
 }

@@ -157,6 +157,12 @@ var famDatabase = {
         img: "img3$1/__cb20140520122105/$2/d/da/Arcanan_Chariot_II_Figure.png",
         fullName: "Arcanan Chariot II"
     },
+    11335: {
+        name: "Arcanan Daemon", stats: [18252, 20700, 12510, 13117, 15023],
+        skills: [509, 510],
+        img: "img2$1/__cb20140711093455/$2/4/49/Arcanan_Daemon_II_Figure.png",
+        fullName: "Arcanan Daemon II"
+    },
     11239: {
         name: "Arcanan Emperor", stats: [18577, 17916, 17786, 10809, 14590],
         skills: [425, 426],

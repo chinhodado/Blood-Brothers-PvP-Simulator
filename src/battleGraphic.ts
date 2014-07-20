@@ -288,10 +288,17 @@ class BattleGraphic {
         var center_x = this.coordArray[playerId][famIndex][0];
         var center_y = this.coordArray[playerId][famIndex][1];
 
-        var amount = this.logger.minorEventLog[majorIndex][minorIndex].amount;
+        var data = this.logger.minorEventLog[majorIndex][minorIndex];
+
+        if (data.missed) {
+            var txt = "missed";
+        }
+        else {
+            txt = Math.abs(data.amount) + "";
+        }
 
         var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
-        damageText.text(Math.abs(amount) + "").font({ size: 22})
+        damageText.text(txt).font({ size: 22})
                   .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '1s'}).opacity(0);
 
@@ -300,6 +307,10 @@ class BattleGraphic {
 
     displayWard(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var data = this.logger.minorEventLog[majorIndex][minorIndex];
+
+        if (data.missed) {
+            return;
+        }
 
         var type;
         switch (data.wardUsed) {
@@ -878,7 +889,9 @@ class BattleGraphic {
             executorGroup.animate({ duration: '0.5s' })
                 .move(x - x1, y - y1)
                 .after(function () {
-                    explosion.opacity(1);
+                    if (!data.missed) {
+                        explosion.opacity(1);
+                    }
 
                     BattleGraphic.getInstance()
                         .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);

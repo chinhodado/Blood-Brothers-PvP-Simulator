@@ -215,12 +215,17 @@ class BattleModel {
      * if damage is not supplied, it will be calculated automatically
      * otherwise, damage will be done directly
      */
-    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number; scaledRatio?: number}) {
+    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number; scaledRatio?: number; missed: boolean}) {
         
         var damage = data.damage;
 
         if (!damage) {
-            damage = this.getWouldBeDamage(data.attacker, data.target, data.skill, {scaledRatio: data.scaledRatio});
+            if (!data.missed) {
+                damage = this.getWouldBeDamage(data.attacker, data.target, data.skill, {scaledRatio: data.scaledRatio});
+            }
+            else {
+                damage = 0;
+            }
         }            
     
         data.target.changeHP(-1 * damage);
@@ -234,16 +239,23 @@ class BattleModel {
             var wardUsed = data.skill.ward;
         }
 
-        var description = data.additionalDescription +
-            data.target.name + " lost " + damage + "hp (remaining " + data.target.getHP() + "/" + data.target.originalStats.hp + ")";
+        if (data.missed) {
+            var desc = data.attacker.name + " missed the attack on " + data.target.name;
+        }
+        else {
+            desc = data.additionalDescription + data.target.name + " lost " + damage + "hp (remaining " + 
+                data.target.getHP() + "/" + data.target.originalStats.hp + ")";
+        }
+
         this.logger.addMinorEvent({
             executorId: data.attacker.id, 
             targetId: data.target.id, 
             type: ENUM.MinorEventType.HP, 
             amount: (-1) * damage, 
-            description: description, 
+            description: desc, 
             skillId: data.skill.id,
-            wardUsed: wardUsed
+            wardUsed: wardUsed,
+            missed: data.missed
         });
 
         if (data.target.getHP() <= 0) {
@@ -331,20 +343,30 @@ class BattleModel {
             return;
         }
 
-        if (skill.skillFuncArg4 || skill.skillFuncArg5) {
-            // arg4: number of turns for silent & blind, % for venom
-            // arg5: miss prob. for blind
-            var optParam = [skill.skillFuncArg4, skill.skillFuncArg5];
+        var option: AfflectOptParam = {};
+
+        if (skill.skillFuncArg4) {
+            if (type == ENUM.AfflictionType.POISON) {
+                // envenom percent
+                option.percent = skill.skillFuncArg4;
+            }
+            else {
+                // turn num for silent & blind
+                option.turnNum = skill.skillFuncArg4;
+            }
+        }
+
+        if (skill.skillFuncArg5) {
+            option.missProb = skill.skillFuncArg5;
         }
             
         if(Math.random() <= prob){
-            target.setAffliction(type, optParam);
+            target.setAffliction(type, option);
             var description = target.name + " is now " + ENUM.AfflictionType[type];
             var maxTurn = 1;
-            if (type == ENUM.AfflictionType.BLIND || type == ENUM.AfflictionType.SILENT) {
-                var maxTurn = skill.skillFuncArg4;
-            }
-            else if (type == ENUM.AfflictionType.POISON) {
+
+            if (type == ENUM.AfflictionType.POISON) {
+                // needed since poison is stacked
                 var percent = target.getPoisonPercent();
             }
             
@@ -354,8 +376,9 @@ class BattleModel {
                 type: ENUM.MinorEventType.AFFLICTION, 
                 affliction: {
                     type: type,
-                    duration: maxTurn,
-                    percent: percent
+                    duration: option.turnNum,
+                    percent: percent,
+                    missProb: option.missProb
                 },
                 description: description,                 
             });

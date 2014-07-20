@@ -455,11 +455,13 @@ interface MinorEvent {
     type?: ENUM.MinorEventType;
     noProcEffect?: boolean; // specify true if don't want the proc effect to be displayed
     wardUsed?: ENUM.WardType;
+    missed?: boolean;
     affliction?: {
         type: ENUM.AfflictionType;
         percent?: number;
         isFinished?: boolean;
         duration?: number;
+        missProb?: number;
     };
     status?: {
         type: ENUM.StatusType;

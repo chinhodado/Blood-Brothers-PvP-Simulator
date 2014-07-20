@@ -2126,6 +2126,20 @@ var SkillDatabase = {
         desc: "Reduce magic damage taken by self and adjacent familiars."
     },
 
+    509: {
+        name: "Atrocity", type: 2, func: 3, calc: 1,
+        arg1: 1, arg2: 4, arg3: 0.3, 
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to and sometimes disable all foes."
+    },
+
+    510: {
+        name: "Bedazzle", type: 1, func: 19, calc: 0,
+        arg1: 0, arg2: 7, arg3: 0.4,  arg4: 2,  arg5: 0.7, 
+        range: 7, prob: 70,
+        desc: "Chance to blind up to three foes for 2 turns at start of battle."
+    },
+
     511: {
         name: "Twin Arrow", type: 2, func: 4, calc: 1,
         arg1: 2.1,

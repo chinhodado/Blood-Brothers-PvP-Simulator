@@ -211,13 +211,11 @@ class Card {
     }
 
     // affliction
-    setAffliction(type: ENUM.AfflictionType, optParam?) {
-        if (!optParam) {
-            optParam = [null, null];
-        }
+    setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam) {
+
         if(this.affliction){
             if (this.affliction.getType() === type){
-                this.affliction.add(optParam[0], optParam[1]);
+                this.affliction.add(option);
                 return;
             }
             else {
@@ -225,7 +223,7 @@ class Card {
             }
         }
         this.affliction = AfflictionFactory.getAffliction(type);
-        this.affliction.add(optParam[0], optParam[1]);
+        this.affliction.add(option);
     }
 
     clearAffliction(): void{
@@ -244,7 +242,7 @@ class Card {
         return (this.affliction) ? this.affliction.canUseSkill() : true;
     }
 
-    canMiss(): boolean {
+    willMiss(): boolean {
         return (this.affliction) ? this.affliction.canMiss() : false;
     }
 
