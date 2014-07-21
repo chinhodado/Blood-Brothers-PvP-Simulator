@@ -265,56 +265,7 @@ class AttackSkillLogic extends SkillLogic {
             // since we get a valid index with every iteration of the loop, there's no need
             // to check if the target is dead here
             var targetCard = this.battleModel.oppositePlayerCards[targetIndex];
-            var protectSkillActivated = this.battleModel.processProtect(data.executor, targetCard, data.skill, null);
-
-            // if not protected, proceed with the attack as normal
-            if (!protectSkillActivated) {
-                var missed = false;
-                var wouldBeDamage = this.battleModel.getWouldBeDamage(data.executor, targetCard, data.skill);
-
-                if (data.executor.willMiss()) {
-                    missed = true;
-                    wouldBeDamage = 0; 
-                }
-
-                var defenseSkill = targetCard.getRandomDefenseSkill();
-                
-                var defenseData: SkillLogicData = {
-                    executor: targetCard,
-                    skill: defenseSkill,
-                    attacker:  data.executor,
-                    wouldBeDamage: wouldBeDamage
-                }
-
-                if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
-                     defenseSkill.willBeExecuted(defenseData)) {
-                    defenseSkill.execute(defenseData);
-                    wouldBeDamage = targetCard.getHP() - 1;
-                }
-
-                this.battleModel.damageToTarget({
-                    attacker: data.executor, 
-                    target: targetCard, 
-                    skill: data.skill,
-                    damage: wouldBeDamage,
-                    missed: missed
-                });
-
-                if (!missed) {
-                    if (data.skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || data.skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
-                        if (Math.random() <= data.skill.skillFuncArg3) {
-                            this.battleModel.processDebuff(data.executor, targetCard, data.skill);
-                        }
-                    }
-                    else {
-                        this.battleModel.processAffliction(data.executor, targetCard, data.skill);
-                    }
-                }
-
-                if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
-                    defenseSkill.execute(defenseData);    
-                }
-            }
+            this.processAttackAgainstSingleTarget(data.executor, targetCard, data.skill);
         }
     }
 
@@ -448,62 +399,67 @@ class AttackSkillLogic extends SkillLogic {
                     continue;
                 }
 
-                var protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, null, scaledRatio);
-
-                // if not protected, proceed with the attack as normal
-                if (!protectSkillActivated) {
-                    var missed = false;
-                    var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill, {scaledRatio: scaledRatio});
-
-                    if (executor.willMiss()) {
-                        missed = true;
-                        wouldBeDamage = 0; 
-                    }
-
-                    var defenseSkill = targetCard.getRandomDefenseSkill();
-                    
-                    var defenseData: SkillLogicData = {
-                        executor: targetCard,
-                        skill: defenseSkill,
-                        attacker:  executor,
-                        wouldBeDamage: wouldBeDamage
-                    }
-
-                    if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE &&
-                        defenseSkill.willBeExecuted(defenseData)) {
-                        defenseSkill.execute(defenseData);
-                        wouldBeDamage = targetCard.getHP() - 1;
-                    }
-
-                    this.battleModel.damageToTarget({
-                        attacker: executor, 
-                        target: targetCard, 
-                        skill: skill,
-                        damage: wouldBeDamage,
-                        missed: missed
-                    });
-
-                    if (!missed) {
-                        if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
-                            if (Math.random() <= skill.skillFuncArg3) {
-                                this.battleModel.processDebuff(executor, targetCard, skill);
-                            }
-                        }
-                        else {
-                            this.battleModel.processAffliction(executor, targetCard, skill);
-                        }
-                    }
-                    
-                    if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
-                        defenseSkill.execute(defenseData);    
-                    }
-                }
+                this.processAttackAgainstSingleTarget(data.executor, targetCard, data.skill, scaledRatio);
             }
         }        
+    }
+
+    processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio?: number) {
+        var protectSkillActivated = this.battleModel.processProtect(executor, target, skill, null, scaledRatio);
+
+        // if not protected, proceed with the attack as normal
+        if (!protectSkillActivated) {
+            var missed = false;
+            var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, target, skill, {scaledRatio: scaledRatio});
+
+            if (executor.willMiss()) {
+                missed = true;
+                wouldBeDamage = 0; 
+            }
+
+            var defenseSkill = target.getRandomDefenseSkill();
+                
+            var defenseData: SkillLogicData = {
+                executor: target,
+                skill: defenseSkill,
+                attacker: executor,
+                wouldBeDamage: wouldBeDamage
+            }
+
+            if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE && defenseSkill.willBeExecuted(defenseData)) {
+                defenseSkill.execute(defenseData);
+                wouldBeDamage = target.getHP() - 1;
+            }
+
+            this.battleModel.damageToTarget({
+                attacker: executor, 
+                target: target, 
+                skill: skill,
+                damage: wouldBeDamage,
+                missed: missed
+            });
+
+            if (!missed) {
+                if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                    if (Math.random() <= skill.skillFuncArg3) {
+                        this.battleModel.processDebuff(executor, target, skill);
+                    }
+                }
+                else {
+                    this.battleModel.processAffliction(executor, target, skill);
+                }
+            }
+
+            if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
+                defenseSkill.execute(defenseData);    
+            }
+        }
     }
 }
 
 class ProtectSkillLogic extends SkillLogic {
+    counter: boolean = false;
+
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = data.skill.getTargets(data.executor);
 
@@ -516,24 +472,30 @@ class ProtectSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
+        this.executeProtectPhase(data);
+    }
+
+    executeProtectPhase(data: SkillLogicData, noProtectLog?: boolean) {
         var protector = data.executor;
         var protectSkill = data.skill;
         var attackSkill = data.attackSkill;
 
         // first redirect the original attack to the protecting fam
-        var desc = protector.name + " procs " + protectSkill.name + " to protect " +
-            data.targetCard.name + ". ";
-        this.logger.addMinorEvent({
-            executorId: protector.id, 
-            type: ENUM.MinorEventType.PROTECT,
-            protect: {
-                protectedId: data.targetCard.id,
-                counteredSkillId: attackSkill.id,
-                attackerId: data.attacker.id
-            },
-            description: desc,
-            skillId: protectSkill.id
-        });
+        if (!noProtectLog) {
+            var desc = protector.name + " procs " + protectSkill.name + " to protect " + data.targetCard.name + ". ";
+            this.logger.addMinorEvent({
+                executorId: protector.id, 
+                type: ENUM.MinorEventType.PROTECT,
+                protect: {
+                    protectedId: data.targetCard.id,
+                    counter: this.counter,
+                    counteredSkillId: attackSkill.id,
+                    attackerId: data.attacker.id
+                },
+                description: desc,
+                skillId: protectSkill.id
+            });
+        }
 
         var missed = false;
         if (data.attacker.willMiss()) {
@@ -567,55 +529,14 @@ class ProtectSkillLogic extends SkillLogic {
 }
 
 class ProtectCounterSkillLogic extends ProtectSkillLogic {
+    constructor() {
+        super();
+        this.counter = true;
+    }
+
     execute(data: SkillLogicData) {
+        this.executeProtectPhase(data);
         var protector = data.executor;
-        var protectSkill = data.skill;
-        var attackSkill = data.attackSkill;
-
-        // first redirect the original attack to the protecting fam
-        var desc = protector.name + " procs " + protectSkill.name + " to protect " +
-            data.targetCard.name + ". ";
-        this.logger.addMinorEvent({
-            executorId: protector.id, 
-            type: ENUM.MinorEventType.PROTECT, 
-            protect: {
-                protectedId: data.targetCard.id,
-                counter: true, // <- different from Protect
-                counteredSkillId: attackSkill.id,
-                attackerId: data.attacker.id
-            },
-            description: desc,
-            skillId: protectSkill.id
-        });
-
-        var missed = false;
-        if (data.attacker.willMiss()) {
-            missed = true;
-        }
-
-        this.battleModel.damageToTarget({
-            attacker: data.attacker, 
-            target: protector, 
-            skill: attackSkill,
-            scaledRatio: data.scaledRatio,
-            missed: missed
-        });
-
-        if (!missed) {
-            if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                this.battleModel.processAffliction(data.attacker, protector, attackSkill);
-            }
-            else if (attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
-                if (Math.random() <= attackSkill.skillFuncArg3) {
-                    this.battleModel.processDebuff(data.attacker, protector, attackSkill);
-                }
-            }
-        }
-
-        // update the targetsAttacked if necessary
-        if (data.targetsAttacked) {
-            data.targetsAttacked[protector.id] = true;
-        }
 
         // counter phase
         if (!protector.isDead) {
@@ -628,7 +549,7 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
             this.battleModel.damageToTarget({
                 attacker: protector, 
                 target: data.attacker, 
-                skill: protectSkill, 
+                skill: data.skill, 
                 additionalDescription: additionalDesc,
                 missed: counterMissed
             });
@@ -663,7 +584,7 @@ class CounterSkillLogic extends SkillLogic {
     }
 }
 
-class CounterDispellSkillLogic extends SkillLogic {
+class CounterDispellSkillLogic extends ProtectSkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = this.getValidTargets(data);
         return super.willBeExecuted(data) && (targets.length > 0);
@@ -685,37 +606,7 @@ class CounterDispellSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        var attackSkill = data.attackSkill;
-
-        // first take the damage
-        var missed = false;
-        if (data.attacker.willMiss()) {
-            missed = true;
-        }
-
-        this.battleModel.damageToTarget({
-            attacker: data.attacker, 
-            target: data.executor, 
-            skill: attackSkill,
-            scaledRatio: data.scaledRatio,
-            missed: missed
-        });
-
-        if (!missed) {
-            if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                this.battleModel.processAffliction(data.attacker, data.executor, attackSkill);
-            }
-            else if (attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
-                if (Math.random() <= attackSkill.skillFuncArg3) {
-                    this.battleModel.processDebuff(data.attacker, data.executor, attackSkill);
-                }
-            }
-        }
-
-        // update the targetsAttacked if necessary
-        if (data.targetsAttacked) {
-            data.targetsAttacked[data.executor.id] = true;
-        }
+        this.executeProtectPhase(data, true);
 
         if (data.executor.isDead || !data.executor.canUseSkill()) {
             return;
