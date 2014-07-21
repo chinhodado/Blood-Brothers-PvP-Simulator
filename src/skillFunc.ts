@@ -13,6 +13,8 @@
             case ENUM.SkillFunc.MAGIC:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
+            case ENUM.SkillFunc.DRAIN_ATTACK:
+            case ENUM.SkillFunc.DRAIN_MAGIC:
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();
@@ -316,13 +318,15 @@ class AttackSkillLogic extends SkillLogic {
                 }
 
                 var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
+                var damageDealt: number;
 
                 // if no reactive skill has been activated at all during this AoE, we can try to
                 // protect this target, otherwise no protect can be activated to protect this target
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
                 if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
-                    protectSkillActivated = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio);
+                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio)
+                    protectSkillActivated = protectData.activated;
                     if (protectSkillActivated) {
                         aoeReactiveSkillActivated = true;
                     }
@@ -365,6 +369,7 @@ class AttackSkillLogic extends SkillLogic {
                         missed: missed
                     });
                     targetsAttacked[targetCard.id] = true;
+                    damageDealt = wouldBeDamage;
 
                     if (!missed) {
                         if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
@@ -372,7 +377,7 @@ class AttackSkillLogic extends SkillLogic {
                                 this.battleModel.processDebuff(executor, targetCard, skill);
                             }
                         }
-                        else {
+                        else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC) {
                             this.battleModel.processAffliction(executor, targetCard, skill);
                         }
                     }
@@ -384,6 +389,13 @@ class AttackSkillLogic extends SkillLogic {
                         defenseSkill.execute(defenseData);
                         aoeReactiveSkillActivated = true; 
                     }
+                }
+                else {
+                    damageDealt = protectData.damage;
+                }
+
+                if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
+                    this.processHeal(executor, skill, damageDealt);
                 }
             }
         }
@@ -405,10 +417,11 @@ class AttackSkillLogic extends SkillLogic {
     }
 
     processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio?: number) {
-        var protectSkillActivated = this.battleModel.processProtect(executor, target, skill, null, scaledRatio);
+        var protectData = this.battleModel.processProtect(executor, target, skill, null, scaledRatio);
+        var damageDealt: number;
 
         // if not protected, proceed with the attack as normal
-        if (!protectSkillActivated) {
+        if (!protectData.activated) {
             var missed = false;
             var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, target, skill, {scaledRatio: scaledRatio});
 
@@ -439,13 +452,15 @@ class AttackSkillLogic extends SkillLogic {
                 missed: missed
             });
 
+            damageDealt = wouldBeDamage;
+
             if (!missed) {
                 if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
                     if (Math.random() <= skill.skillFuncArg3) {
                         this.battleModel.processDebuff(executor, target, skill);
                     }
                 }
-                else {
+                else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC){
                     this.battleModel.processAffliction(executor, target, skill);
                 }
             }
@@ -453,6 +468,36 @@ class AttackSkillLogic extends SkillLogic {
             if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && defenseSkill.skillFunc != ENUM.SkillFunc.SURVIVE) {
                 defenseSkill.execute(defenseData);    
             }
+        }
+        else {
+            damageDealt = protectData.damage;
+        }
+
+        if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
+            this.processHeal(executor, skill, damageDealt);
+        }
+    }
+
+    // for drain attack
+    processHeal(executor: Card, skill: Skill, damageDealt: number) {
+        var healRange = RangeFactory.getRange(skill.skillFuncArg4);
+        var initialHealTargets = healRange.getTargets(executor);
+        var healTargets = [];
+
+        for (var i = 0; i < initialHealTargets.length; i++) {
+            var tmpCard = initialHealTargets[i];
+            if (!tmpCard.isFullHealth()) {
+                healTargets.push(tmpCard);
+            }
+        }
+
+        if (healTargets.length == 0) {
+            return;
+        }
+
+        var healAmount = Math.floor((damageDealt * skill.skillFuncArg2) / healTargets.length);
+        for (var i = 0; i < healTargets.length; i++) {
+            this.battleModel.damageToTargetDirectly(healTargets[i], -1 * healAmount, " healing");
         }
     }
 }
@@ -472,13 +517,14 @@ class ProtectSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        this.executeProtectPhase(data);
+        return this.executeProtectPhase(data);
     }
 
     executeProtectPhase(data: SkillLogicData, noProtectLog?: boolean) {
         var protector = data.executor;
         var protectSkill = data.skill;
         var attackSkill = data.attackSkill;
+        var toReturn: any = {};
 
         // first redirect the original attack to the protecting fam
         if (!noProtectLog) {
@@ -502,11 +548,13 @@ class ProtectSkillLogic extends SkillLogic {
             missed = true;
         }
 
+        var wouldBeDamage = this.battleModel.getWouldBeDamage(data.attacker, protector, attackSkill, {scaledRatio: data.scaledRatio});
+        toReturn.damage = wouldBeDamage;
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
             skill: attackSkill,
-            scaledRatio: data.scaledRatio,
+            damage: wouldBeDamage,
             missed: missed
         });
 
@@ -525,6 +573,8 @@ class ProtectSkillLogic extends SkillLogic {
         if (data.targetsAttacked) {
             data.targetsAttacked[protector.id] = true;
         }
+        
+        return toReturn;
     }
 }
 
@@ -535,7 +585,7 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        this.executeProtectPhase(data);
+        var toReturn = this.executeProtectPhase(data);
         var protector = data.executor;
 
         // counter phase
@@ -554,6 +604,8 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
                 missed: counterMissed
             });
         }
+
+        return toReturn;
     }
 }
 
@@ -606,10 +658,10 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        this.executeProtectPhase(data, true);
+        var toReturn = this.executeProtectPhase(data, true);
 
         if (data.executor.isDead || !data.executor.canUseSkill()) {
-            return;
+            return toReturn;
         }
 
         // now process the dispell
@@ -638,6 +690,8 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
                 skillId: data.skill.id
             });
         }
+
+        return toReturn;
     }
 }
 

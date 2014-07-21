@@ -52,12 +52,17 @@ class Skill {
         var isAttackSkill = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.func == ENUM.SkillFunc.ATTACK || 
-            skillInfo.func == ENUM.SkillFunc.MAGIC ||
-            skillInfo.func == ENUM.SkillFunc.DEBUFFATTACK ||
-            skillInfo.func == ENUM.SkillFunc.DEBUFFINDIRECT) 
-        {
-            isAttackSkill = true;    
+        switch (skillInfo.func) {
+            case ENUM.SkillFunc.ATTACK:
+            case ENUM.SkillFunc.MAGIC:
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DEBUFFINDIRECT:
+            case ENUM.SkillFunc.DRAIN_ATTACK:
+            case ENUM.SkillFunc.DRAIN_MAGIC:
+                isAttackSkill = true;
+                break;
+            default:
+                break;
         }
 
         return isAttackSkill;
@@ -67,12 +72,16 @@ class Skill {
         var isIndirect = true;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.func == ENUM.SkillFunc.ATTACK || 
-            skillInfo.func == ENUM.SkillFunc.COUNTER ||
-            skillInfo.func == ENUM.SkillFunc.PROTECT_COUNTER ||
-            skillInfo.func == ENUM.SkillFunc.DEBUFFATTACK) 
-        {
-            isIndirect = false;    
+        switch (skillInfo.func) {
+            case ENUM.SkillFunc.ATTACK:
+            case ENUM.SkillFunc.COUNTER:
+            case ENUM.SkillFunc.PROTECT_COUNTER:
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DRAIN_ATTACK:
+                isIndirect = false;
+                break;
+            default:
+                break;
         }
         
         return isIndirect;
@@ -202,7 +211,7 @@ class Skill {
     }
 
     execute(data: SkillLogicData) {
-        this.logic.execute(data);
+        return this.logic.execute(data);
     }
 
     getTargets(executor: Card): Card[] {

@@ -297,10 +297,16 @@ class BattleGraphic {
             txt = Math.abs(data.amount) + "";
         }
 
+        var txtColor = '#fff';
+        if (data.amount > 0) {
+            // green text for healing
+            txtColor = '#00ff00';
+        }
+
         var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
-        damageText.text(txt).font({ size: 22})
+        damageText.text(txt).font({ size: 22}).attr({fill: txtColor})
                   .center(center_x, center_y).opacity(1).front();
-        damageText.animate({duration: '1s'}).opacity(0);
+        damageText.animate({duration: '2s'}).opacity(0);
 
         this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, playerId, famIndex);
     }

@@ -1965,6 +1965,20 @@ var SkillDatabase = {
         desc: "Allows a random ally to perform an extra action during the next turn."
     },
 
+    482 : {
+        name: "Souldrain Fangs", type: 2, func: 36, calc: 3, 
+        arg1: 1.75, arg2: 0.2, arg3: 27, arg4: 21, 
+        range: 7, prob: 30, ward: 1,
+        desc: "Drains HP from up to three foes while dealing heavy AGI-based damage."
+    },
+
+    483 : {
+        name: "Spearhead", type: 1, func: 19, calc: 0, 
+        arg1: 0, arg2: 7, arg3: 0.4, arg4: 1, arg5: 1,
+        range: 7, prob: 70,
+        desc: "Chance to blind up to three foes at start of battle."
+    },
+
     484: {
         name: "Wall of the Brave", type: 5, func: 12, calc: 0,
         arg1: 0, 

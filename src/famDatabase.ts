@@ -1463,6 +1463,12 @@ var famDatabase = {
         img: "img4$1/__cb20131221031407/$2/7/79/Ruprecht_the_Punisher_II_Figure.png",
         fullName: "Ruprecht the Punisher II"
     },
+    11295: {
+        name: "Ryaum", stats: [19454, 13561, 17667, 11221, 17602],
+        skills: [482, 483],
+        img: "img2$1/__cb20140613080813/$2/3/37/Ryaum%2C_Hussar_Captain_II_Figure.png",
+        fullName: "Ryaum, Hussar Captain II"
+    },
     11063: {
         name: "Treant", stats: [18566, 17017, 22542, 13626, 8014],
         skills: [154],

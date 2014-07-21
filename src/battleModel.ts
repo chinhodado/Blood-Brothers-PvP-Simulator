@@ -673,10 +673,11 @@ class BattleModel {
      *
      * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
      */
-    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any, scaledRatio?: number): boolean {
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any, scaledRatio?: number) {
         // now check if someone on the enemy side can protect before the damage is dealt
         var enemyCards = this.cardManager.getEnemyCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
+        var toReturn: any = {}; // data that we will return
         for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
             if (enemyCards[i].isDead) {
                 continue;
@@ -702,7 +703,7 @@ class BattleModel {
 
                 if (protectSkill.willBeExecuted(protectData)) {
                     protectSkillActivated = true;
-                    protectSkill.execute(protectData);
+                    toReturn = protectSkill.execute(protectData);
                 }
             }
             else {
@@ -710,7 +711,8 @@ class BattleModel {
                 continue;
             }
         }
-        return protectSkillActivated;
+        toReturn.activated = protectSkillActivated
+        return toReturn;
     }
 
     performOpeningSkills () {
