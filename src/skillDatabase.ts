@@ -679,6 +679,13 @@ var SkillDatabase = {
         desc: "Deal damage and sometimes freeze six random foes."
     },
 
+    169 : {
+        name: "Silent Cheer", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 8,
+        range: 2, prob: 70,
+        desc: "Raise the skill trigger rate of adjacent familiars."
+    },
+
     170 : {
         name: "War Dance", type: 2, func: 4, calc: 3,
         arg1: 1.5,

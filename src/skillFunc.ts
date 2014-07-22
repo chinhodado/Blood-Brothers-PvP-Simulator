@@ -101,10 +101,10 @@ class BuffSkillLogic extends SkillLogic {
                 var statusType = statusToBuff[j];
 
                 switch (statusType) {
-                    case ENUM.StatusType.ATK :
-                    case ENUM.StatusType.DEF :
-                    case ENUM.StatusType.WIS :
-                    case ENUM.StatusType.AGI :
+                    case ENUM.StatusType.ATK:
+                    case ENUM.StatusType.DEF:
+                    case ENUM.StatusType.WIS:
+                    case ENUM.StatusType.AGI:
                         var skillMod = skill.skillFuncArg1;
 
                         if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
@@ -117,9 +117,10 @@ class BuffSkillLogic extends SkillLogic {
 
                         var buffAmount = Math.round(skillMod * baseStat);
                         break;
-                    case ENUM.StatusType.ATTACK_RESISTANCE :
-                    case ENUM.StatusType.MAGIC_RESISTANCE :
-                    case ENUM.StatusType.BREATH_RESISTANCE :
+                    case ENUM.StatusType.ATTACK_RESISTANCE:
+                    case ENUM.StatusType.MAGIC_RESISTANCE:
+                    case ENUM.StatusType.BREATH_RESISTANCE:
+                    case ENUM.StatusType.SKILL_PROBABILITY:
                     case ENUM.StatusType.WILL_ATTACK_AGAIN:
                     case ENUM.StatusType.ACTION_ON_DEATH:
                         var buffAmount = skill.skillFuncArg1;

@@ -1521,6 +1521,12 @@ var famDatabase = {
         img: "img3$1/__cb20131228021319/$2/d/d5/Scirocco%2C_Father_of_Winds_II_Figure.png",
         fullName: "Scirocco, Father of Winds II"
     },
+    10626: {
+        name: "Marid", stats: [14070, 17851, 14449, 12597, 15478],
+        skills: [169],
+        img: "img2$1/__cb20130414020555/$2/e/ed/Scorching_Marid_II_Figure.png",
+        fullName: "Scorching Marid II"
+    },
     11036: {
         name: "Sea Serpent", stats: [16020, 12012, 15121, 19259, 17103],
         skills: [302],

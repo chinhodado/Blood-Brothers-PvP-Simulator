@@ -167,7 +167,7 @@ class BattleLogger {
             for (var f = 0; f < 5; f++) { // for each card
                 var stats = playerCards[f].stats;
                 var originalStats = playerCards[f].originalStats;
-                var status = playerCards[f].status;
+                var status: Status = playerCards[f].status;
                 var afflict = playerCards[f].affliction; // not the same thing as in the original card class
 
                 var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
@@ -201,6 +201,10 @@ class BattleLogger {
 
                 if (status.willAttackAgain != 0) {
                     infoText.willAttackAgain = "Extra action: Yes";
+                }
+
+                if (status.skillProbability != 0) {
+                    infoText.skillProbability = "Extra prob.: " + status.skillProbability;
                 }
 
                 if (afflict) {
@@ -249,6 +253,9 @@ class BattleLogger {
                             else if (tempEvent.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
                                 infoText.willAttackAgain = this.decorateText(infoText.willAttackAgain, false);
                             }
+                            else if (tempEvent.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
+                                infoText.skillProbability = this.decorateText(infoText.skillProbability, false);
+                            }
                         }
                         else if (tempEvent.type == ENUM.MinorEventType.AFFLICTION) {
                             if (!tempEvent.affliction.isFinished) {
@@ -272,6 +279,7 @@ class BattleLogger {
                                     (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
                                     (infoText.willAttackAgain? ( "<br>" + infoText.willAttackAgain) : "") +
+                                    (infoText.skillProbability? ( "<br>" + infoText.skillProbability) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
 
                 // display last event's HP

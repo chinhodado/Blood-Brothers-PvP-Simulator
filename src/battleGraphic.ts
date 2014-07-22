@@ -616,6 +616,9 @@ class BattleGraphic {
                     else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
                         displayText = "Revive On"; // for now
                     }
+                    else if (data.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
+                        displayText = "Prob. Up";
+                    }
                     else {
                         // for stats buff, this does not really use the log
                         var upDownText = data.amount < 0? " Down" : " Up";
