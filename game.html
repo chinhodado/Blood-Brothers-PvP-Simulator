@@ -37,6 +37,7 @@
             overflow: auto;
             font-family: "Consolas";
             font-size: 12px;
+            position: relative;
         }
         .midCol {
             width: 400px;
@@ -89,6 +90,12 @@
             background-color: #dddddd;
         }
 
+        #githubDiv {
+            position:absolute; 
+            bottom: 60px;
+            padding-right: 30px;
+        }
+
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
@@ -115,6 +122,11 @@
                 Refresh this page to view another battle <span id="refreshText"></span>.<br /><br />
                 Click <a href="setting.html">here</a> to return to the main page.
             </div>
+        </div>
+
+        <div id="githubDiv">
+            Like this? <a href="https://github.com/chinhodado/bb_pvp_simulator">Star</a> it on Github <br />
+            Has suggestions or bug reports? <a href="https://github.com/chinhodado/bb_pvp_simulator/issues?state=open">Create</a> a new issue
         </div>
     </div>
 
