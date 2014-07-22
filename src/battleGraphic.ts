@@ -541,7 +541,7 @@ class BattleGraphic {
      * 
      * noAttackAnim: don't display attack anim anymore (for AoE)
      */
-    displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; callback?} = {}) {
+    displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean;callback?} = {}) {
         var minorLog = this.logger.minorEventLog;
         var majorLog = this.logger.majorEventLog;
 
@@ -828,16 +828,21 @@ class BattleGraphic {
             if (data.executorId === majorLog[majorIndex].executorId && data.skillId === majorLog[majorIndex].skillId) {
                 var aoeTargets = this.logger.getTargetsInMajorEvent(majorIndex);
             }
-            else { //hacky, for slagh
+            else { //hacky, for nested AoE (slagh, phantom ass, fate)
                 var aoeTargets = this.logger.getNestedTargetsInMajorEvent(majorIndex, minorIndex);
                 var isNested = true;
             }
+
+            if ((isNested && option.noNestedAttackAnim) || (!isNested && option.noAttackAnim)) {
+                var noAttackAnim = true;
+            }
+
             for (var i = 0; i < aoeTargets.length; i++) {
                 var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
                 exploSet.push(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
             }
 
-            if (option.noAttackAnim && !isNested) {
+            if (noAttackAnim) {
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
@@ -853,7 +858,13 @@ class BattleGraphic {
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
-                option.noAttackAnim = true;
+
+                if (!isNested) {
+                    option.noAttackAnim = true;
+                }
+                else {
+                    option.noNestedAttackAnim = true;
+                }
 
                 function getCallback(graphic, majorIndex, minorIndex, option, target, procEffect, exploSet) {
                     return function() {
