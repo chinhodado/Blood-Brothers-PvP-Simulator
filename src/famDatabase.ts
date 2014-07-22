@@ -157,6 +157,13 @@ var famDatabase = {
         img: "img3$1/__cb20140520122105/$2/d/da/Arcanan_Chariot_II_Figure.png",
         fullName: "Arcanan Chariot II"
     },
+    21300: {
+        name: "Fate", stats: [20706, 17848, 13181, 18794, 17522],
+        skills: [475],
+        autoAttack: 10007,
+        img: "img3$1/__cb20140606074954/$2/e/ee/Arcanan_Circle_of_Fate_Figure.png",
+        fullName: "Arcanan Circle of Fate"
+    },
     11335: {
         name: "Arcanan Daemon", stats: [18252, 20700, 12510, 13117, 15023],
         skills: [509, 510],
@@ -1084,6 +1091,13 @@ var famDatabase = {
         img: "img4$1/__cb20140521080600/$2/2/2b/Managarmr%2C_the_Frost_Moon_II_Figure.png",
         fullName: "Managarmr, the Frost Moon II"
     },
+    11319: {
+        name: "Manannan", stats: [16551, 10668, 16464, 19227, 16605],
+        skills: [513, 514],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140715092527/$2/a/a4/Manannan_mac_Lir_II_Figure.png",
+        fullName: "Manannan mac Lir II"
+    },
     10792: {
         name: "Marchosias", stats: [18165, 15424, 12781, 18566, 13561],
         skills: [210],
@@ -1366,6 +1380,12 @@ var famDatabase = {
         img: "img1$1/__cb20131025125352/$2/f/fb/Phantasmal_Succubus_II_Figure.png",
         fullName: "Phantasmal Succubus II"
     },
+    10710: {
+        name: "Phantom Assassin", stats: [13507, 13951, 11102, 14341, 14081],
+        skills: [193],
+        img: "img1$1/__cb20130605201800/$2/1/10/Phantom_Assassin_II_Figure.png",
+        fullName: "Phantom Assassin II"
+    },
     11022: {
         name: "Phantom Knight", stats: [19877, 23213, 19270, 19682, 18057],
         skills: [267],
@@ -1524,6 +1544,13 @@ var famDatabase = {
         skills: [327],
         img: "img4$1/__cb20131221031323/$2/0/03/Selk%2C_Desert_King_II_Figure.png",
         fullName: "Selk, Desert King II"
+    },
+    11321: {
+        name: "Selkie", stats: [15803, 8442, 14049, 16024, 13586],
+        skills: [515, 516],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140715092434/$2/3/31/Selkie%2C_Lady_of_the_Shore_II_Figure.png",
+        fullName: "Selkie, Lady of the Shore II"
     },
     11290: {
         name: "Set", stats: [13097, 16364, 10990, 10001, 17133],

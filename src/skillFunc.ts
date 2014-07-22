@@ -34,6 +34,8 @@
                 return new ReviveSkillLogic();
             case ENUM.SkillFunc.TURN_ORDER_CHANGE:
                 return new TurnOrderChangeSkillLogic();
+            case ENUM.SkillFunc.RANDOM:
+                return new RandomSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -54,12 +56,19 @@ class SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
         var deadCond = (data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
-                       (!data.executor.isDead && data.skill.skillType !== ENUM.SkillType.ACTION_ON_DEATH)
+                       (!data.executor.isDead && data.skill.skillType !== ENUM.SkillType.ACTION_ON_DEATH);
+
+        if (data.noProbCheck) {
+            var probCond: boolean = true;
+        }
+        else {
+            probCond = (Math.random() * 100) <= (data.skill.maxProbability + data.executor.status.skillProbability * 100);
+        }
 
         return (deadCond && 
             data.executor.canAttack() && // if cannot attack -> cannot use skill, so the same. If can attack, true, doesn't matter
             data.executor.canUseSkill() && 
-            Math.random() * 100 < data.skill.maxProbability);
+            probCond);
     }
 
     execute(data: SkillLogicData) {
@@ -814,6 +823,31 @@ class TurnOrderChangeSkillLogic extends SkillLogic {
     }
 }
 
+class RandomSkillLogic extends SkillLogic {
+    execute(data: SkillLogicData) {
+        var randSkillsId: number[] = SkillDatabase[data.skill.id].randSkills;
+        shuffle(randSkillsId);
+        data.noProbCheck = true;
+
+        for (var i = 0; i < randSkillsId.length; i++) {
+            var skill = new Skill(randSkillsId[i]);
+            data.skill = skill;
+
+            if (skill.willBeExecuted(data)) {
+                this.logger.addMinorEvent({
+                    executorId: data.executor.id, 
+                    type: ENUM.MinorEventType.DESCRIPTION,
+                    description: data.executor.name + " procs " + data.skill.name + ". ",
+                    skillId: data.skill.id
+                });
+
+                skill.execute(data);
+                break;
+            }
+        }
+    }
+}
+
 interface SkillLogicData {
     executor: Card;
     skill?: Skill;
@@ -823,4 +857,5 @@ interface SkillLogicData {
     attackSkill?: Skill // for protect/counter
     targetCard?: Card;  // for protect
     targetsAttacked?: any;  // for protect
+    noProbCheck?: boolean; // for passing the prob check of proccing the skill, like for RandomSkillLogic
 }

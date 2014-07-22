@@ -76,6 +76,20 @@ var SkillDatabase = {
         range: 8, prob: 70,
         desc: "Remove the buffs of all foes."
     },
+
+    20 : {
+        name: "Recall", type: 2, func: 6, calc: 0,
+        arg1: 1,
+        range: 1, prob: 30,
+        desc: "Revive an adjacent familiar."
+    },
+
+    21 : {
+        name: "Elixir of Recall", type: 2, func: 6, calc: 0,
+        arg1: 1,
+        range: 1, prob: 30,
+        desc: "Revive an adjacent familiar."
+    },
     
     23 : {
         name: "Breath of Flame", type: 2, func: 4, calc: 2, 
@@ -96,6 +110,20 @@ var SkillDatabase = {
         arg1: 1, 
         range: 2, prob: 30,
         desc: "Restore a fixed amount of HP to adjacent familiars."
+    },
+
+    28 : {
+        name: "Envenom", type: 2, func: 4, calc: 2, 
+        arg1: 1, arg2: 1, arg3: 1,
+        range: 5, prob: 30, ward: 2,
+        desc: "Deal damage and poison one foe."
+    },
+
+    29 : {
+        name: "Bind", type: 2, func: 4, calc: 2, 
+        arg1: 1, arg2: 2, arg3: 0.3,
+        range: 5, prob: 30, ward: 2,
+        desc: "Deal damage and sometimes paralyze one foe."
     },
 
     33 : {
@@ -133,11 +161,32 @@ var SkillDatabase = {
         desc: "Deal heavy damage to one foe."
     },
 
+    41 : {
+        name: "Blizzard", type: 2, func: 4, calc: 2, 
+        arg1: 1, arg2: 3, arg3: 0.3,
+        range: 7, prob: 30, ward: 2,
+        desc: "Deal damage and sometimes freeze three foes."
+    },
+
+    42 : {
+        name: "Thunderstorm", type: 2, func: 4, calc: 2, 
+        arg1: 0.7,  
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal damage to all foes."
+    },
+
     43 : {
         name: "Windlash", type: 2, func: 3, calc: 3, 
         arg1: 1,  
         range: 16, prob: 30, ward: 1,
         desc: "Deal AGI-based damage to multiple foes."
+    },
+
+    45 : {
+        name: "Intense Assault", type: 2, func: 3, calc: 1, 
+        arg1: 3,  
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal very heavy damage to one foe."
     },
 
     46 : {
@@ -152,6 +201,48 @@ var SkillDatabase = {
         arg1: 2,  
         range: 12, prob: 30, ward: 2,
         desc: "Deal heavy damage to all foes in the front line."
+    },
+
+    48 : {
+        name: "Impale", type: 2, func: 4, calc: 1, 
+        arg1: 1,  
+        range: 6, prob: 30, ward: 1,
+        desc: "Deal damage to two foes, regardless of his position."
+    },
+
+    50 : {
+        name: "Focused Assault", type: 2, func: 3, calc: 1, 
+        arg1: 2,  
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal heavy damage to one foe."
+    },
+
+    51 : {
+        name: "Skirmish", type: 2, func: 3, calc: 1, 
+        arg1: 1,  
+        range: 6, prob: 30, ward: 1,
+        desc: "Attack two foes."
+    },
+
+    52 : {
+        name: "Dervish", type: 2, func: 3, calc: 3, 
+        arg1: 2,  
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to one foe."
+    },
+
+    54 : {
+        name: "Foul Fang", type: 2, func: 3, calc: 1, 
+        arg1: 1, arg2: 1, arg3: 1,
+        range: 5, prob: 30, ward: 1,
+        desc: "Poison one foe."
+    },
+
+    55 : {
+        name: "Embrace", type: 2, func: 3, calc: 1, 
+        arg1: 0.5, arg2: 4, arg3: 1,
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal damage and disable one foe for one turn."
     },
 
     60: {
@@ -187,6 +278,20 @@ var SkillDatabase = {
         arg1: 1, 
         range: 1, prob: 50, ward: 1,
         desc: "Counterattack after receiving an attack."
+    },
+
+    69: {
+        name: "Lightning Bolt", type: 2, func: 4, calc: 2,
+        arg1: 3, 
+        range: 5, prob: 30, ward: 2,
+        desc: "Deal heavy damage to one foe."
+    },
+
+    70: {
+        name: "Wind Cutter", type: 2, func: 4, calc: 2,
+        arg1: 3, 
+        range: 5, prob: 30, ward: 2,
+        desc: "Deal heavy damage to one foe."
     },
 
     71: {
@@ -301,6 +406,13 @@ var SkillDatabase = {
         desc: "Raise WIS and DEF of all party members."
     },
 
+    121 : {
+        name: "Charge", type: 2, func: 4, calc: 1,
+        arg1: 1.2,
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to three foes, regardless of his position."
+    },
+
     122 : {
         name: "Frontal Onslaught", type: 2, func: 3, calc: 1,
         arg1: 1.5, 
@@ -329,11 +441,25 @@ var SkillDatabase = {
         desc: "Take damage in place of any ally and counter."
     },
 
+    127: {
+        name: "Poison Fang", type: 2, func: 4, calc: 2,
+        arg1: 1, arg2: 1, arg3: 0.3,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal damage and sometimes poison three random targets."
+    },
+
     128: {
         name: "Whiteout", type: 2, func: 4, calc: 2,
         arg1: 2.3, arg2: 3, arg3: 0.3,
         range: 7, prob: 30, ward: 2,
         desc: "Deal heavy damage and sometimes freeze three foes."
+    },
+
+    129: {
+        name: "Fire Whirlwind", type: 2, func: 4, calc: 2,
+        arg1: 1,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal damage to three foes."
     },
 
     131: {
@@ -385,6 +511,13 @@ var SkillDatabase = {
         desc: "Deal physical damage to two random targets."
     },
 
+    140 : {
+        name: "Numbing Touch", type: 2, func: 3, calc: 1, 
+        arg1: 1, arg2: 2, arg3: 0.7,   
+        range: 5, prob: 70, ward: 1,
+        desc: "Cause attacks to have a high chance to paralyze foes."
+    },
+
     141 : {
         name: "Burning Rage", type: 2, func: 4, calc: 2,
         arg1: 0.9, 
@@ -420,6 +553,20 @@ var SkillDatabase = {
 	    desc: "Chance to silence all foes at beginning of battle." 
 	},
 
+    147 : {
+	    name: "Spirit Curse", type: 2, func: 4, calc: 2,  
+	    arg1: 1, arg2: 4, arg3: 0.3,
+        range: 16, prob: 30, ward: 2,
+	    desc: "Deal damage and sometimes disable three random foes." 
+	},
+
+    148 : {
+	    name: "Windblast", type: 2, func: 22, calc: 2,  
+	    arg1: 1.5, arg2: 4, arg3: 0.3, arg4: 0.2,
+        range: 16, prob: 30, ward: 2,
+	    desc: "Deal damage and sometimes lower AGI of three foes." 
+	},
+
     149 : {
         name: "Spiteful Strike", type: 2, func: 21, calc: 1, 
         arg1: 1, arg2: 2, arg3: 0.3, arg4: 0.2, 
@@ -439,6 +586,13 @@ var SkillDatabase = {
 	    arg1: 1.7,   
         range: 7, prob: 30, ward: 1,
 	    desc: "Deal heavy damage to three foes with a mighty swing." 
+	},
+
+    153 : {
+	    name: "Onfall", type: 2, func: 4, calc: 1,  
+	    arg1: 4,   
+        range: 5, prob: 30, ward: 1,
+	    desc: "Deal massive damage with dual blades to one foe." 
 	},
 
     154: {
@@ -532,6 +686,13 @@ var SkillDatabase = {
         desc: "Deal heavy AGI-based damage to foes in front and middle."
     },
 
+    175 : {
+        name: "Lifesaver", type: 2, func: 18, calc: 4,
+        arg1: 2,
+        range: 2, prob: 30,
+        desc: "Restore a large amount of health to adjacent allies."
+    },
+
     177 : {
         name: "Divine Shield", type: 1, func: 1, calc: 0,
         arg1: 0.65, arg2: 5, 
@@ -567,6 +728,29 @@ var SkillDatabase = {
         desc: "Deal massive damage and sometimes paralyze two foes."
     },
 
+    187: {
+        name: "Mega Shot", type: 2, func: 4, calc: 1,
+        arg1: 4,
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to one foe, regardless of position."
+    },
+
+    188: {
+        name: "Shatter Armor", type: 2, func: 21, calc: 1,
+        arg1: 3, arg2: 2, arg3: 0.3, arg4: 0.3,
+        range: 5, prob: 30, ward: 1,
+        desc: "Deal a heavy blow to one foe, sometimes lowering DEF."
+    },
+
+    193 : {
+        name: "Angler", type: 2, func: 24, calc: 0, 
+        range: 21, prob: 50,
+        randSkills: [10, 11, 16, 18, 19, 20, 21, 26, 27, 28, 29, 34, 38, 39, 41, 42, 43, 45, 46, 47, 48, 50, 
+            51, 52, 54, 55, 69, 70, 108, 110, 111, 113, 114, 115, 116, 117, 118, 119, 121, 122, 123, 124, 127,
+            129, 131, 137, 138, 139, 140, 144, 145, 147, 148, 149, 152, 153, 155, 156, 160, 161, 163, 175, 187, 188, 197, 198, 206],
+        desc: "Not even its user knows what this skill will do."
+    },
+
     195 : {
         name: "Warrior's Wrath", type: 2, func: 3, calc: 1, 
         arg1: 2,  
@@ -586,6 +770,13 @@ var SkillDatabase = {
         arg1: 1.5,  
         range: 4, prob: 30,
         desc: "Restore HP to all party members."
+    },
+
+    198 : {
+        name: "Flame Rasp", type: 2, func: 4, calc: 2, 
+        arg1: 1.3,  
+        range: 7, prob: 30, ward: 2,
+        desc: "Deal heavy damage to up to three foes."
     },
 
     199 : {
@@ -621,6 +812,13 @@ var SkillDatabase = {
         arg1: 1, arg2: 3, arg3: 0.3, 
         range: 8, prob: 30, ward: 1,
         desc: "Deal physical damage and sometimes freeze all foes"
+    },
+
+    206 : {
+        name: "Dance of Petals", type: 2, func: 4, calc: 3, 
+        arg1: 1,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to three random foes, regardless of position."
     },
 
     210 : {
@@ -1937,6 +2135,14 @@ var SkillDatabase = {
         desc: "Reduce physical damage taken by self and adjacent familiars."
     },
 
+    475 : {
+        name: "Hand of Fortune", type: 2, func: 24, calc: 0,
+        randSkills: [11, 16, 20, 26, 33, 34, 109, 110, 114, 116, 138, 145, 232, 264, 274, 277, 287,
+            296, 319, 331, 345, 346, 354, 378, 426, 431, 462, 99007],
+        range: 21, prob: 50,
+        desc: "The outcome of this skill depends on the user's Fortune."
+    },
+
     476 : {
         name: "Furious Horns", type: 2, func: 4, calc: 2, 
         arg1: 2,  
@@ -2166,6 +2372,34 @@ var SkillDatabase = {
         arg1: 2.1,
         range: 6, prob: 30, ward: 1,
         desc: "Deal massive ATK-based damage to up to two foes, ignoring position."
+    },
+
+    513: {
+        name: "Goblet of Truth", type: 1, func: 19, calc: 0,
+        arg1: 0, arg2: 5, arg3: 0.3, arg4: 1,
+        range: 8, prob: 70,
+        desc: "Chance to silence all foes for one turn at the start of battle."
+    },
+
+    514: {
+        name: "Fragarach", type: 2, func: 4, calc: 2,
+        arg1: 1.95,
+        range: 313, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to up to three foes, ignoring position. Increased if fewer foes."
+    },
+
+    515: {
+        name: "The Sea's Favor", type: 2, func: 37, calc: 2,
+        arg1: 2.85, arg2: 0.4, arg3: 27, arg4: 21,
+        range: 6, prob: 30, ward: 2,
+        desc: "Drains HP from up to two foes while dealing massive WIS-based damage, ignoring position."
+    },
+
+    516: {
+        name: "Enthrall", type: 1, func: 19, calc: 0,
+        arg1: 0, arg2: 3, arg3: 0.15,
+        range: 7, prob: 70,
+        desc: "Chance to freeze up to three foes at start of battle."
     },
 
     518: {

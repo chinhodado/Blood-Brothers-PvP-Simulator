@@ -120,7 +120,8 @@ class Skill {
             skillInfo.func == ENUM.SkillFunc.AFFLICTION ||
             skillInfo.func == ENUM.SkillFunc.BUFF ||
             skillInfo.func == ENUM.SkillFunc.DEBUFF ||
-            skillInfo.func == ENUM.SkillFunc.MAGIC)
+            skillInfo.func == ENUM.SkillFunc.MAGIC ||
+            skillInfo.func == ENUM.SkillFunc.DRAIN_MAGIC)
         {
             isMagicSkill = true;    
         }
