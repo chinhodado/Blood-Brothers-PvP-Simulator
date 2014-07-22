@@ -1,5 +1,7 @@
 class Skill {
 
+    static availableSkillsForSelect: number[] = null;
+
     id: number;
     name: string;
     skillType: number;
@@ -139,6 +141,31 @@ class Skill {
         }
 
         return isAoe;
+    }
+
+    static isAvailableForSelect(skillId: number): boolean {
+        var isAvailable = true;
+        var skillInfo = SkillDatabase[skillId];
+
+        if (skillInfo.isAutoAttack || skillId == 355 || skillId == 452) {
+            isAvailable = false;
+        }
+
+        return isAvailable;
+    }
+
+    static getAvailableSkillsForSelect(): number[] {
+
+        if (this.availableSkillsForSelect == null) {
+            this.availableSkillsForSelect = [];
+            for (var key in SkillDatabase) {
+                if (this.isAvailableForSelect(key)) {
+                    this.availableSkillsForSelect.push(key);
+                }                
+            }
+        }
+
+        return this.availableSkillsForSelect;
     }
 
     // get the list of stats status modified by the skill

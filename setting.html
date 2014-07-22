@@ -111,12 +111,7 @@
             var skillSelects = document.getElementsByClassName("skillSelect");
 
             // create an array of skill id and sort it based on the skill's name
-            var skillIdArray = [];
-            for (var key in SkillDatabase) {
-                if (!SkillDatabase[key].isAutoAttack) {
-                    skillIdArray.push(key);
-                }                
-            }
+            var skillIdArray = Skill.getAvailableSkillsForSelect();
             skillIdArray.sort(function (a, b) {
                 return SkillDatabase[a].name.localeCompare(SkillDatabase[b].name);
             });

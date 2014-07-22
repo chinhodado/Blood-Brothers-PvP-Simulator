@@ -78,6 +78,8 @@ class BattleModel {
         var player2cardsInfo = [];
         var player1warlordSkillArray: number[] = [];
         var player2warlordSkillArray: number[] = [];
+
+        var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
         
         if (option.p1random) {
             this.p1Random = true;
@@ -87,7 +89,7 @@ class BattleModel {
             }
 
             for (var i = 0; i < 3; i++) {
-                player1warlordSkillArray.push(+pickRandomProperty(SkillDatabase));
+                player1warlordSkillArray.push(+getRandomElement(availableSkills));
             }
         }
         else {
@@ -104,7 +106,7 @@ class BattleModel {
             }
 
             for (var i = 0; i < 3; i++) {
-                player2warlordSkillArray.push(+pickRandomProperty(SkillDatabase));
+                player2warlordSkillArray.push(+getRandomElement(availableSkills));
             }
         }
         else {
