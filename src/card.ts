@@ -20,6 +20,7 @@ class Card {
     player: Player;
     formationColumn: number; // 0 to 4
     formationRow: ENUM.FormationRow; // 1, 2 or 3
+    procIndex: number;
 
     skills: Skill[];
     autoAttack: Skill;
@@ -50,6 +51,7 @@ class Card {
         this.player = player; // 1: me, 2: opponent
         this.formationColumn = formationColumn;
         this.formationRow = player.formation.getCardRow(formationColumn);
+        this.procIndex = Formation.getProcIndex(this.formationRow, this.formationColumn, BattleModel.getInstance().procOrderType);
 
         this.skills = skills;
 
@@ -99,7 +101,8 @@ class Card {
                      
             player: this.player,
             formationColumn: this.formationColumn,
-            formationRow : this.formationRow,
+            formationRow: this.formationRow,
+            procIndex: this.procIndex,
 
             skills: getSerializableObjectArray(this.skills),
             autoAttack: this.autoAttack.getSerializableObject(),

@@ -47,6 +47,20 @@ class CardManager {
         var sortFunc = this.getSortFunc(BattleModel.getInstance().turnOrderBase);
         BattleModel.getInstance().allCards.sort(sortFunc);
     }
+
+    getPlayerCardsByProcOrder(player: Player) {
+        var playerCards = this.getPlayerCards(player);
+        var copy = [];
+        for (var i = 0; i < playerCards.length; i++) {
+            copy.push(playerCards[i]);
+        }
+
+        copy.sort(function (a: Card, b: Card) {
+            return a.procIndex - b.procIndex; // ascending based on proc index
+        });
+
+        return copy;
+    }
     
     /**
      * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost 

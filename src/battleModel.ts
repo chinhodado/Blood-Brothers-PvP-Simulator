@@ -20,8 +20,9 @@ class BattleModel {
     static IS_MASS_SIMULATION = false;
     p1Random: boolean;
     p2Random: boolean;
+    procOrderType: ENUM.ProcOrderType = ENUM.ProcOrderType.ANDROID;
 
-    logger : BattleLogger;
+    logger: BattleLogger;
     cardManager: CardManager;
     
     player1: Player;
@@ -30,8 +31,8 @@ class BattleModel {
     playerWon: Player = null;
     
     // the two players' cards. The order of the cards in these two arrays should never be changed
-    player1Cards : Card[];
-    player2Cards : Card[];
+    player1Cards: Card[];
+    player2Cards: Card[];
     
     // contains all cards in play. Should be re-sorted every turn
     allCards: Card[];
@@ -48,14 +49,14 @@ class BattleModel {
     turnOrderChanged: boolean = false;
     
     // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
-    currentPlayer : Player;
-    oppositePlayer : Player;
-    currentPlayerCards : Card[];
-    oppositePlayerCards : Card[];
+    currentPlayer: Player;
+    oppositePlayer: Player;
+    currentPlayerCards: Card[];
+    oppositePlayerCards: Card[];
     
-    private static _instance : BattleModel = null;
+    private static _instance: BattleModel = null;
 
-    public static getInstance() : BattleModel {
+    public static getInstance(): BattleModel {
         if (BattleModel._instance === null) {
             throw new Error("Error: you should not make this object this way");
         }
@@ -71,6 +72,8 @@ class BattleModel {
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
         var graphic = new BattleGraphic();
+
+        this.procOrderType = option.procOrder;
         
         var player1formation: any;
         var player2formation: any;
@@ -718,17 +721,21 @@ class BattleModel {
     }
 
     performOpeningSkills () {
-        for (var i = 0; i < this.player1Cards.length; i++) {
-            var skill1 = this.player1Cards[i].getRandomOpeningSkill();
+        // the cards sorted by proc order
+        var p1cards = this.cardManager.getPlayerCardsByProcOrder(this.player1);
+        var p2cards = this.cardManager.getPlayerCardsByProcOrder(this.player2);
+
+        for (var i = 0; i < p1cards.length; i++) {
+            var skill1 = p1cards[i].getRandomOpeningSkill();
             if (skill1) {
                 var data: SkillLogicData = {
-                    executor: this.player1Cards[i],
+                    executor: p1cards[i],
                     skill: skill1
                 }
                 if (skill1.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
-                        description: this.player1Cards[i].name + " procs " + skill1.name,
-                        executorId: this.player1Cards[i].id,
+                        description: p1cards[i].name + " procs " + skill1.name,
+                        executorId: p1cards[i].id,
                         skillId: skill1.id
                     });
                     skill1.execute(data);
@@ -736,17 +743,17 @@ class BattleModel {
             }
         }
         
-        for (var i = 0; i < this.player2Cards.length; i++) {
-            var skill2 = this.player2Cards[i].getRandomOpeningSkill();
+        for (var i = 0; i < p2cards.length; i++) {
+            var skill2 = p2cards[i].getRandomOpeningSkill();
             if (skill2) {
                 var data: SkillLogicData = {
-                    executor: this.player2Cards[i],
+                    executor: p2cards[i],
                     skill: skill2
                 }
                 if (skill2.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
-                        description: this.player2Cards[i].name + " procs " + skill2.name,
-                        executorId: this.player2Cards[i].id,
+                        description: p2cards[i].name + " procs " + skill2.name,
+                        executorId: p2cards[i].id,
                         skillId: skill2.id
                     });
                     skill2.execute(data);
@@ -771,4 +778,5 @@ interface GameData {
 interface GameOption {
     p1random?: boolean;
     p2random?: boolean;
+    procOrder?: ENUM.ProcOrderType;
 }

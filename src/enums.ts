@@ -132,6 +132,11 @@ module ENUM {
         PINCER_5 = 9
     }
 
+    export enum ProcOrderType {
+        ANDROID = 1, 
+        IOS     = 2
+    }
+
     export enum MinorEventType {
         HP = 1,
         STATUS = 2,
