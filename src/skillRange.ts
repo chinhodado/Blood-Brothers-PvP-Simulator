@@ -230,7 +230,7 @@ class BaseRange {
     }
 
     getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
-        var allCards = CardManager.getInstance().getAllCards();
+        var allCards = CardManager.getInstance().getAllCardsInPlayerOrder();
         var baseTargets = [];
         for (var i = 0; i < allCards.length; i++) {
             if (condFunc(allCards[i])) {

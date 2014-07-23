@@ -209,8 +209,19 @@ class CardManager {
         return card1.id == card2.id;
     }
 
+    /**
+     * Use this when the order of the cards are unimportant
+     */
     getAllCards(): Card[] {
         return BattleModel.getInstance().allCards;
+    }
+
+    /**
+     * Use this when the order of the cards are important: player 1 cards -> player 2 cards
+     */
+    getAllCardsInPlayerOrder(): Card[] {
+        var battle = BattleModel.getInstance();
+        return battle.player1Cards.concat(battle.player2Cards);
     }
 
     /**
