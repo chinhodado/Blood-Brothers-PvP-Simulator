@@ -18,8 +18,8 @@ class BattleModel {
 
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
-    p1Random: boolean;
-    p2Random: boolean;
+    p1RandomMode: ENUM.RandomBrigType;
+    p2RandomMode: ENUM.RandomBrigType;
     procOrderType: ENUM.ProcOrderType = ENUM.ProcOrderType.ANDROID;
 
     logger: BattleLogger;
@@ -63,7 +63,7 @@ class BattleModel {
         return BattleModel._instance;
     }
 
-    constructor(data: GameData, option: GameOption = {}) {
+    constructor(data: GameData, option: GameOption = {}, tierListString?) {
     
         if(BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
@@ -84,11 +84,16 @@ class BattleModel {
 
         var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
         
-        if (option.p1random) {
-            this.p1Random = true;
+        if (!tierListString) {
+            var tierListString = sessionStorage["tierList"];
+        }
+
+        if (option.p1RandomMode) {
+            this.p1RandomMode = option.p1RandomMode;
+            var p1randomList = FamiliarDatabase.getRandomFamList(+option.p1RandomMode, tierListString);
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
-                player1cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
+                player1cardsInfo.push(famDatabase[getRandomElement(p1randomList)]);
             }
 
             for (var i = 0; i < 3; i++) {
@@ -101,11 +106,12 @@ class BattleModel {
             player1warlordSkillArray = data.player1warlordSkillArray;
         }
 
-        if (option.p2random) {
-            this.p2Random = true;
+        if (option.p2RandomMode) {
+            this.p2RandomMode = option.p2RandomMode;
+            var p2randomList = FamiliarDatabase.getRandomFamList(+option.p2RandomMode, tierListString);
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 5; i++) {
-                player2cardsInfo.push(famDatabase[pickRandomProperty(famDatabase)]);
+                player2cardsInfo.push(famDatabase[getRandomElement(p2randomList)]);
             }
 
             for (var i = 0; i < 3; i++) {
@@ -776,7 +782,7 @@ interface GameData {
 }
 
 interface GameOption {
-    p1random?: boolean;
-    p2random?: boolean;
+    p1RandomMode?: ENUM.RandomBrigType;
+    p2RandomMode?: ENUM.RandomBrigType;
     procOrder?: ENUM.ProcOrderType;
 }

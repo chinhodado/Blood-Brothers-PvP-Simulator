@@ -8,9 +8,10 @@
 
     <script src="compiled.js"></script>
     <script src="./js/helper.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="js/ga.js"></script>
 </head>
-<body style="width: 100%; text-align: center;">
+<body style="width: 100%; text-align: center;" onload="toogleDisable()">
 <div style="display: inline-block;">
     <h1>Blood Brothers Simulator</h1>
     <form action="game.html" method="GET" onsubmit="return validateForm()" name="mainForm">
@@ -42,8 +43,20 @@
         Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select>
 
         <br /><br />
-        Random <input type="checkbox" name="r2" onchange="toogleDisable(2, this.checked)"/>
-
+        Random <input type="checkbox" name="r2" id="r2" onchange="toogleDisable()"/>
+        Random mode 
+        <select name="2r" id="2r">
+            <option value="1">All</option>
+            <option value="2">Tier X only</option>
+            <option value="3">Tier S+ only</option>
+            <option value="4">Tier S+ and up</option>
+            <option value="5">Tier S only</option>
+            <option value="6">Tier S and up</option>
+            <option value="7">Tier A+ only</option>
+            <option value="8">Tier A+ and up</option>
+            <option value="9">Tier A only</option>
+            <option value="10">Tier A and up</option>
+        </select>
         <br><br><br><br>
 
         <p>Player 1</p>
@@ -73,8 +86,20 @@
         Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select>
 
         <br /><br />
-        Random <input type="checkbox" name="r1"  onchange="toogleDisable(1, this.checked)" />
-
+        Random <input type="checkbox" name="r1" id="r1" onchange="toogleDisable()" />
+        Random mode
+        <select name="1r" id="1r">
+            <option value="1">All</option>
+            <option value="2">Tier X only</option>
+            <option value="3">Tier S+ only</option>
+            <option value="4">Tier S+ and up</option>
+            <option value="5">Tier S only</option>
+            <option value="6">Tier S and up</option>
+            <option value="7">Tier A+ only</option>
+            <option value="8">Tier A+ and up</option>
+            <option value="9">Tier A only</option>
+            <option value="10">Tier A and up</option>
+        </select>
         <br><br>
         Proc order:
         <select name="po">
@@ -117,6 +142,9 @@
                 options[Math.floor(Math.random() * options.length)].selected = true;
             };
         }
+
+        getTierList();
+
     </script>
 </div>
 </body>

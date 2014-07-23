@@ -42,16 +42,31 @@ function setPreviousChoices() {
 }
 
 /**
- * Disable/enable all form items belong to a player
+ * Disable/enable form items belonging to a player based on random chosen or not
  */
-function toogleDisable(player, isSelected) {
-    var elems = document.getElementsByClassName("p" + player);
-    for (var i = 0; i < elems.length; i++) {
+function toogleDisable() {
+    for (var player = 1; player <= 2; player++) {
+        // is the random checkbox checked?
+        var isSelected = document.getElementById("r" + player).checked;
+
+        // fams, skills, formation
+        var elems = document.getElementsByClassName("p" + player);
+        for (var i = 0; i < elems.length; i++) {
+            if (isSelected) {
+                elems[i].disabled = true;
+            }
+            else {
+                elems[i].disabled = false;
+            }
+        }
+
+        // random modes
+        var randomSelect = document.getElementById(player + "r");
         if (isSelected) {
-            elems[i].disabled = true;
+            randomSelect.disabled = false;
         }
         else {
-            elems[i].disabled = false;
+            randomSelect.disabled = true;
         }
     }
 }
@@ -123,19 +138,14 @@ function getBattleDataOption() {
     var data = {}, option = {};
     option.procOrder = getURLParameter("po");
 
-    if (getURLParameter("r1")) {
-        option.p1random = true;
-    }
-
-    if (getURLParameter("r2")) {
-        option.p2random = true;
-    }
+    option.p1RandomMode = getURLParameter("1r");
+    option.p2RandomMode = getURLParameter("2r");
 
     data.player1formation = getURLParameter("1f");
-    if (!option.p1random) localStorage.setItem("1f", data.player1formation);
+    if (!option.p1RandomMode) localStorage.setItem("1f", data.player1formation);
 
     data.player2formation = getURLParameter("2f");
-    if (!option.p2random) localStorage.setItem("2f", data.player2formation);
+    if (!option.p2RandomMode) localStorage.setItem("2f", data.player2formation);
 
     data.player1cardsInfo = [];
     data.player2cardsInfo = [];
@@ -148,8 +158,8 @@ function getBattleDataOption() {
         data.player1cardsInfo.push(famDatabase[f1id]);
         data.player2cardsInfo.push(famDatabase[f2id]);
 
-        if (!option.p1random) localStorage.setItem("f" + i, f1id);
-        if (!option.p2random) localStorage.setItem("f" + (i + 10), f2id);
+        if (!option.p1RandomMode) localStorage.setItem("f" + i, f1id);
+        if (!option.p2RandomMode) localStorage.setItem("f" + (i + 10), f2id);
     }
     for (var i = 0; i < 3; i++) {
         var w1s = getURLParameter("s1" + i);
@@ -157,9 +167,63 @@ function getBattleDataOption() {
         data.player1warlordSkillArray.push(w1s);
         data.player2warlordSkillArray.push(w2s);
 
-        if (!option.p1random) localStorage.setItem("s1" + i, w1s);
-        if (!option.p2random) localStorage.setItem("s2" + i, w2s);
+        if (!option.p1RandomMode) localStorage.setItem("s1" + i, w1s);
+        if (!option.p2RandomMode) localStorage.setItem("s2" + i, w2s);
     }
 
     return [data, option];
+}
+
+// fetch the tier list and cache it
+function getTierList(whatToDoNext) {
+    if (whatToDoNext == "debug") {
+        var callback = "updateTierListThenDebug";
+    }
+    else if (whatToDoNext == "play") {
+        callback = "updateTierListThenPlay";
+    }
+    else if (whatToDoNext == "sim") {
+        callback = "updateTierListThenSim";
+    }
+    else {
+        callback = "updateTierList";
+    }
+
+    if (!sessionStorage.tierList) {
+        console.log("Fetching tier list...");
+        $.ajax({
+            "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
+            "crossDomain": true,
+            "dataType": "jsonp"
+        });
+    }
+    else {
+        if (whatToDoNext == "debug") {
+            playDebug();
+        }
+        else if (whatToDoNext == "play") {
+            playGame();
+        }
+        else if (whatToDoNext == "sim") {
+            playSim();
+        }
+    }
+}
+
+function updateTierList(data) {
+    sessionStorage.tierList = JSON.stringify(data.results);
+}
+
+// kill me now...
+function updateTierListThenPlay(data) {
+    sessionStorage.tierList = JSON.stringify(data.results);
+    playGame();
+}
+function updateTierListThenDebug(data) {
+    sessionStorage.tierList = JSON.stringify(data.results);
+    playDebug();
+}
+function updateTierListThenSim(data) {
+    sessionStorage.tierList = JSON.stringify(data.results);
+    playSim();
 }

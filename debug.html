@@ -125,11 +125,14 @@
     </div>
 
     <script type="text/javascript">
-        var dataOption = getBattleDataOption();
-        var data = dataOption[0], option = dataOption[1];
+        function playDebug() {
+            var dataOption = getBattleDataOption();
+            var data = dataOption[0], option = dataOption[1];
 
-        var newGame = new BattleModel(data, option);
-        newGame.startBattle();
+            var newGame = new BattleModel(data, option);
+            newGame.startBattle();
+        }
+        getTierList("debug");
     </script>
 
     <script>function showCardDetailDialog() { } // dummy</script>

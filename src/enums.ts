@@ -137,6 +137,20 @@ module ENUM {
         IOS     = 2
     }
 
+    export enum RandomBrigType {
+        NONE = 0,
+        ALL = 1, 
+        X_ONLY = 2,
+        SP_ONLY = 3,
+        SP_UP = 4,
+        S_ONLY = 5,
+        S_UP = 6,
+        AP_ONLY = 7,
+        AP_UP = 8,
+        A_ONLY = 9,
+        A_UP = 10
+    }
+
     export enum MinorEventType {
         HP = 1,
         STATUS = 2,

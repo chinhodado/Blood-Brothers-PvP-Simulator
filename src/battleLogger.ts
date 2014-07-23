@@ -295,26 +295,42 @@ class BattleLogger {
     displayInfoText() {
         var cardManager = CardManager.getInstance();
         var battle = BattleModel.getInstance();
-        var p1randTxt = battle.p1Random? "a random" : "";
-        var p2randTxt = battle.p2Random? "a random" : "";
+        var p1randTxt = this.getRandomModeText(+battle.p1RandomMode);
+        var p2randTxt = this.getRandomModeText(+battle.p2RandomMode);
 
         var infoDiv = document.getElementById("infoDiv");
-        infoDiv.innerHTML = "You are watching <br> " + p2randTxt+ "  Player 2 (" + 
-            cardManager.getPlayerBrigString(battle.player2) + ") <br> vs <br> " + 
-            p1randTxt + " Player 1 (" + cardManager.getPlayerBrigString(battle.player1) + ") <br><br>";
+        infoDiv.innerHTML = "You are watching <br><b> " + p2randTxt+ "</b>  Player 2 (" + 
+            cardManager.getPlayerBrigString(battle.player2) + ") <br> vs <br><b> " + 
+            p1randTxt + "</b> Player 1 (" + cardManager.getPlayerBrigString(battle.player1) + ") <br><br>";
 
-        var refreshText = document.getElementById("refreshText");
-        if (battle.p1Random && battle.p2Random) {
-            refreshText.innerHTML = "between two random opponents"
-        }
-        else if (battle.p1Random) {
-            refreshText.innerHTML = "between Player 2 and a random opponent"
-        }
-        else if (battle.p2Random) {
-            refreshText.innerHTML = "between Player 1 and a random opponent"
-        }
-        else {
-            refreshText.innerHTML = "between Player 1 and Player 2"
+        var refreshText = document.getElementById("refreshText");  
+        refreshText.innerHTML = "between " + p1randTxt + " Player 1 and " + p2randTxt + " Player 2";
+    }
+
+    getRandomModeText(type: ENUM.RandomBrigType) {
+        switch (type) {
+            case ENUM.RandomBrigType.ALL:
+                return "a random";
+            case ENUM.RandomBrigType.X_ONLY:
+                return "a random tier X";
+            case ENUM.RandomBrigType.SP_ONLY:
+                return "a random tier S+";
+            case ENUM.RandomBrigType.SP_UP:
+                return "a random tier S+ and up";
+            case ENUM.RandomBrigType.S_ONLY:
+                return "a random tier S";
+            case ENUM.RandomBrigType.S_UP:
+                return "a random tier S and up";
+            case ENUM.RandomBrigType.AP_ONLY:
+                return "a random tier A+";
+            case ENUM.RandomBrigType.AP_UP:
+                return "a random tier A+ and up";
+            case ENUM.RandomBrigType.A_ONLY:
+                return "a random tier A";
+            case ENUM.RandomBrigType.A_UP:
+                return "a random tier A and up";
+            default:
+                return "";
         }
     }
 

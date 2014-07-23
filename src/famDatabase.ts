@@ -1424,7 +1424,7 @@ var famDatabase = {
     },
     11203: {
         name: "Prismatic", stats: [24004, 14438, 20982, 23300, 18024],
-        skills: [99004],
+        skills: [432],
         autoAttack: 10007,
         img: "img4$1/__cb20140423020348/$2/f/fe/Prismatic_Wyvern_Figure.png",
         fullName: "Prismatic Wyvern"
@@ -1583,6 +1583,13 @@ var famDatabase = {
         skills: [99010],
         img: "img4$1/__cb20131108145539/$2/5/53/Sihn%2C_Moonlight_King_II_Figure.png",
         fullName: "Sihn, Moonlight King II"
+    },
+    11207: {
+        name: "Silver Dragon", stats: [19714, 14601, 15067, 16215, 18154],
+        skills: [522, 523],
+        autoAttack: 10024,
+        img: "img4$1/__cb20140723074838/$2/8/8e/Silver_Dragon_II_Figure.png",
+        fullName: "Silver Dragon II"
     },
     11093: {
         name: "Sinbad", stats: [15868, 18154, 14644, 13853, 17006],
@@ -1958,3 +1965,90 @@ var famDatabase = {
         fullName: "Zuniga, Guard Captain II"
     }
 };
+
+// a simple class that acts like a lazy store of different familiar lists
+class FamiliarDatabase {
+    // contains ids of fam in different tiers
+    static tierList = null;
+
+    // contains ids of all fam
+    static allIdList = null;
+
+    static getTierList(tierToGet: string, allTierString: string) {
+        if (!this.tierList) {
+            // parse and make the whole tier list
+            this.tierList = {};
+            var allTierList = JSON.parse(allTierString);
+            var tierArray = ["tierX", "tierS+", "tierS", "tierA+", "tierA", "tierB", "tierC"];
+
+            for (var i = 0; i < tierArray.length; i++) {
+                var tierNameList = [];
+                var tier = tierArray[i];
+
+                for (var j = 0; j < allTierList[tier].length; j++) {
+                    tierNameList.push(allTierList[tier][j].name);
+                }
+
+                this.tierList[tier] = [];
+        
+                for (var key in famDatabase) {
+                    if (famDatabase.hasOwnProperty(key)) {
+                        var name = famDatabase[key].fullName;
+                        if (tierNameList.indexOf(name) != -1) {
+                            this.tierList[tier].push(key);
+                        }
+                    }
+                }
+            }            
+        }
+
+        return this.tierList[tierToGet];    
+    }
+
+    static getAllIdList() {
+        if (!this.allIdList) {
+            this.allIdList = [];
+
+            for (var key in famDatabase) {
+                if (famDatabase.hasOwnProperty(key)) {
+                    this.allIdList.push(key);
+                }
+            }
+        }
+
+        return this.allIdList;
+    }
+
+    static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string) {
+        var tierX = this.getTierList("tierX", allTierString)
+        var    tierSP = this.getTierList("tierS+", allTierString)
+        var    tierS = this.getTierList("tierS", allTierString)
+        var    tierAP = this.getTierList("tierA+", allTierString)
+        var    tierA = this.getTierList("tierA", allTierString)
+
+        switch (type) {
+            case ENUM.RandomBrigType.ALL:
+                return this.getAllIdList();
+            case ENUM.RandomBrigType.X_ONLY:
+                return tierX;
+            case ENUM.RandomBrigType.SP_ONLY:
+                return tierSP;
+            case ENUM.RandomBrigType.SP_UP:
+                return tierSP.concat(tierX);
+            case ENUM.RandomBrigType.S_ONLY:
+                return tierS;
+            case ENUM.RandomBrigType.S_UP:
+                return tierS.concat(tierSP.concat(tierX));
+            case ENUM.RandomBrigType.AP_ONLY:
+                return tierAP;
+            case ENUM.RandomBrigType.AP_UP:
+                return tierAP.concat(tierS.concat(tierSP.concat(tierX)));
+            case ENUM.RandomBrigType.A_ONLY:
+                return tierA;
+            case ENUM.RandomBrigType.A_UP:
+                return tierA.concat(tierAP.concat(tierS.concat(tierSP.concat(tierX))));
+            default:
+                throw new Error("Invalid brig random type");
+        }
+    }
+}

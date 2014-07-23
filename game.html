@@ -180,13 +180,8 @@
     </div>
 
     <script type="text/javascript">
-        var dataOption = getBattleDataOption();
-        var data = dataOption[0], option = dataOption[1];
 
-        var worker = null;
-
-        var mode = getURLParameter("mode");
-        if (mode !== "sim") {
+        function playGame() {
             BattleGraphic.PLAY_MODE = 'AUTO';
             BattleLogger.IS_DEBUG_MODE = false;
             document.getElementById('startButton').onclick = function () {
@@ -197,13 +192,14 @@
             var newGame = new BattleModel(data, option);
             newGame.startBattle();
         }
-        else if (mode == "sim") {
+
+        function playSim() {
             // create a new game just to display the fam and formation
-            if (option.p1random) {
+            if (option.p1RandomMode) {
                 BattleGraphic.HIDE_PLAYER1 = true;
             }
 
-            if (option.p2random) {
+            if (option.p2RandomMode) {
                 BattleGraphic.HIDE_PLAYER2 = true;
             }
 
@@ -223,12 +219,27 @@
                 else if (event.data.status == "done") {
                     document.getElementById("progressBar").setAttribute("value", 10000);
                     document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount +
-                        "<br> Player 1 won: " + event.data.p1WinCount + 
+                        "<br> Player 1 won: " + event.data.p1WinCount +
                         "<br><a href=setting.html>Go back to main page </a>");
                     worker.terminate();
                 }
             };
-            worker.postMessage([data, option]);
+            // start the worker. Need to pass the tierList information in since the worker 
+            // can't access sessionStorage
+            worker.postMessage([data, option, sessionStorage.tierList]);
+        }
+
+        var dataOption = getBattleDataOption();
+        var data = dataOption[0], option = dataOption[1];
+
+        var worker = null;
+
+        var mode = getURLParameter("mode");
+        if (mode !== "sim") {
+            getTierList("play");
+        }
+        else if (mode == "sim") {
+            getTierList("sim");
         }
     </script>
 

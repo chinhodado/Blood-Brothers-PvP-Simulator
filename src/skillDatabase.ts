@@ -1,8 +1,8 @@
 /**
  * Some notes:
- * - For attack skills, there has to be a "ward" attribute, which takes a value of 1, 3 or 2
+ * - For attack skills, there has to be a "ward" attribute, which takes a value of 1 (physical), 2 (magical) or 3 (breath)
  *   Counter skills also need the above, even though the ward will always be 1 for those skills
- * - If a arg is 0, there's no need to include it
+ * - If an arg is 0, there's no need to include it
  *
  * - There is no need for the baseProbability
  */
@@ -1883,6 +1883,13 @@ var SkillDatabase = {
         range: 17, prob: 30, ward: 2,
         desc: "Deal WIS-based damage to six random foes, ignoring position."
     },
+
+    432 : {
+        name : "Spectrum", type: 2, func: 4, calc: 2,
+        arg1: 2.25,
+        range: 7, prob: 30, ward: 2, // <- guess
+        desc: "Deal massive WIS-based damage to up to three foes, ignoring position."
+    },
     
     433 : {
         name: "Deep Rumble", type: 2, func: 3, calc: 1, 
@@ -2416,6 +2423,20 @@ var SkillDatabase = {
         desc: "ATK-based damage to up to four foes. Increased if fewer foes."
     },
 
+    522: {
+        name: "Flash of Silver", type: 2, func: 3, calc: 3,
+        arg1: 1.25,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to five random foes."
+    },
+
+    523: {
+        name: "Glittering Scales", type: 5, func: 29, calc: 0,
+        arg1: 0, arg2: 0, arg3: 8, arg4: 1,
+        range: 21, prob: 50,
+        desc: "Remove the buffs of all foes after receiving an attack."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -2520,6 +2541,13 @@ var SkillDatabase = {
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage to one foe."
     },
+
+    10024: { // 100% Mod, Single Hit, ATK-based, position dependent, disable (Silver Dragon)
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1, arg2: 4, arg3: 0.35,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
     
     99000 : {
         name : "Raging Flames", type: 2, func: 3, calc: 3,
@@ -2547,13 +2575,6 @@ var SkillDatabase = {
         arg1: 1.8, arg2: 2, arg3: 0.3, 
         range: 15, prob: 30, ward: 2,
         desc: "Deal WIS-based damage and sometimes paralyze front/middle lines."
-    },
-
-    99004 : {
-        name : "Spectrum", type: 2, func: 4, calc: 2,
-        arg1: 2.25,
-        range: 7, prob: 30, ward: 2, // <- guess
-        desc: "Deal massive WIS-based damage to up to three foes, ignoring position."
     },
 
     99005 : {
