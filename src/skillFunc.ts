@@ -632,7 +632,7 @@ class CounterSkillLogic extends SkillLogic {
 
         // counter phase
         var missed = false;
-        if (data.attacker.willMiss()) {
+        if (data.executor.willMiss()) {
             missed = true;
         }
 
