@@ -490,6 +490,20 @@ var SkillDatabase = {
         desc: "Reduce magic damage taken by all allies."
     },
 
+    135 : {
+        name: "Breath Ward 2", type: 1, func: 1, calc: 0,
+        arg1: 0.4, arg2: 7, 
+        range: 4, prob: 70,
+        desc: "Reduce breath damage taken by all allies."
+    },
+
+    136 : {
+        name: "Breath Ward", type: 1, func: 1, calc: 0,
+        arg1: 0.7, arg2: 7, 
+        range: 3, prob: 70,
+        desc: "Reduce breath damage taken by self and adjacent familiars."
+    },
+
     137 : {
         name: "Binding Arcana", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 5, arg3: 0.3, arg4: 3,

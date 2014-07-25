@@ -1,67 +1,41 @@
-﻿function checkPOPE() {
+﻿function checkPOPE(data) {
+    var div = document.getElementById("famCheck");
 
     // Save the POPE stats table as pope.htm
-
+    var popeResult = data.results.pope
     var POPETable = {};
 
-    function getPOPEFromTable(tableTxt) {
-        // parse the response text into DOM
-        var doc = document.implementation.createHTMLDocument("POPE");
-        doc.documentElement.innerHTML = tableTxt;
+    for (var i = 0; i < popeResult.length; i++) {
+        var hpPOPE = parseInt((popeResult[i].hp).replace(/,/g, ""));
+        var atkPOPE = parseInt((popeResult[i].atk).replace(/,/g, ""));
+        var defPOPE = parseInt((popeResult[i].def).replace(/,/g, ""));
+        var wisPOPE = parseInt((popeResult[i].wis).replace(/,/g, ""));
+        var agiPOPE = parseInt((popeResult[i].agi).replace(/,/g, ""));
 
-        // make the hashtable
-        var table = (doc.getElementsByClassName("wikitable"))[0];
-        var rows = (table.getElementsByTagName("tbody"))[0].getElementsByTagName("tr");
+        POPETable[popeResult[i].name] = [hpPOPE, atkPOPE, defPOPE, wisPOPE, agiPOPE];
+    }
 
-        for (var i = rows.length - 1; i >= 2; i--) {
-            try {
-                var cells = rows[i].getElementsByTagName("td");
-                var cellFam = (cells[2].innerText || cells[2].textContent).trim();
+    // check with our db
+    for (var key in famDatabase) {
+        if (famDatabase.hasOwnProperty(key)) {
+            var name = famDatabase[key].fullName;
 
-                var hpPOPE = parseInt((cells[5].innerText  || cells[5].textContent).replace(/,/g, ""));
-                var atkPOPE = parseInt((cells[6].innerText || cells[6].textContent).replace(/,/g, ""));
-                var defPOPE = parseInt((cells[7].innerText || cells[7].textContent).replace(/,/g, ""));
-                var wisPOPE = parseInt((cells[8].innerText || cells[8].textContent).replace(/,/g, ""));
-                var agiPOPE = parseInt((cells[9].innerText || cells[9].textContent).replace(/,/g, ""));
+            if (!POPETable[name]) {
+                if (!famDatabase[key].isWarlord) {
+                    div.innerHTML += ("Not found: " + name + "<br>");
+                }                    
+            }
+            else {
+                var dbS = famDatabase[key].stats;
+                var tbS = POPETable[name];
 
-                POPETable[cellFam] = [hpPOPE, atkPOPE, defPOPE, wisPOPE, agiPOPE];
-            } catch (e) { }
-        }
-
-        // check with our db
-        for (var key in famDatabase) {
-            if (famDatabase.hasOwnProperty(key)) {
-                var name = famDatabase[key].fullName;
-
-                if (!POPETable[name]) {
-                    if (!famDatabase[key].isWarlord) {
-                        console.log("Not found: " + name);
-                    }                    
-                }
-                else {
-                    var dbS = famDatabase[key].stats;
-                    var tbS = POPETable[name];
-
-                    for (var i = 0; i < 5; i++) {
-                        if (dbS[i] != tbS[i]) {
-                            console.log("Conflict: " + name);
-                            break;
-                        }
-                    }                    
-                }
+                for (var i = 0; i < 5; i++) {
+                    if (dbS[i] != tbS[i]) {
+                        div.innerHTML += ("Conflict: " + name + "<br>");
+                        break;
+                    }
+                }                    
             }
         }
     }
-    
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4) {
-            getPOPEFromTable(xmlhttp.responseText);
-        }
-    };
-    xmlhttp.open("GET", "pope.htm", true);
-    xmlhttp.send();
-    console.log("Checking familiar database...");
 }
-
-checkPOPE();

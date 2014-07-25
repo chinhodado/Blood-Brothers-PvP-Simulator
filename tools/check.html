@@ -2,18 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Database Consistency Check</title>
+    <style>
+        * {
+            font-family: Consolas;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-    <p>For skill, convert the Excel sheet to JSON using this <a href="http://shancarter.github.io/mr-data-converter/">site</a>
-    , then make that JSON array into a variable name <code>source</code> in a file named <code>source.js</code> under the same folder as this file.
-    </p>
-    <p>For familiat stats, save the POPE <a href="http://bloodbrothersgame.wikia.com/wiki/POPE_Stats_Table">table</a>
-    into a file named <code>pope.htm</code> and put it under the same folder as this file.
-    </p>
-    <p>Open the console to see the checking result</p>
+    <h4>Skill check</h4>
+    <div id="skillCheck"></div>
+
+    <h4>Familiar check</h4>
+    <div id="famCheck"></div>
+
     <script src="../compiled.js"></script>
-    <script src="source.js"></script>
     <script src="checkSkills.js"></script>
     <script src="checkPOPE.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="http://spreadsheets.google.com/feeds/list/1tE51Z5I2gChdtLNQfY_aE--TmZ_9G3fmiseGf6-K04s/2/public/basic?alt=json-in-script&callback=checkSkill"></script>
+    <script>
+        $.ajax({
+            "url": "https://www.kimonolabs.com/api/8bmc0cbe?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=checkPOPE",
+            "crossDomain": true,
+            "dataType": "jsonp"
+        });
+    </script>
 </body>
 </html>
