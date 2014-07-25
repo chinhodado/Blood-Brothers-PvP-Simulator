@@ -464,6 +464,13 @@ class BattleModel {
                     continue;
                 }
 
+                var missTurn = !currentCard.canAttack();
+                if (missTurn) {
+                    this.logger.addMajorEvent({
+                        description: currentCard.name + " missed a turn"
+                    });
+                }
+
                 // procs active skill if we can
                 finished = this.processActivePhase(currentCard, "FIRST");                
                 if (finished) break;
@@ -475,9 +482,25 @@ class BattleModel {
                     if (finished) break;
                 }                
 
-                // update poison status
-                if (!currentCard.isDead && currentCard.getAfflictionType() == ENUM.AfflictionType.POISON) {
-                    currentCard.updateAffliction();
+                // todo: make a major event if a fam missed a turn
+                if (!currentCard.isDead) {
+                    var cured = currentCard.updateAffliction();
+                    // if cured, make a log
+                    if (!currentCard.affliction && cured) {
+                        var desc = currentCard.name + " is cured of affliction!";
+                    
+                        this.logger.addMinorEvent({
+                            targetId: currentCard.id, 
+                            type: ENUM.MinorEventType.AFFLICTION, 
+                            affliction: {
+                                type: currentCard.getAfflictionType(),
+                                isFinished: true,
+                            },
+                            description: desc, 
+                        
+                        });
+                    }
+
                     this.processOnDeathPhase();
                 }
 
@@ -622,37 +645,10 @@ class BattleModel {
      * Called at the end of two player's turn
      */
     processEndTurn() {
-        // process end turn events: afflictions, etc.
+        // process end turn events
         this.logger.addMajorEvent({
             description: "Turn end"
         });
-
-        for (var i = 0; i < 10; i++) {
-            var currentCard = this.allCards[i];
-            if (currentCard.isDead) {
-                continue;
-            }
-
-            // poison is updated at fam's turn end instead
-            if (currentCard.getAfflictionType() != ENUM.AfflictionType.POISON) {
-                var cured = currentCard.updateAffliction();
-                // if cured, make a log
-                if (!currentCard.affliction && cured) {
-                    var desc = currentCard.name + " is cured of affliction!";
-                    
-                    this.logger.addMinorEvent({
-                        targetId: currentCard.id, 
-                        type: ENUM.MinorEventType.AFFLICTION, 
-                        affliction: {
-                            type: currentCard.getAfflictionType(),
-                            isFinished: true,
-                        },
-                        description: desc, 
-                        
-                    });
-                }
-            }
-        }
 
         this.logger.addMinorEvent({
             type: ENUM.MinorEventType.TEXT,

@@ -185,6 +185,9 @@ function getTierList(whatToDoNext) {
     else if (whatToDoNext == "sim") {
         callback = "updateTierListThenSim";
     }
+    else if (whatToDoNext == "test") {
+        callback = "updateTierListThenTest";
+    }
     else {
         callback = "updateTierList";
     }
@@ -207,6 +210,9 @@ function getTierList(whatToDoNext) {
         else if (whatToDoNext == "sim") {
             playSim();
         }
+        else if (whatToDoNext == "test") {
+            startTest();
+        }
     }
 }
 
@@ -226,4 +232,8 @@ function updateTierListThenDebug(data) {
 function updateTierListThenSim(data) {
     sessionStorage.tierList = JSON.stringify(data.results);
     playSim();
+}
+function updateTierListThenTest(data) {
+    sessionStorage.tierList = JSON.stringify(data.results);
+    startTest();
 }
