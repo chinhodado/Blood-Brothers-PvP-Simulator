@@ -39,6 +39,16 @@ function setPreviousChoices() {
     if (localStorage.getItem("2f") && localStorage.getItem("2f") != "null") {
         document.getElementById("2f").value = localStorage.getItem("2f");
     }
+
+    // proc order
+    if (localStorage.getItem("po") && localStorage.getItem("po") != "null") {
+        document.getElementById("po").value = localStorage.getItem("po");
+    }
+
+    // debug mode
+    if (localStorage.getItem("debug") == "true") {
+        document.getElementById("debug").checked = true;
+    }
 }
 
 /**
@@ -135,8 +145,11 @@ function getBattleDataOption() {
     // skills: player 1: s10 -> s12
     //         player 2: s20 -> s22
     // formation: player 1: 1f, player 2: 2f
+    localStorage.setItem("debug", getURLParameter("debug"));
+
     var data = {}, option = {};
     option.procOrder = getURLParameter("po");
+    localStorage.setItem("po", option.procOrder);
 
     option.p1RandomMode = getURLParameter("1r");
     option.p2RandomMode = getURLParameter("2r");
