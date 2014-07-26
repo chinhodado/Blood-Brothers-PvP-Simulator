@@ -521,7 +521,7 @@ class FriendRandomRange extends BaseRange {
             if (card.id === executor.id && !includeSelf)
                 return false;
 
-            if (selectDead && !card.isDead)
+            if ((selectDead && !card.isDead) || (!selectDead && card.isDead))
                 return false;
 
             return isValid;
