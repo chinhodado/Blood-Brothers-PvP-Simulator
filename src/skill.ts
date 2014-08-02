@@ -59,6 +59,8 @@ class Skill {
             case ENUM.SkillFunc.MAGIC:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
             case ENUM.SkillFunc.DRAIN_ATTACK:
             case ENUM.SkillFunc.DRAIN_MAGIC:
                 isAttackSkill = true;
@@ -79,6 +81,7 @@ class Skill {
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.DRAIN_ATTACK:
                 isIndirect = false;
                 break;
@@ -105,7 +108,7 @@ class Skill {
         var skillInfo = SkillDatabase[skillId];
 
         return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK
-                                               && skillInfo.func == ENUM.SkillFunc.MAGIC;
+            && (skillInfo.func == ENUM.SkillFunc.MAGIC || skillInfo.func == ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC);
     }
 
     static isAutoAttackSkill(skillId: number): boolean {
@@ -123,6 +126,7 @@ class Skill {
             skillInfo.func == ENUM.SkillFunc.BUFF ||
             skillInfo.func == ENUM.SkillFunc.DEBUFF ||
             skillInfo.func == ENUM.SkillFunc.MAGIC ||
+            skillInfo.func == ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC ||
             skillInfo.func == ENUM.SkillFunc.DRAIN_MAGIC)
         {
             isMagicSkill = true;    
@@ -141,6 +145,24 @@ class Skill {
         }
 
         return isAoe;
+    }
+
+    static isDebuffAttackSkill(skillId: number): boolean {
+        var isDebuffAttack = false;
+        var skillInfo = SkillDatabase[skillId];
+
+        switch (skillInfo.func) {
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DEBUFFINDIRECT:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
+                isDebuffAttack = true;
+                break;
+            default:
+                break;
+        }
+
+        return isDebuffAttack;
     }
 
     static isAvailableForSelect(skillId: number): boolean {
@@ -168,7 +190,7 @@ class Skill {
         return this.availableSkillsForSelect;
     }
 
-    // get the list of stats status modified by the skill
+    // get the list of stats status modified by the skill. Mainly used for displaying the status text
     static getStatusModified(skillId: number) {
         var skillInfo = SkillDatabase[skillId];
         var statuses = [];
@@ -181,6 +203,8 @@ class Skill {
             // todo: add DEBUFF here
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
                 statuses.push(skillInfo.arg2);
                 break;
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:

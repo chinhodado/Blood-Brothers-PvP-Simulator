@@ -48,6 +48,8 @@ module ENUM {
         COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ??
         TURN_ORDER_CHANGE = 31, // arg1: new base, arg2: turn num
         CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2, 3: status
+        CASTER_BASED_DEBUFF_ATTACK = 33,  // arg1: multi, arg2: status, arg3: debuff prob, arg4: debuff multi
+        CASTER_BASED_DEBUFF_MAGIC  = 34,  // same as 33
 
         DRAIN_ATTACK = 36, //arg1: multi, arg2: heal % of damage dealt, arg3: effect (unimportant), arg4: heal range
         DRAIN_MAGIC = 37, // same as 36

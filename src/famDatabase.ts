@@ -202,6 +202,13 @@ var famDatabase = {
         img: "img2$1/__cb20140516081822/$2/a/a4/Arcanan_Might_II_Figure.png",
         fullName: "Arcanan Might II"
     },
+    11329: {
+        name: "Archbishop", stats: [19064, 20191, 16009, 10744, 15002],
+        skills: [520],
+        autoAttack: 10025,
+        img: "img3$1/__cb20140722101833/$2/9/9a/Archbishop_of_the_Deep_II_Figure.png",
+        fullName: "Archbishop of the Deep II"
+    },
     10600: {
         name: "Archduke Ose", stats: [16995, 14395, 15023, 14850, 11990],
         skills: [154],
@@ -407,7 +414,7 @@ var famDatabase = {
     },
     11019: {
         name: "Cursebone", stats: [14807, 16952, 14146, 15652, 17721],
-        skills: [99009],
+        skills: [248],
         img: "img3$1/__cb20130926150410/$2/3/3e/Cursebone_Pterosaur_II_Figure.png",
         fullName: "Cursebone Pterosaur II"
     },
@@ -416,6 +423,12 @@ var famDatabase = {
         skills: [99007],
         img: "img3$1/__cb20130801154345/$2/b/ba/Cyclops%2C_the_Rocky_Cliff_II_Figure.png",
         fullName: "Cyclops, the Rocky Cliff II"
+    },
+    11328: {
+        name: "Dagon", stats: [23343, 22065, 18035, 19703, 18208],
+        skills: [519],
+        img: "img3$1/__cb20140722101815/$2/6/6a/Dagon_II_Figure.png",
+        fullName: "Dagon II"
     },
     10973: {
         name: "Dagr", stats: [12012, 14059, 10712, 17818, 13810],
@@ -1489,6 +1502,12 @@ var famDatabase = {
         img: "img2$1/__cb20140613080813/$2/3/37/Ryaum%2C_Hussar_Captain_II_Figure.png",
         fullName: "Ryaum, Hussar Captain II"
     },
+    11343: {
+        name: "Sachiel", stats: [19357, 14059, 13052, 17017, 17526],
+        skills: [527, 528],
+        img: "img4$1/__cb20140730092614/$2/2/2b/Sachiel%2C_Angel_of_Water_II_Figure.png",
+        fullName: "Sachiel, Angel of Water II"
+    },
     11063: {
         name: "Treant", stats: [18566, 17017, 22542, 13626, 8014],
         skills: [154],
@@ -1552,7 +1571,7 @@ var famDatabase = {
         fullName: "Selk, Desert King II"
     },
     11321: {
-        name: "Selkie", stats: [15803, 8442, 14049, 16024, 13586],
+        name: "Selkie", stats: [15804, 8442, 14049, 16024, 13586],
         skills: [515, 516],
         autoAttack: 10007,
         img: "img4$1/__cb20140715092434/$2/3/31/Selkie%2C_Lady_of_the_Shore_II_Figure.png",
@@ -1593,7 +1612,7 @@ var famDatabase = {
     },
     11093: {
         name: "Sinbad", stats: [15868, 18154, 14644, 13853, 17006],
-        skills: [99005],
+        skills: [318],
         img: "img2$1/__cb20131227221736/$2/9/9e/Sinbad_the_Adventurer_II_Figure.png",
         fullName: "Sinbad the Adventurer II"
     },
@@ -1865,6 +1884,12 @@ var famDatabase = {
         skills: [263],
         img: "img3$1/__cb20131010170703/$2/4/4a/Valin_the_Terrible_II_Figure.png",
         fullName: "Valin the Terrible II"
+    },
+    11008: {
+        name: "Karkadann", stats: [17034, 16475, 13510, 7822, 13097],
+        skills: [521],
+        img: "img4$1/__cb20140722101849/$2/2/22/Venomhorn_Karkadann_II_Figure.png",
+        fullName: "Venomhorn Karkadann II"
     },
     11137: {
         name: "Venusia", stats: [14514, 18273, 13333, 10831, 11492],

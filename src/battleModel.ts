@@ -398,6 +398,7 @@ class BattleModel {
    
     processDebuff(executor: Card, target: Card, skill: Skill) {
         var status: ENUM.StatusType, multi: number;
+        var isNewLogic: boolean = false; // for caster-based debuff
 
         if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
             status = skill.skillFuncArg2;
@@ -407,14 +408,31 @@ class BattleModel {
             status = skill.skillFuncArg2;
             multi  = skill.skillFuncArg1;
         }
+        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF) {
+            // todo: arg3 may also be status
+            status = skill.skillFuncArg2;
+            multi = skill.skillFuncArg1;
+            isNewLogic = true;
+        }
+        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK || skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC) {
+            status = skill.skillFuncArg2;
+            multi = skill.skillFuncArg4;
+            isNewLogic = true;
+        }
         else {
             throw new Error("Wrong skill to use with processDebuff()");
         }
 
-        var baseAmount = getDebuffAmount(executor, target);
+        if (!isNewLogic) {
+            var baseAmount = getDebuffAmount(executor, target);
+        }
+        else {
+            baseAmount = getCasterBasedDebuffAmount(executor);
+        }
+
         var amount = Math.floor(baseAmount * multi);
 
-        target.changeStatus(status, amount);
+        target.changeStatus(status, amount, isNewLogic);
         var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
 
         this.logger.addMinorEvent({
@@ -423,6 +441,7 @@ class BattleModel {
             type: ENUM.MinorEventType.STATUS, 
             status: {
                 type: status,
+                isNewLogic: isNewLogic
             },
             description: description, 
             amount: amount,

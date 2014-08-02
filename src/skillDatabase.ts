@@ -1009,6 +1009,13 @@ var SkillDatabase = {
         range: 8, prob: 30, ward: 2,
         desc: "Deal WIS-based damage to all foes, regardless of position."
     },
+    
+    248 : {
+        name : "Venomwing Dance", type: 2, func: 3, calc: 3,
+        arg1: 1.45, arg2: 1, arg3: 0.3,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage and randomly poison four foes."
+    },
 
     249 : {
         name: "Steelscales", type: 2, func: 3, calc: 1, 
@@ -1379,6 +1386,13 @@ var SkillDatabase = {
         arg1: 1.9,  
         range: 7, prob: 30, ward: 1,
         desc: "Deal heavy damage to three foes with a mighty swing."
+    },
+
+    318 : {
+        name : "Frontier Spirit", type: 2, func: 3, calc: 1,
+        arg1: 1.1,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
     },
 
     319: {
@@ -2437,6 +2451,27 @@ var SkillDatabase = {
         desc: "ATK-based damage to up to four foes. Increased if fewer foes."
     },
 
+    519: {
+        name: "The Sea's Fury", type: 2, func: 4, calc: 3,
+        arg1: 2.2,
+        range: 32, prob: 30, ward: 2,
+        desc: "Deal massive AGI-based damage to up to four foes, ignoring position."
+    },
+
+    520: {
+        name: "Tentacle Lash", type: 2, func: 4, calc: 1,
+        arg1: 1.95,
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to three random foes, ignoring position."
+    },
+
+    521: {
+        name: "Horn Rush", type: 2, func: 3, calc: 1,
+        arg1: 1.45, arg2: 1, arg3: 0.4, arg4: 10,
+        range: 314, prob: 30, ward: 1,
+        desc: "ATK-based damage to and sometimes poison up to four foes. Increased if fewer foes."
+    },
+
     522: {
         name: "Flash of Silver", type: 2, func: 3, calc: 3,
         arg1: 1.25,
@@ -2449,6 +2484,20 @@ var SkillDatabase = {
         arg1: 0, arg2: 0, arg3: 8, arg4: 1,
         range: 21, prob: 50,
         desc: "Remove the buffs of all foes after receiving an attack."
+    },
+
+    527: {
+        name: "Water Blade", type: 2, func: 3, calc: 3,
+        arg1: 1.45,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to four random foes."
+    },
+
+    528: {
+        name: "Wall of Water", type: 1, func: 1, calc: 0,
+        arg1: 0.1, arg2: 4,
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars at start of battle."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -2562,6 +2611,13 @@ var SkillDatabase = {
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "WIS-based damage to one foe."
     },
+
+    10025: { // 120% Mod, Single Hit, ATK-based, position independent, greatly lower AGI (Archbishop)
+        name: "Standard Action", type: 2, func: 34, calc: 1,
+        arg1: 1.2, arg2: 4, arg3: 0.3, arg4: 0.2,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes greatly lower AGI of target."
+    },
     
     99000 : {
         name : "Raging Flames", type: 2, func: 3, calc: 3,
@@ -2591,13 +2647,6 @@ var SkillDatabase = {
         desc: "Deal WIS-based damage and sometimes paralyze front/middle lines."
     },
 
-    99005 : {
-        name : "Frontier Spirit", type: 2, func: 3, calc: 1,
-        arg1: 1.1,
-        range: 20, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to five random foes."
-    },
-
     99006 : {
         name : "Light Fist", type: 2, func: 3, calc: 1,
         arg1: 1.7,
@@ -2617,13 +2666,6 @@ var SkillDatabase = {
         arg1: 1.65,
         range: 7, prob: 30, ward: 1,
         desc: "Deal heavy ATK-based damage to up to three foes"
-    },
-
-    99009 : {
-        name : "Venomwing Dance", type: 2, func: 3, calc: 3,
-        arg1: 1.45, arg2: 1, arg3: 0.3,
-        range: 19, prob: 30, ward: 1,
-        desc: "Deal heavy AGI-based damage and randomly poison four foes."
     },
 
     99010 : {

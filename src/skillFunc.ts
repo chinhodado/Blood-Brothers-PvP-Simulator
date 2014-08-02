@@ -15,6 +15,8 @@
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.DRAIN_ATTACK:
             case ENUM.SkillFunc.DRAIN_MAGIC:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();
@@ -153,44 +155,11 @@ class CasterBasedDebuffSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
-
-        for (var skillFuncArgNum = 2; skillFuncArgNum <= 5; skillFuncArgNum++) {
-            var type: ENUM.StatusType = skill.getSkillFuncArg(skillFuncArgNum);
-            if (type == 0) {
-                continue;
-            }
-            switch (type) {
-                case ENUM.StatusType.ATK :
-                case ENUM.StatusType.DEF :
-                case ENUM.StatusType.WIS :
-                case ENUM.StatusType.AGI :
-                    var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-                    var skillMod = skill.skillFuncArg1;
-                    var buffAmount = Math.round(skillMod * getCasterBasedDebuffAmount(executor));
-                    break;
-                default :
-                    throw new Error("Wrong status type for greatly debuff or not implemented");
-            }
+           
+        var targets: Card[] = skill.range.getTargets(executor);
             
-            var targets : Card[] = skill.range.getTargets(executor);
-            
-            for (var i = 0; i < targets.length; i++) {
-                targets[i].changeStatus(type, buffAmount, true);
-                var description = targets[i].name + "'s " + ENUM.StatusType[type] + " decreased by " + Math.abs(buffAmount);
-                
-                this.logger.addMinorEvent({
-                    executorId: executor.id, 
-                    targetId: targets[i].id, 
-                    type: ENUM.MinorEventType.STATUS, 
-                    status: {
-                        type: type,
-                        isNewLogic: true
-                    },
-                    description: description, 
-                    amount: buffAmount,
-                    skillId: skill.id
-                });
-            }
+        for (var i = 0; i < targets.length; i++) {
+            this.battleModel.processDebuff(executor, targets[i], skill);
         }
     }
 }
@@ -382,7 +351,7 @@ class AttackSkillLogic extends SkillLogic {
                     damageDealt = wouldBeDamage;
 
                     if (!missed) {
-                        if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                        if (Skill.isDebuffAttackSkill(skill.id)) {
                             if (Math.random() <= skill.skillFuncArg3) {
                                 this.battleModel.processDebuff(executor, targetCard, skill);
                             }
@@ -465,7 +434,7 @@ class AttackSkillLogic extends SkillLogic {
             damageDealt = wouldBeDamage;
 
             if (!missed) {
-                if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+                if (Skill.isDebuffAttackSkill(skill.id)) {
                     if (Math.random() <= skill.skillFuncArg3) {
                         this.battleModel.processDebuff(executor, target, skill);
                     }
@@ -572,7 +541,7 @@ class ProtectSkillLogic extends SkillLogic {
             if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
                 this.battleModel.processAffliction(data.attacker, protector, attackSkill);
             }
-            else if (attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || attackSkill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
+            else if (Skill.isDebuffAttackSkill(attackSkill.id)) {
                 if (Math.random() <= attackSkill.skillFuncArg3) {
                     this.battleModel.processDebuff(data.attacker, protector, attackSkill);
                 }
