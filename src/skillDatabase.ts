@@ -1926,6 +1926,13 @@ var SkillDatabase = {
         desc: "Deal heavy ATK-based damage to three random foes."
     },
 
+    428 : {
+        name: "Rematch", type: 16, func: 18, calc: 4, 
+        arg1: 0.5, arg2: 1,
+        range: 122, prob: 70,
+        desc: "Heal two random allies for half of their maximum HP upon death."
+    },
+
     430 : {
         name: "Broken Vow", type: 1, func: 32, calc: 0, 
         arg1: 0.22, arg2: 3,
@@ -2514,6 +2521,20 @@ var SkillDatabase = {
         desc: "Remove the buffs of all foes after receiving an attack."
     },
 
+    524: {
+        name: "Twin-tail Strike", type: 2, func: 34, calc: 1,
+        arg1: 1.35, arg2: 1, arg3: 0.5, arg4: 0.2,
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to all foes and sometimes greatly lower atk, ignoring position."
+    },
+
+    525: {
+        name: "Spirit-Candles", type: 2, func: 4, calc: 3,
+        arg1: 1.45,
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to four random foes, ignoring position."
+    },
+
     527: {
         name: "Water Blade", type: 2, func: 3, calc: 3,
         arg1: 1.45,
@@ -2528,7 +2549,28 @@ var SkillDatabase = {
         desc: "Raise AGI of self and adjacent familiars at start of battle."
     },
 
+    529: {
+        name: "Waterslice Claws", type: 2, func: 4, calc: 2,
+        arg1: 1.7,
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    530: {
+        name: "Gift of the Lair", type: 1, func: 1, calc: 0,
+        arg1: 0.1, arg2: 3,
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars at start of battle."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10003: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
         range: 5, prob: 100, ward: 2, isAutoAttack: true,

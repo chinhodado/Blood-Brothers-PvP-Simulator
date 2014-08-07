@@ -223,6 +223,7 @@ class BattleModel {
     }
 
     /**
+     * Use this for damage because of attacks
      * if damage is not supplied, it will be calculated automatically
      * otherwise, damage will be done directly
      */
@@ -333,7 +334,7 @@ class BattleModel {
     }
 
     // todo: move this to Card?
-    // use this when there's no executorId for the MinorEvent, like for poison
+    // use this when there's no executorId for the MinorEvent, like for poison. Also use it for non-attacks like healing, etc.
     damageToTargetDirectly(target: Card, damage: number, reason: string) {
         target.changeHP(-1 * damage);
 

@@ -45,6 +45,13 @@ var famDatabase = {
         img: "img2$1/__cb20140318125230/$2/5/5c/Aeneas%2C_Fallen_Hero_II_Figure.png",
         fullName: "Aeneas, Fallen Hero II"
     },
+    11344: {
+        name: "Afanc", stats: [16518, 8610, 14124, 16020, 13214],
+        skills: [529, 530],
+        autoAttack: 10003,
+        img: "img4$1/__cb20140730092623/$2/a/a1/Afanc%2C_Beast_of_the_Deep_II_Figure.png",
+        fullName: "Afanc, Beast of the Deep II"
+    },
     11041: {
         name: "Ahab", stats: [10273, 12001, 11342, 9978, 12342],
         skills: [195],
@@ -914,6 +921,12 @@ var famDatabase = {
         img: "img1$1/__cb20130106234752/$2/2/2b/Infested_Peryton_II_Figure.png",
         fullName: "Infested Peryton II"
     },
+    11342: {
+        name: "Ghost Ship", stats: [15365, 12879, 11928, 10951, 16803],
+        skills: [525],
+        img: "img2$1/__cb20140730092558/$2/0/0f/Inhabited_Ghost_Ship_II_Figure.png",
+        fullName: "Inhabited Ghost Ship II"
+    },
     693: {
         name: "Ioskeha", stats: [13138, 13611, 11162, 15329, 13675],
         skills: [160],
@@ -1425,6 +1438,12 @@ var famDatabase = {
         img: "img1$1/__cb20131129143510/$2/2/25/Phoenix%2C_the_Metempsychosis_II_Figure.png",
         fullName: "Phoenix, the Metempsychosis II"
     },
+    11237: {
+        name: "Pollux", stats: [13290, 18631, 11654, 10311, 13756],
+        skills: [427, 428],
+        img: "img1$1/__cb20140416052152/$2/a/a2/Pollux%2C_Fallen_Hero_II_Figure.png",
+        fullName: "Pollux, Fallen Hero II"
+    },
     10876: {
         name: "Pontifex", stats: [14590, 16410, 13507, 18371, 17797],
         skills: [229, 167],
@@ -1461,6 +1480,12 @@ var famDatabase = {
         skills: [99002],
         img: "img1$1/__cb20140122120929/$2/f/f6/Queen_of_the_Waspmen_II_Figure.png",
         fullName: "Queen of the Waspmen II"
+    },
+    21340: {
+        name: "Cetus", stats: [22316, 20624, 17579, 11013, 16729],
+        skills: [524],
+        img: "img3$1/__cb20140730092831/$2/0/0a/Raging_Cetus_Figure.png",
+        fullName: "Raging Cetus"
     },
     11048: {
         name: "Ragnar", stats: [13245, 15804, 12001, 10294, 16510],

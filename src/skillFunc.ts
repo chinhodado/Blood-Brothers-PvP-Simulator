@@ -743,12 +743,23 @@ class SurviveSkillLogic extends SkillLogic {
 class HealSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var targets = data.skill.getTargets(data.executor);
+
+        if (!targets || targets.length == 0) {
+            return;
+        }
+
         var baseHealAmount = getHealAmount(data.executor);
 
         var multiplier = data.skill.skillFuncArg1;
         var healAmount = Math.floor(multiplier * baseHealAmount);
 
         for (var i = 0; i < targets.length; i++) {
+
+            // if the heal is not based on wis, recalculate the heal amount
+            if (data.skill.skillFuncArg2 == 1) {
+                healAmount = multiplier * targets[i].getOriginalHP();
+            }
+
             this.battleModel.damageToTargetDirectly(targets[i], -1 * healAmount, " healing");
         }     
     }
