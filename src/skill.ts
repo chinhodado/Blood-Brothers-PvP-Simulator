@@ -198,7 +198,7 @@ class Skill {
         switch (skillInfo.func) {
             case ENUM.SkillFunc.BUFF:
                 statuses.push(skillInfo.arg2);
-                if (skillInfo.arg3) statuses.push(skillInfo.arg3);
+                if (skillInfo.arg3 && skillInfo.arg2 != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.arg3);
                 break;
             // todo: add DEBUFF here
             case ENUM.SkillFunc.DEBUFFATTACK:

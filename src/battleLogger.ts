@@ -207,6 +207,10 @@ class BattleLogger {
                     infoText.skillProbability = "Extra prob.: " + status.skillProbability;
                 }
 
+                if (status.hpShield != 0) {
+                    infoText.hpShield = "HP Shld.: " + status.hpShield;
+                }
+
                 if (afflict) {
                     infoText.affliction = "Affliction: " + Affliction.getAfflictionAdjective(afflict.type);
                     if (afflict.type === ENUM.AfflictionType.SILENT) {
@@ -256,6 +260,9 @@ class BattleLogger {
                             else if (tempEvent.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
                                 infoText.skillProbability = this.decorateText(infoText.skillProbability, false);
                             }
+                            else if (tempEvent.status.type == ENUM.StatusType.HP_SHIELD) {
+                                infoText.hpShield = this.decorateText(infoText.hpShield, false);
+                            }
                         }
                         else if (tempEvent.type == ENUM.MinorEventType.AFFLICTION) {
                             if (!tempEvent.affliction.isFinished) {
@@ -280,6 +287,7 @@ class BattleLogger {
                                     (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
                                     (infoText.willAttackAgain? ( "<br>" + infoText.willAttackAgain) : "") +
                                     (infoText.skillProbability? ( "<br>" + infoText.skillProbability) : "") +
+                                    (infoText.hpShield? ( "<br>" + infoText.hpShield) : "") +
                                     (infoText.affliction? ( "<br>" + infoText.affliction) : "");
 
                 // display last event's HP

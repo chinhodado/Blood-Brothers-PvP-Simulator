@@ -86,7 +86,9 @@ class BuffSkillLogic extends SkillLogic {
 
         if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
             var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
-            if (skill.skillFuncArg3 != 0) {
+
+            // for hp shield buff, arg3 is the ceiling 
+            if (skill.skillFuncArg3 != 0 && skill.skillFuncArg2 != ENUM.StatusType.HP_SHIELD) {
                 statusToBuff.push(skill.skillFuncArg3);
             }
         }
@@ -127,11 +129,16 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.ACTION_ON_DEATH:
                         var buffAmount = skill.skillFuncArg1;
                         break;
+                    case ENUM.StatusType.HP_SHIELD:
+                        skillMod = skill.skillFuncArg1;
+                        buffAmount = Math.round(skillMod * baseStat);
+                        var maxValue = ~~(target.getOriginalHP() * skill.skillFuncArg3);
+                        break;
                     default :
                         throw new Error("Wrong status type or not implemented");
                 }
             
-                target.changeStatus(statusType, buffAmount);
+                target.changeStatus(statusType, buffAmount, false, maxValue);
                 var description = target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount;
                 
                 this.logger.addMinorEvent({

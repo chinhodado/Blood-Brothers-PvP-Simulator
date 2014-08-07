@@ -279,7 +279,7 @@ class Card {
         return false;
     }
     
-    changeStatus(statusType: ENUM.StatusType, amount: number, isNewLogic?: boolean): void {
+    changeStatus(statusType: ENUM.StatusType, amount: number, isNewLogic?: boolean, maxAmount?: number): void {
         if (isNewLogic) {
             this.status.isNewLogic[statusType] = true;
         }
@@ -322,6 +322,12 @@ class Card {
             this.ondeathSkills[0] = skill;
             this.status.actionOnDeath = amount;
         }
+        else if (statusType == ENUM.StatusType.HP_SHIELD) {
+            this.status.hpShield += amount;
+            if (maxAmount && this.status.hpShield > maxAmount) {
+                this.status.hpShield = maxAmount;
+            }
+        }
         else {
             throw new Error ("Invalid status type");
         }
@@ -343,6 +349,8 @@ class Card {
         if (this.status.actionOnDeath > 0) this.status.actionOnDeath = 0;
         this.clearBuffOnDeathSkill();
 
+        if (this.status.hpShield > 0) this.status.hpShield = 0;
+
         if (this.status.willAttackAgain > 0) this.status.willAttackAgain = 0;
     }
 
@@ -352,7 +360,7 @@ class Card {
 
         if (status.atk > 0 || status.def > 0 || status.wis > 0 || status.agi > 0 ||
             status.attackResistance > 0 || status.magicResistance > 0 || status.breathResistance > 0 ||
-            status.skillProbability > 0 || status.actionOnDeath > 0 || status.willAttackAgain > 0) 
+            status.skillProbability > 0 || status.actionOnDeath > 0 || status.hpShield > 0 || status.willAttackAgain > 0) 
         {
             hasPositiveStatus = true;
         }
@@ -362,6 +370,9 @@ class Card {
 
     getHP () {
         return this.stats.hp;
+    }
+    getOriginalHP(): number {
+        return this.originalStats.hp;
     }
     changeHP (amount : number) {
         this.stats.hp += amount;
@@ -485,6 +496,7 @@ class Status {
     skillProbability: number = 0;
 
     actionOnDeath: number = 0;
+    hpShield: number = 0;
 
     willAttackAgain: number = 0;
 

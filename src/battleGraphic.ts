@@ -619,6 +619,9 @@ class BattleGraphic {
                     else if (data.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
                         displayText = "Prob. Up";
                     }
+                    else if (data.status.type == ENUM.StatusType.HP_SHIELD) {
+                        displayText = "HP Up";
+                    }
                     else {
                         // for stats buff, this does not really use the log
                         var upDownText = data.amount < 0? " Down" : " Up";

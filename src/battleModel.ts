@@ -237,7 +237,19 @@ class BattleModel {
             else {
                 damage = 0;
             }
-        }            
+        }
+        
+        // HP shield skill
+        var hpShield = ~~data.target.status.hpShield;
+        if (hpShield > 0 && !data.missed) {
+            if (damage >= hpShield) {
+                data.target.status.hpShield = 0;
+                damage -= hpShield;
+            } else {
+                data.target.status.hpShield = hpShield - damage;
+                damage = 0;
+            }
+        }         
     
         data.target.changeHP(-1 * damage);
 

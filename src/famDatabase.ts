@@ -189,6 +189,13 @@ var famDatabase = {
         img: "img3$1/__cb20140512070142/$2/c/c5/Arcanan_Hermit_II_Figure.png",
         fullName: "Arcanan Hermit II"
     },
+    11199: {
+        name: "Arcanan High Priestess", stats: [17233, 8350, 20256, 19086, 14839],
+        skills: [388, 389],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140313080212/$2/5/58/Arcanan_High_Priestess_II_Figure.png",
+        fullName: "Arcanan High Priestess II"
+    },
     11242: {
         name: "Arcanan Lovers", stats: [16908, 13875, 12705, 19021, 17006],
         skills: [430, 431],
@@ -1294,6 +1301,13 @@ var famDatabase = {
         skills: [115],
         img: "img1$1/__cb20130114161242/$2/9/96/Oniroku_the_Slayer_II_Figure.png",
         fullName: "Oniroku the Slayer II"
+    },
+    11088: {
+        name: "Ovinnik", stats: [19010, 11210, 20592, 16627, 12315],
+        skills: [342, 356],
+        autoAttack: 10007,
+        img: "img3$1/__cb20140116044009/$2/c/c1/Ovinnik%2C_Hex_Beast_II_Figure.png",
+        fullName: "Ovinnik, Hex Beast II"
     },
     11286: {
         name: "Aquarius", stats: [16323, 7494, 11448, 17363, 16009],

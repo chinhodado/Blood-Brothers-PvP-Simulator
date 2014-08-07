@@ -1493,6 +1493,13 @@ var SkillDatabase = {
         desc: "Deal AGI-based damage to four random foes."
     },
 
+    342 : {
+        name: "Shadow Master", type: 1, func: 1, calc: 0, 
+        arg1: 0.3, arg2: 17, arg3: 1.25,
+        range: 3, prob: 70,
+        desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
     343 : {
         name: "Curiosity", type: 2, func: 21, calc: 2, 
         arg1: 1.5, arg2: 4, arg3: 0.3, arg4: 0.3, 
@@ -1553,6 +1560,13 @@ var SkillDatabase = {
         name: "Dawn's Light", type: 16, func: 6, calc: 0, 
         arg1: 0.5,
         range: 21, prob: 100
+    },
+
+    356 : {
+        name: "Wicked Bolt", type: 2, func: 4, calc: 2, 
+        arg1: 1.95,  
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
     358 : {
@@ -1707,6 +1721,20 @@ var SkillDatabase = {
         arg1: 1.35, 
         range: 19, prob: 30, ward: 1,
         desc: "Deal ATK-based damage to four random foes."
+    },
+
+    388 : {
+        name: "Melody of Mercy", type: 1, func: 1, calc: 0,
+        arg1: 0.3, arg2: 17, arg3: 1.25,
+        range: 3, prob: 70,
+        desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
+    389 : {
+        name: "Mystic Light", type: 2, func: 6, calc: 0,
+        arg1: 1,
+        range: 121, prob: 50,
+        desc: "Revive and fully restore HP of one random ally."
     },
 
     390 : {
