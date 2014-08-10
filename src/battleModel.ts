@@ -20,6 +20,7 @@ class BattleModel {
     static IS_MASS_SIMULATION = false;
     p1RandomMode: ENUM.RandomBrigType;
     p2RandomMode: ENUM.RandomBrigType;
+    isBloodClash: boolean = false;
     procOrderType: ENUM.ProcOrderType = ENUM.ProcOrderType.ANDROID;
 
     logger: BattleLogger;
@@ -30,14 +31,23 @@ class BattleModel {
 
     playerWon: Player = null;
     
-    // the two players' cards. The order of the cards in these two arrays should never be changed
-    player1Cards: Card[];
-    player2Cards: Card[];
-    
-    // contains all cards in play. Should be re-sorted every turn
-    allCards: Card[];
+    // The two players' main cards. The order of the cards in these two arrays should never be changed.
+    // When a reserve comes out, replace the main card in here with the reserve
+    p1_mainCards: Card[] = [];
+    p2_mainCards: Card[] = [];
 
-    // only used for quickly get a card by its id
+    // The two player's reserve cards. When a reserve comes out, move it to the main cards (i.e. delete it here)
+    p1_reserveCards: Card[] = [];
+    p2_reserveCards: Card[] = [];
+
+    // The original reserve cards. Should be created once and never modified
+    p1_originalReserveCards: Card[] = [];
+    p2_originalReserveCards: Card[] = [];
+    
+    // contains all cards in play. Should be re-created and re-sorted every turn, and updated when either player's main cards changed.
+    allCurrentMainCards: Card[] = [];
+
+    // Contains all cards in play (both main and reserve of both players). Used for quickly get a card by its id
     allCardsById: any = {};
 
     // store recently dead cards with ondeath skills waiting to proc
@@ -48,11 +58,15 @@ class BattleModel {
     turnOrderChangeEffectiveTurns: number = 0;
     turnOrderChanged: boolean = false;
     
-    // for the current card. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
+    // Turn-dependent. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer: Player;
     oppositePlayer: Player;
-    currentPlayerCards: Card[];
-    oppositePlayerCards: Card[];
+
+    // just a copy of p1_mainCards, p2_mainCards, p1_reserveCards, p2_reserveCards, turn-dependent
+    currentPlayerMainCards: Card[];
+    currentPlayerReserveCards: Card[];
+    oppositePlayerMainCards: Card[];
+    oppositePlayerReserveCards: Card[];
     
     private static _instance: BattleModel = null;
 
@@ -74,6 +88,9 @@ class BattleModel {
         var graphic = new BattleGraphic();
 
         this.procOrderType = option.procOrder;
+        if (option.battleType && option.battleType == ENUM.BattleType.BLOOD_CLASH) {
+            this.isBloodClash = true;
+        }
         
         var player1formation: any;
         var player2formation: any;
@@ -92,7 +109,7 @@ class BattleModel {
             this.p1RandomMode = option.p1RandomMode;
             var p1randomList = FamiliarDatabase.getRandomFamList(+option.p1RandomMode, tierListString);
             player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 10; i++) {
                 player1cardsInfo.push(famDatabase[getRandomElement(p1randomList)]);
             }
 
@@ -110,7 +127,7 @@ class BattleModel {
             this.p2RandomMode = option.p2RandomMode;
             var p2randomList = FamiliarDatabase.getRandomFamList(+option.p2RandomMode, tierListString);
             player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 10; i++) {
                 player2cardsInfo.push(famDatabase[getRandomElement(p2randomList)]);
             }
 
@@ -127,12 +144,12 @@ class BattleModel {
         this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
         this.player2 = new Player(2, "Player 2", new Formation(player2formation), 1); // opp
         
-        // initialize the cards
-        this.player1Cards = [];
-        this.player2Cards = [];
-        this.allCards = [];        
-        
-        for (var i = 0; i < 5; i++) {
+        // create the cards        
+        for (var i = 0; i < 10; i++) {
+
+            if (i >= 5 && !this.isBloodClash) break;
+
+            // make the skill array for the current fam
             var p1fSkillIdArray: number[] = player1cardsInfo[i].skills;
             if (player1cardsInfo[i].isWarlord) {
                 p1fSkillIdArray = player1warlordSkillArray;
@@ -146,14 +163,26 @@ class BattleModel {
             var player1Skills = this.makeSkillArray(p1fSkillIdArray);
             var player2Skills = this.makeSkillArray(p2fSkillIdArray);
             
-            this.player1Cards[i] = new Card(player1cardsInfo[i], this.player1, i, player1Skills); //my cards
+            // now make the cards and add them to the appropriate collections
+            var card1 = new Card(player1cardsInfo[i], this.player1, i, player1Skills);
+            var card2 = new Card(player2cardsInfo[i], this.player2, i, player2Skills);
 
-            this.player2Cards[i] = new Card(player2cardsInfo[i], this.player2, i, player2Skills); // opp card
-            this.allCards.push(this.player1Cards[i]);
-            this.allCards.push(this.player2Cards[i]);
+            if (i < 5) {
+                this.p1_mainCards[i] = card1;
+                this.p2_mainCards[i] = card2;
+                this.allCurrentMainCards.push(this.p1_mainCards[i]);
+                this.allCurrentMainCards.push(this.p2_mainCards[i]);
+            }
+            else if (i >= 5 && this.isBloodClash) {
+                this.p1_reserveCards[i % 5] = card1;
+                this.p2_reserveCards[i % 5] = card2;
 
-            this.allCardsById[this.player1Cards[i].id] = this.player1Cards[i];
-            this.allCardsById[this.player2Cards[i].id] = this.player2Cards[i];
+                this.p1_originalReserveCards[i % 5] = card1;
+                this.p2_originalReserveCards[i % 5] = card2;
+            }
+
+            this.allCardsById[card1.id] = card1;
+            this.allCardsById[card2.id] = card2;
         }
 
         this.cardManager.sortAllCards();
@@ -482,18 +511,49 @@ class BattleModel {
                 this.turnOrderChangeEffectiveTurns--;
             }
 
+            this.cardManager.updateAllCurrentMainCards();
             this.cardManager.sortAllCards();
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !finished; i++) {
-                var currentCard = this.allCards[i];
-                this.currentPlayer = currentCard.player;
-                this.currentPlayerCards = this.cardManager.getPlayerCards(this.currentPlayer); // cards of the attacking player
-                this.oppositePlayer = this.getOppositePlayer(this.currentPlayer);
-                this.oppositePlayerCards = this.cardManager.getPlayerCards(this.oppositePlayer);
+                var currentCard = this.allCurrentMainCards[i];
 
-                if (!currentCard || currentCard.isDead) {
-                    continue;
+                this.currentPlayer = currentCard.player;
+                this.currentPlayerMainCards = this.cardManager.getPlayerCurrentMainCards(this.currentPlayer);
+                this.currentPlayerReserveCards = this.cardManager.getPlayerCurrentReserveCards(this.currentPlayer);
+
+                this.oppositePlayer = this.getOppositePlayer(this.currentPlayer);
+                this.oppositePlayerMainCards = this.cardManager.getPlayerCurrentMainCards(this.oppositePlayer);
+                this.oppositePlayerReserveCards = this.cardManager.getPlayerCurrentReserveCards(this.oppositePlayer);
+
+                if (currentCard.isDead) {
+                    var column = currentCard.formationColumn;
+                    if (this.isBloodClash && this.currentPlayerReserveCards[column]) {
+                        // swich in reserve
+                        var reserveCard = this.currentPlayerReserveCards[column];
+
+                        this.cardManager.switchCardInAllCurrentMainCards(currentCard, reserveCard);
+                        this.currentPlayerMainCards[column] = reserveCard;
+                        this.currentPlayerReserveCards[column] = null;
+
+                        this.logger.addMajorEvent({
+                            description: currentCard.name + " is switched by " + reserveCard.name,
+                        });
+
+                        this.logger.addMinorEvent({
+                            description: currentCard.name + " is switched by " + reserveCard.name,
+                            type: ENUM.MinorEventType.RESERVE_SWITCH,
+                            reserveSwitch: {
+                                mainId: currentCard.id,
+                                reserveId: reserveCard.id
+                            }
+                        });
+
+                        currentCard = reserveCard;                  
+                    }
+                    else {
+                        continue;
+                    }
                 }
 
                 var missTurn = !currentCard.canAttack();
@@ -554,10 +614,10 @@ class BattleModel {
     
     checkFinish(): boolean {
         var noOnDeathRemain = this.onDeathCards.length === 0;
-        if (this.cardManager.isAllDead(this.oppositePlayerCards) && noOnDeathRemain) {
+        if (this.cardManager.isAllDeadPlayer(this.oppositePlayer) && noOnDeathRemain) {
             this.playerWon = this.currentPlayer;
         }
-        else if (this.cardManager.isAllDead(this.currentPlayerCards) && noOnDeathRemain) {
+        else if (this.cardManager.isAllDeadPlayer(this.currentPlayer) && noOnDeathRemain) {
             this.playerWon = this.oppositePlayer;
         }
 
@@ -677,7 +737,6 @@ class BattleModel {
      * Called at the end of two player's turn
      */
     processEndTurn() {
-        // process end turn events
         this.logger.addMajorEvent({
             description: "Turn end"
         });
@@ -686,6 +745,26 @@ class BattleModel {
             type: ENUM.MinorEventType.TEXT,
             description: "Turn end"
         });
+
+        // add skill probability to those still alive
+        if (this.isBloodClash) {
+            var allCards = this.cardManager.getAllCurrentCards();
+            for (var i = 0; i < allCards.length; i++) {
+                var tmpCard = allCards[i];
+                if (tmpCard && !tmpCard.isDead) {
+                    tmpCard.bcAddedProb += 10;
+
+                    this.logger.addMinorEvent({
+                        type: ENUM.MinorEventType.BC_ADDPROB,
+                        description: tmpCard.name + " gets 10% increase in skill prob.",
+                        bcAddProb: {
+                            targetId: tmpCard.id,
+                            isMain: this.cardManager.isCurrentMainCard(tmpCard)
+                        }
+                    });
+                }
+            }
+        }
     }
     
     executeNormalAttack(attacker: Card) {
@@ -714,7 +793,7 @@ class BattleModel {
      */
     processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any, scaledRatio?: number) {
         // now check if someone on the enemy side can protect before the damage is dealt
-        var enemyCards = this.cardManager.getEnemyCards(attacker.player);
+        var enemyCards = this.cardManager.getEnemyCurrentMainCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
         var toReturn: any = {}; // data that we will return
         for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
@@ -813,4 +892,5 @@ interface GameOption {
     p1RandomMode?: ENUM.RandomBrigType;
     p2RandomMode?: ENUM.RandomBrigType;
     procOrder?: ENUM.ProcOrderType;
+    battleType?: ENUM.BattleType;
 }

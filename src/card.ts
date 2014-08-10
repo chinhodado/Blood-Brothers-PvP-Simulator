@@ -16,6 +16,7 @@ class Card {
     status: Status;
     affliction: Affliction;
     isDead: boolean;
+    bcAddedProb: number = 0; // added probability for bloodclash
 
     player: Player;
     formationColumn: number; // 0 to 4
@@ -31,10 +32,10 @@ class Card {
     private defenseSkills: Skill[] = [];
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     
-    constructor(cardData, player: Player, formationColumn: number, skills: Skill[]) {
+    constructor(cardData, player: Player, nth: number, skills: Skill[]) {
         this.name = cardData.name;
         this.fullName = cardData.fullName;
-        this.id = player.id * 100 + formationColumn; // 100-104, 200-204
+        this.id = player.id * 100 + nth; // 100-109, 200-209
         this.isMounted = cardData.isMounted;
         this.isWarlord = cardData.isWarlord;
         this.imageLink = cardData.img;
@@ -49,8 +50,8 @@ class Card {
         this.isDead = false;
 
         this.player = player; // 1: me, 2: opponent
-        this.formationColumn = formationColumn;
-        this.formationRow = player.formation.getCardRow(formationColumn);
+        this.formationColumn = nth % 5;
+        this.formationRow = player.formation.getCardRow(this.formationColumn);
         this.procIndex = Formation.getProcIndex(this.formationRow, this.formationColumn, BattleModel.getInstance().procOrderType);
 
         this.skills = skills;
@@ -98,6 +99,7 @@ class Card {
             status: this.status,
             affliction: this.affliction,
             isDead: this.isDead,
+            bcAddedProb: this.bcAddedProb,
                      
             player: this.player,
             formationColumn: this.formationColumn,

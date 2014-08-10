@@ -2661,7 +2661,7 @@ var SkillDatabase = {
         desc: "ATK-based damage to two random foes."
     },
 
-    10021: { // 120% Mod, Single Hit, ATK-Based, position independent
+    10021: { // 120% Mod, Single Hit, ATK-Based, position independent (Perendon)
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.2, 
         range: 5, prob: 100, ward: 1, isAutoAttack: true,

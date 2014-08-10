@@ -334,7 +334,7 @@ class RightRange extends BaseRange {
     
     getTargets(executor : Card) : Card[] {
         var targets = [];
-        var partyCards = CardManager.getInstance().getPlayerCards(executor.player);
+        var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
         
         for (var i = executor.formationColumn + 1; i < 5; i++) {
             if (!partyCards[i].isDead) {
@@ -398,7 +398,7 @@ class AllRange extends BaseRange {
     
     getTargets(executor : Card) : Card[] {
         var targets = [];
-        var partyCards = CardManager.getInstance().getPlayerCards(executor.player);
+        var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
         
         for (var i = 0; i < partyCards.length; i++) {
             if (!partyCards[i].isDead) {
@@ -434,7 +434,7 @@ class EnemyNearRange extends BaseRange {
             return [];
         }
 
-        var enemyCards = CardManager.getInstance().getEnemyCards(executor.player);
+        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
         
         // only upto 2 and not 4 since the max distance is 2 anyway
         var offsetArray = [0, -1, 1, -2, 2];
@@ -464,7 +464,7 @@ class EnemyAllRange extends BaseRange {
     }
     
     getTargets (executor : Card) : Card[]{
-        var enemyCards = CardManager.getInstance().getEnemyCards(executor.player);
+        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
         var targets = [];
         for (var i = 0; i < enemyCards.length; i++) {
             var currentEnemyCard = enemyCards[i];

@@ -4,14 +4,14 @@
 function setPreviousChoices() {
     // player 1 fams
     if (localStorage.getItem("f0") && localStorage.getItem("f0") != "null") {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
             document.getElementById("f" + i).value = localStorage.getItem("f" + i);
         }
     }
 
     // player 2 fams
     if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
             document.getElementById("f" + (i + 10)).value = localStorage.getItem("f" + (i + 10));
         }
     }
@@ -49,6 +49,12 @@ function setPreviousChoices() {
     if (localStorage.getItem("debug") == "true") {
         document.getElementById("debug").checked = true;
     }
+
+    // battle type
+    var bt = localStorage.getItem("bt");
+    if (bt == 1 || bt == 2) {
+        document.getElementById("bt").value = bt;
+    }
 }
 
 /**
@@ -79,6 +85,38 @@ function toogleDisable() {
             randomSelect.disabled = true;
         }
     }
+}
+
+/**
+ * Toogle on/off the reserve depending on whether the mode is Bloodclash or not
+ */
+function toogleReserve() {
+    for (var player = 1; player <= 2; player++) {
+        var isBloodclash = document.getElementById("bt").value == 1;
+
+        var elems = document.getElementsByClassName("reserve");
+        for (var i = 0; i < elems.length; i++) {
+            if (!isBloodclash) {
+                elems[i].disabled = true;
+                elems[i].style.display = 'none';
+            }
+            else {
+                elems[i].disabled = false;
+                elems[i].style.display = 'inline';
+            }
+        }
+    }
+
+    // need to toogle disable at the end
+    toogleDisable();
+}
+
+/**
+ * Prepare the form when it is loaded
+ */
+function formOnLoad() {
+    toogleReserve();
+    toogleDisable();
 }
 
 function validateForm() {
@@ -138,8 +176,6 @@ function setSkillOptions() {
 }
 
 function getBattleDataOption() {
-    var data = {};
-
     // fam: player 1: f0 -> f4, f5 -> f9
     //      player 2: f10 -> f14, f15 -> f19
     // skills: player 1: s10 -> s12
@@ -150,6 +186,10 @@ function getBattleDataOption() {
     var data = {}, option = {};
     option.procOrder = getURLParameter("po");
     localStorage.setItem("po", option.procOrder);
+
+    var battleType = getURLParameter("bt");
+    localStorage.setItem("bt", battleType);
+    option.battleType = battleType;
 
     option.p1RandomMode = getURLParameter("1r");
     option.p2RandomMode = getURLParameter("2r");
@@ -165,7 +205,7 @@ function getBattleDataOption() {
     data.player1warlordSkillArray = [];
     data.player2warlordSkillArray = [];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
         var f1id = getURLParameter("f" + i);
         var f2id = getURLParameter("f" + (i + 10));
         data.player1cardsInfo.push(famDatabase[f1id]);

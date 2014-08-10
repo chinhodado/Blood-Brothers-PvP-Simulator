@@ -1484,6 +1484,7 @@ var famDatabase = {
     21340: {
         name: "Cetus", stats: [22316, 20624, 17579, 11013, 16729],
         skills: [524],
+        autoAttack: 10021,
         img: "img3$1/__cb20140730092831/$2/0/0a/Raging_Cetus_Figure.png",
         fullName: "Raging Cetus"
     },

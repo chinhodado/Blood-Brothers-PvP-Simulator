@@ -149,12 +149,8 @@ class BattleLogger {
         if (!BattleLogger.IS_DEBUG_MODE) {
             return;
         }
-
+        var graphic = BattleGraphic.getInstance();
         var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
-
-        // display turn animation
-        BattleGraphic.getInstance().displayAllAfflictionText(lastEventIndex);
-        BattleGraphic.getInstance().displayMajorEventAnimation(majorIndex);
 
         // for displaying last turn's HP        
         var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
@@ -292,9 +288,14 @@ class BattleLogger {
 
                 // display last event's HP
                 var lastEventCard = lastEventField["player" + p + "Cards"][f];
-                BattleGraphic.getInstance().displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
+                graphic.displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
             }
         }
+        graphic.displayAllCardImages(majorIndex);
+
+        // display turn animation
+        graphic.displayAllAfflictionText(lastEventIndex);
+        graphic.displayMajorEventAnimation(majorIndex);
     }
 
     /**
@@ -421,8 +422,8 @@ class BattleLogger {
 
     getCurrentFieldJSON() {
         var toSerialize = {
-            player1Cards: getSerializableObjectArray(BattleModel.getInstance().player1Cards),
-            player2Cards: getSerializableObjectArray(BattleModel.getInstance().player2Cards)
+            player1Cards: getSerializableObjectArray(BattleModel.getInstance().p1_mainCards),
+            player2Cards: getSerializableObjectArray(BattleModel.getInstance().p2_mainCards)
         };
 
         return JSON.stringify(toSerialize);
@@ -506,6 +507,14 @@ interface MinorEvent {
         counter?: boolean;
         counteredSkillId: number;
         attackerId: number
+    };
+    reserveSwitch?: {
+        mainId: number;
+        reserveId: number;
+    };
+    bcAddProb?: {
+        targetId: number;
+        isMain: boolean;
     };
     reviveHPRatio?: number; // for revive
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)

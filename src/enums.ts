@@ -139,6 +139,11 @@ module ENUM {
         IOS     = 2
     }
 
+    export enum BattleType {
+        BLOOD_CLASH = 1, 
+        NORMAL = 2
+    }
+
     export enum RandomBrigType {
         NONE = 0,
         ALL = 1, 
@@ -162,6 +167,8 @@ module ENUM {
         BATTLE_DESCRIPTION = 51, // used for displaying things that affect the whole battle
         TEXT = 6, // used for displaying text in the debugger that has nothing to do with the battle
         REVIVE = 7,
+        RESERVE_SWITCH = 8,
+        BC_ADDPROB = 9, // added probability at end of turn in bloodclash
     }
 }
 

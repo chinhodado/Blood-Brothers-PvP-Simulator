@@ -11,7 +11,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="js/ga.js"></script>
 </head>
-<body style="width: 100%; text-align: center;" onload="toogleDisable()">
+<body style="width: 100%; text-align: center;" onload="formOnLoad()">
 <div style="display: inline-block;">
     <h1>Blood Brothers Simulator</h1>
     <form action="game.html" method="GET" onsubmit="return validateForm()" name="mainForm">
@@ -22,6 +22,12 @@
         <select name="f12" id="f12" class="famSelect randomize p2"></select>
         <select name="f13" id="f13" class="famSelect randomize p2"></select>
         <select name="f14" id="f14" class="famSelect randomize p2"></select>
+        <br><br>
+        <select name="f15" id="f15" class="famSelect randomize p2 reserve"></select>
+        <select name="f16" id="f16" class="famSelect randomize p2 reserve"></select>
+        <select name="f17" id="f17" class="famSelect randomize p2 reserve"></select>
+        <select name="f18" id="f18" class="famSelect randomize p2 reserve"></select>
+        <select name="f19" id="f19" class="famSelect randomize p2 reserve"></select>
         <br><br>
         <select name="2f" id="2f" class="randomize p2">
             <option value="0">5-Skein</option>
@@ -66,6 +72,12 @@
         <select name="f3" id="f3" class="famSelect randomize p1"></select>
         <select name="f4" id="f4" class="famSelect randomize p1"></select>
         <br><br>
+        <select name="f5" id="f5" class="famSelect randomize p1 reserve"></select>
+        <select name="f6" id="f6" class="famSelect randomize p1 reserve"></select>
+        <select name="f7" id="f7" class="famSelect randomize p1 reserve"></select>
+        <select name="f8" id="f8" class="famSelect randomize p1 reserve"></select>
+        <select name="f9" id="f9" class="famSelect randomize p1 reserve"></select>
+        <br><br>
         <select name="1f" id="1f" class="randomize p1">
             <option value="0">5-Skein</option>
             <option value="1">5-Valley</option>
@@ -101,6 +113,11 @@
             <option value="10">Tier A and up</option>
         </select>
         <br><br>
+        Battle type:
+        <select name="bt" id="bt" onchange="toogleReserve()">
+            <option value="1">Bloodclash</option>
+            <option value="2">Normal</option>
+        </select>
         Proc order:
         <select name="po" id="po">
             <option value="1">Android</option>

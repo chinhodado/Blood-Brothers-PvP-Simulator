@@ -64,7 +64,8 @@ class SkillLogic {
             var probCond: boolean = true;
         }
         else {
-            probCond = (Math.random() * 100) <= (data.skill.maxProbability + data.executor.status.skillProbability * 100);
+            probCond = (Math.random() * 100) <= (data.skill.maxProbability + data.executor.status.skillProbability * 100 + 
+                data.executor.bcAddedProb);
         }
 
         return (deadCond && 
@@ -243,7 +244,7 @@ class AttackSkillLogic extends SkillLogic {
         
         for (var i = 0; i < numTarget && !data.executor.isDead; i++) {
 
-            var targetIndex = this.cardManager.getValidSingleTarget(this.battleModel.oppositePlayerCards);
+            var targetIndex = this.cardManager.getValidSingleTarget(this.battleModel.oppositePlayerMainCards);
     
             if (targetIndex == -1) {
                 // no valid target, miss a turn, continue to next card
@@ -252,7 +253,7 @@ class AttackSkillLogic extends SkillLogic {
             
             // since we get a valid index with every iteration of the loop, there's no need
             // to check if the target is dead here
-            var targetCard = this.battleModel.oppositePlayerCards[targetIndex];
+            var targetCard = this.battleModel.oppositePlayerMainCards[targetIndex];
             this.processAttackAgainstSingleTarget(data.executor, targetCard, data.skill);
         }
     }

@@ -147,7 +147,8 @@ class BattleGraphic {
             
             // grab the image links of the curent player's fam
             var imageLinksArray = [];
-            var playerCards = CardManager.getInstance().getPlayerCards(BattleModel.getInstance().getPlayerById(player));
+            var playerCards = CardManager.getInstance().getPlayerCurrentMainCards(BattleModel.getInstance().getPlayerById(player));
+            var reserveCards = CardManager.getInstance().getPlayerOriginalReserveCards(BattleModel.getInstance().getPlayerById(player));
             
             for (var fam = 0; fam < playerCards.length; fam++) {
                 imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
@@ -187,7 +188,7 @@ class BattleGraphic {
 
                 var click = function (arg) {
                     var cardMan = CardManager.getInstance();
-                    var card = cardMan.getCardByIndex(arg[0], arg[1]);
+                    var card = cardMan.getCurrentMainCardByIndex(arg[0], arg[1]);
                     return function () {
                         showCardDetailDialog(cardMan.getCardInfoForDialog(card));
                     };
@@ -195,7 +196,13 @@ class BattleGraphic {
                 group.on('click', click([player, i]));
 
                 groupPlayer.add(group);
-            }
+
+                // preload the reserve image
+                if (BattleModel.getInstance().isBloodClash) {
+                    var reserve_img = new Image();
+                    reserve_img.src = getScaledWikiaImageLink(reserveCards[i].imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
+                }
+            }            
         }
     }
 
@@ -207,6 +214,22 @@ class BattleGraphic {
             for (var index = 0; index < 5; index++) {
                 this.displayHPOnCanvas(100, player, index, 0);
                 this.getAfflictionText(player, index).hide();
+            }
+        }
+        this.displayAllCardImages(0);
+    }
+
+    /**
+     * Display all fam images at the beginning of a major index
+     */
+    displayAllCardImages(majorIndex: number) {
+        var field = this.logger.getFieldAtMajorIndex(majorIndex);
+        
+        for (var p = 1; p <= 2; p++) {
+            for (var f = 0; f < 5; f++) {
+                var image: any = SVG.get('p' + p + 'f' + f + 'image');
+                var card = field["player" + p + "Cards"][f];
+                image.load(getScaledWikiaImageLink(card.imageLink, BattleGraphic.IMAGE_WIDTH_BIG))
             }
         }
     }
@@ -377,7 +400,7 @@ class BattleGraphic {
         this.displayDamageTextAndHP(playerId, famIndex, majorIndex, minorIndex);
     }
 
-    displayDeadAliveFamiliar(player, fam, isDead) {
+    displayDeadAliveFamiliar(player: number, fam: number, isDead: boolean) {
         var image : any = SVG.get('p' + player + 'f' + fam + 'image');
         var filter = SVG.get('darkenFilter');
         if (isDead) {
@@ -431,8 +454,6 @@ class BattleGraphic {
             return; //description event like battle start, etc
         }
 
-        var executorId = majorLog[majorIndex].executorId;
-
         if (BattleGraphic.PLAY_MODE == 'AUTO') {
             var autoCallback = function() {
                 BattleGraphic.getInstance().displayMajorEventAnimation(majorIndex + 1);
@@ -448,7 +469,7 @@ class BattleGraphic {
                 BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
             }
 
-            this.displayProcSkill(executorId, majorLog[majorIndex].skillId, {callback: callback});
+            this.displayProcSkill(majorLog[majorIndex].executorId, majorLog[majorIndex].skillId, {callback: callback});
         }
     }
 
@@ -544,6 +565,7 @@ class BattleGraphic {
     displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean;callback?} = {}) {
         var minorLog = this.logger.minorEventLog;
         var majorLog = this.logger.majorEventLog;
+        var that = this;
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (!minorLog[majorIndex] || minorIndex >= minorLog[majorIndex].length) {
@@ -555,7 +577,9 @@ class BattleGraphic {
 
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
             
-        if (!data.executorId && data.type != ENUM.MinorEventType.HP && data.type != ENUM.MinorEventType.AFFLICTION) {
+        if (!data.executorId && data.type != ENUM.MinorEventType.HP && data.type != ENUM.MinorEventType.AFFLICTION
+            && data.type != ENUM.MinorEventType.RESERVE_SWITCH && data.type != ENUM.MinorEventType.BC_ADDPROB) 
+        {
             if (minorIndex < minorLog[majorIndex].length) {
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 return;
@@ -646,12 +670,55 @@ class BattleGraphic {
             else return;
         }
 
+        if (data.type == ENUM.MinorEventType.BC_ADDPROB) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                // we don't care about showing the text for reserve fams
+                if (data.bcAddProb.isMain) {
+                    var target = CardManager.getInstance().getCardById(data.bcAddProb.targetId);
+                    var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+                    var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+
+                    var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                    damageText.text("+10%").center(center_x, center_y).font({ size: 25})
+                        .opacity(1).animate({delay: '2s'}).opacity(0);
+                }
+
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
         if (data.type == ENUM.MinorEventType.AFFLICTION) {
             if (minorIndex < minorLog[majorIndex].length) {
                 var target = CardManager.getInstance().getCardById(data.targetId);
                 this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                return;
+            }
+            else return;
+        }
+
+        if (data.type == ENUM.MinorEventType.RESERVE_SWITCH) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                var main = CardManager.getInstance().getCardById(data.reserveSwitch.mainId);
+                var reserve = CardManager.getInstance().getCardById(data.reserveSwitch.reserveId);
+                var group = this.getCardImageGroupOnCanvas(main);
+                var mainId = main.getPlayerId();
+
+                var image: any = this.getCardImageOnCanvas(main);
+                var newLink = getScaledWikiaImageLink(reserve.imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
+                image.load(newLink);
+
+                var y_offset = mainId == 1? 255 : -255;
+                group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
+                    that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                });
+                
+                this.displayHPOnCanvas(100, mainId, main.formationColumn, 0);
+                this.getAfflictionText(mainId, main.formationColumn).hide();
+                
                 return;
             }
             else return;
