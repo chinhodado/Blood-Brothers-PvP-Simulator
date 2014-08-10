@@ -191,7 +191,7 @@ class Skill {
     }
 
     // get the list of stats status modified by the skill. Mainly used for displaying the status text
-    static getStatusModified(skillId: number) {
+    static getStatusModified(skillId: number): ENUM.StatusType[] {
         var skillInfo = SkillDatabase[skillId];
         var statuses = [];
 
@@ -237,24 +237,6 @@ class Skill {
             skillRange: this.skillRange,
             maxProbability: this.maxProbability,
             ward: this.ward,
-        }
-    }
-    
-    getSkillFuncArg(argnum : number) {
-        if (argnum == 1) {
-            return this.skillFuncArg1;
-        }
-        else if (argnum == 2) {
-            return this.skillFuncArg2;
-        }
-        else if (argnum == 3) {
-            return this.skillFuncArg3;
-        }
-        else if (argnum == 4) {
-            return this.skillFuncArg4;
-        }
-        else if (argnum == 5) {
-            return this.skillFuncArg5;
         }
     }
 

@@ -58,7 +58,7 @@ function setPreviousChoices() {
 }
 
 /**
- * Disable/enable form items belonging to a player based on random chosen or not
+ * Disable/enable form items belonging to a player based on whether random is chosen or not
  */
 function toogleDisable() {
     for (var player = 1; player <= 2; player++) {
@@ -132,6 +132,9 @@ function submitForm() {
     form.submit();
 }
 
+/**
+ * Populates the familiar selects options
+ */
 function setFamOptions() {
     var famSelects = document.getElementsByClassName("famSelect");
 
@@ -155,6 +158,9 @@ function setFamOptions() {
     };
 }
 
+/**
+ * Populates the skill selects options
+ */
 function setSkillOptions() {
     var skillSelects = document.getElementsByClassName("skillSelect");
 
@@ -175,12 +181,18 @@ function setSkillOptions() {
     };
 }
 
+/**
+ * Get the battle data and option from the URL. Also saves the settings to localstorage for later retrieval
+ */
 function getBattleDataOption() {
     // fam: player 1: f0 -> f4, f5 -> f9
     //      player 2: f10 -> f14, f15 -> f19
     // skills: player 1: s10 -> s12
     //         player 2: s20 -> s22
     // formation: player 1: 1f, player 2: 2f
+    // random mode: player 1: 1r, player 2: 2r
+    // proc order: po
+    // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
     var data = {}, option = {};

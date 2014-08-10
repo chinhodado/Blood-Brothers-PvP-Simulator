@@ -129,15 +129,15 @@ class RangeFactory {
         return range;
     }
 
-    static isEnemyRandomRange (id) {
+    static isEnemyRandomRange (id: number) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
     }
 
-    static isFriendRandomRange (id) {
+    static isFriendRandomRange (id: number) {
         return !!RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
     }
     
-    static createEnemyRandomRange (id) {
+    static createEnemyRandomRange (id: number) {
         return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
     }
 
@@ -145,11 +145,11 @@ class RangeFactory {
         return new FriendRandomRange(id, RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id], selectDead);
     }
     
-    static isEnemyNearRange (id) {
+    static isEnemyNearRange (id: number) {
         return !!RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
     }
     
-    static createEnemyNearRange (id) {
+    static createEnemyNearRange (id: number) {
         if (this.isEnemyNearRange(id)) {
             var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
         }
@@ -218,13 +218,13 @@ class RangeFactory {
 
 class BaseRange {
    
-    id : number;
+    id: number;
     
-    constructor(id : number) {
+    constructor(id: number) {
         this.id = id;
     }
     
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         // to be overrridden
         return null;
     }
@@ -276,7 +276,7 @@ class BaseRange {
 
 class BothSidesRange extends BaseRange {
     selectDead: boolean;
-    constructor(id : number, selectDead: boolean) {
+    constructor(id: number, selectDead: boolean) {
         super(id);
         this.selectDead = selectDead;
     }
@@ -289,7 +289,7 @@ class BothSidesRange extends BaseRange {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
+        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && this.satisfyDeadCondition(rightCard, this.selectDead)) {
             targets.push(rightCard);
         }
@@ -300,15 +300,15 @@ class BothSidesRange extends BaseRange {
 
 class EnemyRandomRange extends BaseRange {
 
-    numTarget : number;
+    numTarget: number;
     
-    constructor(id : number, numTarget : number) {
+    constructor(id: number, numTarget: number) {
         super(id);
         this.numTarget = numTarget;    
     }
 
     // use this for determining if there is a target only
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         return this.getBaseTargets(this.getCondFunc(executor));
     }
 }
@@ -366,23 +366,23 @@ class SelfRange extends BaseRange {
 
 class SelfBothSidesRange extends BaseRange {
     
-    constructor(id : number) {
+    constructor(id: number) {
         super(id);
     }
     
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         var targets = [];
         
         if (!executor.isDead) { // should always be true
             targets.push(executor);
         }
         
-        var leftCard : Card = CardManager.getInstance().getLeftSideCard(executor);
+        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
-        var rightCard : Card = CardManager.getInstance().getRightSideCard(executor);
+        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
@@ -392,11 +392,11 @@ class SelfBothSidesRange extends BaseRange {
 }
 
 class AllRange extends BaseRange {
-    constructor(id : number) {
+    constructor(id: number) {
         super(id);
     }
     
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         var targets = [];
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
         
@@ -419,14 +419,14 @@ class EnemyNearRange extends BaseRange {
     };
     
     // specific to an instance, the max distance from the center enemy
-    maxDistance : number;
+    maxDistance: number;
             
-    constructor(id : number, public numTarget) {
+    constructor(id: number, public numTarget) {
         super(id);
         this.maxDistance = EnemyNearRange.MAX_DISTANCE_FROM_CENTER[numTarget];
     }
     
-    getTargets (executor : Card) : Card[] {
+    getTargets (executor: Card): Card[] {
         // get center enemy
         var centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
 
@@ -463,7 +463,7 @@ class EnemyAllRange extends BaseRange {
         super(id);
     }
     
-    getTargets (executor : Card) : Card[]{
+    getTargets (executor: Card): Card[]{
         var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
         var targets = [];
         for (var i = 0; i < enemyCards.length; i++) {
@@ -490,7 +490,7 @@ class FriendRandomRange extends BaseRange {
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
     }
     
-    getTargets (executor : Card) : Card[]{
+    getTargets (executor: Card): Card[]{
         var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
         var targets: Card[];
 
@@ -575,7 +575,7 @@ class BaseRowRange extends BaseRange {
 }
 
 class EnemyFrontMidAllRange extends BaseRowRange {
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
@@ -592,7 +592,7 @@ class EnemyFrontMidAllRange extends BaseRowRange {
 }
 
 class EnemyFrontAllRange extends BaseRowRange {
-    getTargets(executor : Card) : Card[] {
+    getTargets(executor: Card): Card[] {
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);

@@ -37,7 +37,7 @@ class Formation {
         this.type = type;
     }
 
-    static getProcIndex(row: ENUM.FormationRow, column: number, type: ENUM.ProcOrderType) {
+    static getProcIndex(row: ENUM.FormationRow, column: number, type: ENUM.ProcOrderType): number {
         var order = type == ENUM.ProcOrderType.ANDROID? this.ANDROID_PROC_ORDER : this.IOS_PROC_ORDER;
 
         return order[row][column];
@@ -47,14 +47,14 @@ class Formation {
      * Given a position (from 0-5), return the row of the familiar currently at that position based
      * on the current formation
      */
-    getCardRow(position : number) : ENUM.FormationRow {
+    getCardRow(position: number): ENUM.FormationRow {
         return Formation.FORMATION_CONFIG[this.type][position];
     }
     
     /**
      * Return the config array of the current formation
      */
-    getFormationConfig() : number[] {
+    getFormationConfig(): number[] {
         return Formation.FORMATION_CONFIG[this.type];
     }
 }

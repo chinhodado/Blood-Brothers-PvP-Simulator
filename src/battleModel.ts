@@ -170,8 +170,8 @@ class BattleModel {
             if (i < 5) {
                 this.p1_mainCards[i] = card1;
                 this.p2_mainCards[i] = card2;
-                this.allCurrentMainCards.push(this.p1_mainCards[i]);
-                this.allCurrentMainCards.push(this.p2_mainCards[i]);
+                this.allCurrentMainCards.push(card1);
+                this.allCurrentMainCards.push(card2);
             }
             else if (i >= 5 && this.isBloodClash) {
                 this.p1_reserveCards[i % 5] = card1;
@@ -185,7 +185,7 @@ class BattleModel {
             this.allCardsById[card2.id] = card2;
         }
 
-        this.cardManager.sortAllCards();
+        this.cardManager.sortAllCurrentMainCards();
         
         graphic.displayFormationAndFamOnCanvas();
 
@@ -202,6 +202,7 @@ class BattleModel {
         BattleModel.removeInstance();
         BattleLogger.removeInstance();
         BattleGraphic.removeInstance();
+        CardManager.removeInstance();
     }
 
     /**
@@ -512,7 +513,7 @@ class BattleModel {
             }
 
             this.cardManager.updateAllCurrentMainCards();
-            this.cardManager.sortAllCards();
+            this.cardManager.sortAllCurrentMainCards();
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !finished; i++) {
@@ -835,8 +836,8 @@ class BattleModel {
 
     performOpeningSkills () {
         // the cards sorted by proc order
-        var p1cards = this.cardManager.getPlayerCardsByProcOrder(this.player1);
-        var p2cards = this.cardManager.getPlayerCardsByProcOrder(this.player2);
+        var p1cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player1);
+        var p2cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player2);
 
         for (var i = 0; i < p1cards.length; i++) {
             var skill1 = p1cards[i].getRandomOpeningSkill();

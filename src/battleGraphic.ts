@@ -19,7 +19,9 @@ class BattleGraphic {
     static FONT = 'Alegreya Sans, Cooper Black';
     static AFFLICTION_TEXT_STROKE_WIDTH = '1px';
 
-    logger: BattleLogger;
+    private logger: BattleLogger;
+    private battle: BattleModel;
+    private cardMan: CardManager;
 
     private static _instance: BattleGraphic = null;
 
@@ -30,6 +32,8 @@ class BattleGraphic {
         BattleGraphic._instance = this;
 
         this.logger = BattleLogger.getInstance();
+        this.battle = BattleModel.getInstance();
+        this.cardMan = CardManager.getInstance();
     }
 
     public static getInstance(): BattleGraphic {
@@ -57,10 +61,10 @@ class BattleGraphic {
         }
 
         var playerFormations = {};
-        playerFormations[1] = BattleModel.getInstance().player1.formation.getFormationConfig(); // player1's formation
+        playerFormations[1] = this.battle.player1.formation.getFormationConfig(); // player1's formation
         
         // reverse player2's formation for display purpose
-        var player2formation = BattleModel.getInstance().player2.formation.getFormationConfig();
+        var player2formation = this.battle.player2.formation.getFormationConfig();
         var temp = [];
         var tempNumber : number;
         for (var i = 0; i < 5; i++) {            
@@ -147,8 +151,8 @@ class BattleGraphic {
             
             // grab the image links of the curent player's fam
             var imageLinksArray = [];
-            var playerCards = CardManager.getInstance().getPlayerCurrentMainCards(BattleModel.getInstance().getPlayerById(player));
-            var reserveCards = CardManager.getInstance().getPlayerOriginalReserveCards(BattleModel.getInstance().getPlayerById(player));
+            var playerCards = this.cardMan.getPlayerCurrentMainCards(this.battle.getPlayerById(player));
+            var reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
             
             for (var fam = 0; fam < playerCards.length; fam++) {
                 imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
@@ -198,7 +202,7 @@ class BattleGraphic {
                 groupPlayer.add(group);
 
                 // preload the reserve image
-                if (BattleModel.getInstance().isBloodClash) {
+                if (this.battle.isBloodClash) {
                     var reserve_img = new Image();
                     reserve_img.src = getScaledWikiaImageLink(reserveCards[i].imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
                 }
@@ -439,6 +443,7 @@ class BattleGraphic {
      */
     displayMajorEventAnimation(majorIndex: number) {
         var majorLog = this.logger.majorEventLog;
+        var that = this;
 
         if (majorIndex >= majorLog.length) {
             document.getElementById("startButton").disabled = false;
@@ -456,7 +461,7 @@ class BattleGraphic {
 
         if (BattleGraphic.PLAY_MODE == 'AUTO') {
             var autoCallback = function() {
-                BattleGraphic.getInstance().displayMajorEventAnimation(majorIndex + 1);
+                that.displayMajorEventAnimation(majorIndex + 1);
             }
         }
             
@@ -466,7 +471,7 @@ class BattleGraphic {
         }
         else {
             var callback = function() {
-                BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
+                that.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
             }
 
             this.displayProcSkill(majorLog[majorIndex].executorId, majorLog[majorIndex].skillId, {callback: callback});
@@ -490,8 +495,8 @@ class BattleGraphic {
             return;
         }
 
-        var executor = CardManager.getInstance().getCardById(executorId);
-        var group: any = this.getCardImageGroupOnCanvas(executor);
+        var executor = this.cardMan.getCardById(executorId);
+        var group: any = this.getCardImageGroup(executor);
 
         // display the proc effect: spell circle or light spark
         if (!option.noProcEffect) {
@@ -561,8 +566,9 @@ class BattleGraphic {
      * This should only be called once on a major index because of that
      * 
      * noAttackAnim: don't display attack anim anymore (for AoE)
+     * noNestedAttackAnim: same, for nested AoE
      */
-    displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean;callback?} = {}) {
+    displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean; callback?} = {}) {
         var minorLog = this.logger.minorEventLog;
         var majorLog = this.logger.majorEventLog;
         var that = this;
@@ -582,20 +588,20 @@ class BattleGraphic {
         {
             if (minorIndex < minorLog[majorIndex].length) {
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return; // for now
+            
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.HP && !data.executorId) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var target = CardManager.getInstance().getCardById(data.targetId);
+                var target = this.cardMan.getCardById(data.targetId);
 
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.BATTLE_DESCRIPTION) {
@@ -603,14 +609,14 @@ class BattleGraphic {
                 var txt = this.getMainBattleEffect().text('Turn Order Changed').center(200, 300)
                     .opacity(1).animate({duration: '2s'}).opacity(0);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.STATUS) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var target = CardManager.getInstance().getCardById(data.targetId);
+                var target = this.cardMan.getCardById(data.targetId);
 
                 var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
@@ -665,16 +671,16 @@ class BattleGraphic {
                 }
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.BC_ADDPROB) {
             if (minorIndex < minorLog[majorIndex].length) {
                 // we don't care about showing the text for reserve fams
                 if (data.bcAddProb.isMain) {
-                    var target = CardManager.getInstance().getCardById(data.bcAddProb.targetId);
+                    var target = this.cardMan.getCardById(data.bcAddProb.targetId);
                     var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
                     var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
@@ -684,30 +690,30 @@ class BattleGraphic {
                 }
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.AFFLICTION) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var target = CardManager.getInstance().getCardById(data.targetId);
+                var target = this.cardMan.getCardById(data.targetId);
                 this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         if (data.type == ENUM.MinorEventType.RESERVE_SWITCH) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var main = CardManager.getInstance().getCardById(data.reserveSwitch.mainId);
-                var reserve = CardManager.getInstance().getCardById(data.reserveSwitch.reserveId);
-                var group = this.getCardImageGroupOnCanvas(main);
+                var main = this.cardMan.getCardById(data.reserveSwitch.mainId);
+                var reserve = this.cardMan.getCardById(data.reserveSwitch.reserveId);
+                var group = this.getCardImageGroup(main);
                 var mainId = main.getPlayerId();
 
-                var image: any = this.getCardImageOnCanvas(main);
+                var image: any = this.getCardImage(main);
                 var newLink = getScaledWikiaImageLink(reserve.imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
                 image.load(newLink);
 
@@ -718,15 +724,14 @@ class BattleGraphic {
                 
                 this.displayHPOnCanvas(100, mainId, main.formationColumn, 0);
                 this.getAfflictionText(mainId, main.formationColumn).hide();
-                
-                return;
             }
-            else return;
+
+            return;
         }
 
         // going and attack physically
-        var executor = CardManager.getInstance().getCardById(data.executorId);
-        var executorGroup: any = this.getCardImageGroupOnCanvas(executor);
+        var executor = this.cardMan.getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroup(executor);
         executorGroup.front();
 
         var x1 = executorGroup.rbox().x;
@@ -742,7 +747,7 @@ class BattleGraphic {
                 if (!data.noProcEffect) {
                     this.displayProcSkill(executor.id, data.skillId, {
                         callback: function() {
-                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                            that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                         },
                         durationRatio: 0.5,
                     });                
@@ -754,16 +759,14 @@ class BattleGraphic {
                     });
                     this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 }
-
-                return;
             }
-            else return;
+
+            return;
         }
 
-        // revive
         if (data.type == ENUM.MinorEventType.REVIVE) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var target = CardManager.getInstance().getCardById(data.targetId);
+                var target = this.cardMan.getCardById(data.targetId);
                 var playerId = target.getPlayerId();
                 var index = target.formationColumn;
                 var center_x = this.coordArray[playerId][index][0];
@@ -776,19 +779,19 @@ class BattleGraphic {
                 this.getAfflictionText(playerId, index).hide();
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                return;
             }
-            else return;
+
+            return;
         }
 
         // a protect/defense, show it
         if (data.type == ENUM.MinorEventType.PROTECT) {
             if (minorIndex < minorLog[majorIndex].length) {
-                var protectedCard = CardManager.getInstance().getCardById(data.protect.protectedId);
-                var protectedGroup = this.getCardImageGroupOnCanvas(protectedCard);
+                var protectedCard = this.cardMan.getCardById(data.protect.protectedId);
+                var protectedGroup = this.getCardImageGroup(protectedCard);
 
-                var attackerCard = CardManager.getInstance().getCardById(data.protect.attackerId);
-                var attackerGroup = this.getCardImageGroupOnCanvas(attackerCard);
+                var attackerCard = this.cardMan.getCardById(data.protect.attackerId);
+                var attackerGroup = this.getCardImageGroup(attackerCard);
 
                 var x_protected = protectedGroup.rbox().x;
                 var y_protected = protectedGroup.rbox().y;
@@ -846,13 +849,12 @@ class BattleGraphic {
                                         procEffect.remove();
                                     }
 
-                                    BattleGraphic.getInstance()
-                                        .displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+                                    that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
                                     
                                     executorGroup.animate({ duration: moveBackTime + 's'})
                                         .move(0, 0)
                                         .after(function(){                                    
-                                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                            that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
                                         });
                                 });                            
                         }
@@ -863,8 +865,7 @@ class BattleGraphic {
                                 .after(function () {
                                     explosion.opacity(1);           
                                             
-                                    BattleGraphic.getInstance()
-                                        .displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+                                    that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
 
                                     attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
 
@@ -872,19 +873,18 @@ class BattleGraphic {
                                         .move(0, 0)
                                         .after(function(){
                                             explosion.opacity(0);                               
-                                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                            that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
                                         });
                                 });    
                         }
                     });
-
-                return;
             }
-            else return;
+
+            return;
         }
 
-        var target = CardManager.getInstance().getCardById(data.targetId);
-        var targetGroup: any = this.getCardImageGroupOnCanvas(target);
+        var target = this.cardMan.getCardById(data.targetId);
+        var targetGroup: any = this.getCardImageGroup(target);
 
         var x = targetGroup.rbox().x;
         var y = targetGroup.rbox().y;
@@ -908,7 +908,7 @@ class BattleGraphic {
             }
 
             for (var i = 0; i < aoeTargets.length; i++) {
-                var exploTargetCol = CardManager.getInstance().getCardById(aoeTargets[i]).formationColumn;
+                var exploTargetCol = this.cardMan.getCardById(aoeTargets[i]).formationColumn;
                 exploSet.push(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
             }
 
@@ -969,9 +969,8 @@ class BattleGraphic {
                      .after(function() {
                         explosion.opacity(0);
 
-                        BattleGraphic.getInstance()
-                            .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
-                        BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                        that.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                        that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                      });
         }
         else {
@@ -983,14 +982,13 @@ class BattleGraphic {
                         explosion.opacity(1);
                     }
 
-                    BattleGraphic.getInstance()
-                        .displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+                    that.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
                     this.animate({ duration: '0.5s'})
                         .move(0, 0)
                         .after(function () {
                             explosion.opacity(0);
-                            BattleGraphic.getInstance().displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                            that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                         });
                 });
         }
@@ -999,14 +997,14 @@ class BattleGraphic {
     /**
      * Given a card, return the image of that card on the canvas
      */
-    getCardImageOnCanvas(card: Card) {
+    getCardImage(card: Card) {
         return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'image');
     }
 
     /**
      * Given a card, return the image group of that card on the canvas
      */
-    getCardImageGroupOnCanvas(card: Card) {
+    getCardImageGroup(card: Card) {
         return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
     }
 

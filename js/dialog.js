@@ -1,4 +1,8 @@
-﻿function showCardDetailDialog(cardInfo) {
+﻿/**
+ * This file contains functions used for displaying the familiar detail dialog
+ */
+
+function showCardDetailDialog(cardInfo) {
     currentCard = cardInfo;
     currentSkillIndex = 0;
     var elem = document.getElementById("card-detail-figure");

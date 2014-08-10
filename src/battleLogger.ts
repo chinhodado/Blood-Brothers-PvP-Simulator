@@ -38,14 +38,14 @@ class BattleLogger {
      * Allows to create a new instance
      * Used for testing only
      */
-    static removeInstance() {
+    static removeInstance(): void {
         BattleLogger._instance = null;
     }
     
     /**
      * Display a major event on screen (the left side list)
      */
-    displayMajorEvent (index : number) : void {
+    displayMajorEvent (index: number): void {
 
         if (!BattleLogger.IS_DEBUG_MODE) {
             return;
@@ -80,7 +80,7 @@ class BattleLogger {
      * thought of as logging the main action in a fam's turn. The data to log here
      * is just a string, there's no actual data change associated with a major event
      */
-    addMajorEvent (data: MajorEvent) {
+    addMajorEvent (data: MajorEvent): void {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -93,7 +93,7 @@ class BattleLogger {
     /**
      * Log a new turn
      */
-    bblogTurn(data) {
+    bblogTurn(data): void {
 
         if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
@@ -108,7 +108,7 @@ class BattleLogger {
     /**
      * Display a minor event on screen
      */
-    displayMinorEvent (data) {
+    displayMinorEvent (data): void {
 
         if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
@@ -144,7 +144,7 @@ class BattleLogger {
      * of the screen with information after the event that you clicked on has been processed. That event
      * is represented by the index argument supplied into this function.
      */
-    displayEventLogAtIndex(majorIndex) {
+    displayEventLogAtIndex(majorIndex): void {
 
         if (!BattleLogger.IS_DEBUG_MODE) {
             return;
@@ -301,7 +301,7 @@ class BattleLogger {
     /**
      * Display the info text for normal mode
      */
-    displayInfoText() {
+    displayInfoText(): void {
         var cardManager = CardManager.getInstance();
         var battle = BattleModel.getInstance();
         var p1randTxt = this.getRandomModeText(+battle.p1RandomMode);
@@ -316,7 +316,7 @@ class BattleLogger {
         refreshText.innerHTML = "between " + p1randTxt + " Player 1 and " + p2randTxt + " Player 2";
     }
 
-    getRandomModeText(type: ENUM.RandomBrigType) {
+    getRandomModeText(type: ENUM.RandomBrigType): string {
         switch (type) {
             case ENUM.RandomBrigType.ALL:
                 return "a random";
@@ -344,7 +344,7 @@ class BattleLogger {
     }
 
     // after adjusted new debuff
-    getAdjustedStat(original: number, statusAmount: number, isNewLogic: boolean) {
+    getAdjustedStat(original: number, statusAmount: number, isNewLogic: boolean): number {
         var value = original + statusAmount;
 
         if (value < 0) {
@@ -385,8 +385,8 @@ class BattleLogger {
      * @param text the text to decorate
      * @param isNegative true if you want the text to be red, false if green
      */
-    decorateText(text : string, isNegative : boolean) {
-        var openTag : string;
+    decorateText(text: string, isNegative: boolean): string {
+        var openTag: string;
         if (isNegative) {
             openTag = "<span style='color:red'><b>";
         }
@@ -399,7 +399,7 @@ class BattleLogger {
     /**
      * Add a minor event to our minor event log.
      */
-    addMinorEvent(event: MinorEvent) {
+    addMinorEvent(event: MinorEvent): void {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
@@ -420,7 +420,7 @@ class BattleLogger {
         this.displayMinorEvent(event.description);
     }
 
-    getCurrentFieldJSON() {
+    getCurrentFieldJSON(): string {
         var toSerialize = {
             player1Cards: getSerializableObjectArray(BattleModel.getInstance().p1_mainCards),
             player2Cards: getSerializableObjectArray(BattleModel.getInstance().p2_mainCards)
@@ -467,7 +467,7 @@ class BattleLogger {
     /**
      * Log the situation at the start of battle and display the initial info
      */
-    startBattleLog() {
+    startBattleLog(): void {
 
         if (BattleModel.IS_MASS_SIMULATION) {
             return;

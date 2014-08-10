@@ -3,9 +3,10 @@
  */
 class CardManager {
 
-    private static _instance : CardManager = null;
+    private static _instance: CardManager = null;
+    private battle: BattleModel;
 
-    public static getInstance() : CardManager {
+    public static getInstance(): CardManager {
         if (CardManager._instance === null) {
             CardManager._instance = new CardManager();
         }
@@ -17,24 +18,34 @@ class CardManager {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
         CardManager._instance = this;
+
+        this.battle = BattleModel.getInstance();
     }
 
-    getSortFunc(type: ENUM.BattleTurnOrderType) {
+    /**
+     * Allows to create a new instance
+     * Used for testing only
+     */
+    static removeInstance() {
+        CardManager._instance = null;
+    }
+
+    getSortFunc(type: ENUM.BattleTurnOrderType): (a: Card, b: Card)=>number {
         switch (type) {
             case ENUM.BattleTurnOrderType.AGI:
-                return function (a, b) {
+                return function (a: Card, b: Card) {
                     return b.getAGI() - a.getAGI(); // descending based on agi
                 }
             case ENUM.BattleTurnOrderType.ATK:
-                return function (a, b) {
+                return function (a: Card, b: Card) {
                     return b.getATK() - a.getATK(); // descending based on atk
                 }
             case ENUM.BattleTurnOrderType.DEF:
-                return function (a, b) {
+                return function (a: Card, b: Card) {
                     return b.getDEF() - a.getDEF(); // descending based on def
                 }
             case ENUM.BattleTurnOrderType.WIS:
-                return function (a, b) {
+                return function (a: Card, b: Card) {
                     return b.getWIS() - a.getWIS(); // descending based on wis
                 }
             default:
@@ -43,12 +54,12 @@ class CardManager {
         }
     }
 
-    sortAllCards() {
-        var sortFunc = this.getSortFunc(BattleModel.getInstance().turnOrderBase);
-        BattleModel.getInstance().allCurrentMainCards.sort(sortFunc);
+    sortAllCurrentMainCards(): void {
+        var sortFunc = this.getSortFunc(this.battle.turnOrderBase);
+        this.battle.allCurrentMainCards.sort(sortFunc);
     }
 
-    getPlayerCardsByProcOrder(player: Player) {
+    getPlayerCurrentMainCardsByProcOrder(player: Player): Card[] {
         var playerCards = this.getPlayerCurrentMainCards(player);
         var copy = [];
         for (var i = 0; i < playerCards.length; i++) {
@@ -66,7 +77,7 @@ class CardManager {
      * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost 
      * position in the formation
      */
-    getLeftSideCard (card : Card) : Card {
+    getLeftSideCard (card: Card): Card {
         var playerCards = this.getPlayerCurrentMainCards(card.player);
         var column = card.formationColumn;
         if (column == 0) { // leftmost position
@@ -84,7 +95,7 @@ class CardManager {
      * Get the card to the right of a supplied card. Return null if the supplied card is at the rightmost 
      * position in the formation
      */
-    getRightSideCard (card : Card) : Card {
+    getRightSideCard (card: Card): Card {
         var playerCards = this.getPlayerCurrentMainCards(card.player);
         var column = card.formationColumn;
         if (column == 4) { // rightmost position
@@ -102,14 +113,14 @@ class CardManager {
      * Get a card by its id
      */
     getCardById(id: number): Card {
-        return BattleModel.getInstance().allCardsById[id];
+        return this.battle.allCardsById[id];
     }
     
     /**
      * Get all the current main cards of a player
      */
-    getPlayerCurrentMainCards (player: Player) {
-        var battle = BattleModel.getInstance();
+    getPlayerCurrentMainCards (player: Player): Card[] {
+        var battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_mainCards;
         }
@@ -121,8 +132,8 @@ class CardManager {
         }
     }
 
-    getPlayerCurrentReserveCards (player: Player) {
-        var battle = BattleModel.getInstance();
+    getPlayerCurrentReserveCards (player: Player): Card[] {
+        var battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_reserveCards;
         }
@@ -134,8 +145,8 @@ class CardManager {
         }
     }
 
-    getPlayerOriginalReserveCards (player: Player) {
-        var battle = BattleModel.getInstance();
+    getPlayerOriginalReserveCards (player: Player): Card[] {
+        var battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_originalReserveCards;
         }
@@ -147,8 +158,8 @@ class CardManager {
         }
     }
     
-    getEnemyCurrentMainCards (player: Player) {
-        var battle = BattleModel.getInstance();
+    getEnemyCurrentMainCards (player: Player): Card[] {
+        var battle = this.battle;
         if (player === battle.player1) {
             return battle.p2_mainCards;
         }
@@ -160,8 +171,8 @@ class CardManager {
         }
     }
 
-    getEnemyCurrentReserveCards (player: Player) {
-        var battle = BattleModel.getInstance();
+    getEnemyCurrentReserveCards (player: Player): Card[] {
+        var battle = this.battle;
         if (player === battle.player1) {
             return battle.p2_reserveCards;
         }
@@ -173,8 +184,8 @@ class CardManager {
         }
     }
 
-    getValidSingleTarget (cards : Card[]) {
-        var possibleIndices = [];
+    getValidSingleTarget (cards: Card[]): Card {
+        var possibleIndices: number[] = [];
         for (var i = 0; i < 5; i++) {
             if (!cards[i].isDead) {
                 possibleIndices.push(i);
@@ -182,17 +193,17 @@ class CardManager {
         }
 
         if (possibleIndices.length === 0) {
-            return -1; // no valid index
+            return null;
         }
 
         // get a random index from the list of possible indices
         var randomIndex = getRandomInt(0, possibleIndices.length - 1); 
 
-        return possibleIndices[randomIndex];
+        return cards[possibleIndices[randomIndex]];
     }
     
-    getNearestSingleOpponentTarget (executor : Card) : Card {
-        var oppCards : Card[] = this.getPlayerCurrentMainCards(BattleModel.getInstance().getOppositePlayer(executor.player));
+    getNearestSingleOpponentTarget (executor: Card): Card {
+        var oppCards: Card[] = this.getPlayerCurrentMainCards(this.battle.getOppositePlayer(executor.player));
         var executorIndex = executor.formationColumn;
         
         var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
@@ -208,10 +219,12 @@ class CardManager {
         return null;
     }
 
-    isAllDeadPlayer (player: Player) {
-        var battle = BattleModel.getInstance();
+    /**
+     * Check if all cards of a player has died
+     */
+    isAllDeadPlayer (player: Player): boolean {
         var reserveCond = true;
-        if (battle.isBloodClash) {
+        if (this.battle.isBloodClash) {
             if (!this.isNoReserveLeft(player)) reserveCond = false;
         }
         return this.isAllMainCardsDead(player) && reserveCond;
@@ -220,7 +233,7 @@ class CardManager {
     /**
      * Check if all the current main cards of a player has died
      */
-    isAllMainCardsDead (player: Player) {
+    isAllMainCardsDead (player: Player): boolean {
         var mainCards = this.getPlayerCurrentMainCards(player);
         var isAllDead = true;
         for (var i = 0; i < mainCards.length; i++) {
@@ -236,7 +249,7 @@ class CardManager {
     /**
      * Check if a player has no reserve left. Use it only when battle is bloodclash.
      */
-    isNoReserveLeft (player: Player) {
+    isNoReserveLeft (player: Player): boolean {
         var reserveCards = this.getPlayerCurrentReserveCards(player);
         var noReserveLeft = true;
         for (var i = 0; i < reserveCards.length; i++) {
@@ -262,18 +275,21 @@ class CardManager {
         return isIn;
     }
 
+    /**
+     * Return true if two cards are the same (same id)
+     */
     isSameCard(card1: Card, card2: Card): boolean {
         return card1.id == card2.id;
     }
 
     /**
-     * Use this when the order of the cards are unimportant
+     * Use these when the order of the cards are unimportant
      */
     getAllCurrentMainCards(): Card[] {
-        return BattleModel.getInstance().allCurrentMainCards;
+        return this.battle.allCurrentMainCards;
     }
     getAllCurrentCards(): Card[] {
-        var bt = BattleModel.getInstance();
+        var bt = this.battle;
         return bt.p1_mainCards.concat(bt.p2_mainCards).concat(bt.p1_reserveCards).concat(bt.p2_reserveCards);
     }
 
@@ -281,23 +297,12 @@ class CardManager {
      * Is a card currently a main card?
      */
     isCurrentMainCard(card: Card): boolean {
-        var bt = BattleModel.getInstance();
-        var isCurrentMain = false;
-        var p1main = bt.p1_mainCards;
-        var p2main = bt.p2_mainCards;
-
-        for (var i = 0; i < 5; i++) {
-            if (p1main[i].id == card.id || p2main[i].id == card.id) {
-                isCurrentMain = true;
-                break;
-            }
-        }
-        return isCurrentMain;
+        return this.isCardInList(card, this.getAllCurrentMainCards());
     }
 
     // remember to call this when there's a change in membership of p1_mainCards or p2_mainCards
     updateAllCurrentMainCards(): void {
-        var battle = BattleModel.getInstance();
+        var battle = this.battle;
         battle.allCurrentMainCards = battle.p1_mainCards.concat(battle.p2_mainCards);
     }
 
@@ -305,7 +310,7 @@ class CardManager {
     // allCurrentMainCards while still maintaining the current order (the order won't be updated until
     // the beginning of a game turn)
     switchCardInAllCurrentMainCards(oldCard: Card, newCard: Card): void{
-        var allCurrentMainCards = BattleModel.getInstance().allCurrentMainCards;
+        var allCurrentMainCards = this.battle.allCurrentMainCards;
         var found = false;
         for (var i = 0; i < allCurrentMainCards.length; i++) {
             if (allCurrentMainCards[i].id == oldCard.id) {
@@ -324,8 +329,7 @@ class CardManager {
      * Use this when the order of the cards are important: player 1 cards -> player 2 cards
      */
     getAllCardsInPlayerOrder(): Card[] {
-        var battle = BattleModel.getInstance();
-        return battle.p1_mainCards.concat(battle.p2_mainCards);
+        return this.battle.p1_mainCards.concat(this.battle.p2_mainCards);
     }
 
     /**
@@ -341,8 +345,8 @@ class CardManager {
         return brigStr;
     }
 
-    getCurrentMainCardByIndex(playerId: number, index: number) {
-        var cards = this.getPlayerCurrentMainCards(BattleModel.getInstance().getPlayerById(playerId));
+    getCurrentMainCardByIndex(playerId: number, index: number): Card {
+        var cards = this.getPlayerCurrentMainCards(this.battle.getPlayerById(playerId));
         return cards[index];
     }
 

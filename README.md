@@ -1,6 +1,6 @@
 Blood Brothers PvP Simulator
 ================
-[![Build Status](https://travis-ci.org/chinhodado/bb_pvp_simulator.svg?branch=master)](https://travis-ci.org/chinhodado/bb_pvp_simulator)
+[![Build Status](https://travis-ci.org/chinhodado/Blood-Brothers-PvP-Simulator.svg?branch=master)](https://travis-ci.org/chinhodado/Blood-Brothers-PvP-Simulator)
 ### What is this?
 This is a pvp simulator for the Blood Brothers game.
 I code it for fun and also for playing with TypeScript.

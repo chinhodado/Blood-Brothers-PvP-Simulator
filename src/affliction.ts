@@ -28,7 +28,7 @@ class Affliction {
         this.finished = false;
     }
 
-    static getAfflictionAdjective(type: ENUM.AfflictionType) {
+    static getAfflictionAdjective(type: ENUM.AfflictionType): string {
         switch (type) {
             case ENUM.AfflictionType.BLIND:
                 return "Blinded";
@@ -47,36 +47,36 @@ class Affliction {
         }
     }
 
-    canAttack(): boolean{
+    canAttack(): boolean {
         // implement this
         return false;
     }
 
-    canUseSkill(){
+    canUseSkill(): boolean {
         return this.canAttack();
     }
 
-    canMiss() {
+    canMiss(): boolean {
         return false;
     }
 
-    update(card: Card){
+    update(card: Card): void {
         // implement this
     }
 
-    add(option: AfflectOptParam) {
+    add(option: AfflectOptParam): void {
         // implement this
     }
 
-    isFinished(){
+    isFinished(): boolean {
         return this.finished;
     }
 
-    clear(){
+    clear(): void {
         this.finished = true;
     }
 
-    getType(){
+    getType(): ENUM.AfflictionType {
         return this.type;
     }
 }
@@ -94,11 +94,11 @@ class PoisonAffliction extends Affliction {
         this.finished = false;
     }
 
-    canAttack(){
+    canAttack(): boolean {
         return true;
     }
 
-    update(card: Card){
+    update(card: Card): void {
         var damage: number = Math.floor(card.originalStats.hp * this.percent / 100);
         if(damage > PoisonAffliction.MAX_DAMAGE){
             damage = PoisonAffliction.MAX_DAMAGE;
@@ -107,7 +107,7 @@ class PoisonAffliction extends Affliction {
         BattleModel.getInstance().damageToTargetDirectly(card, damage, "poison");
     }
 
-    add(option: AfflectOptParam){
+    add(option: AfflectOptParam): void {
         var percent = option.percent;
         if(!percent){
             percent = PoisonAffliction.DEFAULT_PERCENT;
@@ -128,11 +128,11 @@ class ParalysisAffliction extends Affliction {
         super(ENUM.AfflictionType.PARALYSIS);
     }
 
-    canAttack(){
+    canAttack(): boolean {
         return this.isFinished();
     }
 
-    update(){
+    update(): void {
         this.clear();
     }
 }
@@ -143,11 +143,11 @@ class FrozenAffliction extends Affliction {
         super(ENUM.AfflictionType.FROZEN);
     }
 
-    canAttack(){
+    canAttack(): boolean {
         return this.isFinished();
     }
 
-    update(){
+    update(): void {
         this.clear();
     }
 }
@@ -158,11 +158,11 @@ class DisabledAffliction extends Affliction {
         super(ENUM.AfflictionType.DISABLE);
     }
 
-    canAttack(){
+    canAttack(): boolean {
         return this.isFinished();
     }
 
-    update(){
+    update(): void {
         this.clear();
     }
 }
@@ -180,17 +180,17 @@ class SilentAffliction extends Affliction {
         return true;
     }
 
-    canUseSkill(){
+    canUseSkill(): boolean {
         return this.isFinished();
     }
 
-    update(){
+    update(): void{
         if(--this.validTurnNum <= 0){
             this.clear();
         }
     }
     
-    add(option: AfflectOptParam){
+    add(option: AfflectOptParam): void{
         this.validTurnNum = option.turnNum;
     }
 }
@@ -207,21 +207,21 @@ class BlindAffliction extends Affliction {
         this.validTurnNum = 0;
     }
 
-    canAttack(){
+    canAttack(): boolean{
         return true;
     }
 
-    canMiss(){
+    canMiss(): boolean{
         return Math.random() <= this.missProb;
     }
 
-    update(){
+    update(): void{
         if(--this.validTurnNum <= 0){
             this.clear();
         }
     }
 
-    add(option: AfflectOptParam){
+    add(option: AfflectOptParam): void{
         this.validTurnNum = option.turnNum;
         this.missProb = option.missProb;
     }

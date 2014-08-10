@@ -175,23 +175,23 @@ class Card {
         this.ondeathSkills[0] = null;
     }
 
-    getName() {
+    getName(): string {
         return this.name;
     }
     
-    getPlayerId() {
+    getPlayerId(): number {
         return this.player.id;
     }
     
-    getPlayerName() {
+    getPlayerName(): string {
         return this.player.name;
     }
     
-    getFormationRow() : ENUM.FormationRow {
+    getFormationRow(): ENUM.FormationRow {
         return this.formationRow;
     }
     
-    getStat(statType : String) : number {
+    getStat(statType: String): number {
         if (statType === "HP") {
             return this.getHP();
         }
@@ -216,7 +216,7 @@ class Card {
     }
 
     // affliction
-    setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam) {
+    setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam): void {
 
         if(this.affliction){
             if (this.affliction.getType() === type){
@@ -243,7 +243,7 @@ class Card {
         return (this.affliction) ? this.affliction.canAttack() : true;
     }
 
-    canUseSkill():boolean {
+    canUseSkill(): boolean {
         return (this.affliction) ? this.affliction.canUseSkill() : true;
     }
 
@@ -335,8 +335,7 @@ class Card {
         }
     }
     
-    clearAllPositiveStatus() {
-        // for now, only clear beneficial status
+    clearAllPositiveStatus(): void {
         if (this.status.atk > 0) this.status.atk = 0;
         if (this.status.def > 0) this.status.def = 0;
         if (this.status.wis > 0) this.status.wis = 0;
@@ -356,7 +355,7 @@ class Card {
         if (this.status.willAttackAgain > 0) this.status.willAttackAgain = 0;
     }
 
-    hasPositiveStatus() {
+    hasPositiveStatus(): boolean {
         var hasPositiveStatus = false;
         var status = this.status;
 
@@ -370,13 +369,13 @@ class Card {
         return hasPositiveStatus;
     }
 
-    getHP () {
+    getHP(): number {
         return this.stats.hp;
     }
     getOriginalHP(): number {
         return this.originalStats.hp;
     }
-    changeHP (amount : number) {
+    changeHP (amount: number) {
         this.stats.hp += amount;
 
         if (this.stats.hp > this.originalStats.hp) {
@@ -390,7 +389,7 @@ class Card {
         return this.stats.hp/this.originalStats.hp;
     }
     
-    revive(hpRatio: number) {
+    revive(hpRatio: number): void {
         if (!this.isDead) {
             throw new Error("You can't revive a card that is not dead!");
         }
@@ -400,7 +399,7 @@ class Card {
         this.stats.hp = this.originalStats.hp * hpRatio;
     }
 
-    getATK () {
+    getATK() {
         var value = this.stats.atk + this.status.atk;
 
         if (value < 0) {
@@ -411,7 +410,7 @@ class Card {
 
         return value;
     }
-    getDEF () {
+    getDEF() {
         var value = this.stats.def + this.status.def;
 
         if (value < 0) {
@@ -422,7 +421,7 @@ class Card {
 
         return value;
     }
-    getWIS () {
+    getWIS() {
         var value = this.stats.wis + this.status.wis;
 
         if (value < 0) {
@@ -433,7 +432,7 @@ class Card {
 
         return value;
     }
-    getAGI () {
+    getAGI() {
         var value = this.stats.agi + this.status.agi;
 
         if (value < 0) {
@@ -445,7 +444,7 @@ class Card {
         return value;
     }
 
-    adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number) {
+    adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number): number {
         if (this.status.isNewLogic[type]) {
             var lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
             value = (value > lowerLimit) ? value : lowerLimit;
