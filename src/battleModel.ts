@@ -550,7 +550,24 @@ class BattleModel {
                             }
                         });
 
-                        currentCard = reserveCard;                  
+                        currentCard = reserveCard;
+
+                        // proc opening skill when switch in
+                        var openingSkill = currentCard.getRandomOpeningSkill();
+                        if (openingSkill) {
+                            var data: SkillLogicData = {
+                                executor: currentCard,
+                                skill: openingSkill
+                            }
+                            if (openingSkill.willBeExecuted(data)) {
+                                this.logger.addMajorEvent({
+                                    description: currentCard.name + " procs " + openingSkill.name,
+                                    executorId: currentCard.id,
+                                    skillId: openingSkill.id
+                                });
+                                openingSkill.execute(data);
+                            }
+                        }
                     }
                     else {
                         continue;
