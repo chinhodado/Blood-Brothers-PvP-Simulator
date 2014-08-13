@@ -80,6 +80,12 @@ class SkillLogic {
 }
 
 class BuffSkillLogic extends SkillLogic {
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets: Card[] = data.skill.range.getTargets(data.executor);
+        return super.willBeExecuted(data) && targets && (targets.length > 0);
+    }
+
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
@@ -806,7 +812,8 @@ class TurnOrderChangeSkillLogic extends SkillLogic {
                 type: ENUM.MinorEventType.BATTLE_DESCRIPTION,
                 description: "Turn order is now based on " + ENUM.BattleTurnOrderType[data.skill.skillFuncArg1] + " for " + 
                     data.skill.skillFuncArg2 + " turn(s).",
-                skillId: data.skill.id
+                skillId: data.skill.id,
+                battleDesc: "Turn Order Changed"
         });
     }
 }

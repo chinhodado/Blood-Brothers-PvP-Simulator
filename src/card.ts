@@ -381,6 +381,10 @@ class Card {
         if (this.stats.hp > this.originalStats.hp) {
             this.stats.hp = this.originalStats.hp;
         }
+
+        if (this.stats.hp < 0) {
+            this.stats.hp = 0;
+        }
     }
     isFullHealth(): boolean {
         return this.stats.hp == this.originalStats.hp;

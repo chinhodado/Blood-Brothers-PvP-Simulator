@@ -158,6 +158,10 @@ class CardManager {
         }
     }
     
+    getPlayerAllCurrentCards (player: Player): Card[] {
+        return this.getPlayerCurrentMainCards(player).concat(this.getPlayerCurrentReserveCards(player));
+    }
+
     getEnemyCurrentMainCards (player: Player): Card[] {
         var battle = this.battle;
         if (player === battle.player1) {
@@ -348,6 +352,22 @@ class CardManager {
     getCurrentMainCardByIndex(playerId: number, index: number): Card {
         var cards = this.getPlayerCurrentMainCards(this.battle.getPlayerById(playerId));
         return cards[index];
+    }
+
+    getTotalHPRatio(cards: Card[]): number {
+        var totalRemainHp = 0;
+        var totalOriginalHp = 0;
+        for(var i = 0, len = cards.length; i < len; i++){
+            var card = cards[i];
+            // if dead, remain HP is 0, so no need to care
+            if (card) {
+                if (!card.isDead) {
+                    totalRemainHp += card.getHP();
+                }
+                totalOriginalHp += card.originalStats.hp;
+            }
+        }
+        return totalRemainHp / totalOriginalHp;
     }
 
     getCardInfoForDialog(card: Card) {

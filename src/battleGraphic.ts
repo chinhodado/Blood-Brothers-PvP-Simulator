@@ -582,6 +582,16 @@ class BattleGraphic {
         }
 
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
+
+        if (data.type == ENUM.MinorEventType.BATTLE_DESCRIPTION) {
+            if (minorIndex < minorLog[majorIndex].length) {
+                var txt = this.getMainBattleEffect().text(data.battleDesc).center(200, 300)
+                    .opacity(1).animate({duration: '3s'}).opacity(0);
+                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+            }
+
+            return;
+        }
             
         if (!data.executorId && data.type != ENUM.MinorEventType.HP && data.type != ENUM.MinorEventType.AFFLICTION
             && data.type != ENUM.MinorEventType.RESERVE_SWITCH && data.type != ENUM.MinorEventType.BC_ADDPROB) 
@@ -598,16 +608,6 @@ class BattleGraphic {
                 var target = this.cardMan.getCardById(data.targetId);
 
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-            }
-
-            return;
-        }
-
-        if (data.type == ENUM.MinorEventType.BATTLE_DESCRIPTION) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var txt = this.getMainBattleEffect().text('Turn Order Changed').center(200, 300)
-                    .opacity(1).animate({duration: '2s'}).opacity(0);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
 

@@ -18,6 +18,7 @@ class BattleModel {
 
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
+    static MAX_TURN_NUM = 5;
     p1RandomMode: ENUM.RandomBrigType;
     p2RandomMode: ENUM.RandomBrigType;
     isBloodClash: boolean = false;
@@ -29,6 +30,7 @@ class BattleModel {
     player1: Player;
     player2: Player;
 
+    isFinished = false;
     playerWon: Player = null;
     
     // The two players' main cards. The order of the cards in these two arrays should never be changed.
@@ -497,9 +499,7 @@ class BattleModel {
         
         this.performOpeningSkills();
         
-        var finished = false;
-
-        while (!finished) {
+        while (!this.isFinished) {
 
             this.logger.currentTurn++;
             this.logger.bblogTurn("Turn " + this.logger.currentTurn);
@@ -516,7 +516,7 @@ class BattleModel {
             this.cardManager.sortAllCurrentMainCards();
 
             // assuming both have 5 cards
-            for (var i = 0; i < 10 && !finished; i++) {
+            for (var i = 0; i < 10 && !this.isFinished; i++) {
                 var currentCard = this.allCurrentMainCards[i];
 
                 this.currentPlayer = currentCard.player;
@@ -582,14 +582,14 @@ class BattleModel {
                 }
 
                 // procs active skill if we can
-                finished = this.processActivePhase(currentCard, "FIRST");                
-                if (finished) break;
+                this.processActivePhase(currentCard, "FIRST");                
+                if (this.isFinished) break;
 
                 if (!currentCard.isDead && currentCard.status.willAttackAgain != 0) {
-                    finished = this.processActivePhase(currentCard, "FIRST");
+                    this.processActivePhase(currentCard, "FIRST");
                     // todo: send a minor event log and handle it
                     currentCard.status.willAttackAgain = 0;
-                    if (finished) break;
+                    if (this.isFinished) break;
                 }                
 
                 // todo: make a major event if a fam missed a turn
@@ -614,10 +614,10 @@ class BattleModel {
                     this.processOnDeathPhase();
                 }
 
-                finished = this.checkFinish();
+                this.checkFinish();
             }
 
-            if (!finished) {
+            if (!this.isFinished) {
                 this.processEndTurn();
             }
         }
@@ -630,7 +630,7 @@ class BattleModel {
         }
     }
     
-    checkFinish(): boolean {
+    checkFinish(): void {
         var noOnDeathRemain = this.onDeathCards.length === 0;
         if (this.cardManager.isAllDeadPlayer(this.oppositePlayer) && noOnDeathRemain) {
             this.playerWon = this.currentPlayer;
@@ -648,15 +648,12 @@ class BattleModel {
                 type: ENUM.MinorEventType.TEXT,
                 description: "Battle ended"
             });
-            return true;        
-        }
-        else {
-            return false;
+            this.isFinished = true;
         }
     }
 
     // return true if battle has ended, false if not
-    processActivePhase(currentCard: Card, nth: string): boolean {
+    processActivePhase(currentCard: Card, nth: string): void {
         var activeSkill = currentCard.getRandomActiveSkill();
         
         if (nth === "FIRST" && currentCard.isMounted) {
@@ -690,14 +687,12 @@ class BattleModel {
 
         this.processOnDeathPhase();
 
-        if (this.checkFinish()) {
-            return true;
+        this.checkFinish();
+        if (this.isFinished) {
+            return;
         }
         else if (nth === "FIRST" && currentCard.isMounted && !currentCard.isDead) {
             return this.processActivePhase(currentCard, "SECOND");
-        }
-        else {
-            return false;
         }
     }
 
@@ -764,8 +759,35 @@ class BattleModel {
             description: "Turn end"
         });
 
-        // add skill probability to those still alive
-        if (this.isBloodClash) {
+        if (this.logger.currentTurn >= BattleModel.MAX_TURN_NUM) {
+         
+            var p1Cards    = this.cardManager.getPlayerAllCurrentCards(this.player1);
+            var p2Cards    = this.cardManager.getPlayerAllCurrentCards(this.player2);
+                
+            var p1Ratio    = this.cardManager.getTotalHPRatio(p1Cards);
+            var p2Ratio    = this.cardManager.getTotalHPRatio(p2Cards);
+                
+            if(p1Ratio >= p2Ratio){
+                this.playerWon = this.player1;
+                var battleDesc = "Decision win";
+            } else {
+                this.playerWon = this.player2;
+                var battleDesc = "Decision loss";
+            }
+            this.isFinished = true;
+
+            this.logger.addMajorEvent({
+                description: "Decision win for " + this.playerWon.name
+            });
+
+            this.logger.addMinorEvent({
+                type: ENUM.MinorEventType.BATTLE_DESCRIPTION,
+                description: "Decision win",
+                battleDesc: battleDesc
+            });
+        }
+        else if (this.isBloodClash) {
+            // add skill probability to those still alive
             var allCards = this.cardManager.getAllCurrentCards();
             for (var i = 0; i < allCards.length; i++) {
                 var tmpCard = allCards[i];

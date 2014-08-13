@@ -520,6 +520,7 @@ interface MinorEvent {
     amount?: number;      // the amount changed (for HP/Status) or number of turns left (affliction)
     description?: string; // description of the event in plain text
     skillId?: number;     // the skill associated with this MinorEvent
+    battleDesc?: string; // the text to display for BATTLE_DESCRIPTION
 }
 
 interface MajorEvent {
