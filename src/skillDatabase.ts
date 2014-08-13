@@ -2563,6 +2563,34 @@ var SkillDatabase = {
         desc: "Raise WIS of self and adjacent familiars at start of battle."
     },
 
+    538: {
+        name: "Bronze Fist", type: 2, func: 4, calc: 2,
+        arg1: 1.5,
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to all foes, ignoring position."
+    },
+
+    539: {
+        name: "Clockwork Guardian", type: 16, func: 1, calc: 0,
+        arg1: 0.5, arg2: 5,
+        range: 122, prob: 70,
+        desc: "Reduce physical damage taken by two random allies upon her death."
+    },
+
+    540: {
+        name: "Mercy of the Star", type: 1, func: 1, calc: 0,
+        arg1: 0.4, arg2: 17, arg3: 1.5,
+        range: 3, prob: 70,
+        desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
+    541: {
+        name: "Tears of the Star", type: 2, func: 18, calc: 4,
+        arg1: 1, arg2: 1,
+        range: 132, prob: 70,
+        desc: "Full restore HP of two party members."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,

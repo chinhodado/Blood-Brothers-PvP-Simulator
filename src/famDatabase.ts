@@ -159,7 +159,7 @@ var famDatabase = {
         fullName: "Apocalyptic Beast II"
     },
     11281: {
-        name: "Arcanan Chariot", stats: [17342, 19346, 16453, 10376, 17472],
+        name: "Chariot", stats: [17342, 19346, 16453, 10376, 17472],
         skills: [464],
         img: "img3$1/__cb20140520122105/$2/d/da/Arcanan_Chariot_II_Figure.png",
         fullName: "Arcanan Chariot II"
@@ -172,49 +172,56 @@ var famDatabase = {
         fullName: "Arcanan Circle of Fate"
     },
     11335: {
-        name: "Arcanan Daemon", stats: [18252, 20700, 12510, 13117, 15023],
+        name: "Daemon", stats: [18252, 20700, 12510, 13117, 15023],
         skills: [509, 510],
         img: "img2$1/__cb20140711093455/$2/4/49/Arcanan_Daemon_II_Figure.png",
         fullName: "Arcanan Daemon II"
     },
     11239: {
-        name: "Arcanan Emperor", stats: [18577, 17916, 17786, 10809, 14590],
+        name: "Emperor", stats: [18577, 17916, 17786, 10809, 14590],
         skills: [425, 426],
         img: "img1$1/__cb20140417053801/$2/0/02/Arcanan_Emperor_II_Figure.png",
         fullName: "Arcanan Emperor II"
     },
     11211: {
-        name: "Arcanan Empress", stats: [15197, 12380, 15348, 19422, 17168],
+        name: "Empress", stats: [15197, 12380, 15348, 19422, 17168],
         skills: [394, 395],
         img: "img1$1/__cb20140314150633/$2/0/04/Arcanan_Empress_II_Figure.png",
         fullName: "Arcanan Empress II"
     },
     11287: {
-        name: "Arcanan Hermit", stats: [19205, 12066, 12586, 20722, 15002],
+        name: "Hermit", stats: [19205, 12066, 12586, 20722, 15002],
         skills: [453, 454],
         autoAttack: 10007,
         img: "img3$1/__cb20140512070142/$2/c/c5/Arcanan_Hermit_II_Figure.png",
         fullName: "Arcanan Hermit II"
     },
     11199: {
-        name: "Arcanan High Priestess", stats: [17233, 8350, 20256, 19086, 14839],
+        name: "High Priestess", stats: [17233, 8350, 20256, 19086, 14839],
         skills: [388, 389],
         autoAttack: 10007,
         img: "img4$1/__cb20140313080212/$2/5/58/Arcanan_High_Priestess_II_Figure.png",
         fullName: "Arcanan High Priestess II"
     },
     11242: {
-        name: "Arcanan Lovers", stats: [16908, 13875, 12705, 19021, 17006],
+        name: "Lovers", stats: [16908, 13875, 12705, 19021, 17006],
         skills: [430, 431],
         img: "img3$1/__cb20140414082018/$2/f/fb/Arcanan_Lovers_II_Figure.png",
         fullName: "Arcanan Lovers II"
     },
     11284: {
-        name: "Arcanan Might", stats: [18598, 19227, 10766, 13301, 17948],
+        name: "Might", stats: [18598, 19227, 10766, 13301, 17948],
         skills: [461, 462],
         isMounted: true,
         img: "img2$1/__cb20140516081822/$2/a/a4/Arcanan_Might_II_Figure.png",
         fullName: "Arcanan Might II"
+    },
+    11360: {
+        name: "Star", stats: [20223, 7548, 18035, 18208, 15803],
+        skills: [540, 541],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140812101601/$2/7/75/Arcanan_Star_II_Figure.png",
+        fullName: "Arcanan Star II"
     },
     11329: {
         name: "Archbishop", stats: [19064, 20191, 16009, 10744, 15002],
@@ -561,6 +568,13 @@ var famDatabase = {
         autoAttack: 10006,
         img: "img3$1/__cb20131129144223/$2/1/1f/Ettin_II_Figure.png",
         fullName: "Ettin II"
+    },
+    11358: {
+        name: "Europa", stats: [14731, 8296, 12207, 16735, 16518],
+        skills: [538, 539],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140809012700/$2/2/25/Europa%2C_Fallen_Heroine_II_Figure.png",
+        fullName: "Europa, Fallen Heroine II"
     },
     10452: {
         name: "Evil Eye", stats: [10770, 10394, 10490, 12221, 11721],

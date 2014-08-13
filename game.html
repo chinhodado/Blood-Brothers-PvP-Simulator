@@ -46,6 +46,11 @@
         }
         .rightCol {
             float: left;
+            width: 30%;
+            height: 600px;
+            font-family: "Consolas";
+            font-size: 12px;
+            padding-left: 20px;
         }
         #svgWrapper {
             margin: 0 auto;
@@ -97,6 +102,39 @@
             padding-right: 30px;
         }
 
+        .panel-danger {
+            border-color: #e74c3c;
+        }
+
+        .panel-heading {
+            color: #ffffff;
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .panel-body {
+            padding: 15px;
+        }
+
+        .panel {
+            margin-bottom: 21px;
+            background-color: #ffffff;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 17px;
+            color: inherit;
+        }
+
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
@@ -120,7 +158,7 @@
             <div id="permDiv">
                 Click the <b>Start Battle</b> button below to view the battle. <br /><br />
                 Click on a familiar to see its details. <br /><br />
-                Refresh this page to view another battle <span id="refreshText"></span>.<br /><br />
+                Refresh this page to view another battle.<br /><br />
                 Click <a href="setting.html">here</a> to return to the main page.
             </div>
         </div>
@@ -177,6 +215,28 @@
     </div>
 
     <div class="rightCol">
+        <!--<div id="infoDivP1">
+            Player 1 (Aegis - Selkie - Nightblade - Goviel - Musashi) 
+        </div>-->
+        <div style="width: 100%; position: relative; height: 50%">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="infoDivP2Title">Player 2</h3>
+                </div>
+                <div class="panel-body" id="infoDivP2">
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%; position: relative; height: 50%">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="infoDivP1Title">Player 1</h3>
+                </div>
+                <div class="panel-body" id="infoDivP1">
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">

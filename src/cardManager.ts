@@ -339,8 +339,17 @@ class CardManager {
     /**
      * Get a string that represents a player's brig
      */
-    getPlayerBrigString(player: Player): string {
+    getPlayerMainBrigString(player: Player): string {
         var cards = this.getPlayerCurrentMainCards(player);
+        var brigStr = cards[0].name;
+        for (var i = 1; i < cards.length; i++) {
+            brigStr += (" - " + cards[i].name);
+        }
+
+        return brigStr;
+    }
+    getPlayerReserveBrigString(player: Player): string {
+        var cards = this.getPlayerOriginalReserveCards(player);
         var brigStr = cards[0].name;
         for (var i = 1; i < cards.length; i++) {
             brigStr += (" - " + cards[i].name);

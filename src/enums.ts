@@ -158,6 +158,19 @@ module ENUM {
         A_UP = 10
     }
 
+    export enum RandomBrigText {
+        "all" = 1,
+        "Tier X" = 2,
+        "Tier S+" = 3,
+        "Tier S+ and up" = 4,
+        "Tier S" = 5,
+        "Tier S and up" = 6,
+        "Tier A+" = 7,
+        "Tier A+ and up" = 8,
+        "Tier A" = 9,
+        "Tier A and up" = 10
+    }
+
     export enum MinorEventType {
         HP = 1,
         STATUS = 2,
