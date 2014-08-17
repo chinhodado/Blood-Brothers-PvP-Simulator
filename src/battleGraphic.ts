@@ -964,10 +964,23 @@ class BattleGraphic {
             }
         }
         else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
-            explosion.animate({ duration: '0.2s' })
+
+            var exploDuration = 0.2;
+
+            if (Skill.isWisAutoAttack(data.skillId)) {
+                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
+                procEffect.animate({duration: '0.2s'}).opacity(1);
+                exploDuration = 0.4;
+            }
+
+            explosion.animate({ duration: exploDuration + 's' })
                      .opacity(1)
                      .after(function() {
                         explosion.opacity(0);
+
+                        if (procEffect) {
+                            procEffect.remove();
+                        }
 
                         that.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                         that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
