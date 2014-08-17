@@ -29,7 +29,7 @@ var famDatabase = {
     },
     11099: {
         name: "Adranus", stats: [20223, 23517, 19855, 18609, 18046],
-        skills: [99000],
+        skills: [347],
         img: "img2$1/__cb20140122120804/$2/7/75/Adranus%2C_Lava_Beast_II_Figure.png",
         fullName: "Adranus, Lava Beast II"
     },
@@ -223,6 +223,13 @@ var famDatabase = {
         img: "img4$1/__cb20140812101601/$2/7/75/Arcanan_Star_II_Figure.png",
         fullName: "Arcanan Star II"
     },
+    11332: {
+        name: "Temperance", stats: [19183, 3800, 20007, 19985, 18046],
+        skills: [543],
+        autoAttack: 10027,
+        img: "img3$1/__cb20140814101445/$2/8/8d/Arcanan_Temperance_II_Figure.png",
+        fullName: "Arcanan Temperance II"
+    },
     11329: {
         name: "Archbishop", stats: [19064, 20191, 16009, 10744, 15002],
         skills: [520],
@@ -235,6 +242,12 @@ var famDatabase = {
         skills: [154],
         img: "img3$1/__cb20130314191037/$2/0/00/Archduke_Ose_II_Figure.png",
         fullName: "Archduke Ose II"
+    },
+    11105: {
+        name: "Ares", stats: [25434, 21285, 21047, 16345, 17407],
+        skills: [542],
+        img: "img1$1/__cb20140814101503/$2/8/80/Ares%2C_God_of_Ruin_II_Figure.png",
+        fullName: "Ares, God of Ruin II"
     },
     10372: {
         name: "Artemisia", stats: [10042, 10977, 10977, 10042, 12589],
@@ -256,7 +269,7 @@ var famDatabase = {
     },
     10657: {
         name: "Baal", stats: [14677, 15457, 12813, 14482, 16551],
-        skills: [99006],
+        skills: [178],
         img: "img2$1/__cb20130430102647/$2/2/2f/Baal%2C_Thunder_Lord_of_Hell_II_Figure.png",
         fullName: "Baal, Thunder Lord of Hell II"
     },
@@ -361,7 +374,7 @@ var famDatabase = {
     },
     10997: {
         name: "Cap'n Jolly", stats: [14200, 16594, 14070, 18956, 15424],
-        skills: [99003],
+        skills: [226],
         img: "img2$1/__cb20130828162829/$2/1/14/Cap%27n_Jolly%2C_Sea_Scourge_II_Figure.png",
         fullName: "Cap'n Jolly, Sea Scourge II"
     },
@@ -441,7 +454,7 @@ var famDatabase = {
     },
     10820: {
         name: "Cyclops", stats: [15868, 17147, 18360, 13214, 14449],
-        skills: [99007],
+        skills: [218],
         img: "img3$1/__cb20130801154345/$2/b/ba/Cyclops%2C_the_Rocky_Cliff_II_Figure.png",
         fullName: "Cyclops, the Rocky Cliff II"
     },
@@ -465,7 +478,7 @@ var famDatabase = {
     },
     10905: {
         name: "Danzo", stats: [14774, 17277, 14872, 17667, 16128],
-        skills: [99012],
+        skills: [237],
         img: "img4$1/__cb20130921071511/$2/6/64/Danzo%2C_Falcon_Ninja_II_Figure.png",
         fullName: "Danzo, Falcon Ninja II"
     },
@@ -511,6 +524,12 @@ var famDatabase = {
         skills: [319, 320],
         img: "img1$1/__cb20131227221855/$2/8/8d/Djinn_of_the_Lamp_II_Figure.png",
         fullName: "Djinn of the Lamp II"
+    },
+    11355: {
+        name: "Dong", stats: [13489, 17000, 13196, 8150, 16110],
+        skills: [545],
+        img: "img4$1/__cb20140814101413/$2/8/8b/Dong%2C_the_Bloody_Claw_II_Figure.png",
+        fullName: "Dong, the Bloody Claw II"
     },
     10423: {
         name: "Doppeladler", stats: [13940, 14709, 14417, 14092, 14850],
@@ -648,6 +667,13 @@ var famDatabase = {
         isMounted: true,
         img: "img4$1/__cb20130228233340/$2/e/e2/Galahad%2C_Drake_Knight_II_Figure.png",
         fullName: "Galahad, Drake Knight II"
+    },
+    11172: {
+        name: "Galatea", stats: [19833, 10062, 15825, 18566, 15218],
+        skills: [533],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140810144815/$2/8/8a/Galatea%2C_Nereid_II_Figure.png",
+        fullName: "Galatea, Nereid II"
     },
     201: {
         name: "Gan Ceann", stats: [7950, 10530, 8830, 8910, 8540],
@@ -919,7 +945,7 @@ var famDatabase = {
     },
     11144: {
         name: "Infested Cyclops", stats: [19508, 19508, 15392, 9997, 15348],
-        skills: [99011],
+        skills: [364],
         img: "img3$1/__cb20140207111438/$2/d/db/Infested_Cyclops_II_Figure.png",
         fullName: "Infested Cyclops II"
     },
@@ -1079,7 +1105,7 @@ var famDatabase = {
     },
     21187: {
         name: "Loki", stats: [19202, 21231, 16192, 15119, 15806],
-        skills: [99008],
+        skills: [382],
         img: "img4$1/__cb20140304213357/$2/7/7b/Loki%2C_God_of_Cunning_Figure.png",
         fullName: "Loki, God of Cunning"
     },
@@ -1115,7 +1141,7 @@ var famDatabase = {
     },
     11126: {
         name: "Magdal M", stats: [18728, 20917, 21491, 23235, 15998],
-        skills: [99001],
+        skills: [336],
         img: "img3$1/__cb20140221092054/$2/4/46/Magdal%2C_Dragonmaster_II_Figure.png",
         fullName: "Magdal, Dragonmaster II"
     },
@@ -1214,7 +1240,7 @@ var famDatabase = {
     },
     11134: {
         name: "Minerva", stats: [14590, 18024, 14438, 15435, 18013],
-        skills: [99014],
+        skills: [357],
         img: "img2$1/__cb20140129062047/$2/a/a2/Minerva%2C_Goddess_of_War_II_Figure.png",
         fullName: "Minerva, Goddess of War II"
     },
@@ -1389,6 +1415,12 @@ var famDatabase = {
         img: "img3$1/__cb20140709072736/$2/c/c0/Paladin_of_Sagittarius_II_Figure.png",
         fullName: "Paladin of Sagittarius II"
     },
+    11353: {
+        name: "Scorpio", stats: [14146, 15998, 13117, 8350, 16995],
+        skills: [544],
+        img: "img4$1/__cb20140814101430/$2/f/fe/Paladin_of_Scorpio_II_Figure.png",
+        fullName: "Paladin of Scorpio II"
+    },
     11241: {
         name: "Virgo", stats: [15500, 6118, 12380, 17797, 16822],
         skills: [421, 422],
@@ -1491,7 +1523,7 @@ var famDatabase = {
     },
     11100: {
         name: "Queen Waspmen", stats: [14070, 19898, 13247, 15998, 17829],
-        skills: [99002],
+        skills: [348],
         img: "img1$1/__cb20140122120929/$2/f/f6/Queen_of_the_Waspmen_II_Figure.png",
         fullName: "Queen of the Waspmen II"
     },
@@ -1653,7 +1685,7 @@ var famDatabase = {
     },
     10987: {
         name: "Sihn", stats: [12001, 10495, 12001, 17504, 16497],
-        skills: [99010],
+        skills: [285],
         img: "img4$1/__cb20131108145539/$2/5/53/Sihn%2C_Moonlight_King_II_Figure.png",
         fullName: "Sihn, Moonlight King II"
     },
@@ -1678,7 +1710,7 @@ var famDatabase = {
     },
     10921: {
         name: "Brandiles", stats: [17017, 18100, 16269, 13940, 14070],
-        skills: [99013],
+        skills: [252],
         img: "img1$1/__cb20131002005342/$2/0/06/Sir_Brandiles%2C_the_Flameblade_II_Figure.png",
         fullName: "Sir Brandiles, the Flameblade II"
     },
@@ -1992,6 +2024,12 @@ var famDatabase = {
         skills: [115],
         img: "img3$1/__cb20130709182653/$2/6/65/Wu_Chang_the_Infernal_II_Figure.png",
         fullName: "Wu Chang the Infernal II"
+    },
+    11018: {
+        name: "Warden", stats: [19400, 17504, 18273, 11026, 11795],
+        skills: [532],
+        img: "img3$1/__cb20140815163230/$2/3/3d/Wyrm_Warden%2C_Everwakeful_II_Figure.png",
+        fullName: "Wyrm Warden, Everwakeful II"
     },
     11218: {
         name: "Xaphan", stats: [13013, 9415, 12573, 17000, 15537],

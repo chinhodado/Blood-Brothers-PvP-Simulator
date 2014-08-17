@@ -5,10 +5,10 @@ module ENUM {
      */
     export enum SkillType {
         OPENING = 1,
-        ACTIVE = 2, // attack, active healing
-        DEFENSE = 3,
+        ACTIVE = 2, // attack, active healing, revive, dispell, suicide, random
+        DEFENSE = 3, // drain, counter, survive
         FIELD = 4,
-        PROTECT = 5,
+        PROTECT = 5, // protect, protect-counter, evade, protect-reflect, counter-dispell
 
         ACTION_ON_DEATH = 16,
     }
@@ -45,7 +45,7 @@ module ENUM {
         IMITATE = 26,
         EVADE = 27,
         PROTECT_REFLECT = 28,
-        COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ??
+        COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ?? (aka protect-dispell)
         TURN_ORDER_CHANGE = 31, // arg1: new base, arg2: turn num
         CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2, 3: status
         CASTER_BASED_DEBUFF_ATTACK = 33,  // arg1: multi, arg2: status, arg3: debuff prob, arg4: debuff multi

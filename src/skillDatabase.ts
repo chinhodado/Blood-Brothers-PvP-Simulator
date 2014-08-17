@@ -721,6 +721,13 @@ var SkillDatabase = {
         desc: "Escape most damage from physical attacks."
     },
 
+    178: {
+        name : "Light Fist", type: 2, func: 3, calc: 1,
+        arg1: 1.7,
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy lightning damage to three random targets."
+    },
+
     179 : {
         name: "Sword of Justice", type: 2, func: 3, calc: 3, 
         arg1: 2.5,  
@@ -884,6 +891,13 @@ var SkillDatabase = {
         desc: "Deal massive WIS-based damage to two random foes."
     },
 
+    218 : {
+        name : "Boulder Toss", type: 2, func: 3, calc: 1,
+        arg1: 1.4, arg2: 2, arg3: 0.3,
+        range: 15, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and paralyze front/middle lines."
+    },
+
     219 : {
         name: "Evil Eye", type: 2, func: 21, calc: 3, 
         arg1: 1.2, arg2: 4, arg3: 0.3, arg4: 0.3, 
@@ -917,6 +931,13 @@ var SkillDatabase = {
         arg1: 0.8, 
         range: 20, prob: 30, ward: 1,
         desc: "Deal AGI-based damage to five random foes."
+    },
+
+    226: {
+        name : "Pirate's Pride", type: 2, func: 4, calc: 2,
+        arg1: 1.8, arg2: 2, arg3: 0.3, 
+        range: 15, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes paralyze front/middle lines."
     },
 
     227 : {
@@ -959,6 +980,13 @@ var SkillDatabase = {
         arg1: 2.25, 
         range: 16, prob: 30, ward: 2,
         desc: "Deal massive WIS-based damage to three random foes."
+    },
+
+    237 : {
+        name : "Piercing Claws", type: 2, func: 4, calc: 2,
+        arg1: 2.15,
+        range: 7, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three foes, regardless of position."
     },
 
     238 : {
@@ -1036,6 +1064,13 @@ var SkillDatabase = {
         arg1: 1,  
         range: 20, prob: 30, ward: 1,
         desc: "Deal ATK-based damage to five random foes."
+    },
+
+    252 : {
+        name : "Scathing Fire Brand", type: 2, func: 3, calc: 1,
+        arg1: 1.5,
+        range: 15, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to all foes in the front/middle line."
     },
 
     253 : {
@@ -1204,6 +1239,13 @@ var SkillDatabase = {
         arg1: 1, 
         range: 20, prob: 30, ward: 2,
         desc: "Deal AGI-based damage to five random foes, regardless of position."
+    },
+
+    285 : {
+        name : "Moon Soul", type: 2, func: 4, calc: 2,
+        arg1: 1.45,
+        range: 15, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to front/middle lines, regardless of position."
     },
 
     287: {
@@ -1472,6 +1514,13 @@ var SkillDatabase = {
         desc: "Deal heavy WIS-based damage to three random foes."
     },
 
+    336 : {
+        name : "Golden Flame", type: 2, func: 4, calc: 2,
+        arg1: 1.65, 
+        range: 15, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
+    },
+
     339 : {
         name: "Burning Scales", type: 2, func: 4, calc: 2, 
         arg1: 2,  
@@ -1519,6 +1568,20 @@ var SkillDatabase = {
         arg1: 1,
         range: 101, prob: 50,
         desc: "Revive and fully restore HP of 1 random familiar."
+    },
+
+    347 : {
+        name : "Raging Flames", type: 2, func: 3, calc: 3,
+        arg1: 2.4, 
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal massive AGI-based damage to three random foes"
+    },
+
+    348 : {
+        name : "Inferno", type: 2, func: 3, calc: 1,
+        arg1: 1.4, 
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
     },
     
     349 : {
@@ -1569,6 +1632,13 @@ var SkillDatabase = {
         desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
+    357 : {
+        name : "Welkin Wings", type: 2, func: 3, calc: 3,
+        arg1: 1.75,
+        range: 12, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to all foes in the front line."
+    },
+
     358 : {
         name: "Call of Steel", type: 2, func: 3, calc: 1, 
         arg1: 1.3, arg2: 5, arg3: 0.1, arg4: 3, 
@@ -1602,6 +1672,13 @@ var SkillDatabase = {
         arg1: 1.85,  
         range: 23, prob: 30, ward: 1,
         desc: "Deal heavy ATK-based damage to two random foes."
+    },
+
+    364 : {
+        name : "Depths of Corruption", type: 2, func: 4, calc: 1,
+        arg1: 1.95,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes, regardless of position."
     },
 
     365 : {
@@ -1693,6 +1770,13 @@ var SkillDatabase = {
         arg1: 0.4, arg2: 6, arg3: 7,
         range: 3, prob: 70,
         desc: "Reduce magic and breath damages taken by self and adjacent familiars."
+    },
+
+    382 : {
+        name : "Laevateinn", type: 2, func: 3, calc: 1,
+        arg1: 1.65,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes"
     },
 
     383 : {
@@ -2214,8 +2298,8 @@ var SkillDatabase = {
 
     475 : {
         name: "Hand of Fortune", type: 2, func: 24, calc: 0,
-        randSkills: [11, 16, 20, 26, 33, 34, 109, 110, 114, 116, 138, 145, 232, 264, 274, 277, 287,
-            296, 319, 331, 345, 346, 354, 378, 426, 431, 462, 99007],
+        randSkills: [11, 16, 20, 26, 33, 34, 109, 110, 114, 116, 138, 145, 218, 232, 264, 274, 277, 287,
+            296, 319, 331, 345, 346, 354, 378, 426, 431, 462],
         range: 21, prob: 50,
         desc: "The outcome of this skill depends on the user's Fortune."
     },
@@ -2563,6 +2647,20 @@ var SkillDatabase = {
         desc: "Raise WIS of self and adjacent familiars at start of battle."
     },
 
+    532: {
+        name: "Purging Flame", type: 2, func: 3, calc: 1,
+        arg1: 1.7,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes."
+    },
+
+    533: {
+        name: "Boon of the Sea", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 3, arg3: 4,
+        range: 4, prob: 70,
+        desc: "Raise WIS and AGI of all party members."
+    },
+
     538: {
         name: "Bronze Fist", type: 2, func: 4, calc: 2,
         arg1: 1.5,
@@ -2589,6 +2687,34 @@ var SkillDatabase = {
         arg1: 1, arg2: 1,
         range: 132, prob: 70,
         desc: "Full restore HP of two party members."
+    },
+
+    542: {
+        name: "Rampart Destroyer", type: 2, func: 3, calc: 1,
+        arg1: 1.6,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes."
+    },
+
+    543: {
+        name: "Devotion", type: 2, func: 6, calc: 0,
+        arg1: 1,
+        range: 2, prob: 50,
+        desc: "Revive and fully restore HP of adjacent familiars."
+    },
+
+    544: {
+        name: "Tail of the Scorpion", type: 2, func: 3, calc: 3,
+        arg1: 1.05, arg2: 1, arg3: 0.3, arg4: 10,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to and sometimes envenom five random foes."
+    },
+
+    545: {
+        name: "Whirl of Claws", type: 2, func: 3, calc: 1,
+        arg1: 1.1,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -2716,88 +2842,11 @@ var SkillDatabase = {
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and sometimes greatly lower AGI of target."
     },
-    
-    99000 : {
-        name : "Raging Flames", type: 2, func: 3, calc: 3,
-        arg1: 2.4, 
-        range: 16, prob: 30, ward: 1,
-        desc: "Deal massive AGI-based damage to three random foes"
-    },
 
-    99001 : {
-        name : "Golden Flame", type: 2, func: 4, calc: 2,
-        arg1: 1.65, 
-        range: 15, prob: 30, ward: 3, // <-- guess
-        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
-    },
-    
-    99002 : {
-        name : "Inferno", type: 2, func: 3, calc: 1,
-        arg1: 1.4, 
-        range: 19, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to four random foes."
-    },
-
-    99003 : {
-        name : "Pirate's Pride", type: 2, func: 4, calc: 2,
-        arg1: 1.8, arg2: 2, arg3: 0.3, 
-        range: 15, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage and sometimes paralyze front/middle lines."
-    },
-
-    99006 : {
-        name : "Light Fist", type: 2, func: 3, calc: 1,
-        arg1: 1.7,
-        range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy lightning damage to three random targets."
-    },
-
-    99007 : {
-        name : "Boulder Toss", type: 2, func: 3, calc: 1,
-        arg1: 1.4, arg2: 2, arg3: 0.3,
-        range: 15, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage and paralyze front/middle lines."
-    },
-
-    99008 : {
-        name : "Laevateinn", type: 2, func: 3, calc: 1,
-        arg1: 1.65,
-        range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to up to three foes"
-    },
-
-    99010 : {
-        name : "Moon Soul", type: 2, func: 4, calc: 2,
-        arg1: 1.45,
-        range: 15, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to front/middle lines, regardless of position."
-    },
-
-    99011 : {
-        name : "Depths of Corruption", type: 2, func: 4, calc: 1,
-        arg1: 1.95,
-        range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to up to three foes, regardless of position."
-    },
-
-    99012 : {
-        name : "Piercing Claws", type: 2, func: 4, calc: 2,
-        arg1: 2.15,
-        range: 7, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to three foes, regardless of position."
-    },
-
-    99013 : {
-        name : "Scathing Fire Brand", type: 2, func: 3, calc: 1,
-        arg1: 1.5,
-        range: 15, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to all foes in the front/middle line."
-    },
-
-    99014 : {
-        name : "Welkin Wings", type: 2, func: 3, calc: 3,
-        arg1: 1.75,
-        range: 12, prob: 30, ward: 1,
-        desc: "Deal heavy AGI-based damage to all foes in the front line."
+    10027: { // Temperance
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 0.7, arg2: 5, arg3: 0.4, arg4: 1,
+        range: 23, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to two random foes. 40% chance to silence."
     },
 };
