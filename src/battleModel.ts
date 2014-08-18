@@ -314,9 +314,8 @@ class BattleModel {
             missed: data.missed
         });
 
-        if (data.target.getHP() <= 0) {
+        if (data.target.isDead) {
             this.logger.displayMinorEvent(data.target.name + " is dead");
-            data.target.isDead = true;
             this.addOnDeathCard(data.target);
         }
     }
@@ -384,9 +383,8 @@ class BattleModel {
             description: description, 
         });
         
-        if (target.getHP() <= 0) {
+        if (target.isDead) {
             this.logger.displayMinorEvent(target.name + " is dead");
-            target.isDead = true;
             this.addOnDeathCard(target);
         }
     }

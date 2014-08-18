@@ -363,7 +363,7 @@ class AttackSkillLogic extends SkillLogic {
                     targetsAttacked[targetCard.id] = true;
                     damageDealt = wouldBeDamage;
 
-                    if (!missed) {
+                    if (!missed && !targetCard.isDead) {
                         if (Skill.isDebuffAttackSkill(skill.id)) {
                             if (Math.random() <= skill.skillFuncArg3) {
                                 this.battleModel.processDebuff(executor, targetCard, skill);
@@ -446,7 +446,7 @@ class AttackSkillLogic extends SkillLogic {
 
             damageDealt = wouldBeDamage;
 
-            if (!missed) {
+            if (!missed && !target.isDead) {
                 if (Skill.isDebuffAttackSkill(skill.id)) {
                     if (Math.random() <= skill.skillFuncArg3) {
                         this.battleModel.processDebuff(executor, target, skill);
@@ -550,7 +550,7 @@ class ProtectSkillLogic extends SkillLogic {
             missed: missed
         });
 
-        if (!missed) {
+        if (!missed && !protector.isDead) {
             if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
                 this.battleModel.processAffliction(data.attacker, protector, attackSkill);
             }

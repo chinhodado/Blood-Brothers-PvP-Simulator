@@ -382,8 +382,9 @@ class Card {
             this.stats.hp = this.originalStats.hp;
         }
 
-        if (this.stats.hp < 0) {
+        if (this.stats.hp <= 0) {
             this.stats.hp = 0;
+            this.setDead();
         }
     }
     isFullHealth(): boolean {
@@ -393,6 +394,11 @@ class Card {
         return this.stats.hp/this.originalStats.hp;
     }
     
+    setDead(): void {
+        this.isDead = true;
+        this.clearAffliction();
+        this.status = new Status();
+    }
     revive(hpRatio: number): void {
         if (!this.isDead) {
             throw new Error("You can't revive a card that is not dead!");
