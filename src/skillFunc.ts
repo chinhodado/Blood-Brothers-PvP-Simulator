@@ -581,7 +581,7 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
         var protector = data.executor;
 
         // counter phase
-        if (!protector.isDead && protector.canAttack()) {
+        if (!protector.isDead && protector.canAttack() && !data.attacker.isDead) {
             var counterMissed = false;
             if (protector.willMiss()) {
                 counterMissed = true;
