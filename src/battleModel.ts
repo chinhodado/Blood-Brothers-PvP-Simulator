@@ -259,82 +259,92 @@ class BattleModel {
      * if damage is not supplied, it will be calculated automatically
      * otherwise, damage will be done directly
      */
-    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; damage?: number; scaledRatio?: number; missed: boolean}) {
-        
+    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; 
+        damage?: number; scaledRatio?: number; missed: boolean; isKilled?: boolean;}) {
+        var target = data.target;
         var damage = data.damage;
 
+        // mostly for counter in counter and protect-counter skills
         if (!damage) {
             if (!data.missed) {
-                damage = this.getWouldBeDamage(data.attacker, data.target, data.skill, {scaledRatio: data.scaledRatio});
+                damage = this.getWouldBeDamage(data.attacker, target, data.skill, {scaledRatio: data.scaledRatio});
             }
             else {
                 damage = 0;
             }
         }
+
+        if (data.isKilled) {
+            damage = target.getHP() + target.status.hpShield;
+        }
         
         // HP shield skill
-        var hpShield = ~~data.target.status.hpShield;
-        if (hpShield > 0 && !data.missed) {
+        var hpShield = ~~target.status.hpShield;
+        if (hpShield > 0 && !data.missed && !data.isKilled) {
             if (damage >= hpShield) {
-                data.target.status.hpShield = 0;
+                target.status.hpShield = 0;
                 damage -= hpShield;
             } else {
-                data.target.status.hpShield = hpShield - damage;
+                target.status.hpShield = hpShield - damage;
                 damage = 0;
             }
         }         
     
-        data.target.changeHP(-1 * damage);
+        target.changeHP(-1 * damage);
 
         if (!data.additionalDescription) {
             data.additionalDescription = "";
         }
 
         // this probably should not be here, but wtv...
-        if (data.target.hasWardOfType(data.skill.ward)) {
+        if (target.hasWardOfType(data.skill.ward)) {
             var wardUsed = data.skill.ward;
         }
 
         if (data.missed) {
-            var desc = data.attacker.name + " missed the attack on " + data.target.name;
+            var desc = data.attacker.name + " missed the attack on " + target.name;
+        }
+        else if (data.isKilled) {
+            desc = target.name + " is killed outright!";
         }
         else {
-            desc = data.additionalDescription + data.target.name + " lost " + damage + "hp (remaining " + 
-                data.target.getHP() + "/" + data.target.originalStats.hp + ")";
+            desc = data.additionalDescription + target.name + " lost " + damage + "hp (remaining " + 
+                target.getHP() + "/" + target.originalStats.hp + ")";
         }
 
         this.logger.addMinorEvent({
             executorId: data.attacker.id, 
-            targetId: data.target.id, 
+            targetId: target.id, 
             type: ENUM.MinorEventType.HP, 
             amount: (-1) * damage, 
             description: desc, 
             skillId: data.skill.id,
             wardUsed: wardUsed,
-            missed: data.missed
+            missed: data.missed,
+            isKilled: data.isKilled
         });
 
-        if (data.target.isDead) {
-            this.logger.displayMinorEvent(data.target.name + " is dead");
-            this.addOnDeathCard(data.target);
+        if (target.isDead) {
+            this.logger.displayMinorEvent(target.name + " is dead");
+            this.addOnDeathCard(target);
         }
     }
 
     getWouldBeDamage(attacker: Card, target: Card, skill: Skill, opt?: {scaledRatio?: number}): number {
         var skillMod = skill.skillFuncArg1;
-        var ignorePosition = (skill.skillFunc == ENUM.SkillFunc.MAGIC || skill.skillFunc == ENUM.SkillFunc.DEBUFFINDIRECT);
+        var ignorePosition = Skill.isIndirectSkill(skill.id);
     
-        var baseDamage : number;
+        var baseDamage: number;
             
         switch (skill.skillCalcType) {
-            case (ENUM.SkillCalcType.DEFAULT) :
-            case (ENUM.SkillCalcType.WIS) :
+            case (ENUM.SkillCalcType.DEFAULT):
+            case (ENUM.SkillCalcType.WIS):
                 baseDamage = getDamageCalculatedByWIS(attacker, target);
                 break;
-            case (ENUM.SkillCalcType.ATK) :
+            case (ENUM.SkillCalcType.ATK):
                 baseDamage = getDamageCalculatedByATK(attacker, target, ignorePosition);
                 break;
-            case (ENUM.SkillCalcType.AGI) :
+            case (ENUM.SkillCalcType.AGI):
                 baseDamage = getDamageCalculatedByAGI(attacker, target, ignorePosition);
                 break;
         }

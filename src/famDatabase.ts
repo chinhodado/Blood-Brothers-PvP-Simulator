@@ -177,6 +177,14 @@ var famDatabase = {
         img: "img2$1/__cb20140711093455/$2/4/49/Arcanan_Daemon_II_Figure.png",
         fullName: "Arcanan Daemon II"
     },
+    11324: {
+        name: "Death", stats: [20234, 19508, 13008, 13019, 18111],
+        skills: [546, 547],
+        autoAttack: 10028,
+        isMounted: true,
+        img: "img2$1/__cb20140815142251/$2/5/5b/Arcanan_Death_II_Figure.png",
+        fullName: "Arcanan Death II"
+    },
     11239: {
         name: "Emperor", stats: [18577, 17916, 17786, 10809, 14590],
         skills: [425, 426],
@@ -2055,6 +2063,12 @@ var famDatabase = {
         skills: [134],
         img: "img3$1/__cb20130110210701/$2/4/41/Yulia%2C_Snakesage_II_Figure.png",
         fullName: "Yulia, Snakesage II"
+    },
+    10497: {
+        name: "Zagan", stats: [16128, 16941, 14709, 12423, 13052],
+        skills: [143],
+        img: "img1$1/__cb20130201171143/$2/9/92/Zagan_II_Figure.png",
+        fullName: "Zagan II"
     },
     11077: {
         name: "Zahhak", stats: [16789, 10051, 19151, 17797, 17168],

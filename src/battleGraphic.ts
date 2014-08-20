@@ -320,6 +320,9 @@ class BattleGraphic {
         if (data.missed) {
             var txt = "missed";
         }
+        else if (data.isKilled) {
+            txt = "killed";
+        }
         else {
             txt = Math.abs(data.amount) + "";
         }

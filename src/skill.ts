@@ -57,12 +57,15 @@ class Skill {
         switch (skillInfo.func) {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.MAGIC:
+            case ENUM.SkillFunc.COUNTER:
+            case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
             case ENUM.SkillFunc.DRAIN_ATTACK:
             case ENUM.SkillFunc.DRAIN_MAGIC:
+            case ENUM.SkillFunc.KILL:
                 isAttackSkill = true;
                 break;
             default:
@@ -108,7 +111,7 @@ class Skill {
         var skillInfo = SkillDatabase[skillId];
 
         return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK
-            && (skillInfo.func == ENUM.SkillFunc.MAGIC || skillInfo.func == ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC);
+            && this.isAttackSkill(skillId);
     }
 
     static isAutoAttackSkill(skillId: number): boolean {

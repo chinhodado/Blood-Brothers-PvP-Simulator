@@ -24,7 +24,7 @@ module ENUM {
         MAGIC = 4, // anything that ignores position, args: same as ATTACK
         COOP = 5,
         REVIVE = 6, // arg1: hp heal ratio on revive
-        KILL = 7,
+        KILL = 7, // arg1: multi, arg2: kill chance
         STEAL = 8,
         CHARGE = 9,
         DRAIN = 11, //arg1: always 1?

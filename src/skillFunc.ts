@@ -17,6 +17,7 @@
             case ENUM.SkillFunc.DRAIN_MAGIC:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
+            case ENUM.SkillFunc.KILL:
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();
@@ -329,18 +330,19 @@ class AttackSkillLogic extends SkillLogic {
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
                     var defenseSkill = targetCard.getRandomDefenseSkill();
 
-                    if (!missed) {
-                        var wouldBeDamage = this.battleModel.getWouldBeDamage(executor, targetCard, skill, {scaledRatio: scaledRatio});
-                    }
-                    else {
-                        wouldBeDamage = 0;
-                    }
+                    var wouldBeDamage = missed? 0 : this.battleModel.getWouldBeDamage(executor, targetCard, skill, {scaledRatio: scaledRatio});
 
                     var defenseData: SkillLogicData = {
                         executor: targetCard,
                         skill: defenseSkill,
                         attacker: executor,
                         wouldBeDamage: wouldBeDamage
+                    }
+
+                    if (!missed && skill.skillFunc == ENUM.SkillFunc.KILL) {
+                        if (Math.random() <= skill.skillFuncArg2) { // probability check
+                            var isKilled = true;
+                        }
                     }
 
                     if (defenseSkill && 
@@ -358,7 +360,8 @@ class AttackSkillLogic extends SkillLogic {
                         target: targetCard, 
                         skill: skill,
                         damage: wouldBeDamage,
-                        missed: missed
+                        missed: missed,
+                        isKilled: isKilled
                     });
                     targetsAttacked[targetCard.id] = true;
                     damageDealt = wouldBeDamage;
@@ -431,6 +434,12 @@ class AttackSkillLogic extends SkillLogic {
                 wouldBeDamage: wouldBeDamage
             }
 
+            if (!missed && skill.skillFunc == ENUM.SkillFunc.KILL) {
+                if (Math.random() <= skill.skillFuncArg2) { // probability check
+                    var isKilled = true;
+                }
+            }
+
             if (defenseSkill && defenseSkill.skillFunc == ENUM.SkillFunc.SURVIVE && defenseSkill.willBeExecuted(defenseData)) {
                 defenseSkill.execute(defenseData);
                 wouldBeDamage = target.getHP() - 1;
@@ -441,7 +450,8 @@ class AttackSkillLogic extends SkillLogic {
                 target: target, 
                 skill: skill,
                 damage: wouldBeDamage,
-                missed: missed
+                missed: missed,
+                isKilled: isKilled
             });
 
             damageDealt = wouldBeDamage;
@@ -535,19 +545,23 @@ class ProtectSkillLogic extends SkillLogic {
             });
         }
 
-        var missed = false;
-        if (data.attacker.willMiss()) {
-            missed = true;
+        var missed = data.attacker.willMiss();
+
+        if (!missed && attackSkill.skillFunc == ENUM.SkillFunc.KILL) {
+            if (Math.random() <= attackSkill.skillFuncArg2) { // probability check
+                var isKilled = true;
+            }
         }
 
-        var wouldBeDamage = this.battleModel.getWouldBeDamage(data.attacker, protector, attackSkill, {scaledRatio: data.scaledRatio});
+        var wouldBeDamage = missed? 0 : this.battleModel.getWouldBeDamage(data.attacker, protector, attackSkill, {scaledRatio: data.scaledRatio});
         toReturn.damage = wouldBeDamage;
         this.battleModel.damageToTarget({
             attacker: data.attacker, 
             target: protector, 
             skill: attackSkill,
             damage: wouldBeDamage,
-            missed: missed
+            missed: missed,
+            isKilled: isKilled
         });
 
         if (!missed && !protector.isDead) {
@@ -577,15 +591,13 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
     }
 
     execute(data: SkillLogicData) {
+        // protect phase
         var toReturn = this.executeProtectPhase(data);
         var protector = data.executor;
 
         // counter phase
         if (!protector.isDead && protector.canAttack() && !data.attacker.isDead) {
-            var counterMissed = false;
-            if (protector.willMiss()) {
-                counterMissed = true;
-            }
+            var counterMissed = protector.willMiss();
 
             var additionalDesc = protector.name + " counters " + data.attacker.name + "! ";
             this.battleModel.damageToTarget({
@@ -613,10 +625,7 @@ class CounterSkillLogic extends SkillLogic {
         });
 
         // counter phase
-        var missed = false;
-        if (data.executor.willMiss()) {
-            missed = true;
-        }
+        var missed = data.executor.willMiss();
 
         this.battleModel.damageToTarget({
             attacker: data.executor, 

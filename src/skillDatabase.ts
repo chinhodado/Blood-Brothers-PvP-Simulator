@@ -546,6 +546,13 @@ var SkillDatabase = {
         desc: "Deal physical damage to five random targets."
     },
 
+    143 : {
+        name: "Sonic Boom", type: 2, func: 7, calc: 1, 
+        arg1: 1, arg2: 0.1, 
+        range: 8, prob: 30, ward: 1,
+        desc: "Damage all foes. May kill targets outright."
+    },
+
     144 : {
 	    name: "Windcrush", type: 2, func: 4, calc: 2,  
 	    arg1: 1,   
@@ -2717,6 +2724,20 @@ var SkillDatabase = {
         desc: "Deal ATK-based damage to five random foes."
     },
 
+    546: {
+        name: "Death's March", type: 2, func: 36, calc: 1,
+        arg1: 1.85, arg2: 0.4, arg3: 27, arg4: 21,
+        range: 23, prob: 30, ward: 1,
+        desc: "Drains HP from two random foes while dealing heavy ATK-based damage."
+    },
+
+    547: {
+        name: "Death's Hunt", type: 2, func: 7, calc: 3,
+        arg1: 1.8, arg2: 0.1,
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to two random foes. Chance to kill target."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -2848,5 +2869,12 @@ var SkillDatabase = {
         arg1: 0.7, arg2: 5, arg3: 0.4, arg4: 1,
         range: 23, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage to two random foes. 40% chance to silence."
+    },
+
+    10028: { // Death
+        name: "Standard Action", type: 2, func: 7, calc: 1,
+        arg1: 1, arg2: 0.1,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage. Chance to kill target."
     },
 };
