@@ -164,7 +164,7 @@ var SkillDatabase = {
     41 : {
         name: "Blizzard", type: 2, func: 4, calc: 2, 
         arg1: 1, arg2: 3, arg3: 0.3,
-        range: 7, prob: 30, ward: 2,
+        range: 7, prob: 30, ward: 3,
         desc: "Deal damage and sometimes freeze three foes."
     },
 
@@ -297,7 +297,7 @@ var SkillDatabase = {
     71: {
         name: "Icicle", type: 2, func: 4, calc: 2,
         arg1: 3, 
-        range: 5, prob: 30, ward: 2,
+        range: 5, prob: 30, ward: 3,
         desc: "Deal heavy damage to one foe."
     },
 
@@ -451,7 +451,7 @@ var SkillDatabase = {
     128: {
         name: "Whiteout", type: 2, func: 4, calc: 2,
         arg1: 2.3, arg2: 3, arg3: 0.3,
-        range: 7, prob: 30, ward: 2,
+        range: 7, prob: 30, ward: 3,
         desc: "Deal heavy damage and sometimes freeze three foes."
     },
 
@@ -810,7 +810,7 @@ var SkillDatabase = {
     198 : {
         name: "Flame Rasp", type: 2, func: 4, calc: 2, 
         arg1: 1.3,  
-        range: 7, prob: 30, ward: 2,
+        range: 7, prob: 30, ward: 3,
         desc: "Deal heavy damage to up to three foes."
     },
 
@@ -2048,7 +2048,7 @@ var SkillDatabase = {
     432 : {
         name : "Spectrum", type: 2, func: 4, calc: 2,
         arg1: 2.25,
-        range: 7, prob: 30, ward: 2, // <- guess
+        range: 7, prob: 30, ward: 3,
         desc: "Deal massive WIS-based damage to up to three foes, ignoring position."
     },
     
