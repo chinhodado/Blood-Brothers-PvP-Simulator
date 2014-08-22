@@ -1591,6 +1591,12 @@ var famDatabase = {
         img: "img2$1/__cb20140318135240/$2/6/6b/Reinforced_Brass_Gorilla_II_Figure.png",
         fullName: "Reinforced Brass Gorilla II"
     },
+    10845: {
+        name: "Rovn", stats: [16269, 19086, 18772, 13214, 13355],
+        skills: [228],
+        img: "img2$1/__cb20130823004528/$2/a/a4/Rovn%2C_the_Brass_Panzer_II_Figure.png",
+        fullName: "Rovn, the Brass Panzer II"
+    },
     11066: {
         name: "Ruprecht", stats: [12911, 15316, 11795, 17504, 11199],
         skills: [330, 334],

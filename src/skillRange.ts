@@ -173,7 +173,7 @@ class RangeFactory {
     }
 
     static isRowBasedRange(rangeId: number): boolean {
-        if (rangeId === 15 || rangeId === 12) {
+        if (rangeId === 12 || rangeId === 14 || rangeId === 15) {
             return true;
         }
 
@@ -204,6 +204,8 @@ class RangeFactory {
                 return new EnemyAllRange(id);
             case 12:
                 return new EnemyFrontAllRange(id);
+            case 14:
+                return new EnemyRearAllRange(id);
             case 15:
                 return new EnemyFrontMidAllRange(id);
             case 21:
@@ -596,6 +598,16 @@ class EnemyFrontAllRange extends BaseRowRange {
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);
+        }
+        return candidates;
+    }
+}
+
+class EnemyRearAllRange extends BaseRowRange {
+    getTargets(executor: Card): Card[] {
+        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        if (candidates.length) {
+            candidates = this.getRowCandidates(candidates, ENUM.FormationRow.REAR, false);
         }
         return candidates;
     }

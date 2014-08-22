@@ -954,6 +954,13 @@ var SkillDatabase = {
         desc: "Deal massive ATK-based damage to three foes."
     },
 
+    228 : {
+        name: "Mecha Rush", type: 2, func: 4, calc: 1,
+        arg1: 1.8, 
+        range: 14, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to all foes in the rear line."
+    },
+
     229 : {
         name: "Spirit Word", type: 2, func: 3, calc: 2, 
         arg1: 2.1,  
