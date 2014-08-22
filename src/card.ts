@@ -18,6 +18,10 @@ class Card {
     isDead: boolean;
     bcAddedProb: number = 0; // added probability for bloodclash
 
+    lastBattleDamageTaken: number = 0;
+    lastBattleDamageDealt: number = 0;
+    justMissed: boolean = false;
+
     player: Player;
     formationColumn: number; // 0 to 4
     formationRow: ENUM.FormationRow; // 1, 2 or 3
@@ -29,8 +33,9 @@ class Card {
     private openingSkills: Skill[] = [];
     private activeSkills:  Skill[] = [];
     private protectSkills: Skill[] = [];
-    private defenseSkills: Skill[] = [];
+    private defenseSkills: Skill[] = []; // does not contain survive skills
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
+    private surviveSkill: Skill = null;
     
     constructor(cardData, player: Player, nth: number, skills: Skill[]) {
         this.name = cardData.name;
@@ -76,7 +81,12 @@ class Card {
                     this.protectSkills.push(skill);
                 }
                 else if (skill.skillType === ENUM.SkillType.DEFENSE) {
-                    this.defenseSkills.push(skill);
+                    if (skill.skillFunc == ENUM.SkillFunc.SURVIVE) {
+                        this.surviveSkill = skill;
+                    }
+                    else {
+                        this.defenseSkills.push(skill);
+                    }
                 }
                 else if (skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) {
                     this.ondeathSkills[1] = skill;
@@ -100,6 +110,10 @@ class Card {
             affliction: this.affliction,
             isDead: this.isDead,
             bcAddedProb: this.bcAddedProb,
+
+            lastBattleDamageTaken: this.lastBattleDamageTaken,
+            lastBattleDamageDealt: this.lastBattleDamageDealt,
+            justMissed: this.justMissed,
                      
             player: this.player,
             formationColumn: this.formationColumn,
@@ -114,6 +128,7 @@ class Card {
             protectSkills: getSerializableObjectArray(this.protectSkills),
             defenseSkills: getSerializableObjectArray(this.defenseSkills),
             ondeathSkills: getSerializableObjectArray(this.ondeathSkills),
+            surviveSkill: this.surviveSkill? this.surviveSkill.getSerializableObject() : null
         }
     }
 
@@ -135,6 +150,9 @@ class Card {
         }
     }
 
+    /**
+     * Note that survive skills will not be returned here
+     */
     getRandomDefenseSkill(): Skill {
         if (this.defenseSkills.length === 0) {
             return null;
@@ -151,6 +169,10 @@ class Card {
         else {
             return getRandomElement(this.protectSkills);
         }
+    }
+
+    getSurviveSkill(): Skill {
+        return this.surviveSkill;
     }
     
     getFirstActiveSkill(): Skill {
@@ -473,6 +495,12 @@ class Card {
             default:
                 throw new Error ("Invalid type of ward!");
         }
+    }
+
+    prepareForNewTurn(): void {
+        this.lastBattleDamageDealt = 0;
+        this.lastBattleDamageTaken = 0;
+        this.justMissed = false;
     }
 }
 

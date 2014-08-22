@@ -256,31 +256,29 @@ class BattleModel {
 
     /**
      * Use this for damage because of attacks
-     * if damage is not supplied, it will be calculated automatically
-     * otherwise, damage will be done directly
      */
-    damageToTarget(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; 
-        damage?: number; scaledRatio?: number; missed: boolean; isKilled?: boolean;}) {
+    processDamagePhase(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; scaledRatio?: number;}) {
         var target = data.target;
-        var damage = data.damage;
-
-        // mostly for counter in counter and protect-counter skills
-        if (!damage) {
-            if (!data.missed) {
-                damage = this.getWouldBeDamage(data.attacker, target, data.skill, {scaledRatio: data.scaledRatio});
-            }
-            else {
-                damage = 0;
-            }
+        var damage = this.getWouldBeDamage(data.attacker, target, data.skill, {scaledRatio: data.scaledRatio});
+        
+        var isMissed = data.attacker.willMiss();
+        if (isMissed) {
+            damage = 0;
+            data.attacker.justMissed = true;
         }
 
-        if (data.isKilled) {
+        if (!isMissed && data.skill.skillFunc == ENUM.SkillFunc.KILL) {
+            if (Math.random() <= data.skill.skillFuncArg2) { // probability check
+                var isKilled = true;
+            }
+        }
+        if (isKilled) {
             damage = target.getHP() + target.status.hpShield;
         }
         
         // HP shield skill
         var hpShield = ~~target.status.hpShield;
-        if (hpShield > 0 && !data.missed && !data.isKilled) {
+        if (hpShield > 0 && !isMissed && !isKilled) {
             if (damage >= hpShield) {
                 target.status.hpShield = 0;
                 damage -= hpShield;
@@ -288,9 +286,25 @@ class BattleModel {
                 target.status.hpShield = hpShield - damage;
                 damage = 0;
             }
-        }         
+        }
+        
+        // survive
+        var surviveSkill = target.getSurviveSkill();
+        var defenseData: SkillLogicData = {
+            executor: target,
+            skill: surviveSkill,
+            attacker: data.attacker,
+            wouldBeDamage: damage
+        }
+        
+        if (surviveSkill && surviveSkill.willBeExecuted(defenseData) && !isKilled && !isMissed) {
+            surviveSkill.execute(defenseData);
+            damage = target.getHP() - 1;
+        }     
     
         target.changeHP(-1 * damage);
+        target.lastBattleDamageTaken = damage;
+        data.attacker.lastBattleDamageDealt = damage;
 
         if (!data.additionalDescription) {
             data.additionalDescription = "";
@@ -301,10 +315,10 @@ class BattleModel {
             var wardUsed = data.skill.ward;
         }
 
-        if (data.missed) {
+        if (isMissed) {
             var desc = data.attacker.name + " missed the attack on " + target.name;
         }
-        else if (data.isKilled) {
+        else if (isKilled) {
             desc = target.name + " is killed outright!";
         }
         else {
@@ -320,8 +334,8 @@ class BattleModel {
             description: desc, 
             skillId: data.skill.id,
             wardUsed: wardUsed,
-            missed: data.missed,
-            isKilled: data.isKilled
+            missed: isMissed,
+            isKilled: isKilled
         });
 
         if (target.isDead) {
@@ -525,6 +539,7 @@ class BattleModel {
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !this.isFinished; i++) {
+                this.prepareAllCards();
                 var currentCard = this.allCurrentMainCards[i];
 
                 this.currentPlayer = currentCard.player;
@@ -751,6 +766,13 @@ class BattleModel {
         // at the end, if there are newly addition to recentlyDeadCards, recursively repeat the process 
         if (this.onDeathCards.length !== 0) {
             this.processOnDeathPhase();
+        }
+    }
+
+    prepareAllCards() {
+        var allCards = this.cardManager.getAllCurrentMainCards();
+        for (var i = 0; i < allCards.length; i++) {
+            allCards[i].prepareForNewTurn();
         }
     }
 
