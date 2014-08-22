@@ -500,6 +500,7 @@ interface MinorEvent {
         type: ENUM.StatusType;
         isNewLogic?: boolean;
         isDispelled?: boolean;
+        isClearDebuff?: boolean;
         isAllUp?: boolean; // Rally Cry
     };
     protect?: {

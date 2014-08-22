@@ -999,6 +999,13 @@ var famDatabase = {
         img: "img2$1/__cb20130629202258/$2/f/f2/Iseult%2C_the_Redeemer_II_Figure.png",
         fullName: "Iseult, the Redeemer II"
     },
+    11351: {
+        name: "Ivy", stats: [16341, 3882, 13803, 15889, 17998],
+        skills: [536],
+        autoAttack: 10026,
+        img: "img3$1/__cb20140809012719/$2/7/73/Ivy_the_Verdant_II_Figure.png",
+        fullName: "Ivy the Verdant II"
+    },
     11009: {
         name: "Jabberwock", stats: [13994, 16193, 13008, 19508, 18024],
         skills: [270, 271],

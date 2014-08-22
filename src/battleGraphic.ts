@@ -639,6 +639,9 @@ class BattleGraphic {
                     if (data.status.isDispelled){
                         var displayText = "dispelled";
                     }
+                    else if (data.status.isClearDebuff){
+                        var displayText = "cleared";
+                    }
                     else if (data.status.isAllUp) {
                         displayText = "All Stats Up";
                         fontSize = 15;

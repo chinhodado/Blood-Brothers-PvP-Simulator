@@ -26,7 +26,9 @@
             case ENUM.SkillFunc.COUNTER:
                 return new CounterSkillLogic();
             case ENUM.SkillFunc.COUNTER_DISPELL:
-                return new CounterDispellSkillLogic()
+                return new CounterDispellSkillLogic();
+            case ENUM.SkillFunc.CLEAR_DEBUFF:
+                return new ClearDebuffSkillLogic();
             case ENUM.SkillFunc.DRAIN:
                 return new DrainSkillLogic();
             case ENUM.SkillFunc.SURVIVE:
@@ -179,7 +181,11 @@ class CasterBasedDebuffSkillLogic extends SkillLogic {
     }
 }
 
-class DispellSkillLogic extends SkillLogic {
+class ClearStatusSkillLogic extends SkillLogic {
+
+    condFunc = function (x: number) {return true;};
+    isDispelled: boolean = false;
+
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = this.getValidTargets(data);
         return super.willBeExecuted(data) && (targets.length > 0);
@@ -190,7 +196,7 @@ class DispellSkillLogic extends SkillLogic {
         var validTargets = [];
 
         for (var i = 0; i < rangeTargets.length; i++) {
-            if (rangeTargets[i].hasPositiveStatus()) {
+            if (rangeTargets[i].hasStatus(this.condFunc)) {
                 validTargets.push(rangeTargets[i]);
             }
         }
@@ -202,21 +208,38 @@ class DispellSkillLogic extends SkillLogic {
         var targets = this.getValidTargets(data);
 
         for (var i = 0; i < targets.length; i++) {
-            targets[i].clearAllPositiveStatus();
+            targets[i].clearAllStatus(this.condFunc);
 
-            var desc = targets[i].name + " is dispelled.";
+            var desc = targets[i].name + (this.isDispelled? " is dispelled." : " is cleared of debuffs.");
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 targetId: targets[i].id,
                 type: ENUM.MinorEventType.STATUS,
                 status: {
                     type: 0, //dummy
-                    isDispelled: true,
+                    isDispelled: this.isDispelled,
+                    isClearDebuff: !this.isDispelled
                 },
                 description: desc,
                 skillId: data.skill.id
             });
         }
+    }
+}
+
+class DispellSkillLogic extends ClearStatusSkillLogic {
+    constructor() {
+        super();
+        this.condFunc = function (x: number) {return x > 0};
+        this.isDispelled = true;
+    }
+}
+
+class ClearDebuffSkillLogic extends ClearStatusSkillLogic {
+    constructor() {
+        super();
+        this.condFunc = function (x: number) {return x < 0};
+        this.isDispelled = false;
     }
 }
 
@@ -557,6 +580,9 @@ class CounterSkillLogic extends SkillLogic {
 }
 
 class CounterDispellSkillLogic extends ProtectSkillLogic {
+
+    condFunc = function (x: number) {return x > 0};
+
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = this.getValidTargets(data);
         return super.willBeExecuted(data) && (targets.length > 0);
@@ -569,7 +595,7 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
         var validTargets = [];
 
         for (var i = 0; i < rangeTargets.length; i++) {
-            if (rangeTargets[i].hasPositiveStatus()) {
+            if (rangeTargets[i].hasStatus(this.condFunc)) {
                 validTargets.push(rangeTargets[i]);
             }
         }
@@ -595,7 +621,7 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
         var targets = this.getValidTargets(data);
 
         for (var i = 0; i < targets.length; i++) {
-            targets[i].clearAllPositiveStatus();
+            targets[i].clearAllStatus(this.condFunc);
 
             var desc = targets[i].name + " is dispelled.";
             this.logger.addMinorEvent({

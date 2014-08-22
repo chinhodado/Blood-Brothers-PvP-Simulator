@@ -2668,6 +2668,12 @@ var SkillDatabase = {
         desc: "Raise WIS and AGI of all party members."
     },
 
+    536: {
+        name: "Arboreal Succor", type: 2, func: 40, calc: 0,
+        range: 4, prob: 70,
+        desc: "Remove the debuffs of self and all allies."
+    },
+
     538: {
         name: "Bronze Fist", type: 2, func: 4, calc: 2,
         arg1: 1.5,
@@ -2862,6 +2868,13 @@ var SkillDatabase = {
         arg1: 1.2, arg2: 4, arg3: 0.3, arg4: 0.2,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and sometimes greatly lower AGI of target."
+    },
+
+    10026: { // Ivy
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1.3, arg2: 2, arg3: 0.5,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage, 50% chance to paralyze."
     },
 
     10027: { // Temperance

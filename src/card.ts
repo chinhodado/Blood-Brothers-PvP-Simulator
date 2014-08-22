@@ -195,6 +195,7 @@ class Card {
     }
     clearBuffOnDeathSkill(): void {
         this.ondeathSkills[0] = null;
+        this.status.actionOnDeath = 0;
     }
 
     getName(): string {
@@ -252,7 +253,6 @@ class Card {
         this.affliction = AfflictionFactory.getAffliction(type);
         this.affliction.add(option);
     }
-
     clearAffliction(): void{
         if(!this.affliction){
             return;
@@ -260,23 +260,18 @@ class Card {
         this.affliction.clear();
         this.affliction = null;
     }
-
     canAttack(): boolean {
         return (this.affliction) ? this.affliction.canAttack() : true;
     }
-
     canUseSkill(): boolean {
         return (this.affliction) ? this.affliction.canUseSkill() : true;
     }
-
     willMiss(): boolean {
         return (this.affliction) ? this.affliction.canMiss() : false;
     }
-
     getAfflictionType(): ENUM.AfflictionType {
         return this.affliction ? this.affliction.getType() : null;
     }
-
     getPoisonPercent(): number {
         if (!this.affliction || this.affliction.type != ENUM.AfflictionType.POISON) {
             return undefined;
@@ -357,38 +352,40 @@ class Card {
         }
     }
     
-    clearAllPositiveStatus(): void {
-        if (this.status.atk > 0) this.status.atk = 0;
-        if (this.status.def > 0) this.status.def = 0;
-        if (this.status.wis > 0) this.status.wis = 0;
-        if (this.status.agi > 0) this.status.agi = 0;
+    /**
+     * Clear all statuses of this card that satisfy the supplied conditional function
+     */
+    clearAllStatus(condFunc: (x: number)=>boolean): void {
 
-        if (this.status.attackResistance > 0) this.status.attackResistance = 0;
-        if (this.status.magicResistance > 0) this.status.magicResistance = 0;
-        if (this.status.breathResistance > 0) this.status.breathResistance = 0;
-
-        if (this.status.skillProbability > 0) this.status.skillProbability = 0;
-
-        if (this.status.actionOnDeath > 0) this.status.actionOnDeath = 0;
-        this.clearBuffOnDeathSkill();
-
-        if (this.status.hpShield > 0) this.status.hpShield = 0;
-
-        if (this.status.willAttackAgain > 0) this.status.willAttackAgain = 0;
-    }
-
-    hasPositiveStatus(): boolean {
-        var hasPositiveStatus = false;
-        var status = this.status;
-
-        if (status.atk > 0 || status.def > 0 || status.wis > 0 || status.agi > 0 ||
-            status.attackResistance > 0 || status.magicResistance > 0 || status.breathResistance > 0 ||
-            status.skillProbability > 0 || status.actionOnDeath > 0 || status.hpShield > 0 || status.willAttackAgain > 0) 
-        {
-            hasPositiveStatus = true;
+        for (var key in this.status) {
+            if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number"){
+                if (condFunc(this.status[key])) {
+                    this.status[key] = 0;
+                }
+            }
         }
 
-        return hasPositiveStatus;
+        if (this.status.actionOnDeath == 0) {
+            this.clearBuffOnDeathSkill();
+        }
+    }
+
+    /**
+     * Return true if this card has a status that satisfies the supplied conditional function
+     */
+    hasStatus(condFunc: (x: number)=>boolean): boolean {
+        var hasStatus = false;
+
+        for (var key in this.status) {
+            if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number"){
+                if (condFunc(this.status[key])) {
+                    hasStatus = true;
+                    break;
+                }
+            }
+        }
+
+        return hasStatus;
     }
 
     getHP(): number {
