@@ -266,6 +266,9 @@ class BattleModel {
             damage = 0;
             data.attacker.justMissed = true;
         }
+        else {
+            data.attacker.justMissed = false;
+        }
 
         if (!isMissed && data.skill.skillFunc == ENUM.SkillFunc.KILL) {
             if (Math.random() <= data.skill.skillFuncArg2) { // probability check
