@@ -701,13 +701,26 @@ class SurviveSkillLogic extends SkillLogic {
 }
 
 class HealSkillLogic extends SkillLogic {
-    execute(data: SkillLogicData) {
-        var targets = data.skill.getTargets(data.executor);
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = this.getValidTargets(data);
+        return super.willBeExecuted(data) && (targets.length > 0);
+    }
 
-        if (!targets || targets.length == 0) {
-            return;
+    getValidTargets(data: SkillLogicData): Card[] {
+        var rangeTargets = data.skill.getTargets(data.executor);
+        var validTargets = [];
+
+        for (var i = 0; i < rangeTargets.length; i++) {
+            if (!rangeTargets[i].isFullHealth()) {
+                validTargets.push(rangeTargets[i]);
+            }
         }
 
+        return validTargets;
+    }
+
+    execute(data: SkillLogicData) {
+        var targets = this.getValidTargets(data);
         var baseHealAmount = getHealAmount(data.executor);
 
         var multiplier = data.skill.skillFuncArg1;

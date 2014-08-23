@@ -65,13 +65,13 @@ var famDatabase = {
         fullName: "Alcina the Soulsucker II"
     },
     10813: {
-        name: "All-Seeing Keeper", stats: [12952, 14282, 11477, 10490, 17133],
+        name: "ASK", stats: [12952, 14282, 11477, 10490, 17133],
         skills: [219],
         img: "img3$1/__cb20130801154343/$2/3/39/All-Seeing_Keeper_II_Figure.png",
         fullName: "All-Seeing Keeper II"
     },
     10936: {
-        name: "Alluring Merrow", stats: [16811, 14709, 13723, 17537, 17320],
+        name: "Merrow", stats: [16811, 14709, 13723, 17537, 17320],
         skills: [217],
         img: "img2$1/__cb20130725105247/$2/6/6d/Alluring_Merrow_II_Figure.png",
         fullName: "Alluring Merrow II"
@@ -83,7 +83,7 @@ var famDatabase = {
         fullName: "Alp, Dynast of Darkness II"
     },
     10623: {
-        name: "Amazon Warfist", stats: [10904, 11417, 10466, 10660, 11830],
+        name: "Warfist", stats: [10904, 11417, 10466, 10660, 11830],
         skills: [156],
         img: "img2$1/__cb20130414034805/$2/1/1a/Amazon_Warfist_II_Figure.png",
         fullName: "Amazon Warfist II"
@@ -108,7 +108,7 @@ var famDatabase = {
         fullName: "Amphisbaena II"
     },
     11065: {
-        name: "Ancient Beetle", stats: [14005, 15901, 11903, 11838, 14904],
+        name: "ABS", stats: [14005, 15901, 11903, 11838, 14904],
         skills: [365],
         img: "img1$1/__cb20140207105441/$2/e/e0/Ancient_Beetle_Soldier_II_Figure.png",
         fullName: "Ancient Beetle Soldier II"
@@ -246,7 +246,7 @@ var famDatabase = {
         fullName: "Archbishop of the Deep II"
     },
     10600: {
-        name: "Archduke Ose", stats: [16995, 14395, 15023, 14850, 11990],
+        name: "Ose", stats: [16995, 14395, 15023, 14850, 11990],
         skills: [154],
         img: "img3$1/__cb20130314191037/$2/0/00/Archduke_Ose_II_Figure.png",
         fullName: "Archduke Ose II"
@@ -350,7 +350,7 @@ var famDatabase = {
         fullName: "Brang Two-Heads II"
     },
     11171: {
-        name: "Bronzeclad Hyena", stats: [14644, 10766, 11860, 18923, 12228],
+        name: "Hyena", stats: [14644, 10766, 11860, 18923, 12228],
         skills: [321],
         autoAttack: 10008,
         img: "img2$1/__cb20131227221825/$2/f/fc/Bronzeclad_Hyena_II_Figure.png",
@@ -381,7 +381,7 @@ var famDatabase = {
         fullName: "Canhel, Guardian Dragon II"
     },
     10997: {
-        name: "Cap'n Jolly", stats: [14200, 16594, 14070, 18956, 15424],
+        name: "Jolly", stats: [14200, 16594, 14070, 18956, 15424],
         skills: [226],
         img: "img2$1/__cb20130828162829/$2/1/14/Cap%27n_Jolly%2C_Sea_Scourge_II_Figure.png",
         fullName: "Cap'n Jolly, Sea Scourge II"
@@ -664,7 +664,7 @@ var famDatabase = {
         fullName: "Fomor the Savage II"
     },
     11115: {
-        name: "Frost Bearwolf", stats: [14503, 24513, 11492, 11405, 17992],
+        name: "Bearwolf", stats: [14503, 24513, 11492, 11405, 17992],
         skills: [353],
         img: "img2$1/__cb20140112201013/$2/5/5b/Frost_Bearwolf_II_Figure.png",
         fullName: "Frost Bearwolf II"
@@ -946,7 +946,7 @@ var famDatabase = {
         fullName: "Ijiraq, the Glacier II"
     },
     21104: {
-        name: "Impregnable Iron Golem", stats: [23155, 19935, 21027, 8440, 17505],
+        name: "IIG", stats: [23155, 19935, 21027, 8440, 17505],
         skills: [444, 445],
         img: "img1$1/__cb20140505115108/$2/5/5f/Impregnable_Iron_Golem_Figure.png",
         fullName: "Impregnable Iron Golem"
@@ -1013,7 +1013,7 @@ var famDatabase = {
         fullName: "Jabberwock, Phantom Dragon II"
     },
     11169: {
-        name: "Jack o' Frost", stats: [13507, 9000, 12196, 16204, 16995],
+        name: "Jack", stats: [13507, 9000, 12196, 16204, 16995],
         skills: [333],
         autoAttack: 10009,
         img: "img1$1/__cb20131227221921/$2/0/0b/Jack_o%27_Frost_II_Figure.png",
@@ -1161,7 +1161,7 @@ var famDatabase = {
         fullName: "Magdal, Dragonmaster II"
     },
     10365: {
-        name: "Makalipon", stats: [10250, 8330, 10515, 12168, 10250],
+        name: "Makalipon", stats: [10343, 8405, 10611, 12280, 10343],
         skills: [60],
         img: "img1$1/__cb20130202230532/$2/f/f1/Makalipon%2C_Sacred_Fruit_II_Figure.png",
         fullName: "Makalipon, Sacred Fruit II"
@@ -1591,6 +1591,13 @@ var famDatabase = {
         img: "img2$1/__cb20140318135240/$2/6/6b/Reinforced_Brass_Gorilla_II_Figure.png",
         fullName: "Reinforced Brass Gorilla II"
     },
+    11215: {
+        name: "Rohde", stats: [17591, 8101, 16042, 15305, 10582],
+        skills: [376, 377],
+        autoAttack: 10007,
+        img: "img2$1/__cb20140213035144/$2/3/3b/Rohde%2C_the_Rose_Thorn_II_Figure.png",
+        fullName: "Rohde, the Rose Thorn II"
+    },
     10845: {
         name: "Rovn", stats: [16269, 19086, 18772, 13214, 13355],
         skills: [228],
@@ -1635,7 +1642,7 @@ var famDatabase = {
         fullName: "Saurva, the Lawless Lord II"
     },
     21228: {
-        name: "Scathing Hierophant", stats: [19681, 13391, 17534, 20112, 16950],
+        name: "Hierophant", stats: [19681, 13391, 17534, 20112, 16950],
         skills: [418],
         autoAttack: 10007,
         img: "img1$1/__cb20140411023129/$2/b/b1/Scathing_Hierophant_Figure.png",
@@ -1660,7 +1667,7 @@ var famDatabase = {
         fullName: "Sea Serpent II"
     },
     11204: {
-        name: "Seismo Worm", stats: [18999, 19097, 15056, 11015, 16800],
+        name: "Seismo", stats: [18999, 19097, 15056, 11015, 16800],
         skills: [433],
         img: "img1$1/__cb20140425214716/$2/c/ce/Seismo_Worm_Figure_2.png",
         fullName: "Seismo Worm"
@@ -1931,7 +1938,7 @@ var famDatabase = {
         fullName: "Tomoe, the Lightning Arrow II"
     },
     11143: {
-        name: "Bone Beast", stats: [12001, 9905, 12207, 17000, 16803],
+        name: "TBB", stats: [12001, 9905, 12207, 17000, 16803],
         skills: [366],
         autoAttack: 10007,
         img: "img1$1/__cb20140206151442/$2/1/15/Tormented_Bone_Beast_II_Figure.png",

@@ -1758,6 +1758,20 @@ var SkillDatabase = {
         desc: "Deal massive ATK-based damage to three random foes, regardless of position."
     },
 
+    376 : {
+        name: "Enigmatic Bloom", type: 2, func: 6, calc: 0, 
+        arg1: 1,  
+        range: 2, prob: 50,
+        desc: "Revive and fully restore HP of adjacent familiars."
+    },
+
+    377 : {
+        name: "Healing Bloom", type: 2, func: 18, calc: 4, 
+        arg1: 1,  
+        range: 21, prob: 70,
+        desc: "Restore HP to self."
+    },
+
     378 : {
         name: "Blade Flurry", type: 2, func: 21, calc: 3, 
         arg1: 1, arg2: 1, arg3: 0.3, arg4: 0.3, 
