@@ -769,7 +769,7 @@ class HealSkillLogic extends SkillLogic {
         var rangeTargets = data.skill.getTargets(data.executor);
         var validTargets = [];
 
-        for (var i = 0; i < rangeTargets.length; i++) {
+        for (var i = 0; rangeTargets && i < rangeTargets.length; i++) {
             if (!rangeTargets[i].isFullHealth()) {
                 validTargets.push(rangeTargets[i]);
             }
