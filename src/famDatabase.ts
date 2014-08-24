@@ -197,6 +197,12 @@ var famDatabase = {
         img: "img1$1/__cb20140314150633/$2/0/04/Arcanan_Empress_II_Figure.png",
         fullName: "Arcanan Empress II"
     },
+    11311: {
+        name: "Hanged Man", stats: [20505, 15002, 13008, 13030, 18024],
+        skills: [480, 481],
+        img: "img4$1/__cb20140609073717/$2/8/89/Arcanan_Hanged_Man_II_Figure.png",
+        fullName: "Arcanan Hanged Man II"
+    },
     11287: {
         name: "Hermit", stats: [19205, 12066, 12586, 20722, 15002],
         skills: [453, 454],
@@ -216,6 +222,12 @@ var famDatabase = {
         skills: [430, 431],
         img: "img3$1/__cb20140414082018/$2/f/fb/Arcanan_Lovers_II_Figure.png",
         fullName: "Arcanan Lovers II"
+    },
+    11208: {
+        name: "Magus", stats: [15186, 12131, 17688, 19010, 15641],
+        skills: [402, 403],
+        img: "img1$1/__cb20140319013115/$2/b/bb/Arcanan_Magus_II_Figure.png",
+        fullName: "Arcanan Magus II"
     },
     11284: {
         name: "Might", stats: [18598, 19227, 10766, 13301, 17948],
@@ -945,6 +957,12 @@ var famDatabase = {
         img: "img2$1/__cb20130412195618/$2/1/1b/Ijiraq%2C_the_Glacier_II_Figure.png",
         fullName: "Ijiraq, the Glacier II"
     },
+    11064: {
+        name: "Ijiraq L", stats: [16995, 14449, 17006, 19508, 12987],
+        skills: [328, 329],
+        img: "img3$1/__cb20131221031354/$2/3/3c/Ijiraq_the_Brinicle_II_Figure.png",
+        fullName: "Ijiraq the Brinicle II"
+    },
     21104: {
         name: "IIG", stats: [23155, 19935, 21027, 8440, 17505],
         skills: [444, 445],
@@ -1390,6 +1408,12 @@ var famDatabase = {
         img: "img2$1/__cb20140606074955/$2/4/4e/Paladin_of_Cancer_II_Figure.png",
         fullName: "Paladin of Cancer II"
     },
+    11210: {
+        name: "Aries", stats: [14395, 15543, 16854, 9011, 12813],
+        skills: [392, 393],
+        img: "img3$1/__cb20140313080212/$2/3/37/Paladin_of_Aries_II_Figure.png",
+        fullName: "Paladin of Aries II"
+    },
     11301: {
         name: "Capricorn", stats: [14937, 8491, 13507, 16551, 15099],
         skills: [476],
@@ -1469,7 +1493,7 @@ var famDatabase = {
         fullName: "Pendragon, the Scourge II"
     },
     21368: {
-        name: "Perendon", stats: [19203, 17300, 17055, 17009, 17604],
+        name: "Perendon", stats: [19202, 17300, 17055, 17009, 17604],
         skills: [504],
         autoAttack: 10021,
         img: "img1$1/__cb20140709072738/$2/2/24/Perendon_the_Pure_Figure.png",

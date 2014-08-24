@@ -21,6 +21,8 @@
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();
+            case ENUM.SkillFunc.EVADE:
+                return new EvadeSkillLogic();
             case ENUM.SkillFunc.PROTECT_COUNTER:
                 return new ProtectCounterSkillLogic();
             case ENUM.SkillFunc.COUNTER:
@@ -79,6 +81,13 @@ class SkillLogic {
 
     execute(data: SkillLogicData) {
         throw new Error("Implement this");
+    }
+
+    clearAllCardsDamagePhaseData() {
+        var allCards = this.cardManager.getAllCurrentMainCards();
+        for (var i = 0; i < allCards.length; i++) {
+            allCards[i].clearDamagePhaseData();
+        }
     }
 }
 
@@ -360,7 +369,7 @@ class AttackSkillLogic extends SkillLogic {
                     });
                     targetsAttacked[targetCard.id] = true;
 
-                    if (!executor.justMissed && !targetCard.isDead) {
+                    if (!executor.justMissed && !targetCard.justEvaded && !targetCard.isDead) {
                         if (Skill.isDebuffAttackSkill(skill.id)) {
                             if (Math.random() <= skill.skillFuncArg3) {
                                 this.battleModel.processDebuff(executor, targetCard, skill);
@@ -382,6 +391,8 @@ class AttackSkillLogic extends SkillLogic {
                 if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
                     this.processDrainPhase(executor, skill);
                 }
+
+                this.clearAllCardsDamagePhaseData();
             }
         }
         else {
@@ -420,7 +431,7 @@ class AttackSkillLogic extends SkillLogic {
                 skill: skill,
             });
 
-            if (!executor.justMissed && !target.isDead) {
+            if (!executor.justMissed && !target.justEvaded && !target.isDead) {
                 if (Skill.isDebuffAttackSkill(skill.id)) {
                     if (Math.random() <= skill.skillFuncArg3) {
                         this.battleModel.processDebuff(executor, target, skill);
@@ -439,6 +450,8 @@ class AttackSkillLogic extends SkillLogic {
         if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
             this.processDrainPhase(executor, skill);
         }
+
+        this.clearAllCardsDamagePhaseData();
     }
 
     // for drain attack
@@ -491,7 +504,6 @@ class ProtectSkillLogic extends SkillLogic {
 
         // first redirect the original attack to the protecting fam
         if (!noProtectLog) {
-            var desc = protector.name + " procs " + protectSkill.name + " to protect " + data.targetCard.name + ". ";
             this.logger.addMinorEvent({
                 executorId: protector.id, 
                 type: ENUM.MinorEventType.PROTECT,
@@ -501,7 +513,7 @@ class ProtectSkillLogic extends SkillLogic {
                     counteredSkillId: attackSkill.id,
                     attackerId: data.attacker.id
                 },
-                description: desc,
+                description: protector.name + " procs " + protectSkill.name + " to protect " + data.targetCard.name + ". ",
                 skillId: protectSkill.id
             });
         }
@@ -512,6 +524,7 @@ class ProtectSkillLogic extends SkillLogic {
             skill: attackSkill,
         });
 
+        // note: don't need to check for justEvaded here
         if (!data.attacker.justMissed && !protector.isDead) {
             if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
                 this.battleModel.processAffliction(data.attacker, protector, attackSkill);
@@ -527,8 +540,55 @@ class ProtectSkillLogic extends SkillLogic {
         if (data.targetsAttacked) {
             data.targetsAttacked[protector.id] = true;
         }
+
+        // clear the temp stuffs
+        this.clearAllCardsDamagePhaseData();
         
         return toReturn;
+    }
+}
+
+class EvadeSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        var targets = data.skill.getTargets(data.executor);
+
+        // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != 21) {
+            return false;
+        }
+
+        var canEvade = Skill.canProtectFromCalcType(data.skill.skillFuncArg2, data.attackSkill)
+                    && Skill.canEvadeFromSkill(data.attackSkill);
+
+        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, targets) && canEvade;
+    }
+
+    execute(data: SkillLogicData) {
+        data.executor.justEvaded = true;
+
+        this.logger.addMinorEvent({
+            executorId: data.executor.id, 
+            type: ENUM.MinorEventType.DESCRIPTION,
+            noProcEffect: true,
+            description: data.executor.name + " procs " + data.skill.name,
+            skillId: data.skill.id
+        });
+
+        this.battleModel.processDamagePhase({
+            attacker: data.attacker, 
+            target: data.executor, 
+            skill: data.attackSkill,
+        });
+
+        // update the targetsAttacked if necessary
+        if (data.targetsAttacked) {
+            data.targetsAttacked[data.executor] = true;
+        }
+
+        // clear the temp stuffs
+        this.clearAllCardsDamagePhaseData();
+
+        return {};
     }
 }
 
@@ -689,12 +749,11 @@ class SurviveSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        var desc = data.executor.name + " procs " + data.skill.name + ". ";
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
             noProcEffect: true,
-            description: desc,
+            description: data.executor.name + " procs " + data.skill.name + ". ",
             skillId: data.skill.id
         });
     }

@@ -1500,6 +1500,20 @@ var SkillDatabase = {
         desc: "Deal heavy ATK-based damage to three random foes."
     },
 
+    328 : {
+        name: "Rime Fist", type: 2, func: 4, calc: 2, 
+        arg1: 1.4, arg2: 3, arg3: 0.3,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes freeze five random foes, regardless of position."
+    },
+
+    329 : {
+        name: "Backstep", type: 5, func: 27, calc: 0, 
+        arg1: 2, arg2: 3, arg3: 78, arg4: 79,
+        range: 21, prob: 50,
+        desc: "Deflect enemy AGI attack skills."
+    },
+
     330 : {
 	    name: "Dark Blessing", type: 1, func: 19, calc: 0,  
 	    arg1: 0, arg2: 5, arg3: 0.45, arg4: 1,
@@ -1863,6 +1877,20 @@ var SkillDatabase = {
         desc: "Deal AGI-based damage to up to four foes, regardless of position."
     },
 
+    392 : {
+        name: "Aries' Strike", type: 2, func: 3, calc: 1, 
+        arg1: 1.2,  
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
+    },
+
+    393 : {
+        name: "Sidestep", type: 5, func: 27, calc: 0, 
+        arg1: 2, arg2: 3, arg3: 78, arg4: 79,
+        range: 21, prob: 30,
+        desc: "Evade enemy AGI-based attack skills."
+    },
+
     394 : {
         name: "Glance", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
@@ -1896,6 +1924,20 @@ var SkillDatabase = {
         arg1: 0, arg2: 1, arg3: 0.5, arg4: 10,
         range: 7, prob: 70,
         desc: "Chance to poison up to three foes at the start of battle."
+    },
+
+    402 : {
+        name : "Tricksy Flames", type: 2, func: 4, calc: 2, 
+        arg1: 1.95,
+        range: 12, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to all foes in the front line, ignoring position."
+    },
+
+    403 : {
+        name : "Flickering Flames", type: 5, func: 27, calc: 0, 
+        arg1: 2, arg2: 2, arg3: 78, arg4: 79,
+        range: 21, prob: 50,
+        desc: "Evade enemy WIS-based attack skills."
     },
     
     404 : {
@@ -2358,6 +2400,20 @@ var SkillDatabase = {
         arg1: 1, arg2: 18, arg3: 0, arg4: 0, 
         range: 121, prob: 70,
         desc: "Allows a random ally to perform an extra action during the next turn."
+    },
+
+    480 : {
+        name: "Rasteira", type: 2, func: 3, calc: 3, 
+        arg1: 1.5,
+        range: 314, prob: 30, ward: 1,
+        desc: "Heavy AGI-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    481 : {
+        name: "Macaco", type: 6, func: 27, calc: 0, 
+        arg1: 2, arg2: 9, arg3: 78, arg4: 79, 
+        range: 21, prob: 50,
+        desc: "Evade enemy ATK-based and AGI-based attack skills."
     },
 
     482 : {

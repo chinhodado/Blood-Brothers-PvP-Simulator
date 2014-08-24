@@ -320,6 +320,9 @@ class BattleGraphic {
         if (data.missed) {
             var txt = "missed";
         }
+        else if (data.evaded) {
+            var txt = "evaded";
+        }
         else if (data.isKilled) {
             txt = "killed";
         }

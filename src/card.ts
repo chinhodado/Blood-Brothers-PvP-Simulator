@@ -21,6 +21,7 @@ class Card {
     lastBattleDamageTaken: number = 0;
     lastBattleDamageDealt: number = 0;
     justMissed: boolean = false;
+    justEvaded: boolean = false;
 
     player: Player;
     formationColumn: number; // 0 to 4
@@ -77,7 +78,7 @@ class Card {
                 else if (skill.skillType === ENUM.SkillType.ACTIVE) {
                     this.activeSkills.push(skill);
                 }
-                else if (skill.skillType === ENUM.SkillType.PROTECT) {
+                else if (skill.skillType === ENUM.SkillType.PROTECT || skill.skillType === ENUM.SkillType.EVADE) {
                     this.protectSkills.push(skill);
                 }
                 else if (skill.skillType === ENUM.SkillType.DEFENSE) {
@@ -114,6 +115,7 @@ class Card {
             lastBattleDamageTaken: this.lastBattleDamageTaken,
             lastBattleDamageDealt: this.lastBattleDamageDealt,
             justMissed: this.justMissed,
+            justEvaded: this.justEvaded,
                      
             player: this.player,
             formationColumn: this.formationColumn,
@@ -494,10 +496,11 @@ class Card {
         }
     }
 
-    prepareForNewTurn(): void {
+    clearDamagePhaseData(): void {
         this.lastBattleDamageDealt = 0;
         this.lastBattleDamageTaken = 0;
         this.justMissed = false;
+        this.justEvaded = false;
     }
 }
 

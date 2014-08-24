@@ -270,7 +270,12 @@ class BattleModel {
             data.attacker.justMissed = false;
         }
 
-        if (!isMissed && data.skill.skillFunc == ENUM.SkillFunc.KILL) {
+        var evaded = target.justEvaded
+        if (evaded) {
+            damage = 0;
+        }
+
+        if (!isMissed && !evaded && data.skill.skillFunc == ENUM.SkillFunc.KILL) {
             if (Math.random() <= data.skill.skillFuncArg2) { // probability check
                 var isKilled = true;
             }
@@ -281,7 +286,7 @@ class BattleModel {
         
         // HP shield skill
         var hpShield = ~~target.status.hpShield;
-        if (hpShield > 0 && !isMissed && !isKilled) {
+        if (hpShield > 0 && !isMissed && !evaded && !isKilled) {
             if (damage >= hpShield) {
                 target.status.hpShield = 0;
                 damage -= hpShield;
@@ -300,7 +305,7 @@ class BattleModel {
             wouldBeDamage: damage
         }
         
-        if (surviveSkill && surviveSkill.willBeExecuted(defenseData) && !isKilled && !isMissed) {
+        if (surviveSkill && surviveSkill.willBeExecuted(defenseData) && !isKilled && !isMissed && !evaded) {
             surviveSkill.execute(defenseData);
             damage = target.getHP() - 1;
         }     
@@ -321,6 +326,9 @@ class BattleModel {
         if (isMissed) {
             var desc = data.attacker.name + " missed the attack on " + target.name;
         }
+        else if (evaded) {
+            desc = target.name + " evaded the attack!";
+        }
         else if (isKilled) {
             desc = target.name + " is killed outright!";
         }
@@ -338,6 +346,7 @@ class BattleModel {
             skillId: data.skill.id,
             wardUsed: wardUsed,
             missed: isMissed,
+            evaded: evaded,
             isKilled: isKilled
         });
 
@@ -542,7 +551,6 @@ class BattleModel {
 
             // assuming both have 5 cards
             for (var i = 0; i < 10 && !this.isFinished; i++) {
-                this.prepareAllCards();
                 var currentCard = this.allCurrentMainCards[i];
 
                 this.currentPlayer = currentCard.player;
@@ -771,14 +779,7 @@ class BattleModel {
             this.processOnDeathPhase();
         }
     }
-
-    prepareAllCards() {
-        var allCards = this.cardManager.getAllCurrentMainCards();
-        for (var i = 0; i < allCards.length; i++) {
-            allCards[i].prepareForNewTurn();
-        }
-    }
-
+    
     /**
      * Called at the end of two player's turn
      */

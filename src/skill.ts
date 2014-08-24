@@ -4,9 +4,9 @@ class Skill {
 
     id: number;
     name: string;
-    skillType: number;
-    skillFunc: number;
-    skillCalcType: number;
+    skillType: ENUM.SkillType;
+    skillFunc: ENUM.SkillFunc;
+    skillCalcType: ENUM.SkillCalcType;
     skillFuncArg1: number;
     skillFuncArg2: number;
     skillFuncArg3: number;
@@ -219,6 +219,29 @@ class Skill {
         }
 
         return statuses;
+    }
+
+    static canProtectFromCalcType(type: ENUM.SkillCalcType, attackSkill: Skill) {
+        switch (type) {
+            case ENUM.SkillCalcType.ATK:
+            case ENUM.SkillCalcType.WIS:
+            case ENUM.SkillCalcType.AGI:
+                return attackSkill.skillCalcType == type;
+            case ENUM.SkillCalcType.ATK_WIS:
+                return attackSkill.skillCalcType == ENUM.SkillCalcType.ATK || attackSkill.skillCalcType == ENUM.SkillCalcType.WIS;
+            case ENUM.SkillCalcType.ATK_AGI:
+                return attackSkill.skillCalcType == ENUM.SkillCalcType.ATK || attackSkill.skillCalcType == ENUM.SkillCalcType.AGI;
+            case ENUM.SkillCalcType.WIS_AGI:
+                return attackSkill.skillCalcType == ENUM.SkillCalcType.WIS || attackSkill.skillCalcType == ENUM.SkillCalcType.AGI;
+            default:
+                return false;
+        }
+    }
+
+    static canEvadeFromSkill(attackSkill: Skill) {
+        return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
+                    && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
+                    && !attackSkill.isAutoAttack);
     }
 
     isIndirectSkill(): boolean {

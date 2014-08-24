@@ -9,7 +9,7 @@ module ENUM {
         DEFENSE = 3, // drain, counter, survive
         FIELD = 4,
         PROTECT = 5, // protect, protect-counter, evade, protect-reflect, counter-dispell
-
+        EVADE = 6,
         ACTION_ON_DEATH = 16,
     }
     
@@ -43,7 +43,7 @@ module ENUM {
         RANDOM = 24,
         COPY = 25,
         IMITATE = 26,
-        EVADE = 27,
+        EVADE = 27, // arg1: skill type to evade, arg2: skill calc type to evade, arg3 & 4: unimportant
         PROTECT_REFLECT = 28,
         COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ?? (aka protect-dispell)
         TURN_ORDER_CHANGE = 31, // arg1: new base, arg2: turn num
@@ -67,7 +67,10 @@ module ENUM {
         HEAL = 4,
         BUFF = 5,
         DEBUFF = 6,
-        REFLECT = 7
+        REFLECT = 7,
+        ATK_WIS = 8,
+        ATK_AGI = 9,
+        WIS_AGI = 10
     }
     
     export enum StatType {
