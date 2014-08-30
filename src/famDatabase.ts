@@ -236,6 +236,13 @@ var famDatabase = {
         img: "img2$1/__cb20140516081822/$2/a/a4/Arcanan_Might_II_Figure.png",
         fullName: "Arcanan Might II"
     },
+    11363: {
+        name: "Moon", stats: [18273, 18046, 13279, 12467, 17948],
+        skills: [551, 552],
+        autoAttack: 10030,
+        img: "img3$1/__cb20140825081610/$2/b/b8/Arcanan_Moon_II_Figure.png",
+        fullName: "Arcanan Moon II"
+    },
     11360: {
         name: "Star", stats: [20223, 7548, 18035, 18208, 15803],
         skills: [540, 541],
@@ -337,7 +344,7 @@ var famDatabase = {
         fullName: "Biast II"
     },
     10787: {
-        name: "Black Knight", stats: [12647, 16095, 11623, 11573, 13841],
+        name: "Black Knight", stats: [12648, 16097, 11623, 11574, 13842],
         skills: [211],
         img: "img1$1/__cb20130714135313/$2/9/9e/Black_Knight%2C_Soul_Hunter_II_Figure.png",
         fullName: "Black Knight, Soul Hunter II"
@@ -416,6 +423,12 @@ var famDatabase = {
         autoAttack: 10007,
         img: "img2$1/__cb20140116044027/$2/6/6d/Cat_Sith_Magus_Master_II_Figure.png",
         fullName: "Cat Sith Magus Master II"
+    },
+    11366: {
+        name: "CSS", stats: [15034, 16518, 13052, 7202, 16811],
+        skills: [549],
+        img: "img1$1/__cb20140823140158/$2/7/7b/Cat_Sith_Swordswoman_II_Figure.png",
+        fullName: "Cat Sith Swordswoman II"
     },
     11213: {
         name: "Cegila", stats: [13149, 11492, 9498, 17504, 16995],
@@ -627,6 +640,13 @@ var famDatabase = {
         img: "img1$1/__cb20130420124059/$2/d/dd/Fenrir_II_Figure.png",
         fullName: "Fenrir II"
     },
+    21352: {
+        name: "Siege Tower", stats: [20007, 19750, 16915, 14021, 17567],
+        skills: [548],
+        autoAttack: 10029,
+        img: "img2$1/__cb20140823140158/$2/9/93/Ferocious_Siege_Tower_Figure.png",
+        fullName: "Ferocious Siege Tower"
+    },
     10496: {
         name: "Bat Demon", stats: [12538, 14182, 12648, 11928, 12720],
         skills: [131],
@@ -742,6 +762,12 @@ var famDatabase = {
         skills: [491],
         img: "img3$1/__cb20140620060851/$2/e/e5/Gigantopithecus_II_Figure.png",
         fullName: "Gigantopithecus II"
+    },
+    11375: {
+        name: "Gilgamesh", stats: [20115, 19053, 18013, 8220, 16096],
+        skills: [558, 559],
+        img: "img1$1/__cb20140830112828/$2/e/e1/Gilgamesh_the_Bold_II_Figure.png",
+        fullName: "Gilgamesh the Bold II"
     },
     10177: {
         name: "Goblin King", stats: [8144, 8339, 6400, 10159, 10278],
@@ -1088,7 +1114,7 @@ var famDatabase = {
         fullName: "Kelaino, the Dark Cloud II"
     },
     11279: {
-        name: "Kobold", stats: [14207, 14462, 15844, 8442, 14999],
+        name: "Kobold", stats: [14207, 14462, 15804, 8442, 14999],
         skills: [449],
         img: "img1$1/__cb20140508115333/$2/6/6e/Kobold_Guard_Captain_II_Figure.png",
         fullName: "Kobold Guard Captain II"
@@ -1149,13 +1175,13 @@ var famDatabase = {
         fullName: "Long Feng, the Dragon Fist II"
     },
     10754: {
-        name: "Lucia", stats: [17106, 13878, 16633, 9880, 10857],
+        name: "Lucia", stats: [17106, 13878, 16633, 9881, 10857],
         skills: [16],
         img: "img1$1/__cb20130428112723/$2/9/97/Lucia%2C_Petal-Shears_II_Figure.png",
         fullName: "Lucia, Petal-Shears II"
     },
     10794: {
-        name: "Ma-Gu", stats: [14182, 12437, 11476, 15306, 12437],
+        name: "Ma-Gu", stats: [14182, 12438, 11477, 15306, 12438],
         skills: [4],
         img: "img2$1/__cb20130709182651/$2/a/a8/Ma-Gu_the_Enlightened_II_Figure.png",
         fullName: "Ma-Gu the Enlightened II"
@@ -1460,6 +1486,12 @@ var famDatabase = {
         img: "img4$1/__cb20140814101430/$2/f/fe/Paladin_of_Scorpio_II_Figure.png",
         fullName: "Paladin of Scorpio II"
     },
+    11362: {
+        name: "Taurus", stats: [15608, 18598, 10105, 7007, 17363],
+        skills: [553, 554],
+        img: "img2$1/__cb20140828103608/$2/d/d3/Paladin_of_Taurus_II_Figure.png",
+        fullName: "Paladin of Taurus II"
+    },
     11241: {
         name: "Virgo", stats: [15500, 6118, 12380, 17797, 16822],
         skills: [421, 422],
@@ -1703,7 +1735,7 @@ var famDatabase = {
         fullName: "Sekhmet Aflame II"
     },
     11056: {
-        name: "Selk", stats: [13902, 15852, 11976, 11210, 14927],
+        name: "Selk", stats: [13902, 15854, 11976, 11208, 14927],
         skills: [327],
         img: "img4$1/__cb20131221031323/$2/0/03/Selk%2C_Desert_King_II_Figure.png",
         fullName: "Selk, Desert King II"
@@ -1720,6 +1752,13 @@ var famDatabase = {
         skills: [469],
         img: "img2$1/__cb20140528102650/$2/c/c6/Set%2C_God_of_the_Sands_II_Figure.png",
         fullName: "Set, God of the Sands II"
+    },
+    11006: {
+        name: "Siby", stats: [15558, 8005, 11442, 17120, 15804],
+        skills: [550],
+        autoAttack: 10018,
+        img: "img2$1/__cb20140823140531/$2/0/0c/Siby%2C_Sea_Seer_II_Figure.png",
+        fullName: "Siby, Sea Seer II"
     },
     11219: {
         name: "Sigiled Corpse Beast", stats: [17006, 12954, 14926, 19855, 16042],
@@ -1834,7 +1873,7 @@ var famDatabase = {
         fullName: "Sulima, Executioner II"
     },
     21189: {
-        name: "Surtr", stats: [15439, 17108, 15085, 7016, 12891],
+        name: "Surtr", stats: [15440, 17106, 15085, 7016, 12890],
         skills: [383],
         img: "img1$1/__cb20140301022355/$2/5/5b/Surtr_the_Fervent_II_Figure.png",
         fullName: "Surtr the Fervent II"

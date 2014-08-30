@@ -2821,6 +2821,69 @@ var SkillDatabase = {
         desc: "Deal heavy AGI-based damage to two random foes. Chance to kill target."
     },
 
+    548: {
+        name: "Cannon Barrage", type: 2, func: 4, calc: 1,
+        arg1: 1.75,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
+    },
+
+    549: {
+        name: "Bond en Avant", type: 2, func: 21, calc: 3,
+        arg1: 0.85, arg2: 4, arg3: 0.6, arg4: 0.3,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to six random foes and sometimes reduce AGI."
+    },
+
+    550: {
+        name: "Judgement of the Sea", type: 2, func: 4, calc: 2,
+        arg1: 1.3,
+        range: 208, prob: 30, ward: 2,
+        desc: "WIS-based damage to all foes, ignoring position. Increased if fewer foes."
+    },
+
+    551: {
+        name: "Moonlight", type: 1, func: 1, calc: 0,
+        arg1: 0.4, arg2: 8,
+        range: 21, prob: 70,
+        desc: "Raise the skill trigger rate of self by 40%."
+    },
+
+    552: {
+        name: "Crescent Edge", type: 2, func: 3, calc: 1,
+        arg1: 2.6,
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    553: {
+        name: "Wrath of Taurus", type: 2, func: 3, calc: 1,
+        arg1: 0.9,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to six random foes."
+    },
+
+    554: {
+        name: "Heart of Taurus", type: 1, func: 1, calc: 1,
+        arg1: 1, arg2: 17, arg3: 1.5,
+        range: 21, prob: 70,
+        desc: "Raise HP of self at start of battle, based on 100% of his ATK."
+    },
+
+    558: {
+        name: "Blade of Conquest", type: 2, func: 3, calc: 1,
+        arg1: 0.95,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to six random foes."
+    },
+
+    559: {
+        name: "Grace of the Goddess", type: 1, func: 1, calc: 0,
+        arg1: 0.3, arg2: 1, arg3: 2,
+        range: 3, prob: 70,
+        desc: "Raise ATK and DEF of self and adjacent familiars."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -2904,6 +2967,13 @@ var SkillDatabase = {
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage, sometimes envenoms target."
     },
+
+    10018: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
     
     10019: { // 100% Mod, Single Hit, WIS-based, position independent, breath based
         name: "Standard Action", type: 2, func: 4, calc: 2,
@@ -2966,5 +3036,19 @@ var SkillDatabase = {
         arg1: 1, arg2: 0.1,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage. Chance to kill target."
+    },
+
+    10029: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        arg1: 1.2,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10030: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1,
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to two foes."
     },
 };

@@ -163,6 +163,10 @@ class RangeFactory {
         return !!RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
     }
 
+    static isEnemyScaledRange(id: number) {
+        return this.isEnemyNearScaledRange(id) || id == 208;
+    }
+
     static getScaledRatio(id: number, targetsLeft: number) {
         var paramArray = RangeFactory.ScalePatternParams[id];
 
@@ -194,13 +198,14 @@ class RangeFactory {
         switch (id) {
             case 1:
                 return new EitherSideRange(id, selectDead); // either side, but not both
-            case 2 :
+            case 2:
                 return new BothSidesRange(id, selectDead);
-            case 3 :
+            case 3:
                 return new SelfBothSidesRange(id);
-            case 4 :
+            case 4:
                 return new AllRange(id);
-            case 8 :
+            case 8:
+            case 208:
                 return new EnemyAllRange(id);
             case 12:
                 return new EnemyFrontAllRange(id);
