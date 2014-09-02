@@ -768,12 +768,13 @@ class HealSkillLogic extends SkillLogic {
         return super.willBeExecuted(data) && (targets.length > 0);
     }
 
-    getValidTargets(data: SkillLogicData): Card[] {
-        var rangeTargets = data.skill.getTargets(data.executor);
+    private getValidTargets(data: SkillLogicData): Card[] {
+        var rangeTargets = data.skill.range.getAllPossibleTargets(data.executor);
         var validTargets = [];
+        var cond = this.getCondFunc();
 
         for (var i = 0; rangeTargets && i < rangeTargets.length; i++) {
-            if (!rangeTargets[i].isFullHealth()) {
+            if (cond(rangeTargets[i])) {
                 validTargets.push(rangeTargets[i]);
             }
         }
@@ -781,8 +782,15 @@ class HealSkillLogic extends SkillLogic {
         return validTargets;
     }
 
+    private getCondFunc() {
+        return function (card: Card): boolean {
+            return !card.isFullHealth();
+        }
+    }
+
     execute(data: SkillLogicData) {
-        var targets = this.getValidTargets(data);
+        var targets = data.skill.range.getTargets(data.executor, this.getCondFunc());
+
         var baseHealAmount = getHealAmount(data.executor);
 
         var multiplier = data.skill.skillFuncArg1;
@@ -802,12 +810,11 @@ class HealSkillLogic extends SkillLogic {
 
 class ReviveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = data.skill.getTargets(data.executor);
+        var targets = data.skill.range.getAllPossibleTargets(data.executor);
         return super.willBeExecuted(data) && targets && (targets.length > 0);
     }
 
     execute(data: SkillLogicData) {
-
         var targets = data.skill.getTargets(data.executor);
         var hpRatio = data.skill.skillFuncArg1;
 

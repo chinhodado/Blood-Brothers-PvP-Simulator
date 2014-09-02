@@ -332,7 +332,7 @@ class CardManager {
     /**
      * Use this when the order of the cards are important: player 1 cards -> player 2 cards
      */
-    getAllCardsInPlayerOrder(): Card[] {
+    getAllMainCardsInPlayerOrder(): Card[] {
         return this.battle.p1_mainCards.concat(this.battle.p2_mainCards);
     }
 

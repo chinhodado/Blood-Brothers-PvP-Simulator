@@ -235,13 +235,14 @@ class BaseRange {
         this.id = id;
     }
     
-    getTargets(executor: Card): Card[] {
+    getTargets(executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[] {
         // to be overrridden
+        throw new Error("Implement this");
         return null;
     }
 
     getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
-        var allCards = CardManager.getInstance().getAllCardsInPlayerOrder();
+        var allCards = CardManager.getInstance().getAllMainCardsInPlayerOrder();
         var baseTargets = [];
         for (var i = 0; i < allCards.length; i++) {
             if (condFunc(allCards[i])) {
@@ -249,6 +250,11 @@ class BaseRange {
             }
         }
         return baseTargets;
+    }
+
+    // this is needed for the sake of random-targets skills
+    getAllPossibleTargets(executor: Card): Card[] {
+        return this.getTargets(executor);
     }
 
     getRandomCard(cards: Card[]): Card {
@@ -320,6 +326,10 @@ class EnemyRandomRange extends BaseRange {
 
     // use this for determining if there is a target only
     getTargets(executor: Card): Card[] {
+        return this.getBaseTargets(this.getCondFunc(executor));
+    }
+
+    getAllPossibleTargets(executor: Card): Card[] {
         return this.getBaseTargets(this.getCondFunc(executor));
     }
 }
@@ -501,8 +511,8 @@ class FriendRandomRange extends BaseRange {
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
     }
     
-    getTargets (executor: Card): Card[]{
-        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
+    getTargets (executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[]{
+        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
         var targets: Card[];
 
         if (baseTargets.length) {
@@ -519,7 +529,11 @@ class FriendRandomRange extends BaseRange {
         return targets;
     }
 
-    getCondFunc(executor: Card): (x: Card)=>boolean {
+    getAllPossibleTargets(executor: Card): Card[] {
+        return this.getBaseTargets(this.getCondFunc(executor));
+    }
+
+    getCondFunc(executor: Card, skillCondFunc?: (card: Card)=>boolean): (x: Card)=>boolean {
         var selectDead = this.selectDead;
         var includeSelf = this.includeSelf;
 
@@ -533,6 +547,9 @@ class FriendRandomRange extends BaseRange {
                 return false;
 
             if ((selectDead && !card.isDead) || (!selectDead && card.isDead))
+                return false;
+
+            if (skillCondFunc && !skillCondFunc(card))
                 return false;
 
             return isValid;
