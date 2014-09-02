@@ -2870,6 +2870,20 @@ var SkillDatabase = {
         desc: "Raise HP of self at start of battle, based on 100% of his ATK."
     },
 
+    555: {
+        name: "Shredding Claws", type: 2, func: 3, calc: 3,
+        arg1: 1.55,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to four random foes."
+    },
+
+    556: {
+        name: "Scorching Tornado", type: 2, func: 33, calc: 1,
+        arg1: 1.25, arg2: 2, arg3: 0.4, arg4: 0.3,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes and sometimes greatly lower DEF."
+    },
+
     558: {
         name: "Blade of Conquest", type: 2, func: 3, calc: 1,
         arg1: 0.95,
@@ -2882,6 +2896,34 @@ var SkillDatabase = {
         arg1: 0.3, arg2: 1, arg3: 2,
         range: 3, prob: 70,
         desc: "Raise ATK and DEF of self and adjacent familiars."
+    },
+
+    560: {
+        name: "Yalli of the Blade", type: 2, func: 3, calc: 1,
+        arg1: 1.15,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
+    },
+
+    561: {
+        name: "Affection", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 1,
+        range: 3, prob: 70,
+        desc: "Raise ATK of self and adjacent familiars."
+    },
+
+    562: {
+        name: "Hewing Rood", type: 3, func: 13, calc: 1,
+        arg1: 1.5,
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a counter attack when struck."
+    },
+
+    563: {
+        name: "Ablution", type: 1, func: 1, calc: 0,
+        arg1: 0.7, arg2: 2, arg3: 3,
+        range: 21, prob: 70,
+        desc: "Raise DEF and WIS of self."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent

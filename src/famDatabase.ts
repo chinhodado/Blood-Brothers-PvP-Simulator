@@ -64,6 +64,12 @@ var famDatabase = {
         img: "img3$1/__cb20131023124730/$2/1/1b/Alcina_the_Soulsucker_II_Figure.png",
         fullName: "Alcina the Soulsucker II"
     },
+    11400: {
+        name: "Ales", stats: [18119, 18009, 16024, 10101, 5884],
+        skills: [562, 563],
+        img: "img4$1/__cb20140830112829/$2/d/d5/Ales_Darkblood_II_Figure.png",
+        fullName: "Ales Darkblood II"
+    },
     10813: {
         name: "ASK", stats: [12952, 14282, 11477, 10490, 17133],
         skills: [219],
@@ -1043,6 +1049,12 @@ var famDatabase = {
         img: "img2$1/__cb20130629202258/$2/f/f2/Iseult%2C_the_Redeemer_II_Figure.png",
         fullName: "Iseult, the Redeemer II"
     },
+    11376: {
+        name: "Ishtar", stats: [16009, 16074, 13106, 9022, 14265],
+        skills: [560, 561],
+        img: "img2$1/__cb20140830112828/$2/4/4d/Ishtar%2C_Goddess_of_Love_II_Figure.png",
+        fullName: "Ishtar, Goddess of Love II"
+    },
     11351: {
         name: "Ivy", stats: [16341, 3882, 13803, 15889, 17998],
         skills: [536],
@@ -1137,6 +1149,12 @@ var famDatabase = {
         autoAttack: 10004,
         img: "img2$1/__cb20131112084823/$2/f/fe/Lahamu%2C_Royal_Viper_II_Figure.png",
         fullName: "Lahamu, Royal Viper II"
+    },
+    21372: {
+        name: "Lamashtu", stats: [20579, 17977, 20007, 12062, 17685],
+        skills: [555],
+        img: "img2$1/__cb20140830112546/$2/e/e5/Lamashtu%2C_Fell_Goddess_Figure.png",
+        fullName: "Lamashtu, Fell Goddess"
     },
     10432: {
         name: "Lanvall", stats: [12914, 14639, 12245, 12210, 15040],
@@ -1504,6 +1522,12 @@ var famDatabase = {
         skills: [420],
         img: "img3$1/__cb20140411023129/$2/f/fb/Palna%2C_the_Vanguard_II_Figure.png",
         fullName: "Palna, the Vanguard II"
+    },
+    11374: {
+        name: "Pazuzu", stats: [15121, 17182, 14988, 5640, 14999],
+        skills: [556],
+        img: "img2$1/__cb20140830112827/$2/4/4d/Pazuzu%2C_the_Whirling_Jinn_II_Figure.png",
+        fullName: "Pazuzu, the Whirling Jinn II"
     },
     10348: {
         name: "Pegasus", stats: [8756, 10200, 8843, 10880, 9181],
