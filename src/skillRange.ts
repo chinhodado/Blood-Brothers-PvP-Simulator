@@ -187,7 +187,11 @@ class RangeFactory {
     static canBeAoeRange(rangeId: number): boolean {
         var canBe = false;
         
-        if (this.isEnemyNearRange(rangeId) || this.isEnemyNearScaledRange(rangeId) || this.isRowBasedRange(rangeId) || rangeId == 8) {
+        if (this.isEnemyNearRange(rangeId) || 
+            this.isEnemyNearScaledRange(rangeId) || 
+            this.isRowBasedRange(rangeId) || 
+            rangeId == 8 ||
+            rangeId == 208) {
             canBe = true;    
         }
 

@@ -304,7 +304,7 @@ class AttackSkillLogic extends SkillLogic {
         var executor = data.executor;
         var targets: Card[] = skill.range.getTargets(executor);
 
-        if (RangeFactory.isEnemyNearScaledRange(skill.skillRange)) {
+        if (RangeFactory.isEnemyScaledRange(skill.skillRange)) {
             var scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
         }
 
@@ -365,7 +365,8 @@ class AttackSkillLogic extends SkillLogic {
                     this.battleModel.processDamagePhase({
                         attacker: executor, 
                         target: targetCard, 
-                        skill: skill
+                        skill: skill,
+                        scaledRatio: scaledRatio
                     });
                     targetsAttacked[targetCard.id] = true;
 
@@ -429,6 +430,7 @@ class AttackSkillLogic extends SkillLogic {
                 attacker: executor, 
                 target: target, 
                 skill: skill,
+                scaledRatio: scaledRatio
             });
 
             if (!executor.justMissed && !target.justEvaded && !target.isDead) {
@@ -522,6 +524,7 @@ class ProtectSkillLogic extends SkillLogic {
             attacker: data.attacker, 
             target: protector, 
             skill: attackSkill,
+            scaledRatio: data.scaledRatio
         });
 
         // note: don't need to check for justEvaded here
@@ -578,6 +581,7 @@ class EvadeSkillLogic extends SkillLogic {
             attacker: data.attacker, 
             target: data.executor, 
             skill: data.attackSkill,
+            scaledRatio: data.scaledRatio
         });
 
         // update the targetsAttacked if necessary
@@ -605,12 +609,11 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
 
         // counter phase
         if (!protector.isDead && protector.canAttack() && !data.attacker.isDead) {
-            var additionalDesc = protector.name + " counters " + data.attacker.name + "! ";
             this.battleModel.processDamagePhase({
                 attacker: protector, 
                 target: data.attacker, 
                 skill: data.skill, 
-                additionalDescription: additionalDesc,
+                additionalDescription: protector.name + " counters " + data.attacker.name + "! ",
             });
         }
 
