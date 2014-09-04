@@ -206,22 +206,22 @@ function getBattleDataOption() {
     option.p1RandomMode = getURLParameter("1r");
     option.p2RandomMode = getURLParameter("2r");
 
-    data.player1formation = getURLParameter("1f");
-    if (!option.p1RandomMode) localStorage.setItem("1f", data.player1formation);
+    data.p1_formation = getURLParameter("1f");
+    if (!option.p1RandomMode) localStorage.setItem("1f", data.p1_formation);
 
-    data.player2formation = getURLParameter("2f");
-    if (!option.p2RandomMode) localStorage.setItem("2f", data.player2formation);
+    data.p2_formation = getURLParameter("2f");
+    if (!option.p2RandomMode) localStorage.setItem("2f", data.p2_formation);
 
-    data.player1cardsInfo = [];
-    data.player2cardsInfo = [];
-    data.player1warlordSkillArray = [];
-    data.player2warlordSkillArray = [];
+    data.p1_cardIds = [];
+    data.p2_cardIds = [];
+    data.p1_warlordSkillIds = [];
+    data.p2_warlordSkillIds = [];
 
     for (var i = 0; i < 10; i++) {
         var f1id = getURLParameter("f" + i);
         var f2id = getURLParameter("f" + (i + 10));
-        data.player1cardsInfo.push(famDatabase[f1id]);
-        data.player2cardsInfo.push(famDatabase[f2id]);
+        data.p1_cardIds.push(f1id);
+        data.p2_cardIds.push(f2id);
 
         if (!option.p1RandomMode) localStorage.setItem("f" + i, f1id);
         if (!option.p2RandomMode) localStorage.setItem("f" + (i + 10), f2id);
@@ -229,8 +229,8 @@ function getBattleDataOption() {
     for (var i = 0; i < 3; i++) {
         var w1s = getURLParameter("s1" + i);
         var w2s = getURLParameter("s2" + i);
-        data.player1warlordSkillArray.push(w1s);
-        data.player2warlordSkillArray.push(w2s);
+        data.p1_warlordSkillIds.push(w1s);
+        data.p2_warlordSkillIds.push(w2s);
 
         if (!option.p1RandomMode) localStorage.setItem("s1" + i, w1s);
         if (!option.p2RandomMode) localStorage.setItem("s2" + i, w2s);

@@ -11,6 +11,7 @@ class BattleGraphic {
     // mainly for simulation vs random brigs
     static HIDE_PLAYER1 = false;
     static HIDE_PLAYER2 = false;
+    static GRAPHIC_DISABLED = false;
 
     static SHOW_FORMATION_LINE = false;
     static IMAGE_WIDTH = 70;
@@ -56,7 +57,7 @@ class BattleGraphic {
      */
     displayFormationAndFamOnCanvas() {
 
-        if (BattleModel.IS_MASS_SIMULATION) {
+        if (BattleGraphic.GRAPHIC_DISABLED) {
             return;
         }
 

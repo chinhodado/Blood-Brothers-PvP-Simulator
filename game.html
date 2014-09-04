@@ -215,9 +215,6 @@
     </div>
 
     <div class="rightCol">
-        <!--<div id="infoDivP1">
-            Player 1 (Aegis - Selkie - Nightblade - Goviel - Musashi) 
-        </div>-->
         <div style="width: 100%; position: relative; height: 50%">
             <div class="panel panel-danger">
                 <div class="panel-heading">
@@ -262,7 +259,8 @@
             if (option.p2RandomMode) {
                 BattleGraphic.HIDE_PLAYER2 = true;
             }
-
+            BattleLogger.IS_DEBUG_MODE = false;
+            BattleModel.IS_MASS_SIMULATION = true;
             var newGame = new BattleModel(data, option);
 
             // hide/show some elements on the page

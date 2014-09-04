@@ -299,7 +299,7 @@ class BattleLogger {
     }
 
     /**
-     * Display the info text for normal mode
+     * Display the info text
      */
     displayInfoText(): void {
         var cardManager = CardManager.getInstance();
@@ -312,16 +312,69 @@ class BattleLogger {
         var infoDivP1Title = document.getElementById("infoDivP1Title");
         var infoDivP2Title = document.getElementById("infoDivP2Title");
 
-        infoDivP1.innerHTML = cardManager.getPlayerMainBrigString(battle.player1);
-        infoDivP2.innerHTML = cardManager.getPlayerMainBrigString(battle.player2);
+        if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
+            infoDivP1.innerHTML = cardManager.getPlayerMainBrigString(battle.player1);
+        }
+
+        if (!battle.p2RandomMode || !BattleModel.IS_MASS_SIMULATION) {
+            infoDivP2.innerHTML = cardManager.getPlayerMainBrigString(battle.player2);
+        }
         
         if (battle.isBloodClash) {
-            infoDivP1.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player1);
-            infoDivP2.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player2)
+            if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
+                infoDivP1.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player1);
+            }
+
+            if (!battle.p2RandomMode || !BattleModel.IS_MASS_SIMULATION) {
+                infoDivP2.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player2);
+            }
         }
 
         infoDivP1Title.innerHTML += p1randTxt;
         infoDivP2Title.innerHTML += p2randTxt;
+    }
+
+    /**
+     * Add a warning if the user try do a 5v5 or 10v10 battle between 2 fams
+     */
+    displayWarningText(): void {
+        var needWarn = true;
+        var cardManager = CardManager.getInstance();
+        var battle = BattleModel.getInstance();
+        var p1main = cardManager.getPlayerCurrentMainCards(battle.player1);
+        var p2main = cardManager.getPlayerCurrentMainCards(battle.player2);
+        var dbId1 = p1main[0].dbId;
+        var dbId2 = p2main[0].dbId;
+
+        for (var i = 1; i < 5; i++) {
+            if (p1main[i].dbId != dbId1 || p2main[i].dbId != dbId2) {
+                needWarn = false;
+                break;
+            }
+        }
+
+        if (battle.isBloodClash) {
+            var p1res = cardManager.getPlayerOriginalReserveCards(battle.player1);
+            var p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
+
+            for (var i = 0; i < 5; i++) {
+                if (p1res[i].dbId != dbId1 || p2res[i].dbId != dbId2) {
+                    needWarn = false;
+                    break;
+                }
+            }
+        }
+
+        if (dbId1 == dbId2) needWarn = false;
+
+        if (needWarn) {
+            var simDiv = document.getElementById("simDiv");
+            var gameDiv = document.getElementById("gameDiv");
+            var warnTxt = "<p><b>Note:</b> It seems that you using a 5v5 or 10v10 battle to determine whether " + p1main[0].name + " or " +
+                p2main[0].name + " is \"stronger\". This is <b>NOT</b> a recommended way of comparing two familiars.</p>";
+            simDiv.innerHTML += warnTxt;
+            gameDiv.innerHTML += warnTxt;
+        }
     }
 
     getRandomModeText(type: ENUM.RandomBrigType): string {

@@ -12,6 +12,7 @@ function startTest() {
 
 function isPlayerNameReturned() {
     BattleModel.IS_MASS_SIMULATION = true;
+    BattleGraphic.GRAPHIC_DISABLED = true;
     BattleModel.resetAll();
     var newGame = new BattleModel({}, {p1RandomMode: 1, p2RandomMode: 1});
     var playerWon = newGame.startBattle();

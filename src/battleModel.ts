@@ -94,12 +94,12 @@ class BattleModel {
             this.isBloodClash = true;
         }
         
-        var player1formation: any;
-        var player2formation: any;
-        var player1cardsInfo = [];
-        var player2cardsInfo = [];
-        var player1warlordSkillArray: number[] = [];
-        var player2warlordSkillArray: number[] = [];
+        var p1_formation: any;
+        var p2_formation: any;
+        var p1_cardIds: number[] = [];
+        var p2_cardIds: number[] = [];
+        var p1_warlordSkillIds: number[] = [];
+        var p2_warlordSkillIds: number[] = [];
 
         var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
         
@@ -110,64 +110,66 @@ class BattleModel {
         if (option.p1RandomMode) {
             this.p1RandomMode = option.p1RandomMode;
             var p1randomList = FamiliarDatabase.getRandomFamList(+option.p1RandomMode, tierListString);
-            player1formation = pickRandomProperty(Formation.FORMATION_CONFIG);
+            p1_formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 10; i++) {
-                player1cardsInfo.push(famDatabase[getRandomElement(p1randomList)]);
+                p1_cardIds.push(getRandomElement(p1randomList));
             }
 
             for (var i = 0; i < 3; i++) {
-                player1warlordSkillArray.push(+getRandomElement(availableSkills));
+                p1_warlordSkillIds.push(+getRandomElement(availableSkills));
             }
         }
         else {
-            player1formation = data.player1formation;
-            player1cardsInfo = data.player1cardsInfo;
-            player1warlordSkillArray = data.player1warlordSkillArray;
+            p1_formation = data.p1_formation;
+            p1_cardIds = data.p1_cardIds;
+            p1_warlordSkillIds = data.p1_warlordSkillIds;
         }
 
         if (option.p2RandomMode) {
             this.p2RandomMode = option.p2RandomMode;
             var p2randomList = FamiliarDatabase.getRandomFamList(+option.p2RandomMode, tierListString);
-            player2formation = pickRandomProperty(Formation.FORMATION_CONFIG);
+            p2_formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             for (var i = 0; i < 10; i++) {
-                player2cardsInfo.push(famDatabase[getRandomElement(p2randomList)]);
+                p2_cardIds.push(getRandomElement(p2randomList));
             }
 
             for (var i = 0; i < 3; i++) {
-                player2warlordSkillArray.push(+getRandomElement(availableSkills));
+                p2_warlordSkillIds.push(+getRandomElement(availableSkills));
             }
         }
         else {
-            player2formation = data.player2formation;
-            player2cardsInfo = data.player2cardsInfo;
-            player2warlordSkillArray = data.player2warlordSkillArray;
+            p2_formation = data.p2_formation;
+            p2_cardIds = data.p2_cardIds;
+            p2_warlordSkillIds = data.p2_warlordSkillIds;
         }
         
-        this.player1 = new Player(1, "Player 1", new Formation(player1formation), 1); // me
-        this.player2 = new Player(2, "Player 2", new Formation(player2formation), 1); // opp
+        this.player1 = new Player(1, "Player 1", new Formation(p1_formation), 1); // me
+        this.player2 = new Player(2, "Player 2", new Formation(p2_formation), 1); // opp
         
         // create the cards        
         for (var i = 0; i < 10; i++) {
 
             if (i >= 5 && !this.isBloodClash) break;
+            var p1_cardInfo = famDatabase[p1_cardIds[i]];
+            var p2_cardInfo = famDatabase[p2_cardIds[i]];
 
             // make the skill array for the current fam
-            var p1fSkillIdArray: number[] = player1cardsInfo[i].skills;
-            if (player1cardsInfo[i].isWarlord) {
-                p1fSkillIdArray = player1warlordSkillArray;
+            var p1fSkillIdArray: number[] = p1_cardInfo.skills;
+            if (p1_cardInfo.isWarlord) {
+                p1fSkillIdArray = p1_warlordSkillIds;
             }
 
-            var p2fSkillIdArray: number[] = player2cardsInfo[i].skills;
-            if (player2cardsInfo[i].isWarlord) {
-                p2fSkillIdArray = player2warlordSkillArray;
+            var p2fSkillIdArray: number[] = p2_cardInfo.skills;
+            if (p2_cardInfo.isWarlord) {
+                p2fSkillIdArray = p2_warlordSkillIds;
             }
 
             var player1Skills = this.makeSkillArray(p1fSkillIdArray);
             var player2Skills = this.makeSkillArray(p2fSkillIdArray);
             
             // now make the cards and add them to the appropriate collections
-            var card1 = new Card(player1cardsInfo[i], this.player1, i, player1Skills);
-            var card2 = new Card(player2cardsInfo[i], this.player2, i, player2Skills);
+            var card1 = new Card(p1_cardIds[i], this.player1, i, player1Skills);
+            var card2 = new Card(p2_cardIds[i], this.player2, i, player2Skills);
 
             if (i < 5) {
                 this.p1_mainCards[i] = card1;
@@ -193,6 +195,7 @@ class BattleModel {
 
         if (!BattleLogger.IS_DEBUG_MODE) {
             this.logger.displayInfoText();
+            this.logger.displayWarningText();
         }
     }
 
@@ -954,12 +957,12 @@ class BattleModel {
 }
 
 interface GameData {
-    player1formation: string;
-    player2formation: string;
-    player1cardsInfo: any[];
-    player2cardsInfo: any[];
-    player1warlordSkillArray: number[];
-    player2warlordSkillArray: number[];
+    p1_formation: string;
+    p2_formation: string;
+    p1_cardIds: number[];
+    p2_cardIds: number[];
+    p1_warlordSkillIds: number[];
+    p2_warlordSkillIds: number[];
 }
 
 interface GameOption {

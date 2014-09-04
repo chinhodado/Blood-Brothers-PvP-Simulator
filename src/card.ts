@@ -5,8 +5,9 @@ class Card {
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
 
     name: string;
-    fullName: string;    
-    id: number; // id for this simulator, not the id in game
+    fullName: string;
+    dbId: number; // the id in game (used in famDatabase)
+    id: number;   // id for this simulator, not the id in game
     isMounted: boolean;
     isWarlord: boolean;
     imageLink: string;
@@ -38,9 +39,11 @@ class Card {
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
     
-    constructor(cardData, player: Player, nth: number, skills: Skill[]) {
+    constructor(dbId: number, player: Player, nth: number, skills: Skill[]) {
+        var cardData = famDatabase[dbId];
         this.name = cardData.name;
         this.fullName = cardData.fullName;
+        this.dbId = dbId;
         this.id = player.id * 100 + nth; // 100-109, 200-209
         this.isMounted = cardData.isMounted;
         this.isWarlord = cardData.isWarlord;
@@ -99,7 +102,8 @@ class Card {
     getSerializableObject() {
         return {
             name: this.name,
-            fullName: this.fullName,            
+            fullName: this.fullName,
+            dbId: this.dbId,         
             id: this.id,
             isMounted: this.isMounted,
             isWarlord: this.isWarlord,
