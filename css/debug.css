@@ -1,0 +1,60 @@
+﻿* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.wrapper div {
+    display: table-cell;
+}
+
+.wrapper center {
+    display: table-caption;
+}
+
+.svg {
+    display: block;
+    margin: 0 auto;
+}
+
+body {
+    overflow: hidden; /* This will remove the default scroll, not really needed, safer nonetheless */
+}
+
+.leftSide {
+    float: left;
+    width: 40%;
+    height: 100%;
+    overflow: auto;
+    font-family: "Consolas";
+    font-size: 12px;
+}
+
+#rightSide {
+    padding-left: 20px;
+    width: 60%;
+    height: 100%;
+    float: left;
+    overflow: auto;
+    overflow-x: hidden;
+    font-family: "Consolas";
+    font-size: 12px;
+}
+
+#svgWrapper {
+    margin: 0 auto;
+    width: 400px;
+    height: 600px;
+    background-image: url('../img/bg01.png');
+    background-size: 100%;
+}

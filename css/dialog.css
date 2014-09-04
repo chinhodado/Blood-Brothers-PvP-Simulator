@@ -1,6 +1,6 @@
 ﻿@font-face {
     font-family: 'LT Trajanus Roman';
-    src: url('img/trb.ttf');
+    src: url('../img/trb.ttf');
 }
 
 html {font-size: 62.5%;}
@@ -70,38 +70,38 @@ img { vertical-align: bottom }
 }
 
 	.card-figure-rarity-l-1-2 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		background-size: 320px auto;
 		background-position: -75px 185px;
 	}
 
 	.card-figure-rarity-l-2-2 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		background-size: 320px auto;
 		background-position: -75px 129px;
 	}
 
 	.card-figure-rarity-ep-1-2 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		background-size: 320px auto;
 		background-position: -146px 129px;
 	}
 
 	.card-figure-rarity-ep-2-2 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		background-size: 320px auto;
 		background-position: -146px 185px;
 	}
 
 	.card-figure-rarity-ep-3-4 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		width: 122px;
 		background-size: 320px auto;
 		background-position: -75px 157px;
 	}
 
 	.card-figure-rarity-ep-4-4 {
-		background: url('img/sprite_sheet2.png');
+		background: url('../img/sprite_sheet2.png');
 		width: 122px;
 		background-size: 320px auto;
 		background-position: -185px 157px;
@@ -116,21 +116,21 @@ img { vertical-align: bottom }
 }
 
 .arrow-left {
-	background: url(img/arrow_left.png) no-repeat;
+	background: url(../img/arrow_left.png) no-repeat;
 	background-size: 20px auto;
 	top: 262px;
 	left: 15px;
 }
 
 .arrow-right {
-	background: url(img/arrow_right.png) no-repeat;
+	background: url(../img/arrow_right.png) no-repeat;
 	background-size: 20px auto;
 	top: 262px;
 	left: 276px;
 }
 
 .card-detail-dialog {
-	background: url(img/card_detail.png) no-repeat;
+	background: url(../img/card_detail.png) no-repeat;
 	background-size: 317px auto;
 	display: block;
 	width: 317px;
@@ -261,7 +261,7 @@ img { vertical-align: bottom }
 }
 
 .card-detail-ok-button {
-	background: url(img/ok_btn_n.png) no-repeat;
+	background: url(../img/ok_btn_n.png) no-repeat;
 	background-size: 140px auto;
 	position: absolute;
 	top: 398px;
@@ -273,7 +273,7 @@ img { vertical-align: bottom }
 .card-detail-ok-button:hover,
 .card-detail-ok-button:active,
 .card-detail-ok-button:focus {
-	background: url(img/ok_btn_p.png) no-repeat;
+	background: url(../img/ok_btn_p.png) no-repeat;
 	background-size: 140px auto;
 	position: absolute;
 	top: 398px;

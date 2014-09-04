@@ -1,0 +1,126 @@
+﻿* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+.svg {
+    display: block;
+    margin: 0 auto;
+}
+
+body{
+    /*overflow:hidden; /* This will remove the default scroll, not really needed, safer nonetheless */
+}
+
+.leftCol {
+    float: left; 
+    width: 30%; 
+    height: 100%;
+    padding: 30px;
+    overflow: auto;
+    font-family: "Consolas";
+    font-size: 12px;
+    position: relative;
+}
+
+.midCol {
+    width: 400px;
+    float: left;
+}
+
+.rightCol {
+    float: left;
+    width: 30%;
+    height: 600px;
+    font-family: "Consolas";
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+#svgWrapper {
+    margin: 0 auto;
+    width: 400px;
+    height: 600px;
+    background-image: url('../img/bg01.png');
+    background-size: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#svg {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#startButton { /*from bootstrap*/
+    margin: 0 auto;
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-appearance: button;
+    text-transform: none;
+    display: block;
+}
+
+#startButton:disabled {
+    color: GrayText;
+    background-color: #dddddd;
+}
+
+#githubDiv {
+    position:absolute; 
+    bottom: 60px;
+    padding-right: 30px;
+}
+
+.panel-danger {
+    border-color: #e74c3c;
+}
+
+.panel-heading {
+    color: #ffffff;
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel {
+    margin-bottom: 21px;
+    background-color: #ffffff;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 17px;
+    color: inherit;
+}

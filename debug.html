@@ -5,76 +5,15 @@
     <meta name="description" content="A PvP Simulator for the Blood Brothers RPG game">
     <meta name="keywords" content="blood, brothers, simulator, PvP, RPG">
     <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/dialog.css">
+    <link rel="stylesheet" href="css/debug.css">
 
     <script src="lib/svg.min.js"></script>
     <script src="lib/svg.filter.min.js"></script>
     <script src="compiled.js"></script>
-    <script src="./js/helper.js"></script>
-
-    <style type="text/css">
-        * {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
-        .wrapper {
-            display: table;
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        .wrapper div {
-            display: table-cell;
-        }
-
-        .wrapper center {
-            display: table-caption;
-        }
-
-        .svg {
-            display: block;
-            margin: 0 auto;
-        }
-
-        body {
-            overflow: hidden; /* This will remove the default scroll, not really needed, safer nonetheless */
-        }
-
-        .leftSide {
-            float: left;
-            width: 40%;
-            height: 100%;
-            overflow: auto;
-            font-family: "Consolas";
-            font-size: 12px;
-        }
-
-        #rightSide {
-            padding-left: 20px;
-            width: 60%;
-            height: 100%;
-            float: left;
-            overflow: auto;
-            overflow-x: hidden;
-            font-family: "Consolas";
-            font-size: 12px;
-        }
-
-        #svgWrapper {
-            margin: 0 auto;
-            width: 400px;
-            height: 600px;
-            background-image: url('img/bg01.png');
-            background-size: 100%;
-        }
-    </style>
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/dialog.js"></script>
+    <script src="js/helper.js"></script>    
     <script src="js/ga.js"></script>
 </head>
 
@@ -104,6 +43,43 @@
 
         <div id="svgWrapper">
             <div id="svg"></div>
+            <div class="mbgaui-container">
+
+                <!-- popup bg -->
+                <div id="dialogBack">
+                </div>
+
+                <!-- popup -->
+                <div id="card-detail-dialog" class="fn-black">
+                    <div class="card-detail-dialog">
+                        <div class="card-detail-figure">
+                            <img id="card-detail-loading-figure" src="img/loading_figure.png" width="150" height="150">
+                            <img id="card-detail-figure" src="img/loading_figure.png" width="100" height="150">
+                            <!--<div id="card-detail-figure-rarity" class="card-figure-rarity-l-2-2"></div>-->
+                        </div>
+                        <span class="card-detail-level fnb">Level: 99/99</span>
+                        <span class="card-detail-name fnb"></span>
+                        <span class="card-detail-skill-name fnb"></span>
+                        <span class="card-detail-skill-description"></span>
+                        <span class="card-detail-default-action-name fnb"></span>
+                        <span class="card-detail-default-action-description"></span>
+                        <span class="card-detail-skill-proc">30%</span>
+                        <span class="card-detail-max-hp"></span>
+                        <span class="card-detail-max-atk"></span>
+                        <span class="card-detail-max-def"></span>
+                        <span class="card-detail-max-wis"></span>
+                        <span class="card-detail-max-agi"></span>
+                        <span class="card-detail-growth-type"></span>
+                        <span class="card-detail-value">12345</span>
+                        <span class="card-detail-current-hp"></span>
+
+                        <div class="arrow-left" onclick="prevSkill();" style="visibility: hidden;"></div>
+                        <div class="arrow-right" onclick="nextSkill();" style="visibility: hidden;"></div>
+
+                        <div class="card-detail-ok-button" onclick="hideCardDetailDialog();"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="player1Fam" style="margin-bottom:30px; margin-top: 30px; " class="wrapper">
             <center>Player 1</center>
@@ -136,7 +112,5 @@
         getTierList("debug");
     </script>
 
-    <script>function showCardDetailDialog() { } // dummy</script>
 </body>
-
 </html>
