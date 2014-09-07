@@ -42,6 +42,10 @@ class BattleModel {
     p1_reserveCards: Card[] = [];
     p2_reserveCards: Card[] = [];
 
+    // The original main cards. Should be created once and never modified
+    p1_originalMainCards: Card[] = [];
+    p2_originalMainCards: Card[] = [];
+
     // The original reserve cards. Should be created once and never modified
     p1_originalReserveCards: Card[] = [];
     p2_originalReserveCards: Card[] = [];
@@ -174,6 +178,10 @@ class BattleModel {
             if (i < 5) {
                 this.p1_mainCards[i] = card1;
                 this.p2_mainCards[i] = card2;
+
+                this.p1_originalMainCards[i] = card1;
+                this.p2_originalMainCards[i] = card2;
+
                 this.allCurrentMainCards.push(card1);
                 this.allCurrentMainCards.push(card2);
             }

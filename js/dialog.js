@@ -39,6 +39,13 @@ function showCardDetailDialog(cardInfo) {
     $(".card-detail-current-hp").text(cardInfo.hp + "/" + cardInfo.hp);
 }
 
+function showCardDetailDialogById(id) {
+    var cardMan = CardManager.getInstance();
+    var card = cardMan.getCardById(id);
+    
+    showCardDetailDialog(cardMan.getCardInfoForDialog(card));
+}
+
 function hideCardDetailDialog() {
     hideDialog("card-detail-dialog");
     $(".arrow-left").css("visibility", "hidden");

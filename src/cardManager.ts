@@ -145,6 +145,18 @@ class CardManager {
         }
     }
 
+    getPlayerOriginalMainCards (player: Player): Card[] {
+        var battle = this.battle;
+        if (player === battle.player1) {
+            return battle.p1_originalMainCards;
+        }
+        else if (player === battle.player2) {
+            return battle.p2_originalMainCards;
+        }
+        else {
+            throw new Error("Invalid player");
+        }
+    }
     getPlayerOriginalReserveCards (player: Player): Card[] {
         var battle = this.battle;
         if (player === battle.player1) {
@@ -337,22 +349,24 @@ class CardManager {
     }
 
     /**
-     * Get a string that represents a player's brig
+     * Get a HTML string for a player's brig, with each fam name being a link to open that fam's detail dialog
      */
     getPlayerMainBrigString(player: Player): string {
         var cards = this.getPlayerCurrentMainCards(player);
-        var brigStr = cards[0].name;
-        for (var i = 1; i < cards.length; i++) {
-            brigStr += (" - " + cards[i].name);
-        }
-
-        return brigStr;
+        return this.getBrigString(cards);
     }
     getPlayerReserveBrigString(player: Player): string {
         var cards = this.getPlayerOriginalReserveCards(player);
-        var brigStr = cards[0].name;
-        for (var i = 1; i < cards.length; i++) {
-            brigStr += (" - " + cards[i].name);
+        return this.getBrigString(cards);
+    }
+    getBrigString(cards: Card[]): string {
+        var brigStr = "";
+
+        for (var i = 0; i < cards.length; i++) {
+            var dash = i == 0? "" : " - ";
+            var cardInfo = this.getCardInfoForDialog(cards[i]);
+            var cb = "showCardDetailDialogById(" + cards[i].id + ");";
+            brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
         }
 
         return brigStr;
