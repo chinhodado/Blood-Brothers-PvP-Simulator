@@ -47,23 +47,37 @@ class Affliction {
         }
     }
 
+    /**
+     * Can the familiar do anything (both auto attack and perform skills) with this affliction?
+     */
     canAttack(): boolean {
-        // implement this
-        return false;
+        throw new Error ("Implement this");
     }
 
+    /**
+     * Can the familiar use skills with this affliction?
+     */
     canUseSkill(): boolean {
         return this.canAttack();
     }
 
+    /**
+     * Can the familiar miss with this affliction?
+     */
     canMiss(): boolean {
         return false;
     }
 
+    /**
+     * Called when the affliction needs to be updated, like at the end of the fam's turn
+     */
     update(card: Card): void {
-        // implement this
+        throw new Error ("Implement this");
     }
 
+    /**
+     * Called when the fam is affected with another affliction of the same type
+     */
     add(option: AfflectOptParam): void {
         // implement this
     }
@@ -82,9 +96,9 @@ class Affliction {
 }
 
 class PoisonAffliction extends Affliction {
-    static DEFAULT_PERCENT = 5;
-    static MAX_STACK_NUM = 2;
-    static MAX_DAMAGE = 99999;
+    private static DEFAULT_PERCENT = 5; // default poison is 5% of HP every turn
+    private static MAX_STACK_NUM = 2;   // maximum number that poison can stack
+    private static MAX_DAMAGE = 99999;  // maximum poison damage is 99999 every turn
 
     percent: number;
 
@@ -100,7 +114,7 @@ class PoisonAffliction extends Affliction {
 
     update(card: Card): void {
         var damage: number = Math.floor(card.originalStats.hp * this.percent / 100);
-        if(damage > PoisonAffliction.MAX_DAMAGE){
+        if (damage > PoisonAffliction.MAX_DAMAGE) {
             damage = PoisonAffliction.MAX_DAMAGE;
         }
         // damage the card
@@ -109,14 +123,14 @@ class PoisonAffliction extends Affliction {
 
     add(option: AfflectOptParam): void {
         var percent = option.percent;
-        if(!percent){
+        if (!percent) {
             percent = PoisonAffliction.DEFAULT_PERCENT;
         }
         this.percent += percent;
 
         // there's a bug in here. Not my fault though
         var maxPercent = percent * PoisonAffliction.MAX_STACK_NUM;
-        if(this.percent > maxPercent){
+        if (this.percent > maxPercent) {
             this.percent = maxPercent;
         }
     }
@@ -169,7 +183,7 @@ class DisabledAffliction extends Affliction {
 
 class SilentAffliction extends Affliction {
 
-    validTurnNum: number;
+    validTurnNum: number; // number of turns for silence
 
     constructor() {
         super(ENUM.AfflictionType.SILENT);
@@ -185,7 +199,7 @@ class SilentAffliction extends Affliction {
     }
 
     update(): void{
-        if(--this.validTurnNum <= 0){
+        if (--this.validTurnNum <= 0) {
             this.clear();
         }
     }
@@ -197,8 +211,8 @@ class SilentAffliction extends Affliction {
 
 class BlindAffliction extends Affliction {
 
-    missProb: number;
-    validTurnNum: number;
+    missProb: number;     // the probability for missing
+    validTurnNum: number; // number of turns for blind
 
     constructor() {
         super(ENUM.AfflictionType.BLIND);
@@ -216,7 +230,7 @@ class BlindAffliction extends Affliction {
     }
 
     update(): void{
-        if(--this.validTurnNum <= 0){
+        if (--this.validTurnNum <= 0) {
             this.clear();
         }
     }
@@ -227,8 +241,11 @@ class BlindAffliction extends Affliction {
     }
 }
 
+/**
+ * A simple struct for afflection's optional parameters
+ */
 interface AfflectOptParam {
-    turnNum?: number; // for silent and blind
+    turnNum?: number;  // for silent and blind
     missProb?: number; // for blind
-    percent?: number; // for poison
+    percent?: number;  // for poison
 }

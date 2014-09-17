@@ -23,7 +23,7 @@ function getURLParameter(name: string): string {
 /**
  * Shuffle an array. The argument array will be modified.
  */
-function shuffle(array : any[]) {
+function shuffle(array: any[]): any[] {
     var currentIndex = array.length
         , temporaryValue
         , randomIndex
@@ -73,7 +73,7 @@ function pickRandomProperty(obj: {}): string {
 
 /**
  * Change a shortened link used in fam database to a thumbnail link
- * @param link The shortened link
+ * @param link     The shortened link
  * @param newWidth The width of the new image
  * @return The link to the new scaled image
  */

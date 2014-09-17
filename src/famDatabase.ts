@@ -2258,11 +2258,11 @@ class FamiliarDatabase {
     }
 
     static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string) {
-        var tierX = this.getTierList("tierX", allTierString)
-        var tierSP = this.getTierList("tierS+", allTierString)
-        var tierS = this.getTierList("tierS", allTierString)
-        var tierAP = this.getTierList("tierA+", allTierString)
-        var tierA = this.getTierList("tierA", allTierString)
+        var tierX = this.getTierList("tierX", allTierString);
+        var tierSP = this.getTierList("tierS+", allTierString);
+        var tierS = this.getTierList("tierS", allTierString);
+        var tierAP = this.getTierList("tierA+", allTierString);
+        var tierA = this.getTierList("tierA", allTierString);
 
         switch (type) {
             case ENUM.RandomBrigType.ALL:

@@ -87,7 +87,7 @@ function getHealAmount(executor: Card): number {
 
     amount = Math.floor(amount * getRandomArbitary(0.9, 1.1));
 
-    return amount
+    return amount;
 }
 
 function getDebuffAmount(executor: Card, target: Card): number {

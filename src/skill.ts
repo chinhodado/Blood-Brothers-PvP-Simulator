@@ -21,8 +21,7 @@ class Skill {
     range: BaseRange;
     logic: SkillLogic;
 
-    constructor (skillId: number) {
-    
+    constructor (skillId: number) {    
         var skillData = SkillDatabase[skillId];
         
         this.id = skillId;
@@ -50,6 +49,9 @@ class Skill {
         this.range = RangeFactory.getRange(this.skillRange, selectDead);
     }
 
+    /**
+     * Return true if this is an attack skill
+     */
     static isAttackSkill(skillId: number): boolean {
         var isAttackSkill = false;
         var skillInfo = SkillDatabase[skillId];
@@ -75,6 +77,9 @@ class Skill {
         return isAttackSkill;
     }
 
+    /**
+     * Return true if the skill does not make contact
+     */
     static isIndirectSkill(skillId: number): boolean {
         var isIndirect = true;
         var skillInfo = SkillDatabase[skillId];
@@ -95,50 +100,59 @@ class Skill {
         return isIndirect;
     }
 
-    // mainly for displaying the wis circle when attack
+    /**
+     * Return true if this is a WIS-based auto attack
+     * (mainly used for displaying the wis circle when attack)
+     */
     static isWisAutoAttack(skillId: number): boolean {
-        var isWisAutoAttack = false;
         var skillInfo = SkillDatabase[skillId];
-
-        if (this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.WIS) {
-            isWisAutoAttack = true;    
-        }
-
-        return isWisAutoAttack;
+        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.WIS;
     }
 
-    static isAtkIndepAutoAttack(skillId: number): boolean {
+    /**
+     * Return true if this is a ATK-based auto attack
+     */
+    static isAtkAutoAttack(skillId: number): boolean {
         var skillInfo = SkillDatabase[skillId];
 
-        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK
-            && this.isAttackSkill(skillId);
+        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK;
     }
 
+    /**
+     * Return true if this is an auto attack, and false or undefined if not
+     */
     static isAutoAttackSkill(skillId: number): boolean {
-        // either return true or undefined
         return SkillDatabase[skillId].isAutoAttack;
     }
 
-    // mainly used to determine whether to use the magic circle
+    /**
+     * Return true if this is a magic skill
+     * (mainly used to determine whether to use the magic circle)
+     */
     static isMagicSkill(skillId: number): boolean {
         var isMagicSkill = false;
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.calc == ENUM.SkillCalcType.WIS ||
-            skillInfo.func == ENUM.SkillFunc.AFFLICTION ||
-            skillInfo.func == ENUM.SkillFunc.BUFF ||
-            skillInfo.func == ENUM.SkillFunc.DEBUFF ||
-            skillInfo.func == ENUM.SkillFunc.MAGIC ||
-            skillInfo.func == ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC ||
-            skillInfo.func == ENUM.SkillFunc.DRAIN_MAGIC)
-        {
+        if (skillInfo.calc == ENUM.SkillCalcType.WIS) {
             isMagicSkill = true;    
+        }
+
+        if ([ENUM.SkillFunc.AFFLICTION, 
+            ENUM.SkillFunc.BUFF, 
+            ENUM.SkillFunc.DEBUFF, 
+            ENUM.SkillFunc.MAGIC, 
+            ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC, 
+            ENUM.SkillFunc.DRAIN_MAGIC].indexOf(skillInfo.func) != -1) {
+            isMagicSkill = true;
         }
 
         return isMagicSkill;
     }
 
-    // mainly used to determine the animation
+    /**
+     * Return true if this is an AoE skill
+     * (mainly used to determine the animation)
+     */
     static isAoeSkill(skillId: number): boolean {
         var isAoe = false;
         var skillInfo = SkillDatabase[skillId];
@@ -150,6 +164,9 @@ class Skill {
         return isAoe;
     }
 
+    /**
+     * Return true if this is an attack skill with debuff
+     */
     static isDebuffAttackSkill(skillId: number): boolean {
         var isDebuffAttack = false;
         var skillInfo = SkillDatabase[skillId];
@@ -168,6 +185,9 @@ class Skill {
         return isDebuffAttack;
     }
 
+    /**
+     * Return true if this skill should be available for user to select, or available to be randomly chosen
+     */
     static isAvailableForSelect(skillId: number): boolean {
         var isAvailable = true;
         var skillInfo = SkillDatabase[skillId];
@@ -179,6 +199,9 @@ class Skill {
         return isAvailable;
     }
 
+    /**
+     * Return a list of ids of the skills available for selection
+     */
     static getAvailableSkillsForSelect(): number[] {
 
         if (this.availableSkillsForSelect == null) {
@@ -193,7 +216,10 @@ class Skill {
         return this.availableSkillsForSelect;
     }
 
-    // get the list of stats status modified by the skill. Mainly used for displaying the status text
+    /**
+     * Return the list of stats status modified by the skill.
+     * (mainly used for displaying the status text)
+     */
     static getStatusModified(skillId: number): ENUM.StatusType[] {
         var skillInfo = SkillDatabase[skillId];
         var statuses = [];
@@ -221,7 +247,10 @@ class Skill {
         return statuses;
     }
 
-    static canProtectFromCalcType(type: ENUM.SkillCalcType, attackSkill: Skill) {
+    /**
+     * Return true if the attack skill can be protected/evaded from the calc type
+     */
+    static canProtectFromCalcType(type: ENUM.SkillCalcType, attackSkill: Skill): boolean {
         switch (type) {
             case ENUM.SkillCalcType.ATK:
             case ENUM.SkillCalcType.WIS:
@@ -238,7 +267,10 @@ class Skill {
         }
     }
 
-    static canEvadeFromSkill(attackSkill: Skill) {
+    /**
+     * Return true if the attack skill can be evaded
+     */
+    static canEvadeFromSkill(attackSkill: Skill): boolean {
         return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
                     && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
                     && !attackSkill.isAutoAttack);
@@ -263,7 +295,9 @@ class Skill {
             skillRange: this.skillRange,
             maxProbability: this.maxProbability,
             ward: this.ward,
-        }
+            description: this.description,
+            isAutoAttack: this.isAutoAttack
+        };
     }
 
     willBeExecuted(data: SkillLogicData) {

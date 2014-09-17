@@ -35,19 +35,19 @@ class CardManager {
             case ENUM.BattleTurnOrderType.AGI:
                 return function (a: Card, b: Card) {
                     return b.getAGI() - a.getAGI(); // descending based on agi
-                }
+                };
             case ENUM.BattleTurnOrderType.ATK:
                 return function (a: Card, b: Card) {
                     return b.getATK() - a.getATK(); // descending based on atk
-                }
+                };
             case ENUM.BattleTurnOrderType.DEF:
                 return function (a: Card, b: Card) {
                     return b.getDEF() - a.getDEF(); // descending based on def
-                }
+                };
             case ENUM.BattleTurnOrderType.WIS:
                 return function (a: Card, b: Card) {
                     return b.getWIS() - a.getWIS(); // descending based on wis
-                }
+                };
             default:
                 // no HP for now
                 throw new Error("Invalid turn order type!");
@@ -363,7 +363,7 @@ class CardManager {
         var brigStr = "";
 
         for (var i = 0; i < cards.length; i++) {
-            var dash = i == 0? "" : " - ";
+            var dash = (i == 0)? "" : " - ";
             var cardInfo = this.getCardInfoForDialog(cards[i]);
             var cb = "showCardDetailDialogById(" + cards[i].id + ");";
             brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
@@ -380,7 +380,7 @@ class CardManager {
     getTotalHPRatio(cards: Card[]): number {
         var totalRemainHp = 0;
         var totalOriginalHp = 0;
-        for(var i = 0, len = cards.length; i < len; i++){
+        for (var i = 0, len = cards.length; i < len; i++) {
             var card = cards[i];
             // if dead, remain HP is 0, so no need to care
             if (card) {
@@ -406,24 +406,24 @@ class CardManager {
         }
 
         return {
-        "name": card.fullName,
-        "image": getScaledWikiaImageLink(card.imageLink, 150),
-        //"rarity": 5,
-        //"price": 25850,
-        "hp": card.originalStats.hp,
-        "atk": card.originalStats.atk,
-        "def": card.originalStats.def,
-        "wis": card.originalStats.wis,
-        "agi": card.originalStats.agi,
-        "maxLevel": 99,
-        //"growthType": 1,
-        //"evolution": 2,
-        //"maxEvolution": 2,
-        "skills": skillInfo, 
-        "standardAction": {
+            "name": card.fullName,
+            "image": getScaledWikiaImageLink(card.imageLink, 150),
+            //"rarity": 5,
+            //"price": 25850,
+            "hp": card.originalStats.hp,
+            "atk": card.originalStats.atk,
+            "def": card.originalStats.def,
+            "wis": card.originalStats.wis,
+            "agi": card.originalStats.agi,
+            "maxLevel": 99,
+            //"growthType": 1,
+            //"evolution": 2,
+            //"maxEvolution": 2,
+            "skills": skillInfo, 
+            "standardAction": {
                 "name": "Standard Action",
                 "comment": card.autoAttack.description
-            }        
-        }
+            }
+        };
     }
 }

@@ -236,9 +236,7 @@ class BaseRange {
     }
     
     getTargets(executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[] {
-        // to be overrridden
         throw new Error("Implement this");
-        return null;
     }
 
     getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
@@ -493,7 +491,7 @@ class EnemyAllRange extends BaseRange {
                 targets.push(currentEnemyCard);
             }
         }
-        return targets
+        return targets;
     }
 }
 

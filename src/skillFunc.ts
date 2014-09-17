@@ -360,7 +360,7 @@ class AttackSkillLogic extends SkillLogic {
                         executor: targetCard,
                         skill: defenseSkill,
                         attacker: executor,
-                    }
+                    };
 
                     this.battleModel.processDamagePhase({
                         attacker: executor, 
@@ -424,7 +424,7 @@ class AttackSkillLogic extends SkillLogic {
                 executor: target,
                 skill: defenseSkill,
                 attacker: executor,
-            }
+            };
 
             this.battleModel.processDamagePhase({
                 attacker: executor, 
@@ -785,7 +785,7 @@ class HealSkillLogic extends SkillLogic {
     private getCondFunc() {
         return function (card: Card): boolean {
             return !card.isFullHealth();
-        }
+        };
     }
 
     execute(data: SkillLogicData) {
@@ -885,7 +885,7 @@ interface SkillLogicData {
     wouldBeDamage?: number; // the would-be damage, for survive skills
     scaledRatio?: number;
     attacker?: Card;    // for protect/counter
-    attackSkill?: Skill // for protect/counter
+    attackSkill?: Skill; // for protect/counter
     targetCard?: Card;  // for protect
     targetsAttacked?: any;  // for protect
     noProbCheck?: boolean; // for passing the prob check of proccing the skill, like for RandomSkillLogic

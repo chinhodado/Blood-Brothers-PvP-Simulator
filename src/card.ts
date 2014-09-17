@@ -85,7 +85,7 @@ class Card {
                     this.protectSkills.push(skill);
                 }
                 else if (skill.skillType === ENUM.SkillType.DEFENSE) {
-                    if (skill.skillFunc == ENUM.SkillFunc.SURVIVE) {
+                    if (skill.skillFunc === ENUM.SkillFunc.SURVIVE) {
                         this.surviveSkill = skill;
                     }
                     else {
@@ -135,7 +135,7 @@ class Card {
             defenseSkills: getSerializableObjectArray(this.defenseSkills),
             ondeathSkills: getSerializableObjectArray(this.ondeathSkills),
             surviveSkill: this.surviveSkill? this.surviveSkill.getSerializableObject() : null
-        }
+        };
     }
 
     getRandomOpeningSkill(): Skill {
@@ -247,8 +247,8 @@ class Card {
     // affliction
     setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam): void {
 
-        if(this.affliction){
-            if (this.affliction.getType() === type){
+        if (this.affliction) {
+            if (this.affliction.getType() === type) {
                 this.affliction.add(option);
                 return;
             }
@@ -260,7 +260,7 @@ class Card {
         this.affliction.add(option);
     }
     clearAffliction(): void{
-        if(!this.affliction){
+        if (!this.affliction) {
             return;
         }
         this.affliction.clear();
@@ -289,13 +289,13 @@ class Card {
 
     // return true if an affliction was cleared
     updateAffliction(): boolean{
-        if(!this.affliction){
+        if (!this.affliction) {
             return false;
         }
 
         this.affliction.update(this);
         
-        if(this.affliction && this.affliction.isFinished()){
+        if (this.affliction && this.affliction.isFinished()) {
             this.clearAffliction();
             return true;
         }
@@ -347,7 +347,7 @@ class Card {
             this.ondeathSkills[0] = skill;
             this.status.actionOnDeath = amount;
         }
-        else if (statusType == ENUM.StatusType.HP_SHIELD) {
+        else if (statusType === ENUM.StatusType.HP_SHIELD) {
             this.status.hpShield += amount;
             if (maxAmount && this.status.hpShield > maxAmount) {
                 this.status.hpShield = maxAmount;
@@ -364,7 +364,7 @@ class Card {
     clearAllStatus(condFunc: (x: number)=>boolean): void {
 
         for (var key in this.status) {
-            if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number"){
+            if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number") {
                 if (condFunc(this.status[key])) {
                     this.status[key] = 0;
                 }
@@ -416,7 +416,7 @@ class Card {
         return this.stats.hp == this.originalStats.hp;
     }
     getHPRatio(): number {
-        return this.stats.hp/this.originalStats.hp;
+        return this.stats.hp / this.originalStats.hp;
     }
     
     setDead(): void {

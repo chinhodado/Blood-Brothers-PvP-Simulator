@@ -38,8 +38,8 @@ class BattleGraphic {
     }
 
     public static getInstance(): BattleGraphic {
-        if(BattleGraphic._instance === null) {
-            throw new Error ("You're not supposed to create this object this way")
+        if (BattleGraphic._instance === null) {
+            throw new Error ("You're not supposed to create this object this way");
         }
         return BattleGraphic._instance;
     }
@@ -183,7 +183,7 @@ class BattleGraphic {
                 var explosion = draw.image('img/explosion.png', 70, 70)
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
-                                    .opacity(0)
+                                    .opacity(0);
                 
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
                 var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');                
@@ -197,7 +197,7 @@ class BattleGraphic {
                     return function () {
                         showCardDetailDialog(cardMan.getCardInfoForDialog(card));
                     };
-                }
+                };
                 group.on('click', click([player, i]));
 
                 groupPlayer.add(group);
@@ -217,7 +217,7 @@ class BattleGraphic {
     resetInitialField() {
         for (var player = 1; player <= 2; player++) {
             for (var index = 0; index < 5; index++) {
-                this.displayHPOnCanvas(100, player, index, 0);
+                this.displayHP(100, player, index, 0);
                 this.getAfflictionText(player, index).hide();
             }
         }
@@ -234,12 +234,16 @@ class BattleGraphic {
             for (var f = 0; f < 5; f++) {
                 var image: any = SVG.get('p' + p + 'f' + f + 'image');
                 var card = field["player" + p + "Cards"][f];
-                image.load(getScaledWikiaImageLink(card.imageLink, BattleGraphic.IMAGE_WIDTH_BIG))
+                image.load(getScaledWikiaImageLink(card.imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
             }
         }
     }
 
-    displayHPOnCanvas(percent: number, player: number, index: number, animDuration?: number) {
+    /**
+     * Display the HP of a fam
+     * animDuration: set to 0 if you don't want to display the HP change animation
+     */
+    displayHP(percent: number, player: number, index: number, animDuration?: number) {
 
         var draw = SVG.get('mainSvg');
 
@@ -307,6 +311,9 @@ class BattleGraphic {
         this.displayDeadAliveFamiliar(player, index, percent <= 0);
     }
     
+    /**
+     * Display the damage text and HP of a fam
+     */
     displayDamageTextAndHP(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var field = this.logger.getFieldAtMinorIndex(majorIndex, minorIndex);
         var targetInfo = field["player" + playerId + "Cards"][famIndex];
@@ -342,9 +349,12 @@ class BattleGraphic {
                   .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '2s'}).opacity(0);
 
-        this.displayHPOnCanvas (stats.hp / originalStats.hp * 100, playerId, famIndex);
+        this.displayHP (stats.hp / originalStats.hp * 100, playerId, famIndex);
     }
 
+    /**
+     * Display the ward effect on a fam
+     */
     displayWard(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var data = this.logger.minorEventLog[majorIndex][minorIndex];
 
@@ -371,6 +381,9 @@ class BattleGraphic {
         wardImg.opacity(1).animate({delay: '0.5s'}).opacity(0);
     }
 
+    /**
+     * Display the affliction text of a fam
+     */
     displayAfflictionText(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var data = this.logger.minorEventLog[majorIndex][minorIndex];       
         var svgAfflictTxt = this.getAfflictionText(playerId, famIndex);
@@ -384,6 +397,9 @@ class BattleGraphic {
         }
     }
 
+    /**
+     * Display the affliction texts of all fams at a major index
+     */
     displayAllAfflictionText(majorIndex: number) {
         var field = this.logger.getFieldAtMajorIndex(majorIndex);
 
@@ -411,8 +427,11 @@ class BattleGraphic {
         this.displayDamageTextAndHP(playerId, famIndex, majorIndex, minorIndex);
     }
 
+    /**
+     * Display a familiar as dead (greyed) or alive
+     */
     displayDeadAliveFamiliar(player: number, fam: number, isDead: boolean) {
-        var image : any = SVG.get('p' + player + 'f' + fam + 'image');
+        var image: any = SVG.get('p' + player + 'f' + fam + 'image');
         var filter = SVG.get('darkenFilter');
         if (isDead) {
             if (!filter) {
@@ -423,7 +442,7 @@ class BattleGraphic {
                 image.filter(function (add) {
                     add.componentTransfer({
                         rgb: { type: 'linear', slope: 0.05 }
-                    })
+                    });
                 });
 
                 // now grab the filter from the image, and give it the id
@@ -469,17 +488,17 @@ class BattleGraphic {
         if (BattleGraphic.PLAY_MODE == 'AUTO') {
             var autoCallback = function() {
                 that.displayMajorEventAnimation(majorIndex + 1);
-            }
+            };
         }
             
         if (majorLog[majorIndex].skillId && SkillDatabase[majorLog[majorIndex].skillId].isAutoAttack) {
             // don't enlarge the fam, etc.
-            this.displayMinorEventAnimation(majorIndex, 0,{callback: autoCallback});
+            this.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
         }
         else {
             var callback = function() {
                 that.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
-            }
+            };
 
             this.displayProcSkill(majorLog[majorIndex].executorId, majorLog[majorIndex].skillId, {callback: callback});
         }
@@ -531,8 +550,8 @@ class BattleGraphic {
             procEffect.opacity(1);
             procEffect.animate({duration: '3s'})
                        .rotate(180)
-                       .after(function(){
-                            this.rotate(0);//reset the rotation
+                       .after(function() {
+                            this.rotate(0); // reset the rotation
                             this.remove();
                        });
 
@@ -563,7 +582,7 @@ class BattleGraphic {
             groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
                         .after(function () {
                             this.animate({ duration: '0.5s', delay: '1.5s' })
-                                .opacity(0)
+                                .opacity(0);
                         });
     }
 
@@ -633,17 +652,17 @@ class BattleGraphic {
                     data.status.type == ENUM.StatusType.BREATH_RESISTANCE) 
                 {
                     var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type); 
-                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0)
+                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
                 }
                 else {
                     // display status text
 
                     var fontSize = 18;
 
-                    if (data.status.isDispelled){
+                    if (data.status.isDispelled) {
                         var displayText = "dispelled";
                     }
-                    else if (data.status.isClearDebuff){
+                    else if (data.status.isClearDebuff) {
                         var displayText = "cleared";
                     }
                     else if (data.status.isAllUp) {
@@ -732,7 +751,7 @@ class BattleGraphic {
                     that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                 });
                 
-                this.displayHPOnCanvas(100, mainId, main.formationColumn, 0);
+                this.displayHP(100, mainId, main.formationColumn, 0);
                 this.getAfflictionText(mainId, main.formationColumn).hide();
             }
 
@@ -785,7 +804,7 @@ class BattleGraphic {
                 var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
                 damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
                     .opacity(1).animate({delay: '0.5s'}).opacity(0);
-                this.displayHPOnCanvas(data.reviveHPRatio * 100, playerId, index);
+                this.displayHP(data.reviveHPRatio * 100, playerId, index);
                 this.getAfflictionText(playerId, index).hide();
 
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
@@ -833,7 +852,6 @@ class BattleGraphic {
                 //
                 // e.g. if counter: [x procs y to protect z] -> [x receives n damage] -> [x counters w, w lost k damage]
                 //      if not counter or dead, third event becomes [something do something]
-                var that = this;
                 executorGroup.animate({ duration: moveTime + 's' })
                     .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
                     .after(function () {
@@ -845,7 +863,7 @@ class BattleGraphic {
                                 procEffect.animate({duration: '0.2s'}).opacity(1);
                                 exploDuration = 0.5;
                             }
-                            else if (Skill.isAtkIndepAutoAttack(nextData.skillId)) {
+                            else if (Skill.isAtkAutoAttack(nextData.skillId)) {
                                 procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'lineSpark')
                                 procEffect.animate({duration: '0.2s'}).opacity(1);
                                 exploDuration = 0.5;
@@ -933,7 +951,7 @@ class BattleGraphic {
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
-                else if (Skill.isAtkIndepAutoAttack(data.skillId)) {
+                else if (Skill.isAtkAutoAttack(data.skillId)) {
                     procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark')
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
@@ -960,8 +978,6 @@ class BattleGraphic {
                         graphic.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                     }
                 }
-
-                var that = this;
 
                 for (var i = 0; i < exploSet.length; i++) {
                     // specify a callback for the last explosion animation
@@ -1018,33 +1034,36 @@ class BattleGraphic {
     }
 
     /**
-     * Given a card, return the image of that card on the canvas
+     * Get the image of a card
      */
     getCardImage(card: Card) {
         return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'image');
     }
 
     /**
-     * Given a card, return the image group of that card on the canvas
+     * Get the image group of a card
      */
     getCardImageGroup(card: Card) {
         return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
     }
 
+    /**
+     * Get the ward effect on a card
+     */
     getWard(playerId: number, famIndex: number, type: ENUM.StatusType) {
         var wardTxt, wardFileName;
-        switch(type) {
+        switch (type) {
             case ENUM.StatusType.ATTACK_RESISTANCE:
                 wardTxt = "physicalWard";
-                wardFileName = "physical_ward.png"
+                wardFileName = "physical_ward.png";
                 break;
             case ENUM.StatusType.MAGIC_RESISTANCE:
                 wardTxt = "magicalWard";
-                wardFileName = "magical_ward.png"
+                wardFileName = "magical_ward.png";
                 break;
             case ENUM.StatusType.BREATH_RESISTANCE:
                 wardTxt = "breathWard";
-                wardFileName = "breath_ward.png"
+                wardFileName = "breath_ward.png";
                 break;
             default:
                 throw new Error("Invalid type of ward");
@@ -1056,13 +1075,16 @@ class BattleGraphic {
             ward = SVG.get('mainSvg').image('img/' + wardFileName, 70, 70)
                         .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
                         .attr('id', 'p' + playerId + 'f' + famIndex + wardTxt)
-                        .opacity(0)
+                        .opacity(0);
             SVG.get('p' + playerId + 'f' + famIndex + 'group').add(ward);
         }
 
         return ward;
     }
 
+    /**
+     * Get the affiction text of a card
+     */
     getAfflictionText(playerId: number, famIndex: number) {
         var txt = SVG.get('p' + playerId + 'f' + famIndex + 'afflictText');
 
@@ -1079,18 +1101,24 @@ class BattleGraphic {
         return txt;
     }
 
+    /**
+     * Get the proc effect (spellCircle or lineSpark) of a card
+     */
     getProcEffect(playerId: number, famIndex: number, type: string) {
         var file = type == "spellCircle"? "circle_blue.png" : "lineSpark.png";
 
         var effect = SVG.get('mainSvg').image('img/' + file, 150, 150)
                             .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
                             .attr('id', 'p' + playerId + 'f' + famIndex + 'spellCircle')
-                            .opacity(0)
+                            .opacity(0);
         SVG.get('p' + playerId + 'f' + famIndex + 'group').add(effect);
     
         return effect;
     }
 
+    /**
+     * Get the main battle text of the whole field (for turn order change, decision win, etc.)
+     */
     getMainBattleEffect() {
         var txt = SVG.get('battleText');
 

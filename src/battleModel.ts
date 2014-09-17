@@ -85,7 +85,7 @@ class BattleModel {
 
     constructor(data: GameData, option: GameOption = {}, tierListString?) {
     
-        if(BattleModel._instance) {
+        if (BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
         BattleModel._instance = this;
@@ -229,7 +229,7 @@ class BattleModel {
     /**
      * Given an array of skill ids, return an array of Skills
      */
-    makeSkillArray (skills : number[]) {
+    makeSkillArray (skills: number[]) {
         var skillArray : Skill[] = [];
         
         for (var i = 0; i < 3; i++) {
@@ -253,11 +253,11 @@ class BattleModel {
         }
     }
     
-    getOppositePlayer (player : Player) {
-        if (player == this.player1) {
+    getOppositePlayer (player: Player) {
+        if (player === this.player1) {
             return this.player2;
         }
-        else if (player == this.player2) {
+        else if (player === this.player2) {
             return this.player1;
         }
         else {
@@ -281,7 +281,7 @@ class BattleModel {
             data.attacker.justMissed = false;
         }
 
-        var evaded = target.justEvaded
+        var evaded = target.justEvaded;
         if (evaded) {
             damage = 0;
         }
@@ -314,7 +314,7 @@ class BattleModel {
             skill: surviveSkill,
             attacker: data.attacker,
             wouldBeDamage: damage
-        }
+        };
         
         if (surviveSkill && surviveSkill.willBeExecuted(defenseData) && !isKilled && !isMissed && !evaded) {
             surviveSkill.execute(defenseData);
@@ -437,7 +437,7 @@ class BattleModel {
     }
 
     processAffliction(executor: Card, target: Card, skill: Skill) {
-        var type: ENUM.AfflictionType = skill.skillFuncArg2
+        var type: ENUM.AfflictionType = skill.skillFuncArg2;
         var prob: number = skill.skillFuncArg3;
 
         if (!type) {
@@ -461,7 +461,7 @@ class BattleModel {
             option.missProb = skill.skillFuncArg5;
         }
             
-        if(Math.random() <= prob){
+        if (Math.random() <= prob){
             target.setAffliction(type, option);
             var description = target.name + " is now " + ENUM.AfflictionType[type];
             var maxTurn = 1;
@@ -603,7 +603,7 @@ class BattleModel {
                             var data: SkillLogicData = {
                                 executor: currentCard,
                                 skill: openingSkill
-                            }
+                            };
                             if (openingSkill.willBeExecuted(data)) {
                                 this.logger.addMajorEvent({
                                     description: currentCard.name + " procs " + openingSkill.name,
@@ -712,7 +712,7 @@ class BattleModel {
             var data: SkillLogicData = {
                 executor: currentCard,
                 skill: activeSkill
-            }
+            };
             if (activeSkill.willBeExecuted(data)) {
                 this.logger.addMajorEvent({
                     description: currentCard.name + " procs " + activeSkill.name,
@@ -756,7 +756,7 @@ class BattleModel {
             var data: SkillLogicData = {
                 executor: card,
                 skill: skill
-            }
+            };
             if (skill && skill.willBeExecuted(data)) {
                 this.logger.addMinorEvent({
                     executorId: card.id, 
@@ -771,7 +771,7 @@ class BattleModel {
             var data: SkillLogicData = {
                 executor: card,
                 skill: skill
-            }
+            };
             // clear it
             card.clearBuffOnDeathSkill();
             if (skill && skill.willBeExecuted(data)) {
@@ -812,7 +812,7 @@ class BattleModel {
             var p1Ratio    = this.cardManager.getTotalHPRatio(p1Cards);
             var p2Ratio    = this.cardManager.getTotalHPRatio(p2Cards);
                 
-            if(p1Ratio >= p2Ratio){
+            if (p1Ratio >= p2Ratio) {
                 this.playerWon = this.player1;
                 var battleDesc = "Decision win";
             } else {
@@ -902,7 +902,7 @@ class BattleModel {
                     targetCard: targetCard,  // for protect
                     targetsAttacked: targetsAttacked,  // for protect
                     scaledRatio: scaledRatio
-                }
+                };
 
                 if (protectSkill.willBeExecuted(protectData)) {
                     protectSkillActivated = true;
@@ -914,7 +914,7 @@ class BattleModel {
                 continue;
             }
         }
-        toReturn.activated = protectSkillActivated
+        toReturn.activated = protectSkillActivated;
         return toReturn;
     }
 
@@ -929,7 +929,7 @@ class BattleModel {
                 var data: SkillLogicData = {
                     executor: p1cards[i],
                     skill: skill1
-                }
+                };
                 if (skill1.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
                         description: p1cards[i].name + " procs " + skill1.name,
@@ -947,7 +947,7 @@ class BattleModel {
                 var data: SkillLogicData = {
                     executor: p2cards[i],
                     skill: skill2
-                }
+                };
                 if (skill2.willBeExecuted(data)) {
                     this.logger.addMajorEvent({
                         description: p2cards[i].name + " procs " + skill2.name,
@@ -964,6 +964,9 @@ class BattleModel {
     }
 }
 
+/**
+ * A structure for holding a battle's data
+ */
 interface GameData {
     p1_formation: string;
     p2_formation: string;
@@ -973,6 +976,9 @@ interface GameData {
     p2_warlordSkillIds: number[];
 }
 
+/**
+ * A structure for holding a battle's option
+ */
 interface GameOption {
     p1RandomMode?: ENUM.RandomBrigType;
     p2RandomMode?: ENUM.RandomBrigType;

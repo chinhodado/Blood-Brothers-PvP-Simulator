@@ -28,7 +28,7 @@ class BattleLogger {
     }
 
     public static getInstance(): BattleLogger {
-        if(BattleLogger._instance === null) {
+        if (BattleLogger._instance === null) {
             BattleLogger._instance = new BattleLogger();
         }
         return BattleLogger._instance;
@@ -150,7 +150,7 @@ class BattleLogger {
             return;
         }
         var graphic = BattleGraphic.getInstance();
-        var lastEventIndex = majorIndex == 0? 0 : majorIndex - 1;
+        var lastEventIndex = (majorIndex == 0)? 0 : majorIndex - 1;
 
         // for displaying last turn's HP        
         var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
@@ -158,7 +158,7 @@ class BattleLogger {
         var field = this.getFieldAtMajorIndex(majorIndex);
         
         // now prepares the info and print them out
-        for (var p = 1; p <=2; p++) { // for each player
+        for (var p = 1; p <= 2; p++) { // for each player
             var playerCards = field["player" + p + "Cards"]; // get the cards of that player
             for (var f = 0; f < 5; f++) { // for each card
                 var stats = playerCards[f].stats;
@@ -212,7 +212,7 @@ class BattleLogger {
                     if (afflict.type === ENUM.AfflictionType.SILENT) {
                         infoText.affliction += (" (" + afflict.validTurnNum + " turn)");
                     }
-                    else if (afflict.type === ENUM.AfflictionType.POISON){
+                    else if (afflict.type === ENUM.AfflictionType.POISON) {
                         infoText.affliction += (" (" + afflict.percent + " %)");
                     }
                     else { // frozen, disabled, paralyzed
@@ -288,7 +288,7 @@ class BattleLogger {
 
                 // display last event's HP
                 var lastEventCard = lastEventField["player" + p + "Cards"][f];
-                graphic.displayHPOnCanvas (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
+                graphic.displayHP (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
             }
         }
         graphic.displayAllCardImages(majorIndex);
