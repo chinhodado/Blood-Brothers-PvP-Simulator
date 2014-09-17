@@ -100,6 +100,14 @@ class Skill {
         return isIndirect;
     }
 
+    static isPositionIndependentAttackSkill(skillId: number): boolean {
+        var skillInfo = SkillDatabase[skillId];
+
+        // generally, indirect skills are position independent
+        // however, kill skills are indirect (do not make contact) but not position independent
+        return this.isIndirectSkill(skillId) && skillInfo.func != ENUM.SkillFunc.KILL;
+    }
+
     /**
      * Return true if this is a WIS-based auto attack
      * (mainly used for displaying the wis circle when attack)

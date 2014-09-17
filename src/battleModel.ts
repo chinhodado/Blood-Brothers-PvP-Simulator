@@ -369,7 +369,7 @@ class BattleModel {
 
     getWouldBeDamage(attacker: Card, target: Card, skill: Skill, opt?: {scaledRatio?: number}): number {
         var skillMod = skill.skillFuncArg1;
-        var ignorePosition = Skill.isIndirectSkill(skill.id);
+        var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
     
         var baseDamage: number;
             
