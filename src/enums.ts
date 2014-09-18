@@ -136,7 +136,9 @@ module ENUM {
         REAR_5   = 6,
         PIKE_5   = 7,
         SHIELD_5 = 8,
-        PINCER_5 = 9
+        PINCER_5 = 9,
+        SAW_5    = 10,
+        HYDRA_5  = 11
     }
 
     export enum ProcOrderType {

@@ -21,6 +21,8 @@ class Formation {
         Formation.FORMATION_CONFIG[ENUM.FormationType.PIKE_5   ] = [3, 3, 1, 3, 3];
         Formation.FORMATION_CONFIG[ENUM.FormationType.SHIELD_5 ] = [1, 1, 3, 1, 1];
         Formation.FORMATION_CONFIG[ENUM.FormationType.PINCER_5 ] = [3, 1, 3, 1, 3];
+        Formation.FORMATION_CONFIG[ENUM.FormationType.SAW_5    ] = [1, 3, 2, 3, 1];
+        Formation.FORMATION_CONFIG[ENUM.FormationType.HYDRA_5  ] = [3, 3, 1, 1, 1];
 
         Formation.ANDROID_PROC_ORDER[ENUM.FormationRow.FRONT] = [11, 15, 14, 13, 12];
         Formation.ANDROID_PROC_ORDER[ENUM.FormationRow.MID]   = [6, 10, 9, 8, 7];
