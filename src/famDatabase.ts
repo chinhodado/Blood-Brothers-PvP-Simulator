@@ -156,7 +156,7 @@ var famDatabase = {
         skills: [468],
         autoAttack: 10017,
         img: "img2$1/__cb20140528104324/$2/1/16/Apep%2C_the_Chaotic_Figure.png",
-        fullName: "Apep, the Chaotic"
+        fullName: "Apep the Chaotic"
     },
     10593: {
         name: "Apocalyptic Beast", stats: [14189, 15977, 15413, 13420, 14969],
@@ -223,6 +223,13 @@ var famDatabase = {
         img: "img4$1/__cb20140313080212/$2/5/58/Arcanan_High_Priestess_II_Figure.png",
         fullName: "Arcanan High Priestess II"
     },
+    11395: {
+        name: "Judgment", stats: [19996, 7754, 16009, 19508, 17753],
+        skills: [573],
+        autoAttack: 10003,
+        img: "img1$1/__cb20140914071121/$2/7/72/Arcanan_Judgment_II_Figure.png",
+        fullName: "Arcanan Judgment II"
+    },
     11242: {
         name: "Lovers", stats: [16908, 13875, 12705, 19021, 17006],
         skills: [430, 431],
@@ -255,6 +262,13 @@ var famDatabase = {
         autoAttack: 10007,
         img: "img4$1/__cb20140812101601/$2/7/75/Arcanan_Star_II_Figure.png",
         fullName: "Arcanan Star II"
+    },
+    11394: {
+        name: "Sun", stats: [20299, 7982, 16356, 18013, 17916],
+        skills: [570, 571],
+        autoAttack: 10032,
+        img: "img1$1/__cb20140912105317/$2/0/0a/Arcanan_Sun_II_Figure.png",
+        fullName: "Arcanan Sun II"
     },
     11332: {
         name: "Temperance", stats: [19183, 3800, 20007, 19985, 18046],
@@ -300,6 +314,13 @@ var famDatabase = {
         img: "img3$1/__cb20131009141347/$2/1/15/Aurboda%2C_the_Great_Mother_II_Figure.png",
         fullName: "Aurboda, the Great Mother II"
     },
+    11388: {
+        name: "Azi", stats: [20375, 20202, 20104, 22899, 18057],
+        skills: [572],
+        autoAttack: 10033,
+        img: "img2$1/__cb20140914071105/$2/5/5b/Azi_Dahaka_II_Figure.png",
+        fullName: "Azi Dahaka II"
+    },
     10657: {
         name: "Baal", stats: [14677, 15457, 12813, 14482, 16551],
         skills: [178],
@@ -311,6 +332,13 @@ var famDatabase = {
         skills: [315],
         img: "img2$1/__cb20131212173203/$2/6/6c/Badalisc%2C_the_Gourmet_II_Figure.png",
         fullName: "Badalisc, the Gourmet II"
+    },
+    11390: {
+        name: "Suzhen", stats: [15998, 3096, 15002, 17504, 17006],
+        skills: [81],
+        autoAttack: 10031,
+        img: "img1$1/__cb20140914071137/$2/0/05/Bai_Suzhen%2C_Lady_of_Scales_II_Figure.png",
+        fullName: "Bai Suzhen, Lady of Scales II"
     },
     11102: {
         name: "Balgo", stats: [18585, 16037, 13962, 5799, 13510],
@@ -332,7 +360,7 @@ var famDatabase = {
         fullName: "Bayam II"
     },
     11025: {
-        name: "Scarecrow", stats: [10625, 13756, 10490, 11201, 9342],
+        name: "Scarecrow", stats: [10625, 13756, 10490, 11001, 9342],
         skills: [256],
         img: "img3$1/__cb20131002022744/$2/4/4d/Beheading_Scarecrow_II_Figure.png",
         fullName: "Beheading Scarecrow II"
@@ -466,6 +494,12 @@ var famDatabase = {
         autoAttack: 10007,
         img: "img2$1/__cb20140612092914/$2/0/0f/Circe%2C_Fallen_Heroine_II_Figure.png",
         fullName: "Circe, Fallen Heroine II"
+    },
+    11392: {
+        name: "Viper", stats: [14999, 12999, 14999, 7808, 17133],
+        skills: [574],
+        img: "img3$1/__cb20140914071153/$2/3/38/Clockwork_Viper_II_Figure.png",
+        fullName: "Clockwork Viper II"
     },
     10303: {
         name: "Crystal Gillant", stats: [11832, 10896, 10439, 10439, 13317],
@@ -677,7 +711,7 @@ var famDatabase = {
         img: "img2$1/__cb20131002005230/$2/5/52/Flesh_Collector_Golem_II_Figure.png",
         fullName: "Flesh Collector Golem II"
     },
-    11911: {
+    11191: {
         name: "Freyja", stats: [14709, 17125, 14027, 10213, 12380],
         skills: [387],
         img: "img3$1/__cb20140301012048/$2/c/c8/Freyja%2C_Earth_Goddess_II_Figure.png",
@@ -855,7 +889,7 @@ var famDatabase = {
         fullName: "Grim Executioner II"
     },
     10925: {
-        name: "Grimoire", stats: [15234, 18606, 10439, 8064, 15452],
+        name: "Grimoire", stats: [15231, 18609, 10441, 8064, 15451],
         skills: [134],
         img: "img4$1/__cb20131115130412/$2/9/9b/Grimoire_Beast_II_Figure.png",
         fullName: "Grimoire Beast II"
@@ -935,7 +969,7 @@ var famDatabase = {
         fullName: "Hippogriff of Rites II"
     },
     10726: {
-        name: "Hlokk", stats: [14331, 14463, 12832, 9349, 17132],
+        name: "Hlokk", stats: [14328, 14462, 12832, 9271, 17133],
         skills: [502, 503],
         img: "img3$1/__cb20140630102857/$2/7/7a/Hlokk%2C_Blade_of_Thunder_II_Figure.png",
         fullName: "Hlokk, Blade of Thunder II"
@@ -965,6 +999,12 @@ var famDatabase = {
         img: "img2$1/__cb20130613194728/$2/e/e9/Hrimthurs_the_Blizzard_II_Figure.png",
         fullName: "Hrimthurs the Blizzard II"
     },
+    11401: {
+        name: "Huan", stats: [14005, 14406, 13106, 9997, 16096],
+        skills: [577],
+        img: "img1$1/__cb20140830112829/$2/d/d4/Huan%2C_Doomcaller_II_Figure.png",
+        fullName: "Huan, Doomcaller II"
+    },
     10980: {
         name: "Hundred-eyed Warrior", stats: [17385, 18501, 15641, 10452, 17634],
         skills: [289],
@@ -976,6 +1016,12 @@ var famDatabase = {
         skills: [274],
         img: "img4$1/__cb20131101130655/$2/3/3b/Hypnos%2C_Lord_of_Dreams_II_Figure.png",
         fullName: "Hypnos, Lord of Dreams II"
+    },
+    11393: {
+        name: "Icarus", stats: [15186, 14796, 14005, 7137, 17363],
+        skills: [568, 569],
+        img: "img1$1/__cb20140909101524/$2/9/94/Icarus%2C_Fallen_Hero_II_Figure.png",
+        fullName: "Icarus, Fallen Hero II"
     },
     10688: {
         name: "Ignis", stats: [11022, 11312, 10818, 13460, 12859],
@@ -1047,7 +1093,7 @@ var famDatabase = {
         name: "Iseult", stats: [12731, 10977, 11708, 15865, 14193],
         skills: [144],
         img: "img2$1/__cb20130629202258/$2/f/f2/Iseult%2C_the_Redeemer_II_Figure.png",
-        fullName: "Iseult, the Redeemer II"
+        fullName: "Iseult the Redeemer II"
     },
     11376: {
         name: "Ishtar", stats: [16009, 16074, 13106, 9022, 14265],
@@ -1124,6 +1170,13 @@ var famDatabase = {
         skills: [197],
         img: "img4$1/__cb20130609105750/$2/0/05/Kelaino%2C_the_Dark_Cloud_II_Figure.png",
         fullName: "Kelaino, the Dark Cloud II"
+    },
+    11381: {
+        name: "Kijin", stats: [17047, 3323, 14038, 17402, 16110],
+        skills: [566],
+        autoAttack: 10031,
+        img: "img2$1/__cb20140909101523/$2/3/3a/Kijin%2C_Heavenly_Maiden_II_Figure.png",
+        fullName: "Kijin, Heavenly Maiden II"
     },
     11279: {
         name: "Kobold", stats: [14207, 14462, 15804, 8442, 14999],
@@ -1383,7 +1436,7 @@ var famDatabase = {
         img: "img1$1/__cb20140528102649/$2/1/16/Nephthys%2C_Ruler_of_Death_Figure.png",
         fullName: "Nephthys, Ruler of Death"
     },
-    10944: {
+    10994: {
         name: "Nergal", stats: [13008, 15392, 11947, 11643, 16518],
         skills: [282],
         img: "img1$1/__cb20131108145626/$2/7/75/Nergal%2C_Abyssal_Overseer_II_Figure.png",
@@ -1896,7 +1949,7 @@ var famDatabase = {
         img: "img1$1/__cb20130108170214/$2/e/ec/Sulima%2C_Executioner_II_Figure.png",
         fullName: "Sulima, Executioner II"
     },
-    21189: {
+    11189: {
         name: "Surtr", stats: [15440, 17106, 15085, 7016, 12890],
         skills: [383],
         img: "img1$1/__cb20140301022355/$2/5/5b/Surtr_the_Fervent_II_Figure.png",
@@ -2035,7 +2088,7 @@ var famDatabase = {
         name: "Tristan", stats: [13832, 16193, 15197, 13052, 15771],
         skills: [122],
         img: "img4$1/__cb20130629202258/$2/a/ad/Tristan%2C_the_Sorrowful_II_Figure.png",
-        fullName: "Tristan, the Sorrowful II"
+        fullName: "Tristan the Sorrowful II"
     },
     10647: {
         name: "Tuniq", stats: [13635, 16709, 12062, 12086, 9794],
@@ -2135,7 +2188,7 @@ var famDatabase = {
         fullName: "Wolfert, Grave Keeper II"
     },
     10798: {
-        name: "Wu Chang", stats: [10294, 14182, 10977, 10599, 11927],
+        name: "Wu Chang", stats: [10294, 14182, 10977, 10600, 11928],
         skills: [115],
         img: "img3$1/__cb20130709182653/$2/6/65/Wu_Chang_the_Infernal_II_Figure.png",
         fullName: "Wu Chang the Infernal II"
@@ -2185,7 +2238,7 @@ var famDatabase = {
         fullName: "Zahhak, Dragon Marshal II"
     },
     10869: {
-        name: "Zanga", stats: [10218, 10787, 9692, 9511, 12779],
+        name: "Zanga", stats: [10218, 10787, 9694, 9512, 12780],
         skills: [161],
         img: "img1$1/__cb20130630141907/$2/c/cf/Zanga%2C_the_Iron_Storm_II_Figure.png",
         fullName: "Zanga, the Iron Storm II"

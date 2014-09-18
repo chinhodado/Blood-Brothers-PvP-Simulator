@@ -80,14 +80,14 @@ var SkillDatabase = {
     20 : {
         name: "Recall", type: 2, func: 6, calc: 0,
         arg1: 1,
-        range: 1, prob: 30,
+        range: 1, prob: 50,
         desc: "Revive an adjacent familiar."
     },
 
     21 : {
         name: "Elixir of Recall", type: 2, func: 6, calc: 0,
         arg1: 1,
-        range: 1, prob: 30,
+        range: 1, prob: 50,
         desc: "Revive an adjacent familiar."
     },
     
@@ -95,7 +95,7 @@ var SkillDatabase = {
         name: "Breath of Flame", type: 2, func: 4, calc: 2, 
         arg1: 2.5,  
         range: 7, prob: 30, ward: 3,
-        desc: "Deal heavy damage to three foes."
+        desc: "Deal heavy damage to up to three foes."
     },
 
     26 : {
@@ -165,7 +165,7 @@ var SkillDatabase = {
         name: "Blizzard", type: 2, func: 4, calc: 2, 
         arg1: 1, arg2: 3, arg3: 0.3,
         range: 7, prob: 30, ward: 3,
-        desc: "Deal damage and sometimes freeze three foes."
+        desc: "Deal damage and sometimes freeze up to three foes."
     },
 
     42 : {
@@ -207,7 +207,7 @@ var SkillDatabase = {
         name: "Impale", type: 2, func: 4, calc: 1, 
         arg1: 1,  
         range: 6, prob: 30, ward: 1,
-        desc: "Deal damage to two foes, regardless of his position."
+        desc: "Deal damage to up to two foes, ignoring position."
     },
 
     50 : {
@@ -221,7 +221,7 @@ var SkillDatabase = {
         name: "Skirmish", type: 2, func: 3, calc: 1, 
         arg1: 1,  
         range: 6, prob: 30, ward: 1,
-        desc: "Attack two foes."
+        desc: "Attack up to two foes."
     },
 
     52 : {
@@ -301,6 +301,13 @@ var SkillDatabase = {
         desc: "Deal heavy damage to one foe."
     },
 
+    81: {
+        name: "Boon of Blade & Shield 2", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 1, arg3: 2, 
+        range: 4, prob: 70,
+        desc: "Raise ATK and DEF of all familiars."
+    },
+
     85: {
         name: "Grace of Winds 2", type: 1, func: 1, calc: 0,
         arg1: 0.2, arg2: 4, 
@@ -323,7 +330,7 @@ var SkillDatabase = {
     },
 
     109 : {
-        name: "Plasma Field", type: 2, func: 4, calc: 2, 
+        name: "Plasma field", type: 2, func: 4, calc: 2, 
         arg1: 2,  
         range: 8, prob: 30, ward: 2,
         desc: "Deal lightning damage to all foes."
@@ -354,14 +361,14 @@ var SkillDatabase = {
         name: "Thundercloud", type: 2, func: 4, calc: 2, 
         arg1: 1, arg2: 2, arg3: 0.3, 
         range: 7, prob: 30, ward: 2,
-        desc: "Deal damage and sometimes paralyze three foes."
+        desc: "Deal damage and sometimes paralyze up to three foes."
     },
     
     114 : {
         name: "Electric Shock", type: 2, func: 4, calc: 2, 
         arg1: 2.5,  
         range: 7, prob: 30, ward: 2,
-        desc: "Deal heavy lightning damage to three foes."
+        desc: "Deal heavy lightning damage to up to three foes."
     },
 
     115 : {
@@ -452,7 +459,7 @@ var SkillDatabase = {
         name: "Whiteout", type: 2, func: 4, calc: 2,
         arg1: 2.3, arg2: 3, arg3: 0.3,
         range: 7, prob: 30, ward: 3,
-        desc: "Deal heavy damage and sometimes freeze three foes."
+        desc: "Deal heavy damage and sometimes freeze up to three foes."
     },
 
     129: {
@@ -466,7 +473,7 @@ var SkillDatabase = {
         name: "Bloodlust Lance", type: 2, func: 4, calc: 1,
         arg1: 1, 
         range: 8, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to all foes, regardless of position."
+        desc: "Deal ATK-based damage to all foes, ignoring position."
     },
 
     132 : {
@@ -522,7 +529,7 @@ var SkillDatabase = {
         name: "Mad Dash", type: 2, func: 3, calc: 1, 
         arg1: 2,  
         range: 23, prob: 30, ward: 1,
-        desc: "Deal physical damage to two random targets."
+        desc: "Deal Massive ATK-based damage to two random foes."
     },
 
     140 : {
@@ -606,7 +613,7 @@ var SkillDatabase = {
 	    name: "Mad Swing", type: 2, func: 4, calc: 1,  
 	    arg1: 1.7,   
         range: 7, prob: 30, ward: 1,
-	    desc: "Deal heavy damage to three foes with a mighty swing." 
+	    desc: "Deal heavy damage to up to three foes with a mighty swing." 
 	},
 
     153 : {
@@ -641,14 +648,14 @@ var SkillDatabase = {
         name: "Rally Cry", type: 1, func: 1, calc: 0, 
         arg1: 0.1, arg2: 9,  
         range: 4, prob: 70,
-        desc: "Raise the ATK, DEF, WIS, and AGI of all party members by 10% of target's stats."
+        desc: "Raise ATK, DEF, WIS and AGI of all party members."
     },
 
     160 : {
         name: "Ice Fang", type: 2, func: 4, calc: 1, 
         arg1: 1.5, arg2: 3, arg3: 0.3, 
         range: 16, prob: 30, ward: 1,
-        desc: "Deals heavy ice damage and sometimes freeze three foes."
+        desc: "Deal heavy ice damage and sometimes freeze three foes."
     },
     
     161 : {
@@ -718,7 +725,7 @@ var SkillDatabase = {
         name: "Lifesaver", type: 2, func: 18, calc: 4,
         arg1: 2,
         range: 2, prob: 30,
-        desc: "Restore a large amount of health to adjacent allies."
+        desc: "Restore a large amount of HP to adjacent familiars."
     },
 
     177 : {
@@ -746,7 +753,7 @@ var SkillDatabase = {
         name: "Proxy Counter", type: 5, func: 14, calc: 1,
         arg1: 1, 
         range: 28, prob: 50, ward: 1,
-        desc: "Counter when the familiar to the right is hit."
+        desc: "Take damage in place of familiars to its right and counter."
     },
 
     185: {
@@ -760,14 +767,14 @@ var SkillDatabase = {
         name: "Razor Claws", type: 2, func: 3, calc: 1,
         arg1: 2, arg2: 2, arg3: 0.5,
         range: 6, prob: 30, ward: 1,
-        desc: "Deal massive damage and sometimes paralyze two foes."
+        desc: "Deal massive damage and sometimes paralyze up to two foes."
     },
 
     187: {
         name: "Mega Shot", type: 2, func: 4, calc: 1,
         arg1: 4,
         range: 5, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to one foe, regardless of position."
+        desc: "Deal ATK-based damage to one foe, ignoring position."
     },
 
     188: {
@@ -825,14 +832,14 @@ var SkillDatabase = {
         name: "Trial by Fire", type: 2, func: 4, calc: 2, 
         arg1: 2,  
         range: 6, prob: 30, ward: 3,
-        desc: "Deal massive WIS-based fire damage to two foes."
+        desc: "Deal massive WIS-based fire damage to up to two foes."
     },
 
     203 : {
         name: "Trial by Ice", type: 2, func: 4, calc: 2, 
         arg1: 2, arg2: 3, arg3: 0.3, 
         range: 6, prob: 30, ward: 3,
-        desc: "Deal massive WIS-based water damage to two foes."
+        desc: "Deal massive WIS-based water damage to up to two foes."
     },
 
     204 : {
@@ -846,14 +853,14 @@ var SkillDatabase = {
         name: "Crushing Hammer", type: 2, func: 4, calc: 1, 
         arg1: 1, arg2: 3, arg3: 0.3, 
         range: 8, prob: 30, ward: 1,
-        desc: "Deal physical damage and sometimes freeze all foes"
+        desc: "Deal physical damage and sometimes freeze all foes."
     },
 
     206 : {
         name: "Dance of Petals", type: 2, func: 4, calc: 3, 
         arg1: 1,
         range: 16, prob: 30, ward: 2,
-        desc: "Deal AGI-based damage to three random foes, regardless of position."
+        desc: "Deal AGI-based damage to three random foes, ignoring position."
     },
 
     210 : {
@@ -881,14 +888,14 @@ var SkillDatabase = {
         name: "Blade of Madness", type: 2, func: 3, calc: 1, 
         arg1: 1.35,  
         range: 8, prob: 30, ward: 1,
-        desc: "Deals ATK-based damage to all foes."
+        desc: "Deal ATK-based damage to all foes."
     },
     
     216 : {
         name: "Bodycheck", type: 2, func: 3, calc: 1, 
         arg1: 2.5,  
         range: 6, prob: 30, ward: 1,
-        desc: "Deal massive ATK-based damage to two foes."
+        desc: "Deal massive ATK-based damage to up to two foes."
     },
 
     217 : {
@@ -902,21 +909,21 @@ var SkillDatabase = {
         name : "Boulder Toss", type: 2, func: 3, calc: 1,
         arg1: 1.4, arg2: 2, arg3: 0.3,
         range: 15, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage and paralyze front/middle lines."
+        desc: "Deal ATK-based damage and sometimes paralyze front/middles lines."
     },
 
     219 : {
         name: "Evil Eye", type: 2, func: 21, calc: 3, 
         arg1: 1.2, arg2: 4, arg3: 0.3, arg4: 0.3, 
         range: 8, prob: 30, ward: 1,
-        desc: "Deal AGI-based damage and lower AGI of all foes."
+        desc: "Deal AGI-based damage and sometimes lower AGI of all foes."
     },
 
     221 : {
         name: "Skittering Darkness", type: 2, func: 3, calc: 1, 
         arg1: 1.5,  
         range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to three foes."
+        desc: "Deal heavy ATK-based damage to three random foes."
     },
 
     222 : {
@@ -951,7 +958,7 @@ var SkillDatabase = {
         name: "Muscle Play", type: 2, func: 3, calc: 1,
         arg1: 1.65, 
         range: 7, prob: 30, ward: 1,
-        desc: "Deal massive ATK-based damage to three foes."
+        desc: "Deal massive ATK-based damage to up to three foes."
     },
 
     228 : {
@@ -993,14 +1000,14 @@ var SkillDatabase = {
         name: "Flash", type: 2, func: 4, calc: 2,
         arg1: 2.25, 
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to three random foes."
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
     },
 
     237 : {
         name : "Piercing Claws", type: 2, func: 4, calc: 2,
         arg1: 2.15,
         range: 7, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to three foes, regardless of position."
+        desc: "Deal massive WIS-based damage to up to three foes, ignoring position."
     },
 
     238 : {
@@ -1014,7 +1021,7 @@ var SkillDatabase = {
         name : "Dark Rush", type: 2, func: 4, calc: 3,
         arg1: 2, 
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive AGI-based damage to three random foes, regardless of position."
+        desc: "Deal massive AGI-based damage to three random foes, ignoring position."
     },
     
     240 : {
@@ -1025,7 +1032,7 @@ var SkillDatabase = {
     },
 
     241 : {
-        name : "Chillling Blast", type: 2, func: 3, calc: 1,
+        name : "Chilling Blast", type: 2, func: 3, calc: 1,
         arg1: 1.7, arg2: 3, arg3: 0.3,
         range: 16, prob: 30, ward: 1,
         desc: "Deal heavy ATK-based damage and sometimes freeze three random foes."
@@ -1035,21 +1042,21 @@ var SkillDatabase = {
         name : "Glacial Blade", type: 2, func: 4, calc: 2,
         arg1: 1.7, arg2: 3, arg3: 0.3,
         range: 7, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage and sometimes freeze up to three foes, regardless of position."
+        desc: "Deal heavy WIS-based damage and sometimes freeze up to three foes, ignoring position."
     },
 
     244 : {
         name : "High Spirits", type: 2, func: 4, calc: 2,
         arg1: 1.6, 
         range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to four random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
 
     245 : {
         name : "Brave Blade", type: 2, func: 4, calc: 2,
         arg1: 1.2, 
         range: 8, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to all foes, regardless of position."
+        desc: "Deal WIS-based damage to all foes, ignoring position."
     },
     
     248 : {
@@ -1070,7 +1077,7 @@ var SkillDatabase = {
         name: "Goddess of the Deep", type: 2, func: 3, calc: 3, 
         arg1: 1.6,  
         range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy AGI-based damage to three foes."
+        desc: "Deal heavy AGI-based damage to up to three foes."
     },
 
     251 : {
@@ -1112,7 +1119,7 @@ var SkillDatabase = {
         name: "Fatal Kiss", type: 2, func: 4, calc: 2, 
         arg1: 1.35,  
         range: 8, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to all foes, regardless of position."
+        desc: "Deal WIS-based damage to all foes, ignoring position."
     },
 
     259 : {
@@ -1133,7 +1140,7 @@ var SkillDatabase = {
         name: "Groundswell", type: 2, func: 4, calc: 2, 
         arg1: 1.15,  
         range: 8, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to all foes."
+        desc: "Deal WIS-based damage to all foes, ignoring position."
     },
 
     263 : {
@@ -1161,7 +1168,7 @@ var SkillDatabase = {
         name: "Swordmaster", type: 2, func: 3, calc: 3, 
         arg1: 2.4,  
         range: 7, prob: 30, ward: 1,
-        desc: "Deal massive AGI-based damage to three foes."
+        desc: "Deal massive AGI-based damage to up to three foes."
     },
 
     268 : {
@@ -1175,28 +1182,28 @@ var SkillDatabase = {
         name: "Tears of the Hideous", type: 2, func: 4, calc: 3, 
         arg1: 2.05,  
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive AGI-based damage to three random foes regardless of position."
+        desc: "Deal massive AGI-based damage to three random foes, ignoring position."
     },
     
     270 : {
         name: "Withering Flame", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
         range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to four random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
     
     271 : {
         name: "Scales of Tranquility", type: 1, func: 19, calc: 0, 
         arg1: 0, arg2: 5, arg3: 0.45, arg4: 1, 
         range: 7, prob: 70,
-        desc: "Chance to silence three foes for one turn at start of battle."
+        desc: "Chance to silence up to three foes for one turn at start of battle."
     },
 
     272 : {
         name: "Bewitching Wings", type: 2, func: 4, calc: 2, 
         arg1: 2.5,
         range: 23, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to two random foes, regardless of position."
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
     },
 
     273 : {
@@ -1217,28 +1224,28 @@ var SkillDatabase = {
         name: "Blinding Light", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
         range: 16, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to three random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
     276 : {
         name: "Divine Grief", type: 2, func: 4, calc: 2, 
         arg1: 2,  
         range: 23, prob: 30, ward: 2,
-        desc: "Deal Massive WIS-based damage to two random foes, regardless of position."
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
     },
     
     277 : {
         name: "Nightmarish Notion", type: 2, func: 4, calc: 2, 
         arg1: 1.1, arg2: 3, arg3: 0.3, 
         range: 20, prob: 30, ward: 3,
-        desc: "Deal WIS-based damage and sometimes freeze five random foes, regardless of position."
+        desc: "Deal WIS-based damage and sometimes freeze five random foes, ignoring position."
     },
 
     280: {
         name: "Snake Charmer", type: 2, func: 4, calc: 2,
         arg1: 2.05, 
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to three random foes, regardless of position."
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
     },
 
     281: {
@@ -1252,14 +1259,14 @@ var SkillDatabase = {
         name: "Corpse Hymn", type: 2, func: 4, calc: 3,
         arg1: 1, 
         range: 20, prob: 30, ward: 2,
-        desc: "Deal AGI-based damage to five random foes, regardless of position."
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
     },
 
     285 : {
         name : "Moon Soul", type: 2, func: 4, calc: 2,
         arg1: 1.45,
         range: 15, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to front/middle lines, regardless of position."
+        desc: "Deal WIS-based damage to front/middle lines, ignoring position."
     },
 
     287: {
@@ -1273,14 +1280,14 @@ var SkillDatabase = {
         name: "Chain Attack", type: 2, func: 4, calc: 2,
         arg1: 0.95, 
         range: 17, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to six random foes, regardless of position."
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
     },
 
     289: {
         name: "Quakeblade", type: 2, func: 3, calc: 1,
         arg1: 1.35, 
         range: 15, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage front/middle lines."
+        desc: "Deal ATK-based damage to front/middle lines."
     },
 
     291 : {
@@ -1294,14 +1301,14 @@ var SkillDatabase = {
         name: "Golden Rule", type: 2, func: 4, calc: 1,
         arg1: 2.1, 
         range: 7, prob: 30, ward: 1,
-        desc: "Deal massive ATK-based damage to three foes, regardless of position."
+        desc: "Deal massive ATK-based damage to up to three foes, ignoring position."
     },
 
     293: {
         name: "Cruel Flame", type: 2, func: 4, calc: 1,
         arg1: 1.7, 
         range: 19, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to four random foes, regardless of position."
+        desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
     },
 
     294 : {
@@ -1315,28 +1322,28 @@ var SkillDatabase = {
         name: "Dream Lure", type: 1, func: 19, calc: 0, 
         arg1: 0, arg2: 4, arg3: 0.25, 
         range: 7, prob: 70,
-        desc: "Sometimes disable three foes at start of battle."
+        desc: "Sometimes disable up to three foes at start of battle."
     },
 
     296 : {
         name: "Blood Offering", type: 2, func: 4, calc: 1, 
         arg1: 1.2, arg2: 4, arg3: 0.3, 
         range: 17, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage and disable six random foes, regardless of position."
+        desc: "Deal ATK-based damage and disable six random foes, ignoring position."
     },
 
     297 : {
         name: "Awe of the Wild", type: 2, func: 4, calc: 3, 
         arg1: 2.15,  
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive AGI-based damage to three random foes, regardless of position."
+        desc: "Deal massive AGI-based damage to three random foes, ignoring position."
     },
 
     298 : {
         name: "Freezing Scales", type: 2, func: 4, calc: 2, 
         arg1: 1.35, arg2: 3, arg3: 0.3, 
         range: 8, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to all foes and sometimes freeze them, regardless of position."
+        desc: "Deal WIS-based damage to all foes and sometimes freeze them, ignoring position."
     },
 
     299 : {
@@ -1357,14 +1364,14 @@ var SkillDatabase = {
         name: "Ice Wall", type: 2, func: 4, calc: 2, 
         arg1: 1.4,  
         range: 8, prob: 30, ward: 3,
-        desc: "Deal WIS-based damage to all foes, regardless of position."
+        desc: "Deal WIS-based damage to all foes, ignoring position."
     },
 
     303 : {
         name: "Chill Horn", type: 2, func: 3, calc: 2, 
         arg1: 1.9,  
         range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy WIS-based damage to three random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
     304 : {
@@ -1378,14 +1385,14 @@ var SkillDatabase = {
         name: "Dancing Flame", type: 2, func: 4, calc: 2, 
         arg1: 1.3,  
         range: 19, prob: 30, ward: 3,
-        desc: "Deal WIS-based damage to four random foes, regardless of position."
+        desc: "Deal WIS-based damage to four random foes, ignoring position."
     },
 
     307 : {
         name: "Evil Wink", type: 2, func: 3, calc: 2, 
         arg1: 1.8,  
         range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy WIS-based damage to three random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
     308 : {
@@ -1399,21 +1406,21 @@ var SkillDatabase = {
         name: "Black Phantasm", type: 2, func: 3, calc: 1, 
         arg1: 1.75,  
         range: 6, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to two foes."
+        desc: "Deal heavy ATK-based damage to up to two foes."
     },
 
     312 : {
         name: "Demon Spear", type: 2, func: 3, calc: 1, 
         arg1: 1.75,  
         range: 6, prob: 30, ward: 1,
-        desc: "A spear technique from the West. Deal heavy ATK-based damage to two foes."
+        desc: "A spear technique from the West. Deal heavy ATK-based damage to up to two foes."
     },
     
     313 : {
         name: "White Ruin", type: 2, func: 4, calc: 2, 
         arg1: 1.5,  
         range: 8, prob: 30, ward: 3,
-        desc: "Deal heavy WIS-based damage to all foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to all foes, ignoring position."
     },
     
     314 : {
@@ -1427,21 +1434,21 @@ var SkillDatabase = {
         name: "Trembling Horn", type: 2, func: 3, calc: 1, 
         arg1: 1.3,  
         range: 19, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to four random foes."
+        desc: "Deal ATK-based damage to four random foes."
     },
 
     316 : {
         name: "Healing Prism", type: 3, func: 11, calc: 1, 
         arg1: 1,  
         range: 3, prob: 30,
-        desc: "Convert damage to heal self and adjacent familiars"
+        desc: "Convert damage to heal self and adjacent familiars."
     },
 
     317 : {
         name: "Mad Swing 2", type: 2, func: 4, calc: 1, 
         arg1: 1.9,  
         range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy damage to three foes with a mighty swing."
+        desc: "Deal heavy damage to up to three foes with a mighty swing."
     },
 
     318 : {
@@ -1455,7 +1462,7 @@ var SkillDatabase = {
         name: "Magic Overwhelming", type: 2, func: 4, calc: 2,
         arg1: 1.55, 
         range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to four random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
 
     320: {
@@ -1476,7 +1483,7 @@ var SkillDatabase = {
         name: "Cruel Dance", type: 2, func: 4, calc: 3, 
         arg1: 1.5,  
         range: 15, prob: 30, ward: 2,
-        desc: "Deal heavy AGI-based damage to front/middle lines, regardless of position."
+        desc: "Deal heavy AGI-based damage to front/middle lines, ignoring position."
     },
 
     325: {
@@ -1504,28 +1511,28 @@ var SkillDatabase = {
         name: "Rime Fist", type: 2, func: 4, calc: 2, 
         arg1: 1.4, arg2: 3, arg3: 0.3,
         range: 20, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage and sometimes freeze five random foes, regardless of position."
+        desc: "Deal WIS-based damage and sometimes freeze five random foes, ignoring position."
     },
 
     329 : {
         name: "Backstep", type: 5, func: 27, calc: 0, 
         arg1: 2, arg2: 3, arg3: 78, arg4: 79,
         range: 21, prob: 50,
-        desc: "Deflect enemy AGI attack skills."
+        desc: "Evade enemy AGI-based attack skills."
     },
 
     330 : {
 	    name: "Dark Blessing", type: 1, func: 19, calc: 0,  
 	    arg1: 0, arg2: 5, arg3: 0.45, arg4: 1,
         range: 7, prob: 70,
-	    desc: "Chance to silence three foes at beginning of battle, regardless of position." 
+	    desc: "Chance to silence up to three foes for one turn at start of battle." 
 	},
 
     331 : {
         name: "Light Divine", type: 2, func: 4, calc: 2, 
         arg1: 1.2,  
         range: 17, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to six random foes, regardless of position."
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
     },
 
     333 : {
@@ -1546,14 +1553,14 @@ var SkillDatabase = {
         name : "Golden Flame", type: 2, func: 4, calc: 2,
         arg1: 1.65, 
         range: 15, prob: 30, ward: 3,
-        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
+        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, ignoring position."
     },
 
     339 : {
         name: "Burning Scales", type: 2, func: 4, calc: 2, 
         arg1: 2,  
         range: 15, prob: 30, ward: 3,
-        desc: "Deal massive WIS-based damage to all foes in the front/middle lines, regardless of position."
+        desc: "Deal massive WIS-based damage to all foes in the front/middle lines, ignoring position."
     },
     
     340 : {
@@ -1588,7 +1595,7 @@ var SkillDatabase = {
         name: "Wheel of Death", type: 2, func: 4, calc: 2, 
         arg1: 2.2,
         range: 16, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to three random foes, regardless of position."
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
     },
 
     346 : {
@@ -1602,7 +1609,7 @@ var SkillDatabase = {
         name : "Raging Flames", type: 2, func: 3, calc: 3,
         arg1: 2.4, 
         range: 16, prob: 30, ward: 1,
-        desc: "Deal massive AGI-based damage to three random foes"
+        desc: "Deal massive AGI-based damage to three random foes."
     },
 
     348 : {
@@ -1642,7 +1649,7 @@ var SkillDatabase = {
 
     354 : {
         name: "Venomspray Staff", type: 2, func: 4, calc: 2, 
-        arg1: 2.9, arg2: 1, arg3: 0.3, 
+        arg1: 2.9, arg2: 1, arg3: 0.3, arg4: 15,
         range: 23, prob: 30, ward: 2,
         desc: "Deal massive WIS-based damage to two random foes and sometimes envenom them."
     },
@@ -1685,7 +1692,7 @@ var SkillDatabase = {
         name: "Curse of Wrath", type: 2, func: 4, calc: 2,
         arg1: 1, 
         range: 17, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to six random foes, regardless of position."
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
     },
     
     361: {
@@ -1706,28 +1713,28 @@ var SkillDatabase = {
         name : "Depths of Corruption", type: 2, func: 4, calc: 1,
         arg1: 1.95,
         range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to up to three foes, regardless of position."
+        desc: "Deal heavy ATK-based damage to up to three foes, ignoring position."
     },
 
     365 : {
         name: "Bug Attack", type: 2, func: 4, calc: 1, 
         arg1: 1.95,  
         range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to three random foes, regardless of position."
+        desc: "Deal heavy ATK-based damage to three random foes, ignoring position."
     },
 
     366 : {
         name: "Bone Chill", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
         range: 32, prob: 30, ward: 3,
-        desc: "Deal heavy WIS-based damage to up to four foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to up to four foes, ignoring position."
     },
     
     367 : {
         name: "Howl", type: 2, func: 3, calc: 3, 
         arg1: 0.9,  
         range: 20, prob: 30, ward: 1,
-        desc: "Deal Agi-based damage to five random foes."
+        desc: "Deal AGI-based damage to five random foes."
     },
 
     369 : {
@@ -1769,7 +1776,7 @@ var SkillDatabase = {
         name: "Windcutter Blade", type: 2, func: 4, calc: 1, 
         arg1: 2,  
         range: 16, prob: 30, ward: 1,
-        desc: "Deal massive ATK-based damage to three random foes, regardless of position."
+        desc: "Deal massive ATK-based damage to three random foes, ignoring position."
     },
 
     376 : {
@@ -1797,7 +1804,7 @@ var SkillDatabase = {
         name: "Dragon Aura", type: 2, func: 4, calc: 2, 
         arg1: 1.9,  
         range: 16, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to three random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
     
     380 : {
@@ -1818,7 +1825,7 @@ var SkillDatabase = {
         name : "Laevateinn", type: 2, func: 3, calc: 1,
         arg1: 1.65,
         range: 7, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to up to three foes"
+        desc: "Deal heavy ATK-based damage to up to three foes."
     },
 
     383 : {
@@ -1874,7 +1881,7 @@ var SkillDatabase = {
         name: "Scatter Arrow", type: 2, func: 4, calc: 3, 
         arg1: 1.3,  
         range: 32, prob: 30, ward: 2,
-        desc: "Deal AGI-based damage to up to four foes, regardless of position."
+        desc: "Deal AGI-based damage to up to four foes, ignoring position."
     },
 
     392 : {
@@ -1895,7 +1902,7 @@ var SkillDatabase = {
         name: "Glance", type: 2, func: 4, calc: 2, 
         arg1: 1.7,  
         range: 15, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, regardless of position."
+        desc: "Deal heavy WIS-based damage to all foes in the front/middle lines, ignoring position."
     },
 
     395 : {
@@ -1951,21 +1958,21 @@ var SkillDatabase = {
         name : "Visions of Terror", type: 2, func: 4, calc: 2, 
         arg1: 1.65, arg2: 1, arg3: 0.3,
         range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to and sometimes poison four random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to and sometimes poison four random foes, ignoring position."
     },
     
     406 : {
         name: "Piercing Arrow", type: 2, func: 4, calc: 1, 
         arg1: 1.35,  
         range: 8, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to all foes, regardless of position."
+        desc: "Deal ATK-based damage to all foes, ignoring position."
     },
 
     407 : {
         name: "Allure of the Rose", type: 2, func: 4, calc: 2,
         arg1: 1.3, 
         range: 20, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to five random foes, regardless of position."
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
     },
 
     408 : {
@@ -1979,21 +1986,21 @@ var SkillDatabase = {
         name: "Winds of Lust", type: 2, func: 4, calc: 2,
         arg1: 2.1, 
         range: 12, prob: 30, ward: 2,
-        desc: "Deal massive WIS-based damage to all foes in the front line, regardless of position."
+        desc: "Deal massive WIS-based damage to all foes in the front line, ignoring position."
     },
 
     412 : {
         name: "Fires of Thirst", type: 2, func: 4, calc: 2,
         arg1: 1.2, 
         range: 20, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to five random foes, regardless of position."
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
     },
 
     414 : {
         name: "Putrid Stench", type: 2, func: 4, calc: 2,
         arg1: 1.2, arg2: 1, arg3: 0.25,
         range: 20, prob: 30, ward: 2,
-        desc: "Deals WIS-based damage to and sometimes poison five random foes, regardless of position."
+        desc: "Deal WIS-based damage to and sometimes poison five random foes, ignoring position."
     },
 
     415 : {
@@ -2007,7 +2014,7 @@ var SkillDatabase = {
         name: "Bone Smasher", type: 2, func: 4, calc: 2,
         arg1: 1.5, 
         range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to four random foes, regardless of position."
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
 
     418 : {
@@ -2217,7 +2224,7 @@ var SkillDatabase = {
         name: "Endless Deluge", type: 1, func: 1, calc: 0, 
         arg1: 452, arg2: 16,
         range: 101, prob: 70,
-        desc: "One random ally is automatically revived after being killed."
+        desc: "One random ally is automatically revived with full HP after being killed."
     },
 
     452 : {
@@ -2237,7 +2244,7 @@ var SkillDatabase = {
         name: "Shadow of Confusion", type: 1, func: 31, calc: 0, 
         arg1: 2, arg2: 2,
         range: 4, prob: 70,
-        desc: "Order of attack is determined by WIS during the next two turns"
+        desc: "Order of attack is determined by WIS during the next two turns."
     },
 
     455 : {
@@ -2385,7 +2392,7 @@ var SkillDatabase = {
         name: "Chatter Tooth", type: 2, func: 4, calc: 2, 
         arg1: 1.5, arg2: 3, arg3: 0.3, 
         range: 32, prob: 30, ward: 3,
-        desc: "Deal heavy WIS-based damage to and sometimes freeze up to four foes, ignoring position."
+        desc: "Deal heavy WIS-based damage and sometimes freeze up to four foes, ignoring position."
     },
 
     478 : {
@@ -2434,7 +2441,7 @@ var SkillDatabase = {
         name: "Wall of the Brave", type: 5, func: 12, calc: 0,
         arg1: 0, 
         range: 4, prob: 50,
-        desc: "Take damage in place of allies"
+        desc: "Take damage in place of allies."
     },
 
     485: {
@@ -2455,7 +2462,7 @@ var SkillDatabase = {
         name: "Dance of Reunion", type: 16, func: 6, calc: 0,
         arg1: 1,
         range: 121, prob: 50,
-        desc: "Revive one random ally upon her death."
+        desc: "Revives one random ally upon her death."
     },
 
     489: {
@@ -2690,10 +2697,10 @@ var SkillDatabase = {
     },
 
     524: {
-        name: "Twin-tail Strike", type: 2, func: 34, calc: 1,
+        name: "Twin-Tail Strike", type: 2, func: 34, calc: 1,
         arg1: 1.35, arg2: 1, arg3: 0.5, arg4: 0.2,
         range: 8, prob: 30, ward: 1,
-        desc: "Deal ATK-based damage to all foes and sometimes greatly lower atk, ignoring position."
+        desc: "Deal ATK-based damage to all foes and sometimes greatly lower ATK, ignoring position."
     },
 
     525: {
@@ -2836,7 +2843,7 @@ var SkillDatabase = {
     },
 
     550: {
-        name: "Judgement of the Sea", type: 2, func: 4, calc: 2,
+        name: "Judgment of the Sea", type: 2, func: 4, calc: 2,
         arg1: 1.3,
         range: 208, prob: 30, ward: 2,
         desc: "WIS-based damage to all foes, ignoring position. Increased if fewer foes."
@@ -2926,6 +2933,68 @@ var SkillDatabase = {
         desc: "Raise DEF and WIS of self."
     },
 
+    566: {
+        name: "Divine Compass", type: 1, func: 32, calc: 0,
+        arg1: 0.1, arg2: 3,
+        range: 8, prob: 70,
+        desc: "Greatly lower WIS of all foes."
+    },
+
+    568: {
+        name: "Scorching Wing", type: 2, func: 3, calc: 3,
+        arg1: 0.9, arg2: 3, arg3: 0.3,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to six random foes and sometimes freeze them."
+    },
+
+    569: {
+        name: "Fallen Wing", type: 16, func: 16, calc: 0,
+        range: 8, prob: 70,
+        desc: "Remove the buffs of all foes upon his death."
+    },
+
+    570: {
+        name: "Glaring Sunlight", type: 2, func: 4, calc: 2,
+        arg1: 1.6, arg2: 7, arg3: 0.35, arg4: 2, arg5: 0.9,
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to all foes  and sometimes blind them, ignoring position."
+    },
+
+    571: {
+        name: "Corona", type: 1, func: 1, calc: 0,
+        arg1: 0.35, arg2: 5, arg3: 6,
+        range: 3, prob: 70,
+        desc: "Reduce physical and magic damages taken by self and adjacent familiars."
+    },
+
+    572: {
+        name: "Venomflame", type: 2, func: 4, calc: 2,
+        arg1: 2.3, arg2: 3, arg3: 0.4,
+        range: 16, prob: 30, ward: 3,
+        desc: "Deal massive WIS-based damage, sometimes freeze three random foes, ignoring position."
+    },
+
+    573: {
+        name: "Blare of Judgment", type: 2, func: 4, calc: 2,
+        arg1: 1.15, arg2: 5, arg3: 0.3, arg4: 1,
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes silence six random foes, ignoring position."
+    },
+
+    574: {
+        name: "Winding Brass", type: 2, func: 3, calc: 3,
+        arg1: 1.15, arg2: 2, arg3: 0.2,
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to all foes and sometimes paralyze targets."
+    },
+
+    577: {
+        name: "Triple Tails", type: 2, func: 3, calc: 3,
+        arg1: 1.5,
+        range: 7, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to up to three foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -2944,7 +3013,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1.05, arg2: 2, arg3: 0.2,
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
-        desc: "ATK-based damage, sometimes paralyzing target."
+        desc: "WIS-based damage, sometimes paralyzing target."
     },
 
     10006: { // 105% Mod, 3 Random Hits, ATK-based, position dependent (Ettin)
@@ -2972,7 +3041,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1, arg2: 3, arg3: 0.1,
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
-        desc: "ATK-based damage, sometimes freezing target."
+        desc: "WIS-based damage and sometimes freeze target."
     },
 
     10010: { // 110% Mod, Three Hit Cone, ATK-based, position independent (Brang)   
@@ -2986,7 +3055,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.4,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
-        desc: "ATK-based damage, sometimes poisons target."
+        desc: "ATK-based damage and sometimes poison target."
     },
 
     10014: { // 100% Mod, Single Hit, ATK-based, position dependent, paralyze (Leo)
@@ -3007,7 +3076,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.4, arg4: 10,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
-        desc: "ATK-based damage, sometimes envenoms target."
+        desc: "ATK-based damage and sometimes envenom target."
     },
 
     10018: {
@@ -3035,7 +3104,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.2, 
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
-        desc: "ATK-based damage to one foe, regardless of position."
+        desc: "ATK-based damage to one foe."
     },
 
     10023: { // 100% Mod, Single Hit, WIS-based, position independent, wind effect (Bayam)
@@ -3049,7 +3118,7 @@ var SkillDatabase = {
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 4, arg3: 0.35,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
-        desc: "WIS-based damage to one foe."
+        desc: "ATK-based damage and sometimes disable target."
     },
 
     10025: { // 120% Mod, Single Hit, ATK-based, position independent, greatly lower AGI (Archbishop)
@@ -3092,5 +3161,26 @@ var SkillDatabase = {
         arg1: 1,
         range: 6, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to up to two foes."
+    },
+
+    10031: { // Kijin
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1.3,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10032: { // Sun
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1, arg2: 7, arg3: 0.35, arg4: 2, arg5: 0.9,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes blind target."
+    },
+
+    10033: { // Dahaka
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1,
+        range: 23, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to two random foes."
     },
 };

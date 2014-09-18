@@ -3,19 +3,10 @@
     div.innerHTML += "Checking skill database... <br>";
 
     // Make a hashtable from the source data
-    var entries = data.feed.entry;
     var src = {}
-    for (var i = 0; i < entries.length; i++) {
-        var id = entries[i].title.$t;
-        var content = entries[i].content.$t;
-        //if (content == "") continue;
-        var pairs = content.split(", ");
-        src[id] = {};
-        for (var j = 0; j < pairs.length; j++) {
-            var splited = pairs[j].split(": ");
-            var attr = splited[0], value = splited[1];
-            src[id][attr] = value;
-        }
+    for (var i = 0; i < data.length; i++) {
+        var id = data[i].id;
+        src[id] = data[i];
     }
 
     for (var key in SkillDatabase) {
@@ -29,14 +20,14 @@
                 var sheetS = src[key];
                 var conflict = false;
 
-                if (dbS.name != sheetS.name || dbS.type != (+sheetS.skilltype) ||
-                    dbS.func != (+sheetS.skillfunc) || dbS.calc != (+sheetS.skillcalctype) ||
-                    dbS.range != (+sheetS.skillrange) || dbS.prob != (+sheetS.maxprobability)) {
+                if (dbS.name != sheetS.name || dbS.type != (+sheetS.skillType) ||
+                    dbS.func != (+sheetS.skillFunc) || dbS.calc != (+sheetS.skillCalcType) ||
+                    dbS.range != (+sheetS.skillRange) || dbS.prob != (+sheetS.maxProbability) || dbS.desc != sheetS.comment) {
                     conflict = true;
                 }
 
                 for (var i = 1; i <= 5; i++) {
-                    var argi = "arg" + i, skillfuncargi = "skillfuncarg" + i;
+                    var argi = "arg" + i, skillfuncargi = "skillFuncArg" + i;
                     if (dbS[argi] && sheetS[skillfuncargi] && dbS[argi] != sheetS[skillfuncargi])
                         conflict = true;
 
@@ -48,7 +39,7 @@
                 }
 
                 if (conflict) {
-                    div.innerHTML += ("Conflict: " + dbS.name + "<br>");
+                    div.innerHTML += ("Conflict: " + key + " " + dbS.name + "<br>");
                 }
             }
         }

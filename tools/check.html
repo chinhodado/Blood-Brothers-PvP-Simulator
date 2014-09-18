@@ -18,16 +18,13 @@
 
     <script src="../compiled.js"></script>
     <script src="checkSkills.js"></script>
-    <script src="checkPOPE.js"></script>
+    <script src="checkFam.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="srcdb.js"></script>
 
-    <script src="http://spreadsheets.google.com/feeds/list/1tE51Z5I2gChdtLNQfY_aE--TmZ_9G3fmiseGf6-K04s/2/public/basic?alt=json-in-script&callback=checkSkill"></script>
     <script>
-        $.ajax({
-            "url": "https://www.kimonolabs.com/api/8bmc0cbe?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=checkPOPE",
-            "crossDomain": true,
-            "dataType": "jsonp"
-        });
+        checkSkill(srcdb.skills);
+        checkFam(srcdb.cards);
     </script>
 </body>
 </html>
