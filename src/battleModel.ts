@@ -509,12 +509,26 @@ class BattleModel {
             multi = skill.skillFuncArg4;
             isNewLogic = true;
         }
+        else if (skill.skillFunc === ENUM.SkillFunc.ONHIT_DEBUFF) {
+            // todo: arg3 may also be status
+            status = skill.skillFuncArg2;
+            multi = skill.skillFuncArg1;
+            isNewLogic = true;
+
+            if (skill.skillFuncArg4) {
+                multi = skill.skillFuncArg4;
+                var isFlat = true;
+            }
+        }
         else {
             throw new Error("Wrong skill to use with processDebuff()");
         }
 
-        if (!isNewLogic) {
-            var baseAmount = getDebuffAmount(executor, target);
+        if (isFlat) {
+            var baseAmount = -100;
+        }
+        else if (!isNewLogic) {
+            baseAmount = getDebuffAmount(executor, target);
         }
         else {
             baseAmount = getCasterBasedDebuffAmount(executor);

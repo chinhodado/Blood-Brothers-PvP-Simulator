@@ -1799,6 +1799,13 @@ var famDatabase = {
         img: "img1$1/__cb20131129152929/$2/6/65/Sea_Serpent_II_Figure.png",
         fullName: "Sea Serpent II"
     },
+    11379: {
+        name: "Seimei", stats: [19963, 6389, 17038, 19053, 17103],
+        skills: [564, 565],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140909101523/$2/b/b7/Seimei%2C_Onmyoji_II_Figure.png",
+        fullName: "Seimei, Onmyoji II"
+    },
     11204: {
         name: "Seismo", stats: [18999, 19097, 15056, 11015, 16800],
         skills: [433],

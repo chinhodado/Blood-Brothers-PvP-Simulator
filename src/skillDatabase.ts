@@ -2933,6 +2933,20 @@ var SkillDatabase = {
         desc: "Raise DEF and WIS of self."
     },
 
+    564: {
+        name: "Rites of the Shikigami", type: 2, func: 4, calc: 2,
+        arg1: 1.65,
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    565: {
+        name: "Pierce the Veil", type: 3, func: 38, calc: 6,
+        arg1: 0, arg2: 1, arg3: 0, arg4: 60, arg5: 5,
+        range: 7, prob: 50,
+        desc: "Greatly lower ATK of up to three foes when being attacked."
+    },
+
     566: {
         name: "Divine Compass", type: 1, func: 32, calc: 0,
         arg1: 0.1, arg2: 3,
