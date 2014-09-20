@@ -392,15 +392,15 @@ class SelfBothSidesRange extends BaseRange {
     getTargets(executor: Card): Card[] {
         var targets = [];
         
-        if (!executor.isDead) { // should always be true
-            targets.push(executor);
-        }
-        
         var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
         
+        if (!executor.isDead) { // should always be true
+            targets.push(executor);
+        }
+
         var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);

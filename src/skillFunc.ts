@@ -131,6 +131,11 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.DEF:
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
+                        // if the range is "self and adjacent", according to Dena, the base stat will
+                        // have to be recalculated
+                        if (skill.skillRange == 3) {
+                            baseStat = executor.getStat(basedOnStatType);
+                        }
                         var skillMod = skill.skillFuncArg1;
                         var buffAmount = Math.round(skillMod * baseStat);
                         break;
