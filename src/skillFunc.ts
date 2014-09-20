@@ -105,6 +105,7 @@ class BuffSkillLogic extends SkillLogic {
         var executor = data.executor;
         var targets: Card[] = skill.range.getTargets(executor);
 
+        // get a list of things to buff
         if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
             var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
 
@@ -131,15 +132,6 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
                         var skillMod = skill.skillFuncArg1;
-
-                        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
-                            // do nothing - we already calculated the base stat earlier
-                        }
-                        else { // flat based on target's stat (Rally Cry)
-                            basedOnStatType = ENUM.StatusType[statusType];
-                            baseStat = target.getStat(basedOnStatType);
-                        }
-
                         var buffAmount = Math.round(skillMod * baseStat);
                         break;
                     case ENUM.StatusType.ATTACK_RESISTANCE:
@@ -158,7 +150,7 @@ class BuffSkillLogic extends SkillLogic {
                     default :
                         throw new Error("Wrong status type or not implemented");
                 }
-            
+
                 target.changeStatus(statusType, buffAmount, false, maxValue);
                 var description = target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount;
                 
