@@ -133,7 +133,7 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.AGI:
                         // if the range is "self and adjacent", according to Dena, the base stat will
                         // have to be recalculated
-                        if (skill.skillRange == 3) {
+                        if (skill.skillRange == ENUM.SkillRange.SELF_BOTH_SIDES) {
                             baseStat = executor.getStat(basedOnStatType);
                         }
                         var skillMod = skill.skillFuncArg1;
@@ -485,8 +485,8 @@ class ProtectSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = data.skill.getTargets(data.executor);
 
-        // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
-        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != 21) {
+        // a fam cannot protect itself, unless the skillRange is MYSELF
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != ENUM.SkillRange.MYSELF) {
             return false;
         }
 
@@ -554,8 +554,8 @@ class EvadeSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = data.skill.getTargets(data.executor);
 
-        // a fam cannot protect itself, unless the skillRange is 21 (hard-coded here for now)
-        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != 21) {
+        // a fam cannot protect itself, unless the skillRange is MYSELF
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != ENUM.SkillRange.MYSELF) {
             return false;
         }
 

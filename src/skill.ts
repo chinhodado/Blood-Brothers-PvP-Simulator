@@ -12,7 +12,7 @@ class Skill {
     skillFuncArg3: number;
     skillFuncArg4: number;
     skillFuncArg5: number;
-    skillRange: number;
+    skillRange: ENUM.SkillRange;
     maxProbability: number;
     ward: ENUM.WardType;
     description: string;

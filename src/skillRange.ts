@@ -112,7 +112,7 @@ class RangeFactory {
         336: [1.9375, 1.4375, 1.25, 1.13, 1, 1]
     };
     
-    static getRange (id: number, selectDead: boolean = false) {
+    static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
         var range: BaseRange = null;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
@@ -129,27 +129,27 @@ class RangeFactory {
         return range;
     }
 
-    static isEnemyRandomRange (id: number) {
+    static isEnemyRandomRange (id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
     }
 
-    static isFriendRandomRange (id: number) {
+    static isFriendRandomRange (id: ENUM.SkillRange) {
         return !!RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
     }
     
-    static createEnemyRandomRange (id: number) {
+    static createEnemyRandomRange (id: ENUM.SkillRange) {
         return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
     }
 
-    static createFriendRandomRange (id: number, selectDead: boolean) {
+    static createFriendRandomRange (id: ENUM.SkillRange, selectDead: boolean) {
         return new FriendRandomRange(id, RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id], selectDead);
     }
     
-    static isEnemyNearRange (id: number) {
+    static isEnemyNearRange (id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
     }
     
-    static createEnemyNearRange (id: number) {
+    static createEnemyNearRange (id: ENUM.SkillRange) {
         if (this.isEnemyNearRange(id)) {
             var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
         }
@@ -159,15 +159,15 @@ class RangeFactory {
         return new EnemyNearRange(id, numTargets);
     }
 
-    static isEnemyNearScaledRange(id: number) {
+    static isEnemyNearScaledRange(id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
     }
 
-    static isEnemyScaledRange(id: number) {
-        return this.isEnemyNearScaledRange(id) || id == 208;
+    static isEnemyScaledRange(id: ENUM.SkillRange) {
+        return this.isEnemyNearScaledRange(id) || id == ENUM.SkillRange.ENEMY_ALL_SCALED;
     }
 
-    static getScaledRatio(id: number, targetsLeft: number) {
+    static getScaledRatio(id: ENUM.SkillRange, targetsLeft: number) {
         var paramArray = RangeFactory.ScalePatternParams[id];
 
         if (!paramArray) {
@@ -176,50 +176,52 @@ class RangeFactory {
         return paramArray[targetsLeft - 1];
     }
 
-    static isRowBasedRange(rangeId: number): boolean {
-        if (rangeId === 12 || rangeId === 14 || rangeId === 15) {
+    static isRowBasedRange(rangeId: ENUM.SkillRange): boolean {
+        if (rangeId === ENUM.SkillRange.ENEMY_FRONT_ALL || 
+            rangeId === ENUM.SkillRange.ENEMY_REAR_ALL || 
+            rangeId === ENUM.SkillRange.ENEMY_FRONT_MID_ALL) {
             return true;
         }
 
         return false;
     }
 
-    static canBeAoeRange(rangeId: number): boolean {
+    static canBeAoeRange(rangeId: ENUM.SkillRange): boolean {
         var canBe = false;
         
         if (this.isEnemyNearRange(rangeId) || 
             this.isEnemyNearScaledRange(rangeId) || 
             this.isRowBasedRange(rangeId) || 
-            rangeId == 8 ||
-            rangeId == 208) {
+            rangeId == ENUM.SkillRange.ENEMY_ALL ||
+            rangeId == ENUM.SkillRange.ENEMY_ALL_SCALED) {
             canBe = true;    
         }
 
         return canBe;    
     }
     
-    static createRange (id: number, selectDead: boolean) {
+    static createRange (id: ENUM.SkillRange, selectDead: boolean) {
         switch (id) {
-            case 1:
+            case ENUM.SkillRange.EITHER_SIDE:
                 return new EitherSideRange(id, selectDead); // either side, but not both
-            case 2:
+            case ENUM.SkillRange.BOTH_SIDES:
                 return new BothSidesRange(id, selectDead);
-            case 3:
+            case ENUM.SkillRange.SELF_BOTH_SIDES:
                 return new SelfBothSidesRange(id);
-            case 4:
+            case ENUM.SkillRange.ALL:
                 return new AllRange(id);
-            case 8:
-            case 208:
+            case ENUM.SkillRange.ENEMY_ALL:
+            case ENUM.SkillRange.ENEMY_ALL_SCALED:
                 return new EnemyAllRange(id);
-            case 12:
+            case ENUM.SkillRange.ENEMY_FRONT_ALL:
                 return new EnemyFrontAllRange(id);
-            case 14:
+            case ENUM.SkillRange.ENEMY_REAR_ALL:
                 return new EnemyRearAllRange(id);
-            case 15:
+            case ENUM.SkillRange.ENEMY_FRONT_MID_ALL:
                 return new EnemyFrontMidAllRange(id);
-            case 21:
+            case ENUM.SkillRange.MYSELF:
                 return new SelfRange(id, selectDead);
-            case 28:
+            case ENUM.SkillRange.RIGHT:
                 return new RightRange(id);
             default:
                 throw new Error("Invalid range or not implemented");
@@ -229,9 +231,9 @@ class RangeFactory {
 
 class BaseRange {
    
-    id: number;
+    id: ENUM.SkillRange;
     
-    constructor(id: number) {
+    constructor(id: ENUM.SkillRange) {
         this.id = id;
     }
     
@@ -291,7 +293,7 @@ class BaseRange {
 
 class BothSidesRange extends BaseRange {
     selectDead: boolean;
-    constructor(id: number, selectDead: boolean) {
+    constructor(id: ENUM.SkillRange, selectDead: boolean) {
         super(id);
         this.selectDead = selectDead;
     }
@@ -317,7 +319,7 @@ class EnemyRandomRange extends BaseRange {
 
     numTarget: number;
     
-    constructor(id: number, numTarget: number) {
+    constructor(id: ENUM.SkillRange, numTarget: number) {
         super(id);
         this.numTarget = numTarget;    
     }
@@ -347,10 +349,6 @@ class EitherSideRange extends BothSidesRange {
 }
 
 class RightRange extends BaseRange {
-    constructor(id : number) {
-        super(id);
-    }
-    
     getTargets(executor : Card) : Card[] {
         var targets = [];
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
@@ -367,7 +365,7 @@ class RightRange extends BaseRange {
 
 class SelfRange extends BaseRange {
     selectDead: boolean;
-    constructor(id: number, selectDead: boolean) {
+    constructor(id: ENUM.SkillRange, selectDead: boolean) {
         super(id);
         this.selectDead = selectDead;
     }
@@ -384,11 +382,6 @@ class SelfRange extends BaseRange {
 }
 
 class SelfBothSidesRange extends BaseRange {
-    
-    constructor(id: number) {
-        super(id);
-    }
-    
     getTargets(executor: Card): Card[] {
         var targets = [];
         
@@ -411,10 +404,6 @@ class SelfBothSidesRange extends BaseRange {
 }
 
 class AllRange extends BaseRange {
-    constructor(id: number) {
-        super(id);
-    }
-    
     getTargets(executor: Card): Card[] {
         var targets = [];
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
@@ -440,7 +429,7 @@ class EnemyNearRange extends BaseRange {
     // specific to an instance, the max distance from the center enemy
     maxDistance: number;
             
-    constructor(id: number, public numTarget) {
+    constructor(id: ENUM.SkillRange, public numTarget) {
         super(id);
         this.maxDistance = EnemyNearRange.MAX_DISTANCE_FROM_CENTER[numTarget];
     }
@@ -478,10 +467,6 @@ class EnemyNearRange extends BaseRange {
 }
 
 class EnemyAllRange extends BaseRange {
-    constructor(id: number) {
-        super(id);
-    }
-    
     getTargets (executor: Card): Card[]{
         var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
         var targets = [];
@@ -501,7 +486,7 @@ class FriendRandomRange extends BaseRange {
     isUnique: boolean;
     includeSelf: boolean;
 
-    constructor(id: number, numTargets: number, selectDead: boolean) {
+    constructor(id: ENUM.SkillRange, numTargets: number, selectDead: boolean) {
         super(id);
         this.numTargets = numTargets;
         this.selectDead = selectDead;
