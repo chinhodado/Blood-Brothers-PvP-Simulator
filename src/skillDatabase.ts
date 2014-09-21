@@ -36,6 +36,34 @@ var SkillDatabase = {
         desc: "Raise AGI of self and adjacent familiars."
     },
 
+    6 : {
+        name: "Blade Break", type: 1, func: 2, calc: 0,
+        arg1: 0.5, arg2: 1, 
+        range: 7, prob: 70,
+        desc: "Lower ATK of up to three foes."
+    },
+
+    7 : {
+        name: "Shield Rend", type: 1, func: 2, calc: 0,
+        arg1: 0.5, arg2: 2, 
+        range: 7, prob: 70,
+        desc: "Lower DEF of up to three foes."
+    },
+
+    8 : {
+        name: "Mind Rust", type: 1, func: 2, calc: 0,
+        arg1: 0.5, arg2: 3, 
+        range: 7, prob: 70,
+        desc: "Lower WIS of up to three foes."
+    },
+
+    9 : {
+        name: "Speed Sap", type: 1, func: 2, calc: 0,
+        arg1: 0.5, arg2: 4, 
+        range: 7, prob: 70,
+        desc: "Lower AGI of up to three foes."
+    },
+
     10 : {
         name: "Scythe Storm", type: 2, func: 3, calc: 3,
         arg1: 1, 
@@ -301,6 +329,34 @@ var SkillDatabase = {
         desc: "Deal heavy damage to one foe."
     },
 
+    77 : {
+        name: "Blade Break 1", type: 1, func: 2, calc: 0,
+        arg1: 0.1, arg2: 1, 
+        range: 8, prob: 70,
+        desc: "Lower ATK of all foes."
+    },
+
+    78 : {
+        name: "Shield Rend 1", type: 1, func: 2, calc: 0,
+        arg1: 0.1, arg2: 2, 
+        range: 8, prob: 70,
+        desc: "Lower DEF of all foes."
+    },
+
+    79 : {
+        name: "Mind Rust 1", type: 1, func: 2, calc: 0,
+        arg1: 0.1, arg2: 3, 
+        range: 8, prob: 70,
+        desc: "Lower WIS of all foes."
+    },
+
+    80 : {
+        name: "Speed Sap 1", type: 1, func: 2, calc: 0,
+        arg1: 0.1, arg2: 4, 
+        range: 8, prob: 70,
+        desc: "Lower AGI of all foes."
+    },
+
     81: {
         name: "Boon of Blade & Shield 2", type: 1, func: 1, calc: 0,
         arg1: 0.2, arg2: 1, arg3: 2, 
@@ -315,11 +371,95 @@ var SkillDatabase = {
         desc: "Raise AGI of all familiars."
     },
 
+    86 : {
+        name: "Blade Break 2", type: 1, func: 2, calc: 0,
+        arg1: 0.2, arg2: 1, 
+        range: 8, prob: 70,
+        desc: "Lower ATK of all foes."
+    },
+
+    87 : {
+        name: "Shield Rend 2", type: 1, func: 2, calc: 0,
+        arg1: 0.2, arg2: 2, 
+        range: 8, prob: 70,
+        desc: "Lower DEF of all foes."
+    },
+
+    88 : {
+        name: "Mind Rust 2", type: 1, func: 2, calc: 0,
+        arg1: 0.2, arg2: 3, 
+        range: 8, prob: 70,
+        desc: "Lower WIS of all foes."
+    },
+
+    89 : {
+        name: "Speed Sap 2", type: 1, func: 2, calc: 0,
+        arg1: 0.2, arg2: 4, 
+        range: 8, prob: 70,
+        desc: "Lower AGI of all foes."
+    },
+
     94: {
         name: "Grace of Winds 3", type: 1, func: 1, calc: 0,
         arg1: 0.3, arg2: 4, 
         range: 4, prob: 70,
         desc: "Raise AGI of all familiars."
+    },
+
+    95 : {
+        name: "Blade Break 3", type: 1, func: 2, calc: 0,
+        arg1: 0.3, arg2: 1, 
+        range: 8, prob: 70,
+        desc: "Lower ATK of all foes."
+    },
+
+    96 : {
+        name: "Shield Rend 3", type: 1, func: 2, calc: 0,
+        arg1: 0.3, arg2: 2, 
+        range: 8, prob: 70,
+        desc: "Lower DEF of all foes."
+    },
+
+    97 : {
+        name: "Mind Rust 3", type: 1, func: 2, calc: 0,
+        arg1: 0.3, arg2: 3, 
+        range: 8, prob: 70,
+        desc: "Lower WIS of all foes."
+    },
+
+    98 : {
+        name: "Speed Sap 3", type: 1, func: 2, calc: 0,
+        arg1: 0.3, arg2: 4, 
+        range: 8, prob: 70,
+        desc: "Lower AGI of all foes."
+    },
+
+    104 : {
+        name: "Blade Break 4", type: 1, func: 2, calc: 0,
+        arg1: 0.4, arg2: 1, 
+        range: 8, prob: 70,
+        desc: "Lower ATK of all foes."
+    },
+
+    105 : {
+        name: "Shield Rend 4", type: 1, func: 2, calc: 0,
+        arg1: 0.4, arg2: 2, 
+        range: 8, prob: 70,
+        desc: "Lower DEF of all foes."
+    },
+
+    106 : {
+        name: "Mind Rust 4", type: 1, func: 2, calc: 0,
+        arg1: 0.4, arg2: 3, 
+        range: 8, prob: 70,
+        desc: "Lower WIS of all foes."
+    },
+
+    107 : {
+        name: "Speed Sap 4", type: 1, func: 2, calc: 0,
+        arg1: 0.4, arg2: 4, 
+        range: 8, prob: 70,
+        desc: "Lower AGI of all foes."
     },
 
     108 : {

@@ -18,7 +18,7 @@ module ENUM {
      */
     export enum SkillFunc {
         BUFF = 1, // arg1: multiplier, arg2, 3: status
-        DEBUFF = 2,
+        DEBUFF = 2, // arg1: multi, arg2: status
         ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
                     // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
         MAGIC = 4, // anything that ignores position, args: same as ATTACK

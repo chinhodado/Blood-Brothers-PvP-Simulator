@@ -3,8 +3,9 @@
         switch (skillFunc) {
             case ENUM.SkillFunc.BUFF:
                 return new BuffSkillLogic();
+            case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
-                return new CasterBasedDebuffSkillLogic();
+                return new DebuffSkillLogic();
             case ENUM.SkillFunc.ONHIT_DEBUFF:
                 return new OnHitDebuffSkillLogic();
             case ENUM.SkillFunc.DISPELL:
@@ -176,7 +177,7 @@ class BuffSkillLogic extends SkillLogic {
     }
 }
 
-class CasterBasedDebuffSkillLogic extends SkillLogic {
+class DebuffSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
