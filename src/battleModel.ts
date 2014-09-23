@@ -1,6 +1,7 @@
 /// <reference path="affliction.ts"/>
 /// <reference path="battleGraphic.ts"/>
 /// <reference path="battleLogger.ts"/>
+/// <reference path="brigGenerator.ts"/>
 /// <reference path="card.ts"/>
 /// <reference path="cardManager.ts"/>
 /// <reference path="enums.ts"/>
@@ -113,11 +114,8 @@ class BattleModel {
 
         if (option.p1RandomMode) {
             this.p1RandomMode = option.p1RandomMode;
-            var p1randomList = FamiliarDatabase.getRandomFamList(+option.p1RandomMode, tierListString);
             p1_formation = pickRandomProperty(Formation.FORMATION_CONFIG);
-            for (var i = 0; i < 10; i++) {
-                p1_cardIds.push(getRandomElement(p1randomList));
-            }
+            p1_cardIds = BrigGenerator.getBrig(option.p1RandomMode, tierListString, this.isBloodClash);
 
             for (var i = 0; i < 3; i++) {
                 p1_warlordSkillIds.push(+getRandomElement(availableSkills));
@@ -131,11 +129,8 @@ class BattleModel {
 
         if (option.p2RandomMode) {
             this.p2RandomMode = option.p2RandomMode;
-            var p2randomList = FamiliarDatabase.getRandomFamList(+option.p2RandomMode, tierListString);
             p2_formation = pickRandomProperty(Formation.FORMATION_CONFIG);
-            for (var i = 0; i < 10; i++) {
-                p2_cardIds.push(getRandomElement(p2randomList));
-            }
+            p2_cardIds = BrigGenerator.getBrig(option.p2RandomMode, tierListString, this.isBloodClash);
 
             for (var i = 0; i < 3; i++) {
                 p2_warlordSkillIds.push(+getRandomElement(availableSkills));

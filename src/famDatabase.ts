@@ -2303,12 +2303,15 @@ class FamiliarDatabase {
         return this.tierList[tierToGet];    
     }
 
-    static getAllIdList() {
+    /**
+     * Get a list of ids of all familiars, except the warlords
+     */
+    static getAllFamiliarList() {
         if (!this.allIdList) {
             this.allIdList = [];
 
             for (var key in famDatabase) {
-                if (famDatabase.hasOwnProperty(key)) {
+                if (famDatabase.hasOwnProperty(key) && !famDatabase[key].isWarlord) {
                     this.allIdList.push(key);
                 }
             }
@@ -2326,7 +2329,7 @@ class FamiliarDatabase {
 
         switch (type) {
             case ENUM.RandomBrigType.ALL:
-                return this.getAllIdList();
+                return this.getAllFamiliarList();
             case ENUM.RandomBrigType.X_ONLY:
                 return tierX;
             case ENUM.RandomBrigType.SP_ONLY:
@@ -2348,5 +2351,12 @@ class FamiliarDatabase {
             default:
                 throw new Error("Invalid brig random type");
         }
+    }
+
+    /**
+     * Get a list of ids of all warlords
+     */
+    static getWarlordList(): number[] {
+        return [1, 2, 3, 4, 5, 6, 7, 8];
     }
 }
