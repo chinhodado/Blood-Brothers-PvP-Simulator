@@ -155,7 +155,7 @@ var famDatabase = {
         name: "Apep", stats: [20543, 20975, 15503, 14302, 16729],
         skills: [468],
         autoAttack: 10017,
-        img: "img2$1/__cb20140528104324/$2/1/16/Apep%2C_the_Chaotic_Figure.png",
+        img: "img1$1/__cb20140528104324/$2/7/79/Apep_the_Chaotic_Figure.png",
         fullName: "Apep the Chaotic"
     },
     10593: {
@@ -1092,7 +1092,7 @@ var famDatabase = {
     10746: {
         name: "Iseult", stats: [12731, 10977, 11708, 15865, 14193],
         skills: [144],
-        img: "img2$1/__cb20130629202258/$2/f/f2/Iseult%2C_the_Redeemer_II_Figure.png",
+        img: "img1$1/__cb20130629202258/$2/3/3b/Iseult_the_Redeemer_II_Figure.png",
         fullName: "Iseult the Redeemer II"
     },
     11376: {
@@ -1971,7 +1971,7 @@ var famDatabase = {
     11000: {
         name: "Tanba", stats: [17580, 23213, 17883, 23289, 18057],
         skills: [236],
-        img: "img3$1/__cb20130921071545/$2/f/f6/Tanba%2C_Founder_of_Ninja_II_Figure.png",
+        img: "img3$1/__cb20130921071545/$2/a/a8/Tanba%2C_Founder_of_the_Ninja_II_Figure.png",
         fullName: "Tanba, Founder of Ninja II"
     },
     327: {
@@ -2094,7 +2094,7 @@ var famDatabase = {
     10747: {
         name: "Tristan", stats: [13832, 16193, 15197, 13052, 15771],
         skills: [122],
-        img: "img4$1/__cb20130629202258/$2/a/ad/Tristan%2C_the_Sorrowful_II_Figure.png",
+        img: "img3$1/__cb20130629202258/$2/c/c3/Tristan_the_Sorrowful_II_Figure.png",
         fullName: "Tristan the Sorrowful II"
     },
     10647: {
