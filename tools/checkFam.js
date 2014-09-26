@@ -34,6 +34,11 @@
                 if (famDb.fullName != famSrc.name)
                     conflict = true;
 
+                if ((famDb.autoAttack && (famSrc.defaultSkillId == 0)) ||
+                    (!famDb.autoAttack && (famSrc.defaultSkillId != 0)) ||
+                    (famDb.autoAttack && (famSrc.defaultSkillId != 0) && (famDb.autoAttack != famSrc.defaultSkillId)))
+                    conflict = true;
+
                 if (conflict) {
                     div.innerHTML += ("Conflict: " + name + "<br>");
                 }

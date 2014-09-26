@@ -45,6 +45,13 @@ var famDatabase = {
         img: "img2$1/__cb20140318125230/$2/5/5c/Aeneas%2C_Fallen_Hero_II_Figure.png",
         fullName: "Aeneas, Fallen Hero II"
     },
+    11385: {
+        name: "Aeshma", stats: [17558, 17212, 15034, 5804, 13019],
+        skills: [579],
+        autoAttack: 10035,
+        img: "img2$1/__cb20140923104300/$2/4/43/Aeshma%2C_the_Tyrant_II_Figure.png",
+        fullName: "Aeshma, the Tyrant II"
+    },
     11344: {
         name: "Afanc", stats: [16518, 8610, 14124, 16020, 13214],
         skills: [529, 530],
@@ -233,6 +240,7 @@ var famDatabase = {
     11242: {
         name: "Lovers", stats: [16908, 13875, 12705, 19021, 17006],
         skills: [430, 431],
+        autoAttack: 10007,
         img: "img3$1/__cb20140414082018/$2/f/fb/Arcanan_Lovers_II_Figure.png",
         fullName: "Arcanan Lovers II"
     },
@@ -767,6 +775,13 @@ var famDatabase = {
         img: "img2$1/__cb20131023124814/$2/7/77/Gargoyle_Gatekeeper_II_Figure.png",
         fullName: "Gargoyle Gatekeeper II"
     },
+    21384: {
+        name: "Garshasp", stats: [22002, 18058, 20019, 20007, 8223],
+        skills: [578],
+        autoAttack: 10034,
+        img: "img2$1/__cb20140925080753/$2/2/25/Garshasp%2C_the_Juggernaut_Figure.png",
+        fullName: "Garshasp, the Juggernaut"
+    },
     10609: {
         name: "Garuda", stats: [14417, 14677, 14081, 15814, 15023],
         skills: [47],
@@ -794,6 +809,7 @@ var famDatabase = {
     11271: {
         name: "Ghislandi L", stats: [18533, 20234, 14590, 10235, 16204],
         skills: [455, 456],
+        autoAttack: 10015,
         img: "img3$1/__cb20140515012432/$2/9/91/Ghislandi%2C_the_Unchained_II_Figure.png",
         fullName: "Ghislandi, the Unchained II"
     },
@@ -983,7 +999,7 @@ var famDatabase = {
     11297: {
         name: "Hoska", stats: [18996, 7906, 15096, 17023, 8881],
         skills: [484, 485],
-        autoAttack: 10007,
+        autoAttack: 10016,
         img: "img2$1/__cb20140613080813/$2/6/6c/Hoska%2C_the_Firestroke_II_Figure.png",
         fullName: "Hoska, the Firestroke II"
     },
@@ -1451,6 +1467,7 @@ var famDatabase = {
     11369: {
         name: "Nin-Ridu", stats: [16529, 16215, 11351, 10495, 14005],
         skills: [505],
+        autoAttack: 10022,
         img: "img2$1/__cb20140709072738/$2/3/39/Nin-Ridu_Figure.png",
         fullName: "Nin-Ridu"
     },
@@ -1871,6 +1888,13 @@ var famDatabase = {
         img: "img4$1/__cb20140723074838/$2/8/8e/Silver_Dragon_II_Figure.png",
         fullName: "Silver Dragon II"
     },
+    11387: {
+        name: "Simurgh", stats: [15524, 6956, 12145, 17206, 16110],
+        skills: [580],
+        autoAttack: 10007,
+        img: "img2$1/__cb20140923104242/$2/a/a2/Simurgh%2C_Bird_Divine_II_Figure.png",
+        fullName: "Simurgh, Bird Divine II"
+    },
     11093: {
         name: "Sinbad", stats: [15868, 18154, 14644, 13853, 17006],
         skills: [318],
@@ -2069,6 +2093,7 @@ var famDatabase = {
     21264: {
         name: "Thor L", stats: [20007, 22002, 19063, 10334, 16518],
         skills: [437],
+        autoAttack: 10011,
         img: "img3$1/__cb20140430140512/$2/2/23/Thor%2C_the_Roaring_Thunder_Figure.png",
         fullName: "Thor, the Roaring Thunder"
     },
@@ -2112,7 +2137,7 @@ var famDatabase = {
     10735: {
         name: "Typhon", stats: [14677, 13355, 14341, 17959, 13626],
         skills: [117],
-        autoAttack: 10007,
+        autoAttack: 10001,
         img: "img2$1/__cb20130531211236/$2/8/83/Typhon_II_Figure.png",
         fullName: "Typhon II"
     },

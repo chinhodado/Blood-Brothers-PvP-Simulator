@@ -3149,6 +3149,27 @@ var SkillDatabase = {
         desc: "Deal heavy AGI-based damage to up to three foes."
     },
 
+    578: {
+        name: "Divine Mace", type: 5, func: 14, calc: 1,
+        arg1: 1.6,
+        range: 4, prob: 50, ward: 1,
+        desc: "Take damage in place of any ally and unleash a heavy counterattack."
+    },
+
+    579: {
+        name: "Intoxicate", type: 2, func: 4, calc: 1,
+        arg1: 1.5,
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to all foes, ignoring position."
+    },
+
+    580: {
+        name: "Flurry of Fangs", type: 2, func: 4, calc: 2,
+        arg1: 1.6,
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -3205,6 +3226,13 @@ var SkillDatabase = {
         desc: "ATK-based damage up to three foes."
     },
 
+    10011: { // Thor L
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
     10012: { // 100% Mod, Single Hit, ATK-based, position dependent, poison
         name: "Standard Action", type: 2, func: 3, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.4,
@@ -3217,6 +3245,13 @@ var SkillDatabase = {
         arg1: 1, arg2: 2, arg3: 0.4,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage, sometimes paralyzing target."
+    },
+
+    10015: { // Ghis L
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     10016: { // same as 10007, but with flame animation
@@ -3257,6 +3292,13 @@ var SkillDatabase = {
     10021: { // 120% Mod, Single Hit, ATK-Based, position independent (Perendon)
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.2, 
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10022: { // Nin-ridu
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1, 
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
     },
@@ -3336,5 +3378,19 @@ var SkillDatabase = {
         arg1: 1,
         range: 23, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to two random foes."
+    },
+
+    10034: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1.4,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10035: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        arg1: 1.3,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 };
