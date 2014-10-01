@@ -3169,6 +3169,34 @@ var SkillDatabase = {
         range: 314, prob: 30, ward: 2,
         desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
     },
+    
+    581: {
+        name: "Sacred Offering", type: 1, func: 32, calc: 0,
+        arg1: 0.2, arg2: 2,
+        range: 8, prob: 70,
+        desc: "Greatly lower DEF of all foes."
+    },
+    
+    583: {
+        name: "Smoldering Serpent", type: 2, func: 4, calc: 2,
+        arg1: 2,
+        range: 16, prob: 30,
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
+    
+    588: {
+        name: "Tranquil Death", type: 2, func: 4, calc: 3,
+        arg1: 1.45,
+        range: 20, prob: 30,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+    
+    589: {
+        name: "Unbridle", type: 1, func: 1, calc: 0,
+        arg1: 1, arg2: 18,
+        range: 21, prob: 70,
+        desc: "Allows self to perform an extra action during the next turn."
+    },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
