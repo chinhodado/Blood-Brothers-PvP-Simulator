@@ -7,7 +7,7 @@ class Formation {
     static IOS_PROC_ORDER = {};
 
     // hacky, since TS does not have syntax for static initialization yet
-    static foo = Formation.initialize();
+    static whyfoo = Formation.initialize();
 
     static initialize() {
         // 1: front, 2: mid, 3: rear
