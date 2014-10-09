@@ -327,7 +327,7 @@ class AttackSkillLogic extends SkillLogic {
 
             // keep track of targets attacked, to make sure a fam can only be attacked once. So if a fam has already been
             // attacked, it cannot protect another fam later on 
-            var targetsAttacked = {};
+            var targetsAttacked: boolean[] = [];
 
             for (var i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
                 var targetCard = targets[i];
@@ -586,7 +586,7 @@ class EvadeSkillLogic extends SkillLogic {
 
         // update the targetsAttacked if necessary
         if (data.targetsAttacked) {
-            data.targetsAttacked[data.executor] = true;
+            data.targetsAttacked[data.executor.id] = true;
         }
 
         // clear the temp stuffs
@@ -927,6 +927,6 @@ interface SkillLogicData {
     attacker?: Card;    // for protect/counter
     attackSkill?: Skill; // for protect/counter
     targetCard?: Card;  // for protect
-    targetsAttacked?: any;  // for protect
+    targetsAttacked?: boolean[];  // for protect
     noProbCheck?: boolean; // for passing the prob check of proccing the skill, like for RandomSkillLogic
 }

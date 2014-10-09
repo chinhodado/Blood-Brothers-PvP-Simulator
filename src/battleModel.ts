@@ -885,7 +885,7 @@ class BattleModel {
      *
      * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
      */
-    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: any, scaledRatio?: number) {
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: boolean[], scaledRatio?: number) {
         // now check if someone on the enemy side can protect before the damage is dealt
         var enemyCards = this.cardManager.getEnemyCurrentMainCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
