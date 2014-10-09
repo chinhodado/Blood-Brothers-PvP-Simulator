@@ -3170,6 +3170,76 @@ var SkillDatabase = {
         desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
     },
 
+    585: {
+        name: "Death's Call", type: 2, func: 34, calc: 2,
+        arg1: 1.6, arg2: 3, arg3: 0.4, arg4: 0.2,
+        range: 19, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to four random foes and sometimes greatly lower WIS."
+    },
+ 
+    588: {
+        name: "Tranquil Death", type: 2, func: 4, calc: 3,
+        arg1: 1.45,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+ 
+    589: {
+        name: "Unbridle", type: 1, func: 1, calc: 0,
+        arg1: 1, arg2: 18,
+        range: 21, prob: 70,
+        desc: "Allows self to perform an extra action during the next turn."
+    },
+ 
+    590: {
+        name: "Macana Slash", type: 2, func: 3, calc: 3,
+        arg1: 1.05,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to five random foes."
+    },
+ 
+    591: {
+        name: "Glittering Jade", type: 1, func: 1, calc: 0,
+        arg1: 0.15, arg2: 4,
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars."
+    },
+ 
+    594: {
+        name: "Holy Lash", type: 2, func: 37, calc: 1,
+        arg1: 1.9, arg2: 0.2, arg3: 27, arg4: 21,
+        range: 12, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage and drain HP from all foes in the front line, ignoring position."
+    },
+ 
+    595: {
+        name: "Shadow Whip", type: 1, func: 19, calc: 0,
+        arg1: 0, arg2: 7, arg3: 0.2, arg4: 1, arg5: 0.9,
+        range: 7, prob: 70,
+        desc: "Chance to blind up to three foes for one turn at start of battle."
+    },
+ 
+    596: {
+        name: "Masquerade", type: 2, func: 4, calc: 2,
+        arg1: 0.75,
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+ 
+    597: {
+        name: "Runaway Chariot", type: 2, func: 3, calc: 3,
+        arg1: 1.35,
+        range: 314, prob: 30, ward: 1,
+        desc: "AGI-based damage to up to four foes. Increased if fewer foes."
+    },
+ 
+    598: {
+        name: "Entangle", type: 16, func: 32, calc: 0,
+        arg1: 0.15, arg2: 4,
+        range: 8, prob: 70,
+        desc: "Greatly lower AGI of all foes upon his death."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,

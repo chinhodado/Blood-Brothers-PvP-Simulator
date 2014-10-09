@@ -59,6 +59,13 @@ var famDatabase = {
         img: "img4$1/__cb20140730092623/$2/a/a1/Afanc%2C_Beast_of_the_Deep_II_Figure.png",
         fullName: "Afanc, Beast of the Deep II"
     },
+    21404: {
+        name: "Ah Puch", stats: [22515, 9134, 18258, 20999, 17486],
+        skills: [585],
+        autoAttack: 10007,
+        img: "img4$1/__cb20140930103246/$2/6/60/Ah_Puch%2C_Lord_of_Death_Figure.png",
+        fullName: "Ah Puch, Lord of Death"
+    },
     11041: {
         name: "Ahab", stats: [10273, 12001, 11342, 9978, 12342],
         skills: [195],
@@ -556,6 +563,13 @@ var famDatabase = {
         skills: [292],
         img: "img1$1/__cb20131122150756/$2/e/e2/Danniel%2C_Golden_Paladin_II_Figure.png",
         fullName: "Danniel, Golden Paladin II"
+    },
+    11415: {
+        name: "Dantalion", stats: [15193, 5298, 10990, 14207, 11098],
+        skills: [596],
+        autoAttack: 10007,
+        img: "img1$1/__cb20141009082936/$2/8/8e/Dantalion%2C_Duke_of_Hell_II_Figure.png",
+        fullName: "Dantalion, Duke of Hell II"
     },
     10905: {
         name: "Danzo", stats: [14774, 17277, 14872, 17667, 16128],
@@ -1124,6 +1138,13 @@ var famDatabase = {
         img: "img3$1/__cb20140809012719/$2/7/73/Ivy_the_Verdant_II_Figure.png",
         fullName: "Ivy the Verdant II"
     },
+    11407: {
+        name: "Ixtab", stats: [20007, 8502, 17472, 17504, 18013],
+        skills: [588, 589],
+        autoAttack: 10031,
+        img: "img2$1/__cb20140930102755/$2/9/94/Ixtab%2C_Guardian_of_the_Dead_II_Figure.png",
+        fullName: "Ixtab, Guardian of the Dead II"
+    },
     11009: {
         name: "Jabberwock", stats: [13994, 16193, 13008, 19508, 18024],
         skills: [270, 271],
@@ -1509,6 +1530,12 @@ var famDatabase = {
         img: "img3$1/__cb20140116044009/$2/c/c1/Ovinnik%2C_Hex_Beast_II_Figure.png",
         fullName: "Ovinnik, Hex Beast II"
     },
+    11408: {
+        name: "Pakal", stats: [15435, 15175, 10777, 10018, 17103],
+        skills: [590, 591],
+        img: "img1$1/__cb20140930103243/$2/6/68/Pakal%2C_Jade_King_II_Figure.png",
+        fullName: "Pakal, Jade King II"
+    },
     11286: {
         name: "Aquarius", stats: [16323, 7494, 11448, 17363, 16009],
         skills: [450, 451],
@@ -1611,6 +1638,12 @@ var famDatabase = {
         isMounted: true,
         img: "img3$1/__cb20131209121232/$2/e/e4/Pegasus_Knight_II_Figure.png",
         fullName: "Pegasus Knight II"
+    },
+    11425: {
+        name: "Pelops", stats: [15056, 14113, 10018, 12055, 17266],
+        skills: [597, 598],
+        img: "img3$1/__cb20141009082936/$2/e/ee/Pelops%2C_Fallen_Hero_II_Figure.png",
+        fullName: "Pelops, Fallen Hero II"
     },
     10013: {
         name: "Pendragon", stats: [9844, 10317, 10751, 12357, 10861],
@@ -1847,6 +1880,12 @@ var famDatabase = {
         autoAttack: 10007,
         img: "img4$1/__cb20140715092434/$2/3/31/Selkie%2C_Lady_of_the_Shore_II_Figure.png",
         fullName: "Selkie, Lady of the Shore II"
+    },
+    11413: {
+        name: "Sera", stats: [14293, 17023, 13306, 7406, 15903],
+        skills: [594, 595],
+        img: "img2$1/__cb20141009082935/$2/8/84/Sera%2C_Exorcist_II_Figure.png",
+        fullName: "Sera, Exorcist II"
     },
     11290: {
         name: "Set", stats: [13097, 16364, 10990, 10001, 17133],
