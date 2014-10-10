@@ -364,7 +364,6 @@ class CardManager {
 
         for (var i = 0; i < cards.length; i++) {
             var dash = (i == 0)? "" : " - ";
-            var cardInfo = this.getCardInfoForDialog(cards[i]);
             var cb = "showCardDetailDialogById(" + cards[i].id + ");";
             brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
         }

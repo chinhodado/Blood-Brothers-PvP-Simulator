@@ -96,8 +96,8 @@ class BattleGraphic {
                 draw.group().attr('id', 'p2SkillBgTextGroup').add(skillImg).add(text).opacity(0);
             }
             else if (player == 1) {
-                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
-                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
+                text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
                                .attr('id', 'p1SkillText');
                 draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, 300);
             }
@@ -127,7 +127,7 @@ class BattleGraphic {
             }
             
             // calculate the bullets coord
-            for (var i = 0; i < 5; i++) {
+            for (i = 0; i < 5; i++) {
                 var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
                 var bulletY = (playerFormations[player][i] - 1) * verticalStep;
                 
@@ -136,14 +136,14 @@ class BattleGraphic {
             
             // now draw lines and bullets
             if (BattleGraphic.SHOW_FORMATION_LINE) {
-                for (var i = 0; i < 5; i++) {
+                for (i = 0; i < 5; i++) {
                     var diameter = 10;
                     var dot = draw.circle(diameter)
                                   .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
                     groupPlayer.add(dot);
                 }
 
-                for (var i = 0; i < 4; i++) {
+                for (i = 0; i < 4; i++) {
                     var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
                                    .stroke({ width: 1 });
                     groupPlayer.add(line);
@@ -160,7 +160,7 @@ class BattleGraphic {
             }
             
             // display fam images and other effects
-            for (var i = 0; i < 5; i++) {
+            for (i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
                 var image_x_coord = coordArray[i][0] - BattleGraphic.IMAGE_WIDTH / 2;
 
@@ -294,8 +294,8 @@ class BattleGraphic {
         if (!hpGradient) {
             // draw for full HP
             hpGradient = draw.gradient('linear', function (stop) {
-                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1') //<- hp gradient stop
-                stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2')
+                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1'); //<- hp gradient stop
+                stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2');
             }).attr('id', hpGradientId);
         }
         else {
@@ -329,7 +329,7 @@ class BattleGraphic {
             var txt = "missed";
         }
         else if (data.evaded) {
-            var txt = "evaded";
+            txt = "evaded";
         }
         else if (data.isKilled) {
             txt = "killed";
@@ -542,7 +542,7 @@ class BattleGraphic {
                 var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
             }
             else {
-                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark');
+                procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark');
             }
 
             SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
@@ -663,7 +663,7 @@ class BattleGraphic {
                         var displayText = "dispelled";
                     }
                     else if (data.status.isClearDebuff) {
-                        var displayText = "cleared";
+                        displayText = "cleared";
                     }
                     else if (data.status.isAllUp) {
                         displayText = "All Stats Up";

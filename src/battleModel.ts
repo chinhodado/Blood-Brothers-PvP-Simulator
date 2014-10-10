@@ -109,7 +109,7 @@ class BattleModel {
         var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
         
         if (!tierListString) {
-            var tierListString = sessionStorage["tierList"];
+            tierListString = sessionStorage["tierList"];
         }
 
         if (option.p1RandomMode) {
@@ -132,7 +132,7 @@ class BattleModel {
             p2_formation = pickRandomProperty(Formation.FORMATION_CONFIG);
             p2_cardIds = BrigGenerator.getBrig(option.p2RandomMode, tierListString, this.isBloodClash);
 
-            for (var i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++) {
                 p2_warlordSkillIds.push(+getRandomElement(availableSkills));
             }
         }
@@ -146,7 +146,7 @@ class BattleModel {
         this.player2 = new Player(2, "Player 2", new Formation(p2_formation), 1); // opp
         
         // create the cards        
-        for (var i = 0; i < 10; i++) {
+        for (i = 0; i < 10; i++) {
 
             if (i >= 5 && !this.isBloodClash) break;
             var p1_cardInfo = famDatabase[p1_cardIds[i]];
@@ -379,6 +379,8 @@ class BattleModel {
             case (ENUM.SkillCalcType.AGI):
                 baseDamage = getDamageCalculatedByAGI(attacker, target, ignorePosition);
                 break;
+            default:
+                throw new Error("Invalid calcType!");
         }
             
         // apply the multiplier
@@ -459,7 +461,6 @@ class BattleModel {
         if (Math.random() <= prob){
             target.setAffliction(type, option);
             var description = target.name + " is now " + ENUM.AfflictionType[type];
-            var maxTurn = 1;
 
             if (type == ENUM.AfflictionType.POISON) {
                 // needed since poison is stacked
@@ -759,7 +760,7 @@ class BattleModel {
 
         this.onDeathCards = [];
 
-        for (var i = 0; i < hasOnDeath.length; i++) {
+        for (i = 0; i < hasOnDeath.length; i++) {
             var card = hasOnDeath[i];
             var skill = card.getInherentOnDeathSkill();
             var data: SkillLogicData = {
@@ -777,7 +778,7 @@ class BattleModel {
             }
 
             skill = card.getBuffOnDeathSkill();
-            var data: SkillLogicData = {
+            data = {
                 executor: card,
                 skill: skill
             };
@@ -826,7 +827,7 @@ class BattleModel {
                 var battleDesc = "Decision win";
             } else {
                 this.playerWon = this.player2;
-                var battleDesc = "Decision loss";
+                battleDesc = "Decision loss";
             }
             this.isFinished = true;
 
@@ -950,10 +951,10 @@ class BattleModel {
             }
         }
         
-        for (var i = 0; i < p2cards.length; i++) {
+        for (i = 0; i < p2cards.length; i++) {
             var skill2 = p2cards[i].getRandomOpeningSkill();
             if (skill2) {
-                var data: SkillLogicData = {
+                data = {
                     executor: p2cards[i],
                     skill: skill2
                 };

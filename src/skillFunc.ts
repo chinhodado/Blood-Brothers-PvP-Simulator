@@ -146,7 +146,7 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.SKILL_PROBABILITY:
                     case ENUM.StatusType.WILL_ATTACK_AGAIN:
                     case ENUM.StatusType.ACTION_ON_DEATH:
-                        var buffAmount = skill.skillFuncArg1;
+                        buffAmount = skill.skillFuncArg1;
                         break;
                     case ENUM.StatusType.HP_SHIELD:
                         skillMod = skill.skillFuncArg1;
@@ -344,7 +344,7 @@ class AttackSkillLogic extends SkillLogic {
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
                 if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
-                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio)
+                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio);
                     protectSkillActivated = protectData.activated;
                     if (protectSkillActivated) {
                         aoeReactiveSkillActivated = true;
@@ -400,8 +400,8 @@ class AttackSkillLogic extends SkillLogic {
             // skill makes contact, must be fork/sweeping etc., so just proceed as normal
             // i.e. multiple protection is possible
             
-            for (var i = 0; i < targets.length && !executor.isDead; i++) {
-                var targetCard = targets[i];
+            for (i = 0; i < targets.length && !executor.isDead; i++) {
+                targetCard = targets[i];
 
                 // a target can be dead, for example from protecting another fam
                 if (targetCard.isDead) {
@@ -474,7 +474,7 @@ class AttackSkillLogic extends SkillLogic {
         }
 
         var healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healTargets.length);
-        for (var i = 0; i < healTargets.length; i++) {
+        for (i = 0; i < healTargets.length; i++) {
             this.battleModel.damageToTargetDirectly(healTargets[i], -1 * healAmount, " healing");
         }
     }

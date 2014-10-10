@@ -113,7 +113,7 @@ class RangeFactory {
     };
     
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
-        var range: BaseRange = null;
+        var range: BaseRange;
         if (this.isEnemyRandomRange(id)) {
             range = this.createEnemyRandomRange(id);
         }
@@ -154,7 +154,7 @@ class RangeFactory {
             var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
         }
         else if (this.isEnemyNearScaledRange(id)) {
-            var numTargets = RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
+            numTargets = RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
         }
         return new EnemyNearRange(id, numTargets);
     }
@@ -276,13 +276,12 @@ class BaseRange {
     getCondFunc(executor: Card): (x: Card)=>boolean {
         // by default, valid if card is not dead and belongs to the enemy
         return function (card: Card) {
-            var isValid = true;
 
             if (card.isDead || (card.getPlayerId() === executor.getPlayerId())) {
                 return false;
             }
 
-            return isValid;
+            return true;
         };
     }
 
@@ -496,7 +495,7 @@ class FriendRandomRange extends BaseRange {
     
     getTargets (executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[]{
         var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
-        var targets: Card[];
+        var targets: Card[] = [];
 
         if (baseTargets.length) {
 
@@ -521,7 +520,6 @@ class FriendRandomRange extends BaseRange {
         var includeSelf = this.includeSelf;
 
         return function (card: Card) {
-            var isValid = true;
 
             if (card.getPlayerId() != executor.getPlayerId())
                 return false;
@@ -535,7 +533,7 @@ class FriendRandomRange extends BaseRange {
             if (skillCondFunc && !skillCondFunc(card))
                 return false;
 
-            return isValid;
+            return true;
         };
     }
 }
