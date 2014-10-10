@@ -237,7 +237,7 @@ class Skill {
                 statuses.push(skillInfo.arg2);
                 if (skillInfo.arg3 && skillInfo.arg2 != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.arg3);
                 break;
-            // todo: add DEBUFF here
+            case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
