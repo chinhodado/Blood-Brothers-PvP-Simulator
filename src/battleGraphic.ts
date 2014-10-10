@@ -596,8 +596,6 @@ class BattleGraphic {
      */
     displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean; callback?} = {}) {
         var minorLog = this.logger.minorEventLog;
-        var majorLog = this.logger.majorEventLog;
-        var that = this;
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (!minorLog[majorIndex] || minorIndex >= minorLog[majorIndex].length) {
@@ -609,316 +607,396 @@ class BattleGraphic {
 
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
 
-        if (data.type == ENUM.MinorEventType.BATTLE_DESCRIPTION) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var txt = this.getMainBattleEffect().text(data.battleDesc).center(200, 300)
-                    .opacity(1).animate({duration: '3s'}).opacity(0);
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-            }
-
-            return;
+        switch (data.type) {
+            case ENUM.MinorEventType.TEXT:
+                if (minorIndex < minorLog[majorIndex].length) {
+                    this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                }
+                break;
+            case ENUM.MinorEventType.HP:
+                if (!data.executorId) {
+                    this.displayHpChangeEvent(majorIndex, minorIndex, option);
+                } 
+                else {
+                    // going and attack physically
+                    this.displayBattleEvent(majorIndex, minorIndex, option);
+                }
+                break;
+            case ENUM.MinorEventType.STATUS:
+                this.displayStatusEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.BC_ADDPROB:
+                this.displayBcAddProbEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.AFFLICTION:
+                this.displayAfflictionEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.RESERVE_SWITCH:
+                this.displayReserveSwitchEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.DESCRIPTION: // a description of a skill proc
+                this.displayDescriptionEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.REVIVE:
+                this.displayReviveEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.PROTECT: // a protect/defense, show it
+                this.displayProtectEvent(majorIndex, minorIndex, option);
+                break;
+            case ENUM.MinorEventType.BATTLE_DESCRIPTION:
+                this.displayBattleDescriptionEvent(majorIndex, minorIndex, option);
+                break;
+            default:
+                throw new Error("Invalid minor event type!");
         }
-            
-        if (!data.executorId && data.type != ENUM.MinorEventType.HP && data.type != ENUM.MinorEventType.AFFLICTION
-            && data.type != ENUM.MinorEventType.RESERVE_SWITCH && data.type != ENUM.MinorEventType.BC_ADDPROB) 
-        {
-            if (minorIndex < minorLog[majorIndex].length) {
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-            }
-            
-            return;
+    }
+
+    displayBattleDescriptionEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        if (minorIndex < minorLog[majorIndex].length) {
+            this.getMainBattleEffect().text(data.battleDesc).center(200, 300)
+                .opacity(1).animate({duration: '3s'}).opacity(0);
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
 
-        if (data.type == ENUM.MinorEventType.HP && !data.executorId) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var target = this.cardMan.getCardById(data.targetId);
+        return;
+    }
 
-                this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+    displayStatusEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        if (minorIndex < minorLog[majorIndex].length) {
+            var target = this.cardMan.getCardById(data.targetId);
+
+            var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+            var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+
+            if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE ||
+                data.status.type == ENUM.StatusType.MAGIC_RESISTANCE ||
+                data.status.type == ENUM.StatusType.BREATH_RESISTANCE) 
+            {
+                var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type); 
+                ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
             }
+            else {
+                // display status text
 
-            return;
-        }
+                var fontSize = 18;
 
-        if (data.type == ENUM.MinorEventType.STATUS) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var target = this.cardMan.getCardById(data.targetId);
-
-                var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
-                var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
-
-                if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE ||
-                    data.status.type == ENUM.StatusType.MAGIC_RESISTANCE ||
-                    data.status.type == ENUM.StatusType.BREATH_RESISTANCE) 
-                {
-                    var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type); 
-                    ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
+                if (data.status.isDispelled) {
+                    var displayText = "dispelled";
+                }
+                else if (data.status.isClearDebuff) {
+                    displayText = "cleared";
+                }
+                else if (data.status.isAllUp) {
+                    displayText = "All Stats Up";
+                    fontSize = 15;
+                }
+                else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                    displayText = "EXTRA ACT";
+                }
+                else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
+                    displayText = "Revive On"; // for now
+                }
+                else if (data.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
+                    displayText = "Prob. Up";
+                }
+                else if (data.status.type == ENUM.StatusType.HP_SHIELD) {
+                    displayText = "HP Up";
                 }
                 else {
-                    // display status text
+                    // for stats buff, this does not really use the log
+                    var upDownText = data.amount < 0? " Down" : " Up";
+                    var statuses = Skill.getStatusModified(data.skillId);
+                    displayText = ENUM.StatusType[statuses[0]] + upDownText;
 
-                    var fontSize = 18;
-
-                    if (data.status.isDispelled) {
-                        var displayText = "dispelled";
+                    // hacky
+                    if (statuses[1]) {
+                        var displayText2 = ENUM.StatusType[statuses[1]] + upDownText;
+                        displayText = displayText + "\n" + displayText2;
                     }
-                    else if (data.status.isClearDebuff) {
-                        displayText = "cleared";
-                    }
-                    else if (data.status.isAllUp) {
-                        displayText = "All Stats Up";
-                        fontSize = 15;
-                    }
-                    else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
-                        displayText = "EXTRA ACT";
-                    }
-                    else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
-                        displayText = "Revive On"; // for now
-                    }
-                    else if (data.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
-                        displayText = "Prob. Up";
-                    }
-                    else if (data.status.type == ENUM.StatusType.HP_SHIELD) {
-                        displayText = "HP Up";
-                    }
-                    else {
-                        // for stats buff, this does not really use the log
-                        var upDownText = data.amount < 0? " Down" : " Up";
-                        var statuses = Skill.getStatusModified(data.skillId);
-                        displayText = ENUM.StatusType[statuses[0]] + upDownText;
-
-                        // hacky
-                        if (statuses[1]) {
-                            var displayText2 = ENUM.StatusType[statuses[1]] + upDownText;
-                            displayText = displayText + "\n" + displayText2;
-                        }
-                    }
+                }
                     
-                    var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
-                    damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
-                        .opacity(1).animate({delay: '0.5s'}).opacity(0);
-                }
-
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
+                    .opacity(1).animate({delay: '0.5s'}).opacity(0);
             }
 
-            return;
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
 
-        if (data.type == ENUM.MinorEventType.BC_ADDPROB) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                // we don't care about showing the text for reserve fams
-                if (data.bcAddProb.isMain) {
-                    var target = this.cardMan.getCardById(data.bcAddProb.targetId);
-                    var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
-                    var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+        return;
+    }
 
-                    var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
-                    damageText.text("+10%").center(center_x, center_y).font({ size: 25})
-                        .opacity(1).animate({delay: '2s'}).opacity(0);
-                }
+    displayReviveEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
 
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-            }
-
-            return;
-        }
-
-        if (data.type == ENUM.MinorEventType.AFFLICTION) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var target = this.cardMan.getCardById(data.targetId);
-                this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
-
-                this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-            }
-
-            return;
-        }
-
-        if (data.type == ENUM.MinorEventType.RESERVE_SWITCH) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var main = this.cardMan.getCardById(data.reserveSwitch.mainId);
-                var reserve = this.cardMan.getCardById(data.reserveSwitch.reserveId);
-                var group = this.getCardImageGroup(main);
-                var mainId = main.getPlayerId();
-
-                var image: any = this.getCardImage(main);
-                var newLink = getScaledWikiaImageLink(reserve.imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
-                image.load(newLink);
-
-                var y_offset = mainId == 1? 255 : -255;
-                group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
-                    that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                });
-                
-                this.displayHP(100, mainId, main.formationColumn, 0);
-                this.getAfflictionText(mainId, main.formationColumn).hide();
-            }
-
-            return;
-        }
-
-        // going and attack physically
         var executor = this.cardMan.getCardById(data.executorId);
         var executorGroup: any = this.getCardImageGroup(executor);
+        // move the executor's group to the front
         executorGroup.front();
+        SVG.get('p' + executor.getPlayerId() + 'group').front();
 
+        if (minorIndex < minorLog[majorIndex].length) {
+            var target = this.cardMan.getCardById(data.targetId);
+            var playerId = target.getPlayerId();
+            var index = target.formationColumn;
+            var center_x = this.coordArray[playerId][index][0];
+            var center_y = this.coordArray[playerId][index][1];
+
+            var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
+            damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
+                .opacity(1).animate({delay: '0.5s'}).opacity(0);
+            this.displayHP(data.reviveHPRatio * 100, playerId, index);
+            this.getAfflictionText(playerId, index).hide();
+
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+        }
+
+        return;
+    }
+
+    displayProtectEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        var that = this;
+        var executor = this.cardMan.getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroup(executor);
         var x1 = executorGroup.rbox().x;
         var y1 = executorGroup.rbox().y;
 
         // move the executor's group to the front
+        executorGroup.front();
         SVG.get('p' + executor.getPlayerId() + 'group').front();
 
-        // a description of a skill proc
-        if (data.type == ENUM.MinorEventType.DESCRIPTION) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                
-                if (!data.noProcEffect) {
-                    this.displayProcSkill(executor.id, data.skillId, {
-                        callback: function() {
-                            that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                        },
-                        durationRatio: 0.5,
-                    });                
-                }
-                else {
-                    // just need to display the skill text, and have to call the next event ourselves
-                    this.displayProcSkill(executor.id, data.skillId, {
-                        noProcEffect: true
-                    });
-                    this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
-                }
+        if (minorIndex < minorLog[majorIndex].length) {
+            var protectedCard = this.cardMan.getCardById(data.protect.protectedId);
+            var protectedGroup = this.getCardImageGroup(protectedCard);
+
+            var attackerCard = this.cardMan.getCardById(data.protect.attackerId);
+            var attackerGroup = this.getCardImageGroup(attackerCard);
+
+            var x_protected = protectedGroup.rbox().x;
+            var y_protected = protectedGroup.rbox().y;
+
+            var x_attacker = attackerGroup.rbox().x;
+            var y_attacker = attackerGroup.rbox().y;
+
+            //display the skill text, but not proc effect
+            this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
+
+            var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
+            if (executor.getPlayerId() == 1) {
+                y_offset *= -1; //reverse for p1
             }
 
-            return;
+            var moveTime = 0.5;
+            var moveBackTime = 0.5;
+            if (data.protect.counter && Skill.isIndirectSkill(data.protect.counteredSkillId)) {
+                moveTime = 0.1;
+                moveBackTime = 0.1;
+            }
+
+            var nextData = minorLog[majorIndex][minorIndex + 1];
+            var explosion = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'explosion');
+
+            // animation for the protect. Also use the next MinorEvent's information.
+            // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
+            // if the protect fam is dead or if there's no counter
+            //
+            // e.g. if counter: [x procs y to protect z] -> [x receives n damage] -> [x counters w, w lost k damage]
+            //      if not counter or dead, third event becomes [something do something]
+            executorGroup.animate({ duration: moveTime + 's' })
+                .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
+                .after(function () {
+                    if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
+
+                        var exploDuration = 0.2;
+                        if (Skill.isWisAutoAttack(nextData.skillId)) {
+                            var procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'spellCircle');
+                            procEffect.animate({duration: '0.2s'}).opacity(1);
+                            exploDuration = 0.5;
+                        }
+                        else if (Skill.isAtkAutoAttack(nextData.skillId)) {
+                            procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'lineSpark');
+                            procEffect.animate({duration: '0.2s'}).opacity(1);
+                            exploDuration = 0.5;
+                        }
+
+                        explosion.animate({ duration: exploDuration + 's' }).opacity(1)
+                            .after(function() {
+                                explosion.opacity(0);
+                                    
+                                if (procEffect) {
+                                    procEffect.remove();
+                                }
+
+                                that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+                                    
+                                executorGroup.animate({ duration: moveBackTime + 's'})
+                                    .move(0, 0)
+                                    .after(function(){                                    
+                                        that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                    });
+                            });                            
+                    }
+                    else { // receive damage physically - need to move the attacker also
+                        SVG.get('p' + attackerCard.getPlayerId() + 'group').front();
+                        attackerGroup.animate({ duration: '0.5s' })
+                            .move(executorGroup.rbox().x - x_attacker, executorGroup.rbox().y - y_attacker)
+                            .after(function () {
+                                explosion.opacity(1);           
+                                            
+                                that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
+
+                                attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
+
+                                executorGroup.animate({ duration: moveBackTime + 's'})
+                                    .move(0, 0)
+                                    .after(function(){
+                                        explosion.opacity(0);                               
+                                        that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
+                                    });
+                            });    
+                    }
+                });
         }
 
-        if (data.type == ENUM.MinorEventType.REVIVE) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var target = this.cardMan.getCardById(data.targetId);
-                var playerId = target.getPlayerId();
-                var index = target.formationColumn;
-                var center_x = this.coordArray[playerId][index][0];
-                var center_y = this.coordArray[playerId][index][1];
+        return;
+    }
 
-                var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
-                damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
-                    .opacity(1).animate({delay: '0.5s'}).opacity(0);
-                this.displayHP(data.reviveHPRatio * 100, playerId, index);
-                this.getAfflictionText(playerId, index).hide();
+    displayReserveSwitchEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        var that = this;
+        if (minorIndex < minorLog[majorIndex].length) {
+            var main = this.cardMan.getCardById(data.reserveSwitch.mainId);
+            var reserve = this.cardMan.getCardById(data.reserveSwitch.reserveId);
+            var group = this.getCardImageGroup(main);
+            var mainId = main.getPlayerId();
 
+            var image: any = this.getCardImage(main);
+            var newLink = getScaledWikiaImageLink(reserve.imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
+            image.load(newLink);
+
+            var y_offset = mainId == 1? 255 : -255;
+            group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
+                that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+            });
+                
+            this.displayHP(100, mainId, main.formationColumn, 0);
+            this.getAfflictionText(mainId, main.formationColumn).hide();
+        }
+
+        return;
+    }
+
+    displayDescriptionEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        var that = this;
+
+        var executor = this.cardMan.getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroup(executor);
+        // move the executor's group to the front
+        executorGroup.front();
+        SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        if (minorIndex < minorLog[majorIndex].length) {
+            if (!data.noProcEffect) {
+                this.displayProcSkill(executor.id, data.skillId, {
+                    callback: function() {
+                        that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+                    },
+                    durationRatio: 0.5,
+                });                
+            }
+            else {
+                // just need to display the skill text, and have to call the next event ourselves
+                this.displayProcSkill(executor.id, data.skillId, {
+                    noProcEffect: true
+                });
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
-
-            return;
         }
 
-        // a protect/defense, show it
-        if (data.type == ENUM.MinorEventType.PROTECT) {
-            if (minorIndex < minorLog[majorIndex].length) {
-                var protectedCard = this.cardMan.getCardById(data.protect.protectedId);
-                var protectedGroup = this.getCardImageGroup(protectedCard);
+        return;
+    }
 
-                var attackerCard = this.cardMan.getCardById(data.protect.attackerId);
-                var attackerGroup = this.getCardImageGroup(attackerCard);
+    displayBcAddProbEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        if (minorIndex < minorLog[majorIndex].length) {
+            // we don't care about showing the text for reserve fams
+            if (data.bcAddProb.isMain) {
+                var target = this.cardMan.getCardById(data.bcAddProb.targetId);
+                var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+                var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-                var x_protected = protectedGroup.rbox().x;
-                var y_protected = protectedGroup.rbox().y;
-
-                var x_attacker = attackerGroup.rbox().x;
-                var y_attacker = attackerGroup.rbox().y;
-
-                //display the skill text, but not proc effect
-                this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
-
-                var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
-                if (executor.getPlayerId() == 1) {
-                    y_offset *= -1; //reverse for p1
-                }
-
-                var moveTime = 0.5;
-                var moveBackTime = 0.5;
-                if (data.protect.counter && Skill.isIndirectSkill(data.protect.counteredSkillId)) {
-                    moveTime = 0.1;
-                    moveBackTime = 0.1;
-                }
-
-                var nextData = minorLog[majorIndex][minorIndex + 1];
-                var explosion = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'explosion');
-
-                // animation for the protect. Also use the next MinorEvent's information.
-                // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
-                // if the protect fam is dead or if there's no counter
-                //
-                // e.g. if counter: [x procs y to protect z] -> [x receives n damage] -> [x counters w, w lost k damage]
-                //      if not counter or dead, third event becomes [something do something]
-                executorGroup.animate({ duration: moveTime + 's' })
-                    .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
-                    .after(function () {
-                        if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
-
-                            var exploDuration = 0.2;
-                            if (Skill.isWisAutoAttack(nextData.skillId)) {
-                                var procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'spellCircle');
-                                procEffect.animate({duration: '0.2s'}).opacity(1);
-                                exploDuration = 0.5;
-                            }
-                            else if (Skill.isAtkAutoAttack(nextData.skillId)) {
-                                procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'lineSpark')
-                                procEffect.animate({duration: '0.2s'}).opacity(1);
-                                exploDuration = 0.5;
-                            }
-
-                            explosion.animate({ duration: exploDuration + 's' }).opacity(1)
-                                .after(function() {
-                                    explosion.opacity(0);
-                                    
-                                    if (procEffect) {
-                                        procEffect.remove();
-                                    }
-
-                                    that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
-                                    
-                                    executorGroup.animate({ duration: moveBackTime + 's'})
-                                        .move(0, 0)
-                                        .after(function(){                                    
-                                            that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
-                                        });
-                                });                            
-                        }
-                        else { // receive damage physically - need to move the attacker also
-                            SVG.get('p' + attackerCard.getPlayerId() + 'group').front();
-                            attackerGroup.animate({ duration: '0.5s' })
-                                .move(executorGroup.rbox().x - x_attacker, executorGroup.rbox().y - y_attacker)
-                                .after(function () {
-                                    explosion.opacity(1);           
-                                            
-                                    that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
-
-                                    attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
-
-                                    executorGroup.animate({ duration: moveBackTime + 's'})
-                                        .move(0, 0)
-                                        .after(function(){
-                                            explosion.opacity(0);                               
-                                            that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
-                                        });
-                                });    
-                        }
-                    });
+                var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                damageText.text("+10%").center(center_x, center_y).font({ size: 25})
+                    .opacity(1).animate({delay: '2s'}).opacity(0);
             }
 
-            return;
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
+
+        return;
+    }
+
+    displayAfflictionEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        if (minorIndex < minorLog[majorIndex].length) {
+            var target = this.cardMan.getCardById(data.targetId);
+            this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+        }
+
+        return;
+    }
+
+    /**
+     * For non-battle HP change
+     */
+    displayHpChangeEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        if (minorIndex < minorLog[majorIndex].length) {
+            var target = this.cardMan.getCardById(data.targetId);
+
+            this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
+            this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
+        }
+
+        return;
+    }
+
+    displayBattleEvent(majorIndex: number, minorIndex: number, option) {
+        var minorLog = this.logger.minorEventLog;
+        var majorLog = this.logger.majorEventLog;
+        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        var that = this;
 
         var target = this.cardMan.getCardById(data.targetId);
         var targetGroup: any = this.getCardImageGroup(target);
-
         var x = targetGroup.rbox().x;
         var y = targetGroup.rbox().y;
 
-        var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
+        var executor = this.cardMan.getCardById(data.executorId);
+        var executorGroup: any = this.getCardImageGroup(executor);
+        var x1 = executorGroup.rbox().x;
+        var y1 = executorGroup.rbox().y;
 
+        // move the executor's group to the front
+        executorGroup.front();
+        SVG.get('p' + executor.getPlayerId() + 'group').front();
+
+        var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
         if (Skill.isAoeSkill(data.skillId)) {
             var exploSet = [];
 
@@ -927,7 +1005,7 @@ class BattleGraphic {
                 var aoeTargets = this.logger.getTargetsInMajorEvent(majorIndex);
             }
             else { //hacky, for nested AoE (slagh, phantom ass, fate)
-                var aoeTargets = this.logger.getNestedTargetsInMajorEvent(majorIndex, minorIndex);
+                aoeTargets = this.logger.getNestedTargetsInMajorEvent(majorIndex, minorIndex);
                 var isNested = true;
             }
 
@@ -979,7 +1057,7 @@ class BattleGraphic {
                     }
                 }
 
-                for (var i = 0; i < exploSet.length; i++) {
+                for (i = 0; i < exploSet.length; i++) {
                     // specify a callback for the last explosion animation
                     if (i == exploSet.length - 1) {
                         var callback = getCallback(that, majorIndex, minorIndex, option, target, procEffect, exploSet)

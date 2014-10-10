@@ -537,7 +537,7 @@ class BattleLogger {
 interface MinorEvent {
     executorId?: number;  // the card id of the executor
     targetId?: number;    // the card id of the target
-    type?: ENUM.MinorEventType;
+    type: ENUM.MinorEventType;
     noProcEffect?: boolean; // specify true if don't want the proc effect to be displayed
     wardUsed?: ENUM.WardType;
     missed?: boolean;
