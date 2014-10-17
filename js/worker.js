@@ -1,10 +1,12 @@
 importScripts('../compiled.js');
+importScripts('helper.js');
 
 /**
  * Run a heavy simulation in the background
  * @param data The game data
  */
 function runSimulation(args) {
+    prepareRandom();
     var p1WinCount = 0;
     var p2WinCount = 0;
     for (var i = 0; i < 10000; i++) {

@@ -239,6 +239,16 @@ function getBattleDataOption() {
     return [data, option];
 }
 
+function prepareRandom() {
+    var USE_CS_RND = false;
+    if (USE_CS_RND) {
+        var rnd = new CsRandom(1234);
+        Math.random = function () {
+            return rnd.nextDouble();
+        }
+    }
+}
+
 // fetch the tier list and cache it
 function getTierList(whatToDoNext) {
     if (whatToDoNext == "debug") {
