@@ -152,15 +152,18 @@
                     document.getElementById("progressBar").setAttribute("value", event.data.progress);
                 }
                 else if (event.data.status == "done") {
+                    var endTime = performance.now();
                     document.getElementById("progressBar").setAttribute("value", 10000);
                     document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount +
                         "<br> Player 1 won: " + event.data.p1WinCount +
+                        "<br><br> Time: " + ((endTime - startTime)/1000).toFixed(2) + "s" +
                         "<br><a href=setting.html>Go back to main page </a>");
                     worker.terminate();
                 }
             };
             // start the worker. Need to pass the tierList information in since the worker 
             // can't access sessionStorage
+            var startTime = performance.now();
             worker.postMessage([data, option, sessionStorage.tierList]);
         }
 
