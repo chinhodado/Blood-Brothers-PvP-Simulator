@@ -3240,6 +3240,34 @@ var SkillDatabase = {
         desc: "Greatly lower AGI of all foes upon his death."
     },
 
+    601: {
+        name: "Veil of Night", type: 2, func: 3, calc: 3,
+        arg1: 1.85,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to four random foes."
+    },
+
+    602: {
+        name: "Cake Cutting", type: 2, func: 3, calc: 1,
+        arg1: 1.15, arg2: 1, arg3: 1, arg4: 10,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal venomous ATK-based damage to five random foes."
+    },
+
+    603: {
+        name: "Bandage Garotte", type: 2, func: 37, calc: 1,
+        arg1: 2.05, arg2: 0.15, arg3: 27, arg4: 21,
+        range: 16, prob: 30, ward: 1,
+        desc: "Massive ATK-based damage and drain HP from three random foes, ignoring position."
+    },
+
+    604: {
+        name: "Blindside", type: 2, func: 4, calc: 2,
+        arg1: 1.9,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -3460,6 +3488,41 @@ var SkillDatabase = {
     10035: {
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1.3,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10037: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        arg1: 1, arg2: 1, arg3: 0.5, arg4: 15,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes envenom target."
+    },
+
+    10038: {
+        name: "Standard Action", type: 2, func: 36, calc: 1,
+        arg1: 1, arg2: 0.4, arg3: 27, arg4: 21,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and drain HP from target."
+    },
+
+    10039: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1, arg2: 1, arg3: 0.5, arg4: 15,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes envenom target."
+    },
+
+    10040: {
+        name: "Standard Action", type: 2, func: 37, calc: 1,
+        arg1: 1, arg2: 0.2, arg3: 27, arg4: 21,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and drain HP from target."
+    },
+
+    10041: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1.2,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
     },

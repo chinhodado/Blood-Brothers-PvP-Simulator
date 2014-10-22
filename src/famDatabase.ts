@@ -442,6 +442,13 @@ var famDatabase = {
         img: "img1$1/__cb20140213034945/$2/c/c7/Caassimolar%2C_the_Chimera_II_Figure.png",
         fullName: "Caassimolar, the Chimera II"
     },
+    11449: {
+        name: "Camazo", stats: [22628, 22585, 22173, 16139, 18208],
+        skills: [601, 445],
+        autoAttack: 10038,
+        img: "img2$1/__cb20141014080304/$2/6/6c/Camazo%2C_Knight_of_Bats_II_Figure.png",
+        fullName: "Camazo, Knight of Bats II"
+    },
     11119: {
         name: "Canhel", stats: [15608, 19606, 17992, 11329, 16399],
         skills: [293],
@@ -663,6 +670,13 @@ var famDatabase = {
         img: "img2$1/__cb20130430110741/$2/5/5f/Edgardo%2C_Grand_Inquisitor_II_Figure.png",
         fullName: "Edgardo, Grand Inquisitor II"
     },
+    11450: {
+        name: "Elsa", stats: [19010, 19021, 15132, 10018, 17851],
+        skills: [602],
+        autoAttack: 10039,
+        img: "img2$1/__cb20141014080304/$2/f/fe/Elsa%2C_Undead_Bride_II_Figure.png",
+        fullName: "Elsa, Undead Bride II"
+    },
     21276: {
         name: "Empusa", stats: [20706, 12623, 16110, 20999, 17510],
         skills: [447],
@@ -827,6 +841,13 @@ var famDatabase = {
         img: "img3$1/__cb20140515012432/$2/9/91/Ghislandi%2C_the_Unchained_II_Figure.png",
         fullName: "Ghislandi, the Unchained II"
     },
+    11453: {
+        name: "GCE", stats: [15100, 7564, 11403, 17254, 16609],
+        skills: [604],
+        autoAttack: 10007,
+        img: "img3$1/__cb20141014080306/$2/3/33/Ghost_Carriage_Express_II_Figure.png",
+        fullName: "Ghost Carriage Express II"
+    },
     11304: {
         name: "Gigantopithecus", stats: [24210, 25055, 21946, 13994, 15998],
         skills: [491],
@@ -948,6 +969,13 @@ var famDatabase = {
         skills: [232],
         img: "img1$1/__cb20130901131933/$2/9/98/Haokah%2C_the_Lightning_Brave_II_Figure.png",
         fullName: "Haokah, the Lightning Brave II"
+    },
+    11451: {
+        name: "Hatshepsut", stats: [17049, 16334, 13041, 6097, 16096],
+        skills: [603],
+        autoAttack: 10040,
+        img: "img2$1/__cb20141014080305/$2/b/bd/Hatshepsut%2C_Mummy_Queen_II_Figure.png",
+        fullName: "Hatshepsut, Mummy Queen II"
     },
     10951: {
         name: "Hecatoncheir", stats: [11807, 13902, 14768, 13928, 13366],
@@ -2341,7 +2369,7 @@ class FamiliarDatabase {
             // parse and make the whole tier list
             this.tierList = {};
             var allTierList = JSON.parse(allTierString);
-            var tierArray = ["tierX", "tierS+", "tierS", "tierA+", "tierA", "tierB", "tierC"];
+            var tierArray = ["X+", "X", "S+", "S", "A+", "A", "B", "C"];
 
             for (var i = 0; i < tierArray.length; i++) {
                 var tierNameList = [];
@@ -2385,33 +2413,38 @@ class FamiliarDatabase {
     }
 
     static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string) {
-        var tierX = this.getTierList("tierX", allTierString);
-        var tierSP = this.getTierList("tierS+", allTierString);
-        var tierS = this.getTierList("tierS", allTierString);
-        var tierAP = this.getTierList("tierA+", allTierString);
-        var tierA = this.getTierList("tierA", allTierString);
+        var tierXP = this.getTierList("X+", allTierString);
+        var tierX = this.getTierList("X", allTierString);
+        var tierSP = this.getTierList("S+", allTierString);
+        var tierS = this.getTierList("S", allTierString);
+        var tierAP = this.getTierList("A+", allTierString);
+        var tierA = this.getTierList("A", allTierString);
 
         switch (type) {
             case ENUM.RandomBrigType.ALL:
                 return this.getAllFamiliarList();
+            case ENUM.RandomBrigType.XP_ONLY:
+                return tierXP;
             case ENUM.RandomBrigType.X_ONLY:
                 return tierX;
+            case ENUM.RandomBrigType.X_UP:
+                return tierX.concat(tierXP);
             case ENUM.RandomBrigType.SP_ONLY:
                 return tierSP;
             case ENUM.RandomBrigType.SP_UP:
-                return tierSP.concat(tierX);
+                return tierSP.concat(tierX).concat(tierXP);
             case ENUM.RandomBrigType.S_ONLY:
                 return tierS;
             case ENUM.RandomBrigType.S_UP:
-                return tierS.concat(tierSP.concat(tierX));
+                return tierS.concat(tierSP).concat(tierX).concat(tierXP);
             case ENUM.RandomBrigType.AP_ONLY:
                 return tierAP;
             case ENUM.RandomBrigType.AP_UP:
-                return tierAP.concat(tierS.concat(tierSP.concat(tierX)));
+                return tierAP.concat(tierS).concat(tierSP).concat(tierX).concat(tierXP);
             case ENUM.RandomBrigType.A_ONLY:
                 return tierA;
             case ENUM.RandomBrigType.A_UP:
-                return tierA.concat(tierAP.concat(tierS.concat(tierSP.concat(tierX))));
+                return tierA.concat(tierAP).concat(tierS).concat(tierSP).concat(tierX).concat(tierXP);
             default:
                 throw new Error("Invalid brig random type");
         }

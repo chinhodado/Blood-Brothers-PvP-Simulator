@@ -240,30 +240,34 @@ module ENUM {
     }
 
     export enum RandomBrigType {
-        NONE = 0,
-        ALL = 1, 
-        X_ONLY = 2,
-        SP_ONLY = 3,
-        SP_UP = 4,
-        S_ONLY = 5,
-        S_UP = 6,
-        AP_ONLY = 7,
-        AP_UP = 8,
-        A_ONLY = 9,
-        A_UP = 10
+        NONE     = 0,
+        ALL      = 1,
+        XP_ONLY  = 2, 
+        X_ONLY   = 3,
+        X_UP     = 4,
+        SP_ONLY  = 5,
+        SP_UP    = 6,
+        S_ONLY   = 7,
+        S_UP     = 8,
+        AP_ONLY  = 9,
+        AP_UP    = 10,
+        A_ONLY   = 11,
+        A_UP     = 12
     }
 
     export enum RandomBrigText {
-        "all" = 1,
-        "Tier X" = 2,
-        "Tier S+" = 3,
-        "Tier S+ and up" = 4,
-        "Tier S" = 5,
-        "Tier S and up" = 6,
-        "Tier A+" = 7,
-        "Tier A+ and up" = 8,
-        "Tier A" = 9,
-        "Tier A and up" = 10
+        "all"            = 1,
+        "Tier X+"        = 2,
+        "Tier X"         = 3,
+        "Tier X and up"  = 4,
+        "Tier S+"        = 5,
+        "Tier S+ and up" = 6,
+        "Tier S"         = 7,
+        "Tier S and up"  = 8,
+        "Tier A+"        = 9,
+        "Tier A+ and up" = 10,
+        "Tier A"         = 11,
+        "Tier A and up"  = 12
     }
 
     export enum MinorEventType {

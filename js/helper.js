@@ -270,7 +270,7 @@ function getTierList(whatToDoNext) {
     if (!sessionStorage.tierList) {
         console.log("Fetching tier list...");
         $.ajax({
-            "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
+            "url": "https://www.kimonolabs.com/api/cs76o38w?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
             "crossDomain": true,
             "dataType": "jsonp"
         });

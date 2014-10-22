@@ -380,7 +380,9 @@ class BattleLogger {
     getRandomModeText(type: ENUM.RandomBrigType): string {
         switch (type) {
             case ENUM.RandomBrigType.ALL:
+            case ENUM.RandomBrigType.XP_ONLY:
             case ENUM.RandomBrigType.X_ONLY:
+            case ENUM.RandomBrigType.X_UP:
             case ENUM.RandomBrigType.SP_ONLY:
             case ENUM.RandomBrigType.SP_UP:
             case ENUM.RandomBrigType.S_ONLY:

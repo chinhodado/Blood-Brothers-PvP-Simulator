@@ -3,14 +3,7 @@
     var src = {};
 
     for (var i = 0; i < data.length; i++) {
-        //var hpPOPE = data[i].popeHp;
-        //var atkPOPE = data[i].popeAtk;
-        //var defPOPE = data[i].popeDef;
-        //var wisPOPE = data[i].popeWis;
-        //var agiPOPE = data[i].popeAgi;
-
         src[data[i].id] = data[i];
-            //[hpPOPE, atkPOPE, defPOPE, wisPOPE, agiPOPE];
     }
 
     // check with our db
