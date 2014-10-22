@@ -105,6 +105,7 @@ class Skill {
 
         // generally, indirect skills are position independent
         // however, kill skills are indirect (do not make contact) but not position independent
+        // No need to use this for WIS-based skills since they are always pos. independent
         return this.isIndirectSkill(skillId) && skillInfo.func != ENUM.SkillFunc.KILL;
     }
 

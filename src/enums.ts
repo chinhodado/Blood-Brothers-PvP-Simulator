@@ -56,7 +56,8 @@ module ENUM {
         DRAIN_MAGIC = 37, // same as 36
         ONHIT_DEBUFF = 38, //arg1: multi, arg2: type1, arg3: type2, arg4: flat amount debuff (-100*x), arg5: max no. of executions
         ONHIT_BUFF = 39,
-        CLEAR_DEBUFF = 40
+        CLEAR_DEBUFF = 40,
+        COUNTER_INDIRECT = 41
     }
     
     /**

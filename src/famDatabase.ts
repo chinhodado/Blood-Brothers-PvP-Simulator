@@ -1340,6 +1340,13 @@ var famDatabase = {
         img: "img3$1/__cb20140221092054/$2/4/46/Magdal%2C_Dragonmaster_II_Figure.png",
         fullName: "Magdal, Dragonmaster II"
     },
+    11429: {
+        name: "Maisie", stats: [19194, 19097, 16258, 8101, 17905],
+        skills: [599, 600],
+        autoAttack: 10037,
+        img: "img1$1/__cb20141011104105/$2/d/da/Maisie%2C_Grimoire_Keeper_II_Figure.png",
+        fullName: "Maisie, Grimoire Keeper II"
+    },
     10365: {
         name: "Makalipon", stats: [10343, 8405, 10611, 12280, 10343],
         skills: [60],

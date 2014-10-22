@@ -3240,6 +3240,20 @@ var SkillDatabase = {
         desc: "Greatly lower AGI of all foes upon his death."
     },
 
+    599: {
+        name: "Poisoned Wine", type: 2, func: 4, calc: 1,
+        arg1: 1.2, arg2: 4, arg3: 0.3,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to six random foes and sometimes disable them, ignoring position."
+    },
+
+    600: {
+        name: "Poison-Laced Hood", type: 3, func: 41, calc: 1,
+        arg1: 1.8, arg2: 1, arg3: 1, arg4: 20,
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance of poisonous counter attack (20% of max HP) when struck, ignoring position."
+    },
+
     601: {
         name: "Veil of Night", type: 2, func: 3, calc: 3,
         arg1: 1.85,

@@ -29,6 +29,7 @@
             case ENUM.SkillFunc.PROTECT_COUNTER:
                 return new ProtectCounterSkillLogic();
             case ENUM.SkillFunc.COUNTER:
+            case ENUM.SkillFunc.COUNTER_INDIRECT:
                 return new CounterSkillLogic();
             case ENUM.SkillFunc.COUNTER_DISPELL:
                 return new CounterDispellSkillLogic();
@@ -622,9 +623,7 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
 }
 
 class CounterSkillLogic extends SkillLogic {
-
     execute(data: SkillLogicData) {
-
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
@@ -639,6 +638,10 @@ class CounterSkillLogic extends SkillLogic {
             skill: data.skill, 
             additionalDescription: data.executor.name + " counters " + data.attacker.name + "! ",
         });
+
+        if (!data.executor.justMissed && !data.attacker.justEvaded && !data.attacker.isDead) {
+            this.battleModel.processAffliction(data.executor, data.attacker, data.skill);
+        }
     }
 }
 
