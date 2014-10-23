@@ -33,21 +33,13 @@ class CardManager {
     getSortFunc(type: ENUM.BattleTurnOrderType): (a: Card, b: Card)=>number {
         switch (type) {
             case ENUM.BattleTurnOrderType.AGI:
-                return function (a: Card, b: Card) {
-                    return b.getAGI() - a.getAGI(); // descending based on agi
-                };
+                return (a: Card, b: Card) => b.getAGI() - a.getAGI(); // descending based on agi
             case ENUM.BattleTurnOrderType.ATK:
-                return function (a: Card, b: Card) {
-                    return b.getATK() - a.getATK(); // descending based on atk
-                };
+                return (a: Card, b: Card) => b.getATK() - a.getATK(); // descending based on atk
             case ENUM.BattleTurnOrderType.DEF:
-                return function (a: Card, b: Card) {
-                    return b.getDEF() - a.getDEF(); // descending based on def
-                };
+                return (a: Card, b: Card) => b.getDEF() - a.getDEF(); // descending based on def
             case ENUM.BattleTurnOrderType.WIS:
-                return function (a: Card, b: Card) {
-                    return b.getWIS() - a.getWIS(); // descending based on wis
-                };
+                return (a: Card, b: Card) => b.getWIS() - a.getWIS(); // descending based on wis
             default:
                 // no HP for now
                 throw new Error("Invalid turn order type!");
@@ -66,10 +58,7 @@ class CardManager {
             copy.push(playerCards[i]);
         }
 
-        copy.sort(function (a: Card, b: Card) {
-            return a.procIndex - b.procIndex; // ascending based on proc index
-        });
-
+        copy.sort((a: Card, b: Card) => a.procIndex - b.procIndex); // ascending based on proc index
         return copy;
     }
     

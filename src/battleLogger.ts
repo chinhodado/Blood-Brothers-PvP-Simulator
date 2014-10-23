@@ -357,7 +357,7 @@ class BattleLogger {
             var p1res = cardManager.getPlayerOriginalReserveCards(battle.player1);
             var p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
 
-            for (var i = 0; i < 5; i++) {
+            for (i = 0; i < 5; i++) {
                 if (p1res[i].dbId != dbId1 || p2res[i].dbId != dbId2) {
                     needWarn = false;
                     break;

@@ -191,10 +191,10 @@ class BattleGraphic {
                 group.add(damageText);
                 group.add(explosion);
 
-                var click = function (arg) {
+                var click = arg => {
                     var cardMan = CardManager.getInstance();
                     var card = cardMan.getCurrentMainCardByIndex(arg[0], arg[1]);
-                    return function () {
+                    return () => {
                         showCardDetailDialog(cardMan.getCardInfoForDialog(card));
                     };
                 };
@@ -293,7 +293,7 @@ class BattleGraphic {
 
         if (!hpGradient) {
             // draw for full HP
-            hpGradient = draw.gradient('linear', function (stop) {
+            hpGradient = draw.gradient('linear', stop => {
                 stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1'); //<- hp gradient stop
                 stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2');
             }).attr('id', hpGradientId);
@@ -439,7 +439,7 @@ class BattleGraphic {
                 // I don't know how to create a standalone filter for reuse
                 // later, so I have to use this roundabout way. First set
                 // the filter to the image:
-                image.filter(function (add) {
+                image.filter(add => {
                     add.componentTransfer({
                         rgb: { type: 'linear', slope: 0.05 }
                     });
@@ -560,7 +560,7 @@ class BattleGraphic {
                 .after(function () {
                     this.animate({ duration: D1 + 's', delay: D05 + 's' })
                         .transform({a: 1, b: 0, c: 0, d: 1, e: cx - 1 * cx, f: cy - 1 * cy})
-                        .after(function(){
+                        .after(() => {
                             procEffect.opacity(0).remove();
                             if (option.callback) option.callback();
                         });
@@ -659,8 +659,6 @@ class BattleGraphic {
                 .opacity(1).animate({duration: '3s'}).opacity(0);
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     displayStatusEvent(majorIndex: number, minorIndex: number, option) {
@@ -726,8 +724,6 @@ class BattleGraphic {
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     displayReviveEvent(majorIndex: number, minorIndex: number, option) {
@@ -755,8 +751,6 @@ class BattleGraphic {
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     displayProtectEvent(majorIndex: number, minorIndex: number, option) {
@@ -864,8 +858,6 @@ class BattleGraphic {
                     }
                 });
         }
-
-        return;
     }
 
     displayReserveSwitchEvent(majorIndex: number, minorIndex: number, option) {
@@ -890,8 +882,6 @@ class BattleGraphic {
             this.displayHP(100, mainId, main.formationColumn, 0);
             this.getAfflictionText(mainId, main.formationColumn).hide();
         }
-
-        return;
     }
 
     displayDescriptionEvent(majorIndex: number, minorIndex: number, option) {
@@ -922,8 +912,6 @@ class BattleGraphic {
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
         }
-
-        return;
     }
 
     displayBcAddProbEvent(majorIndex: number, minorIndex: number, option) {
@@ -943,8 +931,6 @@ class BattleGraphic {
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     displayAfflictionEvent(majorIndex: number, minorIndex: number, option) {
@@ -956,8 +942,6 @@ class BattleGraphic {
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     /**
@@ -972,8 +956,6 @@ class BattleGraphic {
             this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
-
-        return;
     }
 
     displayBattleEvent(majorIndex: number, minorIndex: number, option) {
@@ -1030,7 +1012,7 @@ class BattleGraphic {
                     exploDuration = 0.8;
                 }
                 else if (Skill.isAtkAutoAttack(data.skillId)) {
-                    procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark')
+                    procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark');
                     procEffect.animate({duration: '0.2s'}).opacity(1);
                     exploDuration = 0.8;
                 }
@@ -1069,10 +1051,10 @@ class BattleGraphic {
         }
         else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
 
-            var exploDuration = 0.2;
+            exploDuration = 0.2;
 
             if (Skill.isWisAutoAttack(data.skillId)) {
-                var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
+                procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
                 procEffect.animate({duration: '0.2s'}).opacity(1);
                 exploDuration = 0.4;
             }
@@ -1103,7 +1085,7 @@ class BattleGraphic {
 
                     this.animate({ duration: '0.5s'})
                         .move(0, 0)
-                        .after(function () {
+                        .after(() => {
                             explosion.opacity(0);
                             that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                         });

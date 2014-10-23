@@ -747,7 +747,7 @@ class BattleModel {
             return;
         }
         else if (nth === "FIRST" && currentCard.isMounted && !currentCard.isDead) {
-            return this.processActivePhase(currentCard, "SECOND");
+            this.processActivePhase(currentCard, "SECOND");
         }
     }
 

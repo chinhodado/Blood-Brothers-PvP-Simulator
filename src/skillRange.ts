@@ -275,12 +275,10 @@ class BaseRange {
 
     getCondFunc(executor: Card): (x: Card)=>boolean {
         // by default, valid if card is not dead and belongs to the enemy
-        return function (card: Card) {
-
+        return (card: Card) => {
             if (card.isDead || (card.getPlayerId() === executor.getPlayerId())) {
                 return false;
             }
-
             return true;
         };
     }
@@ -519,8 +517,7 @@ class FriendRandomRange extends BaseRange {
         var selectDead = this.selectDead;
         var includeSelf = this.includeSelf;
 
-        return function (card: Card) {
-
+        return (card: Card) => {
             if (card.getPlayerId() != executor.getPlayerId())
                 return false;
 

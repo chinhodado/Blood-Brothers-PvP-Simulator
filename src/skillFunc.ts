@@ -159,7 +159,6 @@ class BuffSkillLogic extends SkillLogic {
                 }
 
                 target.changeStatus(statusType, buffAmount, false, maxValue);
-                var description = target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount;
                 
                 this.logger.addMinorEvent({
                     executorId: executor.id, 
@@ -169,7 +168,7 @@ class BuffSkillLogic extends SkillLogic {
                         type: statusType,
                         isAllUp: skill.skillFuncArg2 == ENUM.StatusType.ALL_STATUS
                     },
-                    description: description, 
+                    description: target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount, 
                     amount: buffAmount,
                     skillId: skill.id
                 });
@@ -193,7 +192,7 @@ class DebuffSkillLogic extends SkillLogic {
 
 class ClearStatusSkillLogic extends SkillLogic {
 
-    condFunc = function (x: number) {return true;};
+    condFunc = (x: number) => true;
     isDispelled: boolean = false;
 
     willBeExecuted(data: SkillLogicData): boolean {
@@ -220,7 +219,6 @@ class ClearStatusSkillLogic extends SkillLogic {
         for (var i = 0; i < targets.length; i++) {
             targets[i].clearAllStatus(this.condFunc);
 
-            var desc = targets[i].name + (this.isDispelled? " is dispelled." : " is cleared of debuffs.");
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 targetId: targets[i].id,
@@ -230,7 +228,7 @@ class ClearStatusSkillLogic extends SkillLogic {
                     isDispelled: this.isDispelled,
                     isClearDebuff: !this.isDispelled
                 },
-                description: desc,
+                description: targets[i].name + (this.isDispelled? " is dispelled." : " is cleared of debuffs."),
                 skillId: data.skill.id
             });
         }
@@ -240,7 +238,7 @@ class ClearStatusSkillLogic extends SkillLogic {
 class DispellSkillLogic extends ClearStatusSkillLogic {
     constructor() {
         super();
-        this.condFunc = function (x: number) {return x > 0};
+        this.condFunc = (x: number) => x > 0;
         this.isDispelled = true;
     }
 }
@@ -248,7 +246,7 @@ class DispellSkillLogic extends ClearStatusSkillLogic {
 class ClearDebuffSkillLogic extends ClearStatusSkillLogic {
     constructor() {
         super();
-        this.condFunc = function (x: number) {return x < 0};
+        this.condFunc = (x: number) => x < 0;
         this.isDispelled = false;
     }
 }
@@ -647,7 +645,7 @@ class CounterSkillLogic extends SkillLogic {
 
 class CounterDispellSkillLogic extends ProtectSkillLogic {
 
-    condFunc = function (x: number) {return x > 0};
+    condFunc = (x: number) => x > 0;
 
     willBeExecuted(data: SkillLogicData): boolean {
         var targets = this.getValidTargets(data);
@@ -689,7 +687,6 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
         for (var i = 0; i < targets.length; i++) {
             targets[i].clearAllStatus(this.condFunc);
 
-            var desc = targets[i].name + " is dispelled.";
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 targetId: targets[i].id,
@@ -698,7 +695,7 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
                     type: 0, //dummy
                     isDispelled: true,
                 },
-                description: desc,
+                description: targets[i].name + " is dispelled.",
                 skillId: data.skill.id
             });
         }
@@ -771,11 +768,10 @@ class DrainSkillLogic extends SkillLogic {
 
         var targets = this.getValidTargets(data);
 
-        var desc = data.executor.name + " procs " + data.skill.name + ". ";
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
-            description: desc,
+            description: data.executor.name + " procs " + data.skill.name + ". ",
             skillId: data.skill.id
         });
 
@@ -826,9 +822,7 @@ class HealSkillLogic extends SkillLogic {
     }
 
     private getCondFunc() {
-        return function (card: Card): boolean {
-            return !card.isFullHealth();
-        };
+        return (card: Card): boolean => !card.isFullHealth();
     }
 
     execute(data: SkillLogicData) {
