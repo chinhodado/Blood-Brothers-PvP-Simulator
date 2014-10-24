@@ -232,15 +232,18 @@ class RangeFactory {
 class BaseRange {
    
     id: ENUM.SkillRange;
+
+    // these will be reset every time the skill/range is used
+    targets: Card[];
+    currentIndex: number;
     
     constructor(id: ENUM.SkillRange) {
         this.id = id;
     }
-    
-    getTargets(executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[] {
-        throw new Error("Implement this");
-    }
 
+    /**
+     * Get all targets that satisfy a condition
+     */
     getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
         var allCards = CardManager.getInstance().getAllMainCardsInPlayerOrder();
         var baseTargets = [];
@@ -252,17 +255,49 @@ class BaseRange {
         return baseTargets;
     }
 
-    // this is needed for the sake of random-targets skills
-    getAllPossibleTargets(executor: Card): Card[] {
-        return this.getTargets(executor);
+    /**
+     * For non-random skills, populate the targets[] array and reset the currentIndex
+     * This should be called at the beginning of every skill execution
+     */
+    getReady(executor: Card, skillCondFunc?: (card: Card) => boolean): void {
+        throw new Error("Implement this");
     }
 
+    /**
+     * Check if there is a valid target. Will call getReady() on the range so be careful.
+     * Don't use this in the middle of a skill execution.
+     */
+    hasValidTarget(executor: Card, condFunc?: (x: Card) => boolean): boolean {
+        // this is to initialize targets[]
+        this.getReady(executor, condFunc);
+
+        var hasValid = false;
+        if (condFunc) {
+            for (var i = 0; i < this.targets.length; i++) {
+                if (condFunc(this.targets[i])) {
+                    hasValid = true;
+                    break;
+                }
+            }
+        }
+        else {
+            hasValid = this.targets.length > 0;
+        }
+
+        return hasValid;
+    }
+
+    /* 
+     * Returns a random card from a list of cards
+     */
     getRandomCard(cards: Card[]): Card {
         return getRandomElement(cards);
     }
 
-    // returns a maximum of 'num' unique cards (shuffles and returns first n)
-    getRandomUniqueCards(cards: Card[], num: number) {
+    /* 
+     * Returns a maximum of 'num' unique cards (shuffles and returns first n)
+     */
+    getRandomUniqueCards(cards: Card[], num: number): Card[] {
         var len = cards.length;
         while (len) {
             var a = Math.floor(Math.random() * len);
@@ -273,8 +308,10 @@ class BaseRange {
         return cards.slice(0, num);
     }
 
+    /*
+     * Get the default conditional function (valid if card is not dead and belongs to the enemy)
+     */
     getCondFunc(executor: Card): (x: Card)=>boolean {
-        // by default, valid if card is not dead and belongs to the enemy
         return (card: Card) => {
             if (card.isDead || (card.getPlayerId() === executor.getPlayerId())) {
                 return false;
@@ -283,20 +320,32 @@ class BaseRange {
         };
     }
 
+    /**
+     * Return true if a card satisfies the dead condition
+     */
     satisfyDeadCondition(card: Card, selectDead: boolean): boolean {
         return (card.isDead && selectDead) || (!card.isDead && !selectDead);
+    }
+
+    /**
+     * Get the next target. Return undefined or null when there's no target left.
+     */
+    getTarget(executor: Card): Card {
+        return this.targets[this.currentIndex++];
     }
 }
 
 class BothSidesRange extends BaseRange {
     selectDead: boolean;
+
     constructor(id: ENUM.SkillRange, selectDead: boolean) {
         super(id);
         this.selectDead = selectDead;
     }
     
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
         var targets = [];
+        this.currentIndex = 0;
         
         var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && this.satisfyDeadCondition(leftCard, this.selectDead)) {
@@ -308,46 +357,72 @@ class BothSidesRange extends BaseRange {
             targets.push(rightCard);
         }
         
-        return targets;
+        this.targets = targets;
     }
 }
 
-class EnemyRandomRange extends BaseRange {
+class RandomRange extends BaseRange {
+    /**
+     * Only difference to the BaseRange version is that we use baseTargets instead of the range's targets[]
+     */
+    hasValidTarget(executor: Card, condFunc?: (x: Card) => boolean): boolean {
+        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
+        var hasValid = false;
+        if (condFunc) {
+            for (var i = 0; i < baseTargets.length; i++) {
+                if (condFunc(baseTargets[i])) {
+                    hasValid = true;
+                    break;
+                }
+            }
+        }
+        else {
+            hasValid = baseTargets.length > 0;
+        }
 
-    numTarget: number;
+        return hasValid;
+    }    
+}
+
+class EnemyRandomRange extends RandomRange {
+
+    private numTarget: number;
+    private numProcessed: number;
     
     constructor(id: ENUM.SkillRange, numTarget: number) {
         super(id);
         this.numTarget = numTarget;    
     }
 
-    // use this for determining if there is a target only
-    getTargets(executor: Card): Card[] {
-        return this.getBaseTargets(this.getCondFunc(executor));
+    getReady(executor: Card): void {
+        this.numProcessed = 0;
     }
 
-    getAllPossibleTargets(executor: Card): Card[] {
-        return this.getBaseTargets(this.getCondFunc(executor));
+    getTarget(executor: Card): Card {
+        if (this.numProcessed < this.numTarget) {
+            this.numProcessed++;
+            return this.getRandomCard(this.getBaseTargets(this.getCondFunc(executor)));
+        }
+        else {
+            return null;
+        }
     }
 }
 
 class EitherSideRange extends BothSidesRange {
-    
-    getTargets(executor: Card): Card[] {
-        var targets = super.getTargets(executor);
+    getReady(executor: Card): void {
+        super.getReady(executor);
         
-        if (targets.length === 0) {
-            return [];
-        }
-        else {
-            return [getRandomElement(targets)];
+        if (this.targets.length != 0) {
+            this.targets = [getRandomElement(this.targets)];
         }
     }
 }
 
 class RightRange extends BaseRange {
-    getTargets(executor : Card) : Card[] {
+    getReady(executor: Card): void {
         var targets = [];
+        this.currentIndex = 0;
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
         
         for (var i = executor.formationColumn + 1; i < 5; i++) {
@@ -356,7 +431,7 @@ class RightRange extends BaseRange {
             }
         }
         
-        return targets;
+        this.targets = targets;
     }
 }
 
@@ -367,20 +442,22 @@ class SelfRange extends BaseRange {
         this.selectDead = selectDead;
     }
 
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
         var targets = [];
+        this.currentIndex = 0;
 
         if (this.satisfyDeadCondition(executor, this.selectDead)) {
             targets.push(executor);
         }
 
-        return targets;
+        this.targets = targets;
     }
 }
 
 class SelfBothSidesRange extends BaseRange {
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
         var targets = [];
+        this.currentIndex = 0;
         
         var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
@@ -396,13 +473,14 @@ class SelfBothSidesRange extends BaseRange {
             targets.push(rightCard);
         }
         
-        return targets;
+        this.targets = targets;
     }
 }
 
 class AllRange extends BaseRange {
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
         var targets = [];
+        this.currentIndex = 0;
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
         
         for (var i = 0; i < partyCards.length; i++) {
@@ -410,7 +488,7 @@ class AllRange extends BaseRange {
                 targets.push(partyCards[i]);
             }
         }
-        return targets;
+        this.targets = targets;
     }
 }
 
@@ -431,12 +509,15 @@ class EnemyNearRange extends BaseRange {
         this.maxDistance = EnemyNearRange.MAX_DISTANCE_FROM_CENTER[numTarget];
     }
     
-    getTargets (executor: Card): Card[] {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
+
         // get center enemy
         var centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
 
         if (!centerEnemy) {
-            return [];
+            this.targets = [];
+            return;
         }
 
         var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
@@ -459,25 +540,26 @@ class EnemyNearRange extends BaseRange {
             }
         }
 
-        return targets;
+        this.targets = targets;
     }
 }
 
 class EnemyAllRange extends BaseRange {
-    getTargets (executor: Card): Card[]{
+    getReady(executor: Card): void {
         var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
         var targets = [];
+        this.currentIndex = 0;
         for (var i = 0; i < enemyCards.length; i++) {
             var currentEnemyCard = enemyCards[i];
             if (currentEnemyCard && !currentEnemyCard.isDead) {
                 targets.push(currentEnemyCard);
             }
         }
-        return targets;
+        this.targets = targets;
     }
 }
 
-class FriendRandomRange extends BaseRange {
+class FriendRandomRange extends RandomRange {
     numTargets: number;
     selectDead: boolean;
     isUnique: boolean;
@@ -491,9 +573,10 @@ class FriendRandomRange extends BaseRange {
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
     }
     
-    getTargets (executor: Card, skillCondFunc?: (card: Card)=>boolean): Card[]{
+    getReady(executor: Card, skillCondFunc?: (card: Card)=>boolean): void{
         var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
         var targets: Card[] = [];
+        this.currentIndex = 0;
 
         if (baseTargets.length) {
 
@@ -506,11 +589,7 @@ class FriendRandomRange extends BaseRange {
                 }
             }
         }
-        return targets;
-    }
-
-    getAllPossibleTargets(executor: Card): Card[] {
-        return this.getBaseTargets(this.getCondFunc(executor));
+        this.targets = targets;
     }
 
     getCondFunc(executor: Card, skillCondFunc?: (card: Card)=>boolean): (x: Card)=>boolean {
@@ -539,8 +618,8 @@ class BaseRowRange extends BaseRange {
 
     static ROW_TYPE_COUNT = 3;
     
-    getSameRowCards(cards: Card[], row: ENUM.FormationRow) {
-        var returnArr = [];
+    getSameRowCards(cards: Card[], row: ENUM.FormationRow): Card[] {
+        var returnArr: Card[] = [];
 
         for (var i = 0; i < cards.length; i++) {
             var card = cards[i];
@@ -552,8 +631,8 @@ class BaseRowRange extends BaseRange {
         return returnArr;
     }
 
-    getRowCandidates(cards: Card[], row: ENUM.FormationRow, isAsc: boolean) {
-        var candidates = [];
+    getRowCandidates(cards: Card[], row: ENUM.FormationRow, isAsc: boolean): Card[] {
+        var candidates: Card[] = [];
         if (!cards || cards.length === 0) {
             return candidates;
         }
@@ -581,7 +660,8 @@ class BaseRowRange extends BaseRange {
 }
 
 class EnemyFrontMidAllRange extends BaseRowRange {
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
@@ -593,26 +673,28 @@ class EnemyFrontMidAllRange extends BaseRowRange {
                 candidates = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
             }
         }
-        return candidates;
+        this.targets = candidates;
     }
 }
 
 class EnemyFrontAllRange extends BaseRowRange {
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);
         }
-        return candidates;
+        this.targets = candidates;
     }
 }
 
 class EnemyRearAllRange extends BaseRowRange {
-    getTargets(executor: Card): Card[] {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.REAR, false);
         }
-        return candidates;
+        this.targets = candidates;
     }
 }

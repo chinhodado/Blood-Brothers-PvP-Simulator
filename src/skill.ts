@@ -318,7 +318,11 @@ class Skill {
         return this.logic.execute(data);
     }
 
-    getTargets(executor: Card): Card[] {
-        return this.range.getTargets(executor);
+    getTarget(executor: Card): Card {
+        return this.range.getTarget(executor);
+    }
+
+    getReady(executor: Card): void {
+        this.range.getReady(executor);
     }
 }

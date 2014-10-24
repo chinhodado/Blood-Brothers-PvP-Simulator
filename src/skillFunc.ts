@@ -98,14 +98,14 @@ class SkillLogic {
 class BuffSkillLogic extends SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets: Card[] = data.skill.range.getTargets(data.executor);
-        return super.willBeExecuted(data) && targets && (targets.length > 0);
+        var hasTarget = data.skill.range.hasValidTarget(data.executor);
+        return super.willBeExecuted(data) && hasTarget;
     }
 
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
-        var targets: Card[] = skill.range.getTargets(executor);
+        skill.getReady(executor);
 
         // get a list of things to buff
         if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
@@ -123,9 +123,9 @@ class BuffSkillLogic extends SkillLogic {
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
         var baseStat = executor.getStat(basedOnStatType);
 
-        for (var i = 0; i < targets.length; i++) {
+        var target: Card;
+        while (target = skill.getTarget(executor)) {
             for (var j = 0; j < statusToBuff.length; j++) {
-                var target = targets[i];
                 var statusType = statusToBuff[j];
 
                 switch (statusType) {
@@ -181,11 +181,11 @@ class DebuffSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
+        skill.getReady(executor);
            
-        var targets: Card[] = skill.range.getTargets(executor);
-            
-        for (var i = 0; i < targets.length; i++) {
-            this.battleModel.processDebuff(executor, targets[i], skill);
+        var target: Card;
+        while (target = skill.getTarget(executor)) {
+            this.battleModel.processDebuff(executor, target, skill);
         }
     }
 }
@@ -196,39 +196,31 @@ class ClearStatusSkillLogic extends SkillLogic {
     isDispelled: boolean = false;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = this.getValidTargets(data);
-        return super.willBeExecuted(data) && (targets.length > 0);
+        var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
+        return super.willBeExecuted(data) && hasValidTarget;
     }
 
-    getValidTargets(data: SkillLogicData): Card[] {
-        var rangeTargets = data.skill.getTargets(data.executor);
-        var validTargets = [];
-
-        for (var i = 0; i < rangeTargets.length; i++) {
-            if (rangeTargets[i].hasStatus(this.condFunc)) {
-                validTargets.push(rangeTargets[i]);
-            }
-        }
-
-        return validTargets;
+    private getCondFunc() {
+        return (card: Card): boolean => card.hasStatus(this.condFunc);
     }
 
     execute(data: SkillLogicData) {
-        var targets = this.getValidTargets(data);
+        data.skill.getReady(data.executor);
+        var target: Card;
 
-        for (var i = 0; i < targets.length; i++) {
-            targets[i].clearAllStatus(this.condFunc);
+        while (target = data.skill.getTarget(data.executor)) {
+            target.clearAllStatus(this.condFunc);
 
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
-                targetId: targets[i].id,
+                targetId: target.id,
                 type: ENUM.MinorEventType.STATUS,
                 status: {
                     type: 0, //dummy
                     isDispelled: this.isDispelled,
                     isClearDebuff: !this.isDispelled
                 },
-                description: targets[i].name + (this.isDispelled? " is dispelled." : " is cleared of debuffs."),
+                description: target.name + (this.isDispelled? " is dispelled." : " is cleared of debuffs."),
                 skillId: data.skill.id
             });
         }
@@ -253,10 +245,11 @@ class ClearDebuffSkillLogic extends ClearStatusSkillLogic {
 
 class AfflictionSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
-        var targets = data.skill.range.getTargets(data.executor);
+        data.skill.getReady(data.executor);
 
-        for (var i = 0; i < targets.length; i++) {
-            this.battleModel.processAffliction(data.executor, targets[i], data.skill);
+        var target: Card;
+        while (target = data.skill.getTarget(data.executor)) {
+            this.battleModel.processAffliction(data.executor, target, data.skill);
         }        
     }
 }
@@ -264,44 +257,41 @@ class AfflictionSkillLogic extends SkillLogic {
 class AttackSkillLogic extends SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = data.skill.getTargets(data.executor);
-        return super.willBeExecuted(data) && targets && (targets.length > 0);
+        var hasTarget = data.skill.range.hasValidTarget(data.executor);
+        return super.willBeExecuted(data) && hasTarget;
     }
 
     execute(data: SkillLogicData) {
-        if (RangeFactory.isEnemyRandomRange(data.skill.skillRange)) {
-            this.executeRandomAttackSkill(data);
+        if (!RangeFactory.isEnemyRandomRange(data.skill.skillRange) && data.skill.isIndirectSkill()) {
+            this.executeAoeAttack(data);
         }
         else {
-            this.executeAttackSkillWithRangeTargets(data);
-        }
-    }
-
-    executeRandomAttackSkill (data: SkillLogicData) {
-        var numTarget = (<EnemyRandomRange>data.skill.range).numTarget;
-        
-        for (var i = 0; i < numTarget && !data.executor.isDead; i++) {
-
-            var targetCard = this.cardManager.getValidSingleTarget(this.battleModel.oppositePlayerMainCards);
-    
-            if (!targetCard) {
-                // no valid target, miss a turn, continue to next card
-                return;
-            }
-            
-            // since we get a valid index with every iteration of the loop, there's no need
-            // to check if the target is dead here
-            this.processAttackAgainstSingleTarget(data.executor, targetCard, data.skill);
+            this.executeNonAoeAttack(data);
         }
     }
 
     /**
-     * Execute an attack skill that has the targets obtained from its range
+     * Execute a fork/sweeping/random attack
+     * Multiple protection is possible
      */
-    executeAttackSkillWithRangeTargets (data: SkillLogicData) {
+    executeNonAoeAttack(data: SkillLogicData) {
+        data.skill.getReady(data.executor);
+        var target: Card;
+        while ((target = data.skill.getTarget(data.executor)) && !data.executor.isDead) {
+            this.processAttackAgainstSingleTarget(data.executor, target, data.skill);
+        }
+    }
+
+    /**
+     * Execute an AoE attack
+     */
+    executeAoeAttack(data: SkillLogicData) {
         var skill = data.skill;
         var executor = data.executor;
-        var targets: Card[] = skill.range.getTargets(executor);
+        skill.getReady(executor);
+        
+        // hacky, but kinda convenient
+        var targets: Card[] = skill.range.targets;
 
         if (RangeFactory.isEnemyScaledRange(skill.skillRange)) {
             var scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
@@ -395,21 +385,6 @@ class AttackSkillLogic extends SkillLogic {
                 this.clearAllCardsDamagePhaseData();
             }
         }
-        else {
-            // skill makes contact, must be fork/sweeping etc., so just proceed as normal
-            // i.e. multiple protection is possible
-            
-            for (i = 0; i < targets.length && !executor.isDead; i++) {
-                targetCard = targets[i];
-
-                // a target can be dead, for example from protecting another fam
-                if (targetCard.isDead) {
-                    continue;
-                }
-
-                this.processAttackAgainstSingleTarget(data.executor, targetCard, data.skill, scaledRatio);
-            }
-        }        
     }
 
     processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio?: number) {
@@ -455,26 +430,23 @@ class AttackSkillLogic extends SkillLogic {
         this.clearAllCardsDamagePhaseData();
     }
 
-    // for drain attack
+    /**
+     * Process the drain phase for drain attacks
+     */
     processDrainPhase(executor: Card, skill: Skill) {
         var healRange = RangeFactory.getRange(skill.skillFuncArg4);
-        var initialHealTargets = healRange.getTargets(executor);
-        var healTargets = [];
+        healRange.getReady(executor, (card: Card) => !card.isFullHealth());
 
-        for (var i = 0; i < initialHealTargets.length; i++) {
-            var tmpCard = initialHealTargets[i];
-            if (!tmpCard.isFullHealth()) {
-                healTargets.push(tmpCard);
-            }
-        }
-
-        if (healTargets.length == 0) {
+        // hacky
+        console.assert(!(healRange instanceof RandomRange), "can't do this with random ranges!");
+        if (healRange.targets.length == 0) {
             return;
         }
 
-        var healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healTargets.length);
-        for (i = 0; i < healTargets.length; i++) {
-            this.battleModel.damageToTargetDirectly(healTargets[i], -1 * healAmount, " healing");
+        var healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healRange.targets.length);
+        var target: Card;
+        while (target = skill.getTarget(executor)) {
+            this.battleModel.damageToTargetDirectly(target, -1 * healAmount, " healing");
         }
     }
 }
@@ -483,14 +455,15 @@ class ProtectSkillLogic extends SkillLogic {
     counter: boolean = false;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = data.skill.getTargets(data.executor);
+        data.skill.getReady(data.executor);
 
         // a fam cannot protect itself, unless the skillRange is MYSELF
         if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != ENUM.SkillRange.MYSELF) {
             return false;
         }
 
-        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, targets);
+        console.assert(!(data.skill.range instanceof RandomRange), "can't do this with random ranges!");
+        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, data.skill.range.targets);
     }
 
     execute(data: SkillLogicData) {
@@ -552,17 +525,19 @@ class ProtectSkillLogic extends SkillLogic {
 
 class EvadeSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = data.skill.getTargets(data.executor);
+        var skill = data.skill;
+        skill.getReady(data.executor);
 
         // a fam cannot protect itself, unless the skillRange is MYSELF
-        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != ENUM.SkillRange.MYSELF) {
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && skill.skillRange != ENUM.SkillRange.MYSELF) {
             return false;
         }
 
-        var canEvade = Skill.canProtectFromCalcType(data.skill.skillFuncArg2, data.attackSkill)
+        var canEvade = Skill.canProtectFromCalcType(skill.skillFuncArg2, data.attackSkill)
                     && Skill.canEvadeFromSkill(data.attackSkill);
 
-        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, targets) && canEvade;
+        console.assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
+        return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, skill.range.targets) && canEvade;
     }
 
     execute(data: SkillLogicData) {
@@ -648,23 +623,13 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
     condFunc = (x: number) => x > 0;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = this.getValidTargets(data);
-        return super.willBeExecuted(data) && (targets.length > 0);
+        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
+        var hasValidtarget = range.hasValidTarget(data.executor, this.getCondFunc());
+        return super.willBeExecuted(data) && hasValidtarget;
     }
 
-    getValidTargets(data: SkillLogicData): Card[] {
-        // nearly similar to DispellSkillLogic, but careful with the range
-        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
-        var rangeTargets = range.getTargets(data.executor);
-        var validTargets = [];
-
-        for (var i = 0; i < rangeTargets.length; i++) {
-            if (rangeTargets[i].hasStatus(this.condFunc)) {
-                validTargets.push(rangeTargets[i]);
-            }
-        }
-
-        return validTargets;
+    private getCondFunc() {
+        return (card: Card): boolean => card.hasStatus(this.condFunc);
     }
 
     execute(data: SkillLogicData) {
@@ -682,20 +647,22 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
             skillId: data.skill.id
         });
 
-        var targets = this.getValidTargets(data);
+        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
+        range.getReady(data.executor, this.getCondFunc());
+        var target: Card;
 
-        for (var i = 0; i < targets.length; i++) {
-            targets[i].clearAllStatus(this.condFunc);
+        while (target = range.getTarget(data.executor)) {
+            target.clearAllStatus(this.condFunc);
 
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
-                targetId: targets[i].id,
+                targetId: target.id,
                 type: ENUM.MinorEventType.STATUS,
                 status: {
                     type: 0, //dummy
                     isDispelled: true,
                 },
-                description: targets[i].name + " is dispelled.",
+                description: target.name + " is dispelled.",
                 skillId: data.skill.id
             });
         }
@@ -710,7 +677,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
     private executionLeft: number = OnHitDebuffSkillLogic.UNINITIALIZED_VALUE;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets: Card[] = data.skill.getTargets(data.executor);
+        var hasTarget = data.skill.range.hasValidTarget(data.executor);
 
         // this should be done at construction time instead...
         if (this.executionLeft == OnHitDebuffSkillLogic.UNINITIALIZED_VALUE) {
@@ -719,7 +686,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
 
         if (this.executionLeft == 0) return false;
 
-        var success = super.willBeExecuted(data) && targets && (targets.length > 0);
+        var success = super.willBeExecuted(data) && hasTarget;
 
         if (success) {
             this.executionLeft--;
@@ -728,6 +695,8 @@ class OnHitDebuffSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
+        data.skill.getReady(data.executor);
+        var target: Card;
 
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
@@ -737,9 +706,8 @@ class OnHitDebuffSkillLogic extends SkillLogic {
         });
 
         // debuff
-        var targets = data.skill.getTargets(data.executor);
-        for (var i = 0; i < targets.length; i++) {
-            this.battleModel.processDebuff(data.executor, targets[i], data.skill);
+        while (target = data.skill.getTarget(data.executor)) {
+            this.battleModel.processDebuff(data.executor, target, data.skill);
         }        
     }
 }
@@ -747,39 +715,33 @@ class OnHitDebuffSkillLogic extends SkillLogic {
 class DrainSkillLogic extends SkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = this.getValidTargets(data);
-        return super.willBeExecuted(data) && (targets.length > 0);
+        var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
+        return super.willBeExecuted(data) && hasValidTarget;
     }
 
-    getValidTargets(data: SkillLogicData): Card[] {
-        var rangeTargets = data.skill.getTargets(data.executor);
-        var validTargets = [];
-
-        for (var i = 0; i < rangeTargets.length; i++) {
-            if (!rangeTargets[i].isFullHealth()) {
-                validTargets.push(rangeTargets[i]);
-            }
-        }
-
-        return validTargets;
+    private getCondFunc() {
+        return (card: Card): boolean => !card.isFullHealth();
     }
 
     execute(data: SkillLogicData) {
-
-        var targets = this.getValidTargets(data);
+        var skill = data.skill;
+        skill.range.getReady(data.executor, this.getCondFunc());
+        var target: Card;
 
         this.logger.addMinorEvent({
             executorId: data.executor.id, 
             type: ENUM.MinorEventType.DESCRIPTION,
-            description: data.executor.name + " procs " + data.skill.name + ". ",
-            skillId: data.skill.id
+            description: data.executor.name + " procs " + skill.name + ". ",
+            skillId: skill.id
         });
 
         // don't worry about length == 0, it would not have gotten into here anyway
-        var eachTargetHealAmount = Math.floor(data.executor.lastBattleDamageTaken / targets.length);
+        // TODO: very hacky, only works if the range is not a random range
+        console.assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
+        var eachTargetHealAmount = Math.floor(data.executor.lastBattleDamageTaken / skill.range.targets.length);
 
-        for (var i = 0; i < targets.length; i++) {
-            this.battleModel.damageToTargetDirectly(targets[i], -1 * eachTargetHealAmount, " healing");
+        while (target = skill.getTarget(data.executor)) {
+            this.battleModel.damageToTargetDirectly(target, -1 * eachTargetHealAmount, " healing");
         }        
     }
 }
@@ -803,22 +765,8 @@ class SurviveSkillLogic extends SkillLogic {
 
 class HealSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = this.getValidTargets(data);
-        return super.willBeExecuted(data) && (targets.length > 0);
-    }
-
-    private getValidTargets(data: SkillLogicData): Card[] {
-        var rangeTargets = data.skill.range.getAllPossibleTargets(data.executor);
-        var validTargets = [];
-        var cond = this.getCondFunc();
-
-        for (var i = 0; rangeTargets && i < rangeTargets.length; i++) {
-            if (cond(rangeTargets[i])) {
-                validTargets.push(rangeTargets[i]);
-            }
-        }
-
-        return validTargets;
+        var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
+        return super.willBeExecuted(data) && hasValidTarget;
     }
 
     private getCondFunc() {
@@ -826,44 +774,46 @@ class HealSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        var targets = data.skill.range.getTargets(data.executor, this.getCondFunc());
+        data.skill.range.getReady(data.executor, this.getCondFunc());
 
         var baseHealAmount = getHealAmount(data.executor);
 
         var multiplier = data.skill.skillFuncArg1;
         var healAmount = Math.floor(multiplier * baseHealAmount);
 
-        for (var i = 0; i < targets.length; i++) {
+        var target: Card;
+        while (target = data.skill.getTarget(data.executor)) {
 
             // if the heal is not based on wis, recalculate the heal amount
             if (data.skill.skillFuncArg2 == 1) {
-                healAmount = multiplier * targets[i].getOriginalHP();
+                healAmount = multiplier * target.getOriginalHP();
             }
 
-            this.battleModel.damageToTargetDirectly(targets[i], -1 * healAmount, " healing");
+            this.battleModel.damageToTargetDirectly(target, -1 * healAmount, " healing");
         }     
     }
 }
 
 class ReviveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var targets = data.skill.range.getAllPossibleTargets(data.executor);
-        return super.willBeExecuted(data) && targets && (targets.length > 0);
+        var hasValidTarget = data.skill.range.hasValidTarget(data.executor);
+        return super.willBeExecuted(data) && hasValidTarget;
     }
 
     execute(data: SkillLogicData) {
-        var targets = data.skill.getTargets(data.executor);
+        data.skill.getReady(data.executor);
         var hpRatio = data.skill.skillFuncArg1;
 
-        for (var i = 0; i < targets.length; i++) {
-            targets[i].revive(hpRatio);
+        var target: Card;
+        while (target = data.skill.getTarget(data.executor)) {
+            target.revive(hpRatio);
 
             this.logger.addMinorEvent({
                 executorId: data.executor.id,
-                targetId: targets[i].id,
+                targetId: target.id,
                 type: ENUM.MinorEventType.REVIVE,
                 reviveHPRatio: hpRatio,
-                description: targets[i].name + " is revived with " + hpRatio * 100 + "% HP!",
+                description: target.name + " is revived with " + hpRatio * 100 + "% HP!",
                 skillId: data.skill.id
             });
         }        
