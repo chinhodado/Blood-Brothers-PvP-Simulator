@@ -2920,6 +2920,20 @@ var SkillDatabase = {
         desc: "Raise WIS and AGI of all party members."
     },
 
+    534: {
+        name: "Lava Torrent", type: 1, func: 19, calc: 0,
+        arg1: 0, arg2: 8, arg3: 0.5, arg4: 3000,
+        range: 7, prob: 70,
+        desc: "Chance to burn up to three foes at start of battle."
+    },
+
+    535: {
+        name: "Eruption", type: 2, func: 4, calc: 2,
+        arg1: 1.75,
+        range: 15, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to front/middle lines, ignoring position."
+    },
+
     536: {
         name: "Arboreal Succor", type: 2, func: 40, calc: 0,
         range: 4, prob: 70,
@@ -3198,6 +3212,20 @@ var SkillDatabase = {
         desc: "Heavy WIS-based damage to up to four foes. Increased if fewer foes."
     },
 
+    581: {
+        name: "Sacred Offering", type: 1, func: 32, calc: 0,
+        arg1: 0.2, arg2: 2,
+        range: 8, prob: 70,
+        desc: "Greatly lower DEF of all foes."
+    },
+
+    582: {
+        name: "Crumble", type: 2, func: 4, calc: 2,
+        arg1: 1.4, arg2: 8, arg3: 0.4, arg4: 2000,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and sometimes burn five random foes, ignoring position."
+    },
+
     585: {
         name: "Death's Call", type: 2, func: 34, calc: 2,
         arg1: 1.6, arg2: 3, arg3: 0.4, arg4: 0.2,
@@ -3322,6 +3350,13 @@ var SkillDatabase = {
         arg1: 0.45, arg2: 10, arg3: 23, arg4: 3, arg5: 0.1,
         range: 21, prob: 50,
         desc: "Reflect 90% of AGI/WIS-based damage back to two random foes."
+    },
+
+    607: {
+        name: "Breath of Darkness", type: 2, func: 4, calc: 2,
+        arg1: 1.35, arg2: 8, arg3: 0.4, arg4: 2500,
+        range: 8, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage to all foes and sometimes burn targets, ignoring position."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -3555,6 +3590,13 @@ var SkillDatabase = {
         desc: "ATK-based damage to one foe."
     },
 
+    10036: { // Wicker Man
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1, arg2: 8, arg3: 0.4, arg4: 2000,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes burn target."
+    },
+
     10037: {
         name: "Standard Action", type: 2, func: 4, calc: 1,
         arg1: 1, arg2: 1, arg3: 0.5, arg4: 15,
@@ -3588,5 +3630,12 @@ var SkillDatabase = {
         arg1: 1.2,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10042: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1.3,
+        range: 5, prob: 100, ward: 3, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 };

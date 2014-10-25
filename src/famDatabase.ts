@@ -591,6 +591,13 @@ var famDatabase = {
         img: "img1$1/__cb20141009082936/$2/8/8e/Dantalion%2C_Duke_of_Hell_II_Figure.png",
         fullName: "Dantalion, Duke of Hell II"
     },
+    21445: {
+        name: "Darkwind Wyvern", stats: [22211, 8270, 19352, 20917, 17649],
+        skills: [607],
+        autoAttack: 10042,
+        img: "img4$1/__cb20141025082638/$2/d/dd/Darkwind_Wyvern_Figure.png",
+        fullName: "Darkwind Wyvern"
+    },
     10905: {
         name: "Danzo", stats: [14774, 17277, 14872, 17667, 16128],
         skills: [237],
@@ -1292,6 +1299,13 @@ var famDatabase = {
         skills: [18],
         img: "img1$1/__cb20130106224520/$2/6/63/Lanvall%2C_Lizard_Cavalier_II_Figure.png",
         fullName: "Lanvall, Lizard Cavalier II"
+    },
+    11347: {
+        name: "Lava Dragon", stats: [19021, 8881, 16237, 18891, 16497],
+        skills: [534, 535],
+        autoAttack: 10019,
+        img: "img3$1/__cb20140809012705/$2/d/de/Lava_Dragon_II_Figure.png",
+        fullName: "Lava Dragon II"
     },
     11128: {
         name: "Leupold", stats: [17585, 11038, 12963, 9794, 16510],
@@ -2090,7 +2104,7 @@ var famDatabase = {
         name: "Tanba", stats: [17580, 23213, 17883, 23289, 18057],
         skills: [236],
         img: "img3$1/__cb20130921071545/$2/a/a8/Tanba%2C_Founder_of_the_Ninja_II_Figure.png",
-        fullName: "Tanba, Founder of Ninja II"
+        fullName: "Tanba, Founder of the Ninja II"
     },
     327: {
         name: "Tangata", stats: [10500, 10800, 10630, 10740, 12480],
@@ -2306,6 +2320,13 @@ var famDatabase = {
         skills: [19, 134],
         img: "img2$1/__cb20131210234034/$2/d/dc/Waheela%2C_Dire_Wolf_II_Figure.png",
         fullName: "Waheela, Dire Wolf II"
+    },
+    11396: {
+        name: "Wicker Man", stats: [16605, 6833, 11654, 16670, 16930],
+        skills: [581, 582],
+        autoAttack: 10036,
+        img: "img2$1/__cb20140926194802/$2/d/d2/Wicker_Man_II_Figure.png",
+        fullName: "Wicker Man II"
     },
     10570: {
         name: "Wolfert", stats: [14189, 23972, 13723, 13290, 13431],

@@ -207,7 +207,8 @@ module ENUM {
         FROZEN = 3,
         DISABLE = 4,
         SILENT = 5,
-        BLIND = 7
+        BLIND = 7,
+        BURN = 8
     }
 
     export enum BattleTurnOrderType {

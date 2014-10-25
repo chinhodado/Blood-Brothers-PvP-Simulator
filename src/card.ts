@@ -286,6 +286,14 @@ class Card {
             return (<PoisonAffliction>this.affliction).percent;    
         }
     }
+    getBurnDamage(): number {
+        if (!this.affliction || this.affliction.type != ENUM.AfflictionType.BURN) {
+            return undefined;
+        }
+        else {
+            return (<BurnAffliction>this.affliction).damage;    
+        }
+    }
 
     // return true if an affliction was cleared
     updateAffliction(): boolean{

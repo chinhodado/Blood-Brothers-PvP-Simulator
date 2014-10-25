@@ -470,9 +470,12 @@ class BattleModel {
                 // envenom percent
                 option.percent = skill.skillFuncArg4;
             }
-            else {
+            else if (type == ENUM.AfflictionType.SILENT || type == ENUM.AfflictionType.BLIND){
                 // turn num for silent & blind
                 option.turnNum = skill.skillFuncArg4;
+            }
+            else if (type == ENUM.AfflictionType.BURN) {
+                option.damage = skill.skillFuncArg4;
             }
         }
 
@@ -482,7 +485,6 @@ class BattleModel {
             
         if (Math.random() <= prob){
             target.setAffliction(type, option);
-            var description = target.name + " is now " + ENUM.AfflictionType[type];
 
             if (type == ENUM.AfflictionType.POISON) {
                 // needed since poison is stacked
@@ -499,7 +501,7 @@ class BattleModel {
                     percent: percent,
                     missProb: option.missProb
                 },
-                description: description,                 
+                description: target.name + " is now " + ENUM.AfflictionType[type],                 
             });
         }
     }
@@ -669,9 +671,12 @@ class BattleModel {
                     if (this.isFinished) break;
                 }                
 
-                // todo: make a major event if a fam missed a turn
                 if (!currentCard.isDead) {
-                    var cured = currentCard.updateAffliction();
+                    // update the affliction
+                    if (currentCard.getAfflictionType() != ENUM.AfflictionType.BURN) {
+                        var cured = currentCard.updateAffliction();
+                    }
+
                     // if cured, make a log
                     if (!currentCard.affliction && cured) {
                         var desc = currentCard.name + " is cured of affliction!";
@@ -729,8 +734,24 @@ class BattleModel {
         }
     }
 
-    // return true if battle has ended, false if not
+    /**
+     * Process the active phase. First update pre-active-phase affliction, then do active action.
+     * Do these twice for mounted familiars.
+     * Before this function returns, it will call checkFinish()
+     */
     processActivePhase(currentCard: Card, nth: string): void {
+        // update burn affliction
+        if (currentCard.getAfflictionType() == ENUM.AfflictionType.BURN) {
+            this.logger.addMajorEvent({
+                description: currentCard.name + "'s turn"
+            });
+            currentCard.updateAffliction();
+            this.checkFinish();
+            if (currentCard.isDead || this.isFinished) { // the check for isFinished is redundant, but wtv
+                return;
+            }
+        }
+
         var activeSkill = currentCard.getRandomActiveSkill();
         
         if (nth === "FIRST" && currentCard.isMounted) {
@@ -886,7 +907,7 @@ class BattleModel {
     
     executeNormalAttack(attacker: Card) {
 
-        if (!attacker.canAttack()) {
+        if (!attacker.canAttack() || attacker.isDead) {
             return;
         }
 

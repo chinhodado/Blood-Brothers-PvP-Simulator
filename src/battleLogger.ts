@@ -215,6 +215,9 @@ class BattleLogger {
                     else if (afflict.type === ENUM.AfflictionType.POISON) {
                         infoText.affliction += (" (" + afflict.percent + " %)");
                     }
+                    else if (afflict.type === ENUM.AfflictionType.BURN) {
+                        infoText.affliction += (" (" + afflict.damage + ")");
+                    }
                     else { // frozen, disabled, paralyzed
                         infoText.affliction += " (1 turn)";
                     }
