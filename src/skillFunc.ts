@@ -447,7 +447,7 @@ class AttackSkillLogic extends SkillLogic {
 
         var healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healRange.targets.length);
         var target: Card;
-        while (target = skill.getTarget(executor)) {
+        while (target = healRange.getTarget(executor)) {
             this.battleModel.damageToTargetDirectly(target, -1 * healAmount, " healing");
         }
     }
