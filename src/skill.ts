@@ -88,6 +88,7 @@ class Skill {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.PROTECT_COUNTER:
+            case ENUM.SkillFunc.PROTECT_REFLECT:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.DRAIN_ATTACK:
@@ -278,12 +279,23 @@ class Skill {
     }
 
     /**
-     * Return true if the attack skill can be evaded
+     * Return true if the attack skill can be protected from
      */
-    static canEvadeFromSkill(attackSkill: Skill): boolean {
-        return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
+    static canProtectFromAttackType(type: ENUM.ProtectAttackType, attackSkill: Skill): boolean {
+        switch (type) {
+            case ENUM.ProtectAttackType.SKILL:
+                return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
                     && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
-                    && !attackSkill.isAutoAttack);
+                    && attackSkill.skillFunc != ENUM.SkillFunc.COUNTER_INDIRECT
+                    && attackSkill.id == 10000);
+            case ENUM.ProtectAttackType.NOT_COUNTER:
+                return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
+                     && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
+                     && attackSkill.skillFunc != ENUM.SkillFunc.COUNTER_INDIRECT);
+            default:
+                throw new Error("Unimplemented ProtectAttackType");
+        }
+        
     }
 
     isIndirectSkill(): boolean {

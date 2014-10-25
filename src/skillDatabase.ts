@@ -2052,6 +2052,20 @@ var SkillDatabase = {
         desc: "Chance to silence up to three foes for one turn at the start of battle."
     },
 
+    396: {
+        name : "Venom Snare", type: 5, func: 28, calc: 7, 
+        arg1: 0.23, arg2: 1, arg3: 7, arg4: 3, arg5: 0.3,
+        range: 21, prob: 30,
+        desc: "Reflect ATK-based damage back to up to three foes."
+    },
+
+    397: {
+        name: "Tarantella", type: 1, func: 1, calc: 0, 
+        arg1: 0.3, arg2: 2,
+        range: 3, prob: 70,
+        desc: "Raise DEF of self and adjacent familiars."
+    },
+
     398: {
         name: "Knuckle Guard", type: 5, func: 12, calc: 0,
         arg1: 0, 
@@ -2267,6 +2281,20 @@ var SkillDatabase = {
         arg1: 1.45,  
         range: 313, prob: 30, ward: 1,
         desc: "AGI-based damage to up to three foes. Increased if fewer foes."
+    },
+
+    435 : {
+        name: "Obedience", type: 2, func: 3, calc: 3, 
+        arg1: 1.5, arg2: 2, arg3: 0.3, 
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to and sometimes paralyze four random foes."
+    },
+
+    436 : {
+        name: "Troublemaker", type: 5, func: 28, calc: 7, 
+        arg1: 0.23, arg2: 3, arg3: 7, arg4: 3, arg5: 0.3,
+        range: 21, prob: 50,
+        desc: "Reflect AGI-based damage back to up to three foes."
     },
 
     438 : {
@@ -3282,6 +3310,20 @@ var SkillDatabase = {
         desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
     },
 
+    605: {
+        name: "Bone Shatter", type: 2, func: 3, calc: 1,
+        arg1: 1.6,
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes."
+    },
+
+    606: {
+        name: "Overawe", type: 5, func: 28, calc: 7,
+        arg1: 0.45, arg2: 10, arg3: 23, arg4: 3, arg5: 0.1,
+        range: 21, prob: 50,
+        desc: "Reflect 90% of AGI/WIS-based damage back to two random foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -3301,6 +3343,13 @@ var SkillDatabase = {
         arg1: 1.05, arg2: 2, arg3: 0.2,
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage, sometimes paralyzing target."
+    },
+
+    10005: { // Tarrantula
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        arg1: 1,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     10006: { // 105% Mod, 3 Random Hits, ATK-based, position dependent (Ettin)

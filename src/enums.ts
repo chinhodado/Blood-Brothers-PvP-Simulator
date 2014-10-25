@@ -45,7 +45,8 @@ module ENUM {
         COPY = 25,
         IMITATE = 26,
         EVADE = 27, // arg1: skill type to evade, arg2: skill calc type to evade, arg3 & 4: unimportant
-        PROTECT_REFLECT = 28,
+        PROTECT_REFLECT = 28, // arg1: reflect mod, arg2: calctype can reflect, arg3: reflect range, arg4: attack type can reflect,
+                              // arg5: damage ratio to take
         COUNTER_DISPELL = 29, // arg1, arg2: 0?, arg3: dispell range, arg4: ?? (aka protect-dispell)
         TURN_ORDER_CHANGE = 31, // arg1: new base, arg2: turn num
         CASTER_BASED_DEBUFF = 32, //arg1: multi, arg2, 3: status
@@ -75,6 +76,14 @@ module ENUM {
         ATK_WIS = 8,
         ATK_AGI = 9,
         WIS_AGI = 10
+    }
+
+    export enum ProtectAttackType {
+        ALL = 0,
+        NORMAL = 1,
+        SKILL = 2,
+        NOT_COUNTER = 3,
+        COUNTER = 4
     }
     
     export enum StatType {

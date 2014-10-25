@@ -263,9 +263,9 @@ class BattleModel {
     /**
      * Use this for damage because of attacks
      */
-    processDamagePhase(data: {attacker: Card; target: Card; skill: Skill; additionalDescription?: string; scaledRatio?: number;}) {
+    processDamagePhase(data: DamagePhaseData) {
         var target = data.target;
-        var damage = this.getWouldBeDamage(data.attacker, target, data.skill, {scaledRatio: data.scaledRatio});
+        var damage = this.getWouldBeDamage(data);
         
         var isMissed = data.attacker.willMiss();
         if (isMissed) {
@@ -325,8 +325,13 @@ class BattleModel {
         }
 
         // this probably should not be here, but wtv...
-        if (target.hasWardOfType(data.skill.ward)) {
-            var wardUsed = data.skill.ward;
+        if (data.skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
+            if (target.hasWardOfType(data.oriAtkSkill.ward)) {
+                var wardUsed = data.oriAtkSkill.ward;
+            }
+        }
+        else if (target.hasWardOfType(data.skill.ward)) {
+            wardUsed = data.skill.ward;
         }
 
         if (isMissed) {
@@ -362,9 +367,18 @@ class BattleModel {
         }
     }
 
-    getWouldBeDamage(attacker: Card, target: Card, skill: Skill, opt?: {scaledRatio?: number}): number {
+    getWouldBeDamage(data: DamagePhaseData): number {
+        var attacker = data.attacker;
+        var target = data.target;
+        var skill = data.skill;
         var skillMod = skill.skillFuncArg1;
-        var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
+
+        if (skill.skillFunc != ENUM.SkillFunc.PROTECT_REFLECT) {
+            var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
+        } 
+        else {
+            ignorePosition = Skill.isPositionIndependentAttackSkill(data.oriAtkSkill.id);
+        }
     
         var baseDamage: number;
             
@@ -379,6 +393,9 @@ class BattleModel {
             case (ENUM.SkillCalcType.AGI):
                 baseDamage = getDamageCalculatedByAGI(attacker, target, ignorePosition);
                 break;
+            case ENUM.SkillCalcType.REFLECT:
+                baseDamage = getReflectAmount(data.oriAttacker, data.oriAtkSkill, data.attacker, target, ignorePosition, data.oriDmg);
+                break;
             default:
                 throw new Error("Invalid calcType!");
         }
@@ -386,11 +403,16 @@ class BattleModel {
         // apply the multiplier
         var damage = skillMod * baseDamage;
 
-        if (opt && opt.scaledRatio) {
-            damage *= opt.scaledRatio;
-        }
+        if (data.scaledRatio)
+                damage *= data.scaledRatio;
+
+        if (data.dmgRatio)
+                damage *= data.dmgRatio;
             
         // apply the target's ward
+        if (skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
+            skill = data.oriAtkSkill;
+        }
         switch (skill.ward) {
             case ENUM.WardType.PHYSICAL:
                 damage = Math.round(damage * (1 - target.status.attackResistance));
@@ -433,9 +455,9 @@ class BattleModel {
         }
     }
 
-    processAffliction(executor: Card, target: Card, skill: Skill) {
+    processAffliction(executor: Card, target: Card, skill: Skill, fixedProb?: number) {
         var type: ENUM.AfflictionType = skill.skillFuncArg2;
-        var prob: number = skill.skillFuncArg3;
+        var prob: number = fixedProb? fixedProb : skill.skillFuncArg3;
 
         if (!type) {
             return;
@@ -994,4 +1016,21 @@ interface GameOption {
     p2RandomMode?: ENUM.RandomBrigType;
     procOrder?: ENUM.ProcOrderType;
     battleType?: ENUM.BattleType;
+}
+
+/**
+ * A structure for holding data for damage phase
+ */
+interface DamagePhaseData {
+    attacker: Card;
+    target: Card;
+    skill: Skill; 
+    additionalDescription?: string;
+    scaledRatio?: number;
+
+    // for reflect
+    dmgRatio?: number;
+    oriAttacker?: Card;
+    oriAtkSkill?: Skill;
+    oriDmg?: number;
 }

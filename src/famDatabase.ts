@@ -417,6 +417,19 @@ var famDatabase = {
         img: "img4$1/__cb20140417053801/$2/f/f3/Brang_Two-Heads_II_Figure.png",
         fullName: "Brang Two-Heads II"
     },
+    11209: {
+        name: "Rabbit", stats: [18999, 13951, 20007, 9986, 18035],
+        skills: [435, 436],
+        img: "img2$1/__cb20140423020348/$2/6/6e/Brass_Rabbit_Figure.png",
+        fullName: "Brass Rabbit"
+    },
+    11194: {
+        name: "Tarantula", stats: [19324, 14568, 18024, 15695, 12120],
+        skills: [396, 397],
+        autoAttack: 10005,
+        img: "img2$1/__cb20140318135240/$2/7/71/Brass_Tarantula_II_Figure.png",
+        fullName: "Brass Tarantula II"
+    },
     11171: {
         name: "Hyena", stats: [14644, 10766, 11860, 18923, 12228],
         skills: [321],
@@ -1986,6 +1999,13 @@ var famDatabase = {
         skills: [252],
         img: "img1$1/__cb20131002005342/$2/0/06/Sir_Brandiles%2C_the_Flameblade_II_Figure.png",
         fullName: "Sir Brandiles, the Flameblade II"
+    },
+    11455: {
+        name: "Skeleton King", stats: [19714, 19064, 20982, 6097, 18143],
+        skills: [605, 606],
+        autoAttack: 10041,
+        img: "img3$1/__cb20141016101616/$2/b/b5/Skeleton_King_II_Figure.png",
+        fullName: "Skeleton King II"
     },
     11074: {
         name: "Skoll", stats: [15002, 13160, 15153, 9000, 16302],

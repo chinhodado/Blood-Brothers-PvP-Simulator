@@ -110,3 +110,41 @@ function getCasterBasedDebuffAmount(executor: Card): number {
 
     return -1 * value;
 }
+
+/**
+ * attacker: the original attacker
+ * attackSkill: the original attack skill
+ * caster: the one who procs the reflect skill
+ * target: the target of the reflect skill
+ * oriDmg: the original/would-be damage to the caster
+ */
+function getReflectAmount(attacker: Card, attackSkill: Skill, caster: Card, target: Card, ignorePosFactor: boolean, oriDmg: number): number {
+    var DIFF_FACTOR = 0.7;
+
+    var POS_ATTACK_FACTOR = {};
+    POS_ATTACK_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
+    POS_ATTACK_FACTOR[ENUM.FormationRow.MID]   = 1;
+    POS_ATTACK_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
+    
+    var POS_DAMAGE_FACTOR = {};
+    POS_DAMAGE_FACTOR[ENUM.FormationRow.REAR]  = 0.8;
+    POS_DAMAGE_FACTOR[ENUM.FormationRow.MID]   = 1;
+    POS_DAMAGE_FACTOR[ENUM.FormationRow.FRONT] = 1.2;
+
+    var damage;
+    var x = oriDmg;
+    switch (attackSkill.skillCalcType) {
+        case ENUM.SkillCalcType.ATK:
+        case ENUM.SkillCalcType.AGI:
+            var xFormation = ignorePosFactor ? 1 : POS_ATTACK_FACTOR[attacker.formationRow] * POS_DAMAGE_FACTOR[caster.formationRow];
+            var formation = ignorePosFactor ? 1 : POS_ATTACK_FACTOR[caster.formationRow] * POS_DAMAGE_FACTOR[target.formationRow];
+            damage = (x / xFormation + Math.max(0, caster.getDEF() - target.getDEF()) * DIFF_FACTOR) * formation;
+            break;
+        case ENUM.SkillCalcType.WIS:
+            damage = x + Math.max(0, caster.getDEF() - (target.getWIS() + target.getDEF()) / 2) * DIFF_FACTOR;
+            break;
+    }
+    damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
+
+    return damage;
+}
