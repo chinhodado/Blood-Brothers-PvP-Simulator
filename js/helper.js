@@ -249,6 +249,31 @@ function prepareRandom() {
     }
 }
 
+function battleFinishedCallback() {
+    document.getElementById("startButton").disabled = false;
+    setTimeout(function () {
+        if (!localStorage.getItem("starRequestShown")) {
+            showStarRequest();
+        }
+    }, 2000);
+
+}
+
+function showStarRequest() {
+    swal({
+        title: "Star this!",
+        text: "If you like this simulator, star the project on Github. It motivates me to improve it :)",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#5cb85c",
+        confirmButtonText: "Take me there",
+        closeOnConfirm: false
+    }, function () {
+        localStorage.setItem("starRequestShown", true);
+        window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
+    });
+}
+
 // fetch the tier list and cache it
 function getTierList(whatToDoNext) {
     if (whatToDoNext == "debug") {

@@ -1,4 +1,5 @@
 ﻿declare var showCardDetailDialog;
+declare var battleFinishedCallback;
 
 class BattleGraphic {
 
@@ -472,7 +473,7 @@ class BattleGraphic {
         var that = this;
 
         if (majorIndex >= majorLog.length) {
-            document.getElementById("startButton").disabled = false;
+            battleFinishedCallback();
             return;    
         }
 
