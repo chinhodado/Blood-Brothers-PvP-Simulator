@@ -118,6 +118,7 @@
         prepareRandom();
 
         function playGame() {
+            prepareField();
             BattleGraphic.PLAY_MODE = 'AUTO';
             BattleLogger.IS_DEBUG_MODE = false;
             document.getElementById('startButton').onclick = function () {
@@ -130,6 +131,7 @@
         }
 
         function playSim() {
+            prepareField();
             // create a new game just to display the fam and formation
             if (option.p1RandomMode) {
                 BattleGraphic.HIDE_PLAYER1 = true;
