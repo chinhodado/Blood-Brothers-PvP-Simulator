@@ -157,7 +157,7 @@ class BattleGraphic {
             var reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
             
             for (var fam = 0; fam < playerCards.length; fam++) {
-                imageLinksArray.push(getScaledWikiaImageLink(playerCards[fam].imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
+                imageLinksArray.push(getScaledFamiliarWikiaImageLink(playerCards[fam].imageLink, playerCards[fam].fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
             
             // display fam images and other effects
@@ -206,7 +206,7 @@ class BattleGraphic {
                 // preload the reserve image
                 if (this.battle.isBloodClash) {
                     var reserve_img = new Image();
-                    reserve_img.src = getScaledWikiaImageLink(reserveCards[i].imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
+                    reserve_img.src = getScaledFamiliarWikiaImageLink(reserveCards[i].imageLink, reserveCards[i].fullName, BattleGraphic.IMAGE_WIDTH_BIG);
                 }
             }            
         }
@@ -235,7 +235,7 @@ class BattleGraphic {
             for (var f = 0; f < 5; f++) {
                 var image: any = SVG.get('p' + p + 'f' + f + 'image');
                 var card = field["player" + p + "Cards"][f];
-                image.load(getScaledWikiaImageLink(card.imageLink, BattleGraphic.IMAGE_WIDTH_BIG));
+                image.load(getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
         }
     }
@@ -872,7 +872,7 @@ class BattleGraphic {
             var mainId = main.getPlayerId();
 
             var image: any = this.getCardImage(main);
-            var newLink = getScaledWikiaImageLink(reserve.imageLink, BattleGraphic.IMAGE_WIDTH_BIG);
+            var newLink = getScaledFamiliarWikiaImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
             image.load(newLink);
 
             var y_offset = mainId == 1? 255 : -255;

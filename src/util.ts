@@ -77,19 +77,15 @@ function pickRandomProperty(obj: {}): string {
  * @param newWidth The width of the new image
  * @return The link to the new scaled image
  */
-function getScaledWikiaImageLink (link: string, newWidth: number): string {
+function getScaledFamiliarWikiaImageLink (link: string, fullName: string, newWidth: number): string {
     // first un-shorten the link
-    link = link.replace("$1", ".wikia.nocookie.net");
-    link = link.replace("$2", "bloodbrothersgame/images/thumb");
+    // http://img2.wikia.nocookie.net/bloodbrothersgame/images/thumb/d/dd/
+    var firstPart = "http://img" + link.charAt(0) + ".wikia.nocookie.net/bloodbrothersgame/images/thumb/" + 
+        link.charAt(1) + "/" + link.substring(1) + "/";
+    var urlName = fullName.replace(/,/g, "%2C").replace(/ /g, "_");
+    var fileName = urlName + "_Figure.png";
+    var newScaledLink = firstPart + fileName + "/" + newWidth + "px-" + fileName;
 
-    var lastSlash: number = link.lastIndexOf("/");
-    var originalName: string = link.substring(lastSlash + 1); // the original image name
-
-    // the new scaled image new
-    var newScaledName: string = newWidth + "px-" + originalName;
-
-    // complete new link
-    var newScaledLink: string = "http://" + link + "/" + newScaledName;
     return newScaledLink;
 }
 

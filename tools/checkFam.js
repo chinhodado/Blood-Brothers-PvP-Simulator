@@ -39,3 +39,15 @@
         }
     }
 }
+
+function checkImage() {
+    var imgCheckDiv = document.getElementById("imgCheck");
+    for (var key in famDatabase) {
+        if (famDatabase.hasOwnProperty(key)) {
+            var url = getScaledFamiliarWikiaImageLink(famDatabase[key].img, famDatabase[key].fullName, 30);
+            var img = new Image();
+            img.src = url;
+            imgCheckDiv.appendChild(img);
+        }
+    }
+}
