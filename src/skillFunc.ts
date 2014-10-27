@@ -68,7 +68,7 @@ class SkillLogic {
     }
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var deadCond = (data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
+        var deadCond = (data.executor.isDead && data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
                        (!data.executor.isDead && data.skill.skillType !== ENUM.SkillType.ACTION_ON_DEATH);
 
         if (data.noProbCheck) {
