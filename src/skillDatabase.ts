@@ -3359,6 +3359,41 @@ var SkillDatabase = {
         desc: "Deal WIS-based damage to all foes and sometimes burn targets, ignoring position."
     },
 
+    608: {
+        name: "Hungry Wolf", type: 2, func: 33, calc: 1,
+        arg1: 0.9, arg2: 4, arg3: 0.3, arg4: 0.1,
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to six random foes and sometimes greatly lower AGI."
+    },
+
+    609: {
+        name: "Harvest", type: 2, func: 3, calc: 1,
+        arg1: 2.6,
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    610: {
+        name: "Fickle Treat", type: 1, func: 1, calc: 0,
+        arg1: 452, arg2: 16,
+        range: 21, prob: 70,
+        desc: "Self is automatically revived with full HP after being killed."
+    },
+
+    611: {
+        name: "Cruel Trick", type: 2, func: 3, calc: 3,
+        arg1: 1.65,
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to three random foes."
+    },
+
+    612: {
+        name: "Triple Bite", type: 2, func: 4, calc: 3,
+        arg1: 2.25,
+        range: 18, prob: 30, ward: 3,
+        desc: "Massive AGI-based damage to three random foes, ignoring position. Attacks rear foes first."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -3637,5 +3672,19 @@ var SkillDatabase = {
         arg1: 1.3,
         range: 5, prob: 100, ward: 3, isAutoAttack: true,
         desc: "WIS-based damage to one foe."
+    },
+
+    10043: {
+        name: "Standard Action", type: 2, func: 34, calc: 2,
+        arg1: 1, arg2: 2, arg3: 0.5, arg4: 0.3,
+        range: 5, prob: 100, ward: 3, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes greatly lower DEF."
+    },
+
+    10044: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1.2,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 };

@@ -317,6 +317,12 @@ var famDatabase = {
         img: "3aa",
         fullName: "Artemisia Swiftfoot II"
     },
+    11457: {
+        name: "Asena", stats: [15121, 17385, 11622, 7505, 16995],
+        skills: [608],
+        img: "3f8",
+        fullName: "Asena, Wolfwoman II"
+    },
     10595: {
         name: "Astaroth", stats: [12194, 13965, 10087, 15278, 14280],
         skills: [155],
@@ -1206,6 +1212,13 @@ var famDatabase = {
         img: "10b",
         fullName: "Jack o' Frost II"
     },
+    11448: {
+        name: "Jack Rusty", stats: [17021, 16123, 10148, 9539, 15121],
+        skills: [609],
+        autoAttack: 10044,
+        img: "46a",
+        fullName: "Jack, the Rusty II"
+    },
     10569: {
         name: "Jinx-eye", stats: [14709, 15998, 13832, 13832, 14915],
         skills: [146],
@@ -1379,6 +1392,13 @@ var famDatabase = {
         skills: [60],
         img: "1f1",
         fullName: "Makalipon, Sacred Fruit II"
+    },
+    11456: {
+        name: "Chimaera", stats: [19519, 9986, 16009, 17038, 18013],
+        skills: [612, 134],
+        autoAttack: 10043,
+        img: "4a7",
+        fullName: "Maleficent Chimaera II"
     },
     10445: {
         name: "Managarmr", stats: [12210, 12258, 13266, 13887, 11688],
@@ -1572,6 +1592,12 @@ var famDatabase = {
         isMounted: true,
         img: "365",
         fullName: "Odin, God of Victory II"
+    },
+    11446: {
+        name: "Olan", stats: [16497, 14048, 14113, 6779, 17255],
+        skills: [610, 611],
+        img: "36b",
+        fullName: "Olan, Tricky Succubus II"
     },
     10889: {
         name: "Olitiau", stats: [14081, 15760, 11676, 11232, 15197],
