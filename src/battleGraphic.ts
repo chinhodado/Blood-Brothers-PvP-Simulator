@@ -1,5 +1,5 @@
 ﻿declare var showCardDetailDialog;
-declare var battleFinishedCallback;
+declare var onBattleFinished;
 
 class BattleGraphic {
 
@@ -473,7 +473,7 @@ class BattleGraphic {
         var that = this;
 
         if (majorIndex >= majorLog.length) {
-            battleFinishedCallback();
+            onBattleFinished();
             return;    
         }
 

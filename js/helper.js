@@ -11,21 +11,21 @@ function setPreviousChoices() {
 
     // player 2 fams
     if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
-        for (var i = 0; i < 10; i++) {
+        for (i = 0; i < 10; i++) {
             document.getElementById("f" + (i + 10)).value = localStorage.getItem("f" + (i + 10));
         }
     }
 
     // player 1 skills
     if (localStorage.getItem("s10") && localStorage.getItem("s10") != "null") {
-        for (var i = 0; i < 3; i++) {
+        for (i = 0; i < 3; i++) {
             document.getElementById("s1" + i).value = localStorage.getItem("s1" + i);
         }
     }
 
     // player 2 skills
     if (localStorage.getItem("s20") && localStorage.getItem("s20") != "null") {
-        for (var i = 0; i < 3; i++) {
+        for (i = 0; i < 3; i++) {
             document.getElementById("s2" + i).value = localStorage.getItem("s2" + i);
         }
     }
@@ -149,7 +149,7 @@ function setFamOptions() {
 
     for (var i = 0; i < famSelects.length; i++) {
         for (var index = 0; index < famIdArray.length; index++) {
-            var key = famIdArray[index];
+            key = famIdArray[index];
             var option = document.createElement("option");
             option.value = key;
             option.text = famDatabase[key].fullName;
@@ -226,7 +226,7 @@ function getBattleDataOption() {
         if (!option.p1RandomMode) localStorage.setItem("f" + i, f1id);
         if (!option.p2RandomMode) localStorage.setItem("f" + (i + 10), f2id);
     }
-    for (var i = 0; i < 3; i++) {
+    for (i = 0; i < 3; i++) {
         var w1s = getURLParameter("s1" + i);
         var w2s = getURLParameter("s2" + i);
         data.p1_warlordSkillIds.push(w1s);
@@ -249,29 +249,32 @@ function prepareRandom() {
     }
 }
 
-function battleFinishedCallback() {
+function onBattleFinished() {
     document.getElementById("startButton").disabled = false;
-    setTimeout(function () {
-        if (!localStorage.getItem("starRequestShown")) {
-            showStarRequest();
-        }
-    }, 2000);
+    showStarRequest();
+}
 
+function onSimulationFinished() {
+    showStarRequest();
 }
 
 function showStarRequest() {
-    swal({
-        title: "Star this!",
-        text: "If you like this simulator, star the project on Github. It motivates me to improve it :)",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#5cb85c",
-        confirmButtonText: "Take me there",
-        closeOnConfirm: false
-    }, function () {
-        localStorage.setItem("starRequestShown", true);
-        window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
-    });
+    setTimeout(function () {
+        if (!localStorage.getItem("starRequestShown")) {
+            swal({
+                title: "Star this!",
+                text: "If you like this simulator, star the project on Github. It motivates me to improve it :)",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#5cb85c",
+                confirmButtonText: "Take me there",
+                closeOnConfirm: false
+            }, function () {
+                localStorage.setItem("starRequestShown", true);
+                window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
+            });
+        }
+    }, 2000);
 }
 
 function getRandomBackground() {

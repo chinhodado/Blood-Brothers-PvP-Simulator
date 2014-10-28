@@ -611,7 +611,7 @@ class BattleModel {
                 this.processEndTurn();
             }
         }
-        return this.playerWon.name;
+        return this;
     }
 
     addOnDeathCard(card: Card) {

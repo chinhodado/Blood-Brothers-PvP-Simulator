@@ -22,10 +22,10 @@
 <body>
     <div class="leftCol">
         <div style="display: none;" id="simDiv">
-            Simulation: 10,000 battles
+            Simulation: <span id="numBattle"></span> battles
             <br>
             Simulation progress:
-            <progress value="0" max="10000" id="progressBar" style="width: 95%;"></progress>
+            <progress value="0" max="1000000" id="progressBar" style="width: 95%;"></progress>
             <div id="simResultDiv">
             </div>
         </div>
@@ -132,6 +132,11 @@
 
         function playSim() {
             prepareField();
+
+            var NUM_BATTLE = 10000;
+            document.getElementById("numBattle").innerHTML = NUM_BATTLE;
+            document.getElementById("progressBar").max = NUM_BATTLE;
+
             // create a new game just to display the fam and formation
             if (option.p1RandomMode) {
                 BattleGraphic.HIDE_PLAYER1 = true;
@@ -157,18 +162,36 @@
                 }
                 else if (event.data.status == "done") {
                     var endTime = performance.now();
-                    document.getElementById("progressBar").setAttribute("value", 10000);
-                    document.getElementById("simResultDiv").innerHTML += ("Player 2 won: " + event.data.p2WinCount +
+                    document.getElementById("progressBar").setAttribute("value", NUM_BATTLE);
+                    var simResultDiv = document.getElementById("simResultDiv");
+                    simResultDiv.innerHTML += ("Player 2 won: " + event.data.p2WinCount +
                         "<br> Player 1 won: " + event.data.p1WinCount +
                         "<br><br> Time: " + ((endTime - startTime)/1000).toFixed(2) + "s" +
                         "<br><a href=setting.html>Go back to main page </a>");
+
+                    var famIdArray = [];
+                    for (var key in event.data.winCountTable) {
+                        famIdArray.push(key);
+                    }
+                    famIdArray.sort(function (a, b) {
+                        return event.data.winCountTable[b] - event.data.winCountTable[a];
+                    });
+                    var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
+                    for (var i = 0; i < famIdArray.length; i++) {
+                        var id = famIdArray[i];
+                        detail1 += (famDatabase[id].fullName + ": " + event.data.winCountTable[id] + "<br>");
+                    }
+                    detail1 += "</details>";
+                    simResultDiv.innerHTML += detail1;
+                    onSimulationFinished();
+
                     worker.terminate();
                 }
             };
             // start the worker. Need to pass the tierList information in since the worker 
             // can't access sessionStorage
             var startTime = performance.now();
-            worker.postMessage([data, option, sessionStorage.tierList]);
+            worker.postMessage([data, option, sessionStorage.tierList, NUM_BATTLE]);
         }
 
         var dataOption = getBattleDataOption();

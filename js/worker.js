@@ -9,17 +9,27 @@ function runSimulation(args) {
     prepareRandom();
     var p1WinCount = 0;
     var p2WinCount = 0;
-    for (var i = 0; i < 10000; i++) {
+    var winCountTable = {};
+    for (var i = 0; i < args[3]; i++) {
         BattleModel.IS_MASS_SIMULATION = true;
         BattleGraphic.GRAPHIC_DISABLED = true;
         var newGame = new BattleModel(args[0], args[1], args[2]);
-        var playerWon = newGame.startBattle();
+        var resultBattle = newGame.startBattle();
         BattleModel.resetAll();
-        if (playerWon == "Player 1") {
+        if (resultBattle.playerWon.id == 1) {
             p1WinCount++;
         }
-        else if (playerWon == "Player 2") {
+        else if (resultBattle.playerWon.id == 2) {
             p2WinCount++;
+        }
+
+        var winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
+        for (j = 0; j < winTeam.length; j++) {
+            if (winCountTable[winTeam[j].dbId]) {
+                winCountTable[winTeam[j].dbId]++;
+            } else {
+                winCountTable[winTeam[j].dbId] = 1;
+            }
         }
 
         // update the progress bar every 100 battles
@@ -27,7 +37,7 @@ function runSimulation(args) {
             postMessage({status: "ongoing", progress: i});
         }
     }
-    postMessage({status: "done", p1WinCount: p1WinCount, p2WinCount: p2WinCount});
+    postMessage({ status: "done", p1WinCount: p1WinCount, p2WinCount: p2WinCount, winCountTable: winCountTable });
 }
 
 // when we receive the game data from the main thread, start the simulation
