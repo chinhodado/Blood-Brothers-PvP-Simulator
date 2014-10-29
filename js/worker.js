@@ -10,10 +10,10 @@ function runSimulation(args) {
     var p1WinCount = 0;
     var p2WinCount = 0;
     var winCountTable = {};
-    for (var i = 0; i < args[3]; i++) {
+    for (var i = 0; i < args.numBattle; i++) {
         BattleModel.IS_MASS_SIMULATION = true;
         BattleGraphic.GRAPHIC_DISABLED = true;
-        var newGame = new BattleModel(args[0], args[1], args[2]);
+        var newGame = new BattleModel(args.data, args.option, args.tierList);
         var resultBattle = newGame.startBattle();
         BattleModel.resetAll();
         if (resultBattle.playerWon.id == 1) {
@@ -24,7 +24,7 @@ function runSimulation(args) {
         }
 
         var winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
-        for (j = 0; j < winTeam.length; j++) {
+        for (var j = 0; j < winTeam.length; j++) {
             if (winCountTable[winTeam[j].dbId]) {
                 winCountTable[winTeam[j].dbId]++;
             } else {
