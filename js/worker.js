@@ -1,5 +1,4 @@
 importScripts('../compiled.js');
-importScripts('helper.js');
 
 /**
  * Run a heavy simulation in the background
@@ -10,9 +9,9 @@ function runSimulation(args) {
     var p1WinCount = 0;
     var p2WinCount = 0;
     var winCountTable = {};
+    BattleModel.IS_MASS_SIMULATION = true;
+    BattleGraphic.GRAPHIC_DISABLED = true;
     for (var i = 0; i < args.numBattle; i++) {
-        BattleModel.IS_MASS_SIMULATION = true;
-        BattleGraphic.GRAPHIC_DISABLED = true;
         var newGame = new BattleModel(args.data, args.option, args.tierList);
         var resultBattle = newGame.startBattle();
         BattleModel.resetAll();

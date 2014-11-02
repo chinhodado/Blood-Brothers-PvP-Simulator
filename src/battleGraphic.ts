@@ -1,5 +1,4 @@
 ﻿declare var showCardDetailDialog;
-declare var onBattleFinished;
 
 class BattleGraphic {
 
@@ -15,11 +14,15 @@ class BattleGraphic {
     static GRAPHIC_DISABLED = false;
 
     static SHOW_FORMATION_LINE = false;
-    static IMAGE_WIDTH = 70;
-    static IMAGE_WIDTH_BIG = 120;
+
+    static wr = (ENUM.Setting.IS_MOBILE && typeof window !== 'undefined')? window.innerWidth / 400 : 1;   // the width ratio
+    static hr = (ENUM.Setting.IS_MOBILE && typeof window !== 'undefined')? window.innerHeight / 600 : 1;  // the height ratio
+
+    static IMAGE_WIDTH = Math.floor(BattleGraphic.wr * 70);
+    static IMAGE_WIDTH_BIG = Math.floor(BattleGraphic.wr * 120);
     static PLAY_MODE = 'MANUAL';
     static FONT = 'Alegreya Sans, Cooper Black';
-    static AFFLICTION_TEXT_STROKE_WIDTH = '1px';
+    static AFFLICTION_TEXT_STROKE_WIDTH = BattleGraphic.wr + 'px';
 
     private logger: BattleLogger;
     private battle: BattleModel;
@@ -85,27 +88,28 @@ class BattleGraphic {
         }
         playerFormations[2] = temp;
 
-        var draw = SVG('svg').size(400, 600).attr('id', 'mainSvg').attr('class', 'svg');
+        var wr = BattleGraphic.wr;
+        var hr = BattleGraphic.hr;
+        var draw = SVG('svg').size(wr * 400, hr * 600).attr('id', 'mainSvg').attr('class', 'svg');
 
         for (var player = 1; player <= 2; player++) {
-            
             // draw the skill name background, don't show them yet
             if (player == 2) {
-                var skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 5).attr('id', 'p2SkillBg');
-                var text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                var skillImg = draw.image('img/skillBg.png', wr * 300, hr * 29).move(wr * 55, hr * 5).attr('id', 'p2SkillBg');
+                var text = draw.text('placeholder').font({ size: wr * 14 }).fill({ color: '#fff' })
                                .attr('id', 'p2SkillText');
                 draw.group().attr('id', 'p2SkillBgTextGroup').add(skillImg).add(text).opacity(0);
             }
             else if (player == 1) {
-                skillImg = draw.image('img/skillBg.png', 300, 29).move(55, 270).attr('id', 'p1SkillBg');
-                text = draw.text('placeholder').font({ size: 14 }).fill({ color: '#fff' })
+                skillImg = draw.image('img/skillBg.png', wr * 300, hr * 29).move(wr * 55, hr * 270).attr('id', 'p1SkillBg');
+                text = draw.text('placeholder').font({ size: wr * 14 }).fill({ color: '#fff' })
                                .attr('id', 'p1SkillText');
-                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, 300);
+                draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, hr * 300);
             }
             
             // change these to change the "compactity" of the formation
-            var PLAYER_GROUP_WIDTH = 350;
-            var PLAYER_GROUP_HEIGHT = 80;
+            var PLAYER_GROUP_WIDTH = wr * 350;
+            var PLAYER_GROUP_HEIGHT = hr * 80;
 
             var horizontalStep = PLAYER_GROUP_WIDTH / 10;
             var verticalStep   = PLAYER_GROUP_HEIGHT / 2;
@@ -114,17 +118,16 @@ class BattleGraphic {
             this.coordArray[player] = coordArray;    
 
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
-            var groupPlayer = draw.group()
-                                  .attr('id', 'p' + player + 'group');
+            var groupPlayer = draw.group().attr('id', 'p' + player + 'group');
             if ((BattleGraphic.HIDE_PLAYER1 && player == 1) || (BattleGraphic.HIDE_PLAYER2 && player == 2)) {
                 groupPlayer.hide();
             }
 
             if (player == 1) {
-                groupPlayer.move(30, 400);    
+                groupPlayer.move(wr * 30, wr * 400);    
             }
             else if (player == 2) {
-                groupPlayer.move(30, 100);    
+                groupPlayer.move(wr * 30, wr * 100);    
             }
             
             // calculate the bullets coord
@@ -175,13 +178,13 @@ class BattleGraphic {
                         this.size(BattleGraphic.IMAGE_WIDTH);
                     });
 
-                var damageText = draw.text('0').font({ size: 22, family: BattleGraphic.FONT })
-                                     .attr({fill:'#fff', stroke: '#000', 'stroke-width': '2px'})
+                var damageText = draw.text('0').font({ size: wr * 22, family: BattleGraphic.FONT })
+                                     .attr({fill:'#fff', stroke: '#000', 'stroke-width': hr * 2 + 'px'})
                                      .center(coordArray[i][0], coordArray[i][1])
                                      .attr('id', 'p' + player + 'f' + i + 'damageText')
                                      .opacity(0);
 
-                var explosion = draw.image('img/explosion.png', 70, 70)
+                var explosion = draw.image('img/explosion.png', wr * 70, wr * 70)
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
                                     .opacity(0);
@@ -260,7 +263,7 @@ class BattleGraphic {
         var ystart: number = image_y_coord + BattleGraphic.IMAGE_WIDTH * 1.5;
 
         var width = BattleGraphic.IMAGE_WIDTH; // width of the health bar
-        var height = 5; // height of the health bar
+        var height = BattleGraphic.hr * 5; // height of the health bar
 
         if (percent < 0) {
             percent = 0; // health can't be less than 0
@@ -273,7 +276,7 @@ class BattleGraphic {
         
         if (!hpbar) {
             hpbar = draw.rect(width, height)
-                .style({ 'stroke-width': 1, 'stroke': '#000000'})
+                .style({ 'stroke-width': BattleGraphic.wr * 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
             var groupId = 'p' + player + 'f' + index + 'group';
@@ -346,7 +349,7 @@ class BattleGraphic {
         }
 
         var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
-        damageText.text(txt).font({ size: 22}).attr({fill: txtColor})
+        damageText.text(txt).font({ size: BattleGraphic.wr * 22}).attr({fill: txtColor})
                   .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '2s'}).opacity(0);
 
@@ -573,12 +576,12 @@ class BattleGraphic {
             var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
 
             // the y-coordinate of the text, depending on whether this is player 1 or 2
-            var yText = executor.getPlayerId() == 1 ? 272 : 8;
+            var yText = BattleGraphic.hr * (executor.getPlayerId() == 1 ? 272 : 8);
 
             var skillName: string = SkillDatabase[skillId].name;
                 
             // center the text inside the background
-            svgText.text(skillName).move(55 + 150 - svgText.bbox().width / 2, yText);
+            svgText.text(skillName).move(BattleGraphic.wr * (55 + 150) - svgText.bbox().width / 2, yText);
 
             groupSkillBg.animate({ duration: '0.5s' }).opacity(1)
                         .after(function () {
@@ -656,7 +659,7 @@ class BattleGraphic {
         var minorLog = this.logger.minorEventLog;
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
-            this.getMainBattleEffect().text(data.battleDesc).center(200, 300)
+            this.getMainBattleEffect().text(data.battleDesc).center(BattleGraphic.wr * 200, BattleGraphic.hr * 300)
                 .opacity(1).animate({duration: '3s'}).opacity(0);
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
@@ -681,7 +684,7 @@ class BattleGraphic {
             else {
                 // display status text
 
-                var fontSize = 18;
+                var fontSize = BattleGraphic.wr * 18;
 
                 if (data.status.isDispelled) {
                     var displayText = "dispelled";
@@ -691,7 +694,7 @@ class BattleGraphic {
                 }
                 else if (data.status.isAllUp) {
                     displayText = "All Stats Up";
-                    fontSize = 15;
+                    fontSize = BattleGraphic.wr * 15;
                 }
                 else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
                     displayText = "EXTRA ACT";
@@ -745,7 +748,7 @@ class BattleGraphic {
             var center_y = this.coordArray[playerId][index][1];
 
             var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
-            damageText.text("REVIVED").center(center_x, center_y).font({ size: 18})
+            damageText.text("REVIVED").center(center_x, center_y).font({ size: BattleGraphic.wr * 18})
                 .opacity(1).animate({delay: '0.5s'}).opacity(0);
             this.displayHP(data.reviveHPRatio * 100, playerId, index);
             this.getAfflictionText(playerId, index).hide();
@@ -926,7 +929,7 @@ class BattleGraphic {
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
                 var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
-                damageText.text("+10%").center(center_x, center_y).font({ size: 25})
+                damageText.text("+10%").center(center_x, center_y).font({ size: BattleGraphic.wr * 25})
                     .opacity(1).animate({delay: '2s'}).opacity(0);
             }
 
@@ -1133,7 +1136,7 @@ class BattleGraphic {
         var ward = SVG.get('p' + playerId + 'f' + famIndex + wardTxt);
 
         if (!ward) {
-            ward = SVG.get('mainSvg').image('img/' + wardFileName, 70, 70)
+            ward = SVG.get('mainSvg').image('img/' + wardFileName, BattleGraphic.wr * 70, BattleGraphic.wr * 70)
                         .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
                         .attr('id', 'p' + playerId + 'f' + famIndex + wardTxt)
                         .opacity(0);
@@ -1150,10 +1153,11 @@ class BattleGraphic {
         var txt = SVG.get('p' + playerId + 'f' + famIndex + 'afflictText');
 
         if (!txt) {
-            txt = SVG.get('mainSvg').text('Paralyzed').font({ size: 14, family: BattleGraphic.FONT })
+            txt = SVG.get('mainSvg').text('Paralyzed').font({ size: BattleGraphic.wr * 14, family: BattleGraphic.FONT })
                                 .attr({fill:'#fff', stroke: '#000', 'stroke-width': BattleGraphic.AFFLICTION_TEXT_STROKE_WIDTH})
                                 .center(this.coordArray[playerId][famIndex][0], 
-                                        this.coordArray[playerId][famIndex][1] + BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + 20)
+                                        this.coordArray[playerId][famIndex][1] + 
+                                        BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + BattleGraphic.hr * 20)
                                 .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')
                                 .hide();
             SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);    
@@ -1168,7 +1172,7 @@ class BattleGraphic {
     getProcEffect(playerId: number, famIndex: number, type: string) {
         var file = type == "spellCircle"? "circle_blue.png" : "lineSpark.png";
 
-        var effect = SVG.get('mainSvg').image('img/' + file, 150, 150)
+        var effect = SVG.get('mainSvg').image('img/' + file, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
                             .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
                             .attr('id', 'p' + playerId + 'f' + famIndex + 'spellCircle')
                             .opacity(0);
@@ -1184,9 +1188,9 @@ class BattleGraphic {
         var txt = SVG.get('battleText');
 
         if (!txt) {
-            txt = SVG.get('mainSvg').text('0').font({ size: 24, family: BattleGraphic.FONT })
+            txt = SVG.get('mainSvg').text('0').font({ size: BattleGraphic.wr * 24, family: BattleGraphic.FONT })
                                     .attr({fill:'#fff', stroke: '#000', 'stroke-width': BattleGraphic.AFFLICTION_TEXT_STROKE_WIDTH})
-                                    .center(200, 300)
+                                    .center(BattleGraphic.wr * 200, BattleGraphic.hr * 300)
                                     .attr('id', 'battleText')
                                     .opacity(0);
         }

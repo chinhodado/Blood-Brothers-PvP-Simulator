@@ -1,59 +1,63 @@
-﻿/**
+﻿declare var swal;
+declare var $;
+declare var startTest;
+
+/**
  * Set some form items to what were last chosen
  */
 function setPreviousChoices() {
     // player 1 fams
     if (localStorage.getItem("f0") && localStorage.getItem("f0") != "null") {
         for (var i = 0; i < 10; i++) {
-            document.getElementById("f" + i).value = localStorage.getItem("f" + i);
+            (<HTMLInputElement>document.getElementById("f" + i)).value = localStorage.getItem("f" + i);
         }
     }
 
     // player 2 fams
     if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
         for (i = 0; i < 10; i++) {
-            document.getElementById("f" + (i + 10)).value = localStorage.getItem("f" + (i + 10));
+            (<HTMLInputElement>document.getElementById("f" + (i + 10))).value = localStorage.getItem("f" + (i + 10));
         }
     }
 
     // player 1 skills
     if (localStorage.getItem("s10") && localStorage.getItem("s10") != "null") {
         for (i = 0; i < 3; i++) {
-            document.getElementById("s1" + i).value = localStorage.getItem("s1" + i);
+            (<HTMLInputElement>document.getElementById("s1" + i)).value = localStorage.getItem("s1" + i);
         }
     }
 
     // player 2 skills
     if (localStorage.getItem("s20") && localStorage.getItem("s20") != "null") {
         for (i = 0; i < 3; i++) {
-            document.getElementById("s2" + i).value = localStorage.getItem("s2" + i);
+            (<HTMLInputElement>document.getElementById("s2" + i)).value = localStorage.getItem("s2" + i);
         }
     }
 
     // player 1 formation
     if (localStorage.getItem("1f") && localStorage.getItem("1f") != "null") {
-        document.getElementById("1f").value = localStorage.getItem("1f");
+        (<HTMLInputElement>document.getElementById("1f")).value = localStorage.getItem("1f");
     }
 
     // player 2 formation
     if (localStorage.getItem("2f") && localStorage.getItem("2f") != "null") {
-        document.getElementById("2f").value = localStorage.getItem("2f");
+        (<HTMLInputElement>document.getElementById("2f")).value = localStorage.getItem("2f");
     }
 
     // proc order
     if (localStorage.getItem("po") && localStorage.getItem("po") != "null") {
-        document.getElementById("po").value = localStorage.getItem("po");
+        (<HTMLInputElement>document.getElementById("po")).value = localStorage.getItem("po");
     }
 
     // debug mode
     if (localStorage.getItem("debug") == "true") {
-        document.getElementById("debug").checked = true;
+        (<HTMLInputElement>document.getElementById("debug")).checked = true;
     }
 
     // battle type
     var bt = localStorage.getItem("bt");
     if (bt == 1 || bt == 2) {
-        document.getElementById("bt").value = bt;
+        (<HTMLInputElement>document.getElementById("bt")).value = bt;
     }
 }
 
@@ -63,16 +67,16 @@ function setPreviousChoices() {
 function toogleDisable() {
     for (var player = 1; player <= 2; player++) {
         // is the random checkbox checked?
-        var isSelected = document.getElementById("r" + player).checked;
+        var isSelected = (<HTMLInputElement>document.getElementById("r" + player)).checked;
 
         // fams, skills, formation
         var elems = document.getElementsByClassName("p" + player);
         for (var i = 0; i < elems.length; i++) {
             if (isSelected) {
-                elems[i].disabled = true;
+                (<HTMLInputElement>elems[i]).disabled = true;
             }
             else {
-                elems[i].disabled = false;
+                (<HTMLInputElement>elems[i]).disabled = false;
             }
         }
 
@@ -92,17 +96,18 @@ function toogleDisable() {
  */
 function toogleReserve() {
     for (var player = 1; player <= 2; player++) {
-        var isBloodclash = document.getElementById("bt").value == 1;
+        var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value == "1";
 
         var elems = document.getElementsByClassName("reserve");
         for (var i = 0; i < elems.length; i++) {
+            var elem = (<HTMLInputElement>elems[i]);
             if (!isBloodclash) {
-                elems[i].disabled = true;
-                elems[i].style.display = 'none';
+                elem.disabled = true;
+                elem.style.display = 'none';
             }
             else {
-                elems[i].disabled = false;
-                elems[i].style.display = 'inline';
+                elem.disabled = false;
+                elem.style.display = 'inline';
             }
         }
     }
@@ -114,16 +119,21 @@ function toogleReserve() {
 /**
  * Prepare the form when it is loaded
  */
-function formOnLoad() {
+function onFormLoad() {
     toogleReserve();
     toogleDisable();
 }
 
+/**
+ * Put any validation for the main setting form here
+ */
 function validateForm() {
-    // put any validation for the main setting form here
     return true;
 }
 
+/**
+ * Submits the form. Goes into debug mode if necesary.
+ */
 function submitForm() {
     var form = document.forms["mainForm"];
     if (form["debug"].checked == true) {
@@ -153,7 +163,7 @@ function setFamOptions() {
             var option = document.createElement("option");
             option.value = key;
             option.text = famDatabase[key].fullName;
-            famSelects[i].add(option);
+            (<HTMLSelectElement>famSelects[i]).add(option);
         }
     };
 }
@@ -174,15 +184,15 @@ function setSkillOptions() {
         for (var index = 0; index < skillIdArray.length; index++) {
             var key = skillIdArray[index];
             var option = document.createElement("option");
-            option.value = key;
+            option.value = key + "";
             option.text = SkillDatabase[key].name;
-            skillSelects[i].add(option);
+            (<HTMLSelectElement>skillSelects[i]).add(option);
         }
     };
 }
 
 /**
- * Get the battle data and option from the URL. Also saves the settings to localstorage for later retrieval
+ * Get the battle data and option from the URL. Also saves the settings to localStorage for later retrieval
  */
 function getBattleDataOption() {
     // fam: player 1: f0 -> f4, f5 -> f9
@@ -195,7 +205,7 @@ function getBattleDataOption() {
     // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
-    var data = {}, option = {};
+    var data: any = {}, option: any = {};
     option.procOrder = getURLParameter("po");
     localStorage.setItem("po", option.procOrder);
 
@@ -239,6 +249,9 @@ function getBattleDataOption() {
     return [data, option];
 }
 
+/**
+ * Hijack the Math.random() with our own random implementation if needed
+ */
 function prepareRandom() {
     var USE_CS_RND = false;
     if (USE_CS_RND) {
@@ -249,15 +262,33 @@ function prepareRandom() {
     }
 }
 
+/**
+ * Callback when the battle in normal mode has ended
+ */
 function onBattleFinished() {
-    document.getElementById("startButton").disabled = false;
-    showStarRequest();
+    var startButton = document.getElementById("startButton");
+    startButton.disabled = false;
+
+    if (ENUM.Setting.IS_MOBILE) {
+        startButton.style.display = "block";
+    } 
+    else {
+        showStarRequest();
+    }
 }
 
+/**
+ * Callback when the simulation has ended
+ */
 function onSimulationFinished() {
-    showStarRequest();
+    if (!ENUM.Setting.IS_MOBILE) {
+        showStarRequest();
+    }
 }
 
+/**
+ * Show request for starring on Github
+ */
 function showStarRequest() {
     setTimeout(function () {
         if (!localStorage.getItem("starRequestShown")) {
@@ -270,13 +301,17 @@ function showStarRequest() {
                 confirmButtonText: "Take me there",
                 closeOnConfirm: false
             }, function () {
-                localStorage.setItem("starRequestShown", true);
+                localStorage.setItem("starRequestShown", "true");
                 window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
             });
         }
     }, 2000);
 }
 
+
+/**
+ * Return a link for a random battle background
+ */
 function getRandomBackground() {
     var bg = [
         "23b/Bamboo01", "34d/Bamboo02", "1c5/Carpet01", "141/Carpet02",
@@ -308,6 +343,9 @@ function getRandomBackground() {
     return link;
 }
 
+/**
+ * Prepare the battle field
+ */
 function prepareField() {
     var rndBgLink = getRandomBackground();
     var img = new Image();
@@ -322,7 +360,9 @@ function prepareField() {
     img.src = rndBgLink;
 }
 
-// fetch the tier list and cache it
+/**
+ * Fetch the tier list and cache it
+ */
 function getTierList(whatToDoNext) {
     if (whatToDoNext == "debug") {
         var callback = "updateTierListThenDebug";
@@ -340,7 +380,7 @@ function getTierList(whatToDoNext) {
         callback = "updateTierList";
     }
 
-    if (!sessionStorage.tierList) {
+    if (!localStorage.getItem("tierList")) {
         console.log("Fetching tier list...");
         $.ajax({
             "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
@@ -364,24 +404,180 @@ function getTierList(whatToDoNext) {
     }
 }
 
+/**
+ * Update the tier list
+ */
 function updateTierList(data) {
-    sessionStorage.tierList = JSON.stringify(data.results);
+    localStorage.setItem("tierList", JSON.stringify(data.results));
 }
 
 // kill me now...
 function updateTierListThenPlay(data) {
-    sessionStorage.tierList = JSON.stringify(data.results);
+    updateTierList(data);
     playGame();
 }
 function updateTierListThenDebug(data) {
-    sessionStorage.tierList = JSON.stringify(data.results);
+    updateTierList(data);
     playDebug();
 }
 function updateTierListThenSim(data) {
-    sessionStorage.tierList = JSON.stringify(data.results);
+    updateTierList(data);
     playSim();
 }
 function updateTierListThenTest(data) {
-    sessionStorage.tierList = JSON.stringify(data.results);
+    updateTierList(data);
     startTest();
+}
+
+function playGame() {
+    prepareField();
+    BattleGraphic.PLAY_MODE = 'AUTO';
+    BattleLogger.IS_DEBUG_MODE = false;
+    document.getElementById('startButton').onclick = function () {
+        this.disabled = true;
+
+        if (ENUM.Setting.IS_MOBILE) {
+            this.style.display = "none";
+        }
+
+        BattleGraphic.getInstance().resetInitialField();
+        BattleGraphic.getInstance().displayMajorEventAnimation(0);
+    }
+    var dataOption = getBattleDataOption();
+    var data = dataOption[0], option = dataOption[1];
+    var newGame = new BattleModel(data, option);
+    newGame.startBattle();
+}
+
+function playSim() {
+    prepareField();
+    var dataOption = getBattleDataOption();
+    var data = dataOption[0], option = dataOption[1];
+
+    var NUM_BATTLE = 10000;
+    document.getElementById("numBattle").innerHTML = NUM_BATTLE.toString();
+    (<HTMLProgressElement>document.getElementById("progressBar")).max = NUM_BATTLE;
+
+    // create a new game just to display the fam and formation
+    if (option.p1RandomMode) {
+        BattleGraphic.HIDE_PLAYER1 = true;
+    }
+
+    if (option.p2RandomMode) {
+        BattleGraphic.HIDE_PLAYER2 = true;
+    }
+    BattleLogger.IS_DEBUG_MODE = false;
+    BattleModel.IS_MASS_SIMULATION = true;
+    if (!ENUM.Setting.IS_MOBILE) {
+        var newGame = new BattleModel(data, option);
+    }
+
+    // hide/show some elements on the page
+    document.getElementById("gameDiv").setAttribute("style", "display: none;");
+    document.getElementById("startButton").setAttribute("style", "display: none;");
+    document.getElementById("simDiv").setAttribute("style", "display: block;");
+
+    // now make the workers do the simulation in background
+    var totalProgress = 0;        // update every time a worker posts back
+    var workerDone = 0;           // the number of workers that have done their jobs
+    var NUM_WORKER = 4;           // the number of workers
+    var workerPool = [];          // the worker pool
+    var workerDataReturned = [];  // list of data returned by each worker
+
+    for (var w = 0; w < NUM_WORKER; w++) {
+        var worker = new Worker("js/worker.js");
+        worker.onmessage = function (event) {
+            if (event.data.status == "ongoing") {
+                totalProgress += 100;
+                document.getElementById("progressBar").setAttribute("value", totalProgress.toString());
+            }
+            else if (event.data.status == "done") {
+                totalProgress += 100;
+                document.getElementById("progressBar").setAttribute("value", totalProgress.toString());
+                workerDataReturned[workerDone] = event.data;
+                workerDone++;
+                console.log(workerDone + " workers done.");
+                if (workerDone == NUM_WORKER) { // <- all workers have finished their jobs
+                    var endTime = performance.now();
+
+                    // aggregate all workers' data to form the final data
+                    var finalData = {
+                        p1WinCount: 0,
+                        p2WinCount: 0,
+                        winCountTable: []
+                    };
+                    for (var i = 0; i < NUM_WORKER; i++) {
+                        finalData.p1WinCount += workerDataReturned[i].p1WinCount;
+                        finalData.p2WinCount += workerDataReturned[i].p2WinCount;
+
+                        var workerTable = workerDataReturned[i].winCountTable;
+                        for (var key in workerTable) {
+                            if (finalData.winCountTable[key]) {
+                                finalData.winCountTable[key] += workerTable[key];
+                            } else {
+                                finalData.winCountTable[key] = workerTable[key];
+                            }
+                        }
+                    }
+
+                    var famIdArray = [];
+                    for (key in finalData.winCountTable) {
+                        famIdArray.push(key);
+                    }
+                    famIdArray.sort(function (a, b) {
+                        return finalData.winCountTable[b] - finalData.winCountTable[a];
+                    });
+
+                    // now print out the details
+                    var simResultDiv = document.getElementById("simResultDiv");
+                    simResultDiv.innerHTML += ("Player 2 won: " + finalData.p2WinCount +
+                        "<br> Player 1 won: " + finalData.p1WinCount +
+                        "<br><br> Time: " + ((endTime - startTime) / 1000).toFixed(2) + "s" +
+                        "<br><a href=setting.html>Go back to main page </a>");
+
+                    var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
+                    for (i = 0; i < famIdArray.length; i++) {
+                        var id = famIdArray[i];
+                        detail1 += (famDatabase[id].fullName + ": " + finalData.winCountTable[id] + "<br>");
+                    }
+                    detail1 += "</details>";
+                    simResultDiv.innerHTML += detail1;
+
+                    // call the callback when simulation finished
+                    onSimulationFinished();
+
+                    // terminate all workers
+                    workerPool.forEach(function (entry) {
+                        entry.terminate();
+                    });
+                }
+            }
+        };
+
+        workerPool[w] = worker;
+    }
+
+    worker = null; // <- just leave this here
+            
+    // start the workers. Need to pass the tierList information in since the worker 
+    // can't access sessionStorage
+    var startTime = performance.now();
+
+    for (w = 0; w < workerPool.length; w++) {
+        workerPool[w].postMessage({
+            data: data, 
+            option: option, 
+            tierList: localStorage.getItem("tierList"), 
+            numBattle: NUM_BATTLE / NUM_WORKER
+        });
+    }
+}
+
+function playDebug() {
+    prepareField();
+    var dataOption = getBattleDataOption();
+    var data = dataOption[0], option = dataOption[1];
+
+    var newGame = new BattleModel(data, option);
+    newGame.startBattle();
 }

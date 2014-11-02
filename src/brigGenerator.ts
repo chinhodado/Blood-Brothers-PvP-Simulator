@@ -37,7 +37,7 @@
         var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
 
         if (!tierListString) {
-            tierListString = sessionStorage["tierList"];
+            tierListString = localStorage["tierList"];
         }
 
         if (option.p1RandomMode) {

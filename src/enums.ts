@@ -1,5 +1,9 @@
 module ENUM {
 
+    export enum Setting {
+        IS_MOBILE = 0
+    }
+
     /**
      * Is the skill opening, attack, defense, etc.
      */

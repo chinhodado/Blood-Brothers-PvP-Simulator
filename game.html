@@ -2,20 +2,23 @@
 <html>
 <head>
     <title>Blood Brothers Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A PvP Simulator for the Blood Brothers RPG game">
     <meta name="keywords" content="blood, brothers, simulator, PvP, RPG">
-    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:900' rel='stylesheet' type='text/css'>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <link rel='stylesheet' href='css/font.css'>
     <link rel="stylesheet" href="css/dialog.css">
     <link rel="stylesheet" href="css/game.css">
-    <link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="css/sweet-alert.css">
     
     <script src="lib/sweet-alert.min.js"></script>
     <script src="lib/svg.min.js"></script>
     <script src="lib/svg.filter.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
     <script src="compiled.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="js/dialog.js"></script>
-    <script src="js/helper.js"></script>
     <script src="js/ga.js"></script>
 </head>
 
@@ -51,7 +54,11 @@
 
     <div class="midCol">
         <div id="svgWrapper">
-            <div id="svg"></div>
+            <div id="svg">
+                <div id="buttonInsideWrapper" style="position:absolute; bottom: 5%; width: 100%; display: none;">
+                    <button id="startButtonInside" style="margin: 0 auto;">Start battle</button>
+                </div>
+            </div>
             <div class="mbgaui-container">
 
                 <!-- popup bg -->
@@ -89,7 +96,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <button id="startButton">Start battle</button>
     </div>
@@ -118,144 +124,30 @@
 
     <script type="text/javascript">
         prepareRandom();
-
-        function playGame() {
-            prepareField();
-            BattleGraphic.PLAY_MODE = 'AUTO';
-            BattleLogger.IS_DEBUG_MODE = false;
-            document.getElementById('startButton').onclick = function () {
-                this.disabled = true;
-                BattleGraphic.getInstance().resetInitialField();
-                BattleGraphic.getInstance().displayMajorEventAnimation(0);
-            }
-            var newGame = new BattleModel(data, option);
-            newGame.startBattle();
-        }
-
-        function playSim() {
-            prepareField();
-
-            var NUM_BATTLE = 10000;
-            document.getElementById("numBattle").innerHTML = NUM_BATTLE;
-            document.getElementById("progressBar").max = NUM_BATTLE;
-
-            // create a new game just to display the fam and formation
-            if (option.p1RandomMode) {
-                BattleGraphic.HIDE_PLAYER1 = true;
-            }
-
-            if (option.p2RandomMode) {
-                BattleGraphic.HIDE_PLAYER2 = true;
-            }
-            BattleLogger.IS_DEBUG_MODE = false;
-            BattleModel.IS_MASS_SIMULATION = true;
-            var newGame = new BattleModel(data, option);
-
-            // hide/show some elements on the page
-            document.getElementById("gameDiv").setAttribute("style", "display: none;");
-            document.getElementById("startButton").setAttribute("style", "display: none;");
-            document.getElementById("simDiv").setAttribute("style", "display: block;");
-
-            // now make the workers do the simulation in background
-            var totalProgress = 0;        // update every time a worker posts back
-            var workerDone = 0;           // the number of workers that have done their jobs
-            var NUM_WORKER = 4;           // the number of workers
-            var workerPool = [];          // the worker pool
-            var workerDataReturned = [];  // list of data returned by each worker
-
-            for (var w = 0; w < NUM_WORKER; w++) {
-                var worker = new Worker("js/worker.js");
-                worker.onmessage = function (event) {
-                    if (event.data.status == "ongoing") {
-                        totalProgress += 100;
-                        document.getElementById("progressBar").setAttribute("value", totalProgress);
-                    }
-                    else if (event.data.status == "done") {
-                        totalProgress += 100;
-                        document.getElementById("progressBar").setAttribute("value", totalProgress);
-                        workerDataReturned[workerDone] = event.data;
-                        workerDone++;
-                        console.log(workerDone + " workers done.");
-                        if (workerDone == NUM_WORKER) { // <- all workers have finished their jobs
-                            var endTime = performance.now();
-
-                            // aggregate all workers' data to form the final data
-                            var finalData = {
-                                p1WinCount: 0,
-                                p2WinCount: 0,
-                                winCountTable: []
-                            };
-                            for (var i = 0; i < NUM_WORKER; i++) {
-                                finalData.p1WinCount += workerDataReturned[i].p1WinCount;
-                                finalData.p2WinCount += workerDataReturned[i].p2WinCount;
-
-                                var workerTable = workerDataReturned[i].winCountTable;
-                                for (var key in workerTable) {
-                                    if (finalData.winCountTable[key]) {
-                                        finalData.winCountTable[key] += workerTable[key];
-                                    } else {
-                                        finalData.winCountTable[key] = workerTable[key];
-                                    }
-                                }
-                            }
-
-                            var famIdArray = [];
-                            for (key in finalData.winCountTable) {
-                                famIdArray.push(key);
-                            }
-                            famIdArray.sort(function (a, b) {
-                                return finalData.winCountTable[b] - finalData.winCountTable[a];
-                            });
-
-                            // now print out the details
-                            var simResultDiv = document.getElementById("simResultDiv");
-                            simResultDiv.innerHTML += ("Player 2 won: " + finalData.p2WinCount +
-                                "<br> Player 1 won: " + finalData.p1WinCount +
-                                "<br><br> Time: " + ((endTime - startTime) / 1000).toFixed(2) + "s" +
-                                "<br><a href=setting.html>Go back to main page </a>");
-
-                            var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
-                            for (i = 0; i < famIdArray.length; i++) {
-                                var id = famIdArray[i];
-                                detail1 += (famDatabase[id].fullName + ": " + finalData.winCountTable[id] + "<br>");
-                            }
-                            detail1 += "</details>";
-                            simResultDiv.innerHTML += detail1;
-
-                            // call the callback when simulation finished
-                            onSimulationFinished();
-
-                            // terminate all workers
-                            workerPool.forEach(function (entry) {
-                                entry.terminate();
-                            });
-                        }
-                    }
-                };
-
-                workerPool[w] = worker;
-            }
-
-            worker = null; // <- just leave this here
-            
-            // start the workers. Need to pass the tierList information in since the worker 
-            // can't access sessionStorage
-            var startTime = performance.now();
-
-            for (w = 0; w < workerPool.length; w++) {
-                workerPool[w].postMessage({
-                    data: data, 
-                    option: option, 
-                    tierList: sessionStorage.tierList, 
-                    numBattle: NUM_BATTLE / NUM_WORKER
-                });
-            }
-        }
-
-        var dataOption = getBattleDataOption();
-        var data = dataOption[0], option = dataOption[1];
-
         var mode = getURLParameter("mode");
+
+        if (ENUM.Setting.IS_MOBILE && mode !== "sim") {
+            $(".leftCol, .rightCol").css("display", "none");
+            $(".midCol").css({"width": "100%", "height": "100%", "position": "relative"});
+            $("#svgWrapper").css({ "width": "100%", "height": "100%", "backgroundSize": "100% 100%", "overflow": "hidden" });
+            $(document.documentElement).css("width", "100%");
+            $(document.body).css("margin", 0);
+            $("#startButton").remove();
+            $("#startButtonInside").css("zoom", window.innerWidth / 400).attr("id", "startButton");
+            $("#buttonInsideWrapper").css("display", "block");
+            $("#card-detail-dialog").css({
+                "left": window.innerWidth / 400 * 50,
+                "top": window.innerHeight / 600 * 50,
+                "zoom": window.innerWidth / 400
+            });
+        }
+        else if (ENUM.Setting.IS_MOBILE && mode == "sim") {
+            $(".midCol, .rightCol, #githubDiv").css("display", "none");
+            $(".leftCol").css({ "width": "100%", "height": "100%", "position": "relative" });
+            $("#leftInfoWrapper").css({ "height": "100%" });
+            $(document.body).css("margin", 0);
+        }
+
         if (mode !== "sim") {
             getTierList("play");
         }

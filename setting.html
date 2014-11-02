@@ -2,18 +2,21 @@
 <html>
 <head>
     <title>Blood Brothers Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A PvP Simulator for the Blood Brothers RPG game">
     <meta name="keywords" content="blood, brothers, simulator, PvP, RPG">
-    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:900' rel='stylesheet' type='text/css'>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <link rel='stylesheet' href='css/font.css'>
 
     <script src="compiled.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="js/helper.js"></script>    
+    <script src="lib/jquery.min.js"></script>
     <script src="js/ga.js"></script>
 </head>
-<body style="width: 100%; text-align: center;" onload="formOnLoad()">
+<body style="width: 100%; text-align: center;" onload="onFormLoad()">
 <div style="display: inline-block;">
-    <h1>Blood Brothers Simulator</h1>
+    <h1 id="titleText">Blood Brothers Simulator</h1>
     <form action="game.html" method="GET" onsubmit="return validateForm()" name="mainForm">
 
         <p>Player 2</p>
@@ -44,11 +47,11 @@
             <option value="11">5-Hydra</option>
         </select>
         <br /><br />
-        Warlord Skills: 
+        Warlord Skills: <br class="showInMobile" style="display: none"/>
 
-        Skill 1: <select name="s20" id="s20" class="skillSelect randomize p2"></select>
-        Skill 2: <select name="s21" id="s21" class="skillSelect randomize p2"></select>
-        Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select>
+        Skill 1: <select name="s20" id="s20" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
+        Skill 2: <select name="s21" id="s21" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
+        Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
 
         <br /><br />
         Random <input type="checkbox" name="r2" id="r2" onchange="toogleDisable()"/>
@@ -97,11 +100,11 @@
             <option value="11">5-Hydra</option>
         </select>
         <br /><br />
-        Warlord Skills:
+        Warlord Skills: <br class="showInMobile" style="display: none" />
 
-        Skill 1: <select name="s10" id="s10" class="skillSelect randomize p1"></select>
-        Skill 2: <select name="s11" id="s11" class="skillSelect randomize p1"></select>
-        Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select>
+        Skill 1: <select name="s10" id="s10" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
+        Skill 2: <select name="s11" id="s11" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
+        Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
 
         <br /><br />
         Random <input type="checkbox" name="r1" id="r1" onchange="toogleDisable()" />
@@ -126,18 +129,22 @@
             <option value="1">Bloodclash</option>
             <option value="2">Normal (5v5)</option>
         </select>
+        <br class="showInMobile" style="display: none" />
         Proc order:
         <select name="po" id="po">
             <option value="1">Android</option>
             <option value="2">iOS</option>
         </select>
+        <br class="showInMobile" style="display: none" />
         Mode:
         <select name="mode">
             <option value="normal">Normal</option>
             <option value="sim">Simulation</option>
         </select>
 
-        <input type="checkbox" name="debug" value="true" id="debug">Debug 
+        <span id="debugCheckbox">
+            <input type="checkbox" name="debug" value="true" id="debug">Debug 
+        </span>
 
         <script type="text/javascript">
             setFamOptions();
@@ -152,7 +159,7 @@
             
     </form>
 
-    <a href="https://github.com/chinhodado/bb_pvp_simulator" target="_blank">
+    <a href="https://github.com/chinhodado/bb_pvp_simulator" target="_blank" id="forkImage">
         <img style="position: absolute; top: 0; right: 0; border: 0;"
              src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
              alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
@@ -170,6 +177,11 @@
 
         getTierList();
 
+        if (ENUM.Setting.IS_MOBILE) {
+            $("#debugCheckbox, #forkImage, #titleText").css("display", "none");
+            $(".showInMobile").css("display", "block");
+            $(document.body).css("margin", 0);
+        }
     </script>
 </div>
 </body>

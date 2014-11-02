@@ -4,9 +4,11 @@
 /// <reference path="brigGenerator.ts"/>
 /// <reference path="card.ts"/>
 /// <reference path="cardManager.ts"/>
+/// <reference path="csRandom.ts"/>
 /// <reference path="enums.ts"/>
 /// <reference path="famDatabase.ts"/>
 /// <reference path="formation.ts"/>
+/// <reference path="helper.ts"/>
 /// <reference path="player.ts"/>
 /// <reference path="skill.ts"/>
 /// <reference path="skillCalcType.ts"/>
