@@ -653,6 +653,11 @@ class ProtectReflectSkillLogic extends ProtectSkillLogic {
 }
 
 class CounterSkillLogic extends SkillLogic {
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        return super.willBeExecuted(data) && !data.attacker.isDead;
+    }
+
     execute(data: SkillLogicData) {
         this.logger.addMinorEvent({
             executorId: data.executor.id, 

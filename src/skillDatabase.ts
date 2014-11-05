@@ -3394,6 +3394,69 @@ var SkillDatabase = {
         desc: "Massive AGI-based damage to three random foes, ignoring position. Attacks rear foes first."
     },
 
+    613: {
+        name: "Icy Smile", type: 2, func: 4, calc: 2,
+        arg1: 1.95, arg2: 3, arg3: 0.5,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and sometimes freeze three random foes, ignoring position."
+    },
+
+    614: {
+        name: "Following Orders", type: 2, func: 3, calc: 1,
+        arg1: 1.2, arg2: 5, arg3: 0.2, arg4: 2,
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to all foes and sometimes silence foes for 2 turns."
+    },
+
+    616: {
+        name: "Cat Scratch", type: 2, func: 4, calc: 2,
+        arg1: 1.25,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
+    },
+
+    617: {
+        name: "Tail Swish", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 3,
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars, based on 20% of her WIS."
+    },
+
+    618: {
+        name: "Jack-O'-Boom", type: 2, func: 4, calc: 2,
+        arg1: 1.15,
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+
+    619: {
+        name: "Pumpkin Bulwark", type: 1, func: 1, calc: 0,
+        arg1: 0.2, arg2: 6,
+        range: 4, prob: 70,
+        desc: "Reduce magic damage taken by all allies."
+    },
+
+    620: {
+        name: "Storm of Hooves", type: 2, func: 4, calc: 2,
+        arg1: 2,
+        range: 23, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    621: {
+        name: "Devoted Arrows", type: 2, func: 4, calc: 2,
+        arg1: 1.7,
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to four random foes, ignoring position."
+    },
+
+    622: {
+        name: "Deathbed Shot", type: 16, func: 4, calc: 2,
+        arg1: 0.35,
+        range: 208, prob: 70, ward: 2,
+        desc: "Deal WIS-based damage to all foes upon her death. Increased if fewer foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
@@ -3686,5 +3749,12 @@ var SkillDatabase = {
         arg1: 1.2,
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10045: {
+        name: "Standard Action", type: 2, func: 37, calc: 2,
+        arg1: 1, arg2: 0.3, arg3: 27, arg4: 21,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and drain HP from target."
     },
 };

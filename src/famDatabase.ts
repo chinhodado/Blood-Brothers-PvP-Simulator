@@ -102,6 +102,13 @@ var famDatabase = {
         img: "20d",
         fullName: "Alp, Dynast of Darkness II"
     },
+    11436: {
+        name: "Alyssa", stats: [17883, 8718, 16594, 20516, 17786],
+        skills: [616, 617],
+        autoAttack: 10007,
+        img: "41d",
+        fullName: "Alyssa, Black Cat Witch II"
+    },
     10623: {
         name: "Warfist", stats: [10904, 11417, 10466, 10660, 11830],
         skills: [156],
@@ -536,6 +543,13 @@ var famDatabase = {
         img: "20f",
         fullName: "Circe, Fallen Heroine II"
     },
+    11437: {
+        name: "Pumpkin", stats: [16497, 7061, 12423, 17060, 15457],
+        skills: [618, 619],
+        autoAttack: 10007,
+        img: "46b",
+        fullName: "Clockwork Pumpkin II"
+    },
     11392: {
         name: "Viper", stats: [14999, 12999, 14999, 7808, 17133],
         skills: [574],
@@ -754,6 +768,12 @@ var famDatabase = {
         skills: [131],
         img: "10e",
         fullName: "Fiendish Bat Demon II"
+    },
+    11435: {
+        name: "Figgo", stats: [15509, 16377, 13451, 6051, 16534],
+        skills: [614],
+        img: "275",
+        fullName: "Figgo, Executioner II"
     },
     10849: {
         name: "Fimbul", stats: [12086, 13489, 12562, 16743, 12597],
@@ -1337,6 +1357,13 @@ var famDatabase = {
         skills: [313],
         img: "30b",
         fullName: "Linnorm, the Hailstorm II"
+    },
+    21433: {
+        name: "Liza", stats: [22491, 9517, 16542, 21861, 18011],
+        skills: [613],
+        autoAttack: 10045,
+        img: "4ff",
+        fullName: "Liza, Blood-Anointed"
     },
     21187: {
         name: "Loki", stats: [19202, 21231, 16192, 15119, 15806],
@@ -2340,6 +2367,13 @@ var famDatabase = {
         skills: [199],
         img: "297",
         fullName: "Void Yaksha II"
+    },
+    11461: {
+        name: "Wang Yi", stats: [16024, 6577, 11855, 17000, 16816],
+        skills: [621, 622],
+        autoAttack: 10007,
+        img: "1b8",
+        fullName: "Wang Yi, Lady of Iron II"
     },
     11046: {
         name: "Waheela", stats: [17006, 13008, 16204, 16692, 18100],
