@@ -23,6 +23,9 @@ function runSimulation(args) {
         }
 
         var winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
+        if (resultBattle.isBloodClash) {
+            winTeam = winTeam.concat(resultBattle.cardManager.getPlayerOriginalReserveCards(resultBattle.playerWon));
+        }
         for (var j = 0; j < winTeam.length; j++) {
             if (winCountTable[winTeam[j].dbId]) {
                 winCountTable[winTeam[j].dbId]++;
