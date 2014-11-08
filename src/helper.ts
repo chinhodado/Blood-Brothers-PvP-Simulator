@@ -1,5 +1,4 @@
 ﻿declare var swal;
-declare var $;
 declare var startTest;
 
 /**
@@ -450,12 +449,14 @@ function playGame() {
 }
 
 function playSim() {
-    prepareField();
+    if (!ENUM.Setting.IS_MOBILE) {
+        prepareField();
+    }
     var dataOption = getBattleDataOption();
     var data = dataOption[0], option = dataOption[1];
 
     var NUM_BATTLE = 10000;
-    document.getElementById("numBattle").innerHTML = NUM_BATTLE.toString();
+    document.getElementById("numBattle").innerHTML = numberWithCommas(NUM_BATTLE);
     (<HTMLProgressElement>document.getElementById("progressBar")).max = NUM_BATTLE;
 
     // create a new game just to display the fam and formation
@@ -477,6 +478,84 @@ function playSim() {
     document.getElementById("startButton").setAttribute("style", "display: none;");
     document.getElementById("simDiv").setAttribute("style", "display: block;");
 
+    if (ENUM.Setting.IS_MOBILE) {
+        startSynchronousSim(data, option, NUM_BATTLE);
+    } 
+    else {
+        startWorkerSim(data, option, NUM_BATTLE);
+    }
+}
+
+function playDebug() {
+    prepareField();
+    var dataOption = getBattleDataOption();
+    var data = dataOption[0], option = dataOption[1];
+
+    var newGame = new BattleModel(data, option);
+    newGame.startBattle();
+}
+
+/**
+ * Basically worker.js. Used when worker not available.
+ */
+function startSynchronousSim(data, option, NUM_BATTLE) {
+    prepareRandom();
+    var p1WinCount = 0;
+    var p2WinCount = 0;
+    var winCountTable = {};
+    BattleModel.IS_MASS_SIMULATION = true;
+    BattleGraphic.GRAPHIC_DISABLED = true;
+    var tierList = localStorage.getItem("tierList");
+    var startTime = new Date().getTime(); // if worker is not supported, chance is high that neither is performance.now()
+
+    var intervalCount = 0;
+    var NUM_CHUNK = 100;
+    var CHUNK_SIZE = NUM_BATTLE / NUM_CHUNK;
+    var interval = setInterval(function() {
+        for (var i = 0; i < CHUNK_SIZE; i++) {
+            var newGame = new BattleModel(data, option, tierList);
+            var resultBattle = newGame.startBattle();
+            BattleModel.resetAll();
+            if (resultBattle.playerWon.id == 1) {
+                p1WinCount++;
+            } else if (resultBattle.playerWon.id == 2) {
+                p2WinCount++;
+            }
+
+            var winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
+            if (resultBattle.isBloodClash) {
+                winTeam = winTeam.concat(resultBattle.cardManager.getPlayerOriginalReserveCards(resultBattle.playerWon));
+            }
+            for (var j = 0; j < winTeam.length; j++) {
+                if (winCountTable[winTeam[j].dbId]) {
+                    winCountTable[winTeam[j].dbId]++;
+                } else {
+                    winCountTable[winTeam[j].dbId] = 1;
+                }
+            }
+
+            document.getElementById("progressPercent").innerHTML = intervalCount + 1 + "%";
+            document.getElementById("progressBar").setAttribute("value", (intervalCount * CHUNK_SIZE + i + 1) + "");
+        }
+
+        intervalCount++;
+        if(intervalCount >= NUM_CHUNK) {
+            clearInterval(interval);
+        }
+
+        if (intervalCount * CHUNK_SIZE >= NUM_BATTLE) {
+            var endTime = new Date().getTime();
+            var finalData = {
+                p1WinCount: p1WinCount,
+                p2WinCount: p2WinCount,
+                winCountTable: winCountTable
+            };
+            onSimulationResultObtained(finalData, startTime, endTime);
+        }
+    }, 0);
+}
+
+function startWorkerSim(data, option, NUM_BATTLE) {
     // now make the workers do the simulation in background
     var totalProgress = 0;        // update every time a worker posts back
     var workerDone = 0;           // the number of workers that have done their jobs
@@ -520,31 +599,7 @@ function playSim() {
                         }
                     }
 
-                    var famIdArray = [];
-                    for (key in finalData.winCountTable) {
-                        famIdArray.push(key);
-                    }
-                    famIdArray.sort(function (a, b) {
-                        return finalData.winCountTable[b] - finalData.winCountTable[a];
-                    });
-
-                    // now print out the details
-                    var simResultDiv = document.getElementById("simResultDiv");
-                    simResultDiv.innerHTML += ("Player 2 won: " + finalData.p2WinCount +
-                        "<br> Player 1 won: " + finalData.p1WinCount +
-                        "<br><br> Time: " + ((endTime - startTime) / 1000).toFixed(2) + "s" +
-                        "<br><a href=setting.html>Go back to main page </a>");
-
-                    var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
-                    for (i = 0; i < famIdArray.length; i++) {
-                        var id = famIdArray[i];
-                        detail1 += (famDatabase[id].fullName + ": " + finalData.winCountTable[id] + "<br>");
-                    }
-                    detail1 += "</details>";
-                    simResultDiv.innerHTML += detail1;
-
-                    // call the callback when simulation finished
-                    onSimulationFinished();
+                    onSimulationResultObtained(finalData, startTime, endTime);
 
                     // terminate all workers
                     workerPool.forEach(function (entry) {
@@ -573,11 +628,30 @@ function playSim() {
     }
 }
 
-function playDebug() {
-    prepareField();
-    var dataOption = getBattleDataOption();
-    var data = dataOption[0], option = dataOption[1];
+function onSimulationResultObtained(finalData, startTime, endTime) {
+    var famIdArray = [];
+    for (var key in finalData.winCountTable) {
+        famIdArray.push(key);
+    }
+    famIdArray.sort(function (a, b) {
+        return finalData.winCountTable[b] - finalData.winCountTable[a];
+    });
 
-    var newGame = new BattleModel(data, option);
-    newGame.startBattle();
+    // now print out the details
+    var simResultDiv = document.getElementById("simResultDiv");
+    simResultDiv.innerHTML += ("Player 2 won: " + finalData.p2WinCount +
+        "<br> Player 1 won: " + finalData.p1WinCount +
+        "<br><br> Time: " + ((endTime - startTime) / 1000).toFixed(2) + "s" +
+        "<br><a href=setting.html>Go back to main page </a>");
+
+    var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
+    for (var i = 0; i < famIdArray.length; i++) {
+        var id = famIdArray[i];
+        detail1 += (famDatabase[id].fullName + ": " + finalData.winCountTable[id] + "<br>");
+    }
+    detail1 += "</details>";
+    simResultDiv.innerHTML += detail1;
+
+    // call the callback when simulation finished
+    onSimulationFinished();
 }

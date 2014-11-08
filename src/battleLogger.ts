@@ -6,6 +6,8 @@
 class BattleLogger {
 
     static IS_DEBUG_MODE = true;
+    static INFOTEXT_DISPLAYED = false;
+    static WARNINGTEXT_DISPLAYED = false;
 
     // an array of arrays of MinorEvent objects, describing the things that happened under that major event
     minorEventLog: MinorEvent[][] = [];
@@ -305,15 +307,18 @@ class BattleLogger {
      * Display the info text
      */
     displayInfoText(): void {
+        if (BattleLogger.INFOTEXT_DISPLAYED) {
+            return;
+        }
         var cardManager = CardManager.getInstance();
         var battle = BattleModel.getInstance();
         var p1randTxt = this.getRandomModeText(+battle.p1RandomMode);
         var p2randTxt = this.getRandomModeText(+battle.p2RandomMode);
 
-        var infoDivP1 = document.getElementById("infoDivP1");
-        var infoDivP2 = document.getElementById("infoDivP2");
-        var infoDivP1Title = document.getElementById("infoDivP1Title");
-        var infoDivP2Title = document.getElementById("infoDivP2Title");
+        var infoDivP1 = ENUM.Setting.IS_MOBILE ? $("#infoDivP1mobile")[0] : $("#infoDivP1")[0];
+        var infoDivP2 = ENUM.Setting.IS_MOBILE ? $("#infoDivP2mobile")[0] : $("#infoDivP2")[0];
+        var infoDivP1Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP1TitleMobile")[0] : $("#infoDivP1Title")[0];
+        var infoDivP2Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP2TitleMobile")[0] : $("#infoDivP2Title")[0];
 
         if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
             infoDivP1.innerHTML = cardManager.getPlayerMainBrigString(battle.player1);
@@ -335,12 +340,17 @@ class BattleLogger {
 
         infoDivP1Title.innerHTML += p1randTxt;
         infoDivP2Title.innerHTML += p2randTxt;
+
+        BattleLogger.INFOTEXT_DISPLAYED = true;
     }
 
     /**
      * Add a warning if the user try do a 5v5 or 10v10 battle between 2 fams
      */
     displayWarningText(): void {
+        if (BattleLogger.WARNINGTEXT_DISPLAYED) {
+            return;
+        }
         var needWarn = true;
         var cardManager = CardManager.getInstance();
         var battle = BattleModel.getInstance();
@@ -378,6 +388,8 @@ class BattleLogger {
             simDiv.innerHTML += warnTxt;
             gameDiv.innerHTML += warnTxt;
         }
+
+        BattleLogger.WARNINGTEXT_DISPLAYED = true;
     }
 
     getRandomModeText(type: ENUM.RandomBrigType): string {

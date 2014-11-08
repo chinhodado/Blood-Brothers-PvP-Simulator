@@ -118,3 +118,10 @@ function isChrome(): boolean {
         return false;
     }
 }
+
+/**
+ * Format a number with thousand separators
+ */
+function numberWithCommas(x: number): string {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

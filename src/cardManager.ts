@@ -338,23 +338,45 @@ class CardManager {
     }
 
     /**
-     * Get a HTML string for a player's brig, with each fam name being a link to open that fam's detail dialog
+     * Get a string for a player's main brig
      */
     getPlayerMainBrigString(player: Player): string {
         var cards = this.getPlayerCurrentMainCards(player);
-        return this.getBrigString(cards);
+        return ENUM.Setting.IS_MOBILE? this.getPlainBrigString(cards) : this.getHtmlBrigString(cards);
     }
+
+    /**
+     * Get a string for a player's reserve brig
+     */
     getPlayerReserveBrigString(player: Player): string {
         var cards = this.getPlayerOriginalReserveCards(player);
-        return this.getBrigString(cards);
+        return ENUM.Setting.IS_MOBILE? this.getPlainBrigString(cards) : this.getHtmlBrigString(cards);
     }
-    getBrigString(cards: Card[]): string {
+
+    /**
+     * Get a HTML string for a list of cards, with each fam name being a link to open that fam's detail dialog
+     */
+    getHtmlBrigString(cards: Card[]): string {
         var brigStr = "";
 
         for (var i = 0; i < cards.length; i++) {
             var dash = (i == 0)? "" : " - ";
             var cb = "showCardDetailDialogById(" + cards[i].id + ");";
             brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
+        }
+
+        return brigStr;
+    }
+
+    /**
+     * Get a plain string for a list of cards
+     */
+    getPlainBrigString(cards: Card[]): string {
+        var brigStr = "";
+
+        for (var i = 0; i < cards.length; i++) {
+            var dash = (i == 0)? "" : " - ";
+            brigStr += (dash + cards[i].name);
         }
 
         return brigStr;

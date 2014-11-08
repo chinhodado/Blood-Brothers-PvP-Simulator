@@ -27,8 +27,14 @@
         <div id="leftInfoWrapper" style="height: 80%; overflow: auto;">
             <div style="display: none;" id="simDiv">
                 Simulation: <span id="numBattle"></span> battles
+                <div id="mobileInfoDiv" style="display: none;">
+                    <div id="infoDivP2TitleMobile">Player 2: </div>
+                    <div id="infoDivP2mobile"></div><br />
+                    <div id="infoDivP1TitleMobile">Player 1: </div>
+                    <div id="infoDivP1mobile"></div>
+                </div>
                 <br>
-                Simulation progress:
+                Simulation progress: <span id="progressPercent"></span>
                 <progress value="0" max="1000000" id="progressBar" style="width: 95%;"></progress>
                 <div id="simResultDiv">
                 </div>
@@ -143,6 +149,7 @@
         }
         else if (ENUM.Setting.IS_MOBILE && mode == "sim") {
             $(".midCol, .rightCol, #githubDiv").css("display", "none");
+            $("#mobileInfoDiv").css("display", "block");
             $(".leftCol").css({ "width": "100%", "height": "100%", "position": "relative" });
             $("#leftInfoWrapper").css({ "height": "100%" });
             $(document.body).css("margin", 0);

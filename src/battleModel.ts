@@ -9,6 +9,7 @@
 /// <reference path="famDatabase.ts"/>
 /// <reference path="formation.ts"/>
 /// <reference path="helper.ts"/>
+/// <reference path="../lib/jquery.d.ts"/>
 /// <reference path="player.ts"/>
 /// <reference path="skill.ts"/>
 /// <reference path="skillCalcType.ts"/>
