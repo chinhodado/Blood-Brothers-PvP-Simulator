@@ -301,6 +301,7 @@ class BattleGraphic {
                 stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1'); //<- hp gradient stop
                 stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2');
             }).attr('id', hpGradientId);
+            hpbar.fill(hpGradient);
         }
         else {
             var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
@@ -308,8 +309,6 @@ class BattleGraphic {
             s1.animate(duration + 's').update({ offset: percent + '%' });
             s2.animate(duration + 's').update({ offset: percent + '%' });
         }
-
-        hpbar.fill(hpGradient);
 
         // display dead or alive familiar
         this.displayDeadAliveFamiliar(player, index, percent <= 0);
