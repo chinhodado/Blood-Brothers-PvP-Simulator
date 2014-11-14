@@ -434,36 +434,54 @@ class BattleGraphic {
      * Display a familiar as dead (greyed) or alive
      */
     displayDeadAliveFamiliar(player: number, fam: number, isDead: boolean) {
-        var image: any = SVG.get('p' + player + 'f' + fam + 'image');
-        var filter = SVG.get('darkenFilter');
-        if (isDead) {
-            if (!filter) {
-                // If the filter does not exist yet, create it
-                // I don't know how to create a standalone filter for reuse
-                // later, so I have to use this roundabout way. First set
-                // the filter to the image:
-                image.filter(add => {
-                    add.componentTransfer({
-                        rgb: { type: 'linear', slope: 0.05 }
+        var image: any;
+        if (ENUM.Setting.IS_MOBILE) {
+            // fall back to using opacity, since svg filter can be a luxury...
+            image = document.getElementById('p' + player + 'f' + fam + 'image');
+            if (isDead) {
+                image.style.opacity = 0.4;
+            } else {
+                image.style.opacity = 1;
+            }
+        } 
+        else {
+            image = SVG.get('p' + player + 'f' + fam + 'image');
+            var filter = SVG.get('darkenFilter');
+            if (isDead) {
+                if (!filter) {
+                    // If the filter does not exist yet, create it
+                    // I don't know how to create a standalone filter for reuse
+                    // later, so I have to use this roundabout way. First set
+                    // the filter to the image:
+                    image.filter(add => {
+                        add.componentTransfer({
+                            rgb: { type: 'linear', slope: 0.05 }
+                        });
                     });
-                });
 
-                // now grab the filter from the image, and give it the id
-                filter = image.filterer;
-                filter.attr('id', 'darkenFilter');
+                    // now grab the filter from the image, and give it the id
+                    filter = image.filterer;
+                    filter.attr('id', 'darkenFilter');
 
-                // have to reapply the filter to the image since the image
-                // does not change its filter id automatically
-                image.filter(filter);
+                    // have to reapply the filter to the image since the image
+                    // does not change its filter id automatically
+                    image.filter(filter);
+                }
+                else {
+                    // if the filter is already created, we just use it
+                    image.filter(filter);
+                }
             }
             else {
-                // if the filter is already created, we just use it
-                image.filter(filter);
+                // if the fam is not dead, remove any existing filter from it
+                image.unfilter();
             }
-        }
-        else {
-            // if the fam is not dead, remove any existing filter from it
-            image.unfilter();
+            if (isDead) {
+                image.style.opacity = 0.2;
+            }
+            else {
+                image.style.opacity = 1;
+            }
         }
     }
 
