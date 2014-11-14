@@ -231,6 +231,13 @@ var famDatabase = {
         img: "104",
         fullName: "Arcanan Empress II"
     },
+    11427: {
+        name: "Fool", stats: [20613, 20104, 18057, 13182, 11102],
+        skills: [632, 633],
+        img: "3f3",
+        isMounted: true,
+        fullName: "Arcanan Fool II"
+    },
     11311: {
         name: "Hanged Man", stats: [20505, 15002, 13008, 13030, 18024],
         skills: [480, 481],
@@ -2387,6 +2394,12 @@ var famDatabase = {
         skills: [199],
         img: "297",
         fullName: "Void Yaksha II"
+    },
+    11406: {
+        name: "Vucub", stats: [16123, 13110, 14732, 6967, 17000],
+        skills: [586],
+        img: "2aa",
+        fullName: "Vucub Caquix, the Barbarian II"
     },
     11461: {
         name: "Wang Yi", stats: [16024, 6577, 11855, 17000, 16816],

@@ -3232,6 +3232,13 @@ var SkillDatabase = {
         range: 19, prob: 30, ward: 2,
         desc: "Heavy WIS-based damage to four random foes and sometimes greatly lower WIS."
     },
+
+    586: {
+        name: "Emerald Teeth", type: 2, func: 3, calc: 3,
+        arg1: 1.3,
+        range: 419, prob: 30, ward: 1,
+        desc: "Deal varying AGI-based damage to four random foes."
+    },
  
     588: {
         name: "Tranquil Death", type: 2, func: 4, calc: 3,
@@ -3517,6 +3524,20 @@ var SkillDatabase = {
         arg1: 0.25, arg2: 17, arg3: 1.25,
         range: 3, prob: 70,
         desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
+    632: {
+        name: "Fool's Rage", type: 2, func: 36, calc: 1,
+        arg1: 1.35, arg2: 0.2, arg3: 27, arg4: 21,
+        range: 419, prob: 30, ward: 1,
+        desc: "Drains HP from four random foes while dealing varying ATK-based damage."
+    },
+
+    633: {
+        name: "Fool's Theurgy", type: 2, func: 6, calc: 0,
+        arg1: 1,
+        range: 101, prob: 50,
+        desc: "Revive and fully restore HP of 1 random familiar."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent

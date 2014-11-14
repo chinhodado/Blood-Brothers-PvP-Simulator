@@ -8,6 +8,10 @@ class RangeFactory {
         23: 2
     };
 
+    static ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM = {
+        419: 4
+    };
+
     static ENEMY_NEAR_SCALED_RANGE_TARGET_NUM = {
         312: 2,
         313: 3,
@@ -111,6 +115,10 @@ class RangeFactory {
         335: [1.9375, 1.4375, 1.25, 1.13, 1],
         336: [1.9375, 1.4375, 1.25, 1.13, 1, 1]
     };
+
+    static VaryingPatternParam = {
+        419: [0.9, 1.0, 1.15, 1.35],
+    }
     
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
         var range: BaseRange;
@@ -130,7 +138,9 @@ class RangeFactory {
     }
 
     static isEnemyRandomRange (id: ENUM.SkillRange) {
-        return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id] || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3;
+        return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id] 
+            || !!RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id]
+            || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3;
     }
 
     static isFriendRandomRange (id: ENUM.SkillRange) {
@@ -138,7 +148,12 @@ class RangeFactory {
     }
     
     static createEnemyRandomRange (id: ENUM.SkillRange) {
-        return new EnemyRandomRange(id, RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]);
+        if (this.isEnemyVaryingRange(id)) {
+            var numTargets = RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id];
+        } else {
+            numTargets = RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
+        }
+        return new EnemyRandomRange(id, numTargets);
     }
 
     static createFriendRandomRange (id: ENUM.SkillRange, selectDead: boolean) {
@@ -167,13 +182,29 @@ class RangeFactory {
         return this.isEnemyNearScaledRange(id) || id == ENUM.SkillRange.ENEMY_ALL_SCALED;
     }
 
-    static getScaledRatio(id: ENUM.SkillRange, targetsLeft: number) {
+    static isEnemyVaryingRange(id: ENUM.SkillRange) {
+        return !!RangeFactory.VaryingPatternParam[id];
+    }
+
+    static getScaledRatio(id: ENUM.SkillRange, targetsLeft: number): number {
         var paramArray = RangeFactory.ScalePatternParams[id];
 
         if (!paramArray) {
             throw new Error("Invalid range for getting scale ratio");
         }
         return paramArray[targetsLeft - 1];
+    }
+
+    /**
+     * Get the varying ratio
+     * nthTarget: starts at 0
+     */
+    static getVaryingRatio(id: ENUM.SkillRange, nthTarget: number): number {
+        var paramArray = RangeFactory.VaryingPatternParam[id];
+        if (!paramArray) {
+            throw new Error("Invalid range for getting varying ratio");
+        }
+        return paramArray[nthTarget];
     }
 
     static isRowBasedRange(rangeId: ENUM.SkillRange): boolean {

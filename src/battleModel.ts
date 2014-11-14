@@ -312,10 +312,13 @@ class BattleModel {
         var damage = skillMod * baseDamage;
 
         if (data.scaledRatio)
-                damage *= data.scaledRatio;
+            damage *= data.scaledRatio;
+
+        if (data.varyingRatio)
+            damage *= data.varyingRatio;
 
         if (data.dmgRatio)
-                damage *= data.dmgRatio;
+            damage *= data.dmgRatio;
             
         // apply the target's ward
         if (skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
@@ -840,7 +843,7 @@ class BattleModel {
      *
      * @param targetsAttacked optional, set to null when multiple protect/hit is allowed
      */
-    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: boolean[], scaledRatio?: number) {
+    processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: boolean[], scaledRatio?: number, varyingRatio?: number) {
         // now check if someone on the enemy side can protect before the damage is dealt
         var enemyCards = this.cardManager.getEnemyCurrentMainCards(attacker.player);
         var protectSkillActivated = false; //<- has any protect skill been activated yet?
@@ -865,7 +868,8 @@ class BattleModel {
                     attackSkill: attackSkill, // for protect
                     targetCard: targetCard,  // for protect
                     targetsAttacked: targetsAttacked,  // for protect
-                    scaledRatio: scaledRatio
+                    scaledRatio: scaledRatio,
+                    varyingRatio: varyingRatio
                 };
 
                 if (protectSkill.willBeExecuted(protectData)) {
@@ -959,6 +963,7 @@ interface DamagePhaseData {
     skill: Skill; 
     additionalDescription?: string;
     scaledRatio?: number;
+    varyingRatio?: number;
 
     // for reflect
     dmgRatio?: number;

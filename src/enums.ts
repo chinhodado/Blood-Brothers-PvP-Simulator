@@ -197,6 +197,8 @@ module ENUM {
         ENEMY_REAR_ALL_SCALED         = 214,
         ENEMY_FRONT_MID_ALL_SCALED    = 215,
         ENEMY_FRONT_REAR_ALL_SCALED   = 234,
+
+        ENEMY_VARYING_RANDOM_4        = 419
     }
 
     export enum WardType {

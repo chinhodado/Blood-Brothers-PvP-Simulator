@@ -264,8 +264,17 @@ class AttackSkillLogic extends SkillLogic {
     }
 
     execute(data: SkillLogicData) {
+        var skill = data.skill;
+        skill.getReady(data.executor);
+
+        // hacky, but kinda convenient.
+        var targets: Card[] = skill.range.targets;
+        if (RangeFactory.isEnemyScaledRange(skill.skillRange)) {
+            data.scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
+        }
+
         if (!RangeFactory.isEnemyRandomRange(data.skill.skillRange) && data.skill.isIndirectSkill()) {
-            this.executeAoeAttack(data);
+            this.executeAoeAttack(data, targets);
         }
         else {
             this.executeNonAoeAttack(data);
@@ -276,28 +285,24 @@ class AttackSkillLogic extends SkillLogic {
      * Execute a fork/sweeping/random attack
      * Multiple protection is possible
      */
-    executeNonAoeAttack(data: SkillLogicData) {
-        data.skill.getReady(data.executor);
+    executeNonAoeAttack(data: SkillLogicData): void {
         var target: Card;
+        var attackCount = 0; // for varying skills
         while ((target = data.skill.getTarget(data.executor)) && !data.executor.isDead) {
-            this.processAttackAgainstSingleTarget(data.executor, target, data.skill);
+            if (RangeFactory.isEnemyVaryingRange(data.skill.skillRange)) {
+                var varyingRatio = RangeFactory.getVaryingRatio(data.skill.skillRange, attackCount);
+            }
+            this.processAttackAgainstSingleTarget(data.executor, target, data.skill, data.scaledRatio, varyingRatio);
+            attackCount++;
         }
     }
 
     /**
      * Execute an AoE attack
      */
-    executeAoeAttack(data: SkillLogicData) {
+    executeAoeAttack(data: SkillLogicData, targets: Card[]): void {
         var skill = data.skill;
         var executor = data.executor;
-        skill.getReady(executor);
-        
-        // hacky, but kinda convenient
-        var targets: Card[] = skill.range.targets;
-
-        if (RangeFactory.isEnemyScaledRange(skill.skillRange)) {
-            var scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
-        }
 
         if (skill.isIndirectSkill()) {
             // if the skill is indirect and of range type, it must be AoE, so only one reactive skill can be proc
@@ -335,7 +340,7 @@ class AttackSkillLogic extends SkillLogic {
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
                 if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
-                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, scaledRatio);
+                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, data.scaledRatio);
                     protectSkillActivated = protectData.activated;
                     if (protectSkillActivated) {
                         aoeReactiveSkillActivated = true;
@@ -357,7 +362,7 @@ class AttackSkillLogic extends SkillLogic {
                         attacker: executor, 
                         target: targetCard, 
                         skill: skill,
-                        scaledRatio: scaledRatio
+                        scaledRatio: data.scaledRatio
                     });
                     targetsAttacked[targetCard.id] = true;
 
@@ -389,8 +394,8 @@ class AttackSkillLogic extends SkillLogic {
         }
     }
 
-    processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio?: number) {
-        var protectData = this.battleModel.processProtect(executor, target, skill, null, scaledRatio);
+    processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio: number, varyingRatio?: number) {
+        var protectData = this.battleModel.processProtect(executor, target, skill, null, scaledRatio, varyingRatio);
 
         // if not protected, proceed with the attack as normal
         if (!protectData.activated) {
@@ -406,7 +411,8 @@ class AttackSkillLogic extends SkillLogic {
                 attacker: executor, 
                 target: target, 
                 skill: skill,
-                scaledRatio: scaledRatio
+                scaledRatio: scaledRatio,
+                varyingRatio: varyingRatio
             });
 
             if (!executor.justMissed && !target.justEvaded && !target.isDead) {
@@ -503,6 +509,7 @@ class ProtectSkillLogic extends SkillLogic {
             target: protector, 
             skill: attackSkill,
             scaledRatio: data.scaledRatio,
+            varyingRatio: data.varyingRatio,
             dmgRatio: dmgRatio
         });
 
@@ -566,7 +573,8 @@ class EvadeSkillLogic extends SkillLogic {
             attacker: data.attacker, 
             target: data.executor, 
             skill: data.attackSkill,
-            scaledRatio: data.scaledRatio
+            scaledRatio: data.scaledRatio,
+            varyingRatio: data.varyingRatio
         });
 
         // update the targetsAttacked if necessary
@@ -636,6 +644,7 @@ class ProtectReflectSkillLogic extends ProtectSkillLogic {
                 target: target,
                 skill: data.skill,
                 scaledRatio: data.scaledRatio,
+                varyingRatio: data.varyingRatio,
                 oriAttacker: data.attacker,
                 oriAtkSkill: data.attackSkill,
                 oriDmg: toReturn.dmgTaken / data.skill.skillFuncArg5 //hacky
@@ -933,6 +942,7 @@ interface SkillLogicData {
     skill?: Skill;
     wouldBeDamage?: number; // the would-be damage, for survive skills
     scaledRatio?: number;
+    varyingRatio?: number;
     attacker?: Card;    // for protect/counter
     attackSkill?: Skill; // for protect/counter
     targetCard?: Card;  // for protect
