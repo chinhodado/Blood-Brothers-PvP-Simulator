@@ -185,6 +185,13 @@ var famDatabase = {
         img: "15a",
         fullName: "Apocalyptic Beast II"
     },
+    11364: {
+        name: "Apsara", stats: [15717, 4992, 14113, 17179, 17006],
+        skills: [630, 631],
+        autoAttack: 10007,
+        img: "152",
+        fullName: "Apsara, Spirit of Water II"
+    },
     11281: {
         name: "Chariot", stats: [17342, 19346, 16453, 10376, 17472],
         skills: [464],
@@ -330,6 +337,13 @@ var famDatabase = {
         img: "3f8",
         fullName: "Asena, Wolfwoman II"
     },
+    11361: {
+        name: "Ashlee", stats: [17038, 16042, 15045, 13431, 17992],
+        skills: [623],
+        autoAttack: 10029,
+        img: "3f7",
+        fullName: "Ashlee Steamsaw II"
+    },
     10595: {
         name: "Astaroth", stats: [12194, 13965, 10087, 15278, 14280],
         skills: [155],
@@ -398,6 +412,12 @@ var famDatabase = {
         skills: [186],
         img: "230",
         fullName: "Behemoth, Thunder Beast II"
+    },
+    10935: {
+        name: "Belisama", stats: [17777, 17071, 17000, 11111, 4981],
+        skills: [628],
+        img: "39e",
+        fullName: "Belisama, Flame Goddess II"
     },
     10684: {
         name: "Biast", stats: [13879, 12655, 10163, 13611, 9798],
@@ -2455,6 +2475,12 @@ var famDatabase = {
         skills: [351, 352],
         img: "4a7",
         fullName: "Zeruel, Angel of War II"
+    },
+    11443: {
+        name: "Zorg", stats: [14073, 15196, 11331, 5395, 10805],
+        skills: [629],
+        img: "1e0",
+        fullName: "Zorg, the Cruncher II"
     },
     10474: {
         name: "Zuniga", stats: [12987, 15132, 14276, 14839, 14709],

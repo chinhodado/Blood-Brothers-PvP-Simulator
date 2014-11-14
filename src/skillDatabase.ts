@@ -3457,6 +3457,68 @@ var SkillDatabase = {
         desc: "Deal WIS-based damage to all foes upon her death. Increased if fewer foes."
     },
 
+    623: {
+        name: "Steamsaw Assault", type: 2, func: 24, calc: 0,
+        range: 21, prob: 35, randSkills: [624, 625, 626, 627],
+        desc: "Strong weapon attack with unpredictable results."
+    },
+
+    624: {
+        name: "Saw Swipe", type: 2, func: 4, calc: 3,
+        arg1: 2.1,
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to three random foes, ignoring position."
+    },
+
+    625: {
+        name: "Brutal Slash", type: 2, func: 4, calc: 3,
+        arg1: 1.7,
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to four random foes, ignoring position."
+    },
+
+    626: {
+        name: "Scatter Shot", type: 2, func: 4, calc: 3,
+        arg1: 1.4,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+
+    627: {
+        name: "Concussive Blast", type: 2, func: 4, calc: 3,
+        arg1: 1.1, arg2: 2, arg3: 0.7,
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to and sometimes stun all foes, ignoring position."
+    },
+
+    628: {
+        name: "Glittering Flame", type: 3, func: 13, calc: 1,
+        arg1: 1.4, arg2: 8, arg3: 0.5, arg4: 2500,
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unlease a burning counter attack when struck."
+    },
+
+    629: {
+        name: "Slice and Dice", type: 2, func: 3, calc: 1,
+        arg1: 0.7,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
+    },
+
+    630: {
+        name: "Water's Fury", type: 2, func: 34, calc: 2,
+        arg1: 1.75, arg2: 1, arg3: 0.3, arg4: 0.1,
+        range: 19, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage and sometimes greatly lower ATK of four random foes."
+    },
+
+    631: {
+        name: "Water's Mercy", type: 1, func: 1, calc: 0,
+        arg1: 0.25, arg2: 17, arg3: 1.25,
+        range: 3, prob: 70,
+        desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         arg1: 1,
