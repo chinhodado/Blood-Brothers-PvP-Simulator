@@ -27,6 +27,9 @@
                 if (famDb.fullName != famSrc.name)
                     conflict = true;
 
+                if (!famDb.isMounted && famSrc.cardType == 5)
+                    conflict = true;
+
                 if ((famDb.autoAttack && (famSrc.defaultSkillId == 0)) ||
                     (!famDb.autoAttack && (famSrc.defaultSkillId != 0)) ||
                     (famDb.autoAttack && (famSrc.defaultSkillId != 0) && (famDb.autoAttack != famSrc.defaultSkillId)))
