@@ -3454,7 +3454,7 @@ var SkillDatabase = {
         name: "Devoted Arrows", type: 2, func: 4, calc: 2,
         arg1: 1.7,
         range: 19, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to four random foes, ignoring position."
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
     },
 
     622: {
@@ -3538,6 +3538,48 @@ var SkillDatabase = {
         arg1: 1,
         range: 101, prob: 50,
         desc: "Revive and fully restore HP of 1 random familiar."
+    },
+
+    634: {
+        name: "Airstrike Spear", type: 2, func: 33, calc: 1,
+        arg1: 1.25, arg2: 2, arg3: 0.4, arg4: 0.15,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes greatly lower DEF."
+    },
+
+    635: {
+        name: "Frumious", type: 2, func: 4, calc: 2,
+        arg1: 1.7, arg2: 2, arg3: 0.3,
+        range: 19, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to and sometimes paralyze four random foes, ignoring position."
+    },
+
+    636: {
+        name: "Cold Tentacles", type: 2, func: 4, calc: 2,
+        arg1: 1.3, arg2: 3, arg3: 0.25,
+        range: 20, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage and sometimes freeze five random foes, ignoring position."
+    },
+
+    637: {
+        name: "Guandao and Claws", type: 2, func: 3, calc: 1,
+        arg1: 1.4,
+        range: 419, prob: 30, ward: 1,
+        desc: "Deal varying ATK-based damage to four random foes."
+    },
+
+    638: {
+        name: "Nipping Wind", type: 2, func: 4, calc: 3,
+        arg1: 1.25,
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to six random foes, ignoring position."
+    },
+
+    639: {
+        name: "Breeze's Mercy", type: 1, func: 1, calc: 0,
+        arg1: 0.25, arg2: 4,
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars, based on 25% of her WIS."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -3839,5 +3881,33 @@ var SkillDatabase = {
         arg1: 1, arg2: 0.3, arg3: 27, arg4: 21,
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage and drain HP from target."
+    },
+
+    10046: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10047: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        arg1: 1, arg2: 3, arg3: 0.25,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes freeze target."
+    },
+
+    10048: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1, arg2: 2, arg3: 0.25,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes paralyze target."
+    },
+
+    10049: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        arg1: 1,
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 };

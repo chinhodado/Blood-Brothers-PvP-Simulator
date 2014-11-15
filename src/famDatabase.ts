@@ -363,6 +363,13 @@ var famDatabase = {
         img: "315",
         fullName: "Aurboda, the Great Mother II"
     },
+    11441: {
+        name: "Ausra", stats: [21913, 9596, 15998, 18403, 18154],
+        skills: [638, 639],
+        autoAttack: 10023,
+        img: "2c8",
+        fullName: "Ausra, the Fall Breeze II"
+    },
     11388: {
         name: "Azi", stats: [20375, 20202, 20104, 22899, 18057],
         skills: [572],
@@ -394,6 +401,13 @@ var famDatabase = {
         skills: [349],
         img: "2fd",
         fullName: "Balgo, the Cursed Flame II"
+    },
+    11243: {
+        name: "Bandersnatch", stats: [21805, 8047, 14200, 19183, 17786],
+        skills: [635],
+        autoAttack: 10046,
+        img: "1bc",
+        fullName: "Bandersnatch, Beast Divine II"
     },
     10652: {
         name: "Batraz", stats: [14471, 15511, 13442, 12293, 12174],
@@ -538,6 +552,13 @@ var famDatabase = {
         skills: [549],
         img: "17b",
         fullName: "Cat Sith Swordswoman II"
+    },
+    11177: {
+        name: "CSW", stats: [15804, 16768, 14000, 5334, 16707],
+        skills: [637],
+        autoAttack: 10048,
+        img: "1d8",
+        fullName: "Cat Sith Warlord II"
     },
     11213: {
         name: "Cegila", stats: [13149, 11492, 9498, 17504, 16995],
@@ -1404,6 +1425,13 @@ var famDatabase = {
         img: "2ad",
         fullName: "Long Feng, the Dragon Fist II"
     },
+    11440: {
+        name: "Lucan", stats: [25304, 22011, 18349, 17916, 18154],
+        skills: [634],
+        autoAttack: 10049,
+        img: "419",
+        fullName: "Lucan, Eagle Knight II"
+    },
     10754: {
         name: "Lucia", stats: [17106, 13878, 16633, 9881, 10857],
         skills: [16],
@@ -1767,6 +1795,13 @@ var famDatabase = {
         skills: [556],
         img: "24d",
         fullName: "Pazuzu, the Whirling Jinn II"
+    },
+    11259: {
+        name: "Peg Powler", stats: [15500, 7353, 12499, 17049, 16204],
+        skills: [636],
+        autoAttack: 10047,
+        img: "30c",
+        fullName: "Peg Powler II"
     },
     10348: {
         name: "Pegasus", stats: [8756, 10200, 8843, 10880, 9181],
