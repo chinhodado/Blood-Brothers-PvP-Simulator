@@ -192,7 +192,7 @@ var SkillDatabase = {
     41 : {
         name: "Blizzard", type: 2, func: 4, calc: 2, 
         arg1: 1, arg2: 3, arg3: 0.3,
-        range: 7, prob: 30, ward: 3,
+        range: 7, prob: 30, ward: 2,
         desc: "Deal damage and sometimes freeze up to three foes."
     },
 
@@ -325,7 +325,7 @@ var SkillDatabase = {
     71: {
         name: "Icicle", type: 2, func: 4, calc: 2,
         arg1: 3, 
-        range: 5, prob: 30, ward: 3,
+        range: 5, prob: 30, ward: 2,
         desc: "Deal heavy damage to one foe."
     },
 
@@ -598,7 +598,7 @@ var SkillDatabase = {
     128: {
         name: "Whiteout", type: 2, func: 4, calc: 2,
         arg1: 2.3, arg2: 3, arg3: 0.3,
-        range: 7, prob: 30, ward: 3,
+        range: 7, prob: 30, ward: 2,
         desc: "Deal heavy damage and sometimes freeze up to three foes."
     },
 
@@ -3502,7 +3502,7 @@ var SkillDatabase = {
         name: "Glittering Flame", type: 3, func: 13, calc: 1,
         arg1: 1.4, arg2: 8, arg3: 0.5, arg4: 2500,
         range: 21, prob: 50, ward: 1,
-        desc: "Chance to unlease a burning counter attack when struck."
+        desc: "Chance to unleash a burning counter attack when struck."
     },
 
     629: {
@@ -3557,7 +3557,7 @@ var SkillDatabase = {
     636: {
         name: "Cold Tentacles", type: 2, func: 4, calc: 2,
         arg1: 1.3, arg2: 3, arg3: 0.25,
-        range: 20, prob: 30, ward: 3,
+        range: 20, prob: 30, ward: 2,
         desc: "Deal WIS-based damage and sometimes freeze five random foes, ignoring position."
     },
 
@@ -3580,6 +3580,55 @@ var SkillDatabase = {
         arg1: 0.25, arg2: 4,
         range: 3, prob: 70,
         desc: "Raise AGI of self and adjacent familiars, based on 25% of her WIS."
+    },
+
+    640: {
+        name: "Turkey Shoot", type: 2, func: 3, calc: 3,
+        arg1: 1.2, arg2: 7, arg3: 0.2, arg4: 1, arg5: 0.9,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to five random foes and sometimes blind them for one turn."
+    },
+ 
+    641: {
+        name: "Cannonade", type: 2, func: 4, calc: 3,
+        arg1: 1.25,
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+ 
+    642: {
+        name: "Poison Syrup", type: 2, func: 4, calc: 2,
+        arg1: 1.95, arg2: 2, arg3: 0.3,
+        range: 313, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage, sometimes paralyze up to three foes. Increased if fewer foes."
+    },
+ 
+    643: {
+        name: "Fluttering Leaf", type: 6, func: 27, calc: 0,
+        arg1: 2, arg2: 1, arg3: 78, arg4: 79,
+        range: 21, prob: 50,
+        desc: "Evade enemy ATK-based attack skills."
+    },
+ 
+    644: {
+        name: "Vine Lash", type: 2, func: 4, calc: 1,
+        arg1: 1.4, arg2: 1, arg3: 0.5, arg4: 10,
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes poison them, ignoring position."
+    },
+ 
+    645: {
+        name: "Dread", type: 2, func: 3, calc: 1,
+        arg1: 1.1,
+        range: 314, prob: 30, ward: 1,
+        desc: "ATK-based damage to up to four foes. Increased if fewer foes."
+    },
+ 
+    646: {
+        name: "Initiative", type: 1, func: 31, calc: 0,
+        arg1: 1, arg2: 2,
+        range: 4, prob: 70,
+        desc: "Order of attack is determined by ATK during the next two turns."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent

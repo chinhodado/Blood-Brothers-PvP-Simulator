@@ -440,6 +440,18 @@ var famDatabase = {
         img: "39e",
         fullName: "Belisama, Flame Goddess II"
     },
+    11454: {
+        name: "Bella", stats: [16009, 16627, 13052, 5631, 17374],
+        skills: [643, 644],
+        img: "314",
+        fullName: "Bella, the Dazzling Flower II"
+    },
+    21459: {
+        name: "Benjamina", stats: [21022, 16379, 20007, 13006, 18011],
+        skills: [640],
+        img: "46a",
+        fullName: "Benjamina, Wild Turkey"
+    },
     10684: {
         name: "Biast", stats: [13879, 12655, 10163, 13611, 9798],
         skills: [163],
@@ -1064,6 +1076,12 @@ var famDatabase = {
         img: "198",
         fullName: "Haokah, the Lightning Brave II"
     },
+    11428: {
+        name: "Hash", stats: [15034, 13485, 12532, 10441, 17147],
+        skills: [641],
+        img: "112",
+        fullName: "Hash, Lizardman Cannoneer II"
+    },
     11451: {
         name: "Hatshepsut", stats: [17049, 16334, 13041, 6097, 16096],
         skills: [603],
@@ -1612,6 +1630,13 @@ var famDatabase = {
         img: "2e9",
         fullName: "Naberius II"
     },
+    10949: {
+        name: "Najeeba", stats: [16230, 7539, 10660, 16681, 16803],
+        skills: [642],
+        autoAttack: 10003,
+        img: "48a",
+        fullName: "Najeeba, the Mapleblade II"
+    },
     11015: {
         name: "Narmer", stats: [15876, 12194, 15172, 8870, 15924],
         skills: [260],
@@ -1674,6 +1699,12 @@ var famDatabase = {
         isMounted: true,
         img: "365",
         fullName: "Odin, God of Victory II"
+    },
+    11458: {
+        name: "Odoa", stats: [20364, 24600, 16009, 10040, 9520],
+        skills: [645, 646],
+        img: "1a6",
+        fullName: "Odoa, the Scarecrow II"
     },
     11446: {
         name: "Olan", stats: [16497, 14048, 14113, 6779, 17255],
