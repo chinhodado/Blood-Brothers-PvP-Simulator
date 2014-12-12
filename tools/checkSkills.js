@@ -26,14 +26,15 @@
                 }
 
                 for (i = 1; i <= 5; i++) {
-                    var argi = "arg" + i, skillfuncargi = "skillFuncArg" + i;
-                    if (dbS[argi] && sheetS[skillfuncargi] && dbS[argi] != sheetS[skillfuncargi])
+                    if (!dbS.args) continue;
+                    var argsi = dbS.args[i - 1], skillfuncargi = "skillFuncArg" + i;
+                    if (argsi && sheetS[skillfuncargi] && argsi != sheetS[skillfuncargi])
                         conflict = true;
 
-                    if (!dbS[argi] && sheetS[skillfuncargi] != "0")
+                    if (!argsi && sheetS[skillfuncargi] != "0")
                         conflict = true;
 
-                    if (dbS[argi] && sheetS[skillfuncargi] == "0")
+                    if (argsi && sheetS[skillfuncargi] == "0")
                         conflict = true;
                 }
 

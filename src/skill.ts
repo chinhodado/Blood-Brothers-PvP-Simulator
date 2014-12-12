@@ -28,11 +28,11 @@ class Skill {
         this.skillType = skillData.type;
         this.skillFunc = skillData.func;
         this.skillCalcType = skillData.calc;
-        this.skillFuncArg1 = skillData.arg1? skillData.arg1 : 0;
-        this.skillFuncArg2 = skillData.arg2? skillData.arg2 : 0;
-        this.skillFuncArg3 = skillData.arg3? skillData.arg3 : 0;
-        this.skillFuncArg4 = skillData.arg4? skillData.arg4 : 0;
-        this.skillFuncArg5 = skillData.arg5? skillData.arg5 : 0;
+        this.skillFuncArg1 = skillData.args[0]? skillData.args[0] : 0;
+        this.skillFuncArg2 = skillData.args[1]? skillData.args[1] : 0;
+        this.skillFuncArg3 = skillData.args[2]? skillData.args[2] : 0;
+        this.skillFuncArg4 = skillData.args[3]? skillData.args[3] : 0;
+        this.skillFuncArg5 = skillData.args[4]? skillData.args[4] : 0;
         this.skillRange = skillData.range;
         this.maxProbability = skillData.prob;
         this.ward = skillData.ward;
