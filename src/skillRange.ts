@@ -1,5 +1,4 @@
 class RangeFactory {
-
     static ENEMY_RANDOM_RANGE_TARGET_NUM = {
         16: 3,
         17: 6,
@@ -18,7 +17,7 @@ class RangeFactory {
         314: 4,
         315: 5
     };
-    
+
     static ENEMY_NEAR_RANGE_TARGET_NUM = {
          5: 1,
          6: 2,
@@ -119,7 +118,7 @@ class RangeFactory {
     static VaryingPatternParam = {
         419: [0.9, 1.0, 1.15, 1.35],
     }
-    
+
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
         var range: BaseRange;
         if (this.isEnemyRandomRange(id) && id != ENUM.SkillRange.ENEMY_REAR_RANDOM_3) {
@@ -132,13 +131,13 @@ class RangeFactory {
             range = this.createFriendRandomRange(id, selectDead);
         }
         else {
-            range = this.createRange(id, selectDead);            
+            range = this.createRange(id, selectDead);
         }
         return range;
     }
 
     static isEnemyRandomRange (id: ENUM.SkillRange) {
-        return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id] 
+        return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]
             || !!RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id]
             || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3;
     }
@@ -146,7 +145,7 @@ class RangeFactory {
     static isFriendRandomRange (id: ENUM.SkillRange) {
         return !!RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
     }
-    
+
     static createEnemyRandomRange (id: ENUM.SkillRange) {
         if (this.isEnemyVaryingRange(id)) {
             var numTargets = RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id];
@@ -159,11 +158,11 @@ class RangeFactory {
     static createFriendRandomRange (id: ENUM.SkillRange, selectDead: boolean) {
         return new FriendRandomRange(id, RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id], selectDead);
     }
-    
+
     static isEnemyNearRange (id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
     }
-    
+
     static createEnemyNearRange (id: ENUM.SkillRange) {
         if (this.isEnemyNearRange(id)) {
             var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
@@ -208,8 +207,8 @@ class RangeFactory {
     }
 
     static isRowBasedRange(rangeId: ENUM.SkillRange): boolean {
-        if (rangeId === ENUM.SkillRange.ENEMY_FRONT_ALL || 
-            rangeId === ENUM.SkillRange.ENEMY_REAR_ALL || 
+        if (rangeId === ENUM.SkillRange.ENEMY_FRONT_ALL ||
+            rangeId === ENUM.SkillRange.ENEMY_REAR_ALL ||
             rangeId === ENUM.SkillRange.ENEMY_FRONT_MID_ALL) {
             return true;
         }
@@ -219,18 +218,18 @@ class RangeFactory {
 
     static canBeAoeRange(rangeId: ENUM.SkillRange): boolean {
         var canBe = false;
-        
-        if (this.isEnemyNearRange(rangeId) || 
-            this.isEnemyNearScaledRange(rangeId) || 
-            this.isRowBasedRange(rangeId) || 
+
+        if (this.isEnemyNearRange(rangeId) ||
+            this.isEnemyNearScaledRange(rangeId) ||
+            this.isRowBasedRange(rangeId) ||
             rangeId == ENUM.SkillRange.ENEMY_ALL ||
             rangeId == ENUM.SkillRange.ENEMY_ALL_SCALED) {
-            canBe = true;    
+            canBe = true;
         }
 
-        return canBe;    
+        return canBe;
     }
-    
+
     static createRange (id: ENUM.SkillRange, selectDead: boolean) {
         switch (id) {
             case ENUM.SkillRange.EITHER_SIDE:
@@ -263,13 +262,12 @@ class RangeFactory {
 }
 
 class BaseRange {
-   
     id: ENUM.SkillRange;
 
     // these will be reset every time the skill/range is used
     targets: Card[];
     currentIndex: number;
-    
+
     constructor(id: ENUM.SkillRange) {
         this.id = id;
     }
@@ -320,14 +318,14 @@ class BaseRange {
         return hasValid;
     }
 
-    /* 
+    /*
      * Returns a random card from a list of cards
      */
     getRandomCard(cards: Card[]): Card {
         return getRandomElement(cards);
     }
 
-    /* 
+    /*
      * Returns a maximum of 'num' unique cards (shuffles and returns first n)
      */
     getRandomUniqueCards(cards: Card[], num: number): Card[] {
@@ -375,21 +373,21 @@ class BothSidesRange extends BaseRange {
         super(id);
         this.selectDead = selectDead;
     }
-    
+
     getReady(executor: Card): void {
         var targets = [];
         this.currentIndex = 0;
-        
+
         var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && this.satisfyDeadCondition(leftCard, this.selectDead)) {
             targets.push(leftCard);
         }
-        
+
         var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && this.satisfyDeadCondition(rightCard, this.selectDead)) {
             targets.push(rightCard);
         }
-        
+
         this.targets = targets;
     }
 }
@@ -414,17 +412,16 @@ class RandomRange extends BaseRange {
         }
 
         return hasValid;
-    }    
+    }
 }
 
 class EnemyRandomRange extends RandomRange {
-
     private numTarget: number;
     private numProcessed: number;
-    
+
     constructor(id: ENUM.SkillRange, numTarget: number) {
         super(id);
-        this.numTarget = numTarget;    
+        this.numTarget = numTarget;
     }
 
     getReady(executor: Card): void {
@@ -445,7 +442,7 @@ class EnemyRandomRange extends RandomRange {
 class EitherSideRange extends BothSidesRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        
+
         if (this.targets.length != 0) {
             this.targets = [getRandomElement(this.targets)];
         }
@@ -457,13 +454,13 @@ class RightRange extends BaseRange {
         var targets = [];
         this.currentIndex = 0;
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
-        
+
         for (var i = executor.formationColumn + 1; i < 5; i++) {
             if (!partyCards[i].isDead) {
                 targets.push(partyCards[i]);
             }
         }
-        
+
         this.targets = targets;
     }
 }
@@ -491,12 +488,12 @@ class SelfBothSidesRange extends BaseRange {
     getReady(executor: Card): void {
         var targets = [];
         this.currentIndex = 0;
-        
+
         var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
         if (leftCard && !leftCard.isDead) {
             targets.push(leftCard);
         }
-        
+
         if (!executor.isDead) { // should always be true
             targets.push(executor);
         }
@@ -505,7 +502,7 @@ class SelfBothSidesRange extends BaseRange {
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
-        
+
         this.targets = targets;
     }
 }
@@ -515,7 +512,7 @@ class AllRange extends BaseRange {
         var targets = [];
         this.currentIndex = 0;
         var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
-        
+
         for (var i = 0; i < partyCards.length; i++) {
             if (!partyCards[i].isDead) {
                 targets.push(partyCards[i]);
@@ -533,15 +530,15 @@ class EnemyNearRange extends BaseRange {
         4 : 2,
         5 : 2
     };
-    
+
     // specific to an instance, the max distance from the center enemy
     maxDistance: number;
-            
+
     constructor(id: ENUM.SkillRange, public numTarget) {
         super(id);
         this.maxDistance = EnemyNearRange.MAX_DISTANCE_FROM_CENTER[numTarget];
     }
-    
+
     getReady(executor: Card): void {
         this.currentIndex = 0;
 
@@ -554,12 +551,12 @@ class EnemyNearRange extends BaseRange {
         }
 
         var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
-        
+
         // only upto 2 and not 4 since the max distance is 2 anyway
         var offsetArray = [0, -1, 1, -2, 2];
         var targets = [];
         var targetCount = 0;
-        
+
         // starting from the center enemy, go around it, adding targets when possible
         for (var i = 0; i < offsetArray.length; i++) {
             if (targetCount >= this.numTarget || Math.abs(offsetArray[i]) > this.maxDistance) {
@@ -605,17 +602,16 @@ class FriendRandomRange extends RandomRange {
         this.isUnique = RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
     }
-    
+
     getReady(executor: Card, skillCondFunc?: (card: Card)=>boolean): void{
         var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
         var targets: Card[] = [];
         this.currentIndex = 0;
 
         if (baseTargets.length) {
-
             if (this.isUnique) {
                 targets = this.getRandomUniqueCards(baseTargets, this.numTargets);
-            } 
+            }
             else {
                 for (var i = 0; i < this.numTargets; i++) {
                     targets.push(this.getRandomCard(baseTargets));
@@ -648,9 +644,8 @@ class FriendRandomRange extends RandomRange {
 }
 
 class BaseRowRange extends BaseRange {
-
     static ROW_TYPE_COUNT = 3;
-    
+
     getSameRowCards(cards: Card[], row: ENUM.FormationRow): Card[] {
         var returnArr: Card[] = [];
 
@@ -733,7 +728,6 @@ class EnemyRearAllRange extends BaseRowRange {
 }
 
 class EnemyRearRandom3Range extends RandomRange { // TODO: fix this later (not extends RandomRange)
-
     private static NUM_TARGET = 3;
     private numProcessed: number;
 

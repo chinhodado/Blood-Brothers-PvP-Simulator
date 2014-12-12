@@ -4,7 +4,6 @@
  * Handle the logging and displaying of information
  */
 class BattleLogger {
-
     static IS_DEBUG_MODE = true;
     static INFOTEXT_DISPLAYED = false;
     static WARNINGTEXT_DISPLAYED = false;
@@ -17,7 +16,7 @@ class BattleLogger {
 
     // just an array of strings
     majorEventLog: MajorEvent[] = [];
-    
+
     currentTurn: number = 0;
 
     private static _instance: BattleLogger = null;
@@ -43,12 +42,11 @@ class BattleLogger {
     static removeInstance(): void {
         BattleLogger._instance = null;
     }
-    
+
     /**
      * Display a major event on screen (the left side list)
      */
     displayMajorEvent (index: number): void {
-
         if (!BattleLogger.IS_DEBUG_MODE) {
             return;
         }
@@ -57,7 +55,7 @@ class BattleLogger {
         var id = "turn" + this.currentTurn + "events";
         var battleEventDiv = document.getElementById("battleEventDiv");
         var turnEventList = document.getElementById(id);
-        
+
         // if not already exist, create it
         if (!turnEventList) {
             turnEventList = document.createElement("ul");
@@ -69,21 +67,20 @@ class BattleLogger {
         newEvent.innerHTML = "<a>" + data.description + "</a>";
         newEvent.setAttribute("tabindex", index + "");
         newEvent.setAttribute("id", index + "");
-        
+
         // populate right section with the field situation
         newEvent.onclick = function () {
             BattleLogger.getInstance().displayEventLogAtIndex(this.id);
         };
-        turnEventList.appendChild(newEvent);    
+        turnEventList.appendChild(newEvent);
     }
-    
+
     /**
      * Use this to log a major event: a normal attack, a proc, etc. Can also be
      * thought of as logging the main action in a fam's turn. The data to log here
      * is just a string, there's no actual data change associated with a major event
      */
     addMajorEvent (data: MajorEvent): void {
-
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
         }
@@ -91,12 +88,11 @@ class BattleLogger {
         this.majorEventLog.push(data);
         this.displayMajorEvent(this.majorEventLog.length - 1);
     }
-    
+
     /**
      * Log a new turn
      */
     bblogTurn(data): void {
-
         if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
         }
@@ -106,18 +102,17 @@ class BattleLogger {
         newEvent.innerHTML = data;
         battleEventDiv.appendChild(newEvent);
     }
-    
+
     /**
      * Display a minor event on screen
      */
     displayMinorEvent (data): void {
-
         if (BattleModel.IS_MASS_SIMULATION || !BattleLogger.IS_DEBUG_MODE) {
             return;
         }
 
         var id = "turn" + this.currentTurn + "events";
-        
+
         // the list of events of this turn
         // assume that it has already been created
         var turnEventList = document.getElementById(id);
@@ -127,7 +122,7 @@ class BattleLogger {
 
         // the <ul> nested inside the above <li>, the sub event list
         var subEventList = lastEvent.getElementsByClassName("ul")[0];
-        
+
         // if not already exist, create it
         if (!subEventList) {
             subEventList = document.createElement("ul");
@@ -138,27 +133,26 @@ class BattleLogger {
         // new list item for the sub event, and append it to the sub event list
         var newEvent = document.createElement("li");
         newEvent.innerHTML = "<a>" + data + "</a>";
-        subEventList.appendChild(newEvent);        
+        subEventList.appendChild(newEvent);
     }
-   
+
     /**
      * This is called when you click on an event in the event list. It updates the field on the right side
      * of the screen with information after the event that you clicked on has been processed. That event
      * is represented by the index argument supplied into this function.
      */
     displayEventLogAtIndex(majorIndex): void {
-
         if (!BattleLogger.IS_DEBUG_MODE) {
             return;
         }
         var graphic = BattleGraphic.getInstance();
         var lastEventIndex = (majorIndex == 0)? 0 : majorIndex - 1;
 
-        // for displaying last turn's HP        
+        // for displaying last turn's HP
         var lastEventField = this.getFieldAtMajorIndex(lastEventIndex);
-         
+
         var field = this.getFieldAtMajorIndex(majorIndex);
-        
+
         // now prepares the info and print them out
         for (var p = 1; p <= 2; p++) { // for each player
             var playerCards = field["player" + p + "Cards"]; // get the cards of that player
@@ -169,13 +163,13 @@ class BattleLogger {
                 var afflict = playerCards[f].affliction; // not the same thing as in the original card class
 
                 var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
-                
+
                 // the stats of the fam after the buffs/debuffs are added in
                 var addedATK = this.getAdjustedStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK]);
                 var addedDEF = this.getAdjustedStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF]);
                 var addedWIS = this.getAdjustedStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS]);
                 var addedAGI = this.getAdjustedStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI]);
-                
+
                 var infoText: any = {
                     name : playerCards[f].name,
                     hp : "HP: " + stats.hp,
@@ -224,7 +218,7 @@ class BattleLogger {
                         infoText.affliction += " (1 turn)";
                     }
                 }
-                
+
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
                 for (var j = 0; this.minorEventLog[majorIndex] && j < this.minorEventLog[majorIndex].length; j++) {
@@ -272,7 +266,7 @@ class BattleLogger {
                         }
                     }
                 }
-                
+
                 if (this.minorEventLog[majorIndex] && this.minorEventLog[majorIndex][0].executorId == playerCards[f].id) {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
@@ -293,7 +287,7 @@ class BattleLogger {
 
                 // display last event's HP
                 var lastEventCard = lastEventField["player" + p + "Cards"][f];
-                graphic.displayHP (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);                
+                graphic.displayHP (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);
             }
         }
         graphic.displayAllCardImages(majorIndex);
@@ -327,7 +321,7 @@ class BattleLogger {
         if (!battle.p2RandomMode || !BattleModel.IS_MASS_SIMULATION) {
             infoDivP2.innerHTML = cardManager.getPlayerMainBrigString(battle.player2);
         }
-        
+
         if (battle.isBloodClash) {
             if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
                 infoDivP1.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player1);
@@ -424,12 +418,11 @@ class BattleLogger {
             var lowerLimit = original * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
             value = (value > lowerLimit) ? value : lowerLimit;
         }
-        return value;    
+        return value;
     }
-    
+
     // get the field situation at a major event index
     getFieldAtMajorIndex(majorIndex: number) {
-
         // for empty major events like opening proc with no success target
         if (!this.minorEventLog[majorIndex]) {
             return this.getFieldAtMajorIndex(majorIndex - 1);
@@ -464,23 +457,22 @@ class BattleLogger {
         }
         return openTag + text + "</b></span>";
     }
-    
+
     /**
      * Add a minor event to our minor event log.
      */
     addMinorEvent(event: MinorEvent): void {
-
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
         }
 
         var index = this.majorEventLog.length - 1;
-        
+
         if (!this.minorEventLog[index]) {
             this.minorEventLog[index] = [];
         }
         this.minorEventLog[index].push(event);
-        
+
         if (!this.minorEventFields[index]) {
             this.minorEventFields[index] = [];
         }
@@ -497,7 +489,7 @@ class BattleLogger {
 
         return JSON.stringify(toSerialize);
     }
-    
+
     /**
      * Should only call this when need the targets for an AoE attack
      * Return an array of target id's
@@ -537,7 +529,6 @@ class BattleLogger {
      * Log the situation at the start of battle and display the initial info
      */
     startBattleLog(): void {
-
         if (BattleModel.IS_MASS_SIMULATION) {
             return;
         }

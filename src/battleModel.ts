@@ -19,7 +19,6 @@
 /// <reference path="util.ts"/>
 
 class BattleModel {
-
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
     static IS_MASS_SIMULATION = false;
     static MAX_TURN_NUM = 5;
@@ -30,13 +29,13 @@ class BattleModel {
 
     logger: BattleLogger;
     cardManager: CardManager;
-    
+
     player1: Player;
     player2: Player;
 
     isFinished = false;
     playerWon: Player = null;
-    
+
     // The two players' main cards. The order of the cards in these two arrays should never be changed.
     // When a reserve comes out, replace the main card in here with the reserve
     p1_mainCards: Card[] = [];
@@ -53,8 +52,8 @@ class BattleModel {
     // The original reserve cards. Should be created once and never modified
     p1_originalReserveCards: Card[] = [];
     p2_originalReserveCards: Card[] = [];
-    
-    // contains all cards in play. Should be re-created and re-sorted every turn, 
+
+    // contains all cards in play. Should be re-created and re-sorted every turn,
     // and updated when either player's main cards changed.
     allCurrentMainCards: Card[] = [];
 
@@ -68,7 +67,7 @@ class BattleModel {
     turnOrderBase: ENUM.BattleTurnOrderType = ENUM.BattleTurnOrderType.AGI;
     turnOrderChangeEffectiveTurns: number = 0;
     turnOrderChanged: boolean = false;
-    
+
     // Turn-dependent. Remember to update these when it's a new card's turn. Maybe move to a separate structure?
     currentPlayer: Player;
     oppositePlayer: Player;
@@ -78,7 +77,7 @@ class BattleModel {
     currentPlayerReserveCards: Card[];
     oppositePlayerMainCards: Card[];
     oppositePlayerReserveCards: Card[];
-    
+
     private static _instance: BattleModel = null;
 
     public static getInstance(): BattleModel {
@@ -89,7 +88,6 @@ class BattleModel {
     }
 
     constructor(data: GameData, option: GameOption = {}, tierListString?) {
-    
         if (BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
@@ -102,7 +100,7 @@ class BattleModel {
         if (option.battleType && option.battleType == ENUM.BattleType.BLOOD_CLASH) {
             this.isBloodClash = true;
         }
-        
+
         var p1_formation: any = option.p1RandomMode ?
             pickRandomProperty(Formation.FORMATION_CONFIG) : data.p1_formation;
         var p2_formation: any = option.p2RandomMode ?
@@ -116,7 +114,7 @@ class BattleModel {
 
         BrigGenerator.initializeBrigs(data, option, tierListString);
         this.cardManager.sortAllCurrentMainCards();
-        
+
         graphic.displayFormationAndFamOnCanvas();
 
         if (!BattleLogger.IS_DEBUG_MODE) {
@@ -143,7 +141,7 @@ class BattleModel {
     static removeInstance() {
         BattleModel._instance = null;
     }
-        
+
     getPlayerById(id: number) {
         if (id === 1) {
             return this.player1;
@@ -155,7 +153,7 @@ class BattleModel {
             throw new Error("Invalid player");
         }
     }
-    
+
     getOppositePlayer (player: Player) {
         if (player === this.player1) {
             return this.player2;
@@ -174,7 +172,7 @@ class BattleModel {
     processDamagePhase(data: DamagePhaseData) {
         var target = data.target;
         var damage = this.getWouldBeDamage(data);
-        
+
         var isMissed = data.attacker.willMiss();
         if (isMissed) {
             damage = 0;
@@ -197,7 +195,7 @@ class BattleModel {
         if (isKilled) {
             damage = target.getHP() + target.status.hpShield;
         }
-        
+
         // HP shield skill
         var hpShield = ~~target.status.hpShield;
         if (hpShield > 0 && !isMissed && !evaded && !isKilled) {
@@ -209,7 +207,7 @@ class BattleModel {
                 damage = 0;
             }
         }
-        
+
         // survive
         var surviveSkill = target.getSurviveSkill();
         var defenseData: SkillLogicData = {
@@ -218,12 +216,12 @@ class BattleModel {
             attacker: data.attacker,
             wouldBeDamage: damage
         };
-        
+
         if (surviveSkill && surviveSkill.willBeExecuted(defenseData) && !isKilled && !isMissed && !evaded) {
             surviveSkill.execute(defenseData);
             damage = target.getHP() - 1;
-        }     
-    
+        }
+
         target.changeHP(-1 * damage);
         target.lastBattleDamageTaken = damage;
         data.attacker.lastBattleDamageDealt = damage;
@@ -252,16 +250,16 @@ class BattleModel {
             desc = target.name + " is killed outright!";
         }
         else {
-            desc = data.additionalDescription + target.name + " lost " + damage + "hp (remaining " + 
+            desc = data.additionalDescription + target.name + " lost " + damage + "hp (remaining " +
                 target.getHP() + "/" + target.originalStats.hp + ")";
         }
 
         this.logger.addMinorEvent({
-            executorId: data.attacker.id, 
-            targetId: target.id, 
-            type: ENUM.MinorEventType.HP, 
-            amount: (-1) * damage, 
-            description: desc, 
+            executorId: data.attacker.id,
+            targetId: target.id,
+            type: ENUM.MinorEventType.HP,
+            amount: (-1) * damage,
+            description: desc,
             skillId: data.skill.id,
             wardUsed: wardUsed,
             missed: isMissed,
@@ -283,13 +281,13 @@ class BattleModel {
 
         if (skill.skillFunc != ENUM.SkillFunc.PROTECT_REFLECT) {
             var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
-        } 
+        }
         else {
             ignorePosition = Skill.isPositionIndependentAttackSkill(data.oriAtkSkill.id);
         }
-    
+
         var baseDamage: number;
-            
+
         switch (skill.skillCalcType) {
             case (ENUM.SkillCalcType.DEFAULT):
             case (ENUM.SkillCalcType.WIS):
@@ -307,7 +305,7 @@ class BattleModel {
             default:
                 throw new Error("Invalid calcType!");
         }
-            
+
         // apply the multiplier
         var damage = skillMod * baseDamage;
 
@@ -319,7 +317,7 @@ class BattleModel {
 
         if (data.dmgRatio)
             damage *= data.dmgRatio;
-            
+
         // apply the target's ward
         if (skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
             skill = data.oriAtkSkill;
@@ -343,7 +341,7 @@ class BattleModel {
 
     // todo: move this to Card?
     /*
-     * Use this when there's no executorId for the MinorEvent, like for poison. 
+     * Use this when there's no executorId for the MinorEvent, like for poison.
      * Also use it for non-attacks like healing, etc.
      */
     damageToTargetDirectly(target: Card, damage: number, reason: string) {
@@ -355,14 +353,14 @@ class BattleModel {
         }
 
         var description = target.name + descVerb + Math.abs(damage) + " HP because of " + reason;
-        
+
         this.logger.addMinorEvent({
-            targetId: target.id, 
-            type: ENUM.MinorEventType.HP, 
-            amount: (-1) * damage, 
-            description: description, 
+            targetId: target.id,
+            type: ENUM.MinorEventType.HP,
+            amount: (-1) * damage,
+            description: description,
         });
-        
+
         if (target.isDead) {
             this.logger.displayMinorEvent(target.name + " is dead");
             this.addOnDeathCard(target);
@@ -396,7 +394,7 @@ class BattleModel {
         if (skill.skillFuncArg5) {
             option.missProb = skill.skillFuncArg5;
         }
-            
+
         if (Math.random() <= prob){
             target.setAffliction(type, option);
 
@@ -404,22 +402,22 @@ class BattleModel {
                 // needed since poison is stacked
                 var percent = target.getPoisonPercent();
             }
-            
+
             this.logger.addMinorEvent({
-                executorId: executor.id, 
-                targetId: target.id, 
-                type: ENUM.MinorEventType.AFFLICTION, 
+                executorId: executor.id,
+                targetId: target.id,
+                type: ENUM.MinorEventType.AFFLICTION,
                 affliction: {
                     type: type,
                     duration: option.turnNum,
                     percent: percent,
                     missProb: option.missProb
                 },
-                description: target.name + " is now " + ENUM.AfflictionType[type],                 
+                description: target.name + " is now " + ENUM.AfflictionType[type],
             });
         }
     }
-   
+
     processDebuff(executor: Card, target: Card, skill: Skill) {
         var status: ENUM.StatusType, multi: number;
         var isNewLogic: boolean = false; // for caster-based debuff
@@ -474,14 +472,14 @@ class BattleModel {
         var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
 
         this.logger.addMinorEvent({
-            executorId: executor.id, 
-            targetId: target.id, 
-            type: ENUM.MinorEventType.STATUS, 
+            executorId: executor.id,
+            targetId: target.id,
+            type: ENUM.MinorEventType.STATUS,
             status: {
                 type: status,
                 isNewLogic: isNewLogic
             },
-            description: description, 
+            description: description,
             amount: amount,
             skillId: skill.id
         });
@@ -489,11 +487,10 @@ class BattleModel {
 
     startBattle () {
         this.logger.startBattleLog();
-        
-        this.performOpeningSkills();
-        
-        while (!this.isFinished) {
 
+        this.performOpeningSkills();
+
+        while (!this.isFinished) {
             this.logger.currentTurn++;
             this.logger.bblogTurn("Turn " + this.logger.currentTurn);
 
@@ -575,7 +572,7 @@ class BattleModel {
                 }
 
                 // procs active skill if we can
-                this.processActivePhase(currentCard, "FIRST");                
+                this.processActivePhase(currentCard, "FIRST");
                 if (this.isFinished) break;
 
                 if (!currentCard.isDead && currentCard.status.willAttackAgain != 0) {
@@ -583,7 +580,7 @@ class BattleModel {
                     // todo: send a minor event log and handle it
                     currentCard.status.willAttackAgain = 0;
                     if (this.isFinished) break;
-                }                
+                }
 
                 if (!currentCard.isDead) {
                     // update the affliction
@@ -594,16 +591,15 @@ class BattleModel {
                     // if cured, make a log
                     if (!currentCard.affliction && cured) {
                         var desc = currentCard.name + " is cured of affliction!";
-                    
+
                         this.logger.addMinorEvent({
-                            targetId: currentCard.id, 
-                            type: ENUM.MinorEventType.AFFLICTION, 
+                            targetId: currentCard.id,
+                            type: ENUM.MinorEventType.AFFLICTION,
                             affliction: {
                                 type: currentCard.getAfflictionType(),
                                 isFinished: true,
                             },
-                            description: desc, 
-                        
+                            description: desc,
                         });
                     }
 
@@ -625,7 +621,7 @@ class BattleModel {
             this.onDeathCards.push(card);
         }
     }
-    
+
     checkFinish(): void {
         var noOnDeathRemain = this.onDeathCards.length === 0;
         if (this.cardManager.isAllDeadPlayer(this.oppositePlayer) && noOnDeathRemain) {
@@ -667,14 +663,14 @@ class BattleModel {
         }
 
         var activeSkill = currentCard.getRandomActiveSkill();
-        
+
         if (nth === "FIRST" && currentCard.isMounted) {
             activeSkill = currentCard.getFirstActiveSkill();
         }
         else if (nth === "SECOND" && currentCard.isMounted) {
             activeSkill = currentCard.getSecondActiveSkill();
         }
-        
+
         if (activeSkill) {
             var data: SkillLogicData = {
                 executor: currentCard,
@@ -726,7 +722,7 @@ class BattleModel {
             };
             if (skill && skill.willBeExecuted(data)) {
                 this.logger.addMinorEvent({
-                    executorId: card.id, 
+                    executorId: card.id,
                     type: ENUM.MinorEventType.DESCRIPTION,
                     description: card.name + " procs " + skill.name + ". ",
                     skillId: skill.id
@@ -743,7 +739,7 @@ class BattleModel {
             card.clearBuffOnDeathSkill();
             if (skill && skill.willBeExecuted(data)) {
                 this.logger.addMinorEvent({
-                    executorId: card.id, 
+                    executorId: card.id,
                     type: ENUM.MinorEventType.DESCRIPTION,
                     description: card.name + " procs " + skill.name + ". ",
                     skillId: skill.id
@@ -752,12 +748,12 @@ class BattleModel {
             }
         }
 
-        // at the end, if there are newly addition to recentlyDeadCards, recursively repeat the process 
+        // at the end, if there are newly addition to recentlyDeadCards, recursively repeat the process
         if (this.onDeathCards.length !== 0) {
             this.processOnDeathPhase();
         }
     }
-    
+
     /**
      * Called at the end of two player's turn
      */
@@ -772,13 +768,12 @@ class BattleModel {
         });
 
         if (this.logger.currentTurn >= BattleModel.MAX_TURN_NUM) {
-         
             var p1Cards    = this.cardManager.getPlayerAllCurrentCards(this.player1);
             var p2Cards    = this.cardManager.getPlayerAllCurrentCards(this.player2);
-                
+
             var p1Ratio    = this.cardManager.getTotalHPRatio(p1Cards);
             var p2Ratio    = this.cardManager.getTotalHPRatio(p2Cards);
-                
+
             if (p1Ratio >= p2Ratio) {
                 this.playerWon = this.player1;
                 var battleDesc = "Decision win";
@@ -818,9 +813,8 @@ class BattleModel {
             }
         }
     }
-    
-    executeNormalAttack(attacker: Card) {
 
+    executeNormalAttack(attacker: Card) {
         if (!attacker.canAttack() || attacker.isDead) {
             return;
         }
@@ -908,7 +902,7 @@ class BattleModel {
                 }
             }
         }
-        
+
         for (i = 0; i < p2cards.length; i++) {
             var skill2 = p2cards[i].getRandomOpeningSkill();
             if (skill2) {
@@ -960,7 +954,7 @@ interface GameOption {
 interface DamagePhaseData {
     attacker: Card;
     target: Card;
-    skill: Skill; 
+    skill: Skill;
     additionalDescription?: string;
     scaledRatio?: number;
     varyingRatio?: number;

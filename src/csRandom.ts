@@ -2,7 +2,7 @@
  * A naive, partial port of C#'s Random class
  */
 class CsRandom {
-    // Private Constants 
+    // Private Constants
     static MBIG: number = 2147483647;
     static MSEED: number = 161803398;
     static MZ: number = 0;
@@ -84,7 +84,7 @@ class CsRandom {
     }
 
     private getSampleForLargeRange(): number {
-        // The distribution of double value returned by Sample 
+        // The distribution of double value returned by Sample
         // is not distributed well enough for a large range.
         // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
         // We will end up getting even numbers only.

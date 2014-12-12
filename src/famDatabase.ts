@@ -2593,7 +2593,7 @@ class FamiliarDatabase {
                 }
 
                 this.tierList[tier] = [];
-        
+
                 for (var key in famDatabase) {
                     if (famDatabase.hasOwnProperty(key)) {
                         var name = famDatabase[key].fullName;
@@ -2602,10 +2602,10 @@ class FamiliarDatabase {
                         }
                     }
                 }
-            }            
+            }
         }
 
-        return this.tierList[tierToGet];    
+        return this.tierList[tierToGet];
     }
 
     /**

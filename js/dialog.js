@@ -42,7 +42,7 @@ function showCardDetailDialog(cardInfo) {
 function showCardDetailDialogById(id) {
     var cardMan = CardManager.getInstance();
     var card = cardMan.getCardById(id);
-    
+
     showCardDetailDialog(cardMan.getCardInfoForDialog(card));
 }
 
@@ -88,7 +88,6 @@ function hideDialog(dialogId) {
 }
 
 function getRarityClassName(rarity, evolution, maxEvolution) {
-    var char_rarity;
     switch (rarity) {
         case 4:
             return "card-figure-rarity-ep-" + evolution + "-" + maxEvolution;
@@ -108,7 +107,7 @@ function getGrowthName(growthType) {
         case 3:
             return "Late Bloomer";
         default:
-            return "???"
+            return "???";
     }
 }
 

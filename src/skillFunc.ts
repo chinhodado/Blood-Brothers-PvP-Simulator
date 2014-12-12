@@ -53,10 +53,9 @@
                 throw new Error("Invalid skillFunc or not implemented");
         }
     }
-} 
+}
 
 class SkillLogic {
-
     battleModel: BattleModel;
     logger: BattleLogger;
     cardManager: CardManager;
@@ -75,13 +74,13 @@ class SkillLogic {
             var probCond: boolean = true;
         }
         else {
-            probCond = (Math.random() * 100) <= (data.skill.maxProbability + data.executor.status.skillProbability * 100 + 
+            probCond = (Math.random() * 100) <= (data.skill.maxProbability + data.executor.status.skillProbability * 100 +
                 data.executor.bcAddedProb);
         }
 
-        return (deadCond && 
+        return (deadCond &&
             data.executor.canAttack() && // if cannot attack -> cannot use skill, so the same. If can attack, true, doesn't matter
-            data.executor.canUseSkill() && 
+            data.executor.canUseSkill() &&
             probCond);
     }
 
@@ -98,7 +97,6 @@ class SkillLogic {
 }
 
 class BuffSkillLogic extends SkillLogic {
-
     willBeExecuted(data: SkillLogicData): boolean {
         var hasTarget = data.skill.range.hasValidTarget(data.executor);
         return super.willBeExecuted(data) && hasTarget;
@@ -113,7 +111,7 @@ class BuffSkillLogic extends SkillLogic {
         if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
             var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
 
-            // for hp shield buff, arg3 is the ceiling 
+            // for hp shield buff, arg3 is the ceiling
             if (skill.skillFuncArg3 != 0 && skill.skillFuncArg2 != ENUM.StatusType.HP_SHIELD) {
                 statusToBuff.push(skill.skillFuncArg3);
             }
@@ -161,16 +159,16 @@ class BuffSkillLogic extends SkillLogic {
                 }
 
                 target.changeStatus(statusType, buffAmount, false, maxValue);
-                
+
                 this.logger.addMinorEvent({
-                    executorId: executor.id, 
-                    targetId: target.id, 
-                    type: ENUM.MinorEventType.STATUS, 
+                    executorId: executor.id,
+                    targetId: target.id,
+                    type: ENUM.MinorEventType.STATUS,
                     status: {
                         type: statusType,
                         isAllUp: skill.skillFuncArg2 == ENUM.StatusType.ALL_STATUS
                     },
-                    description: target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount, 
+                    description: target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount,
                     amount: buffAmount,
                     skillId: skill.id
                 });
@@ -184,7 +182,7 @@ class DebuffSkillLogic extends SkillLogic {
         var skill = data.skill;
         var executor = data.executor;
         skill.getReady(executor);
-           
+
         var target: Card;
         while (target = skill.getTarget(executor)) {
             this.battleModel.processDebuff(executor, target, skill);
@@ -193,7 +191,6 @@ class DebuffSkillLogic extends SkillLogic {
 }
 
 class ClearStatusSkillLogic extends SkillLogic {
-
     condFunc = (x: number) => true;
     isDispelled: boolean = false;
 
@@ -252,12 +249,11 @@ class AfflictionSkillLogic extends SkillLogic {
         var target: Card;
         while (target = data.skill.getTarget(data.executor)) {
             this.battleModel.processAffliction(data.executor, target, data.skill);
-        }        
+        }
     }
 }
 
 class AttackSkillLogic extends SkillLogic {
-
     willBeExecuted(data: SkillLogicData): boolean {
         var hasTarget = data.skill.range.hasValidTarget(data.executor);
         return super.willBeExecuted(data) && hasTarget;
@@ -307,7 +303,7 @@ class AttackSkillLogic extends SkillLogic {
         if (skill.isIndirectSkill()) {
             // if the skill is indirect and of range type, it must be AoE, so only one reactive skill can be proc
 
-            // NOTE: the algorithm used here for protection may not be correct, since it makes the 
+            // NOTE: the algorithm used here for protection may not be correct, since it makes the
             // proc rate not really what it should be. For example, if two cards, one can protect (A)
             // and one not (B), are hit by an AoE, B only has 35% chance of being protected, and not 70%,
             // since there's 50% that A will be hit first and therefore unable to protect later on when B
@@ -322,7 +318,7 @@ class AttackSkillLogic extends SkillLogic {
             var aoeReactiveSkillActivated = false; //<- has any reactive skill proc during this whole AoE?
 
             // keep track of targets attacked, to make sure a fam can only be attacked once. So if a fam has already been
-            // attacked, it cannot protect another fam later on 
+            // attacked, it cannot protect another fam later on
             var targetsAttacked: boolean[] = [];
 
             for (var i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
@@ -359,8 +355,8 @@ class AttackSkillLogic extends SkillLogic {
                     };
 
                     this.battleModel.processDamagePhase({
-                        attacker: executor, 
-                        target: targetCard, 
+                        attacker: executor,
+                        target: targetCard,
                         skill: skill,
                         scaledRatio: data.scaledRatio
                     });
@@ -378,10 +374,10 @@ class AttackSkillLogic extends SkillLogic {
                     }
 
                     // try to proc post-damage skills
-                    if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && !aoeReactiveSkillActivated) 
+                    if (defenseSkill && defenseSkill.willBeExecuted(defenseData) && !aoeReactiveSkillActivated)
                     {
                         defenseSkill.execute(defenseData);
-                        aoeReactiveSkillActivated = true; 
+                        aoeReactiveSkillActivated = true;
                     }
                 }
 
@@ -400,7 +396,7 @@ class AttackSkillLogic extends SkillLogic {
         // if not protected, proceed with the attack as normal
         if (!protectData.activated) {
             var defenseSkill = target.getRandomDefenseSkill();
-                
+
             var defenseData: SkillLogicData = {
                 executor: target,
                 skill: defenseSkill,
@@ -408,8 +404,8 @@ class AttackSkillLogic extends SkillLogic {
             };
 
             this.battleModel.processDamagePhase({
-                attacker: executor, 
-                target: target, 
+                attacker: executor,
+                target: target,
                 skill: skill,
                 scaledRatio: scaledRatio,
                 varyingRatio: varyingRatio
@@ -427,7 +423,7 @@ class AttackSkillLogic extends SkillLogic {
             }
 
             if (defenseSkill && defenseSkill.willBeExecuted(defenseData)) {
-                defenseSkill.execute(defenseData);    
+                defenseSkill.execute(defenseData);
             }
         }
 
@@ -487,7 +483,7 @@ class ProtectSkillLogic extends SkillLogic {
         // first redirect the original attack to the protecting fam
         if (!noProtectLog) {
             this.logger.addMinorEvent({
-                executorId: protector.id, 
+                executorId: protector.id,
                 type: ENUM.MinorEventType.PROTECT,
                 protect: {
                     protectedId: data.targetCard.id,
@@ -505,8 +501,8 @@ class ProtectSkillLogic extends SkillLogic {
         }
 
         this.battleModel.processDamagePhase({
-            attacker: data.attacker, 
-            target: protector, 
+            attacker: data.attacker,
+            target: protector,
             skill: attackSkill,
             scaledRatio: data.scaledRatio,
             varyingRatio: data.varyingRatio,
@@ -536,7 +532,7 @@ class ProtectSkillLogic extends SkillLogic {
 
         // clear the temp stuffs
         this.clearAllCardsDamagePhaseData();
-        
+
         return toReturn;
     }
 }
@@ -562,7 +558,7 @@ class EvadeSkillLogic extends SkillLogic {
         data.executor.justEvaded = true;
 
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             noProcEffect: true,
             description: data.executor.name + " procs " + data.skill.name,
@@ -570,8 +566,8 @@ class EvadeSkillLogic extends SkillLogic {
         });
 
         this.battleModel.processDamagePhase({
-            attacker: data.attacker, 
-            target: data.executor, 
+            attacker: data.attacker,
+            target: data.executor,
             skill: data.attackSkill,
             scaledRatio: data.scaledRatio,
             varyingRatio: data.varyingRatio
@@ -603,9 +599,9 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
         // counter phase
         if (!protector.isDead && protector.canAttack() && !data.attacker.isDead) {
             this.battleModel.processDamagePhase({
-                attacker: protector, 
-                target: data.attacker, 
-                skill: data.skill, 
+                attacker: protector,
+                target: data.attacker,
+                skill: data.skill,
                 additionalDescription: protector.name + " counters " + data.attacker.name + "! ",
             });
         }
@@ -662,14 +658,13 @@ class ProtectReflectSkillLogic extends ProtectSkillLogic {
 }
 
 class CounterSkillLogic extends SkillLogic {
-
     willBeExecuted(data: SkillLogicData): boolean {
         return super.willBeExecuted(data) && !data.attacker.isDead;
     }
 
     execute(data: SkillLogicData) {
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             description: data.executor.name + " procs " + data.skill.name + ". ",
             skillId: data.skill.id
@@ -677,9 +672,9 @@ class CounterSkillLogic extends SkillLogic {
 
         // counter phase
         this.battleModel.processDamagePhase({
-            attacker: data.executor, 
-            target: data.attacker, 
-            skill: data.skill, 
+            attacker: data.executor,
+            target: data.attacker,
+            skill: data.skill,
             additionalDescription: data.executor.name + " counters " + data.attacker.name + "! ",
         });
 
@@ -690,7 +685,6 @@ class CounterSkillLogic extends SkillLogic {
 }
 
 class CounterDispellSkillLogic extends ProtectSkillLogic {
-
     condFunc = (x: number) => x > 0;
 
     willBeExecuted(data: SkillLogicData): boolean {
@@ -712,7 +706,7 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
 
         // now process the dispell
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             description: data.executor.name + " procs " + data.skill.name,
             skillId: data.skill.id
@@ -743,7 +737,6 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
 }
 
 class OnHitDebuffSkillLogic extends SkillLogic {
-
     private static UNINITIALIZED_VALUE = -1234;
     private executionLeft: number = OnHitDebuffSkillLogic.UNINITIALIZED_VALUE;
 
@@ -770,7 +763,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
         var target: Card;
 
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             description: data.executor.name + " procs " + data.skill.name + ". ",
             skillId: data.skill.id
@@ -779,12 +772,11 @@ class OnHitDebuffSkillLogic extends SkillLogic {
         // debuff
         while (target = data.skill.getTarget(data.executor)) {
             this.battleModel.processDebuff(data.executor, target, data.skill);
-        }        
+        }
     }
 }
 
 class DrainSkillLogic extends SkillLogic {
-
     willBeExecuted(data: SkillLogicData): boolean {
         var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
         return super.willBeExecuted(data) && hasValidTarget;
@@ -800,7 +792,7 @@ class DrainSkillLogic extends SkillLogic {
         var target: Card;
 
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             description: data.executor.name + " procs " + skill.name + ". ",
             skillId: skill.id
@@ -813,7 +805,7 @@ class DrainSkillLogic extends SkillLogic {
 
         while (target = skill.getTarget(data.executor)) {
             this.battleModel.damageToTargetDirectly(target, -1 * eachTargetHealAmount, " healing");
-        }        
+        }
     }
 }
 
@@ -825,7 +817,7 @@ class SurviveSkillLogic extends SkillLogic {
 
     execute(data: SkillLogicData) {
         this.logger.addMinorEvent({
-            executorId: data.executor.id, 
+            executorId: data.executor.id,
             type: ENUM.MinorEventType.DESCRIPTION,
             noProcEffect: true,
             description: data.executor.name + " procs " + data.skill.name + ". ",
@@ -854,14 +846,13 @@ class HealSkillLogic extends SkillLogic {
 
         var target: Card;
         while (target = data.skill.getTarget(data.executor)) {
-
             // if the heal is not based on wis, recalculate the heal amount
             if (data.skill.skillFuncArg2 == 1) {
                 healAmount = multiplier * target.getOriginalHP();
             }
 
             this.battleModel.damageToTargetDirectly(target, -1 * healAmount, " healing");
-        }     
+        }
     }
 }
 
@@ -887,7 +878,7 @@ class ReviveSkillLogic extends SkillLogic {
                 description: target.name + " is revived with " + hpRatio * 100 + "% HP!",
                 skillId: data.skill.id
             });
-        }        
+        }
     }
 }
 
@@ -900,11 +891,11 @@ class TurnOrderChangeSkillLogic extends SkillLogic {
         this.battleModel.turnOrderChanged = true;
         this.battleModel.turnOrderBase = data.skill.skillFuncArg1;
         this.battleModel.turnOrderChangeEffectiveTurns = data.skill.skillFuncArg2;
-        
+
         this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 type: ENUM.MinorEventType.BATTLE_DESCRIPTION,
-                description: "Turn order is now based on " + ENUM.BattleTurnOrderType[data.skill.skillFuncArg1] + " for " + 
+                description: "Turn order is now based on " + ENUM.BattleTurnOrderType[data.skill.skillFuncArg1] + " for " +
                     data.skill.skillFuncArg2 + " turn(s).",
                 skillId: data.skill.id,
                 battleDesc: "Turn Order Changed"
@@ -924,7 +915,7 @@ class RandomSkillLogic extends SkillLogic {
 
             if (skill.willBeExecuted(data)) {
                 this.logger.addMinorEvent({
-                    executorId: data.executor.id, 
+                    executorId: data.executor.id,
                     type: ENUM.MinorEventType.DESCRIPTION,
                     description: data.executor.name + " procs " + data.skill.name + ". ",
                     skillId: data.skill.id

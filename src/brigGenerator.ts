@@ -64,9 +64,8 @@
             p2_warlordSkillIds = data.p2_warlordSkillIds;
         }
 
-        // create the cards        
+        // create the cards
         for (i = 0; i < 10; i++) {
-
             if (i >= 5 && !isBloodClash) break;
             var p1_cardInfo = famDatabase[p1_cardIds[i]];
             var p2_cardInfo = famDatabase[p2_cardIds[i]];

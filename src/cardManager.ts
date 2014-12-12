@@ -2,7 +2,6 @@
  * A helper class for BattleModel, provides the card-related methods
  */
 class CardManager {
-
     private static _instance: CardManager = null;
     private battle: BattleModel;
 
@@ -61,9 +60,9 @@ class CardManager {
         copy.sort((a: Card, b: Card) => a.procIndex - b.procIndex); // ascending based on proc index
         return copy;
     }
-    
+
     /**
-     * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost 
+     * Get the card to the left of a supplied card. Return null if the supplied card is at the leftmost
      * position in the formation
      */
     getLeftSideCard (card: Card): Card {
@@ -79,9 +78,9 @@ class CardManager {
             throw new Error("Invalid card index");
         }
     }
-    
+
     /**
-     * Get the card to the right of a supplied card. Return null if the supplied card is at the rightmost 
+     * Get the card to the right of a supplied card. Return null if the supplied card is at the rightmost
      * position in the formation
      */
     getRightSideCard (card: Card): Card {
@@ -97,14 +96,14 @@ class CardManager {
             throw new Error("Invalid card index");
         }
     }
-    
+
     /**
      * Get a card by its id
      */
     getCardById(id: number): Card {
         return this.battle.allCardsById[id];
     }
-    
+
     /**
      * Get all the current main cards of a player
      */
@@ -158,7 +157,7 @@ class CardManager {
             throw new Error("Invalid player");
         }
     }
-    
+
     getPlayerAllCurrentCards (player: Player): Card[] {
         return this.getPlayerCurrentMainCards(player).concat(this.getPlayerCurrentReserveCards(player));
     }
@@ -202,24 +201,24 @@ class CardManager {
         }
 
         // get a random index from the list of possible indices
-        var randomIndex = getRandomInt(0, possibleIndices.length - 1); 
+        var randomIndex = getRandomInt(0, possibleIndices.length - 1);
 
         return cards[possibleIndices[randomIndex]];
     }
-    
+
     getNearestSingleOpponentTarget (executor: Card): Card {
         var oppCards: Card[] = this.getPlayerCurrentMainCards(this.battle.getOppositePlayer(executor.player));
         var executorIndex = executor.formationColumn;
-        
+
         var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
-        
+
         for (var i = 0; i < offsetArray.length; i++) {
             var currentOppCard = oppCards[executorIndex + offsetArray[i]];
             if (currentOppCard && !currentOppCard.isDead) {
                 return currentOppCard;
             }
         }
-        
+
         // if it reaches this point, there's no target, so return null
         return null;
     }
@@ -265,7 +264,7 @@ class CardManager {
         }
         return noReserveLeft;
     }
-    
+
     /**
      * Return true if a card is in a list of cards, or false if not
      */
@@ -429,7 +428,7 @@ class CardManager {
             //"growthType": 1,
             //"evolution": 2,
             //"maxEvolution": 2,
-            "skills": skillInfo, 
+            "skills": skillInfo,
             "standardAction": {
                 "name": "Standard Action",
                 "comment": card.autoAttack.description

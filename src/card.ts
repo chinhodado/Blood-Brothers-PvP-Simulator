@@ -1,7 +1,6 @@
 /// <reference path="enums.ts"/>
 
 class Card {
-
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
 
     name: string;
@@ -31,14 +30,14 @@ class Card {
 
     skills: Skill[];
     autoAttack: Skill;
-    
+
     private openingSkills: Skill[] = [];
     private activeSkills:  Skill[] = [];
     private protectSkills: Skill[] = [];
     private defenseSkills: Skill[] = []; // does not contain survive skills
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
-    
+
     constructor(dbId: number, player: Player, nth: number, skills: Skill[]) {
         var cardData = famDatabase[dbId];
         this.name = cardData.name;
@@ -51,7 +50,7 @@ class Card {
 
         // the HP will be modified during the battle
         this.stats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
-        
+
         // this should never be modified
         this.originalStats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
 
@@ -98,12 +97,12 @@ class Card {
             }
         }
     }
-    
+
     getSerializableObject() {
         return {
             name: this.name,
             fullName: this.fullName,
-            dbId: this.dbId,         
+            dbId: this.dbId,
             id: this.id,
             isMounted: this.isMounted,
             isWarlord: this.isWarlord,
@@ -120,7 +119,7 @@ class Card {
             lastBattleDamageDealt: this.lastBattleDamageDealt,
             justMissed: this.justMissed,
             justEvaded: this.justEvaded,
-                     
+
             player: this.player,
             formationColumn: this.formationColumn,
             formationRow: this.formationRow,
@@ -128,7 +127,7 @@ class Card {
 
             skills: getSerializableObjectArray(this.skills),
             autoAttack: this.autoAttack.getSerializableObject(),
-    
+
             openingSkills: getSerializableObjectArray(this.openingSkills),
             activeSkills:  getSerializableObjectArray(this.activeSkills),
             protectSkills: getSerializableObjectArray(this.protectSkills),
@@ -180,11 +179,11 @@ class Card {
     getSurviveSkill(): Skill {
         return this.surviveSkill;
     }
-    
+
     getFirstActiveSkill(): Skill {
         return this.activeSkills[0];
     }
-    
+
     getSecondActiveSkill(): Skill {
         return this.activeSkills[1];
     }
@@ -207,19 +206,19 @@ class Card {
     getName(): string {
         return this.name;
     }
-    
+
     getPlayerId(): number {
         return this.player.id;
     }
-    
+
     getPlayerName(): string {
         return this.player.name;
     }
-    
+
     getFormationRow(): ENUM.FormationRow {
         return this.formationRow;
     }
-    
+
     getStat(statType: String): number {
         if (statType === "HP") {
             return this.getHP();
@@ -246,7 +245,6 @@ class Card {
 
     // affliction
     setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam): void {
-
         if (this.affliction) {
             if (this.affliction.getType() === type) {
                 this.affliction.add(option);
@@ -283,7 +281,7 @@ class Card {
             return undefined;
         }
         else {
-            return (<PoisonAffliction>this.affliction).percent;    
+            return (<PoisonAffliction>this.affliction).percent;
         }
     }
     getBurnDamage(): number {
@@ -291,7 +289,7 @@ class Card {
             return undefined;
         }
         else {
-            return (<BurnAffliction>this.affliction).damage;    
+            return (<BurnAffliction>this.affliction).damage;
         }
     }
 
@@ -302,7 +300,7 @@ class Card {
         }
 
         this.affliction.update(this);
-        
+
         if (this.affliction && this.affliction.isFinished()) {
             this.clearAffliction();
             return true;
@@ -311,7 +309,7 @@ class Card {
         // still have affliction
         return false;
     }
-    
+
     changeStatus(statusType: ENUM.StatusType, amount: number, isNewLogic?: boolean, maxAmount?: number): void {
         if (isNewLogic) {
             this.status.isNewLogic[statusType] = true;
@@ -365,12 +363,11 @@ class Card {
             throw new Error ("Invalid status type");
         }
     }
-    
+
     /**
      * Clear all statuses of this card that satisfy the supplied conditional function
      */
     clearAllStatus(condFunc: (x: number)=>boolean): void {
-
         for (var key in this.status) {
             if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number") {
                 if (condFunc(this.status[key])) {
@@ -426,7 +423,7 @@ class Card {
     getHPRatio(): number {
         return this.stats.hp / this.originalStats.hp;
     }
-    
+
     setDead(): void {
         this.isDead = true;
         this.clearAffliction();
@@ -517,13 +514,12 @@ class Card {
 }
 
 class Stats {
-
     hp: number;
     atk: number;
     def: number;
     wis: number;
     agi: number;
-    
+
     constructor(hp: number, atk: number, def: number, wis: number, agi: number) {
         this.hp = hp;
         this.atk = atk;

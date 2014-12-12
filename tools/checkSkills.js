@@ -11,7 +11,6 @@
 
     for (var key in SkillDatabase) {
         if (SkillDatabase.hasOwnProperty(key)) {
-
             if (!src[key]) {
                 div.innerHTML += ("Not found: " + key + " - " + SkillDatabase[key].name + "<br>");
             }
@@ -26,7 +25,7 @@
                     conflict = true;
                 }
 
-                for (var i = 1; i <= 5; i++) {
+                for (i = 1; i <= 5; i++) {
                     var argi = "arg" + i, skillfuncargi = "skillFuncArg" + i;
                     if (dbS[argi] && sheetS[skillfuncargi] && dbS[argi] != sheetS[skillfuncargi])
                         conflict = true;

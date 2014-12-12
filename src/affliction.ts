@@ -141,7 +141,6 @@ class PoisonAffliction extends Affliction {
 }
 
 class ParalysisAffliction extends Affliction {
-
     constructor() {
         super(ENUM.AfflictionType.PARALYSIS);
     }
@@ -156,7 +155,6 @@ class ParalysisAffliction extends Affliction {
 }
 
 class FrozenAffliction extends Affliction {
-
     constructor() {
         super(ENUM.AfflictionType.FROZEN);
     }
@@ -171,7 +169,6 @@ class FrozenAffliction extends Affliction {
 }
 
 class DisabledAffliction extends Affliction {
-
     constructor() {
         super(ENUM.AfflictionType.DISABLE);
     }
@@ -186,7 +183,6 @@ class DisabledAffliction extends Affliction {
 }
 
 class SilentAffliction extends Affliction {
-
     validTurnNum: number; // number of turns for silence
 
     constructor() {
@@ -207,14 +203,13 @@ class SilentAffliction extends Affliction {
             this.clear();
         }
     }
-    
+
     add(option: AfflectOptParam): void{
         this.validTurnNum = option.turnNum;
     }
 }
 
 class BlindAffliction extends Affliction {
-
     missProb: number;     // the probability for missing
     validTurnNum: number; // number of turns for blind
 

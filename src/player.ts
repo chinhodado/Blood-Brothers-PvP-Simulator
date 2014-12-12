@@ -2,7 +2,6 @@
  * A class represents a player
  */
 class Player {
-
     id: number;
     name: string;
     formation: Formation;

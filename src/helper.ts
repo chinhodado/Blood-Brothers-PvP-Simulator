@@ -270,7 +270,7 @@ function onBattleFinished() {
 
     if (ENUM.Setting.IS_MOBILE) {
         startButton.style.display = "block";
-    } 
+    }
     else {
         showStarRequest();
     }
@@ -306,7 +306,6 @@ function showStarRequest() {
         }
     }, 2000);
 }
-
 
 /**
  * Return a link for a random battle background
@@ -480,7 +479,7 @@ function playSim() {
 
     if (ENUM.Setting.IS_MOBILE) {
         startSynchronousSim(data, option, NUM_BATTLE);
-    } 
+    }
     else {
         startWorkerSim(data, option, NUM_BATTLE);
     }
@@ -613,16 +612,16 @@ function startWorkerSim(data, option, NUM_BATTLE) {
     }
 
     worker = null; // <- just leave this here
-            
-    // start the workers. Need to pass the tierList information in since the worker 
+
+    // start the workers. Need to pass the tierList information in since the worker
     // can't access sessionStorage
     var startTime = performance.now();
 
     for (w = 0; w < workerPool.length; w++) {
         workerPool[w].postMessage({
-            data: data, 
-            option: option, 
-            tierList: localStorage.getItem("tierList"), 
+            data: data,
+            option: option,
+            tierList: localStorage.getItem("tierList"),
             numBattle: NUM_BATTLE / NUM_WORKER
         });
     }

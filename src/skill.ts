@@ -1,5 +1,4 @@
 class Skill {
-
     static availableSkillsForSelect: number[] = null;
 
     id: number;
@@ -21,9 +20,9 @@ class Skill {
     range: BaseRange;
     logic: SkillLogic;
 
-    constructor (skillId: number) {    
+    constructor (skillId: number) {
         var skillData = SkillDatabase[skillId];
-        
+
         this.id = skillId;
         this.name = skillData.name;
         this.skillType = skillData.type;
@@ -41,7 +40,7 @@ class Skill {
         this.isAutoAttack = skillData.isAutoAttack;
 
         this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);
-        
+
         var selectDead = false;
         if (this.skillFunc === ENUM.SkillFunc.REVIVE) {
             selectDead = true;
@@ -97,7 +96,7 @@ class Skill {
             default:
                 break;
         }
-        
+
         return isIndirect;
     }
 
@@ -144,14 +143,14 @@ class Skill {
         var skillInfo = SkillDatabase[skillId];
 
         if (skillInfo.calc == ENUM.SkillCalcType.WIS) {
-            isMagicSkill = true;    
+            isMagicSkill = true;
         }
 
-        if ([ENUM.SkillFunc.AFFLICTION, 
-            ENUM.SkillFunc.BUFF, 
-            ENUM.SkillFunc.DEBUFF, 
-            ENUM.SkillFunc.MAGIC, 
-            ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC, 
+        if ([ENUM.SkillFunc.AFFLICTION,
+            ENUM.SkillFunc.BUFF,
+            ENUM.SkillFunc.DEBUFF,
+            ENUM.SkillFunc.MAGIC,
+            ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC,
             ENUM.SkillFunc.DRAIN_MAGIC].indexOf(skillInfo.func) != -1) {
             isMagicSkill = true;
         }
@@ -168,7 +167,7 @@ class Skill {
         var skillInfo = SkillDatabase[skillId];
 
         if (RangeFactory.canBeAoeRange(skillInfo.range) && this.isIndirectSkill(skillId)) {
-            isAoe = true;    
+            isAoe = true;
         }
 
         return isAoe;
@@ -213,13 +212,12 @@ class Skill {
      * Return a list of ids of the skills available for selection
      */
     static getAvailableSkillsForSelect(): number[] {
-
         if (this.availableSkillsForSelect == null) {
             this.availableSkillsForSelect = [];
             for (var key in SkillDatabase) {
                 if (this.isAvailableForSelect(key)) {
                     this.availableSkillsForSelect.push(key);
-                }                
+                }
             }
         }
 
@@ -295,7 +293,6 @@ class Skill {
             default:
                 throw new Error("Unimplemented ProtectAttackType");
         }
-        
     }
 
     isIndirectSkill(): boolean {

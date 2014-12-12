@@ -31,7 +31,6 @@ function shuffle(array: any[]): any[] {
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-
         // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -80,7 +79,7 @@ function pickRandomProperty(obj: {}): string {
 function getScaledFamiliarWikiaImageLink (link: string, fullName: string, newWidth: number): string {
     // first un-shorten the link
     // http://img2.wikia.nocookie.net/bloodbrothersgame/images/thumb/d/dd/
-    var firstPart = "http://img" + link.charAt(0) + ".wikia.nocookie.net/bloodbrothersgame/images/thumb/" + 
+    var firstPart = "http://img" + link.charAt(0) + ".wikia.nocookie.net/bloodbrothersgame/images/thumb/" +
         link.charAt(1) + "/" + link.substring(1) + "/";
     var urlName = fullName.replace(/,/g, "%2C").replace(/ /g, "_");
     var fileName = urlName + "_Figure.png";
@@ -113,7 +112,7 @@ function isChrome(): boolean {
     if(isChromium !== null && vendorName === "Google Inc.") {
         // is Google chrome
         return true;
-    } else { 
+    } else {
         // not Google chrome
         return false;
     }

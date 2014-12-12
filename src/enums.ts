@@ -1,5 +1,4 @@
 module ENUM {
-
     export enum Setting {
         IS_MOBILE = 0
     }
@@ -16,7 +15,7 @@ module ENUM {
         EVADE = 6,
         ACTION_ON_DEATH = 16,
     }
-    
+
     /**
      * Is the skill buff, attack, magic, etc.
      */
@@ -39,7 +38,7 @@ module ENUM {
         DISPELL = 16, //arg1-5: 0
         SUICIDE = 17,
         HEAL = 18, //arg1: multi, arg2: 0 if heal based on caster's wis, 1 if heal based on target's max HP
-        AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob., 
+        AFFLICTION = 19, //arg1: always 0? arg2: afflict type, arg3: afflict prob.,
                          // arg4: turns for silent & blind, % for venom, arg5: miss prob. for blind
         SURVIVE = 20, //arg1: HP threshold percent
         DEBUFFATTACK = 21, // arg1: multiplier, arg2: status, arg3: debuff prob., arg4: debuff multi (use WIS)
@@ -64,7 +63,7 @@ module ENUM {
         CLEAR_DEBUFF = 40,
         COUNTER_INDIRECT = 41
     }
-    
+
     /**
      * Is the skill calculated based on atk, wis, agi, etc.
      */
@@ -72,7 +71,7 @@ module ENUM {
         DEFAULT = 0, // default is Wis, usually used for buff
         ATK = 1,
         WIS = 2, // usually used for active skill
-        AGI = 3, 
+        AGI = 3,
         HEAL = 4,
         BUFF = 5,
         DEBUFF = 6,
@@ -89,11 +88,11 @@ module ENUM {
         NOT_COUNTER = 3,
         COUNTER = 4
     }
-    
+
     export enum StatType {
         HP, ATK, DEF, WIS, AGI
     }
-    
+
     export enum StatusType { // skillFuncArg2 for buffs
         ATK = 1,
         DEF = 2,
@@ -165,14 +164,14 @@ module ENUM {
         FRIEND_SELF_RANDOM_4   = 114,
         FRIEND_SELF_RANDOM_5   = 115,
         FRIEND_SELF_RANDOM_6   = 116,
-    
+
         FRIEND_UNIQUE_RANDOM   = 121,
         FRIEND_UNIQUE_RANDOM_2 = 122,
         FRIEND_UNIQUE_RANDOM_3 = 123,
         FRIEND_UNIQUE_RANDOM_4 = 124,
         FRIEND_UNIQUE_RANDOM_5 = 125,
         FRIEND_UNIQUE_RANDOM_6 = 126,
-    
+
         FRIEND_SELF_UNIQUE_RANDOM     = 131,
         FRIEND_SELF_UNIQUE_RANDOM_2   = 132,
         FRIEND_SELF_UNIQUE_RANDOM_3   = 133,
@@ -224,7 +223,7 @@ module ENUM {
         DEF = 3,
         HP = 4,
     }
-    
+
     export enum FormationRow {
         REAR = 3,
         MID = 2,
@@ -247,19 +246,19 @@ module ENUM {
     }
 
     export enum ProcOrderType {
-        ANDROID = 1, 
+        ANDROID = 1,
         IOS     = 2
     }
 
     export enum BattleType {
-        BLOOD_CLASH = 1, 
+        BLOOD_CLASH = 1,
         NORMAL = 2
     }
 
     export enum RandomBrigType {
         NONE     = 0,
         ALL      = 1,
-        XP_ONLY  = 2, 
+        XP_ONLY  = 2,
         X_ONLY   = 3,
         X_UP     = 4,
         SP_ONLY  = 5,
@@ -300,5 +299,3 @@ module ENUM {
         BC_ADDPROB = 9, // added probability at end of turn in bloodclash
     }
 }
-
-

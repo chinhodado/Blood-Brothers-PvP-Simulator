@@ -1,10 +1,9 @@
 ﻿declare var showCardDetailDialog;
 
 class BattleGraphic {
-
     // holds the coordinates of the bullets of the formation
     coordArray: any = {
-        1: [], 
+        1: [],
         2: []
     };
 
@@ -60,24 +59,23 @@ class BattleGraphic {
      * Display the two players' formations and their familiars on their canvas
      */
     displayFormationAndFamOnCanvas() {
-
         if (BattleGraphic.GRAPHIC_DISABLED) {
             return;
         }
 
         var playerFormations = {};
         playerFormations[1] = this.battle.player1.formation.getFormationConfig(); // player1's formation
-        
+
         // reverse player2's formation for display purpose
         var player2formation = this.battle.player2.formation.getFormationConfig();
         var temp = [];
         var tempNumber : number;
-        for (var i = 0; i < 5; i++) {            
+        for (var i = 0; i < 5; i++) {
             switch (player2formation[i]) {
                 case 1 :
                     tempNumber = 3;
                     break;
-                case 2 : 
+                case 2 :
                     tempNumber = 2;
                     break;
                 case 3 :
@@ -106,16 +104,16 @@ class BattleGraphic {
                                .attr('id', 'p1SkillText');
                 draw.group().attr('id', 'p1SkillBgTextGroup').add(skillImg).add(text).opacity(0).move(0, hr * 300);
             }
-            
+
             // change these to change the "compactity" of the formation
             var PLAYER_GROUP_WIDTH = wr * 350;
             var PLAYER_GROUP_HEIGHT = hr * 80;
 
             var horizontalStep = PLAYER_GROUP_WIDTH / 10;
             var verticalStep   = PLAYER_GROUP_HEIGHT / 2;
-            
+
             var coordArray = [];
-            this.coordArray[player] = coordArray;    
+            this.coordArray[player] = coordArray;
 
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
             var groupPlayer = draw.group().attr('id', 'p' + player + 'group');
@@ -124,20 +122,20 @@ class BattleGraphic {
             }
 
             if (player == 1) {
-                groupPlayer.move(wr * 30, wr * 400);    
+                groupPlayer.move(wr * 30, wr * 400);
             }
             else if (player == 2) {
-                groupPlayer.move(wr * 30, wr * 100);    
+                groupPlayer.move(wr * 30, wr * 100);
             }
-            
+
             // calculate the bullets coord
             for (i = 0; i < 5; i++) {
                 var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
                 var bulletY = (playerFormations[player][i] - 1) * verticalStep;
-                
+
                 coordArray.push([bulletX, bulletY]);
             }
-            
+
             // now draw lines and bullets
             if (BattleGraphic.SHOW_FORMATION_LINE) {
                 for (i = 0; i < 5; i++) {
@@ -153,16 +151,16 @@ class BattleGraphic {
                     groupPlayer.add(line);
                 }
             }
-            
+
             // grab the image links of the curent player's fam
             var imageLinksArray = [];
             var playerCards = this.cardMan.getPlayerCurrentMainCards(this.battle.getPlayerById(player));
             var reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
-            
+
             for (var fam = 0; fam < playerCards.length; fam++) {
                 imageLinksArray.push(getScaledFamiliarWikiaImageLink(playerCards[fam].imageLink, playerCards[fam].fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
-            
+
             // display fam images and other effects
             for (i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
@@ -188,9 +186,9 @@ class BattleGraphic {
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', 'p' + player + 'f' + i + 'explosion')
                                     .opacity(0);
-                
+
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
-                var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');                
+                var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');
                 group.add(image);
                 group.add(damageText);
                 group.add(explosion);
@@ -211,7 +209,7 @@ class BattleGraphic {
                     var reserve_img = new Image();
                     reserve_img.src = getScaledFamiliarWikiaImageLink(reserveCards[i].imageLink, reserveCards[i].fullName, BattleGraphic.IMAGE_WIDTH_BIG);
                 }
-            }            
+            }
         }
     }
 
@@ -233,7 +231,7 @@ class BattleGraphic {
      */
     displayAllCardImages(majorIndex: number) {
         var field = this.logger.getFieldAtMajorIndex(majorIndex);
-        
+
         for (var p = 1; p <= 2; p++) {
             for (var f = 0; f < 5; f++) {
                 var image: any = SVG.get('p' + p + 'f' + f + 'image');
@@ -248,7 +246,6 @@ class BattleGraphic {
      * animDuration: set to 0 if you don't want to display the HP change animation
      */
     displayHP(percent: number, player: number, index: number, animDuration?: number) {
-
         var draw = SVG.get('mainSvg');
 
         // the x coordinate is 1/2 image width to the left of the bullet
@@ -273,7 +270,7 @@ class BattleGraphic {
         // try to get the bar if it exist, or create if not
         var hpbarId = 'p' + player + 'f' + index + 'hp';
         var hpbar = SVG.get(hpbarId);
-        
+
         if (!hpbar) {
             hpbar = draw.rect(width, height)
                 .style({ 'stroke-width': BattleGraphic.wr * 1, 'stroke': '#000000'})
@@ -289,7 +286,7 @@ class BattleGraphic {
         // now we deal with the background gradient used for displaying the HP
         var hpGradientId = 'p' + player + 'f' + index + 'hpGradient';
         var hpGradient : any = SVG.get(hpGradientId);
-        
+
         var duration = 1;
         if (!isNaN(animDuration)) {
             duration = animDuration;
@@ -313,7 +310,7 @@ class BattleGraphic {
         // display dead or alive familiar
         this.displayDeadAliveFamiliar(player, index, percent <= 0);
     }
-    
+
     /**
      * Display the damage text and HP of a fam
      */
@@ -388,7 +385,7 @@ class BattleGraphic {
      * Display the affliction text of a fam
      */
     displayAfflictionText(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
-        var data = this.logger.minorEventLog[majorIndex][minorIndex];       
+        var data = this.logger.minorEventLog[majorIndex][minorIndex];
         var svgAfflictTxt = this.getAfflictionText(playerId, famIndex);
 
         if (data.affliction.isFinished) {
@@ -443,7 +440,7 @@ class BattleGraphic {
             } else {
                 image.style.opacity = 1;
             }
-        } 
+        }
         else {
             image = SVG.get('p' + player + 'f' + fam + 'image');
             var filter = SVG.get('darkenFilter');
@@ -494,7 +491,7 @@ class BattleGraphic {
 
         if (majorIndex >= majorLog.length) {
             onBattleFinished();
-            return;    
+            return;
         }
 
         // TODO: check this
@@ -511,7 +508,7 @@ class BattleGraphic {
                 that.displayMajorEventAnimation(majorIndex + 1);
             };
         }
-            
+
         if (majorLog[majorIndex].skillId && SkillDatabase[majorLog[majorIndex].skillId].isAutoAttack) {
             // don't enlarge the fam, etc.
             this.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
@@ -529,12 +526,11 @@ class BattleGraphic {
      * Display the skill proc animation:
      * enlarge the fam, display the skill name, display spell circle/light flash
      * durationRatio: e.g. 0.5 means half the animation duration
-     */   
-    displayProcSkill(executorId: number, skillId: number, option: {callback?; 
-                                                                    durationRatio?: number; 
-                                                                    noProcEffect?: boolean}) 
+     */
+    displayProcSkill(executorId: number, skillId: number, option: {callback?;
+                                                                    durationRatio?: number;
+                                                                    noProcEffect?: boolean})
     {
-
         if (!executorId || !skillId) {
             if (option.callback) {
                 option.callback();
@@ -567,7 +563,7 @@ class BattleGraphic {
             }
 
             SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
-        
+
             procEffect.opacity(1);
             procEffect.animate({duration: '3s'})
                        .rotate(180)
@@ -596,7 +592,7 @@ class BattleGraphic {
             var yText = BattleGraphic.hr * (executor.getPlayerId() == 1 ? 272 : 8);
 
             var skillName: string = SkillDatabase[skillId].name;
-                
+
             // center the text inside the background
             svgText.text(skillName).move(BattleGraphic.wr * (55 + 150) - svgText.bbox().width / 2, yText);
 
@@ -611,7 +607,7 @@ class BattleGraphic {
      * Display the animation for a minor event
      * This is a recursive function. It will pass itself as a callback to play the next minor event.
      * This should only be called once on a major index because of that
-     * 
+     *
      * noAttackAnim: don't display attack anim anymore (for AoE)
      * noNestedAttackAnim: same, for nested AoE
      */
@@ -637,7 +633,7 @@ class BattleGraphic {
             case ENUM.MinorEventType.HP:
                 if (!data.executorId) {
                     this.displayHpChangeEvent(majorIndex, minorIndex, option);
-                } 
+                }
                 else {
                     // going and attack physically
                     this.displayBattleEvent(majorIndex, minorIndex, option);
@@ -693,9 +689,9 @@ class BattleGraphic {
 
             if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE ||
                 data.status.type == ENUM.StatusType.MAGIC_RESISTANCE ||
-                data.status.type == ENUM.StatusType.BREATH_RESISTANCE) 
+                data.status.type == ENUM.StatusType.BREATH_RESISTANCE)
             {
-                var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type); 
+                var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type);
                 ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
             }
             else {
@@ -737,7 +733,7 @@ class BattleGraphic {
                         displayText = displayText + "\n" + displayText2;
                     }
                 }
-                    
+
                 var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
                 damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
                     .opacity(1).animate({delay: '0.5s'}).opacity(0);
@@ -828,7 +824,6 @@ class BattleGraphic {
                 .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
                 .after(function () {
                     if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
-
                         var exploDuration = 0.2;
                         if (Skill.isWisAutoAttack(nextData.skillId)) {
                             var procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'spellCircle');
@@ -844,27 +839,27 @@ class BattleGraphic {
                         explosion.animate({ duration: exploDuration + 's' }).opacity(1)
                             .after(function() {
                                 explosion.opacity(0);
-                                    
+
                                 if (procEffect) {
                                     procEffect.remove();
                                 }
 
                                 that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
-                                    
+
                                 executorGroup.animate({ duration: moveBackTime + 's'})
                                     .move(0, 0)
-                                    .after(function(){                                    
+                                    .after(function(){
                                         that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
                                     });
-                            });                            
+                            });
                     }
                     else { // receive damage physically - need to move the attacker also
                         SVG.get('p' + attackerCard.getPlayerId() + 'group').front();
                         attackerGroup.animate({ duration: '0.5s' })
                             .move(executorGroup.rbox().x - x_attacker, executorGroup.rbox().y - y_attacker)
                             .after(function () {
-                                explosion.opacity(1);           
-                                            
+                                explosion.opacity(1);
+
                                 that.displayPostDamage(executor.getPlayerId(), executor.formationColumn, majorIndex, minorIndex + 1);
 
                                 attackerGroup.animate({ duration: '0.3s'}).move(0, 0);
@@ -872,10 +867,10 @@ class BattleGraphic {
                                 executorGroup.animate({ duration: moveBackTime + 's'})
                                     .move(0, 0)
                                     .after(function(){
-                                        explosion.opacity(0);                               
+                                        explosion.opacity(0);
                                         that.displayMinorEventAnimation(majorIndex, minorIndex + 2, option);
                                     });
-                            });    
+                            });
                     }
                 });
         }
@@ -899,7 +894,7 @@ class BattleGraphic {
             group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
                 that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             });
-                
+
             this.displayHP(100, mainId, main.formationColumn, 0);
             this.getAfflictionText(mainId, main.formationColumn).hide();
         }
@@ -923,7 +918,7 @@ class BattleGraphic {
                         that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                     },
                     durationRatio: 0.5,
-                });                
+                });
             }
             else {
                 // just need to display the skill text, and have to call the next event ourselves
@@ -1025,7 +1020,7 @@ class BattleGraphic {
                 this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                 this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             }
-            else {                
+            else {
                 var exploDuration = 0.4;
                 if (Skill.isWisAutoAttack(data.skillId)) {
                     var procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'spellCircle');
@@ -1050,7 +1045,7 @@ class BattleGraphic {
                         for (var i = 0; i < exploSet.length; i++) {
                             exploSet[i].opacity(0);
                         }
-                        
+
                         if (procEffect) {
                             procEffect.remove();
                         }
@@ -1071,7 +1066,6 @@ class BattleGraphic {
             }
         }
         else if (Skill.isIndirectSkill(data.skillId)) { // indirect but not AoE, like multi-hitting
-
             exploDuration = 0.2;
 
             if (Skill.isWisAutoAttack(data.skillId)) {
@@ -1172,12 +1166,12 @@ class BattleGraphic {
         if (!txt) {
             txt = SVG.get('mainSvg').text('Paralyzed').font({ size: BattleGraphic.wr * 14, family: BattleGraphic.FONT })
                                 .attr({fill:'#fff', stroke: '#000', 'stroke-width': BattleGraphic.AFFLICTION_TEXT_STROKE_WIDTH})
-                                .center(this.coordArray[playerId][famIndex][0], 
-                                        this.coordArray[playerId][famIndex][1] + 
+                                .center(this.coordArray[playerId][famIndex][0],
+                                        this.coordArray[playerId][famIndex][1] +
                                         BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + BattleGraphic.hr * 20)
                                 .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')
                                 .hide();
-            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);    
+            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);
         }
 
         return txt;
@@ -1194,7 +1188,7 @@ class BattleGraphic {
                             .attr('id', 'p' + playerId + 'f' + famIndex + 'spellCircle')
                             .opacity(0);
         SVG.get('p' + playerId + 'f' + famIndex + 'group').add(effect);
-    
+
         return effect;
     }
 

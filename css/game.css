@@ -13,13 +13,9 @@ html, body {
     margin: 0 auto;
 }
 
-body{
-    /*overflow:hidden; /* This will remove the default scroll, not really needed, safer nonetheless */
-}
-
 .leftCol {
-    float: left; 
-    width: 30%; 
+    float: left;
+    width: 30%;
     height: 100%;
     padding: 30px;
     overflow: auto;
@@ -86,7 +82,7 @@ body{
 }
 
 #githubDiv {
-    position:absolute; 
+    position:absolute;
     bottom: 60px;
     padding-right: 30px;
 }
