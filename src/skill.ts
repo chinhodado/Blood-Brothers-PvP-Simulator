@@ -244,20 +244,26 @@ class Skill {
 
         switch (skillInfo.func) {
             case ENUM.SkillFunc.BUFF:
-                statuses.push(skillInfo.arg2);
-                if (skillInfo.arg3 && skillInfo.arg2 != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.arg3);
+                statuses.push(skillInfo.args[1]);
+                if (skillInfo.args[2] && skillInfo.args[1] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
+                break;
+            case ENUM.SkillFunc.MULTI_BUFF:
+                statuses.push(skillInfo.args[1]);
+                if (skillInfo.args[2] && skillInfo.args[1] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
+                statuses.push(skillInfo.args[6]);
+                if (skillInfo.args[7] && skillInfo.args[6] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[7]);
                 break;
             case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
-                statuses.push(skillInfo.arg2);
+                statuses.push(skillInfo.args[1]);
                 break;
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
             case ENUM.SkillFunc.ONHIT_DEBUFF:
-                statuses.push(skillInfo.arg2);
-                if (skillInfo.arg3) statuses.push(skillInfo.arg3);
+                statuses.push(skillInfo.args[1]);
+                if (skillInfo.args[2]) statuses.push(skillInfo.args[2]);
                 break;
             default:
                 break;

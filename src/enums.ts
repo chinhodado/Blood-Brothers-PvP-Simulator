@@ -61,7 +61,8 @@ module ENUM {
         ONHIT_DEBUFF = 38, //arg1: multi, arg2: type1, arg3: type2, arg4: flat amount debuff (-100*x), arg5: max no. of executions
         ONHIT_BUFF = 39,
         CLEAR_DEBUFF = 40,
-        COUNTER_INDIRECT = 41
+        COUNTER_INDIRECT = 41,
+        MULTI_BUFF = 44, // 1-5: same as buff, arg6: multiplier, arg7, 8: status
     }
 
     /**
