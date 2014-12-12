@@ -11,6 +11,11 @@ class Skill {
     skillFuncArg3: number;
     skillFuncArg4: number;
     skillFuncArg5: number;
+    skillFuncArg6: number;
+    skillFuncArg7: number;
+    skillFuncArg8: number;
+    skillFuncArg9: number;
+    skillFuncArg10: number;
     skillRange: ENUM.SkillRange;
     maxProbability: number;
     ward: ENUM.WardType;
@@ -33,6 +38,11 @@ class Skill {
         this.skillFuncArg3 = skillData.args[2]? skillData.args[2] : 0;
         this.skillFuncArg4 = skillData.args[3]? skillData.args[3] : 0;
         this.skillFuncArg5 = skillData.args[4]? skillData.args[4] : 0;
+        this.skillFuncArg6 = skillData.args[5]? skillData.args[5] : 0;
+        this.skillFuncArg7 = skillData.args[6]? skillData.args[6] : 0;
+        this.skillFuncArg8 = skillData.args[7]? skillData.args[7] : 0;
+        this.skillFuncArg9 = skillData.args[8]? skillData.args[8] : 0;
+        this.skillFuncArg10 = skillData.args[9]? skillData.args[9] : 0;
         this.skillRange = skillData.range;
         this.maxProbability = skillData.prob;
         this.ward = skillData.ward;
@@ -311,6 +321,11 @@ class Skill {
             skillFuncArg3: this.skillFuncArg3,
             skillFuncArg4: this.skillFuncArg4,
             skillFuncArg5: this.skillFuncArg5,
+            skillFuncArg6: this.skillFuncArg6,
+            skillFuncArg7: this.skillFuncArg7,
+            skillFuncArg8: this.skillFuncArg8,
+            skillFuncArg9: this.skillFuncArg9,
+            skillFuncArg10: this.skillFuncArg10,
             skillRange: this.skillRange,
             maxProbability: this.maxProbability,
             ward: this.ward,

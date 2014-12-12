@@ -3630,6 +3630,118 @@ var SkillDatabase = {
         desc: "Order of attack is determined by ATK during the next two turns."
     },
 
+    647: {
+        name: "Hailstroke", type: 2, func: 4, calc: 1,
+        args: [1.4, 5, 0.35, 1],
+        range: 20, prob: 30, ward: 1,
+        desc: "ATK-based damage and sometimes silence five random foes for 1 turn, ignoring position."
+    },
+
+    648: {
+        name: "Frost Feathers", type: 2, func: 4, calc: 3,
+        args: [1.95],
+        range: 43, prob: 30, ward: 2,
+        desc: "Deal heavy AGI-based damage to three random foes, ignoring position. Attack front foes first."
+    },
+
+    649: {
+        name: "Whirling Spear", type: 2, func: 4, calc: 3,
+        args: [1.65],
+        range: 7, prob: 30, ward: 2,
+        desc: "Deal heavy AGI-based damage to up to three foes, ignoring position."
+    },
+
+    650: {
+        name: "Tempest Slash", type: 2, func: 3, calc: 1,
+        args: [1.5],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes."
+    },
+
+    651: {
+        name: "Wings of Valor", type: 1, func: 44, calc: 0,
+        args: [0.25, 1, 0, 0, 0, 0.1, 4],
+        range: 3, prob: 70,
+        desc: "Raise ATK/AGI of self and adjacent familiars based on 25% and 10% of his WIS respectively."
+    },
+
+    652: {
+        name: "Rapid Shot", type: 2, func: 4, calc: 1,
+        args: [1.8],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
+    },
+
+    653: {
+        name: "Defensive Stance", type: 1, func: 1, calc: 0,
+        args: [0.2, 5],
+        range: 4, prob: 70,
+        desc: "Reduce physical damage taken by all allies."
+    },
+
+    654: {
+        name: "Fated Doom", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    657: {
+        name: "Hound's Bay", type: 2, func: 3, calc: 1,
+        args: [1.25],
+        range: 208, prob: 30, ward: 1,
+        desc: "ATK-based damage to all foes. Increased if fewer foes."
+    },
+
+    658: {
+        name: "Furious Fangs", type: 3, func: 39, calc: 6,
+        args: [1, 1, 4, 30, 5],
+        range: 21, prob: 50,
+        desc: "Greatly increase ATK and AGI of self when being attacked."
+    },
+
+    659: {
+        name: "Winter's Breath", type: 2, func: 34, calc: 2,
+        args: [1.7, 1, 0.7, 0.15],
+        range: 15, prob: 30, ward: 3,
+        desc: "Heavy WIS-based DMG to all foes in front/middle line, may greatly lower ATK."
+    },
+
+    660: {
+        name: "Rain of Ice", type: 2, func: 4, calc: 2,
+        args: [1.55],
+        range: 54, prob: 30, ward: 3,
+        desc: "Heavy WIS-based DMG to four random foes, ignoring position. Middle then rear foes first."
+    },
+
+    661: {
+        name: "Freezing Gaze", type: 1, func: 19, calc: 0,
+        args: [0, 3, 0.2],
+        range: 8, prob: 70,
+        desc: "Chance to freeze all foes at start of battle."
+    },
+
+    662: {
+        name: "Unerring Harpoon", type: 2, func: 4, calc: 1,
+        args: [0.8],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes, ignoring position."
+    },
+
+    663: {
+        name: "Enthralling Shot", type: 2, func: 36, calc: 3,
+        args: [1.1, 0.25, 27, 21],
+        range: 8, prob: 30, ward: 1,
+        desc: "Drains HP from all foes while dealing AGI-based damage."
+    },
+
+    664: {
+        name: "Requited Love", type: 3, func: 13, calc: 3,
+        args: [1],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash AGI-based counter attack when struck."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -3957,5 +4069,26 @@ var SkillDatabase = {
         args: [1],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10050: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2, 3, 0.35],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes freeze target."
+    },
+
+    10051: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10052: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 };

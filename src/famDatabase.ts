@@ -72,6 +72,20 @@ var famDatabase = {
         img: "2ec",
         fullName: "Ahab, the Colossal Anchor II"
     },
+    21474: {
+        name: "Aipaloovik", stats: [17006, 7397, 11481, 17526, 16605],
+        skills: [660, 661],
+        autoAttack: 10052,
+        img: "46f",
+        fullName: "Aipaloovik, Sacred Dragon II"
+    },
+    11474: {
+        name: "Aipaloovik", stats: [15610, 7991, 11807, 16534, 15999],
+        skills: [659],
+        autoAttack: 10007,
+        img: "389",
+        fullName: "Aipaloovik, the Snowstorm II"
+    },
     10841: {
         name: "Alcina", stats: [12684, 14169, 11356, 13682, 15755],
         skills: [269],
@@ -357,6 +371,12 @@ var famDatabase = {
         img: "22e",
         fullName: "Astaroth, Duke of Fear II"
     },
+    11467: {
+        name: "Atalanta", stats: [16497, 16302, 13561, 7776, 15576],
+        skills: [652, 653],
+        img: "210",
+        fullName: "Atalanta, Fowler II"
+    },
     10900: {
         name: "Aurboda", stats: [11903, 15348, 11773, 18468, 11015],
         skills: [261],
@@ -521,6 +541,12 @@ var famDatabase = {
         img: "1c7",
         fullName: "Caassimolar, the Chimera II"
     },
+    11466: {
+        name: "Calais", stats: [19812, 18100, 16009, 12792, 17277],
+        skills: [650, 651],
+        img: "379",
+        fullName: "Calais, the Gale II"
+    },
     11449: {
         name: "Camazo", stats: [22628, 22585, 22173, 16139, 18208],
         skills: [601, 445],
@@ -589,6 +615,12 @@ var famDatabase = {
         skills: [123],
         img: "363",
         fullName: "Chaotic Magma Giant II"
+    },
+    11484: {
+        name: "Chione", stats: [16204, 13008, 13561, 8502, 17266],
+        skills: [663, 664],
+        img: "4d9",
+        fullName: "Chione, Fallen Heroine II"
     },
     10907: {
         name: "Chiyome", stats: [12635, 14148, 11369, 15817, 13510],
@@ -1324,6 +1356,13 @@ var famDatabase = {
         img: "430",
         fullName: "Kagemaru, Master Ninja II"
     },
+    21463: {
+        name: "Kaikias", stats: [22014, 20007, 18560, 12611, 17742],
+        skills: [647],
+        autoAttack: 10050,
+        img: "350",
+        fullName: "Kaikias, the Hail God"
+    },
     11121: {
         name: "Kalevan", stats: [12629, 18013, 11914, 12055, 13821],
         skills: [297, 240],
@@ -1706,6 +1745,19 @@ var famDatabase = {
         img: "1a6",
         fullName: "Odoa, the Scarecrow II"
     },
+    21465: {
+        name: "Okypete Shd.", stats: [12889, 10506, 13084, 6313, 13214],
+        skills: [649],
+        img: "203",
+        fullName: "Okypete, the Night Breeze II"
+    },
+    11465: {
+        name: "Okypete", stats: [15610, 13331, 15158, 6967, 16840],
+        skills: [648],
+        autoAttack: 10051,
+        img: "39d",
+        fullName: "Okypete, the Swiftwing II"
+    },
     11446: {
         name: "Olan", stats: [16497, 14048, 14113, 6779, 17255],
         skills: [610, 611],
@@ -1884,6 +1936,13 @@ var famDatabase = {
         img: "461",
         fullName: "Phantom Knight, the Vagabond II"
     },
+    11469: {
+        name: "Phineus", stats: [13597, 7005, 9894, 14561, 10915],
+        skills: [654],
+        autoAttack: 10007,
+        img: "37a",
+        fullName: "Phineus, the Augur King II"
+    },
     11039: {
         name: "Phoenix", stats: [14005, 11188, 12033, 19010, 12185],
         skills: [305],
@@ -2056,6 +2115,13 @@ var famDatabase = {
         skills: [302],
         img: "165",
         fullName: "Sea Serpent II"
+    },
+    11470: {
+        name: "Sedna", stats: [20321, 17840, 19129, 7072, 17699],
+        skills: [657, 658],
+        autoAttack: 10033,
+        img: "18d",
+        fullName: "Sedna, the Frozen Sea II"
     },
     11379: {
         name: "Seimei", stats: [19963, 6389, 17038, 19053, 17103],
@@ -2375,6 +2441,12 @@ var famDatabase = {
         skills: [122],
         img: "3c3",
         fullName: "Tristan the Sorrowful II"
+    },
+    11472: {
+        name: "Tulok", stats: [15498, 15047, 10807, 5247, 10198],
+        skills: [662],
+        img: "3a7",
+        fullName: "Tulok, Icebreaker II"
     },
     10647: {
         name: "Tuniq", stats: [13635, 16709, 12062, 12086, 9794],

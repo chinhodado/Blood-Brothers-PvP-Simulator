@@ -25,7 +25,7 @@
                     conflict = true;
                 }
 
-                for (i = 1; i <= 5; i++) {
+                for (i = 1; i <= 10; i++) {
                     if (!dbS.args) continue;
                     var argsi = dbS.args[i - 1], skillfuncargi = "skillFuncArg" + i;
                     if (argsi && sheetS[skillfuncargi] && argsi != sheetS[skillfuncargi])
