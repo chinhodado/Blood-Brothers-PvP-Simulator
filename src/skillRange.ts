@@ -121,7 +121,8 @@ class RangeFactory {
 
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
         var range: BaseRange;
-        if (this.isEnemyRandomRange(id) && id != ENUM.SkillRange.ENEMY_REAR_RANDOM_3) {
+        if (this.isEnemyRandomRange(id) && id != ENUM.SkillRange.ENEMY_REAR_RANDOM_3
+            && id != ENUM.SkillRange.ENEMY_FRONT_RANDOM_3) { // TODO: refactor this
             range = this.createEnemyRandomRange(id);
         }
         else if (this.isEnemyNearRange(id) || this.isEnemyNearScaledRange(id)) {
@@ -139,7 +140,8 @@ class RangeFactory {
     static isEnemyRandomRange (id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]
             || !!RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id]
-            || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3;
+            || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3
+            || id == ENUM.SkillRange.ENEMY_FRONT_RANDOM_3;
     }
 
     static isFriendRandomRange (id: ENUM.SkillRange) {
@@ -255,6 +257,8 @@ class RangeFactory {
                 return new RightRange(id);
             case ENUM.SkillRange.ENEMY_REAR_RANDOM_3:
                 return new EnemyRearRandom3Range(id);
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_3:
+                return new EnemyFrontRandom3Range(id);
             default:
                 throw new Error("Invalid range or not implemented");
         }
@@ -740,6 +744,29 @@ class EnemyRearRandom3Range extends RandomRange { // TODO: fix this later (not e
         tmpRange.getReady(executor);
 
         if (this.numProcessed < EnemyRearRandom3Range.NUM_TARGET) {
+            this.numProcessed++;
+            return this.getRandomCard(tmpRange.targets);
+        }
+        else {
+            return null;
+        }
+    }
+}
+
+// copied from EnemyRearRandom3Range without much thought, may need to check later
+class EnemyFrontRandom3Range extends RandomRange { // TODO: fix this later (not extends RandomRange)
+    private static NUM_TARGET = 3;
+    private numProcessed: number;
+
+    getReady(executor: Card): void {
+        this.numProcessed = 0;
+    }
+
+    getTarget(executor: Card): Card {
+        var tmpRange = RangeFactory.getRange(ENUM.SkillRange.ENEMY_FRONT_ALL);
+        tmpRange.getReady(executor);
+
+        if (this.numProcessed < EnemyFrontRandom3Range.NUM_TARGET) {
             this.numProcessed++;
             return this.getRandomCard(tmpRange.targets);
         }

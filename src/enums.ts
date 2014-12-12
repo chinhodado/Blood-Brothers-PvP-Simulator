@@ -152,6 +152,8 @@ module ENUM {
         SELF_IMMEDIATE_RIGHT   = 36,
         SELF_IMMEDIATE_LEFT    = 37,
 
+        ENEMY_FRONT_RANDOM_3   = 43,
+
         FRIEND_RANDOM          = 101,
         FRIEND_RANDOM_2        = 102,
         FRIEND_RANDOM_3        = 103,
