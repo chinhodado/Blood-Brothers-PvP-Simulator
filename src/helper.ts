@@ -152,9 +152,7 @@ function setFamOptions() {
     for (var key in famDatabase) {
         famIdArray.push(key);
     }
-    famIdArray.sort(function (a, b) {
-        return famDatabase[a].fullName.localeCompare(famDatabase[b].fullName);
-    });
+    famIdArray.sort((a, b) => famDatabase[a].fullName.localeCompare(famDatabase[b].fullName));
 
     for (var i = 0; i < famSelects.length; i++) {
         for (var index = 0; index < famIdArray.length; index++) {
@@ -175,9 +173,7 @@ function setSkillOptions() {
 
     // create an array of skill id and sort it based on the skill's name
     var skillIdArray = Skill.getAvailableSkillsForSelect();
-    skillIdArray.sort(function (a, b) {
-        return SkillDatabase[a].name.localeCompare(SkillDatabase[b].name);
-    });
+    skillIdArray.sort((a, b) => SkillDatabase[a].name.localeCompare(SkillDatabase[b].name));
 
     for (var i = 0; i < skillSelects.length; i++) {
         for (var index = 0; index < skillIdArray.length; index++) {
@@ -255,9 +251,7 @@ function prepareRandom() {
     var USE_CS_RND = false;
     if (USE_CS_RND) {
         var rnd = new CsRandom(1234);
-        Math.random = function () {
-            return rnd.nextDouble();
-        }
+        Math.random = () => rnd.nextDouble();
     }
 }
 
@@ -289,7 +283,7 @@ function onSimulationFinished() {
  * Show request for starring on Github
  */
 function showStarRequest() {
-    setTimeout(function () {
+    setTimeout(() => {
         if (!localStorage.getItem("starRequestShown")) {
             swal({
                 title: "Star this!",
@@ -299,7 +293,7 @@ function showStarRequest() {
                 confirmButtonColor: "#5cb85c",
                 confirmButtonText: "Take me there",
                 closeOnConfirm: false
-            }, function () {
+            }, () => {
                 localStorage.setItem("starRequestShown", "true");
                 window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
             });
@@ -348,10 +342,10 @@ function prepareField() {
     var rndBgLink = getRandomBackground();
     var img = new Image();
     var svgWrapper = document.getElementById("svgWrapper");
-    img.onload = function() {
+    img.onload = () => {
         svgWrapper.style.backgroundImage = "url('" + rndBgLink + "')";
     };
-    img.onerror = function() {
+    img.onerror = () => {
         console.log("Background not found: " + rndBgLink);
         svgWrapper.style.backgroundImage = "url(img/bg01.png)";
     };
@@ -378,7 +372,18 @@ function getTierList(whatToDoNext) {
         callback = "updateTierList";
     }
 
-    if (!localStorage.getItem("tierList")) {
+    var needUpdate = false;
+    var currentTime = new Date().getTime();
+    var lastUpdatedTime = localStorage.getItem("lastTierUpdateTime");
+    if (!lastUpdatedTime) {
+        needUpdate = true;
+    }
+    else {
+        var elapsedTime = currentTime - lastUpdatedTime;
+        needUpdate = elapsedTime >= 1000 * 60 * 60 * 24; // 1 day
+    }
+
+    if (!localStorage.getItem("tierList") || needUpdate) {
         console.log("Fetching tier list...");
         $.ajax({
             "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
@@ -407,6 +412,7 @@ function getTierList(whatToDoNext) {
  */
 function updateTierList(data) {
     localStorage.setItem("tierList", JSON.stringify(data.results));
+    localStorage.setItem("lastTierUpdateTime", "" + new Date().getTime());
 }
 
 // kill me now...
@@ -510,7 +516,7 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
     var intervalCount = 0;
     var NUM_CHUNK = 100;
     var CHUNK_SIZE = NUM_BATTLE / NUM_CHUNK;
-    var interval = setInterval(function() {
+    var interval = setInterval(() => {
         for (var i = 0; i < CHUNK_SIZE; i++) {
             var newGame = new BattleModel(data, option, tierList);
             var resultBattle = newGame.startBattle();
@@ -564,7 +570,7 @@ function startWorkerSim(data, option, NUM_BATTLE) {
 
     for (var w = 0; w < NUM_WORKER; w++) {
         var worker = new Worker("js/worker.js");
-        worker.onmessage = function (event) {
+        worker.onmessage = event => {
             if (event.data.status == "ongoing") {
                 totalProgress += 100;
                 document.getElementById("progressBar").setAttribute("value", totalProgress.toString());
@@ -601,7 +607,7 @@ function startWorkerSim(data, option, NUM_BATTLE) {
                     onSimulationResultObtained(finalData, startTime, endTime);
 
                     // terminate all workers
-                    workerPool.forEach(function (entry) {
+                    workerPool.forEach(entry => {
                         entry.terminate();
                     });
                 }
@@ -632,9 +638,7 @@ function onSimulationResultObtained(finalData, startTime, endTime) {
     for (var key in finalData.winCountTable) {
         famIdArray.push(key);
     }
-    famIdArray.sort(function (a, b) {
-        return finalData.winCountTable[b] - finalData.winCountTable[a];
-    });
+    famIdArray.sort((a, b) => finalData.winCountTable[b] - finalData.winCountTable[a]);
 
     // now print out the details
     var simResultDiv = document.getElementById("simResultDiv");
