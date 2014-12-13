@@ -46,16 +46,16 @@
             <option value="10">5-Saw</option>
             <option value="11">5-Hydra</option>
         </select>
-        <br /><br />
+        <br /><br/>
         Warlord Skills: <br class="showInMobile" style="display: none"/>
 
-        Skill 1: <select name="s20" id="s20" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
-        Skill 2: <select name="s21" id="s21" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
-        Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none" />
+        Skill 1: <select name="s20" id="s20" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none"/>
+        Skill 2: <select name="s21" id="s21" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none"/>
+        Skill 3: <select name="s22" id="s22" class="skillSelect randomize p2"></select> <br class="showInMobile" style="display: none"/>
 
-        <br /><br />
+        <br /><br/>
         Random <input type="checkbox" name="r2" id="r2" onchange="toogleDisable()"/>
-        Random mode 
+        Random mode
         <select name="2r" id="2r">
             <option value="1">All</option>
             <option value="2">Tier X+ only</option>
@@ -99,15 +99,15 @@
             <option value="10">5-Saw</option>
             <option value="11">5-Hydra</option>
         </select>
-        <br /><br />
-        Warlord Skills: <br class="showInMobile" style="display: none" />
+        <br /><br/>
+        Warlord Skills: <br class="showInMobile" style="display: none"/>
 
-        Skill 1: <select name="s10" id="s10" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
-        Skill 2: <select name="s11" id="s11" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
-        Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none" />
+        Skill 1: <select name="s10" id="s10" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none"/>
+        Skill 2: <select name="s11" id="s11" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none"/>
+        Skill 3: <select name="s12" id="s12" class="skillSelect randomize p1"></select> <br class="showInMobile" style="display: none"/>
 
-        <br /><br />
-        Random <input type="checkbox" name="r1" id="r1" onchange="toogleDisable()" />
+        <br /><br/>
+        Random <input type="checkbox" name="r1" id="r1" onchange="toogleDisable()"/>
         Random mode
         <select name="1r" id="1r">
             <option value="1">All</option>
@@ -129,13 +129,13 @@
             <option value="1">Bloodclash</option>
             <option value="2">Normal (5v5)</option>
         </select>
-        <br class="showInMobile" style="display: none" />
+        <br class="showInMobile" style="display: none"/>
         Proc order:
         <select name="po" id="po">
             <option value="1">Android</option>
             <option value="2">iOS</option>
         </select>
-        <br class="showInMobile" style="display: none" />
+        <br class="showInMobile" style="display: none"/>
         Mode:
         <select name="mode">
             <option value="normal">Normal</option>
@@ -143,26 +143,26 @@
         </select>
 
         <span id="debugCheckbox">
-            <input type="checkbox" name="debug" value="true" id="debug">Debug 
+            <input type="checkbox" name="debug" value="true" id="debug">Debug
         </span>
 
         <script type="text/javascript">
             setFamOptions();
             setSkillOptions();
-            setPreviousChoices();           
+            setPreviousChoices();
         </script>
 
         <br><br><br>
 
         <button type="button" id="randomizeButton">Randomize</button>
         <input type="button" value="Start" onclick="submitForm()">
-            
+        <p id="lastTierUpdate"></p>
     </form>
 
     <a href="https://github.com/chinhodado/bb_pvp_simulator" target="_blank" id="forkImage">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="img/githubFork.png" alt="Fork me on GitHub">
     </a>
-    
+
     <script type="text/javascript">
         var randomizeButton = document.getElementById("randomizeButton");
         randomizeButton.onclick = function() {
