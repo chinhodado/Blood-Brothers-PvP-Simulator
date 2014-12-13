@@ -11,6 +11,29 @@ class RangeFactory {
         419: 4
     };
 
+    static ENEMY_ROW_RANDOM_RANGE_TARGET_NUM = {
+        18: 3,
+        38: 2,
+        39: 4,
+        40: 5,
+        41: 6,
+        42: 2,
+        43: 3,
+        44: 4,
+        45: 5,
+        46: 6,
+        47: 2,
+        48: 3,
+        49: 4,
+        50: 5,
+        51: 6,
+        52: 2,
+        53: 3,
+        54: 4,
+        55: 5,
+        56: 6
+    };
+
     static ENEMY_NEAR_SCALED_RANGE_TARGET_NUM = {
         312: 2,
         313: 3,
@@ -121,8 +144,10 @@ class RangeFactory {
 
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
         var range: BaseRange;
-        if (this.isEnemyRandomRange(id) && id != ENUM.SkillRange.ENEMY_REAR_RANDOM_3
-            && id != ENUM.SkillRange.ENEMY_FRONT_RANDOM_3) { // TODO: refactor this
+        if (this.isEnemyRowRandomRange(id)) {
+            range = this.createEnemyRowRandomRange(id);
+        }
+        else if (this.isEnemyRandomRange(id)){
             range = this.createEnemyRandomRange(id);
         }
         else if (this.isEnemyNearRange(id) || this.isEnemyNearScaledRange(id)) {
@@ -140,8 +165,11 @@ class RangeFactory {
     static isEnemyRandomRange (id: ENUM.SkillRange) {
         return !!RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id]
             || !!RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id]
-            || id == ENUM.SkillRange.ENEMY_REAR_RANDOM_3
-            || id == ENUM.SkillRange.ENEMY_FRONT_RANDOM_3;
+            || RangeFactory.isEnemyRowRandomRange(id);
+    }
+
+    static isEnemyRowRandomRange (id: ENUM.SkillRange) {
+        return !!RangeFactory.ENEMY_ROW_RANDOM_RANGE_TARGET_NUM[id];
     }
 
     static isFriendRandomRange (id: ENUM.SkillRange) {
@@ -155,6 +183,33 @@ class RangeFactory {
             numTargets = RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
         }
         return new EnemyRandomRange(id, numTargets);
+    }
+
+    static createEnemyRowRandomRange (id: ENUM.SkillRange): BaseRange {
+        var numTargets = RangeFactory.ENEMY_ROW_RANDOM_RANGE_TARGET_NUM[id];
+
+        switch (id) {
+            case ENUM.SkillRange.ENEMY_REAR_RANDOM_2:
+            case ENUM.SkillRange.ENEMY_REAR_RANDOM_3:
+            case ENUM.SkillRange.ENEMY_REAR_RANDOM_4:
+            case ENUM.SkillRange.ENEMY_REAR_RANDOM_5:
+            case ENUM.SkillRange.ENEMY_REAR_RANDOM_6:
+                return new EnemyRearRandomRange(id, numTargets);
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_2:
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_3:
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_4:
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_5:
+            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_6:
+                return new EnemyFrontRandomRange(id, numTargets);
+            case ENUM.SkillRange.ENEMY_MID_REAR_RANDOM_2:
+            case ENUM.SkillRange.ENEMY_MID_REAR_RANDOM_3:
+            case ENUM.SkillRange.ENEMY_MID_REAR_RANDOM_4:
+            case ENUM.SkillRange.ENEMY_MID_REAR_RANDOM_5:
+            case ENUM.SkillRange.ENEMY_MID_REAR_RANDOM_6:
+                return new EnemyMidRearRandomRange(id, numTargets);
+            default:
+                throw new Error("Invalid or unimplemented range!");
+        }
     }
 
     static createFriendRandomRange (id: ENUM.SkillRange, selectDead: boolean) {
@@ -210,6 +265,7 @@ class RangeFactory {
 
     static isRowBasedRange(rangeId: ENUM.SkillRange): boolean {
         if (rangeId === ENUM.SkillRange.ENEMY_FRONT_ALL ||
+            rangeId === ENUM.SkillRange.ENEMY_MID_ALL ||
             rangeId === ENUM.SkillRange.ENEMY_REAR_ALL ||
             rangeId === ENUM.SkillRange.ENEMY_FRONT_MID_ALL) {
             return true;
@@ -247,6 +303,8 @@ class RangeFactory {
                 return new EnemyAllRange(id);
             case ENUM.SkillRange.ENEMY_FRONT_ALL:
                 return new EnemyFrontAllRange(id);
+            case ENUM.SkillRange.ENEMY_MID_ALL:
+                return new EnemyMidAllRange(id);
             case ENUM.SkillRange.ENEMY_REAR_ALL:
                 return new EnemyRearAllRange(id);
             case ENUM.SkillRange.ENEMY_FRONT_MID_ALL:
@@ -255,10 +313,6 @@ class RangeFactory {
                 return new SelfRange(id, selectDead);
             case ENUM.SkillRange.RIGHT:
                 return new RightRange(id);
-            case ENUM.SkillRange.ENEMY_REAR_RANDOM_3:
-                return new EnemyRearRandom3Range(id);
-            case ENUM.SkillRange.ENEMY_FRONT_RANDOM_3:
-                return new EnemyFrontRandom3Range(id);
             default:
                 throw new Error("Invalid range or not implemented");
         }
@@ -720,6 +774,17 @@ class EnemyFrontAllRange extends BaseRowRange {
     }
 }
 
+class EnemyMidAllRange extends BaseRowRange {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
+        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        if (candidates.length) {
+            candidates = this.getRowCandidates(candidates, ENUM.FormationRow.MID, true);
+        }
+        this.targets = candidates;
+    }
+}
+
 class EnemyRearAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         this.currentIndex = 0;
@@ -731,19 +796,26 @@ class EnemyRearAllRange extends BaseRowRange {
     }
 }
 
-class EnemyRearRandom3Range extends RandomRange { // TODO: fix this later (not extends RandomRange)
-    private static NUM_TARGET = 3;
+class EnemyRowRandomRange extends RandomRange { // TODO: fix this later (not extends RandomRange)
+    private numTargets: number;
     private numProcessed: number;
+    private baseOnRangeType: ENUM.SkillRange;
+
+    constructor(id: ENUM.SkillRange, numTargets: number, baseOnRangeType: ENUM.SkillRange) {
+        super(id);
+        this.numTargets = numTargets;
+        this.baseOnRangeType = baseOnRangeType;
+    }
 
     getReady(executor: Card): void {
         this.numProcessed = 0;
     }
 
     getTarget(executor: Card): Card {
-        var tmpRange = RangeFactory.getRange(ENUM.SkillRange.ENEMY_REAR_ALL);
+        var tmpRange = RangeFactory.getRange(this.baseOnRangeType);
         tmpRange.getReady(executor);
 
-        if (this.numProcessed < EnemyRearRandom3Range.NUM_TARGET) {
+        if (this.numProcessed < this.numTargets) {
             this.numProcessed++;
             return this.getRandomCard(tmpRange.targets);
         }
@@ -753,25 +825,20 @@ class EnemyRearRandom3Range extends RandomRange { // TODO: fix this later (not e
     }
 }
 
-// copied from EnemyRearRandom3Range without much thought, may need to check later
-class EnemyFrontRandom3Range extends RandomRange { // TODO: fix this later (not extends RandomRange)
-    private static NUM_TARGET = 3;
-    private numProcessed: number;
-
-    getReady(executor: Card): void {
-        this.numProcessed = 0;
+class EnemyRearRandomRange extends EnemyRowRandomRange {
+    constructor(id: ENUM.SkillRange, numTargets: number) {
+        super(id, numTargets, ENUM.SkillRange.ENEMY_REAR_ALL);
     }
+}
 
-    getTarget(executor: Card): Card {
-        var tmpRange = RangeFactory.getRange(ENUM.SkillRange.ENEMY_FRONT_ALL);
-        tmpRange.getReady(executor);
+class EnemyFrontRandomRange extends EnemyRowRandomRange {
+    constructor(id: ENUM.SkillRange, numTargets: number) {
+        super(id, numTargets, ENUM.SkillRange.ENEMY_FRONT_ALL);
+    }
+}
 
-        if (this.numProcessed < EnemyFrontRandom3Range.NUM_TARGET) {
-            this.numProcessed++;
-            return this.getRandomCard(tmpRange.targets);
-        }
-        else {
-            return null;
-        }
+class EnemyMidRearRandomRange extends EnemyRowRandomRange {
+    constructor(id: ENUM.SkillRange, numTargets: number) {
+        super(id, numTargets, ENUM.SkillRange.ENEMY_MID_ALL);
     }
 }

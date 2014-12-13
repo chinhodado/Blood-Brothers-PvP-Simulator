@@ -3742,6 +3742,20 @@ var SkillDatabase = {
         desc: "Chance to unleash AGI-based counter attack when struck."
     },
 
+    665: {
+        name: "Iceberg Shell", type: 5, func: 14, calc: 1,
+        args: [1.6],
+        range: 4, prob: 50, ward: 1,
+        desc: "Take damage in place of any ally and unleash a heavy counter attack."
+    },
+
+    666: {
+        name: "Ice Shard", type: 3, func: 41, calc: 2,
+        args: [2, 3, 0.3],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a freezing massive counter attack when struck, ignoring position."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],

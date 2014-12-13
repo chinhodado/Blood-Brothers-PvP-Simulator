@@ -365,6 +365,13 @@ var famDatabase = {
         img: "3f7",
         fullName: "Ashlee Steamsaw II"
     },
+    11488: {
+        name: "Aspidochelone", stats: [21003, 17103, 21003, 17006, 4450],
+        skills: [665, 666],
+        autoAttack: 10050,
+        img: "26f",
+        fullName: "Aspidochelone, the Iceberg II"
+    },
     10595: {
         name: "Astaroth", stats: [12194, 13965, 10087, 15278, 14280],
         skills: [155],
