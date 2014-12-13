@@ -262,6 +262,7 @@ class Skill {
                 break;
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
             case ENUM.SkillFunc.ONHIT_DEBUFF:
+            case ENUM.SkillFunc.ONHIT_BUFF:
                 statuses.push(skillInfo.args[1]);
                 if (skillInfo.args[2]) statuses.push(skillInfo.args[2]);
                 break;

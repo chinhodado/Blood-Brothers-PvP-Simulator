@@ -59,7 +59,7 @@ module ENUM {
         DRAIN_ATTACK = 36, //arg1: multi, arg2: heal % of damage dealt, arg3: effect (unimportant), arg4: heal range
         DRAIN_MAGIC = 37, // same as 36
         ONHIT_DEBUFF = 38, //arg1: multi, arg2: type1, arg3: type2, arg4: flat amount debuff (-100*x), arg5: max no. of executions
-        ONHIT_BUFF = 39,
+        ONHIT_BUFF = 39,   // same as 38
         CLEAR_DEBUFF = 40,
         COUNTER_INDIRECT = 41,
         MULTI_BUFF = 44, // 1-5: same as buff, arg6: multiplier, arg7, 8: status

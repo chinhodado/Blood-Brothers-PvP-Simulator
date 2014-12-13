@@ -8,6 +8,8 @@
             case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
                 return new DebuffSkillLogic();
+            case ENUM.SkillFunc.ONHIT_BUFF:
+                return new OnHitBuffSkillLogic();
             case ENUM.SkillFunc.ONHIT_DEBUFF:
                 return new OnHitDebuffSkillLogic();
             case ENUM.SkillFunc.DISPELL:
@@ -123,7 +125,9 @@ class BuffSkillLogic extends SkillLogic {
         }
 
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
-        var baseStat = executor.getStat(basedOnStatType);
+
+        // for ONHIT_BUFF, the calcType is 6 (Debuff), which doesn't make any sense. Anyway...
+        var baseStat = skill.skillFunc == ENUM.SkillFunc.ONHIT_BUFF? 0 : executor.getStat(basedOnStatType);
 
         var target: Card;
         while (target = skill.getTarget(executor)) {
@@ -142,6 +146,14 @@ class BuffSkillLogic extends SkillLogic {
                         }
                         var skillMod = skill.skillFuncArg1;
                         var buffAmount = Math.round(skillMod * baseStat);
+                        if (skill.skillFunc == ENUM.SkillFunc.ONHIT_BUFF) {
+                            if (skill.skillFuncArg4 == 0) {
+                                throw new Error("Not sure what needs to happen here when arg4 = 0 for onhit buff. Check the manual.");
+                            }
+                            else {
+                                buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
+                            }
+                        }
                         break;
                     case ENUM.StatusType.ATTACK_RESISTANCE:
                     case ENUM.StatusType.MAGIC_RESISTANCE:
@@ -754,6 +766,38 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
         }
 
         return toReturn;
+    }
+}
+
+class OnHitBuffSkillLogic extends BuffSkillLogic {
+    private static UNINITIALIZED_VALUE = -1234;
+    private executionLeft: number = OnHitBuffSkillLogic.UNINITIALIZED_VALUE;
+
+    willBeExecuted(data: SkillLogicData): boolean {
+        // this should be done at construction time instead...
+        if (this.executionLeft == OnHitBuffSkillLogic.UNINITIALIZED_VALUE) {
+            this.executionLeft = data.skill.skillFuncArg5;
+        }
+
+        if (this.executionLeft == 0) return false;
+
+        var success = super.willBeExecuted(data);
+
+        if (success) {
+            this.executionLeft--;
+            return true;
+        } else return false;
+    }
+
+    execute(data: SkillLogicData) {
+        this.logger.addMinorEvent({
+            executorId: data.executor.id,
+            type: ENUM.MinorEventType.DESCRIPTION,
+            description: data.executor.name + " procs " + data.skill.name + ". ",
+            skillId: data.skill.id
+        });
+
+        super.execute(data);
     }
 }
 
