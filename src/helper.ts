@@ -450,7 +450,7 @@ function updateTierListThenTest(data) {
 function playGame() {
     prepareField();
     BattleGraphic.PLAY_MODE = 'AUTO';
-    BattleLogger.IS_DEBUG_MODE = false;
+    BattleDebugger.IS_DEBUG_MODE = false;
     document.getElementById('startButton').onclick = function () {
         this.disabled = true;
 
@@ -486,7 +486,7 @@ function playSim() {
     if (option.p2RandomMode) {
         BattleGraphic.HIDE_PLAYER2 = true;
     }
-    BattleLogger.IS_DEBUG_MODE = false;
+    BattleDebugger.IS_DEBUG_MODE = false;
     BattleModel.IS_MASS_SIMULATION = true;
     if (!ENUM.Setting.IS_MOBILE) {
         var newGame = new BattleModel(data, option);

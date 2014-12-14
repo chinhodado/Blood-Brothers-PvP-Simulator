@@ -9,8 +9,10 @@ function runSimulation(args) {
     var p1WinCount = 0;
     var p2WinCount = 0;
     var winCountTable = {};
+    BattleDebugger.IS_DEBUG_MODE = false;
     BattleModel.IS_MASS_SIMULATION = true;
     BattleGraphic.GRAPHIC_DISABLED = true;
+    BattleLogger.INFOTEXT_DISPLAYED = true;
     for (var i = 0; i < args.numBattle; i++) {
         var newGame = new BattleModel(args.data, args.option, args.tierList);
         var resultBattle = newGame.startBattle();

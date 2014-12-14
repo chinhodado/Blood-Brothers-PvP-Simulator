@@ -1,4 +1,5 @@
 /// <reference path="affliction.ts"/>
+/// <reference path="battleDebugger.ts"/>
 /// <reference path="battleGraphic.ts"/>
 /// <reference path="battleLogger.ts"/>
 /// <reference path="brigGenerator.ts"/>
@@ -117,7 +118,7 @@ class BattleModel {
 
         graphic.displayFormationAndFamOnCanvas();
 
-        if (!BattleLogger.IS_DEBUG_MODE) {
+        if (!BattleDebugger.IS_DEBUG_MODE) {
             this.logger.displayInfoText();
             this.logger.displayWarningText();
         }
@@ -268,7 +269,10 @@ class BattleModel {
         });
 
         if (target.isDead) {
-            this.logger.displayMinorEvent(target.name + " is dead");
+            this.logger.addMinorEvent({
+                description: target.name + " is dead",
+                type: ENUM.MinorEventType.TEXT
+            });
             this.addOnDeathCard(target);
         }
     }
@@ -362,7 +366,10 @@ class BattleModel {
         });
 
         if (target.isDead) {
-            this.logger.displayMinorEvent(target.name + " is dead");
+            this.logger.addMinorEvent({
+                description: target.name + " is dead",
+                type: ENUM.MinorEventType.TEXT
+            });
             this.addOnDeathCard(target);
         }
     }
@@ -492,7 +499,6 @@ class BattleModel {
 
         while (!this.isFinished) {
             this.logger.currentTurn++;
-            this.logger.bblogTurn("Turn " + this.logger.currentTurn);
 
             // process turn order change
             if (this.turnOrderChangeEffectiveTurns == 0) {
@@ -613,6 +619,12 @@ class BattleModel {
                 this.processEndTurn();
             }
         }
+
+        // create debugger if needed
+        if (BattleDebugger.IS_DEBUG_MODE) {
+            BattleDebugger.getInstance().displayDebugger();
+        }
+
         return this;
     }
 
