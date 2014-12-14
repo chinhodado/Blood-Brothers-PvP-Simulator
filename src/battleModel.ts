@@ -1,4 +1,5 @@
 /// <reference path="affliction.ts"/>
+/// <reference path="battleBackground.ts"/>
 /// <reference path="battleDebugger.ts"/>
 /// <reference path="battleGraphic.ts"/>
 /// <reference path="battleLogger.ts"/>

@@ -13,6 +13,7 @@ function runSimulation(args) {
     BattleModel.IS_MASS_SIMULATION = true;
     BattleGraphic.GRAPHIC_DISABLED = true;
     BattleLogger.INFOTEXT_DISPLAYED = true;
+    BattleLogger.WARNINGTEXT_DISPLAYED = true;
     for (var i = 0; i < args.numBattle; i++) {
         var newGame = new BattleModel(args.data, args.option, args.tierList);
         var resultBattle = newGame.startBattle();
