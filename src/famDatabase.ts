@@ -1836,6 +1836,13 @@ var famDatabase = {
         img: "491",
         fullName: "Paladin of Leo II"
     },
+    11389: {
+        name: "Ophiuchus", stats: [19508, 9000, 15002, 19541, 17504],
+        skills: [583, 584],
+        autoAttack: 10007,
+        img: "13d",
+        fullName: "Paladin of Ophiuchus II"
+    },
     11229: {
         name: "Pisces", stats: [13041, 8621, 14796, 17114, 14991],
         skills: [419],
@@ -1955,6 +1962,13 @@ var famDatabase = {
         skills: [305],
         img: "125",
         fullName: "Phoenix, the Metempsychosis II"
+    },
+    21489: {
+        name: "Poliahu", stats: [23572, 8648, 17482, 22365, 18202],
+        skills: [655, 656],
+        autoAttack: 10007,
+        img: "17d",
+        fullName: "Poliahu, the Mauna Kea"
     },
     11237: {
         name: "Pollux", stats: [13290, 18631, 11654, 10311, 13756],

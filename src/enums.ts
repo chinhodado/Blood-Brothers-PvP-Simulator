@@ -107,10 +107,27 @@ module ENUM {
         SKILL_PROBABILITY = 8,
         ALL_STATUS = 9,
 
+        REMAIN_HP_ATK_UP = 11,
+        REMAIN_HP_DEF_UP = 12,
+        REMAIN_HP_WIS_UP = 13,
+        REMAIN_HP_AGI_UP = 14,
+        REMAIN_HP_ALL_STATUS_UP = 15,
+
         ACTION_ON_DEATH = 16,
 
         HP_SHIELD = 17,
-        WILL_ATTACK_AGAIN = 18
+        WILL_ATTACK_AGAIN = 18,
+
+        REMAIN_HP_ATK_DEF_UP = 20,
+        REMAIN_HP_ATK_WIS_UP = 21,
+        REMAIN_HP_ATK_AGI_UP = 22,
+        REMAIN_HP_DEF_WIS_UP = 23,
+        REMAIN_HP_DEF_AGI_UP = 24,
+        REMAIN_HP_WIS_AGI_UP = 25,
+        REMAIN_HP_ATK_DEF_WIS_UP = 26,
+        REMAIN_HP_ATK_DEF_AGI_UP = 27,
+        REMAIN_HP_DEF_WIS_AGI_UP = 28,
+        REMAIN_HP_ATK_WIS_AGI_UP = 29,
     }
 
     export enum SkillRange {

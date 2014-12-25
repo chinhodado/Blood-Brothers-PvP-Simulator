@@ -276,6 +276,9 @@ class BattleModel {
             });
             this.addOnDeathCard(target);
         }
+        else {
+            this.processRemainHpBuff(target, false);
+        }
     }
 
     getWouldBeDamage(data: DamagePhaseData): number {
@@ -344,10 +347,10 @@ class BattleModel {
         return damage;
     }
 
-    // todo: move this to Card?
     /*
      * Use this when there's no executorId for the MinorEvent, like for poison.
      * Also use it for non-attacks like healing, etc.
+     * TODO: move this to Card?
      */
     damageToTargetDirectly(target: Card, damage: number, reason: string) {
         target.changeHP(-1 * damage);
@@ -372,6 +375,39 @@ class BattleModel {
                 type: ENUM.MinorEventType.TEXT
             });
             this.addOnDeathCard(target);
+        }
+        else {
+            this.processRemainHpBuff(target, damage < 0);
+        }
+    }
+
+    /**
+     * Add a debug minor event if a fam's stat changed because of remain-HP-stats-up buffs
+     * This is called after a fam's HP change, i.e. at the end of processDamagePhase() and damageToTargetDirectly()
+     * @oaram isPositiveChange Whether the change in HP was positive (e.g. healing) or not (e.g. battle damage)
+     */
+    processRemainHpBuff(target: Card, isPositiveChange: boolean): void {
+        var types = [];
+
+        if (target.status.remainHpAtkUp > 0)
+             types.push(ENUM.StatusType.ATK);
+
+        if (target.status.remainHpDefUp > 0)
+            types.push(ENUM.StatusType.DEF);
+
+        if (target.status.remainHpWisUp > 0)
+            types.push(ENUM.StatusType.WIS);
+
+        if (target.status.remainHpAgiUp > 0)
+            types.push(ENUM.StatusType.AGI);
+
+        var verb = isPositiveChange ? "decreased" : "increased";
+
+        for (var i = 0; i < types.length; i++) {
+            this.logger.addMinorEvent({
+                type: ENUM.MinorEventType.TEXT,
+                description: target.name + "'s " + ENUM.StatusType[types[i]] + " " + verb + " because of remain HP buff.",
+            });
         }
     }
 

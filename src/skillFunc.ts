@@ -112,7 +112,7 @@ class BuffSkillLogic extends SkillLogic {
         skill.getReady(executor);
 
         // get a list of things to buff
-        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
+        if (this.getComponentStatus(skill.skillFuncArg2) == null) {
             var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
 
             // for hp shield buff, arg3 is the ceiling
@@ -121,7 +121,7 @@ class BuffSkillLogic extends SkillLogic {
             }
         }
         else {
-            statusToBuff = [ENUM.StatusType.ATK, ENUM.StatusType.DEF, ENUM.StatusType.WIS, ENUM.StatusType.AGI];
+            statusToBuff = this.getComponentStatus(skill.skillFuncArg2);
         }
 
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
@@ -161,6 +161,10 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.SKILL_PROBABILITY:
                     case ENUM.StatusType.WILL_ATTACK_AGAIN:
                     case ENUM.StatusType.ACTION_ON_DEATH:
+                    case ENUM.StatusType.REMAIN_HP_ATK_UP:
+                    case ENUM.StatusType.REMAIN_HP_DEF_UP:
+                    case ENUM.StatusType.REMAIN_HP_WIS_UP:
+                    case ENUM.StatusType.REMAIN_HP_AGI_UP:
                         buffAmount = skill.skillFuncArg1;
                         break;
                     case ENUM.StatusType.HP_SHIELD:
@@ -187,6 +191,42 @@ class BuffSkillLogic extends SkillLogic {
                     skillId: skill.id
                 });
             }
+        }
+    }
+
+    /**
+     * If a status is a composed status, return an array of its component statuses
+     * Otherwise, return null
+     */
+    getComponentStatus(type: ENUM.StatusType): ENUM.StatusType[] {
+        switch (type) {
+            case ENUM.StatusType.ALL_STATUS:
+                return [ENUM.StatusType.ATK, ENUM.StatusType.DEF, ENUM.StatusType.WIS, ENUM.StatusType.AGI];
+            case ENUM.StatusType.REMAIN_HP_ALL_STATUS_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_DEF_UP,
+                    ENUM.StatusType.REMAIN_HP_WIS_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_DEF_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_DEF_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_WIS_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_WIS_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_DEF_WIS_UP:
+                return [ENUM.StatusType.REMAIN_HP_DEF_UP, ENUM.StatusType.REMAIN_HP_WIS_UP];
+            case ENUM.StatusType.REMAIN_HP_DEF_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_DEF_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_WIS_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_WIS_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_DEF_WIS_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_DEF_UP, ENUM.StatusType.REMAIN_HP_WIS_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_DEF_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_DEF_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_DEF_WIS_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_DEF_UP, ENUM.StatusType.REMAIN_HP_WIS_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            case ENUM.StatusType.REMAIN_HP_ATK_WIS_AGI_UP:
+                return [ENUM.StatusType.REMAIN_HP_ATK_UP, ENUM.StatusType.REMAIN_HP_WIS_UP, ENUM.StatusType.REMAIN_HP_AGI_UP];
+            default:
+                return null;
         }
     }
 }
@@ -876,7 +916,7 @@ class DrainSkillLogic extends SkillLogic {
 
 class SurviveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hpRatio = data.executor.getHPRatio();
+        var hpRatio = data.executor.getHpRatio();
         return super.willBeExecuted(data) && (hpRatio > data.skill.skillFuncArg1) && (data.wouldBeDamage >= data.executor.getHP());
     }
 

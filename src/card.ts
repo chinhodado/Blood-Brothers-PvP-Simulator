@@ -315,52 +315,66 @@ class Card {
             this.status.isNewLogic[statusType] = true;
         }
 
-        if (statusType === ENUM.StatusType.ATK) {
-            this.status.atk += amount;
-        }
-        else if (statusType === ENUM.StatusType.DEF) {
-            this.status.def += amount;
-        }
-        else if (statusType === ENUM.StatusType.WIS) {
-            this.status.wis += amount;
-        }
-        else if (statusType === ENUM.StatusType.AGI) {
-            this.status.agi += amount;
-        }
-        else if (statusType === ENUM.StatusType.ATTACK_RESISTANCE) {
-            if (this.status.attackResistance < amount) {
-                this.status.attackResistance = amount; // do not stack
-            }
-        }
-        else if (statusType === ENUM.StatusType.MAGIC_RESISTANCE) {
-            if (this.status.magicResistance < amount) {
-                this.status.magicResistance = amount; // do not stack
-            }
-        }
-        else if (statusType === ENUM.StatusType.BREATH_RESISTANCE) {
-            if (this.status.breathResistance < amount) {
-                this.status.breathResistance = amount; // do not stack
-            }
-        }
-        else if (statusType === ENUM.StatusType.SKILL_PROBABILITY) {
-            this.status.skillProbability += amount;
-        }
-        else if (statusType === ENUM.StatusType.WILL_ATTACK_AGAIN) {
-            this.status.willAttackAgain = amount;
-        }
-        else if (statusType === ENUM.StatusType.ACTION_ON_DEATH) {
-            var skill = new Skill(amount);
-            this.ondeathSkills[0] = skill;
-            this.status.actionOnDeath = amount;
-        }
-        else if (statusType === ENUM.StatusType.HP_SHIELD) {
-            this.status.hpShield += amount;
-            if (maxAmount && this.status.hpShield > maxAmount) {
-                this.status.hpShield = maxAmount;
-            }
-        }
-        else {
-            throw new Error ("Invalid status type");
+        switch (statusType) {
+            case ENUM.StatusType.ATK:
+                this.status.atk += amount;
+                break;
+            case ENUM.StatusType.DEF:
+                this.status.def += amount;
+                break;
+            case ENUM.StatusType.WIS:
+                this.status.wis += amount;
+                break;
+            case ENUM.StatusType.AGI:
+                this.status.agi += amount;
+                break;
+            case ENUM.StatusType.ATTACK_RESISTANCE:
+                if (this.status.attackResistance < amount)
+                    this.status.attackResistance = amount; // do not stack
+                break;
+            case ENUM.StatusType.MAGIC_RESISTANCE:
+                if (this.status.magicResistance < amount)
+                    this.status.magicResistance = amount; // do not stack
+                break;
+            case ENUM.StatusType.BREATH_RESISTANCE:
+                if (this.status.breathResistance < amount)
+                    this.status.breathResistance = amount; // do not stack
+                break;
+            case ENUM.StatusType.SKILL_PROBABILITY:
+                this.status.skillProbability += amount;
+                break;
+            case ENUM.StatusType.REMAIN_HP_ATK_UP:
+                if (this.status.remainHpAtkUp < amount)
+                    this.status.remainHpAtkUp = amount; // do not stack
+                break;
+            case ENUM.StatusType.REMAIN_HP_DEF_UP:
+                if (this.status.remainHpDefUp < amount)
+                    this.status.remainHpDefUp = amount; // do not stack
+                break;
+            case ENUM.StatusType.REMAIN_HP_WIS_UP:
+                if (this.status.remainHpWisUp < amount)
+                    this.status.remainHpWisUp = amount; // do not stack
+                break;
+            case ENUM.StatusType.REMAIN_HP_AGI_UP:
+                if (this.status.remainHpAgiUp < amount)
+                    this.status.remainHpAgiUp = amount; // do not stack
+                break;
+            case ENUM.StatusType.WILL_ATTACK_AGAIN:
+                this.status.willAttackAgain = amount;
+                break;
+            case ENUM.StatusType.ACTION_ON_DEATH:
+                var skill = new Skill(amount);
+                this.ondeathSkills[0] = skill;
+                this.status.actionOnDeath = amount;
+                break;
+            case ENUM.StatusType.HP_SHIELD:
+                this.status.hpShield += amount;
+                if (maxAmount && this.status.hpShield > maxAmount) {
+                    this.status.hpShield = maxAmount;
+                }
+                break;
+            default:
+                throw new Error ("Invalid status type");
         }
     }
 
@@ -420,7 +434,7 @@ class Card {
     isFullHealth(): boolean {
         return this.stats.hp == this.originalStats.hp;
     }
-    getHPRatio(): number {
+    getHpRatio(): number {
         return this.stats.hp / this.originalStats.hp;
     }
 
@@ -440,7 +454,14 @@ class Card {
     }
 
     getATK() {
-        var value = this.stats.atk + this.status.atk;
+        var value = this.stats.atk;
+
+        if (this.status.remainHpAtkUp > 1){
+            var hpRatio = this.getHpRatio();
+            value += Math.round(value * (1 - hpRatio) * (this.status.remainHpAtkUp - 1));
+        }
+
+        value += this.status.atk;
 
         if (value < 0) {
             value = 0;
@@ -451,7 +472,14 @@ class Card {
         return value;
     }
     getDEF() {
-        var value = this.stats.def + this.status.def;
+        var value = this.stats.def;
+
+        if (this.status.remainHpDefUp > 1){
+            var hpRatio = this.getHpRatio();
+            value += Math.round(value * (1 - hpRatio) * (this.status.remainHpDefUp - 1));
+        }
+
+        value += this.status.def;
 
         if (value < 0) {
             value = 0;
@@ -462,7 +490,14 @@ class Card {
         return value;
     }
     getWIS() {
-        var value = this.stats.wis + this.status.wis;
+        var value = this.stats.wis;
+
+        if (this.status.remainHpWisUp > 1){
+            var hpRatio = this.getHpRatio();
+            value += Math.round(value * (1 - hpRatio) * (this.status.remainHpWisUp - 1));
+        }
+
+        value += this.status.wis;
 
         if (value < 0) {
             value = 0;
@@ -473,7 +508,14 @@ class Card {
         return value;
     }
     getAGI() {
-        var value = this.stats.agi + this.status.agi;
+        var value = this.stats.agi;
+
+        if (this.status.remainHpAgiUp > 1){
+            var hpRatio = this.getHpRatio();
+            value += Math.round(value * (1 - hpRatio) * (this.status.remainHpAgiUp - 1));
+        }
+
+        value += this.status.agi;
 
         if (value < 0) {
             value = 0;
@@ -541,6 +583,11 @@ class Status {
     breathResistance: number = 0;
 
     skillProbability: number = 0;
+
+    remainHpAtkUp: number = 0;
+    remainHpDefUp: number = 0;
+    remainHpWisUp: number = 0;
+    remainHpAgiUp: number = 0;
 
     actionOnDeath: number = 0;
     hpShield: number = 0;

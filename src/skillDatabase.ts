@@ -3225,6 +3225,20 @@ var SkillDatabase = {
         desc: "Deal heavy WIS-based damage and sometimes burn five random foes, ignoring position."
     },
 
+    583: {
+        name: "Smoldering Serpent", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
+
+    584: {
+        name: "Eye of the Serpent", type: 1, func: 1, calc: 0,
+        args: [2, 23],
+        range: 3, prob: 70,
+        desc: "Buff self and adjacent familiars. DEF/WIS of each affected ally increase as its HP decrease."
+    },
+
     585: {
         name: "Death's Call", type: 2, func: 34, calc: 2,
         args: [1.6, 3, 0.4, 0.2],
@@ -3684,6 +3698,20 @@ var SkillDatabase = {
         args: [2],
         range: 23, prob: 30, ward: 2,
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    655: {
+        name: "Wrath of Mauna Kea", type: 2, func: 4, calc: 2,
+        args: [1.05, 3, 0.3],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to and sometimes freeze six random foes, ignoring postion."
+    },
+
+    656: {
+        name: "Grace of Mauna Kea", type: 1, func: 44, calc: 0,
+        args: [2, 13, 0, 0, 0, 0.4, 6, 7],
+        range: 3, prob: 70,
+        desc: "WIS of self/adjacent allies go up when their HP go down, magic/breath dmg taken reduced."
     },
 
     657: {

@@ -721,6 +721,19 @@ class BattleGraphic {
                 else if (data.status.type == ENUM.StatusType.HP_SHIELD) {
                     displayText = "HP Up";
                 }
+                // TODO: these remain hp buffs will be hidden behind the ward (e.g.: Poliahu). Find a better way to do this!
+                else if (data.status.type == ENUM.StatusType.REMAIN_HP_ATK_UP) {
+                    displayText = "HP/ATK";
+                }
+                else if (data.status.type == ENUM.StatusType.REMAIN_HP_DEF_UP) {
+                    displayText = "HP/DEF";
+                }
+                else if (data.status.type == ENUM.StatusType.REMAIN_HP_WIS_UP) {
+                    displayText = "HP/WIS";
+                }
+                else if (data.status.type == ENUM.StatusType.REMAIN_HP_AGI_UP) {
+                    displayText = "HP/AGI";
+                }
                 else {
                     // for stats buff, this does not really use the log
                     var upDownText = data.amount < 0? " Down" : " Up";

@@ -142,60 +142,61 @@ class BattleDebugger {
         var logger = BattleLogger.getInstance();
         var lastEventIndex = (majorIndex == 0)? 0 : majorIndex - 1;
 
-        // for displaying last turn's HP
+        // the field after the last major event and before the current major event
         var lastEventField = logger.getFieldAtMajorIndex(lastEventIndex);
 
+        // the current field, aka the field after the current major event
         var field = logger.getFieldAtMajorIndex(majorIndex);
 
         // now prepares the info and print them out
         for (var p = 1; p <= 2; p++) { // for each player
             var playerCards = field["player" + p + "Cards"]; // get the cards of that player
+            var lastPlayerCards = lastEventField["player" + p + "Cards"];
             for (var f = 0; f < 5; f++) { // for each card
-                var stats = playerCards[f].stats;
-                var originalStats = playerCards[f].originalStats;
+                var stats          = playerCards[f].stats;
+                var originalStats  = playerCards[f].originalStats;
                 var status: Status = playerCards[f].status;
                 var afflict = playerCards[f].affliction; // not the same thing as in the original card class
 
-                var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
+                var hpRatio = stats.hp / originalStats.hp;
+                var finalAtk = this.getFinalStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK],
+                    status.remainHpAtkUp, hpRatio);
+                var finalDef = this.getFinalStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF],
+                    status.remainHpDefUp, hpRatio);
+                var finalWis = this.getFinalStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS],
+                    status.remainHpWisUp, hpRatio);
+                var finalAgi = this.getFinalStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI],
+                    status.remainHpAgiUp, hpRatio);
 
-                // the stats of the fam after the buffs/debuffs are added in
-                var addedATK = this.getAdjustedStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK]);
-                var addedDEF = this.getAdjustedStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF]);
-                var addedWIS = this.getAdjustedStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS]);
-                var addedAGI = this.getAdjustedStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI]);
+                // get the stats after the last major event so we can compare with it later
+                var lastStats          = lastPlayerCards[f].stats;
+                var lastOriginalStats  = lastPlayerCards[f].originalStats;
+                var lastStatus: Status = lastPlayerCards[f].status;
+                var lastHpRatio = lastStats.hp / lastOriginalStats.hp;
+                var lastFinalAtk = this.getFinalStat(lastOriginalStats.atk, lastStatus.atk, lastStatus.isNewLogic[ENUM.StatusType.ATK],
+                    lastStatus.remainHpAtkUp, lastHpRatio);
+                var lastFinalDef = this.getFinalStat(lastOriginalStats.def, lastStatus.def, lastStatus.isNewLogic[ENUM.StatusType.DEF],
+                    lastStatus.remainHpDefUp, lastHpRatio);
+                var lastFinalWis = this.getFinalStat(lastOriginalStats.wis, lastStatus.wis, lastStatus.isNewLogic[ENUM.StatusType.WIS],
+                    lastStatus.remainHpWisUp, lastHpRatio);
+                var lastFinalAgi = this.getFinalStat(lastOriginalStats.agi, lastStatus.agi, lastStatus.isNewLogic[ENUM.StatusType.AGI],
+                    lastStatus.remainHpAgiUp, lastHpRatio);
 
                 var infoText: any = {
                     name : playerCards[f].name,
                     hp : "HP: " + stats.hp,
-                    atk : "ATK: " + addedATK,
-                    def : "DEF: " + addedDEF,
-                    wis : "WIS: " + addedWIS,
-                    agi : "AGI: " + addedAGI,
+                    atk : "ATK: " + finalAtk,
+                    def : "DEF: " + finalDef,
+                    wis : "WIS: " + finalWis,
+                    agi : "AGI: " + finalAgi,
                 };
 
-                if (status.attackResistance != 0) {
-                    infoText.physicalResist = "PW: " + status.attackResistance;
-                }
-
-                if (status.magicResistance != 0) {
-                    infoText.magicalResist = "MW: " + status.magicResistance;
-                }
-
-                if (status.breathResistance != 0) {
-                    infoText.breathResist = "BW: " + status.breathResistance;
-                }
-
-                if (status.willAttackAgain != 0) {
-                    infoText.willAttackAgain = "Extra action: Yes";
-                }
-
-                if (status.skillProbability != 0) {
-                    infoText.skillProbability = "Extra prob.: " + status.skillProbability;
-                }
-
-                if (status.hpShield != 0) {
-                    infoText.hpShield = "HP Shld.: " + status.hpShield;
-                }
+                if (status.attackResistance != 0) infoText.physicalResist = "PW: " + status.attackResistance;
+                if (status.magicResistance  != 0) infoText.magicalResist  = "MW: " + status.magicResistance;
+                if (status.breathResistance != 0) infoText.breathResist   = "BW: " + status.breathResistance;
+                if (status.willAttackAgain  != 0) infoText.willAttackAgain  = "Extra action: Yes";
+                if (status.skillProbability != 0) infoText.skillProbability = "Extra prob.: " + status.skillProbability;
+                if (status.hpShield != 0)         infoText.hpShield = "HP Shld.: " + status.hpShield;
 
                 if (afflict) {
                     infoText.affliction = "Affliction: " + Affliction.getAfflictionAdjective(afflict.type);
@@ -213,28 +214,20 @@ class BattleDebugger {
                     }
                 }
 
+                // compare the stats of this fam before and after this major event and decorate the text accordingly
+                if (stats.hp != lastStats.hp) infoText.hp  = this.decorateText(infoText.hp,  stats.hp < lastStats.hp);
+                if (finalAtk != lastFinalAtk) infoText.atk = this.decorateText(infoText.atk, finalAtk < lastFinalAtk);
+                if (finalDef != lastFinalDef) infoText.def = this.decorateText(infoText.def, finalDef < lastFinalDef);
+                if (finalWis != lastFinalWis) infoText.wis = this.decorateText(infoText.wis, finalWis < lastFinalWis);
+                if (finalAgi != lastFinalAgi) infoText.agi = this.decorateText(infoText.agi, finalAgi < lastFinalAgi);
+
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
                 for (var j = 0; logger.minorEventLog[majorIndex] && j < logger.minorEventLog[majorIndex].length; j++) {
                     var tempEvent = logger.minorEventLog[majorIndex][j]; // a minor event
                     if (tempEvent.targetId == playerCards[f].id) {
-                        if (tempEvent.type == ENUM.MinorEventType.HP) {
-                            infoText.hp = this.decorateText(infoText.hp, tempEvent.amount < 0);
-                        }
-                        else if (tempEvent.type == ENUM.MinorEventType.STATUS) {
-                            if (tempEvent.status.type == ENUM.StatusType.ATK) {
-                                infoText.atk = this.decorateText(infoText.atk, tempEvent.amount < 0);
-                            }
-                            else if (tempEvent.status.type == ENUM.StatusType.DEF) {
-                                infoText.def = this.decorateText(infoText.def, tempEvent.amount < 0);
-                            }
-                            else if (tempEvent.status.type == ENUM.StatusType.WIS) {
-                                infoText.wis = this.decorateText(infoText.wis, tempEvent.amount < 0);
-                            }
-                            else if (tempEvent.status.type == ENUM.StatusType.AGI) {
-                                infoText.agi = this.decorateText(infoText.agi, tempEvent.amount < 0);
-                            }
-                            else if (tempEvent.status.type == ENUM.StatusType.ATTACK_RESISTANCE) {
+                        if (tempEvent.type == ENUM.MinorEventType.STATUS) {
+                            if (tempEvent.status.type == ENUM.StatusType.ATTACK_RESISTANCE) {
                                 infoText.physicalResist = this.decorateText(infoText.physicalResist, false);
                             }
                             else if (tempEvent.status.type == ENUM.StatusType.MAGIC_RESISTANCE) {
@@ -265,6 +258,7 @@ class BattleDebugger {
                     infoText.name = "<b>" + infoText.name + "</b>";
                 }
 
+                var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
                 htmlelem.innerHTML = infoText.name + "<br>" +
                                     infoText.hp  + "<br>" +
                                     infoText.atk + "<br>" +
@@ -292,10 +286,17 @@ class BattleDebugger {
     }
 
     /**
-     * Get the adjusted stat after new greatly debuff
+     * Get the final stat after all adjustments (buff/debuff status,
+     * new debuff logic adjustment, remain hp power up)
      */
-    getAdjustedStat(original: number, statusAmount: number, isNewLogic: boolean): number {
-        var value = original + statusAmount;
+    getFinalStat(original: number, statusAmount: number, isNewLogic: boolean, remainHpPwrUp: number, hpRatio: number): number {
+        var value = original;
+
+        if (remainHpPwrUp > 1){
+            value += Math.round(value * (1 - hpRatio) * (remainHpPwrUp - 1));
+        }
+
+        value += statusAmount;
 
         if (value < 0) {
             value = 0;
