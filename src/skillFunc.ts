@@ -317,7 +317,7 @@ class AttackSkillLogic extends SkillLogic {
     executeNonAoeAttack(data: SkillLogicData): void {
         var target: Card;
         var attackCount = 0; // for varying skills
-        while ((target = data.skill.getTarget(data.executor)) && !data.executor.isDead) {
+        while ((target = data.skill.getTarget(data.executor)) && !data.executor.isDead && data.executor.canAttack()) {
             if (RangeFactory.isEnemyVaryingRange(data.skill.skillRange)) {
                 var varyingRatio = RangeFactory.getVaryingRatio(data.skill.skillRange, attackCount);
             }
