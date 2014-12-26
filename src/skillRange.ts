@@ -376,14 +376,14 @@ class BaseRange {
         return hasValid;
     }
 
-    /*
+    /**
      * Returns a random card from a list of cards
      */
     getRandomCard(cards: Card[]): Card {
         return getRandomElement(cards);
     }
 
-    /*
+    /**
      * Returns a maximum of 'num' unique cards (shuffles and returns first n)
      */
     getRandomUniqueCards(cards: Card[], num: number): Card[] {
@@ -397,7 +397,7 @@ class BaseRange {
         return cards.slice(0, num);
     }
 
-    /*
+    /**
      * Get the default conditional function (valid if card is not dead and belongs to the enemy)
      */
     getCondFunc(executor: Card): (x: Card)=>boolean {

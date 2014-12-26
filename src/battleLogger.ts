@@ -186,7 +186,9 @@ class BattleLogger {
         }
     }
 
-    // get the field situation at a major event index
+    /**
+     * Get the field situation at a major event index
+     */
     getFieldAtMajorIndex(majorIndex: number) {
         // for empty major events like opening proc with no success target
         if (!this.minorEventLog[majorIndex]) {

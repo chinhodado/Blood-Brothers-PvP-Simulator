@@ -347,7 +347,7 @@ class BattleModel {
         return damage;
     }
 
-    /*
+    /**
      * Use this when there's no executorId for the MinorEvent, like for poison.
      * Also use it for non-attacks like healing, etc.
      * TODO: move this to Card?
@@ -419,7 +419,7 @@ class BattleModel {
             return;
         }
 
-        var option: AfflectOptParam = {};
+        var option: AfflictOptParam = {};
 
         if (skill.skillFuncArg4) {
             if (type == ENUM.AfflictionType.POISON) {

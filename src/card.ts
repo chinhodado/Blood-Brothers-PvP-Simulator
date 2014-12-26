@@ -244,7 +244,7 @@ class Card {
     }
 
     // affliction
-    setAffliction(type: ENUM.AfflictionType, option: AfflectOptParam): void {
+    setAffliction(type: ENUM.AfflictionType, option: AfflictOptParam): void {
         if (this.affliction) {
             if (this.affliction.getType() === type) {
                 this.affliction.add(option);

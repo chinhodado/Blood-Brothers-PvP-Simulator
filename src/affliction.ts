@@ -82,7 +82,7 @@ class Affliction {
     /**
      * Called when the fam is affected with another affliction of the same type
      */
-    add(option: AfflectOptParam): void {
+    add(option: AfflictOptParam): void {
         // implement this
     }
 
@@ -125,7 +125,7 @@ class PoisonAffliction extends Affliction {
         BattleModel.getInstance().damageToTargetDirectly(card, damage, "poison");
     }
 
-    add(option: AfflectOptParam): void {
+    add(option: AfflictOptParam): void {
         var percent = option.percent;
         if (!percent) {
             percent = PoisonAffliction.DEFAULT_PERCENT;
@@ -204,7 +204,7 @@ class SilentAffliction extends Affliction {
         }
     }
 
-    add(option: AfflectOptParam): void{
+    add(option: AfflictOptParam): void{
         this.validTurnNum = option.turnNum;
     }
 }
@@ -234,7 +234,7 @@ class BlindAffliction extends Affliction {
         }
     }
 
-    add(option: AfflectOptParam): void{
+    add(option: AfflictOptParam): void{
         this.validTurnNum = option.turnNum;
         this.missProb = option.missProb;
     }
@@ -257,7 +257,7 @@ class BurnAffliction extends Affliction {
         BattleModel.getInstance().damageToTargetDirectly(card, this.damage, "burn");
     }
 
-    add(option: AfflectOptParam): void {
+    add(option: AfflictOptParam): void {
         // update the damage as the sum of the highest 3 values
         var arr = this.values;
         arr.push(option.damage);
@@ -273,9 +273,9 @@ class BurnAffliction extends Affliction {
 }
 
 /**
- * A simple struct for afflection's optional parameters
+ * A simple struct for affliction's optional parameters
  */
-interface AfflectOptParam {
+interface AfflictOptParam {
     turnNum?: number;  // for silent and blind
     missProb?: number; // for blind
     percent?: number;  // for poison
