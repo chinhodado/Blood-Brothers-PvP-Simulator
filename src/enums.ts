@@ -63,6 +63,8 @@ module ENUM {
         CLEAR_DEBUFF = 40,
         COUNTER_INDIRECT = 41,
         MULTI_BUFF = 44, // 1-5: same as buff, arg6: multiplier, arg7, 8: status
+        MULTI_DEBUFF = 45,
+        DEBUFF_AFFLICTION = 46, // 1-5: same as CASTER_BASED_DEBUFF, 6: afflict type, 7: afflict prob., 8, 9: afflict opt param
     }
 
     /**

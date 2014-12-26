@@ -154,6 +154,13 @@ var famDatabase = {
         img: "1e0",
         fullName: "Ancient Beetle Soldier II"
     },
+    11483: {
+        name: "Tree Golem", stats: [17998, 17106, 17998, 12001, 2907],
+        skills: [671],
+        autoAttack: 10056,
+        img: "14b",
+        fullName: "Ancient Tree Golem II"
+    },
     10464: {
         name: "Andorra", stats: [12538, 13621, 13510, 12134, 12342],
         skills: [142],
@@ -572,6 +579,13 @@ var famDatabase = {
         skills: [226],
         img: "214",
         fullName: "Cap'n Jolly, Sea Scourge II"
+    },
+    11479: {
+        name: "Jed", stats: [24080, 25066, 20494, 14005, 18100],
+        skills: [667],
+        autoAttack: 10053,
+        img: "1b7",
+        fullName: "Captain Jed II"
     },
     11333: {
         name: "Kidd", stats: [18403, 18046, 12781, 14395, 16085],
@@ -1121,12 +1135,25 @@ var famDatabase = {
         img: "112",
         fullName: "Hash, Lizardman Cannoneer II"
     },
+    11493: {
+        name: "Hati", stats: [15002, 8144, 10777, 17721, 16995],
+        skills: [675],
+        autoAttack: 10059,
+        img: "230",
+        fullName: "Hati, Icetail Wolf II"
+    },
     11451: {
         name: "Hatshepsut", stats: [17049, 16334, 13041, 6097, 16096],
         skills: [603],
         autoAttack: 10040,
         img: "2bd",
         fullName: "Hatshepsut, Mummy Queen II"
+    },
+    11478: {
+        name: "Hecatoncheir", stats: [15509, 15158, 14024, 8759, 15706],
+        skills: [676],
+        img: "2e5",
+        fullName: "Hecatoncheir Rimetouch II"
     },
     10951: {
         name: "Hecatoncheir", stats: [11807, 13902, 14768, 13928, 13366],
@@ -1279,6 +1306,13 @@ var famDatabase = {
         skills: [525],
         img: "20f",
         fullName: "Inhabited Ghost Ship II"
+    },
+    21475: {
+        name: "Uranus", stats: [21943, 9529, 18525, 20649, 17742],
+        skills: [674],
+        autoAttack: 10058,
+        img: "3d5",
+        fullName: "Intrepid Hand of Uranus"
     },
     693: {
         name: "Ioskeha", stats: [13138, 13611, 11162, 15329, 13675],
@@ -1501,6 +1535,13 @@ var famDatabase = {
         skills: [16],
         img: "197",
         fullName: "Lucia, Petal-Shears II"
+    },
+    11485: {
+        name: "Luot", stats: [18013, 17992, 17006, 9997, 18035],
+        skills: [668],
+        autoAttack: 10054,
+        img: "2c3",
+        fullName: "Luot, Scout II"
     },
     10794: {
         name: "Ma-Gu", stats: [14182, 12438, 11477, 15306, 12438],
@@ -2013,6 +2054,13 @@ var famDatabase = {
         img: "1f6",
         fullName: "Queen of the Waspmen II"
     },
+    11486: {
+        name: "Qing Nu", stats: [19010, 8957, 15002, 19541, 17992],
+        skills: [677, 678],
+        autoAttack: 10007,
+        img: "14f",
+        fullName: "Qing Nu, Snowweaver II"
+    },
     21340: {
         name: "Cetus", stats: [22316, 20624, 17579, 11013, 16729],
         skills: [524],
@@ -2271,6 +2319,13 @@ var famDatabase = {
         skills: [457],
         img: "13c",
         fullName: "Slagh, Carnage Incarnate II"
+    },
+    11480: {
+        name: "Snegurochka", stats: [20007, 7895, 16063, 22000, 18143],
+        skills: [672, 673],
+        autoAttack: 10057,
+        img: "306",
+        fullName: "Snegurochka II"
     },
     10450: {
         name: "Snow Queen", stats: [14070, 13994, 13940, 15229, 14449],

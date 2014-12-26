@@ -8,6 +8,8 @@
             case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
                 return new DebuffSkillLogic();
+            case ENUM.SkillFunc.DEBUFF_AFFLICTION:
+                return new DebuffAfflictionSkillLogic();
             case ENUM.SkillFunc.ONHIT_BUFF:
                 return new OnHitBuffSkillLogic();
             case ENUM.SkillFunc.ONHIT_DEBUFF:
@@ -260,6 +262,27 @@ class DebuffSkillLogic extends SkillLogic {
         while (target = skill.getTarget(executor)) {
             this.battleModel.processDebuff(executor, target, skill);
         }
+    }
+}
+
+class DebuffAfflictionSkillLogic extends SkillLogic {
+    execute(data: SkillLogicData) {
+        // process the debuff with the first 5 args
+        var tempDebuffSkillLogic = new DebuffSkillLogic();
+        tempDebuffSkillLogic.execute(data);
+
+        // make a temporary affliction skill with the original skill's last 5 args as the first 5 args
+        var tempSkill: Skill = new Skill(data.skill.id);
+        tempSkill.skillFuncArg1 = 0;
+        tempSkill.skillFuncArg2 = tempSkill.skillFuncArg6;
+        tempSkill.skillFuncArg3 = tempSkill.skillFuncArg7;
+        tempSkill.skillFuncArg4 = tempSkill.skillFuncArg8;
+        tempSkill.skillFuncArg5 = tempSkill.skillFuncArg9;
+
+        // then execute it
+        var tempAfflictionSkillLogic = new AfflictionSkillLogic();
+        data.skill = tempSkill;
+        tempAfflictionSkillLogic.execute(data);
     }
 }
 

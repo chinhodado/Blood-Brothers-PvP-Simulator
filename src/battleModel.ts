@@ -474,7 +474,7 @@ class BattleModel {
             status = skill.skillFuncArg2;
             multi  = skill.skillFuncArg1;
         }
-        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF) {
+        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF || skill.skillFunc === ENUM.SkillFunc.DEBUFF_AFFLICTION) {
             // todo: arg3 may also be status
             status = skill.skillFuncArg2;
             multi = skill.skillFuncArg1;

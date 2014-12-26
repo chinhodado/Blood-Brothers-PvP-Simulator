@@ -3784,6 +3784,76 @@ var SkillDatabase = {
         desc: "Chance to unleash a freezing massive counter attack when struck, ignoring position."
     },
 
+    667: {
+        name: "Icy Gift", type: 2, func: 3, calc: 1,
+        args: [1.1, 5, 0.3, 1],
+        range: 8, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to and sometimes silence all foes ."
+    },
+
+    668: {
+        name: "Hail Stiletto", type: 2, func: 3, calc: 3,
+        args: [1.5],
+        range: 44, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to four random foes. Attacks front foes first."
+    },
+
+    671: {
+        name: "Hardened Rime", type: 5, func: 14, calc: 1,
+        args: [1.4],
+        range: 2, prob: 50, ward: 1,
+        desc: "Take damage in place of adjacent familiars and counter."
+    },
+
+    672: {
+        name: "Snow Blade", type: 2, func: 4, calc: 2,
+        args: [1.6],
+        range: 39, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to four random foes, ignoring position. Attacks rear foes first."
+    },
+
+    673: {
+        name: "Leaching Blizzard", type: 1, func: 46, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 3, 0.3],
+        range: 7, prob: 70,
+        desc: "Greatly lower WIS of up to three foes and sometimes freeze target."
+    },
+
+    674: {
+        name: "Meteor Shower", type: 2, func: 4, calc: 2,
+        args: [1.7, 4, 0.3],
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage and sometimes disable up to four foes. Increased if fewer foes."
+    },
+
+    675: {
+        name: "Tail of Hail", type: 2, func: 4, calc: 2,
+        args: [1.65],
+        range: 32, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to up to four foes, ignoring position."
+    },
+
+    676: {
+        name: "Icy Touch", type: 2, func: 3, calc: 1,
+        args: [1.9, 5, 0.3],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage and sometimes silence three random foes."
+    },
+
+    677: {
+        name: "Dance of Snow", type: 2, func: 4, calc: 2,
+        args: [1.4],
+        range: 208, prob: 30, ward: 2,
+        desc: "WIS-based damage to all foes. Increased if fewer foes."
+    },
+
+    678: {
+        name: "Icy Tailwind", type: 1, func: 1, calc: 0,
+        args: [0.15, 8],
+        range: 3, prob: 70,
+        desc: "Raise the skill trigger rate of self and adjacent familiars by 15%."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -4132,5 +4202,47 @@ var SkillDatabase = {
         args: [1.2],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage to one foe."
+    },
+
+    10053: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1, 2, 0.25],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes paralyze target."
+    },
+
+    10054: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1, 5, 0.35, 1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes silence target."
+    },
+
+    10056: {
+        name: "Standard Action", type: 2, func: 33, calc: 1,
+        args: [1, 4, 1, 0.1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Deal ATK-based damage to one foe and greatly lower AGI."
+    },
+
+    10057: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 3, 0.3],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes freeze target."
+    },
+
+    10058: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [0.5],
+        range: 7, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to up to three foes."
+    },
+
+    10059: {
+        name: "Standard Action", type: 2, func: 34, calc: 2,
+        args: [1, 4, 0.3, 0.1],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "Deal WIS-based damage to one foe and sometimes greatly lower AGI."
     },
 };
