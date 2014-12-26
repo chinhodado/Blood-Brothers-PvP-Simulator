@@ -59,10 +59,23 @@ function checkFam(data) {
         src[data[i].id] = data[i];
     }
 
+    var whiteList = [
+        "Galahad, Drake Knight II",            // hacky 10000 skill
+        "Moren, Rime Mage II",                 // hacky 10000 skill
+        "Danzo, Falcon Ninja II",              // space in name
+        "Chiyome, the Kamaitachi II",          // space in name
+        "Ankou, Harbinger of Death II",        // space in name
+        "Tanba, Founder of the Ninja II",      // space in name
+        "Wyrm Warden, Everwakeful II"          // space in name
+    ];
+
     // check with our db
     for (var key in famDatabase) {
         if (famDatabase.hasOwnProperty(key)) {
             var name = famDatabase[key].fullName;
+
+            if (whiteList.indexOf(name) != -1)
+                continue;
 
             if (!src[key]) {
                 div.innerHTML += ("Not found: " + name + "<br>");
@@ -79,6 +92,11 @@ function checkFam(data) {
 
                 if (famDb.fullName != famSrc.name)
                     conflict = true;
+
+                for (i = 0; i < 3; i++) {
+                    if ((famDb.skills[i] != famSrc["skillId" + (i + 1)]) && !(!famDb.skills[i] && famSrc["skillId" + (i + 1)] == 0))
+                        conflict = true;
+                }
 
                 if (!famDb.isMounted && famSrc.cardType == 5)
                     conflict = true;

@@ -920,7 +920,7 @@ var SkillDatabase = {
         name: "Shatter Armor", type: 2, func: 21, calc: 1,
         args: [3, 2, 0.3, 0.3],
         range: 5, prob: 30, ward: 1,
-        desc: "Deal a heavy blow to one foe, sometimes lowering DEF."
+        desc: "Deal a heavy blow to one foe,sometimes lowering DEF."
     },
 
     193 : {
@@ -978,7 +978,7 @@ var SkillDatabase = {
         name: "Trial by Ice", type: 2, func: 4, calc: 2,
         args: [2, 3, 0.3],
         range: 6, prob: 30, ward: 3,
-        desc: "Deal massive WIS-based water damage to up to two foes."
+        desc: "Deal massive WIS-based damage to up to two foes, and sometimes freeze target."
     },
 
     204 : {
@@ -1482,7 +1482,7 @@ var SkillDatabase = {
         name: "Freezing Scales", type: 2, func: 4, calc: 2,
         args: [1.35, 3, 0.3],
         range: 8, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to all foes and sometimes freeze them, ignoring position."
+        desc: "Deal WIS-based damage to all foes  and sometimes freeze them, ignoring position."
     },
 
     299 : {
@@ -2013,7 +2013,7 @@ var SkillDatabase = {
         name: "Libra's Retribution", type: 2, func: 3, calc: 1,
         args: [1.6],
         range: 16, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to three random foes."
+        desc: "Deal heavy ATK-based damage to three random foes"
     },
 
     391 : {
@@ -2153,7 +2153,7 @@ var SkillDatabase = {
         name: "Putrid Stench", type: 2, func: 4, calc: 2,
         args: [1.2, 1, 0.25],
         range: 20, prob: 30, ward: 2,
-        desc: "Deal WIS-based damage to and sometimes poison five random foes, ignoring position."
+        desc: "Deal WIS-based damage to and sometimes poison five random foes, ignoring position. "
     },
 
     415 : {
@@ -2230,7 +2230,7 @@ var SkillDatabase = {
         name: "Imperial Gift", type: 2, func: 18, calc: 4,
         args: [2],
         range: 21, prob: 50,
-        desc: "Restore HP to self."
+        desc: "Restore of HP to self."
     },
 
     427 : {
@@ -2699,7 +2699,7 @@ var SkillDatabase = {
         name: "Snake Whip", type: 2, func: 4, calc: 1,
         args: [1.5],
         range: 20, prob: 30, ward: 1,
-        desc: "Deal heavy ATK-based damage to five random foes, ignoring position."
+        desc: "Deal heavy ATK-based damage to five random foes, ignoring position"
     },
 
     500: {

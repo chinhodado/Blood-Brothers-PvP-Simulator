@@ -589,7 +589,7 @@ var famDatabase = {
     },
     11333: {
         name: "Kidd", stats: [18403, 18046, 12781, 14395, 16085],
-        skills: [157, 518],
+        skills: [518, 157],
         img: "442",
         fullName: "Captain Kidd II"
     },
@@ -1360,7 +1360,7 @@ var famDatabase = {
     },
     11009: {
         name: "Jabberwock", stats: [13994, 16193, 13008, 19508, 18024],
-        skills: [270, 271],
+        skills: [271, 270],
         img: "41f",
         fullName: "Jabberwock, Phantom Dragon II"
     },
@@ -1627,7 +1627,7 @@ var famDatabase = {
     },
     11013: {
         name: "Marraco", stats: [18716, 15876, 17254, 7381, 8809],
-        skills: [61, 167],
+        skills: [167, 61],
         img: "47b",
         fullName: "Marraco, Crusted Wyrm II"
     },
@@ -1826,7 +1826,7 @@ var famDatabase = {
     },
     11088: {
         name: "Ovinnik", stats: [19010, 11210, 20592, 16627, 12315],
-        skills: [342, 356],
+        skills: [356, 342],
         autoAttack: 10007,
         img: "3c1",
         fullName: "Ovinnik, Hex Beast II"
@@ -2304,7 +2304,7 @@ var famDatabase = {
     },
     11074: {
         name: "Skoll", stats: [15002, 13160, 15153, 9000, 16302],
-        skills: [301, 367],
+        skills: [367, 301],
         img: "3e8",
         fullName: "Skoll, Dark Wolf II"
     },
@@ -2599,7 +2599,7 @@ var famDatabase = {
     },
     11021: {
         name: "Vlad", stats: [16323, 19508, 13680, 14709, 16529],
-        skills: [295, 296],
+        skills: [296, 295],
         img: "356",
         fullName: "Vlad the Impaler II"
     },
