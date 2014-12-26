@@ -1,9 +1,9 @@
 /**
  * Some notes:
  * - For attack skills, there has to be a "ward" attribute, which takes a value of 1 (physical), 2 (magical) or 3 (breath)
- *   Counter skills also need the above, even though the ward will always be 1 for those skills
- * - If an arg is 0, there's no need to include it
- *
+ *   For definition of attack skills, see Skill.isAttackSkill()
+ * - Only need to include the first n args such that the nth arg is the last arg that has a value (i.e. not 0)
+ * - For auto attacks, need to include isAutoAttack: true
  * - There is no need for the baseProbability
  */
 var SkillDatabase = {
@@ -1481,7 +1481,7 @@ var SkillDatabase = {
     298 : {
         name: "Freezing Scales", type: 2, func: 4, calc: 2,
         args: [1.35, 3, 0.3],
-        range: 8, prob: 30, ward: 2,
+        range: 8, prob: 30, ward: 3,
         desc: "Deal WIS-based damage to all foes  and sometimes freeze them, ignoring position."
     },
 
@@ -1837,7 +1837,7 @@ var SkillDatabase = {
     361: {
         name: "Resplendent Light", type: 2, func: 3, calc: 1,
         args: [1],
-        range: 20, prob: 30, ward: 2,
+        range: 20, prob: 30, ward: 1,
         desc: "Deal ATK-based damage to five random foes."
     },
 
@@ -2712,7 +2712,7 @@ var SkillDatabase = {
     501: {
         name: "Dragon Strike", type: 2, func: 22, calc: 1,
         args: [1.65, 2, 0.3, 0.3],
-        range: 19, prob: 30, ward: 2,
+        range: 19, prob: 30, ward: 1,
         desc: "Heavy ATK-based damage to four random foes and sometimes lower DEF, ignoring position."
     },
 
@@ -3780,7 +3780,7 @@ var SkillDatabase = {
     666: {
         name: "Ice Shard", type: 3, func: 41, calc: 2,
         args: [2, 3, 0.3],
-        range: 21, prob: 50, ward: 1,
+        range: 21, prob: 50, ward: 2,
         desc: "Chance to unleash a freezing massive counter attack when struck, ignoring position."
     },
 
