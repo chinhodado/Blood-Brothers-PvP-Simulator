@@ -141,19 +141,20 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.DEF:
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
-                        // if the status type is not ALL_STATUS, we have to recalculate the base stat
-                        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
-                            baseStat = executor.getStat(basedOnStatType);
-                        }
                         var skillMod = skill.skillFuncArg1;
-                        var buffAmount = Math.round(skillMod * baseStat);
                         if (skill.skillFunc == ENUM.SkillFunc.ONHIT_BUFF) {
                             if (skill.skillFuncArg4 == 0) {
                                 throw new Error("Not sure what needs to happen here when arg4 = 0 for onhit buff. Check the manual.");
+                            } else {
+                                var buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
                             }
-                            else {
-                                buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
+                        }
+                        else {
+                            // if the status type is not ALL_STATUS, we have to recalculate the base stat
+                            if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
+                                baseStat = executor.getStat(basedOnStatType);
                             }
+                            buffAmount = Math.round(skillMod * baseStat);
                         }
                         break;
                     case ENUM.StatusType.ATTACK_RESISTANCE:
