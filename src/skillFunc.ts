@@ -141,9 +141,8 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.DEF:
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
-                        // if the range is "self and adjacent", according to Dena, the base stat will
-                        // have to be recalculated
-                        if (skill.skillRange == ENUM.SkillRange.SELF_BOTH_SIDES) {
+                        // if the status type is not ALL_STATUS, we have to recalculate the base stat
+                        if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
                             baseStat = executor.getStat(basedOnStatType);
                         }
                         var skillMod = skill.skillFuncArg1;
