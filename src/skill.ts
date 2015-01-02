@@ -60,12 +60,13 @@ class Skill {
 
     /**
      * Return true if this is an attack skill
+     * @param srcSkillData: optional, the skill data from srcdb, if specified it will be used directly
      */
-    static isAttackSkill(skillId: number): boolean {
-        var isAttackSkill = false;
-        var skillInfo = SkillDatabase[skillId];
+    static isAttackSkill(skillId: number, srcSkillData?: any): boolean {
+        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
-        switch (skillInfo.func) {
+        switch (func) {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.MAGIC:
             case ENUM.SkillFunc.COUNTER:
@@ -78,23 +79,21 @@ class Skill {
             case ENUM.SkillFunc.DRAIN_ATTACK:
             case ENUM.SkillFunc.DRAIN_MAGIC:
             case ENUM.SkillFunc.KILL:
-                isAttackSkill = true;
-                break;
+                return true;
             default:
-                break;
+                return false;
         }
-
-        return isAttackSkill;
     }
 
     /**
      * Return true if the skill does not make contact
+     * @param srcSkillData: optional, the skill data from srcdb, if specified it will be used directly
      */
-    static isIndirectSkill(skillId: number): boolean {
-        var isIndirect = true;
-        var skillInfo = SkillDatabase[skillId];
+    static isIndirectSkill(skillId: number, srcSkillData?: any): boolean {
+        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
-        switch (skillInfo.func) {
+        switch (func) {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.PROTECT_COUNTER:
@@ -102,22 +101,48 @@ class Skill {
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.DRAIN_ATTACK:
-                isIndirect = false;
-                break;
+                return false;
             default:
-                break;
+                return true;
         }
-
-        return isIndirect;
     }
 
-    static isPositionIndependentAttackSkill(skillId: number): boolean {
-        var skillInfo = SkillDatabase[skillId];
+    static isPositionIndependentAttackSkill(skillId: number, srcSkillData?: any): boolean {
+        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
         // generally, indirect skills are position independent
         // however, kill skills are indirect (do not make contact) but not position independent
         // No need to use this for WIS-based skills since they are always pos. independent
-        return this.isIndirectSkill(skillId) && skillInfo.func != ENUM.SkillFunc.KILL;
+        return this.isIndirectSkill(skillId, srcSkillData) && func != ENUM.SkillFunc.KILL;
+    }
+
+    /**
+     * Return the ward type of the attack skill. ONLY USE THIS FOR SRCDB!
+     * @param srcSkillData: the skill data from srcdb
+     */
+    static getWardType(srcSkillData): ENUM.WardType {
+        var wardType = undefined;
+        if (Skill.isAttackSkill(null, srcSkillData)) {
+            if (Skill.isPositionIndependentAttackSkill(null, srcSkillData)) {
+                var isCalcAtk = srcSkillData.skillCalcType === ENUM.SkillCalcType.ATK;
+                var isCalcWisOrAgi = srcSkillData.skillCalcType === ENUM.SkillCalcType.WIS ||
+                                     srcSkillData.skillCalcType === ENUM.SkillCalcType.AGI;
+                if (isCalcAtk) {
+                    wardType = ENUM.WardType.PHYSICAL;
+                } else if (isCalcWisOrAgi) {
+                    var isEffectBreath = [17, 18, 19].indexOf(srcSkillData.casterEffectId) != -1;
+                    if (isEffectBreath) {
+                        wardType = ENUM.WardType.BREATH;
+                    } else {
+                        wardType = ENUM.WardType.MAGICAL;
+                    }
+                }
+            } else {
+                wardType = ENUM.WardType.PHYSICAL;
+            }
+        }
+        return wardType;
     }
 
     /**
