@@ -59,6 +59,20 @@ var famDatabase = {
         img: "4a1",
         fullName: "Afanc, Beast of the Deep II"
     },
+    21501: {
+        name: "Agathos", stats: [12163, 8220, 10224, 13095, 12315],
+        skills: [683],
+        autoAttack: 10007,
+        img: "188",
+        fullName: "Agathos, the Ruinous II"
+    },
+    11501: {
+        name: "Agathos", stats: [15265, 7478, 11442, 16803, 16913],
+        skills: [682],
+        autoAttack: 10036,
+        img: "38e",
+        fullName: "Agathos, Wyrm of the Harvest II"
+    },
     21404: {
         name: "Ah Puch", stats: [22515, 9134, 18258, 20999, 17486],
         skills: [585],
@@ -486,6 +500,19 @@ var famDatabase = {
         img: "46a",
         fullName: "Benjamina, Wild Turkey"
     },
+    11494: {
+        name: "Bergel", stats: [16529, 7321, 10538, 17797, 16811],
+        skills: [679, 680],
+        autoAttack: 10007,
+        img: "297",
+        fullName: "Bergel, Frost Magus II"
+    },
+    11505: {
+        name: "Bert", stats: [14107, 14000, 11828, 6577, 9453],
+        skills: [688],
+        img: "404",
+        fullName: "Bert, Foe Sweep II"
+    },
     10684: {
         name: "Biast", stats: [13879, 12655, 10163, 13611, 9798],
         skills: [163],
@@ -863,6 +890,13 @@ var famDatabase = {
         img: "2bf",
         fullName: "Evil Eye II"
     },
+    11503: {
+        name: "Fenghuang", stats: [15218, 7494, 12261, 17190, 16345],
+        skills: [686, 687],
+        autoAttack: 10019,
+        img: "1ce",
+        fullName: "Fenghuang, Bird Divine II"
+    },
     10674: {
         name: "Fenrir", stats: [15099, 16865, 22498, 13008, 11167],
         skills: [154],
@@ -906,6 +940,12 @@ var famDatabase = {
         img: "252",
         fullName: "Flesh Collector Golem II"
     },
+    10606: {
+        name: "Fomor", stats: [13052, 14645, 11928, 9967, 9781],
+        skills: [138],
+        img: "143",
+        fullName: "Fomor the Savage II"
+    },
     11191: {
         name: "Freyja", stats: [14709, 17125, 14027, 10213, 12380],
         skills: [387],
@@ -923,12 +963,6 @@ var famDatabase = {
         skills: [385, 386],
         img: "151",
         fullName: "Freyr, God of the Harvest II"
-    },
-    10606: {
-        name: "Fomor", stats: [13052, 14645, 11928, 9967, 9781],
-        skills: [138],
-        img: "143",
-        fullName: "Fomor the Savage II"
     },
     11115: {
         name: "Bearwolf", stats: [14503, 24513, 11492, 11405, 17992],
@@ -1447,6 +1481,13 @@ var famDatabase = {
         skills: [449],
         img: "16e",
         fullName: "Kobold Guard Captain II"
+    },
+    11502: {
+        name: "Kokopelli", stats: [19584, 18858, 13799, 11102, 18187],
+        skills: [684, 685],
+        isMounted: true,
+        img: "210",
+        fullName: "Kokopelli Mana II"
     },
     11314: {
         name: "Kua Fu", stats: [16510, 16561, 12207, 9174, 13476],
@@ -2536,6 +2577,13 @@ var famDatabase = {
         img: "3ee",
         fullName: "Two-Headed Stormwyrm II"
     },
+    21499: {
+        name: "Tyche", stats: [22409, 9752, 17534, 20836, 17942],
+        skills: [681],
+        autoAttack: 10052,
+        img: "1b7",
+        fullName: "Tyche, Goddess of Glory"
+    },
     10735: {
         name: "Typhon", stats: [14677, 13355, 14341, 17959, 13626],
         skills: [117],
@@ -2665,6 +2713,13 @@ var famDatabase = {
         autoAttack: 10020,
         img: "325",
         fullName: "Xuan Wu II"
+    },
+    11526: {
+        name: "Yae", stats: [15317, 7271, 13258, 15365, 17133],
+        skills: [699, 700],
+        autoAttack: 10007,
+        img: "2a6",
+        fullName: "Yae, the Night Flower II"
     },
     10995: {
         name: "Ymir", stats: [22650, 24600, 16464, 20592, 15933],

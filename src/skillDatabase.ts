@@ -3854,6 +3854,90 @@ var SkillDatabase = {
         desc: "Raise the skill trigger rate of self and adjacent familiars by 15%."
     },
 
+    679: {
+        name: "Icicle Crush", type: 2, func: 4, calc: 2,
+        args: [1.95, 3, 0.4],
+        range: 43, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to and may freeze three random foes. Attack front foes first."
+    },
+
+    680: {
+        name: "Ice-Crystal Mirror", type: 5, func: 28, calc: 7,
+        args: [0.25, 2, 23, 3, 0.5],
+        range: 21, prob: 50,
+        desc: "Reflect 50% of WIS-based damage back to two random foes."
+    },
+
+    681: {
+        name: "Trial by Luck", type: 2, func: 37, calc: 2,
+        args: [1.35, 0.13, 27, 21],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and drain HP from all foes, ignoring position."
+    },
+
+    682: {
+        name: "Flames of Bounty", type: 2, func: 4, calc: 2,
+        args: [1.7],
+        range: 314, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    683: {
+        name: "Flames of Ruin", type: 2, func: 4, calc: 2,
+        args: [1.65],
+        range: 7, prob: 30, ward: 3,
+        desc: "Deal heavy WIS-based damage to up to three foes, ignoring position."
+    },
+
+    684: {
+        name: "Luckcall Axe", type: 2, func: 3, calc: 3,
+        args: [1.75],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage to two random foes."
+    },
+
+    685: {
+        name: "Hexbreak Axe", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    686: {
+        name: "Blaze of Feathers", type: 2, func: 4, calc: 2,
+        args: [1.3, 8, 0.4, 2000],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes burn five random foes, ignoring position."
+    },
+
+    687: {
+        name: "Anointed Feathers", type: 1, func: 1, calc: 0,
+        args: [0.1, 3, 2],
+        range: 3, prob: 70,
+        desc: "Raise WIS and DEF of self and adjacent familiars at start of battle."
+    },
+
+    688: {
+        name: "Brush Shot", type: 2, func: 4, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes, ignoring position."
+    },
+
+    699: {
+        name: "Multi-Shot Aerial ", type: 2, func: 4, calc: 3,
+        args: [1.6, 8, 0.1, 5000],
+        range: 39, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage, ignore position and may burn 4 random foes. Attacks rear first."
+    },
+
+    700: {
+        name: "Cherry Bomb", type: 3, func: 41, calc: 2,
+        args: [1],
+        range: 21, prob: 50, ward: 2,
+        desc: "Chance to unleash WIS-based counter attack when struck."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
