@@ -6,7 +6,7 @@
         <script src="../compiled.js"></script>
     </head>
     <body>
-        <p>Fams?</p>
+        <p>Fams? (list of name, one on each line)</p>
         <textarea rows="10" cols="50" id="famList"></textarea>
         <p>Last skill? (< 10,000 to generate normal skills, and > 10,000 to generate auto skills)</p>
         <textarea rows="1" cols="50" id="skill"></textarea>
@@ -16,5 +16,9 @@
         <button onclick="generateFam()">Generate fams</button>
         <br><br>
         <pre><code><div id="result"></div></code></pre>
+        <script>
+            document.getElementById('famList').value = "Camazo, Knight of Bats II\nDong, the Bloody Claw II\nArcanan Death II";
+            document.getElementById('skill').value = "699";
+        </script>
     </body>
 </html>
