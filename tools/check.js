@@ -43,25 +43,7 @@ function checkSkill(data) {
                         conflict = true;
                 }
 
-                var wardType = undefined;
-                if (Skill.isAttackSkill(key)) {
-                    if (Skill.isPositionIndependentAttackSkill(key)) {
-                        var isCalcAtk = dbS.calc === ENUM.SkillCalcType.ATK;
-                        var isCalcWisOrAgi = dbS.calc === ENUM.SkillCalcType.WIS || dbS.calc === ENUM.SkillCalcType.AGI;
-                        if (isCalcAtk) {
-                            wardType = ENUM.WardType.PHYSICAL;
-                        } else if (isCalcWisOrAgi) {
-                            var isEffectBreath = [17, 18, 19].indexOf(sheetS.casterEffectId) != -1;
-                            if (isEffectBreath) {
-                                wardType = ENUM.WardType.BREATH;
-                            } else {
-                                wardType = ENUM.WardType.MAGICAL;
-                            }
-                        }
-                    } else {
-                        wardType = ENUM.WardType.PHYSICAL;
-                    }
-                }
+                var wardType = Skill.getWardType(sheetS);
 
                 if (wardType != dbS.ward && !(!wardType && !dbS.ward))
                     conflict = true;
