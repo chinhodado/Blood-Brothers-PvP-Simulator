@@ -195,8 +195,23 @@ class BattleGraphic {
 
                 var click = arg => {
                     var cardMan = CardManager.getInstance();
-                    var card = cardMan.getCurrentMainCardByIndex(arg[0], arg[1]);
-                    return () => {
+
+                    return function() {
+                        // Get the svg image element nested inside the current fam group.
+                        // Here, "this" is the group, and we're assuming that the card image is always
+                        // the first children of the group, which I'm not sure is true all the time
+                        var nestedImg = this.get(0);
+                        var nestedImgHref = nestedImg.attr("href");
+                        var card = cardMan.getOriginalMainCardByIndex(arg[0], arg[1]);
+
+                        // In this player's brig, at this index, if the current fam image is different from
+                        // the image of the fam originally in the main brig, we know that this is a reserve fam
+                        // Note: this wouldn't work if the main and reserve fam are same in name but are different
+                        // fams (e.g. with different stats, levels, etc). Fortunately the simulator doesn't support that.
+                        if (nestedImgHref != getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG)) {
+                            card = cardMan.getOriginalReserveCardByIndex(arg[0], arg[1]);
+                        }
+
                         showCardDetailDialog(cardMan.getCardInfoForDialog(card));
                     };
                 };

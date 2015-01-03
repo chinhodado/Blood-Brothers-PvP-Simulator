@@ -386,6 +386,16 @@ class CardManager {
         return cards[index];
     }
 
+    getOriginalMainCardByIndex(playerId: number, index: number): Card {
+        var cards = this.getPlayerOriginalMainCards(this.battle.getPlayerById(playerId));
+        return cards[index];
+    }
+
+    getOriginalReserveCardByIndex(playerId: number, index: number): Card {
+        var cards = this.getPlayerOriginalReserveCards(this.battle.getPlayerById(playerId));
+        return cards[index];
+    }
+
     getTotalHPRatio(cards: Card[]): number {
         var totalRemainHp = 0;
         var totalOriginalHp = 0;
