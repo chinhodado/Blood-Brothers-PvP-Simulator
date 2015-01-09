@@ -926,6 +926,9 @@ var SkillDatabase = {
     193: {
         name: "Angler", type: 2, func: 24, calc: 0,
         range: 21, prob: 50, sac: 1,
+        randSkills: [10, 11, 16, 18, 19, 20, 21, 26, 27, 28, 29, 34, 38, 39, 41, 42, 43, 45, 46, 47, 48, 50,
+            51, 52, 54, 55, 69, 70, 108, 110, 111, 113, 114, 115, 116, 117, 118, 119, 121, 122, 123, 124, 127,
+            129, 131, 137, 138, 139, 140, 144, 145, 147, 148, 149, 152, 153, 155, 156, 160, 161, 163, 175, 187, 188, 197, 198, 206],
         desc: "Not even its user knows what this skill will do."
     },
 
@@ -2541,6 +2544,8 @@ var SkillDatabase = {
     475: {
         name: "Hand of Fortune", type: 2, func: 24, calc: 0,
         range: 21, prob: 50, sac: 1,
+        randSkills: [11, 16, 20, 26, 33, 34, 109, 110, 114, 116, 138, 145, 218, 232, 264, 274, 277, 287,
+            296, 319, 331, 345, 346, 354, 378, 426, 431, 462],
         desc: "The outcome of this skill depends on the user's Fortune."
     },
 
@@ -3475,6 +3480,7 @@ var SkillDatabase = {
     623: {
         name: "Steamsaw Assault", type: 2, func: 24, calc: 0,
         range: 21, prob: 35, sac: 1,
+        randSkills: [624, 625, 626, 627],
         desc: "Strong weapon attack with unpredictable results."
     },
 
