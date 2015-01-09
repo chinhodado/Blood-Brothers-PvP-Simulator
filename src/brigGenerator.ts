@@ -42,10 +42,7 @@
 
         if (option.p1RandomMode) {
             p1_cardIds = BrigGenerator.getRandomBrig(option.p1RandomMode, tierListString, isBloodClash);
-
-            for (var i = 0; i < 3; i++) {
-                p1_warlordSkillIds.push(+getRandomElement(availableSkills));
-            }
+            p1_warlordSkillIds = BrigGenerator.getSmartWarlordSkills();
         }
         else {
             p1_cardIds = data.p1_cardIds;
@@ -54,10 +51,7 @@
 
         if (option.p2RandomMode) {
             p2_cardIds = BrigGenerator.getRandomBrig(option.p2RandomMode, tierListString, isBloodClash);
-
-            for (i = 0; i < 3; i++) {
-                p2_warlordSkillIds.push(+getRandomElement(availableSkills));
-            }
+            p2_warlordSkillIds = BrigGenerator.getSmartWarlordSkills();
         }
         else {
             p2_cardIds = data.p2_cardIds;
@@ -65,7 +59,7 @@
         }
 
         // create the cards
-        for (i = 0; i < 10; i++) {
+        for (var i = 0; i < 10; i++) {
             if (i >= 5 && !isBloodClash) break;
             var p1_cardInfo = famDatabase[p1_cardIds[i]];
             var p2_cardInfo = famDatabase[p2_cardIds[i]];
@@ -124,5 +118,35 @@
         }
 
         return skillArray;
+    }
+
+    /**
+     * Returns 3 skill ids such that each skill belongs to a different "category"
+     */
+    static getSmartWarlordSkills(): number[] {
+        // choose 3 out of 4 categories. Maybe there's a more efficient way of doing this...
+        var choosenCategory = getRandomUniqueElements(SkillProvider.skillCategories, 3);
+        var skills: number[] = [];
+
+        for (var i = 0; i < choosenCategory.length; i++) {
+            switch (choosenCategory[i]) {
+            case ENUM.SkillCategory.OPENING:
+                skills.push(getRandomElement(SkillProvider.getAvailableOpeningSkillList()));
+                break;
+            case ENUM.SkillCategory.ACTIVE:
+                skills.push(getRandomElement(SkillProvider.getAvailableActiveSkillList()));
+                break;
+            case ENUM.SkillCategory.REACTIVE:
+                skills.push(getRandomElement(SkillProvider.getAvailableReactiveSkillList()));
+                break;
+            case ENUM.SkillCategory.ACTION_ON_DEATH:
+                skills.push(getRandomElement(SkillProvider.getAvailableOnDeathSkillList()));
+                break;
+            default:
+                throw new Error("Invalid skill category");
+            }
+        }
+
+        return skills;
     }
 } 

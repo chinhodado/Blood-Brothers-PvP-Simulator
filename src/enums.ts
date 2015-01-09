@@ -17,6 +17,16 @@ module ENUM {
     }
 
     /**
+     * Based on activation time. Not really, but anyway
+     */
+    export enum SkillCategory {
+        OPENING = 10,
+        ACTIVE = 20,
+        REACTIVE = 30, // a combination of DEFENSE, PROTECT and EVADE
+        ACTION_ON_DEATH = 16,
+    }
+
+    /**
      * Is the skill buff, attack, magic, etc.
      */
     export enum SkillFunc {
