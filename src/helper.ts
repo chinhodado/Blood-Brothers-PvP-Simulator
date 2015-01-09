@@ -186,7 +186,7 @@ function setSkillOptions() {
     var skillSelects = document.getElementsByClassName("skillSelect");
 
     // create an array of skill id and sort it based on the skill's name
-    var skillIdArray = Skill.getAvailableSkillsForSelect();
+    var skillIdArray = SkillProvider.getAvailableSkillsForSelect();
     skillIdArray.sort((a, b) => SkillDatabase[a].name.localeCompare(SkillDatabase[b].name));
 
     for (var i = 0; i < skillSelects.length; i++) {

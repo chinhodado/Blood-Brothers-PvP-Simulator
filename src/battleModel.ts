@@ -18,6 +18,7 @@
 /// <reference path="skillCalcType.ts"/>
 /// <reference path="skillDatabase.ts"/>
 /// <reference path="skillFunc.ts"/>
+/// <reference path="skillProvider.ts"/>
 /// <reference path="skillRange.ts"/>
 /// <reference path="util.ts"/>
 

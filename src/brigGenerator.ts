@@ -34,7 +34,7 @@
         var p1_warlordSkillIds: number[] = [];
         var p2_warlordSkillIds: number[] = [];
 
-        var availableSkills: number[] = Skill.getAvailableSkillsForSelect();
+        var availableSkills: number[] = SkillProvider.getAvailableSkillsForSelect();
 
         if (!tierListString) {
             tierListString = localStorage["tierList"];
