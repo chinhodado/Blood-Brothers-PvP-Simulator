@@ -5,6 +5,8 @@
 function generateSkill() {
     var lastId = +document.getElementById('skill').value;
     var content = "";
+    var warnings = "";
+    var total = 0, saccable = 0;
     for (var i = 0; i < srcdb.skills.length; i++) {
         var skill = srcdb.skills[i];
         var id = +skill.id;
@@ -13,6 +15,10 @@ function generateSkill() {
             skillTxt += (id + ": {\n" +
                 "    name: \"" + skill.name + "\", type: " + skill.skillType + ", func: " + skill.skillFunc +
                 ", calc: " + skill.skillCalcType + ",\n");
+
+            if (skill.skillFunc == ENUM.SkillFunc.RANDOM) {
+                warnings += ("Warning: " + id + " - " + skill.name + ": is a random skill.\n");
+            }
 
             // the arguments
             var lastArg = -1; // the last arg that is not 0
@@ -28,6 +34,12 @@ function generateSkill() {
                 var args = "";
                 for (j = 1; j <= lastArg; j++) {
                     args += skill["skillFuncArg" + j];
+
+                    if ((j == 2 || j == 7) && skill["skillFuncArg" + j] == 16) {
+                        warnings += ("Warning: " + id + " - " + skill.name + ": skillFuncArg" + j + " is 16. " +
+                            "Check arg1 or arg6, make sure their skillType is 16.\n");
+                    }
+
                     if (j != lastArg) {
                         args += ", ";
                     }
@@ -45,12 +57,21 @@ function generateSkill() {
                 skillTxt += (" isAutoAttack: true,");
             }
 
+            total++;
+            if (isSkillSaccable(id)) {
+                skillTxt += (" sac: 1,");
+                saccable++;
+            }
+
             skillTxt += ("\n    desc: \"" + skill.comment + "\"\n},");
             content += (skillTxt + "\n\n");
         }
     }
 
+    content += ("\n\n" + warnings);
+
     document.getElementById('result').innerText = content;
+    console.log("Total: " + total + " skills, saccable: " + saccable + " skills.");
 }
 
 function generateFam() {
@@ -96,4 +117,27 @@ function generateFam() {
     }
 
     document.getElementById('result').innerText = content;
+}
+
+function isSkillSaccable(id) {
+    for (var k = 0; k < srcdb.cards.length; k++) {
+        var card = srcdb.cards[k];
+        if (isCardHasSkill(card, id) && isEpicOrHigher(card) && !isDualSkillFamiliar(card)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isDualSkillFamiliar(card) {
+    // relies on the fact that there is no card with skillId3 != 0 yet
+    return card.skillId1 != 0 && card.skillId2 != 0;
+}
+
+function isEpicOrHigher(card) {
+    return card.rarity == 4 || card.rarity == 5 || card.rarity == 6;
+}
+
+function isCardHasSkill(card, skillId) {
+    return card.skillId1 == skillId || card.skillId2 == skillId || card.skillId3 == skillId;
 }
