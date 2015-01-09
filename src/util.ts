@@ -23,7 +23,7 @@ function getURLParameter(name: string): string {
 /**
  * Shuffle an array. The argument array will be modified.
  */
-function shuffle(array: any[]): any[] {
+function shuffle<T>(array: T[]): T[] {
     var currentIndex = array.length
         , temporaryValue
         , randomIndex
@@ -47,14 +47,29 @@ function shuffle(array: any[]): any[] {
 /**
  * Get a random element from an array
  */
-function getRandomElement(myArray: any) {
+function getRandomElement<T>(myArray: T[]): T {
     return myArray[Math.floor(Math.random() * myArray.length)];
+}
+
+/**
+ * Returns a maximum of 'num' unique elements (shuffles and returns first n)
+ * Note: the argument array will be modified (its content will be shuffled)
+ */
+function getRandomUniqueElements<T>(arr: T[], num: number): T[] {
+    var len = arr.length;
+    while (len) {
+        var a = Math.floor(Math.random() * len);
+        var b = arr[--len];
+        arr[len] = arr[a];
+        arr[a] = b;
+    }
+    return arr.slice(0, num);
 }
 
 /**
  * Remove an element with the supplied index from an array.
  */
-function removeElementAtIndex(array: any, index: number): void {
+function removeElementAtIndex(array: any[], index: number): void {
     array.splice(index, 1);
 }
 
@@ -62,7 +77,7 @@ function removeElementAtIndex(array: any, index: number): void {
  * Get a random property of an object
  */
 function pickRandomProperty(obj: {}): string {
-    var result;
+    var result = undefined;
     var count = 0;
     for (var prop in obj)
         if (Math.random() < 1/++count)

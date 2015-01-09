@@ -377,27 +377,6 @@ class BaseRange {
     }
 
     /**
-     * Returns a random card from a list of cards
-     */
-    getRandomCard(cards: Card[]): Card {
-        return getRandomElement(cards);
-    }
-
-    /**
-     * Returns a maximum of 'num' unique cards (shuffles and returns first n)
-     */
-    getRandomUniqueCards(cards: Card[], num: number): Card[] {
-        var len = cards.length;
-        while (len) {
-            var a = Math.floor(Math.random() * len);
-            var b = cards[--len];
-            cards[len] = cards[a];
-            cards[a] = b;
-        }
-        return cards.slice(0, num);
-    }
-
-    /**
      * Get the default conditional function (valid if card is not dead and belongs to the enemy)
      */
     getCondFunc(executor: Card): (x: Card)=>boolean {
@@ -489,7 +468,7 @@ class EnemyRandomRange extends RandomRange {
     getTarget(executor: Card): Card {
         if (this.numProcessed < this.numTarget) {
             this.numProcessed++;
-            return this.getRandomCard(this.getBaseTargets(this.getCondFunc(executor)));
+            return getRandomElement(this.getBaseTargets(this.getCondFunc(executor)));
         }
         else {
             return null;
@@ -668,11 +647,11 @@ class FriendRandomRange extends RandomRange {
 
         if (baseTargets.length) {
             if (this.isUnique) {
-                targets = this.getRandomUniqueCards(baseTargets, this.numTargets);
+                targets = getRandomUniqueElements(baseTargets, this.numTargets);
             }
             else {
                 for (var i = 0; i < this.numTargets; i++) {
-                    targets.push(this.getRandomCard(baseTargets));
+                    targets.push(getRandomElement(baseTargets));
                 }
             }
         }
@@ -817,7 +796,7 @@ class EnemyRowRandomRange extends RandomRange { // TODO: fix this later (not ext
 
         if (this.numProcessed < this.numTargets) {
             this.numProcessed++;
-            return this.getRandomCard(tmpRange.targets);
+            return getRandomElement(tmpRange.targets);
         }
         else {
             return null;

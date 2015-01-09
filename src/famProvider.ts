@@ -6,7 +6,7 @@ class FamProvider {
     static tierList = null;
 
     // contains ids of all fam
-    static allIdList = null;
+    static allIdList: number[] = null;
 
     static getTierList(tierToGet: string, allTierString: string) {
         if (!this.tierList) {
@@ -42,7 +42,7 @@ class FamProvider {
     /**
      * Get a list of ids of all familiars, except the warlords
      */
-    static getAllFamiliarList() {
+    static getAllFamiliarList(): number[] {
         if (!this.allIdList) {
             this.allIdList = [];
 
@@ -56,7 +56,7 @@ class FamProvider {
         return this.allIdList;
     }
 
-    static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string) {
+    static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string): number[] {
         var tierXP = this.getTierList("X+", allTierString);
         var tierX = this.getTierList("X", allTierString);
         var tierSP = this.getTierList("S+", allTierString);
