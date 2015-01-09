@@ -3,14 +3,14 @@
      * Return a randomly generated brig
      */
     static getRandomBrig(randomMode: ENUM.RandomBrigType, tierListString: string, isBloodclash: boolean): number[] {
-        var randomList = FamiliarDatabase.getRandomFamList(+randomMode, tierListString);
+        var randomList = FamProvider.getRandomFamList(+randomMode, tierListString);
         var brigIds: number[] = [];
         var maxIndex = isBloodclash? 9 : 4;
 
         if (isBloodclash) {
             // choose a random index for the WL
             var randIndex = getRandomInt(0, maxIndex);
-            brigIds[randIndex] = getRandomElement(FamiliarDatabase.getWarlordList());
+            brigIds[randIndex] = getRandomElement(FamProvider.getWarlordList());
         }
 
         for (var i = 0; i <= maxIndex; i++) {

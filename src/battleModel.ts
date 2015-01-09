@@ -9,6 +9,7 @@
 /// <reference path="csRandom.ts"/>
 /// <reference path="enums.ts"/>
 /// <reference path="famDatabase.ts"/>
+/// <reference path="famProvider.ts"/>
 /// <reference path="formation.ts"/>
 /// <reference path="helper.ts"/>
 /// <reference path="../lib/jquery.d.ts"/>
