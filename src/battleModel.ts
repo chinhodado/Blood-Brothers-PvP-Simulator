@@ -468,38 +468,43 @@ class BattleModel {
         var status: ENUM.StatusType, multi: number;
         var isNewLogic: boolean = false; // for caster-based debuff
 
-        if (skill.skillFunc === ENUM.SkillFunc.DEBUFFATTACK || skill.skillFunc === ENUM.SkillFunc.DEBUFFINDIRECT) {
-            status = skill.skillFuncArg2;
-            multi  = skill.skillFuncArg4;
-        }
-        else if (skill.skillFunc === ENUM.SkillFunc.DEBUFF) {
-            status = skill.skillFuncArg2;
-            multi  = skill.skillFuncArg1;
-        }
-        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF || skill.skillFunc === ENUM.SkillFunc.DEBUFF_AFFLICTION) {
-            // todo: arg3 may also be status
-            status = skill.skillFuncArg2;
-            multi = skill.skillFuncArg1;
-            isNewLogic = true;
-        }
-        else if (skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK || skill.skillFunc === ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC) {
-            status = skill.skillFuncArg2;
-            multi = skill.skillFuncArg4;
-            isNewLogic = true;
-        }
-        else if (skill.skillFunc === ENUM.SkillFunc.ONHIT_DEBUFF) {
-            // todo: arg3 may also be status
-            status = skill.skillFuncArg2;
-            multi = skill.skillFuncArg1;
-            isNewLogic = true;
-
-            if (skill.skillFuncArg4) {
+        switch (skill.skillFunc) {
+            case ENUM.SkillFunc.DEBUFFATTACK:
+            case ENUM.SkillFunc.DEBUFFINDIRECT:
+                status = skill.skillFuncArg2;
+                multi  = skill.skillFuncArg4;
+                break;
+            case ENUM.SkillFunc.DEBUFF:
+                status = skill.skillFuncArg2;
+                multi  = skill.skillFuncArg1;
+                break;
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
+            case ENUM.SkillFunc.DEBUFF_AFFLICTION:
+            case ENUM.SkillFunc.MULTI_DEBUFF:
+                // todo: arg3 may also be status
+                status = skill.skillFuncArg2;
+                multi = skill.skillFuncArg1;
+                isNewLogic = true;
+                break;
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
+            case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
+                status = skill.skillFuncArg2;
                 multi = skill.skillFuncArg4;
-                var isFlat = true;
-            }
-        }
-        else {
-            throw new Error("Wrong skill to use with processDebuff()");
+                isNewLogic = true;
+                break;
+            case ENUM.SkillFunc.ONHIT_DEBUFF:
+                // todo: arg3 may also be status
+                status = skill.skillFuncArg2;
+                multi = skill.skillFuncArg1;
+                isNewLogic = true;
+
+                if (skill.skillFuncArg4) {
+                    multi = skill.skillFuncArg4;
+                    var isFlat = true;
+                }
+                break;
+            default:
+                throw new Error("Wrong skill to use with processDebuff()");
         }
 
         if (isFlat) {

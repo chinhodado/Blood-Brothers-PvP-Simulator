@@ -3925,6 +3925,76 @@ var SkillDatabase = {
         desc: "Deal massive ATK-based damage to two random foes, ignoring position."
     },
 
+    689: {
+        name: "Pain Ordained", type: 2, func: 4, calc: 2,
+        args: [2.05],
+        range: 313, prob: 30, ward: 2,
+        desc: "Massive WIS-based damage to up to three foes, ignoring position. Increased if fewer foes."
+    },
+
+    690: {
+        name: "Fate Restrained", type: 1, func: 45, calc: 0,
+        args: [0.25, 2, 0, 0, 0, 0.15, 3],
+        range: 7, prob: 70,
+        desc: "Greatly lower DEF and WIS of up to three foes."
+    },
+
+    691: {
+        name: "Hands of Riches", type: 2, func: 3, calc: 1,
+        args: [2.3, 2, 0.4],
+        range: 6, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage and sometimes paralyze up to two foes."
+    },
+
+    692: {
+        name: "Blade of Ending", type: 2, func: 33, calc: 3,
+        args: [1.6, 2, 0.15, 0.3],
+        range: 16, prob: 30, ward: 1,
+        desc: "Heavy AGI-based damage to three random foes and sometimes greatly lower DEF."
+    },
+
+    693: {
+        name: "Twist of Fate", type: 5, func: 28, calc: 7,
+        args: [0.25, 3, 6, 3, 0.5],
+        range: 21, prob: 50,
+        desc: "Reflect 50% of AGI-based damage back to up to two foes."
+    },
+
+    694: {
+        name: "Serpent's Lash", type: 2, func: 3, calc: 3,
+        args: [0.75],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to five random foes."
+    },
+
+    695: {
+        name: "Rain of Terror", type: 2, func: 4, calc: 1,
+        args: [1.7],
+        range: 314, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    696: {
+        name: "Fearless", type: 1, func: 1, calc: 0,
+        args: [0.5, 5, 6],
+        range: 21, prob: 70,
+        desc: "Reduce physical and magical damage taken by self greatly."
+    },
+
+    697: {
+        name: "Staff of Doom", type: 2, func: 37, calc: 2,
+        args: [1.6, 0.15, 27, 21],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and drain HP from four random foes, ignoring position."
+    },
+
+    698: {
+        name: "Reclaim Soul", type: 3, func: 11, calc: 1,
+        args: [1],
+        range: 3, prob: 50,
+        desc: "Convert damage to heal self and adjacent familiars."
+    },
+
     699: {
         name: "Multi-Shot Aerial ", type: 2, func: 4, calc: 3,
         args: [1.6, 8, 0.1, 5000],
@@ -3937,6 +4007,13 @@ var SkillDatabase = {
         args: [1],
         range: 21, prob: 50, ward: 2,
         desc: "Chance to unleash WIS-based counter attack when struck."
+    },
+
+    701: {
+        name: "Gaze of Wealth", type: 1, func: 19, calc: 0,
+        args: [0, 2, 0.15],
+        range: 7, prob: 70,
+        desc: "Chance to paralyze up to three foes at start of battle."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -4329,5 +4406,19 @@ var SkillDatabase = {
         args: [1, 4, 0.3, 0.1],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "Deal WIS-based damage to one foe and sometimes greatly lower AGI."
+    },
+
+    10060: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1, 2, 0.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes paralyze target."
+    },
+
+    10061: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 };

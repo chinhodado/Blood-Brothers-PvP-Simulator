@@ -531,6 +531,19 @@ var famDatabase = {
         img: "4a0",
         fullName: "Bolus, the Blue Bolt II"
     },
+    21510: {
+        name: "Botis", stats: [16009, 14742, 13994, 8003, 17255],
+        skills: [692, 693],
+        autoAttack: 10060,
+        img: "417",
+        fullName: "Botis, Dasher of Hopes II"
+    },
+    11510: {
+        name: "Botis", stats: [14096, 14000, 10001, 5506, 13196],
+        skills: [694],
+        img: "2e7",
+        fullName: "Botis, Earl of Hell II"
+    },
     10977: {
         name: "Boudica", stats: [9967, 11914, 8918, 13110, 12014],
         skills: [276],
@@ -776,6 +789,13 @@ var famDatabase = {
         skills: [222],
         img: "373",
         fullName: "Deborah, Knight Immaculate II"
+    },
+    11512: {
+        name: "Deimos", stats: [16497, 17753, 11188, 6996, 17363],
+        skills: [695, 696],
+        autoAttack: 10061,
+        img: "1b8",
+        fullName: "Deimos, Terror Spear II"
     },
     11225: {
         name: "Dein", stats: [14000, 16768, 11098, 11683, 14417],
@@ -1489,6 +1509,13 @@ var famDatabase = {
         img: "210",
         fullName: "Kokopelli Mana II"
     },
+    11524: {
+        name: "Kokuanten", stats: [18999, 7050, 19996, 20505, 13994],
+        skills: [697, 698],
+        autoAttack: 10003,
+        img: "2ad",
+        fullName: "Kokuanten, the Ominous II"
+    },
     11314: {
         name: "Kua Fu", stats: [16510, 16561, 12207, 9174, 13476],
         skills: [497],
@@ -1500,6 +1527,13 @@ var famDatabase = {
         skills: [258],
         img: "4d4",
         fullName: "Kyteler the Corrupted II"
+    },
+    11506: {
+        name: "Lachesis", stats: [17992, 9596, 15002, 19205, 17753],
+        skills: [689, 690],
+        autoAttack: 10003,
+        img: "2ba",
+        fullName: "Lachesis, the Measurer II"
     },
     10985: {
         name: "Lahamu", stats: [14024, 10784, 15999, 16010, 11001],
@@ -2044,6 +2078,13 @@ var famDatabase = {
         skills: [305],
         img: "125",
         fullName: "Phoenix, the Metempsychosis II"
+    },
+    11508: {
+        name: "Pixiu", stats: [15706, 15999, 12999, 8005, 16489],
+        skills: [691, 701],
+        autoAttack: 10060,
+        img: "443",
+        fullName: "Pixiu, the Wealthy II"
     },
     21489: {
         name: "Poliahu", stats: [23572, 8648, 17482, 22365, 18202],

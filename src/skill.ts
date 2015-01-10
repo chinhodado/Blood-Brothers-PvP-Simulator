@@ -258,6 +258,10 @@ class Skill {
             case ENUM.SkillFunc.DEBUFF_AFFLICTION:
                 statuses.push(skillInfo.args[1]);
                 break;
+            case ENUM.SkillFunc.MULTI_DEBUFF:
+                statuses.push(skillInfo.args[1]);
+                statuses.push(skillInfo.args[6]);
+                break;
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
             case ENUM.SkillFunc.ONHIT_DEBUFF:
             case ENUM.SkillFunc.ONHIT_BUFF:
