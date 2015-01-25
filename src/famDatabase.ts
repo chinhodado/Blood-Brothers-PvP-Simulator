@@ -2810,5 +2810,70 @@ var famDatabase = {
         skills: [132],
         img: "322",
         fullName: "Zuniga, Guard Captain II"
-    }
+    },
+
+    //// Jan 25, 2015: from now on, fams no longer have to be in alphabetical order /////
+
+    11519: {
+        name: "Koroku", stats: [15341, 16561, 13013, 7492, 16853],
+        skills: [705],
+        autoAttack: 10065,
+        img: "11f",
+        fullName: "Koroku, the Death Stinger II"
+    },
+    11517: {
+        name: "Etain", stats: [15511, 7873, 11015, 17038, 17201],
+        skills: [704],
+        autoAttack: 10064,
+        img: "147",
+        fullName: "Etain, Butterfly Tamer II"
+    },
+    11157: {
+        name: "Ausguss", stats: [14937, 9087, 12304, 16952, 14308],
+        skills: [708],
+        autoAttack: 10007,
+        img: "3ce",
+        fullName: "Ausguss, Jailer II"
+    },
+    11516: {
+        name: "Kotyangwuti", stats: [18512, 9509, 15023, 20028, 17992],
+        skills: [703],
+        autoAttack: 10063,
+        img: "3ce",
+        fullName: "Kotyangwuti, Spider Spirit II"
+    },
+    11356: {
+        name: "Ulfhe", stats: [24102, 22921, 18447, 18057, 18219],
+        skills: [702],
+        autoAttack: 10062,
+        img: "268",
+        fullName: "Ulfhe, Sword-Shield Master II"
+    },
+    11522: {
+        name: "Briar", stats: [18988, 9000, 20028, 19519, 12987],
+        skills: [804, 805],
+        autoAttack: 10007,
+        img: "36b",
+        fullName: "Briar, Grimoire Keeper II"
+    },
+    11514: {
+        name: "Eros", stats: [15438, 16292, 14486, 6284, 16668],
+        skills: [801],
+        img: "38c",
+        fullName: "Eros, the Golden Arrow II"
+    },
+    11520: {
+        name: "Oliver", stats: [15912, 14980, 13702, 8014, 17266],
+        skills: [800],
+        autoAttack: 10067,
+        img: "3e5",
+        fullName: "Sir Oliver, the Golden Sword II"
+    },
+    21511: {
+        name: "Venus", stats: [21967, 19039, 19982, 18011, 9391],
+        skills: [709],
+        autoAttack: 10066,
+        img: "21d",
+        fullName: "Intrepid Hand of Venus"
+    },
 };

@@ -4016,6 +4016,76 @@ var SkillDatabase = {
         desc: "Chance to paralyze up to three foes at start of battle."
     },
 
+    702: {
+        name: "Shield Slash", type: 2, func: 34, calc: 3,
+        args: [1.75, 2, 1, 0.1],
+        range: 8, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy AGI-based damage and lower DEF of all foes, ignoring position."
+    },
+
+    703: {
+        name: "Entwining Silk", type: 2, func: 4, calc: 2,
+        args: [1.3, 4, 0.2],
+        range: 20, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage and sometimes disable five random foes."
+    },
+
+    704: {
+        name: "Scales of Darkness", type: 2, func: 4, calc: 2,
+        args: [1.1, 7, 0.2, 1, 0.9],
+        range: 17, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to six random foes and sometimes blind them."
+    },
+
+    705: {
+        name: "Hornet Sting", type: 2, func: 4, calc: 1,
+        args: [1.35, 1, 0.3, 10],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes poison them, ignoring position."
+    },
+
+    708: {
+        name: "Discipline", type: 2, func: 4, calc: 2,
+        args: [1.6],
+        range: 32, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage to up to four foes, ignoring position."
+    },
+
+    709: {
+        name: "Winds of Anemone", type: 2, func: 18, calc: 4,
+        args: [1.5],
+        range: 4, prob: 30, sac: 1,
+        desc: "Restore a large amount of HP to all party members."
+    },
+
+    800: {
+        name: "Hauteclere", type: 2, func: 3, calc: 1,
+        args: [2.65],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    801: {
+        name: "Mischief Arrows", type: 2, func: 4, calc: 1,
+        args: [1.4, 8, 0.5, 1000],
+        range: 8, prob: 30, ward: 1, sac: 1,
+        desc: "ATK-based damage and may burn all foes."
+    },
+
+    804: {
+        name: "Twin Oars", type: 2, func: 4, calc: 2,
+        args: [2.1],
+        range: 16, prob: 30, ward: 2,
+        desc: "Massive WIS-based damage to three random foes."
+    },
+
+    805: {
+        name: "Golden Fleece", type: 2, func: 6, calc: 0,
+        args: [1],
+        range: 122, prob: 50,
+        desc: "Revive and fully restore HP of two random familiars."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -4420,5 +4490,47 @@ var SkillDatabase = {
         args: [1.2],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10062: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [0.8],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to two foes."
+    },
+
+    10063: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 4, 0.25],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes disable target."
+    },
+
+    10064: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 7, 0.25, 1, 0.9],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes blind target."
+    },
+
+    10065: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2, 1, 0.5, 10],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes envenom target."
+    },
+
+    10066: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [0.85],
+        range: 16, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to three random foes, ignoring position."
+    },
+
+    10067: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.7],
+        range: 23, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to two random foes."
     },
 };
