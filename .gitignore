@@ -1,15 +1,12 @@
 *.map
 .project
 .gitattributes
-*.csproj
 *.user
 *.config
-*.sln
 *.suo
 /.settings
 /bin
 /obj
-/compiled
 /compiled.js
 /.idea
 tools/srcdb.js
