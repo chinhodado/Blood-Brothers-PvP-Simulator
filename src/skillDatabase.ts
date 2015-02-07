@@ -4072,18 +4072,109 @@ var SkillDatabase = {
         desc: "ATK-based damage and may burn all foes."
     },
 
+    802: {
+        name: "Twin Oars", type: 2, func: 3, calc: 1,
+        args: [2.25],
+        range: 6, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to up to two foes."
+    },
+
+    803: {
+        name: "Golden Fleece", type: 16, func: 1, calc: 0,
+        args: [0.5, 17, 0.5],
+        range: 4, prob: 70,
+        desc: "Chance to raise HP of all party members upon his death."
+    },
+
     804: {
-        name: "Twin Oars", type: 2, func: 4, calc: 2,
+        name: "Thorn Whip", type: 2, func: 4, calc: 2,
         args: [2.1],
         range: 16, prob: 30, ward: 2,
         desc: "Massive WIS-based damage to three random foes."
     },
 
     805: {
-        name: "Golden Fleece", type: 2, func: 6, calc: 0,
+        name: "Waking Kiss", type: 2, func: 6, calc: 0,
         args: [1],
         range: 122, prob: 50,
         desc: "Revive and fully restore HP of two random familiars."
+    },
+
+    806: {
+        name: "Dance of the Ogres", type: 2, func: 4, calc: 3,
+        args: [2.25],
+        range: 16, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive AGI-based damage to three random foes, ignoring position."
+    },
+
+    807: {
+        name: "Iron Rod", type: 2, func: 3, calc: 1,
+        args: [1.4],
+        range: 15, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to all foes in the front/middle line."
+    },
+
+    808: {
+        name: "Bloodied Rod", type: 2, func: 3, calc: 1,
+        args: [0.8],
+        range: 12, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to all foes in the front line."
+    },
+
+    809: {
+        name: "Ogresbane", type: 2, func: 3, calc: 1,
+        args: [1.15, 8, 0.25, 2000],
+        range: 45, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and sometimes burn five random foes. Attack front foes first."
+    },
+
+    810: {
+        name: "Fighting Spirit", type: 1, func: 1, calc: 0,
+        args: [0.35, 1],
+        range: 3, prob: 70,
+        desc: "Raise ATK of self and adjacent familiars based on 35% of his WIS."
+    },
+
+    811: {
+        name: "Talon Rush", type: 2, func: 4, calc: 1,
+        args: [1.55],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to four random foes, ignoring position."
+    },
+
+    812: {
+        name: "Vitality Pinion", type: 1, func: 44, calc: 0,
+        args: [0.2, 1, 0, 0, 0, 0.2, 3],
+        range: 3, prob: 70,
+        desc: "Raise ATK and WIS of self and adjacent familiars at start of battle."
+    },
+
+    813: {
+        name: "Dogfight", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    814: {
+        name: "Winds of War", type: 2, func: 3, calc: 1,
+        args: [1.4],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
+    },
+
+    815: {
+        name: "Psychopomp", type: 1, func: 1, calc: 0,
+        args: [816, 16],
+        range: 153, prob: 70,
+        desc: "Self and two random allies are automatically revived with 60% HP after being killed."
+    },
+
+    816: {
+        name: "Metempsychosis", type: 16, func: 6, calc: 0,
+        args: [0.6],
+        range: 21, prob: 100,
+        desc: "-"
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -4532,5 +4623,19 @@ var SkillDatabase = {
         args: [0.7],
         range: 23, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to two random foes."
+    },
+
+    10100: {
+        name: "Standard Action", type: 2, func: 34, calc: 1,
+        args: [1.4, 4, 0.5, 0.15],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe and sometimes lower AGI of target."
+    },
+
+    10101: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1, 1, 0.5, 5],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes poison target."
     },
 };

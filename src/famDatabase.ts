@@ -2876,4 +2876,54 @@ var famDatabase = {
         img: "21d",
         fullName: "Intrepid Hand of Venus"
     },
+
+    11523: {
+        name: "Jason", stats: [15348, 18024, 11015, 8978, 16876],
+        skills: [802, 803],
+        img: "4c7",
+        fullName: "Jason, Fallen Hero II"
+    },
+    11535: {
+        name: "Macaca", stats: [13962, 13671, 12025, 6368, 9453],
+        skills: [813],
+        img: "2a6",
+        fullName: "Macaca, the Headlong II"
+    },
+    11532: {
+        name: "Kibitsuhiko", stats: [19335, 18642, 16562, 11448, 17981],
+        skills: [809, 810],
+        img: "38d",
+        fullName: "Kibitsuhiko, Ogre Slayer II"
+    },
+    21531: {
+        name: "Onra", stats: [13377, 13496, 12250, 7516, 9368],
+        skills: [808],
+        img: "3b8",
+        fullName: "Onra, Ogre of Darkness II"
+    },
+    11531: {
+        name: "Onra", stats: [15719, 16416, 15147, 6710, 15147],
+        skills: [807],
+        img: "155",
+        fullName: "Onra, Ogre Lord II"
+    },
+    11533: {
+        name: "Momoso", stats: [15034, 16973, 11925, 9997, 15836],
+        skills: [811, 812],
+        img: "39b",
+        fullName: "Momoso, Pheasant Tamer II"
+    },
+    21529: {
+        name: "Aso", stats: [19587, 18851, 18105, 13823, 18083],
+        skills: [806],
+        autoAttack: 10100,
+        img: "170",
+        fullName: "Aso, the Asura"
+    },
+    21416: {
+        name: "Mercury", stats: [22700, 20970, 18517, 12020, 18005],
+        skills: [814, 815],
+        img: "3d8",
+        fullName: "Intrepid Hand of Mercury"
+    },
 };
