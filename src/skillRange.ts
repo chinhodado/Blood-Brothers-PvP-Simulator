@@ -73,7 +73,14 @@ class RangeFactory {
         133: 3,
         134: 4,
         135: 5,
-        136: 6
+        136: 6,
+        142: 2,
+        143: 3,
+        144: 4,
+        145: 5,
+        153: 3,
+        154: 4,
+        155: 5,
     };
 
     static INCLUDE_SELF = {
@@ -90,11 +97,46 @@ class RangeFactory {
         135: true,
         136: true,
 
+        142: true,
+        143: true,
+        144: true,
+        145: true,
+        153: true,
+        154: true,
+        155: true,
+
         332: true,
         333: true,
         334: true,
         335: true,
-        336: true
+        336: true,
+
+        511:true,
+        512:true,
+        513:true,
+        514:true,
+        515:true,
+        516:true,
+
+        542: true,
+        543: true,
+        544: true,
+        545: true,
+    };
+
+    static FORCED_SELF = {
+        142: true,
+        143: true,
+        144: true,
+        145: true,
+        153: true,
+        154: true,
+        155: true,
+
+        542: true,
+        543: true,
+        544: true,
+        545: true,
     };
 
     static IS_UNIQUE = {
@@ -109,7 +151,10 @@ class RangeFactory {
         133: true,
         134: true,
         135: true,
-        136: true
+        136: true,
+        153: true,
+        154: true,
+        155: true,
     };
 
     static ScalePatternParams = {
@@ -631,6 +676,7 @@ class FriendRandomRange extends RandomRange {
     selectDead: boolean;
     isUnique: boolean;
     includeSelf: boolean;
+    forcedSelf: boolean;
 
     constructor(id: ENUM.SkillRange, numTargets: number, selectDead: boolean) {
         super(id);
@@ -638,6 +684,7 @@ class FriendRandomRange extends RandomRange {
         this.selectDead = selectDead;
         this.isUnique = RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
+        this.forcedSelf = RangeFactory.FORCED_SELF[id];
     }
 
     getReady(executor: Card, skillCondFunc?: (card: Card)=>boolean): void{
@@ -645,16 +692,39 @@ class FriendRandomRange extends RandomRange {
         var targets: Card[] = [];
         this.currentIndex = 0;
 
+        var selfAllowed = false;
+        for (var i = 0; i < baseTargets.length; i++) {
+            if (executor === baseTargets[i]) {
+                selfAllowed = true;
+                break;
+            }
+        }
+
         if (baseTargets.length) {
             if (this.isUnique) {
                 targets = getRandomUniqueElements(baseTargets, this.numTargets);
             }
             else {
-                for (var i = 0; i < this.numTargets; i++) {
+                for (i = 0; i < this.numTargets; i++) {
                     targets.push(getRandomElement(baseTargets));
                 }
             }
         }
+
+        if (this.forcedSelf && selfAllowed ) {
+             var alreadyIncludedSelf = false;
+             for (i = 0; i < targets.length; i++) {
+                 if (executor === targets[i]) {
+                      alreadyIncludedSelf = true;
+                      break;
+                 }
+             }
+             if (!alreadyIncludedSelf) {
+                targets.shift();
+                targets.unshift(executor);
+             }
+        }
+
         this.targets = targets;
     }
 
