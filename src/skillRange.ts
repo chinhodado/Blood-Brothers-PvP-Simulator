@@ -312,7 +312,8 @@ class RangeFactory {
         if (rangeId === ENUM.SkillRange.ENEMY_FRONT_ALL ||
             rangeId === ENUM.SkillRange.ENEMY_MID_ALL ||
             rangeId === ENUM.SkillRange.ENEMY_REAR_ALL ||
-            rangeId === ENUM.SkillRange.ENEMY_FRONT_MID_ALL) {
+            rangeId === ENUM.SkillRange.ENEMY_FRONT_MID_ALL ||
+            rangeId === ENUM.SkillRange.ENEMY_FRONT_REAR_ALL) {
             return true;
         }
 
@@ -354,6 +355,8 @@ class RangeFactory {
                 return new EnemyRearAllRange(id);
             case ENUM.SkillRange.ENEMY_FRONT_MID_ALL:
                 return new EnemyFrontMidAllRange(id);
+            case ENUM.SkillRange.ENEMY_FRONT_REAR_ALL:
+                return new EnemyFrontRearAllRange(id);
             case ENUM.SkillRange.MYSELF:
                 return new SelfRange(id, selectDead);
             case ENUM.SkillRange.RIGHT:
@@ -806,6 +809,24 @@ class EnemyFrontMidAllRange extends BaseRowRange {
                 candidates = frontCards.concat(centerCards);
             } else {
                 candidates = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
+            }
+        }
+        this.targets = candidates;
+    }
+}
+
+class EnemyFrontRearAllRange extends BaseRowRange {
+    getReady(executor: Card): void {
+        this.currentIndex = 0;
+        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        if (candidates.length) {
+            var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
+            var rearCards = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
+
+            if (frontCards.length > 0 || rearCards.length > 0) {
+                candidates = frontCards.concat(rearCards);
+            } else {
+                candidates = this.getSameRowCards(candidates, ENUM.FormationRow.MID);
             }
         }
         this.targets = candidates;
