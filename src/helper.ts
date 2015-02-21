@@ -43,11 +43,6 @@ function setPreviousChoices() {
         (<HTMLInputElement>document.getElementById("2f")).value = localStorage.getItem("2f");
     }
 
-    // proc order
-    if (localStorage.getItem("po") && localStorage.getItem("po") != "null") {
-        (<HTMLInputElement>document.getElementById("po")).value = localStorage.getItem("po");
-    }
-
     // debug mode
     if (localStorage.getItem("debug") == "true") {
         (<HTMLInputElement>document.getElementById("debug")).checked = true;
@@ -210,13 +205,10 @@ function getBattleDataOption() {
     //         player 2: s20 -> s22
     // formation: player 1: 1f, player 2: 2f
     // random mode: player 1: 1r, player 2: 2r
-    // proc order: po
     // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
     var data: any = {}, option: any = {};
-    option.procOrder = getURLParameter("po");
-    localStorage.setItem("po", option.procOrder);
 
     var battleType = getURLParameter("bt");
     localStorage.setItem("bt", battleType);

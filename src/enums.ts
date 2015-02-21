@@ -297,11 +297,6 @@ module ENUM {
         HYDRA_5  = 11
     }
 
-    export enum ProcOrderType {
-        ANDROID = 1,
-        IOS     = 2
-    }
-
     export enum BattleType {
         BLOOD_CLASH = 1,
         NORMAL = 2

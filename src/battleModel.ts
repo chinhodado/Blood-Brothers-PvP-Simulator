@@ -29,7 +29,6 @@ class BattleModel {
     p1RandomMode: ENUM.RandomBrigType;
     p2RandomMode: ENUM.RandomBrigType;
     isBloodClash: boolean = false;
-    procOrderType: ENUM.ProcOrderType = ENUM.ProcOrderType.ANDROID;
 
     logger: BattleLogger;
     cardManager: CardManager;
@@ -100,7 +99,6 @@ class BattleModel {
         this.cardManager = CardManager.getInstance();
         var graphic = new BattleGraphic();
 
-        this.procOrderType = option.procOrder;
         if (option.battleType && option.battleType == ENUM.BattleType.BLOOD_CLASH) {
             this.isBloodClash = true;
         }
@@ -1002,7 +1000,6 @@ interface GameData {
 interface GameOption {
     p1RandomMode?: ENUM.RandomBrigType;
     p2RandomMode?: ENUM.RandomBrigType;
-    procOrder?: ENUM.ProcOrderType;
     battleType?: ENUM.BattleType;
 }
 

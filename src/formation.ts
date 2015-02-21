@@ -2,8 +2,7 @@
 
 class Formation {
     static FORMATION_CONFIG = {};
-    static ANDROID_PROC_ORDER = {};
-    static IOS_PROC_ORDER = {};
+    static UNI_PROC_ORDER = {}; // Universal proc order (same as iOS previously)
 
     // hacky, since TS does not have syntax for static initialization yet
     static whyfoo = Formation.initialize();
@@ -23,13 +22,9 @@ class Formation {
         Formation.FORMATION_CONFIG[ENUM.FormationType.SAW_5    ] = [1, 3, 2, 3, 1];
         Formation.FORMATION_CONFIG[ENUM.FormationType.HYDRA_5  ] = [3, 3, 1, 1, 1];
 
-        Formation.ANDROID_PROC_ORDER[ENUM.FormationRow.FRONT] = [11, 15, 14, 13, 12];
-        Formation.ANDROID_PROC_ORDER[ENUM.FormationRow.MID]   = [6, 10, 9, 8, 7];
-        Formation.ANDROID_PROC_ORDER[ENUM.FormationRow.REAR]  = [1, 5, 4, 3, 2];
-
-        Formation.IOS_PROC_ORDER[ENUM.FormationRow.FRONT] = [11, 12, 13, 14, 15];
-        Formation.IOS_PROC_ORDER[ENUM.FormationRow.MID]   = [6, 7, 8, 9, 10];
-        Formation.IOS_PROC_ORDER[ENUM.FormationRow.REAR]  = [1, 2, 3, 4, 5];
+        Formation.UNI_PROC_ORDER[ENUM.FormationRow.FRONT] = [11, 12, 13, 14, 15];
+        Formation.UNI_PROC_ORDER[ENUM.FormationRow.MID]   = [6, 7, 8, 9, 10];
+        Formation.UNI_PROC_ORDER[ENUM.FormationRow.REAR]  = [1, 2, 3, 4, 5];
         return null;
     }
 
@@ -39,10 +34,8 @@ class Formation {
         this.type = type;
     }
 
-    static getProcIndex(row: ENUM.FormationRow, column: number, type: ENUM.ProcOrderType): number {
-        var order = (type == ENUM.ProcOrderType.ANDROID)? this.ANDROID_PROC_ORDER : this.IOS_PROC_ORDER;
-
-        return order[row][column];
+    static getProcIndex(row: ENUM.FormationRow, column: number): number {
+        return Formation.UNI_PROC_ORDER[row][column];
     }
 
     /**

@@ -60,7 +60,7 @@ class Card {
         this.player = player; // 1: me, 2: opponent
         this.formationColumn = nth % 5;
         this.formationRow = player.formation.getCardRow(this.formationColumn);
-        this.procIndex = Formation.getProcIndex(this.formationRow, this.formationColumn, BattleModel.getInstance().procOrderType);
+        this.procIndex = Formation.getProcIndex(this.formationRow, this.formationColumn);
 
         this.skills = skills;
 
