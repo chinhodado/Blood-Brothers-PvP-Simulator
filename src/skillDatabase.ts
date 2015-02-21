@@ -4177,6 +4177,104 @@ var SkillDatabase = {
         desc: "-"
     },
 
+    817: {
+        name: "Jealousy", type: 3, func: 42, calc: 1,
+        args: [1.55, 1, 1, 0.07],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a heavy counter attack when struck, greatly lower ATK."
+    },
+
+    818: {
+        name: "Grace of Love", type: 1, func: 1, calc: 0,
+        args: [0.45, 2],
+        range: 21, prob: 70,
+        desc: "Raise DEF of self at start of battle."
+    },
+
+    819: {
+        name: "Enthralling Scent", type: 2, func: 34, calc: 2,
+        args: [1.65, 3, 0.3, 0.07],
+        range: 34, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based damage to all foes in the front/rear lines, sometimes greatly lower WIS."
+    },
+
+    820: {
+        name: "Leaping Dead", type: 2, func: 3, calc: 1,
+        args: [1.1, 1, 0.3, 10],
+        range: 40, prob: 30, ward: 1,
+        desc: "ATK-based damage to five random foes, sometimes poison them. Attacks rear foes first."
+    },
+
+    821: {
+        name: "Hug of the Dead", type: 1, func: 19, calc: 0,
+        args: [0, 4, 0.3],
+        range: 7, prob: 70,
+        desc: "Sometimes disable up to three foes at start of battle."
+    },
+
+    822: {
+        name: "Burning Tarots", type: 2, func: 4, calc: 2,
+        args: [0.65],
+        range: 17, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+
+    823: {
+        name: "Lovesickness", type: 2, func: 4, calc: 2,
+        args: [1.35, 5, 0.15, 1],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to all foes and sometimes silence targets, ignoring position."
+    },
+
+    824: {
+        name: "Tune of Love", type: 1, func: 44, calc: 0,
+        args: [0.3, 2, 0, 0, 0, 0.1, 3],
+        range: 4, prob: 70,
+        desc: "Raise DEF/WIS of all familiars based on 30% and 10% of his WIS respectively."
+    },
+
+    827: {
+        name: "Lotus Blossom", type: 2, func: 34, calc: 2,
+        args: [1.75, 1, 1, 0.06],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage and lower ATK of four random foes."
+    },
+
+    828: {
+        name: "Scarlet Arrows", type: 2, func: 4, calc: 1,
+        args: [1.3, 8, 0.3, 2000],
+        range: 8, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to all foes and sometimes burn targets, ignoring position."
+    },
+
+    829: {
+        name: "Rousing Roar", type: 1, func: 44, calc: 1,
+        args: [0.2, 1, 0, 0, 0, 0.1, 4],
+        range: 3, prob: 70, sac: 1,
+        desc: "Raise ATK/AGI of self and adjacent familiars on 20% and 10% of its ATK respectively."
+    },
+
+    830: {
+        name: "Gift of the Fleece", type: 1, func: 1, calc: 0,
+        args: [0.4, 5],
+        range: 3, prob: 70, sac: 1,
+        desc: "Reduce physical damage taken by self and adjacent familiars."
+    },
+
+    831: {
+        name: "Fervent Blade", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to three random foes."
+    },
+
+    832: {
+        name: "Tit for Tat", type: 3, func: 13, calc: 1,
+        args: [1.3],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a counter attack when struck."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -4637,5 +4735,26 @@ var SkillDatabase = {
         args: [1, 1, 0.5, 5],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and sometimes poison target."
+    },
+
+    10103: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10104: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.8],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to two foes."
+    },
+
+    10105: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.5],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Heavy ATK-based damage to one foe."
     },
 };

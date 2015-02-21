@@ -2926,4 +2926,66 @@ var famDatabase = {
         img: "3d8",
         fullName: "Intrepid Hand of Mercury"
     },
+    11540: {
+        name: "Houdi", stats: [13293, 6006, 10001, 15498, 12001],
+        skills: [822],
+        autoAttack: 10003,
+        img: "14b",
+        fullName: "Houdi, the Illusory Flame II"
+    },
+    11538: {
+        name: "Brangane", stats: [14610, 7639, 12001, 17899, 15804],
+        skills: [819],
+        autoAttack: 10003,
+        img: "2de",
+        fullName: "Brangane, the Enchanting II"
+    },
+    11541: {
+        name: "Aengus", stats: [15803, 6996, 12239, 17006, 16497],
+        skills: [823, 824],
+        autoAttack: 10003,
+        img: "453",
+        fullName: "Aengus, the Charitable II"
+    },
+    11557: {
+        name: "Peony", stats: [17298, 17797, 12250, 7505, 16399],
+        skills: [820, 821],
+        autoAttack: 10101,
+        img: "394",
+        fullName: "Peony, the Jiang Shi II"
+    },
+    11536: {
+        name: "Juno", stats: [19552, 18501, 17006, 17992, 9000],
+        skills: [817, 818],
+        img: "489",
+        fullName: "Juno, Goddess of Affection II"
+    },
+    11547: {
+        name: "Barometz", stats: [16961, 15121, 14145, 14000, 9052],
+        skills: [830],
+        autoAttack: 10105,
+        img: "184",
+        fullName: "Caparisoned Barometz II"
+    },
+    11545: {
+        name: "Chi-Hu", stats: [16529, 17071, 13106, 7440, 15738],
+        skills: [829],
+        autoAttack: 10104,
+        img: "381",
+        fullName: "Chi-Hu II"
+    },
+    11544: {
+        name: "Karna", stats: [19324, 20310, 15478, 11004, 17461],
+        skills: [828],
+        autoAttack: 10103,
+        img: "365",
+        fullName: "Karna, the Red Eye II"
+    },
+    11543: {
+        name: "He Qiong", stats: [24253, 14243, 22206, 23051, 17992],
+        skills: [827],
+        autoAttack: 10007,
+        img: "359",
+        fullName: "He Qiong, the Transcendent II"
+    },
 };
