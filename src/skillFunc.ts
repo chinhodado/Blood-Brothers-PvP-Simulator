@@ -43,6 +43,9 @@
                 return new CounterSkillLogic();
             case ENUM.SkillFunc.COUNTER_DISPELL:
                 return new CounterDispellSkillLogic();
+            case ENUM.SkillFunc.COUNTER_DEBUFF:
+            case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
+                return new CounterDebuffSkillLogic();
             case ENUM.SkillFunc.CLEAR_DEBUFF:
                 return new ClearDebuffSkillLogic();
             case ENUM.SkillFunc.DRAIN:
@@ -795,7 +798,8 @@ class CounterSkillLogic extends SkillLogic {
             additionalDescription: data.executor.name + " counters " + data.attacker.name + "! ",
         });
 
-        if (!data.executor.justMissed && !data.attacker.justEvaded && !data.attacker.isDead) {
+        if (!data.executor.justMissed && !data.attacker.justEvaded && !data.attacker.isDead
+            && data.skill.skillFunc === ENUM.SkillFunc.COUNTER) { // because this class can be subclassed. TODO: move the SkillFunc handling to processAffliction
             this.battleModel.processAffliction(data.executor, data.attacker, data.skill);
         }
     }
@@ -850,6 +854,19 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
         }
 
         return toReturn;
+    }
+}
+
+class CounterDebuffSkillLogic extends CounterSkillLogic {
+    execute(data: SkillLogicData) {
+        // counter
+        super.execute(data);
+
+        // debuff
+        var protector = data.executor;
+        if (!protector.isDead && protector.canUseSkill() && !data.attacker.isDead && Math.random() <= data.skill.skillFuncArg3) {
+            this.battleModel.processDebuff(protector, data.attacker, data.skill);
+        }
     }
 }
 

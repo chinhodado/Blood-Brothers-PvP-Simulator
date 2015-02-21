@@ -9,7 +9,7 @@ module ENUM {
     export enum SkillType {
         OPENING = 1,
         ACTIVE = 2, // attack, active healing, revive, dispell, suicide, random
-        DEFENSE = 3, // drain, counter, survive
+        DEFENSE = 3, // drain, counter, counter-indirect, survive, counter-debuff, onhit-buff, onhit-debuff,
         FIELD = 4,
         PROTECT = 5, // protect, protect-counter, evade, protect-reflect, counter-dispell
         EVADE = 6,
@@ -72,6 +72,8 @@ module ENUM {
         ONHIT_BUFF = 39,   // same as 38
         CLEAR_DEBUFF = 40,
         COUNTER_INDIRECT = 41,
+        COUNTER_DEBUFF = 42, // 1: mod, 2: status, 3: prob, 4: debuff pow
+        COUNTER_DEBUFF_INDIRECT = 43, // same as 42
         MULTI_BUFF = 44, // 1-5: same as buff, arg6: multiplier, arg7, 8: status
         MULTI_DEBUFF = 45,
         DEBUFF_AFFLICTION = 46, // 1-5: same as CASTER_BASED_DEBUFF, 6: afflict type, 7: afflict prob., 8, 9: afflict opt param

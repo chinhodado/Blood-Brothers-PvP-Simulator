@@ -69,6 +69,8 @@ class Skill {
             case ENUM.SkillFunc.MAGIC:
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.COUNTER_INDIRECT:
+            case ENUM.SkillFunc.COUNTER_DEBUFF:
+            case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
             case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
@@ -94,6 +96,7 @@ class Skill {
         switch (func) {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.COUNTER:
+            case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.PROTECT_REFLECT:
             case ENUM.SkillFunc.DEBUFFATTACK:
@@ -222,6 +225,9 @@ class Skill {
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
+            // not sure about these 2
+            case ENUM.SkillFunc.COUNTER_DEBUFF:
+            case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
                 isDebuffAttack = true;
                 break;
             default:
@@ -256,6 +262,8 @@ class Skill {
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
             case ENUM.SkillFunc.DEBUFF_AFFLICTION:
+            case ENUM.SkillFunc.COUNTER_DEBUFF:
+            case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
                 statuses.push(skillInfo.args[1]);
                 break;
             case ENUM.SkillFunc.MULTI_DEBUFF:
