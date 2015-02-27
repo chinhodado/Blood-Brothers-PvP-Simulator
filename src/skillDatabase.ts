@@ -4275,6 +4275,62 @@ var SkillDatabase = {
         desc: "Chance to unleash a counter attack when struck."
     },
 
+    833: {
+        name: "Seeds of Strife", type: 2, func: 4, calc: 3,
+        args: [1.55, 2, 0.2],
+        range: 208, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy AGI-based DMG to all foes, sometimes paralyze target. Increased if fewer foes."
+    },
+
+    834: {
+        name: "Cold Blood", type: 3, func: 41, calc: 1,
+        args: [1.5, 1, 0.4, 10],
+        range: 21, prob: 50, ward: 1, sac: 1,
+        desc: "Chance to unleash a heavy poisonous counter attack (10% of max HP) when struck."
+    },
+
+    835: {
+        name: "Funerary Wings", type: 2, func: 3, calc: 3,
+        args: [1.6, 2, 0.3],
+        range: 16, prob: 30, ward: 1, sac: 1,
+        desc: "Heavy AGI-based damage to and sometimes paralyze three random foes."
+    },
+
+    836: {
+        name: "Blade of Hair", type: 2, func: 4, calc: 1,
+        args: [1.3],
+        range: 20, prob: 30, ward: 1,
+        desc: "ATK-based damage to five random foes, ignoring position."
+    },
+
+    837: {
+        name: "Hair Cocoon", type: 1, func: 1, calc: 0,
+        args: [1, 18],
+        range: 122, prob: 70,
+        desc: "Allows two random allies to perform an extra action during the next turn."
+    },
+
+    838: {
+        name: "Calamity Unleashed", type: 2, func: 4, calc: 2,
+        args: [1.75],
+        range: 19, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    839: {
+        name: "Last Hope", type: 1, func: 1, calc: 0,
+        args: [840, 16],
+        range: 21, prob: 50,
+        desc: "Revive and fully restore HP of self upon her death."
+    },
+
+    840: {
+        name: "Dawn's Light", type: 16, func: 6, calc: 0,
+        args: [1],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -4756,5 +4812,26 @@ var SkillDatabase = {
         args: [1.5],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "Heavy ATK-based damage to one foe."
+    },
+
+    10106: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10107: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2, 1, 0.3, 10],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe and sometimes poison target."
+    },
+
+    10108: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 };

@@ -2988,4 +2988,39 @@ var famDatabase = {
         img: "359",
         fullName: "He Qiong, the Transcendent II"
     },
+
+    11553: {
+        name: "Rapunzel", stats: [18349, 20223, 17428, 8805, 18208],
+        skills: [836, 837],
+        autoAttack: 10108,
+        img: "391",
+        fullName: "Rapunzel, Grimoire Keeper II"
+    },
+    11552: {
+        name: "Druj", stats: [15024, 12999, 15647, 7005, 17241],
+        skills: [835],
+        img: "460",
+        fullName: "Druj Nasu, the Impure II"
+    },
+    11550: {
+        name: "Medea", stats: [17493, 18598, 17493, 10300, 5999],
+        skills: [834],
+        autoAttack: 10107,
+        img: "37b",
+        fullName: "Medea, Vengeful Queen II"
+    },
+    21549: {
+        name: "Discordia", stats: [20031, 18525, 19831, 12014, 17989],
+        skills: [833],
+        autoAttack: 10106,
+        img: "42a",
+        fullName: "Discordia, Bringer of Ruin"
+    },
+    11554: {
+        name: "Pandora", stats: [15023, 7028, 13528, 16887, 16529],
+        skills: [838, 839],
+        autoAttack: 10003,
+        img: "12a",
+        fullName: "Pandora, Fallen Heroine II"
+    },
 };
