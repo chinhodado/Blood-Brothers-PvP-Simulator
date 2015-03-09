@@ -358,9 +358,10 @@ function getTierList(whatToDoNext) {
     if (!localStorage.getItem("tierList") || needUpdate) {
         console.log("Fetching tier list...");
         $.ajax({
-            "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372&callback=" + callback,
+            "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372",
             "crossDomain": true,
-            "dataType": "jsonp"
+            "dataType": "jsonp",
+            "jsonpCallback": callback
         });
     }
     else {
