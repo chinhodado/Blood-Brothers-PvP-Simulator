@@ -3023,4 +3023,77 @@ var famDatabase = {
         img: "12a",
         fullName: "Pandora, Fallen Heroine II"
     },
+    11564: {
+        name: "Ninurta", stats: [13465, 6954, 10332, 14120, 11077],
+        skills: [848],
+        autoAttack: 10007,
+        img: "292",
+        fullName: "Ninurta, the Thunderclap II"
+    },
+    11561: {
+        name: "Persephone", stats: [18793, 8686, 13929, 21957, 18154],
+        skills: [844, 845],
+        autoAttack: 10007,
+        img: "4b1",
+        fullName: "Persephone, Spring Goddess II"
+    },
+    11560: {
+        name: "Bheara", stats: [14975, 6502, 12207, 17475, 16754],
+        skills: [842],
+        autoAttack: 10007,
+        img: "387",
+        fullName: "Bheara, Wastestrider II"
+    },
+    21560: {
+        name: "Bheara", stats: [13572, 8426, 9509, 13301, 11459],
+        skills: [843],
+        autoAttack: 10007,
+        img: "141",
+        fullName: "Bheara, Tree of Death II"
+    },
+    11562: {
+        name: "Oka", stats: [16042, 5122, 12120, 17959, 17244],
+        skills: [846, 847],
+        autoAttack: 10007,
+        img: "275",
+        fullName: "Oka, Kunoichi II"
+    },
+    21558: {
+        name: "Jarilo", stats: [20987, 21955, 18023, 12050, 17965],
+        skills: [841],
+        autoAttack: 10109,
+        img: "31b",
+        fullName: "Jarilo, God of Fertility"
+    },
+    11567: {
+        name: "Phlox", stats: [15047, 5298, 13489, 17499, 16607],
+        skills: [863],
+        img: "23d",
+        fullName: "Phlox, Avern Witch II"
+    },
+    11569: {
+        name: "Icemelt", stats: [11794, 8101, 8502, 14402, 14000],
+        skills: [858],
+        img: "408",
+        fullName: "Icemelt Dragon II"
+    },
+    21569: {
+        name: "Cocytus", stats: [16497, 6248, 12001, 18252, 16995],
+        skills: [866, 867],
+        autoAttack: 10111,
+        img: "2f0",
+        fullName: "Cocytus Dragon II"
+    },
+    11570: {
+        name: "War Bear", stats: [18999, 17504, 15500, 11492, 6292],
+        skills: [859, 860],
+        img: "1b8",
+        fullName: "War Bear II"
+    },
+    11565: {
+        name: "Sigurd", stats: [19996, 19053, 14005, 11004, 17992],
+        skills: [864, 865],
+        img: "25e",
+        fullName: "Sigurd, Dragonslayer II"
+    },
 };

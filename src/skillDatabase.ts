@@ -4331,6 +4331,181 @@ var SkillDatabase = {
         desc: "-"
     },
 
+    841: {
+        name: "Raging Spear", type: 2, func: 3, calc: 1,
+        args: [1.35, 2, 0.25],
+        range: 32, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to and sometimes paralyze up to four foes."
+    },
+
+    842: {
+        name: "Icy Flame", type: 2, func: 4, calc: 2,
+        args: [1.6, 8, 0.25, 2500],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage and sometimes burn four random foes, ignoring position."
+    },
+
+    843: {
+        name: "Rampike Limbs", type: 2, func: 4, calc: 2,
+        args: [1.2],
+        range: 32, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to up to four foes, ignoring position."
+    },
+
+    844: {
+        name: "Infernal Gale", type: 2, func: 4, calc: 2,
+        args: [1.45],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to four random foes, ignoring position."
+    },
+
+    845: {
+        name: "Spring Breeze", type: 1, func: 44, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 0.3, 5],
+        range: 3, prob: 70,
+        desc: "Raise WIS and reduce physical damage taken by self and adjacent familiars."
+    },
+
+    846: {
+        name: "Sakura Shower", type: 2, func: 4, calc: 2,
+        args: [1, 2, 0.2],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to and sometimes paralyze six random foes, ignoring position."
+    },
+
+    847: {
+        name: "Petals of Confusion", type: 1, func: 1, calc: 0,
+        args: [0.15, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars, based on 15% of her WIS."
+    },
+
+    848: {
+        name: "Gale Claw", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    849: {
+        name: "Blazing Rapier", type: 2, func: 4, calc: 2,
+        args: [1.15],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
+    },
+
+    850: {
+        name: "Blazing Rapier", type: 2, func: 4, calc: 2,
+        args: [1.15],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    851: {
+        name: "Blazing Rapier", type: 2, func: 4, calc: 2,
+        args: [1.15],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to five random foes, ignoring position."
+    },
+
+    852: {
+        name: "Conflagration", type: 1, func: 1, calc: 0,
+        args: [0.1, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars, based on 10% of his WIS."
+    },
+
+    853: {
+        name: "Conflagration", type: 1, func: 1, calc: 0,
+        args: [0.15, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars, based on 15% of his WIS."
+    },
+
+    854: {
+        name: "Conflagration", type: 1, func: 1, calc: 0,
+        args: [0.2, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS of self and adjacent familiars, based on 20% of his WIS."
+    },
+
+    855: {
+        name: "Inferno Aegis", type: 1, func: 1, calc: 0,
+        args: [0.1, 5],
+        range: 3, prob: 70,
+        desc: "Reduce physical damage taken by self and adjacent familiars by 10%."
+    },
+
+    856: {
+        name: "Inferno Aegis", type: 1, func: 1, calc: 0,
+        args: [0.2, 5],
+        range: 3, prob: 70,
+        desc: "Reduce physical damage taken by self and adjacent familiars by 20%."
+    },
+
+    857: {
+        name: "Inferno Aegis", type: 1, func: 1, calc: 0,
+        args: [0.3, 5],
+        range: 3, prob: 70,
+        desc: "Reduce physical damage taken by self and adjacent familiars by 30%."
+    },
+
+    858: {
+        name: "Freezing Wind", type: 2, func: 4, calc: 2,
+        args: [0.85],
+        range: 20, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
+    },
+
+    859: {
+        name: "Lashing Claws", type: 5, func: 14, calc: 1,
+        args: [1.45],
+        range: 2, prob: 50, ward: 1,
+        desc: "Take damage in place of adjacent familiars and counter."
+    },
+
+    860: {
+        name: "Last Stand", type: 1, func: 44, calc: 1,
+        args: [0.3, 17, 0, 0, 0, 0.3, 2],
+        range: 3, prob: 70,
+        desc: "Raise HP/DEF of self and adjacent familiars on 30% of its ATK respectively."
+    },
+
+    863: {
+        name: "Popping Petals", type: 2, func: 33, calc: 2,
+        args: [1.3, 3, 0.2, 0.1],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal WIS-based damage to five random foes and sometimes greatly lower WIS."
+    },
+
+    864: {
+        name: "Reforged Blade", type: 2, func: 3, calc: 1,
+        args: [1.75],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to three random foes."
+    },
+
+    865: {
+        name: "Dragonblood Ward", type: 6, func: 27, calc: 0,
+        args: [2, 10, 78, 79],
+        range: 21, prob: 50,
+        desc: "Evade enemy WIS-based and AGI-based attack skills."
+    },
+
+    866: {
+        name: "Winds of Sorrow", type: 2, func: 4, calc: 2,
+        args: [1.6, 3, 0.3],
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage and sometimes freeze up to four foes. Increased if fewer foes."
+    },
+
+    867: {
+        name: "Tail Blizzard", type: 1, func: 1, calc: 0,
+        args: [0.1, 4],
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars at start of battle."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -4833,5 +5008,19 @@ var SkillDatabase = {
         args: [1.2],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10109: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.7],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage up to two foes."
+    },
+
+    10111: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 3, 0.2],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes freeze target."
     },
 };

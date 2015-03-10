@@ -312,7 +312,7 @@ class Skill {
                 return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
                     && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
                     && attackSkill.skillFunc != ENUM.SkillFunc.COUNTER_INDIRECT
-                    && attackSkill.id == 10000);
+                    && attackSkill.id != 10000);
             case ENUM.ProtectAttackType.NOT_COUNTER:
                 return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
                      && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
