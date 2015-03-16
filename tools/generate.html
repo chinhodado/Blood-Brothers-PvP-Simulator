@@ -1,11 +1,21 @@
 ﻿<html>
     <head>
         <title>Database generator</title>
-        <script src="srcdb.js"></script>
+
+        <script src="../lib/jquery.min.js"></script>
         <script src="generate.js"></script>
         <script src="../compiled.js"></script>
     </head>
     <body>
+        <script>
+            var srcdb;
+            function foo(data) {
+                srcdb = JSON.parse(data);
+            }
+        </script>
+
+        <script src="https://bloodbrothers.herokuapp.com/?callback=foo"></script>
+
         <p>Fams? (list of name, one on each line)</p>
         <textarea rows="10" cols="50" id="famList"></textarea>
         <p>Last skill? (< 10,000 to generate normal skills, and > 10,000 to generate auto skills)</p>
