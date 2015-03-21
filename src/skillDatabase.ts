@@ -4320,7 +4320,7 @@ var SkillDatabase = {
     839: {
         name: "Last Hope", type: 1, func: 1, calc: 0,
         args: [840, 16],
-        range: 21, prob: 50,
+        range: 21, prob: 70,
         desc: "Revive and fully restore HP of self upon her death."
     },
 
@@ -4471,6 +4471,20 @@ var SkillDatabase = {
         desc: "Raise HP/DEF of self and adjacent familiars on 30% of its ATK respectively."
     },
 
+    861: {
+        name: "Flame Gout", type: 2, func: 34, calc: 2,
+        args: [1.35, 2, 0.25, 0.15],
+        range: 208, prob: 30, ward: 3,
+        desc: "WIS-based DMG and sometimes lower DEF of all foes. Increased if fewer foes."
+    },
+
+    862: {
+        name: "Brass Wing", type: 5, func: 28, calc: 7,
+        args: [0.23, 0, 7, 3, 0.3],
+        range: 21, prob: 50,
+        desc: "Reflect 70% of all kinds of damages back to up to three foes."
+    },
+
     863: {
         name: "Popping Petals", type: 2, func: 33, calc: 2,
         args: [1.3, 3, 0.2, 0.1],
@@ -4504,6 +4518,41 @@ var SkillDatabase = {
         args: [0.1, 4],
         range: 3, prob: 70,
         desc: "Raise AGI of self and adjacent familiars at start of battle."
+    },
+
+    868: {
+        name: "Emerald Flame", type: 2, func: 3, calc: 1,
+        args: [1.1, 1, 0.3, 10],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to and sometimes poison five random foes."
+    },
+
+    870: {
+        name: "Oak Arrow", type: 2, func: 4, calc: 1,
+        args: [2, 2, 0.4],
+        range: 313, prob: 30, ward: 1, sac: 1,
+        desc: "Massive ATK-based damage, sometimes paralyze up to three foes. Increased if fewer foes."
+    },
+
+    871: {
+        name: "Flying Leaf", type: 2, func: 4, calc: 3,
+        args: [1.6],
+        range: 314, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy AGI-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    872: {
+        name: "Fervent Hooves", type: 2, func: 4, calc: 2,
+        args: [1.35],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to five random foes."
+    },
+
+    873: {
+        name: "Binding Whip", type: 1, func: 19, calc: 0,
+        args: [0, 2, 0.3],
+        range: 7, prob: 70,
+        desc: "Chance to paralyze up to three foes at start of battle."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -5017,10 +5066,38 @@ var SkillDatabase = {
         desc: "ATK-based damage up to two foes."
     },
 
+    10110: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 5, prob: 100, ward: 3, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
     10111: {
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1, 3, 0.2],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage and sometimes freeze target."
+    },
+
+    10112: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2, 1, 0.2, 10],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe and sometimes poison target."
+    },
+
+    10113: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.5],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Heavy ATK-based damage to one foe."
+    },
+
+    10114: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2, 2, 0.3],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes paralyze target."
     },
 };

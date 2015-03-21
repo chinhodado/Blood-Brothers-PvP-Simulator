@@ -288,6 +288,8 @@ class Skill {
      */
     static canProtectFromCalcType(type: ENUM.SkillCalcType, attackSkill: Skill): boolean {
         switch (type) {
+            case ENUM.SkillCalcType.DEFAULT:
+                return true;
             case ENUM.SkillCalcType.ATK:
             case ENUM.SkillCalcType.WIS:
             case ENUM.SkillCalcType.AGI:
@@ -299,7 +301,7 @@ class Skill {
             case ENUM.SkillCalcType.WIS_AGI:
                 return attackSkill.skillCalcType == ENUM.SkillCalcType.WIS || attackSkill.skillCalcType == ENUM.SkillCalcType.AGI;
             default:
-                return false;
+                throw new Error("Unimplemented calcType for canProtectFromCalcType()");
         }
     }
 

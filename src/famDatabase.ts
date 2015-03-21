@@ -3068,6 +3068,7 @@ var famDatabase = {
     11567: {
         name: "Phlox", stats: [15047, 5298, 13489, 17499, 16607],
         skills: [863],
+        autoAttack: 10003,
         img: "23d",
         fullName: "Phlox, Avern Witch II"
     },
@@ -3095,5 +3096,40 @@ var famDatabase = {
         skills: [864, 865],
         img: "25e",
         fullName: "Sigurd, Dragonslayer II"
+    },
+    11574: {
+        name: "Dryad", stats: [15186, 17060, 14449, 6487, 16670],
+        skills: [870],
+        autoAttack: 10103,
+        img: "3c2",
+        fullName: "Dryad Archer II"
+    },
+    11572: {
+        name: "Banshee", stats: [23560, 16009, 21480, 24708, 18533],
+        skills: [872, 873],
+        autoAttack: 10114,
+        img: "42d",
+        fullName: "Banshee Rider II"
+    },
+    11577: {
+        name: "Emerald", stats: [25012, 24383, 21881, 12272, 18208],
+        skills: [868],
+        autoAttack: 10112,
+        img: "342",
+        fullName: "Emerald Dragon II"
+    },
+    21571: {
+        name: "Rattlebolt", stats: [19552, 11502, 20007, 20999, 18221],
+        skills: [861, 862],
+        autoAttack: 10110,
+        img: "35b",
+        fullName: "Rattlebolt Wyvern"
+    },
+    11576: {
+        name: "Lubberkin", stats: [15793, 12965, 16144, 6078, 17060],
+        skills: [871],
+        autoAttack: 10061,
+        img: "1fc",
+        fullName: "Lubberkin, Four Leaf Clover II"
     },
 };
