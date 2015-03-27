@@ -219,7 +219,7 @@ class Card {
         return this.formationRow;
     }
 
-    getStat(statType: String): number {
+    getStat(statType: string): number {
         if (statType === "HP") {
             return this.getHP();
         }
@@ -240,6 +240,23 @@ class Card {
         }
         else {
             throw new Error ("Invalid stat type");
+        }
+    }
+
+    getOriginalStat(statType: string) {
+        switch (statType) {
+            case "HP":
+                return this.originalStats.hp;
+            case "ATK":
+                return this.originalStats.atk;
+            case "DEF":
+                return this.originalStats.def;
+            case "WIS":
+                return this.originalStats.wis;
+            case "AGI":
+                return this.originalStats.agi;
+            default:
+                throw new Error("Invalid StatType!");
         }
     }
 

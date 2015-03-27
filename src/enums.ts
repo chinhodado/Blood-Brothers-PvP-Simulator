@@ -77,6 +77,10 @@ module ENUM {
         MULTI_BUFF = 44, // 1-5: same as buff, arg6: multiplier, arg7, 8: status
         MULTI_DEBUFF = 45,
         DEBUFF_AFFLICTION = 46, // 1-5: same as CASTER_BASED_DEBUFF, 6: afflict type, 7: afflict prob., 8, 9: afflict opt param
+        ABSORB = 51, // 1: not used, 2: stat(s) to be absorbed, 3: skill mod used for the buff/debuff,
+                     // 4: base stat for debuff (WIS, ATK, etc)
+                     // 5: percent gain from the amount debuffed of a target, 6: inner probability,
+                     // 7, 8, 9: unimportant (effect ids), 10: not used
     }
 
     /**
@@ -142,6 +146,24 @@ module ENUM {
         REMAIN_HP_ATK_DEF_AGI_UP = 27,
         REMAIN_HP_DEF_WIS_AGI_UP = 28,
         REMAIN_HP_ATK_WIS_AGI_UP = 29,
+    }
+
+    // seems to only be used by absorb
+    export enum BuffStatusType {
+        ATK         = 1,
+        DEF         = 2,
+        WIS         = 3,
+        AGI         = 4,
+        ATK_DEF     = 5,
+        ATK_WIS     = 6,
+        ATK_AGI     = 7,
+        DEF_WIS     = 8,
+        DEF_AGI     = 9,
+        WIS_AGI     = 10,
+        ATK_DEF_WIS = 11,
+        ATK_DEF_AGI = 12,
+        DEF_WIS_AGI = 13,
+        ALL_STATUS  = 14, // ATK + DEF + WIS + AGI
     }
 
     export enum SkillRange {

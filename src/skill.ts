@@ -176,11 +176,15 @@ class Skill {
      * (mainly used to determine whether to use the magic circle)
      */
     static isMagicSkill(skillId: number): boolean {
-        var isMagicSkill = false;
         var skillInfo = SkillDatabase[skillId];
 
         if (skillInfo.calc == ENUM.SkillCalcType.WIS) {
-            isMagicSkill = true;
+            return true;
+        }
+
+        // hmmm is this true? I think so...
+        if (skillInfo.type == ENUM.SkillType.OPENING) {
+            return true;
         }
 
         if ([ENUM.SkillFunc.AFFLICTION,
@@ -191,11 +195,12 @@ class Skill {
             ENUM.SkillFunc.DEBUFF_AFFLICTION,
             ENUM.SkillFunc.MAGIC,
             ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC,
+            ENUM.SkillFunc.ABSORB,
             ENUM.SkillFunc.DRAIN_MAGIC].indexOf(skillInfo.func) != -1) {
-            isMagicSkill = true;
+            return true;
         }
 
-        return isMagicSkill;
+        return false;
     }
 
     /**
@@ -275,6 +280,9 @@ class Skill {
             case ENUM.SkillFunc.ONHIT_BUFF:
                 statuses.push(skillInfo.args[1]);
                 if (skillInfo.args[2]) statuses.push(skillInfo.args[2]);
+                break;
+            case ENUM.SkillFunc.ABSORB:
+                statuses = AbsorbSkillLogic.getComponentStatusFromBuffStatusType(skillInfo.args[1]);
                 break;
             default:
                 break;

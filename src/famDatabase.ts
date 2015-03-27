@@ -3132,4 +3132,17 @@ var famDatabase = {
         img: "1fc",
         fullName: "Lubberkin, Four Leaf Clover II"
     },
+    11582: {
+        name: "Vlad", stats: [18934, 8491, 15240, 19812, 18024],
+        skills: [877, 878],
+        autoAttack: 10007,
+        img: "187",
+        fullName: "Vlad, Swap II"
+    },
+    11521: {
+        name: "Wrath", stats: [19010, 21101, 16410, 11936, 18154],
+        skills: [706, 707],
+        img: "279",
+        fullName: "Wrath, Beast of Sin II"
+    },
 };

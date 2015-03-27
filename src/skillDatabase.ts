@@ -4044,6 +4044,20 @@ var SkillDatabase = {
         desc: "Deal ATK-based damage to five random foes and sometimes poison them, ignoring position."
     },
 
+    706: {
+        name: "Storm of Wrath", type: 2, func: 36, calc: 1,
+        args: [1.1, 0.2, 27, 21],
+        range: 20, prob: 30, ward: 1,
+        desc: "Drains HP from five random foes while dealing ATK-based damage."
+    },
+
+    707: {
+        name: "Furious Roar", type: 1, func: 51, calc: 0,
+        args: [0, 1, 0.35, 2, 0.35, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorbs ATK from up to three foes at beginning of battles."
+    },
+
     708: {
         name: "Discipline", type: 2, func: 4, calc: 2,
         args: [1.6],
@@ -4553,6 +4567,20 @@ var SkillDatabase = {
         args: [0, 2, 0.3],
         range: 7, prob: 70,
         desc: "Chance to paralyze up to three foes at start of battle."
+    },
+
+    877: {
+        name: "Blood Blade", type: 2, func: 37, calc: 2,
+        args: [1.7, 0.3, 27, 21],
+        range: 19, prob: 30, ward: 2,
+        desc: "Drains HP from four random foes while dealing heavy WIS-based damage."
+    },
+
+    878: {
+        name: "Eye of Confusion", type: 1, func: 51, calc: 0,
+        args: [0, 10, 0.08, 2, 0.35, 1, 121, 120, 43],
+        range: 16, prob: 70,
+        desc: "Absorbs AGI and WIS from three random foes at the beginning of battles."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
