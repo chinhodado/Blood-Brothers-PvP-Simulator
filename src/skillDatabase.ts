@@ -1,13 +1,25 @@
-/**
- * Some notes:
- * - For attack skills, there has to be a "ward" attribute, which takes a value of 1 (physical), 2 (magical) or 3 (breath)
- *   For definition of attack skills, see Skill.isAttackSkill()
- * - Only need to include the first n args such that the nth arg is the last arg that has a value (i.e. not 0)
- * - For auto attacks, need to include isAutoAttack: true
- * - For saccable skills, need to include sac: 1
- * - There is no need for the baseProbability
- */
-var SkillDatabase = {
+interface SkillInfo {
+    name: string;
+    type: ENUM.SkillType;
+    func: ENUM.SkillFunc;
+    calc: ENUM.SkillCalcType;
+    args?: number[];          // Only need to include the first n args such that the nth arg is
+                              // the last arg that has a value (i.e. not 0)
+                              // some skillFuncs don't need args (dispel, random)
+    randSkills?: number[];    // array of random skill ids for random skills
+    range :ENUM.SkillRange;
+    prob: number;             // skill proc probability. There's no need for the baseProbability
+    ward?: ENUM.WardType;     // needed for attack skills. For definition of attack skills, see Skill.isAttackSkill()
+    sac?: number;             // For saccable skills, need to include sac: 1
+    isAutoAttack?: boolean;   // For auto attacks, need to include isAutoAttack: true
+    desc: string;
+}
+
+interface SkillMap {
+    [id: number]: SkillInfo;
+}
+
+var SkillDatabase: SkillMap = {
     10000: {
         name: "Default auto", type: 2, func: 3, calc: 1,
         args: [1],
