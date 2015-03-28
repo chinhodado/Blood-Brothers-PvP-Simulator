@@ -56,7 +56,7 @@ class BattleDebugger {
         }
 
         var data = BattleLogger.getInstance().majorEventLog[index];
-        var id = "turn" + data.turn + "events";
+        var id = `turn${data.turn}events`;
         var battleEventDiv = document.getElementById("battleEventDiv");
         var turnEventList = document.getElementById(id);
 
@@ -68,7 +68,7 @@ class BattleDebugger {
         }
 
         var newEvent = document.createElement("li");
-        newEvent.innerHTML = "<a>" + data.description + "</a>";
+        newEvent.innerHTML = `<a>${data.description}</a>`;
         newEvent.setAttribute("tabindex", index + "");
         newEvent.setAttribute("id", index + "");
 
@@ -88,7 +88,7 @@ class BattleDebugger {
         }
 
         var currentTurn = BattleLogger.getInstance().majorEventLog[majorIndex].turn;
-        var id = "turn" + currentTurn + "events";
+        var id = `turn${currentTurn}events`;
 
         var description = BattleLogger.getInstance().minorEventLog[majorIndex][minorIndex].description;
 
@@ -125,7 +125,7 @@ class BattleDebugger {
 
         var battleEventDiv = document.getElementById("battleEventDiv");
         var newEvent = document.createElement("p");
-        newEvent.innerHTML = "Turn " + turnNum;
+        newEvent.innerHTML = `Turn ${turnNum}`;
         battleEventDiv.appendChild(newEvent);
     }
 
@@ -150,8 +150,8 @@ class BattleDebugger {
 
         // now prepares the info and print them out
         for (var p = 1; p <= 2; p++) { // for each player
-            var playerCards = field["player" + p + "Cards"]; // get the cards of that player
-            var lastPlayerCards = lastEventField["player" + p + "Cards"];
+            var playerCards = field[`player${p}Cards`]; // get the cards of that player
+            var lastPlayerCards = lastEventField[`player${p}Cards`];
             for (var f = 0; f < 5; f++) { // for each card
                 var stats          = playerCards[f].stats;
                 var originalStats  = playerCards[f].originalStats;
@@ -184,30 +184,30 @@ class BattleDebugger {
 
                 var infoText: any = {
                     name : playerCards[f].name,
-                    hp : "HP: " + stats.hp,
-                    atk : "ATK: " + finalAtk,
-                    def : "DEF: " + finalDef,
-                    wis : "WIS: " + finalWis,
-                    agi : "AGI: " + finalAgi,
+                    hp : `HP: ${stats.hp}`,
+                    atk : `ATK: ${finalAtk}`,
+                    def : `DEF: ${finalDef}`,
+                    wis : `WIS: ${finalWis}`,
+                    agi : `AGI: ${finalAgi}`,
                 };
 
-                if (status.attackResistance != 0) infoText.physicalResist = "PW: " + status.attackResistance;
-                if (status.magicResistance  != 0) infoText.magicalResist  = "MW: " + status.magicResistance;
-                if (status.breathResistance != 0) infoText.breathResist   = "BW: " + status.breathResistance;
+                if (status.attackResistance != 0) infoText.physicalResist = `PW: ${status.attackResistance}`;
+                if (status.magicResistance  != 0) infoText.magicalResist  = `MW: ${status.magicResistance}`;
+                if (status.breathResistance != 0) infoText.breathResist   = `BW: ${status.breathResistance}`;
                 if (status.willAttackAgain  != 0) infoText.willAttackAgain  = "Extra action: Yes";
-                if (status.skillProbability != 0) infoText.skillProbability = "Extra prob.: " + status.skillProbability;
-                if (status.hpShield != 0)         infoText.hpShield = "HP Shld.: " + status.hpShield;
+                if (status.skillProbability != 0) infoText.skillProbability = `Extra prob.: ${status.skillProbability}`;
+                if (status.hpShield != 0)         infoText.hpShield = `HP Shld.: ${status.hpShield}`;
 
                 if (afflict) {
-                    infoText.affliction = "Affliction: " + Affliction.getAfflictionAdjective(afflict.type);
+                    infoText.affliction = `Affliction: ${Affliction.getAfflictionAdjective(afflict.type)}`;
                     if (afflict.type === ENUM.AfflictionType.SILENT) {
-                        infoText.affliction += (" (" + afflict.validTurnNum + " turn)");
+                        infoText.affliction += ` (${afflict.validTurnNum} turn)`;
                     }
                     else if (afflict.type === ENUM.AfflictionType.POISON) {
-                        infoText.affliction += (" (" + afflict.percent + " %)");
+                        infoText.affliction += ` (${afflict.percent} %)`;
                     }
                     else if (afflict.type === ENUM.AfflictionType.BURN) {
-                        infoText.affliction += (" (" + afflict.damage + ")");
+                        infoText.affliction += ` (${afflict.damage})`;
                     }
                     else { // frozen, disabled, paralyzed
                         infoText.affliction += " (1 turn)";
@@ -255,26 +255,26 @@ class BattleDebugger {
                 }
 
                 if (logger.minorEventLog[majorIndex] && logger.minorEventLog[majorIndex][0].executorId == playerCards[f].id) {
-                    infoText.name = "<b>" + infoText.name + "</b>";
+                    infoText.name = `<b>${infoText.name}</b>`;
                 }
 
-                var htmlelem = document.getElementById("player" + p + "Fam" + f); // <- the box to display info of the current fam
+                var htmlelem = document.getElementById(`player${p}Fam${f}`); // <- the box to display info of the current fam
                 htmlelem.innerHTML = infoText.name + "<br>" +
                                     infoText.hp  + "<br>" +
                                     infoText.atk + "<br>" +
                                     infoText.def + "<br>" +
                                     infoText.wis + "<br>" +
                                     infoText.agi +
-                                    (infoText.physicalResist? ( "<br>" + infoText.physicalResist) : "") +
-                                    (infoText.magicalResist? ( "<br>" + infoText.magicalResist) : "") +
-                                    (infoText.breathResist? ( "<br>" + infoText.breathResist) : "") +
-                                    (infoText.willAttackAgain? ( "<br>" + infoText.willAttackAgain) : "") +
-                                    (infoText.skillProbability? ( "<br>" + infoText.skillProbability) : "") +
-                                    (infoText.hpShield? ( "<br>" + infoText.hpShield) : "") +
-                                    (infoText.affliction? ( "<br>" + infoText.affliction) : "");
+                                    (infoText.physicalResist?   `<br>${infoText.physicalResist}` : "") +
+                                    (infoText.magicalResist?    `<br>${infoText.magicalResist}` : "") +
+                                    (infoText.breathResist?     `<br>${infoText.breathResist}` : "") +
+                                    (infoText.willAttackAgain?  `<br>${infoText.willAttackAgain}` : "") +
+                                    (infoText.skillProbability? `<br>${infoText.skillProbability}` : "") +
+                                    (infoText.hpShield?         `<br>${infoText.hpShield}` : "") +
+                                    (infoText.affliction?       `<br>${infoText.affliction}` : "");
 
                 // display last event's HP
-                var lastEventCard = lastEventField["player" + p + "Cards"][f];
+                var lastEventCard = lastEventField[`player${p}Cards`][f];
                 graphic.displayHP (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);
             }
         }

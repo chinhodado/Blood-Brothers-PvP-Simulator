@@ -104,11 +104,11 @@ class BattleLogger {
 
         if (battle.isBloodClash) {
             if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
-                infoDivP1.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player1);
+                infoDivP1.innerHTML +=  `<br><br>${cardManager.getPlayerReserveBrigString(battle.player1)}`;
             }
 
             if (!battle.p2RandomMode || !BattleModel.IS_MASS_SIMULATION) {
-                infoDivP2.innerHTML +=  "<br><br>" + cardManager.getPlayerReserveBrigString(battle.player2);
+                infoDivP2.innerHTML +=  `<br><br>${cardManager.getPlayerReserveBrigString(battle.player2)}`;
             }
         }
 
@@ -157,8 +157,7 @@ class BattleLogger {
         if (needWarn) {
             var simDiv = document.getElementById("simDiv");
             var gameDiv = document.getElementById("gameDiv");
-            var warnTxt = "<p><b>Note:</b> It seems that you using a 5v5 or 10v10 battle to determine whether " + p1main[0].name + " or " +
-                p2main[0].name + " is \"stronger\". This is <b>NOT</b> a recommended way of comparing two familiars.</p>";
+            var warnTxt = `<p><b>Note:</b> It seems that you using a 5v5 or 10v10 battle to determine whether ${p1main[0].name} or ${p2main[0].name} is "stronger". This is <b>NOT</b> a recommended way of comparing two familiars.</p>`;
             simDiv.innerHTML += warnTxt;
             gameDiv.innerHTML += warnTxt;
         }
@@ -180,7 +179,7 @@ class BattleLogger {
             case ENUM.RandomBrigType.AP_UP:
             case ENUM.RandomBrigType.A_ONLY:
             case ENUM.RandomBrigType.A_UP:
-                return " (random " + ENUM.RandomBrigText[type] + ")";
+                return ` (random ${ENUM.RandomBrigText[type]})`;
             default:
                 return "";
         }

@@ -840,7 +840,7 @@ class BattleModel {
             this.isFinished = true;
 
             this.logger.addMajorEvent({
-                description: "Decision win for " + this.playerWon.name
+                description: `Decision win for ${this.playerWon.name}`
             });
 
             this.logger.addMinorEvent({

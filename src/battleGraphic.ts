@@ -116,7 +116,7 @@ class BattleGraphic {
             this.coordArray[player] = coordArray;
 
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
-            var groupPlayer = draw.group().attr('id', 'p' + player + 'group');
+            var groupPlayer = draw.group().attr('id', `p${player}group`);
             if ((BattleGraphic.HIDE_PLAYER1 && player == 1) || (BattleGraphic.HIDE_PLAYER2 && player == 2)) {
                 groupPlayer.hide();
             }
@@ -171,7 +171,7 @@ class BattleGraphic {
 
                 var image = draw.image(imageLinksArray[i])
                     .move(image_x_coord, image_y_coord)
-                    .attr('id', 'p' + player + 'f' + i + 'image')
+                    .attr('id', `p${player}f${i}image`)
                     .loaded(function (loader) {
                         this.size(BattleGraphic.IMAGE_WIDTH);
                     });
@@ -179,16 +179,16 @@ class BattleGraphic {
                 var damageText = draw.text('0').font({ size: wr * 22, family: BattleGraphic.FONT })
                                      .attr({fill:'#fff', stroke: '#000', 'stroke-width': hr * 2 + 'px'})
                                      .center(coordArray[i][0], coordArray[i][1])
-                                     .attr('id', 'p' + player + 'f' + i + 'damageText')
+                                     .attr('id', `p${player}f${i}damageText`)
                                      .opacity(0);
 
                 var explosion = draw.image('img/explosion.png', wr * 70, wr * 70)
                                     .move(image_x_coord, image_y_coord)
-                                    .attr('id', 'p' + player + 'f' + i + 'explosion')
+                                    .attr('id', `p${player}f${i}explosion`)
                                     .opacity(0);
 
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
-                var group = draw.group().attr('id', 'p' + player + 'f' + i + 'group');
+                var group = draw.group().attr('id', `p${player}f${i}group`);
                 group.add(image);
                 group.add(damageText);
                 group.add(explosion);
@@ -249,8 +249,8 @@ class BattleGraphic {
 
         for (var p = 1; p <= 2; p++) {
             for (var f = 0; f < 5; f++) {
-                var image: any = SVG.get('p' + p + 'f' + f + 'image');
-                var card = field["player" + p + "Cards"][f];
+                var image: any = SVG.get(`p${p}f${f}image`);
+                var card = field[`player${p}Cards`][f];
                 image.load(getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
         }
@@ -283,7 +283,7 @@ class BattleGraphic {
 
         // first draw the (empty) hp bar
         // try to get the bar if it exist, or create if not
-        var hpbarId = 'p' + player + 'f' + index + 'hp';
+        var hpbarId = `p${player}f${index}hp`;
         var hpbar = SVG.get(hpbarId);
 
         if (!hpbar) {
@@ -291,7 +291,7 @@ class BattleGraphic {
                 .style({ 'stroke-width': BattleGraphic.wr * 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
-            var groupId = 'p' + player + 'f' + index + 'group';
+            var groupId = `p${player}f${index}group`;
 
             // add the hpbar to the group
             var group = SVG.get(groupId);
@@ -299,7 +299,7 @@ class BattleGraphic {
         }
 
         // now we deal with the background gradient used for displaying the HP
-        var hpGradientId = 'p' + player + 'f' + index + 'hpGradient';
+        var hpGradientId = `p${player}f${index}hpGradient`;
         var hpGradient : any = SVG.get(hpGradientId);
 
         var duration = 1;
@@ -310,14 +310,14 @@ class BattleGraphic {
         if (!hpGradient) {
             // draw for full HP
             hpGradient = draw.gradient('linear', stop => {
-                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', 'p' + player + 'f' + index + 'hpgs1'); //<- hp gradient stop
-                stop.at({ offset: '100%', color: 'transparent' }).attr('id', 'p' + player + 'f' + index + 'hpgs2');
+                stop.at({ offset: '100%', color: '#00ff00' }).attr('id', `p${player}f${index}hpgs1`); //<- hp gradient stop
+                stop.at({ offset: '100%', color: 'transparent' }).attr('id', `p${player}f${index}hpgs2`);
             }).attr('id', hpGradientId);
             hpbar.fill(hpGradient);
         }
         else {
-            var s1 = SVG.get('p' + player + 'f' + index + 'hpgs1');
-            var s2 = SVG.get('p' + player + 'f' + index + 'hpgs2');
+            var s1 = SVG.get(`p${player}f${index}hpgs1`);
+            var s2 = SVG.get(`p${player}f${index}hpgs2`);
             s1.animate(duration + 's').update({ offset: percent + '%' });
             s2.animate(duration + 's').update({ offset: percent + '%' });
         }
@@ -331,7 +331,7 @@ class BattleGraphic {
      */
     displayDamageTextAndHP(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
         var field = this.logger.getFieldAtMinorIndex(majorIndex, minorIndex);
-        var targetInfo = field["player" + playerId + "Cards"][famIndex];
+        var targetInfo = field[`player${playerId}Cards`][famIndex];
         var stats = targetInfo.stats;
         var originalStats = targetInfo.originalStats;
 
@@ -359,7 +359,7 @@ class BattleGraphic {
             txtColor = '#00ff00';
         }
 
-        var damageText = SVG.get('p' + playerId + 'f' + famIndex + 'damageText');
+        var damageText = SVG.get(`p${playerId}f${famIndex}damageText`);
         damageText.text(txt).font({ size: BattleGraphic.wr * 22}).attr({fill: txtColor})
                   .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '2s'}).opacity(0);
@@ -421,7 +421,7 @@ class BattleGraphic {
         for (var player = 1; player <= 2; player++) {
             for (var fam = 0; fam < 5; fam++) {
                 var svgAfflictTxt = this.getAfflictionText(player, fam);
-                var data = field["player" + player + "Cards"][fam];
+                var data = field[`player${player}Cards`][fam];
 
                 if (!data.affliction) {
                     svgAfflictTxt.hide();
@@ -449,7 +449,7 @@ class BattleGraphic {
         var image: any;
         if (ENUM.Setting.IS_MOBILE) {
             // fall back to using opacity, since svg filter can be a luxury...
-            image = document.getElementById('p' + player + 'f' + fam + 'image');
+            image = document.getElementById(`p${player}f${fam}image`);
             if (isDead) {
                 image.style.opacity = 0.4;
             } else {
@@ -457,7 +457,7 @@ class BattleGraphic {
             }
         }
         else {
-            image = SVG.get('p' + player + 'f' + fam + 'image');
+            image = SVG.get(`p${player}f${fam}image`);
             var filter = SVG.get('darkenFilter');
             if (isDead) {
                 if (!filter) {
@@ -577,7 +577,7 @@ class BattleGraphic {
                 procEffect = this.getProcEffect(executor.getPlayerId(), executor.formationColumn, 'lineSpark');
             }
 
-            SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'group').front();
+            SVG.get(`p${executor.getPlayerId()}f${executor.formationColumn}group`).front();
 
             procEffect.opacity(1);
             procEffect.animate({duration: '3s'})
@@ -600,8 +600,8 @@ class BattleGraphic {
             }
 
             // display skill name
-            var groupSkillBg = SVG.get('p' + executor.getPlayerId() + 'SkillBgTextGroup');
-            var svgText      = SVG.get('p' + executor.getPlayerId() + 'SkillText');
+            var groupSkillBg = SVG.get(`p${executor.getPlayerId()}SkillBgTextGroup`);
+            var svgText      = SVG.get(`p${executor.getPlayerId()}SkillText`);
 
             // the y-coordinate of the text, depending on whether this is player 1 or 2
             var yText = BattleGraphic.hr * (executor.getPlayerId() == 1 ? 272 : 8);
@@ -762,7 +762,7 @@ class BattleGraphic {
                     }
                 }
 
-                var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
                 damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
                     .opacity(1).animate({delay: '0.5s'}).opacity(0);
             }
@@ -779,7 +779,7 @@ class BattleGraphic {
         var executorGroup: any = this.getCardImageGroup(executor);
         // move the executor's group to the front
         executorGroup.front();
-        SVG.get('p' + executor.getPlayerId() + 'group').front();
+        SVG.get(`p${executor.getPlayerId()}group`).front();
 
         if (minorIndex < minorLog[majorIndex].length) {
             var target = this.cardMan.getCardById(data.targetId);
@@ -788,7 +788,7 @@ class BattleGraphic {
             var center_x = this.coordArray[playerId][index][0];
             var center_y = this.coordArray[playerId][index][1];
 
-            var damageText = SVG.get('p' + playerId + 'f' + index + 'damageText');
+            var damageText = SVG.get(`p${playerId}f${index}damageText`);
             damageText.text("REVIVED").center(center_x, center_y).font({ size: BattleGraphic.wr * 18})
                 .opacity(1).animate({delay: '0.5s'}).opacity(0);
             this.displayHP(data.reviveHPRatio * 100, playerId, index);
@@ -809,7 +809,7 @@ class BattleGraphic {
 
         // move the executor's group to the front
         executorGroup.front();
-        SVG.get('p' + executor.getPlayerId() + 'group').front();
+        SVG.get(`p${executor.getPlayerId()}group`).front();
 
         if (minorIndex < minorLog[majorIndex].length) {
             var protectedCard = this.cardMan.getCardById(data.protect.protectedId);
@@ -840,7 +840,7 @@ class BattleGraphic {
             }
 
             var nextData = minorLog[majorIndex][minorIndex + 1];
-            var explosion = SVG.get('p' + executor.getPlayerId() + 'f' + executor.formationColumn + 'explosion');
+            var explosion = SVG.get(`p${executor.getPlayerId()}f${executor.formationColumn}explosion`);
 
             // animation for the protect. Also use the next MinorEvent's information.
             // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
@@ -882,7 +882,7 @@ class BattleGraphic {
                             });
                     }
                     else { // receive damage physically - need to move the attacker also
-                        SVG.get('p' + attackerCard.getPlayerId() + 'group').front();
+                        SVG.get(`p${attackerCard.getPlayerId()}group`).front();
                         attackerGroup.animate({ duration: '0.5s' })
                             .move(executorGroup.rbox().x - x_attacker, executorGroup.rbox().y - y_attacker)
                             .after(function () {
@@ -937,7 +937,7 @@ class BattleGraphic {
         var executorGroup: any = this.getCardImageGroup(executor);
         // move the executor's group to the front
         executorGroup.front();
-        SVG.get('p' + executor.getPlayerId() + 'group').front();
+        SVG.get(`p${executor.getPlayerId()}group`).front();
 
         if (minorIndex < minorLog[majorIndex].length) {
             if (!data.noProcEffect) {
@@ -968,7 +968,7 @@ class BattleGraphic {
                 var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-                var damageText = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'damageText');
+                var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
                 damageText.text("+10%").center(center_x, center_y).font({ size: BattleGraphic.wr * 25})
                     .opacity(1).animate({delay: '2s'}).opacity(0);
             }
@@ -1020,9 +1020,9 @@ class BattleGraphic {
 
         // move the executor's group to the front
         executorGroup.front();
-        SVG.get('p' + executor.getPlayerId() + 'group').front();
+        SVG.get(`p${executor.getPlayerId()}group`).front();
 
-        var explosion = SVG.get('p' + target.getPlayerId() + 'f' + target.formationColumn + 'explosion');
+        var explosion = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}explosion`);
         if (Skill.isAoeSkill(data.skillId)) {
             var exploSet = [];
 
@@ -1041,7 +1041,7 @@ class BattleGraphic {
 
             for (var i = 0; i < aoeTargets.length; i++) {
                 var exploTargetCol = this.cardMan.getCardById(aoeTargets[i]).formationColumn;
-                exploSet.push(SVG.get('p' + target.getPlayerId() + 'f' + exploTargetCol + 'explosion'));
+                exploSet.push(SVG.get(`p${target.getPlayerId()}f${exploTargetCol}explosion`));
             }
 
             if (noAttackAnim) {
@@ -1140,14 +1140,14 @@ class BattleGraphic {
      * Get the image of a card
      */
     getCardImage(card: Card) {
-        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'image');
+        return SVG.get(`p${card.getPlayerId()}f${card.formationColumn}image`);
     }
 
     /**
      * Get the image group of a card
      */
     getCardImageGroup(card: Card) {
-        return SVG.get('p' + card.getPlayerId() + 'f' + card.formationColumn + 'group');
+        return SVG.get(`p${card.getPlayerId()}f${card.formationColumn}group`);
     }
 
     /**
@@ -1172,14 +1172,14 @@ class BattleGraphic {
                 throw new Error("Invalid type of ward");
         }
 
-        var ward = SVG.get('p' + playerId + 'f' + famIndex + wardTxt);
+        var ward = SVG.get(`p${playerId}f${famIndex}${wardTxt}`);
 
         if (!ward) {
-            ward = SVG.get('mainSvg').image('img/' + wardFileName, BattleGraphic.wr * 70, BattleGraphic.wr * 70)
+            ward = SVG.get('mainSvg').image(`img/${wardFileName}`, BattleGraphic.wr * 70, BattleGraphic.wr * 70)
                         .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
-                        .attr('id', 'p' + playerId + 'f' + famIndex + wardTxt)
+                        .attr('id', `p${playerId}f${famIndex}${wardTxt}`)
                         .opacity(0);
-            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(ward);
+            SVG.get(`p${playerId}f${famIndex}group`).add(ward);
         }
 
         return ward;
@@ -1189,7 +1189,7 @@ class BattleGraphic {
      * Get the affiction text of a card
      */
     getAfflictionText(playerId: number, famIndex: number) {
-        var txt = SVG.get('p' + playerId + 'f' + famIndex + 'afflictText');
+        var txt = SVG.get(`p${playerId}f${famIndex}afflictText`);
 
         if (!txt) {
             txt = SVG.get('mainSvg').text('Paralyzed').font({ size: BattleGraphic.wr * 14, family: BattleGraphic.FONT })
@@ -1197,9 +1197,9 @@ class BattleGraphic {
                                 .center(this.coordArray[playerId][famIndex][0],
                                         this.coordArray[playerId][famIndex][1] +
                                         BattleGraphic.IMAGE_WIDTH * 1.5 / 2 + BattleGraphic.hr * 20)
-                                .attr('id', 'p' + playerId + 'f' + famIndex + 'afflictText')
+                                .attr('id', `p${playerId}f${famIndex}afflictText`)
                                 .hide();
-            SVG.get('p' + playerId + 'f' + famIndex + 'group').add(txt);
+            SVG.get(`p${playerId}f${famIndex}group`).add(txt);
         }
 
         return txt;
@@ -1211,11 +1211,11 @@ class BattleGraphic {
     getProcEffect(playerId: number, famIndex: number, type: string) {
         var file = type == "spellCircle"? "circle_blue.png" : "lineSpark.png";
 
-        var effect = SVG.get('mainSvg').image('img/' + file, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
+        var effect = SVG.get('mainSvg').image(`img/${file}`, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
                             .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
-                            .attr('id', 'p' + playerId + 'f' + famIndex + 'spellCircle')
+                            .attr('id', `p${playerId}f${famIndex}spellCircle`)
                             .opacity(0);
-        SVG.get('p' + playerId + 'f' + famIndex + 'group').add(effect);
+        SVG.get(`p${playerId}f${famIndex}group`).add(effect);
 
         return effect;
     }

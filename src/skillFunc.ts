@@ -1172,8 +1172,7 @@ class TurnOrderChangeSkillLogic extends SkillLogic {
         this.logger.addMinorEvent({
                 executorId: data.executor.id,
                 type: ENUM.MinorEventType.BATTLE_DESCRIPTION,
-                description: "Turn order is now based on " + ENUM.BattleTurnOrderType[data.skill.skillFuncArg1] + " for " +
-                    data.skill.skillFuncArg2 + " turn(s).",
+                description: `Turn order is now based on ${ENUM.BattleTurnOrderType[data.skill.skillFuncArg1]} for ${data.skill.skillFuncArg2} turn(s).`,
                 skillId: data.skill.id,
                 battleDesc: "Turn Order Changed"
         });

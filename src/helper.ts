@@ -8,28 +8,28 @@ function setPreviousChoices() {
     // player 1 fams
     if (localStorage.getItem("f0") && localStorage.getItem("f0") != "null") {
         for (var i = 0; i < 10; i++) {
-            (<HTMLInputElement>document.getElementById("f" + i)).value = localStorage.getItem("f" + i);
+            (<HTMLInputElement>document.getElementById(`f${i}`)).value = localStorage.getItem(`f${i}`);
         }
     }
 
     // player 2 fams
     if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
         for (i = 0; i < 10; i++) {
-            (<HTMLInputElement>document.getElementById("f" + (i + 10))).value = localStorage.getItem("f" + (i + 10));
+            (<HTMLInputElement>document.getElementById(`f${i + 10}`)).value = localStorage.getItem(`f${i + 10}`);
         }
     }
 
     // player 1 skills
     if (localStorage.getItem("s10") && localStorage.getItem("s10") != "null") {
         for (i = 0; i < 3; i++) {
-            (<HTMLInputElement>document.getElementById("s1" + i)).value = localStorage.getItem("s1" + i);
+            (<HTMLInputElement>document.getElementById(`s1${i}`)).value = localStorage.getItem(`s1${i}`);
         }
     }
 
     // player 2 skills
     if (localStorage.getItem("s20") && localStorage.getItem("s20") != "null") {
         for (i = 0; i < 3; i++) {
-            (<HTMLInputElement>document.getElementById("s2" + i)).value = localStorage.getItem("s2" + i);
+            (<HTMLInputElement>document.getElementById(`s2${i}`)).value = localStorage.getItem(`s2${i}`);
         }
     }
 
@@ -61,10 +61,10 @@ function setPreviousChoices() {
 function toogleDisable() {
     for (var player = 1; player <= 2; player++) {
         // is the random checkbox checked?
-        var isSelected = (<HTMLInputElement>document.getElementById("r" + player)).checked;
+        var isSelected = (<HTMLInputElement>document.getElementById(`r${player}`)).checked;
 
         // fams, skills, formation
-        var elems = document.getElementsByClassName("p" + player);
+        var elems = document.getElementsByClassName(`p${player}`);
         for (var i = 0; i < elems.length; i++) {
             if (isSelected) {
                 (<HTMLInputElement>elems[i]).disabled = true;
@@ -128,7 +128,7 @@ function onFormLoad() {
         var min = a.getMinutes();
         var sec = a.getSeconds();
         var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-        $("#lastTierUpdate").text("Last tier list update: " + time);
+        $("#lastTierUpdate").text(`Last tier list update: ${time}`);
     }
 }
 
@@ -229,22 +229,22 @@ function getBattleDataOption() {
     data.p2_warlordSkillIds = [];
 
     for (var i = 0; i < 10; i++) {
-        var f1id = getURLParameter("f" + i);
-        var f2id = getURLParameter("f" + (i + 10));
+        var f1id = getURLParameter(`f${i}`);
+        var f2id = getURLParameter(`f${i + 10}`);
         data.p1_cardIds.push(f1id);
         data.p2_cardIds.push(f2id);
 
-        if (!option.p1RandomMode) localStorage.setItem("f" + i, f1id);
-        if (!option.p2RandomMode) localStorage.setItem("f" + (i + 10), f2id);
+        if (!option.p1RandomMode) localStorage.setItem(`f${i}`, f1id);
+        if (!option.p2RandomMode) localStorage.setItem(`f${i + 10}`, f2id);
     }
     for (i = 0; i < 3; i++) {
-        var w1s = getURLParameter("s1" + i);
-        var w2s = getURLParameter("s2" + i);
+        var w1s = getURLParameter(`s1${i}`);
+        var w2s = getURLParameter(`s2${i}`);
         data.p1_warlordSkillIds.push(w1s);
         data.p2_warlordSkillIds.push(w2s);
 
-        if (!option.p1RandomMode) localStorage.setItem("s1" + i, w1s);
-        if (!option.p2RandomMode) localStorage.setItem("s2" + i, w2s);
+        if (!option.p1RandomMode) localStorage.setItem(`s1${i}`, w1s);
+        if (!option.p2RandomMode) localStorage.setItem(`s2${i}`, w2s);
     }
 
     return [data, option];
@@ -315,10 +315,10 @@ function prepareField() {
     var img = new Image();
     var svgWrapper = document.getElementById("svgWrapper");
     img.onload = () => {
-        svgWrapper.style.backgroundImage = "url('" + rndBgLink + "')";
+        svgWrapper.style.backgroundImage = `url('${rndBgLink}')`;
     };
     img.onerror = () => {
-        console.log("Background not found: " + rndBgLink);
+        console.log(`Background not found: ${rndBgLink}`);
         svgWrapper.style.backgroundImage = "url(img/bg01.png)";
     };
     img.src = rndBgLink;
@@ -385,7 +385,7 @@ function getTierList(whatToDoNext) {
  */
 function updateTierList(data) {
     localStorage.setItem("tierList", JSON.stringify(data.results));
-    localStorage.setItem("lastTierUpdateTime", "" + new Date().getTime());
+    localStorage.setItem("lastTierUpdateTime", `${new Date().getTime()}`);
 }
 
 // kill me now...
@@ -615,10 +615,7 @@ function onSimulationResultObtained(finalData, startTime, endTime) {
 
     // now print out the details
     var simResultDiv = document.getElementById("simResultDiv");
-    simResultDiv.innerHTML += ("Player 2 won: " + finalData.p2WinCount +
-        "<br> Player 1 won: " + finalData.p1WinCount +
-        "<br><br> Time: " + ((endTime - startTime) / 1000).toFixed(2) + "s" +
-        "<br><a href=setting.html>Go back to main page </a>");
+    simResultDiv.innerHTML += (`Player 2 won: ${finalData.p2WinCount}<br> Player 1 won: ${finalData.p1WinCount}<br><br> Time: ${((endTime - startTime) / 1000).toFixed(2)}s<br><a href=setting.html>Go back to main page </a>`);
 
     var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
     for (var i = 0; i < famIdArray.length; i++) {
