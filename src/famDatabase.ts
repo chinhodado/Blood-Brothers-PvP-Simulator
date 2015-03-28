@@ -1,14 +1,26 @@
 /**
  * Some notes:
  * - Order the familiars by the fullName
- * - Use the POPE stats
- * - The "name" attribute is a short name for the fam. If multiple fams have the same short name,
- *   append the rarity at the end (e.g. "Thor" and "Thor L")
  * - The order of the skills only matters for mounted familiars
- * - If the familiar has a special autoAttack, add it
- * - For the image, use the wikia thumbnail version and follow the existing examples
  */
-var famDatabase = {
+
+interface CardInfo {
+    name: string;        // Short name for the fam. If multiple fams have the same short name,
+                         // append the rarity at the end (e.g. "Thor" and "Thor L")
+    stats: number[];     // Use the POPE stats
+    skills: number[];
+    autoAttack?: number; // needed for those with special autoAttack
+    isMounted?: boolean;
+    isWarlord?: boolean;
+    img: string;         // three chars that will be used to get the url of the fam's image
+    fullName: string;
+}
+
+interface CardMap {
+    [id: number]: CardInfo;
+}
+
+var famDatabase: CardMap = {
     11261: {
         name: "Rahab", stats: [14073, 12597, 15498, 9004, 16754],
         skills: [434],
