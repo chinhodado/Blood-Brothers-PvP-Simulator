@@ -4581,6 +4581,27 @@ var SkillDatabase: SkillMap = {
         desc: "Chance to paralyze up to three foes at start of battle."
     },
 
+    874: {
+        name: "Perforate", type: 2, func: 33, calc: 1,
+        args: [0.95, 3, 0.25, 0.19],
+        range: 17, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to six random foes and sometimes greatly lower WIS."
+    },
+
+    875: {
+        name: "Primal Dance", type: 2, func: 3, calc: 1,
+        args: [1.45],
+        range: 314, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    876: {
+        name: "Sharpshooting", type: 2, func: 4, calc: 1,
+        args: [2.7, 5, 0.3, 1],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes, sometimes silence targets."
+    },
+
     877: {
         name: "Blood Blade", type: 2, func: 37, calc: 2,
         args: [1.7, 0.3, 27, 21],
@@ -4593,6 +4614,83 @@ var SkillDatabase: SkillMap = {
         args: [0, 10, 0.08, 2, 0.35, 1, 121, 120, 43],
         range: 16, prob: 70,
         desc: "Absorbs AGI and WIS from three random foes at the beginning of battles."
+    },
+
+    879: {
+        name: "Bloodied Hatchet", type: 1, func: 1, calc: 0,
+        args: [881, 16],
+        range: 36, prob: 70,
+        desc: "Self and an ally on the right are automatically revived with 70% HP after being killed."
+    },
+
+    880: {
+        name: "Hungry Leopard", type: 2, func: 4, calc: 2,
+        args: [2.05],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
+
+    881: {
+        name: "Ferocious Incarnation", type: 16, func: 6, calc: 0,
+        args: [0.7],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
+    882: {
+        name: "Deceiving Fog", type: 2, func: 4, calc: 2,
+        args: [1.6, 7, 0.3, 1, 0.9],
+        range: 314, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS dmg and sometimes blind up to 4 foes, ignoring position.  Incresed if fewer foes."
+    },
+
+    883: {
+        name: "Foul Play", type: 2, func: 4, calc: 3,
+        args: [1.25, 2, 0.2],
+        range: 20, prob: 30, ward: 2, sac: 1,
+        desc: "Deal AGI-based damage to and sometimes paralyze five random foes, ignoring position. "
+    },
+
+    884: {
+        name: "Surprise Attack", type: 2, func: 4, calc: 3,
+        args: [1.25],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal AGI-based damage to four random foes, ignoring position."
+    },
+
+    885: {
+        name: "Blade of Truth", type: 2, func: 3, calc: 1,
+        args: [0.95],
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to six random foes."
+    },
+
+    886: {
+        name: "Honest Heart", type: 1, func: 44, calc: 0,
+        args: [0.3, 1, 0, 0, 0, 0.3, 6],
+        range: 3, prob: 70,
+        desc: "Raise ATK and reduce magical damage taken by self and adjacent familiars."
+    },
+
+    887: {
+        name: "Punishing Fangs", type: 2, func: 3, calc: 1,
+        args: [1.4, 1, 0.25, 10],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to and sometimes poison four random foes."
+    },
+
+    888: {
+        name: "False Justice", type: 1, func: 44, calc: 0,
+        args: [0.3, 1, 0, 0, 0, 0.1, 3],
+        range: 3, prob: 70,
+        desc: "Raise ATK + WIS of self and adjacent familiars by 30% and 10% of WIS respectively."
+    },
+
+    889: {
+        name: "Twin Sickles", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -5139,5 +5237,33 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 2, 0.3],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and sometimes paralyze target."
+    },
+
+    10115: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.6],
+        range: 23, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to two random foes."
+    },
+
+    10116: {
+        name: "Standard Action", type: 2, func: 36, calc: 1,
+        args: [1, 0.5, 27, 21],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and drain HP from target."
+    },
+
+    10117: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.4, 5, 0.25, 1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes silence target."
+    },
+
+    10118: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 7, 0.3, 1, 0.9],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes blind target."
     },
 };

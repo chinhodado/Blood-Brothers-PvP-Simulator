@@ -361,6 +361,8 @@ class RangeFactory {
                 return new SelfRange(id, selectDead);
             case ENUM.SkillRange.RIGHT:
                 return new RightRange(id);
+            case ENUM.SkillRange.SELF_IMMEDIATE_RIGHT:
+                return new SelfImmediateRightRange(id);
             default:
                 throw new Error("Invalid range or not implemented");
         }
@@ -470,6 +472,25 @@ class BothSidesRange extends BaseRange {
 
         var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && this.satisfyDeadCondition(rightCard, this.selectDead)) {
+            targets.push(rightCard);
+        }
+
+        this.targets = targets;
+    }
+}
+
+// TODO: generalize this range
+class SelfImmediateRightRange extends BaseRange {
+    getReady(executor: Card): void {
+        var targets = [];
+        this.currentIndex = 0;
+
+        if (!executor.isDead) { // should always be true
+            targets.push(executor);
+        }
+
+        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
+        if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
         }
 

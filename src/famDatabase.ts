@@ -3157,4 +3157,71 @@ var famDatabase: CardMap = {
         img: "279",
         fullName: "Wrath, Beast of Sin II"
     },
+    11594: {
+        name: "Isegrim", stats: [12573, 12928, 12049, 8491, 9515],
+        skills: [889],
+        img: "31d",
+        fullName: "Isegrim, the Lone Wolf II"
+    },
+    11591: {
+        name: "Aletheia", stats: [18674, 19010, 17277, 10939, 18165],
+        skills: [885, 886],
+        img: "2be",
+        fullName: "Aletheia, Knight Templar II"
+    },
+    21430: {
+        name: "Bijan", stats: [22189, 20473, 18945, 11176, 18083],
+        skills: [874],
+        autoAttack: 10115,
+        img: "16a",
+        fullName: "Bijan, the Comet"
+    },
+    11581: {
+        name: "Adara", stats: [14424, 17805, 13013, 7005, 16902],
+        skills: [876],
+        autoAttack: 10117,
+        img: "205",
+        fullName: "Adara Luck Shot, Swap II"
+    },
+    11579: {
+        name: "Gryla", stats: [17049, 4363, 15489, 16594, 15500],
+        skills: [879, 880],
+        autoAttack: 10007,
+        isMounted: true,
+        img: "3a9",
+        fullName: "Gryla, Swap II"
+    },
+    11592: {
+        name: "Andromalius", stats: [15749, 16172, 12564, 7960, 17277],
+        skills: [887, 888],
+        img: "2b6",
+        fullName: "Andromalius, Eater of Lies II"
+    },
+    11258: {
+        name: "Amazon", stats: [15034, 16670, 14048, 8025, 16107],
+        skills: [875],
+        autoAttack: 10116,
+        img: "2a8",
+        fullName: "Amazon Berserker II"
+    },
+    21590: {
+        name: "Lenore", stats: [13182, 9455, 12120, 8404, 12900],
+        skills: [884],
+        img: "271",
+        fullName: "Lenore, the False II"
+    },
+    21588: {
+        name: "Apate", stats: [21266, 9647, 18128, 21466, 17977],
+        skills: [882],
+        autoAttack: 10118,
+        img: "111",
+        fullName: "Apate, Goddess of Deceit"
+    },
+    11590: {
+        name: "Lenore", stats: [15903, 12280, 13745, 8709, 17292],
+        skills: [883],
+        autoAttack: 10061,
+        img: "1e6",
+        fullName: "Lenore, the Sly Fox II"
+    },
 };
