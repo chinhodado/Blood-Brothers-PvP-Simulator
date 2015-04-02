@@ -362,7 +362,11 @@ class BattleGraphic {
         var damageText = SVG.get(`p${playerId}f${famIndex}damageText`);
         damageText.text(txt).font({ size: BattleGraphic.wr * 22}).attr({fill: txtColor})
                   .center(center_x, center_y).opacity(1).front();
-        damageText.animate({duration: '2s'}).opacity(0);
+        damageText.animate({duration: '2s'}).opacity(0)
+            .after(function() {
+                this.text('-');
+                this.center(center_x, center_y);
+            });
 
         this.displayHP (stats.hp / originalStats.hp * 100, playerId, famIndex);
     }
@@ -405,6 +409,7 @@ class BattleGraphic {
 
         if (data.affliction.isFinished) {
             svgAfflictTxt.hide();
+            svgAfflictTxt.text('-');
         }
         else {
             var text = Affliction.getAfflictionAdjective(data.affliction.type);
@@ -425,6 +430,7 @@ class BattleGraphic {
 
                 if (!data.affliction) {
                     svgAfflictTxt.hide();
+                    svgAfflictTxt.text('-');
                 }
                 else {
                     var text = Affliction.getAfflictionAdjective(data.affliction.type);
@@ -688,7 +694,7 @@ class BattleGraphic {
         var data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
             this.getMainBattleEffect().text(data.battleDesc).center(BattleGraphic.wr * 200, BattleGraphic.hr * 300)
-                .opacity(1).animate({duration: '3s'}).opacity(0);
+                .opacity(1).animate({ duration: '3s' }).opacity(0).after(function() { this.text('-') });
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
     }
@@ -764,7 +770,11 @@ class BattleGraphic {
 
                 var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
                 damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
-                    .opacity(1).animate({delay: '0.5s'}).opacity(0);
+                    .opacity(1).animate({delay: '0.5s'}).opacity(0)
+                    .after(function() {
+                        this.text('-');
+                        this.center(center_x, center_y);
+                    });
             }
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
@@ -790,9 +800,13 @@ class BattleGraphic {
 
             var damageText = SVG.get(`p${playerId}f${index}damageText`);
             damageText.text("REVIVED").center(center_x, center_y).font({ size: BattleGraphic.wr * 18})
-                .opacity(1).animate({delay: '0.5s'}).opacity(0);
+                .opacity(1).animate({delay: '0.5s'}).opacity(0)
+                .after(function() {
+                    this.text('-');
+                    this.center(center_x, center_y);
+                });
             this.displayHP(data.reviveHPRatio * 100, playerId, index);
-            this.getAfflictionText(playerId, index).hide();
+            this.getAfflictionText(playerId, index).hide().text('-').center(center_x, center_y);
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
         }
@@ -924,7 +938,7 @@ class BattleGraphic {
             });
 
             this.displayHP(100, mainId, main.formationColumn, 0);
-            this.getAfflictionText(mainId, main.formationColumn).hide();
+            this.getAfflictionText(mainId, main.formationColumn).hide().text('-');
         }
     }
 
@@ -969,8 +983,12 @@ class BattleGraphic {
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
                 var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
-                damageText.text("+10%").center(center_x, center_y).font({ size: BattleGraphic.wr * 25})
-                    .opacity(1).animate({delay: '2s'}).opacity(0);
+                damageText.text("+10%").center(center_x, center_y).font({ size: BattleGraphic.wr * 25 })
+                    .opacity(1).animate({ delay: '2s' }).opacity(0)
+                    .after(function() {
+                        this.text('-');
+                        this.center(center_x, center_y);
+                    });
             }
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
