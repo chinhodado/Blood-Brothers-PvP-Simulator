@@ -78,12 +78,12 @@ function generateFam() {
     var names = document.getElementById('famList').value.split('\n');
     for (var i = 0; i < names.length; i++) {
         var name = names[i];
-        
+
         var urlName = name.replace(/,/g, "%2C").replace(/ /g, "_");
         var url = "http://bloodbrothersgame.wikia.com/wiki/" + urlName;
-        
+
         var rootYql = 'http://query.yahooapis.com/v1/public/yql';
-        var imgXPath = '//*[@id="mw-content-text"]/table[1]/tbody/tr[2]/th/a/img'; 
+        var imgXPath = '//*[@id="mw-content-text"]/table[1]/tbody/tr[2]/th/a/img';
         var req = rootYql + '?q=' + encodeURIComponent('select * from html where url="' + url + '" and xpath=\'' + imgXPath + '\'') + '&format=json';
 
         $.ajax({
@@ -100,9 +100,12 @@ function generateFam() {
 
 function printFam(name, img) {
     var content = "";
-    for (var j = 0; j < srcdb.cards.length; j++) { // O(n^2), but who cares...
+    var warnings = "";
+    var found = false;
+    for (var j = 0; j < srcdb.cards.length && !found; j++) { // O(n^2), but who cares...
         var card = srcdb.cards[j];
         if (card.name != name) continue;
+        found = true;
 
         // heuristic, of course
         var shortName = name.split(" ").shift().replace(",", "");
@@ -132,9 +135,18 @@ function printFam(name, img) {
             content += ("    isMounted: true,\n");
         }
 
-        content += ("    img: \"" + img + "\",\n" +
+        content += ("    img: \"" + img + "\", rarity: " + card.rarity +
+            ", evo: " + card.evolution + ",\n" +
             "    fullName: \"" + name + "\"\n},\n");
+
+        if (card.evolution !== card.maxEvolution) {
+            warnings += ("Not fully evolved: " + name + "\n");
+        }
     }
+    if (!found) {
+        warnings += ("Not found: " + name + "\n");
+    }
+    content += ("\n\n" + warnings);
     document.getElementById('result').innerText += content;
 }
 
