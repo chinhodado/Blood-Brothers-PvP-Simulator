@@ -159,7 +159,9 @@ function setFamOptions() {
     // create an array of fam id and sort it based on the fam's full name
     var famIdArray = [];
     for (var key in famDatabase) {
-        famIdArray.push(key);
+        if (famDatabase.hasOwnProperty(key)) {
+            famIdArray.push(key);
+        }
     }
     famIdArray.sort((a, b) => famDatabase[a].fullName.localeCompare(famDatabase[b].fullName));
 
@@ -569,10 +571,12 @@ function startWorkerSim(data, option, NUM_BATTLE) {
 
                         var workerTable = workerDataReturned[i].winCountTable;
                         for (var key in workerTable) {
-                            if (finalData.winCountTable[key]) {
-                                finalData.winCountTable[key] += workerTable[key];
-                            } else {
-                                finalData.winCountTable[key] = workerTable[key];
+                            if (workerTable.hasOwnProperty(key)) {
+                                if (finalData.winCountTable[key]) {
+                                    finalData.winCountTable[key] += workerTable[key];
+                                } else {
+                                    finalData.winCountTable[key] = workerTable[key];
+                                }
                             }
                         }
                     }
@@ -609,7 +613,9 @@ function startWorkerSim(data, option, NUM_BATTLE) {
 function onSimulationResultObtained(finalData, startTime, endTime) {
     var famIdArray = [];
     for (var key in finalData.winCountTable) {
-        famIdArray.push(key);
+        if (finalData.winCountTable.hasOwnProperty(key)) {
+            famIdArray.push(key);
+        }
     }
     famIdArray.sort((a, b) => finalData.winCountTable[b] - finalData.winCountTable[a]);
 
