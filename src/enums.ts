@@ -367,4 +367,13 @@ module ENUM {
         RESERVE_SWITCH = 8,
         BC_ADDPROB = 9, // added probability at end of turn in bloodclash
     }
+
+    export enum RarityType {
+        COMMON = 1,
+        UNCOMMON = 2,
+        RARE = 3,
+        EPIC = 4,
+        LEGEND = 5,
+        MYTHIC = 6
+    }
 }
