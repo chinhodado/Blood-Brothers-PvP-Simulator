@@ -115,7 +115,7 @@ class Skill {
         // generally, indirect skills are position independent
         // however, kill skills are indirect (do not make contact) but not position independent
         // No need to use this for WIS-based skills since they are always pos. independent
-        return this.isIndirectSkill(skillId, srcSkillData) && func != ENUM.SkillFunc.KILL;
+        return this.isIndirectSkill(skillId, srcSkillData) && func !== ENUM.SkillFunc.KILL;
     }
 
     /**
@@ -132,7 +132,7 @@ class Skill {
                 if (isCalcAtk) {
                     wardType = ENUM.WardType.PHYSICAL;
                 } else if (isCalcWisOrAgi) {
-                    var isEffectBreath = [17, 18, 19].indexOf(srcSkillData.casterEffectId) != -1;
+                    var isEffectBreath = [17, 18, 19].indexOf(srcSkillData.casterEffectId) !== -1;
                     if (isEffectBreath) {
                         wardType = ENUM.WardType.BREATH;
                     } else {
@@ -152,7 +152,7 @@ class Skill {
      */
     static isWisAutoAttack(skillId: number): boolean {
         var skillInfo = SkillDatabase[skillId];
-        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.WIS;
+        return this.isAutoAttackSkill(skillId) && skillInfo.calc === ENUM.SkillCalcType.WIS;
     }
 
     /**
@@ -161,7 +161,7 @@ class Skill {
     static isAtkAutoAttack(skillId: number): boolean {
         var skillInfo = SkillDatabase[skillId];
 
-        return this.isAutoAttackSkill(skillId) && skillInfo.calc == ENUM.SkillCalcType.ATK;
+        return this.isAutoAttackSkill(skillId) && skillInfo.calc === ENUM.SkillCalcType.ATK;
     }
 
     /**
@@ -178,12 +178,12 @@ class Skill {
     static isMagicSkill(skillId: number): boolean {
         var skillInfo = SkillDatabase[skillId];
 
-        if (skillInfo.calc == ENUM.SkillCalcType.WIS) {
+        if (skillInfo.calc === ENUM.SkillCalcType.WIS) {
             return true;
         }
 
         // hmmm is this true? I think so...
-        if (skillInfo.type == ENUM.SkillType.OPENING) {
+        if (skillInfo.type === ENUM.SkillType.OPENING) {
             return true;
         }
 
@@ -196,7 +196,7 @@ class Skill {
             ENUM.SkillFunc.MAGIC,
             ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC,
             ENUM.SkillFunc.ABSORB,
-            ENUM.SkillFunc.DRAIN_MAGIC].indexOf(skillInfo.func) != -1) {
+            ENUM.SkillFunc.DRAIN_MAGIC].indexOf(skillInfo.func) !== -1) {
             return true;
         }
 
@@ -253,13 +253,13 @@ class Skill {
         switch (skillInfo.func) {
             case ENUM.SkillFunc.BUFF:
                 statuses.push(skillInfo.args[1]);
-                if (skillInfo.args[2] && skillInfo.args[1] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
+                if (skillInfo.args[2] && skillInfo.args[1] !== ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
                 break;
             case ENUM.SkillFunc.MULTI_BUFF:
                 statuses.push(skillInfo.args[1]);
-                if (skillInfo.args[2] && skillInfo.args[1] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
+                if (skillInfo.args[2] && skillInfo.args[1] !== ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[2]);
                 statuses.push(skillInfo.args[6]);
-                if (skillInfo.args[7] && skillInfo.args[6] != ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[7]);
+                if (skillInfo.args[7] && skillInfo.args[6] !== ENUM.StatusType.HP_SHIELD) statuses.push(skillInfo.args[7]);
                 break;
             case ENUM.SkillFunc.DEBUFF:
             case ENUM.SkillFunc.DEBUFFATTACK:
@@ -301,13 +301,13 @@ class Skill {
             case ENUM.SkillCalcType.ATK:
             case ENUM.SkillCalcType.WIS:
             case ENUM.SkillCalcType.AGI:
-                return attackSkill.skillCalcType == type;
+                return attackSkill.skillCalcType === type;
             case ENUM.SkillCalcType.ATK_WIS:
-                return attackSkill.skillCalcType == ENUM.SkillCalcType.ATK || attackSkill.skillCalcType == ENUM.SkillCalcType.WIS;
+                return attackSkill.skillCalcType === ENUM.SkillCalcType.ATK || attackSkill.skillCalcType === ENUM.SkillCalcType.WIS;
             case ENUM.SkillCalcType.ATK_AGI:
-                return attackSkill.skillCalcType == ENUM.SkillCalcType.ATK || attackSkill.skillCalcType == ENUM.SkillCalcType.AGI;
+                return attackSkill.skillCalcType === ENUM.SkillCalcType.ATK || attackSkill.skillCalcType === ENUM.SkillCalcType.AGI;
             case ENUM.SkillCalcType.WIS_AGI:
-                return attackSkill.skillCalcType == ENUM.SkillCalcType.WIS || attackSkill.skillCalcType == ENUM.SkillCalcType.AGI;
+                return attackSkill.skillCalcType === ENUM.SkillCalcType.WIS || attackSkill.skillCalcType === ENUM.SkillCalcType.AGI;
             default:
                 throw new Error("Unimplemented calcType for canProtectFromCalcType()");
         }
@@ -319,14 +319,14 @@ class Skill {
     static canProtectFromAttackType(type: ENUM.ProtectAttackType, attackSkill: Skill): boolean {
         switch (type) {
             case ENUM.ProtectAttackType.SKILL:
-                return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
-                    && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
-                    && attackSkill.skillFunc != ENUM.SkillFunc.COUNTER_INDIRECT
-                    && attackSkill.id != 10000);
+                return (attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER
+                    && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER
+                    && attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER_INDIRECT
+                    && attackSkill.id !== 10000);
             case ENUM.ProtectAttackType.NOT_COUNTER:
-                return (attackSkill.skillFunc != ENUM.SkillFunc.COUNTER
-                     && attackSkill.skillFunc != ENUM.SkillFunc.PROTECT_COUNTER
-                     && attackSkill.skillFunc != ENUM.SkillFunc.COUNTER_INDIRECT);
+                return (attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER
+                     && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER
+                     && attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER_INDIRECT);
             default:
                 throw new Error("Unimplemented ProtectAttackType");
         }

@@ -19,7 +19,7 @@ class CsRandom {
 
         //Initialize our Seed array.
         //This algorithm comes from Numerical Recipes in C (2nd Ed.)
-        var subtraction: number = (seed ==-2147483648) ? 2147483647 : Math.abs(seed);
+        var subtraction: number = (seed ===-2147483648) ? 2147483647 : Math.abs(seed);
         mj = CsRandom.MSEED - subtraction;
         this.seedArray[55] = mj;
         mk = 1;
@@ -63,7 +63,7 @@ class CsRandom {
 
         retVal = this.seedArray[locINext] - this.seedArray[locINextp];
 
-        if (retVal == CsRandom.MBIG) retVal--;
+        if (retVal === CsRandom.MBIG) retVal--;
         if (retVal < 0) retVal += CsRandom.MBIG;
 
         this.seedArray[locINext] = retVal;
@@ -91,7 +91,7 @@ class CsRandom {
 
         var result: number = this.internalSample();
         // Note we can't use addition here. The distribution will be bad if we do that.
-        var negative: boolean = (this.internalSample() % 2 == 0) ? true : false;  // decide the sign based on second sample
+        var negative: boolean = (this.internalSample() % 2 === 0) ? true : false;  // decide the sign based on second sample
         if (negative) {
             result = -result;
         }

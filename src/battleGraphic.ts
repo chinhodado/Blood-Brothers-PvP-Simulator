@@ -92,13 +92,13 @@ class BattleGraphic {
 
         for (var player = 1; player <= 2; player++) {
             // draw the skill name background, don't show them yet
-            if (player == 2) {
+            if (player === 2) {
                 var skillImg = draw.image('img/skillBg.png', wr * 300, hr * 29).move(wr * 55, hr * 5).attr('id', 'p2SkillBg');
                 var text = draw.text('placeholder').font({ size: wr * 14 }).fill({ color: '#fff' })
                                .attr('id', 'p2SkillText');
                 draw.group().attr('id', 'p2SkillBgTextGroup').add(skillImg).add(text).opacity(0);
             }
-            else if (player == 1) {
+            else if (player === 1) {
                 skillImg = draw.image('img/skillBg.png', wr * 300, hr * 29).move(wr * 55, hr * 270).attr('id', 'p1SkillBg');
                 text = draw.text('placeholder').font({ size: wr * 14 }).fill({ color: '#fff' })
                                .attr('id', 'p1SkillText');
@@ -117,14 +117,14 @@ class BattleGraphic {
 
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
             var groupPlayer = draw.group().attr('id', `p${player}group`);
-            if ((BattleGraphic.HIDE_PLAYER1 && player == 1) || (BattleGraphic.HIDE_PLAYER2 && player == 2)) {
+            if ((BattleGraphic.HIDE_PLAYER1 && player === 1) || (BattleGraphic.HIDE_PLAYER2 && player === 2)) {
                 groupPlayer.hide();
             }
 
-            if (player == 1) {
+            if (player === 1) {
                 groupPlayer.move(wr * 30, wr * 400);
             }
-            else if (player == 2) {
+            else if (player === 2) {
                 groupPlayer.move(wr * 30, wr * 100);
             }
 
@@ -208,7 +208,7 @@ class BattleGraphic {
                         // the image of the fam originally in the main brig, we know that this is a reserve fam
                         // Note: this wouldn't work if the main and reserve fam are same in name but are different
                         // fams (e.g. with different stats, levels, etc). Fortunately the simulator doesn't support that.
-                        if (nestedImgHref != getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG)) {
+                        if (nestedImgHref !== getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG)) {
                             card = cardMan.getOriginalReserveCardByIndex(arg[0], arg[1]);
                         }
 
@@ -517,14 +517,14 @@ class BattleGraphic {
 
         // TODO: check this
         if (!majorLog[majorIndex]) {
-            if (BattleGraphic.PLAY_MODE == 'AUTO') {
+            if (BattleGraphic.PLAY_MODE === 'AUTO') {
                 var nextIndex = +majorIndex + 1;
                 this.displayMajorEventAnimation(nextIndex);
             }
             return; //description event like battle start, etc
         }
 
-        if (BattleGraphic.PLAY_MODE == 'AUTO') {
+        if (BattleGraphic.PLAY_MODE === 'AUTO') {
             var autoCallback = function() {
                 that.displayMajorEventAnimation(majorIndex + 1);
             };
@@ -610,7 +610,7 @@ class BattleGraphic {
             var svgText      = SVG.get(`p${executor.getPlayerId()}SkillText`);
 
             // the y-coordinate of the text, depending on whether this is player 1 or 2
-            var yText = BattleGraphic.hr * (executor.getPlayerId() == 1 ? 272 : 8);
+            var yText = BattleGraphic.hr * (executor.getPlayerId() === 1 ? 272 : 8);
 
             var skillName: string = SkillDatabase[skillId].name;
 
@@ -708,9 +708,9 @@ class BattleGraphic {
             var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
             var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-            if (data.status.type == ENUM.StatusType.ATTACK_RESISTANCE ||
-                data.status.type == ENUM.StatusType.MAGIC_RESISTANCE ||
-                data.status.type == ENUM.StatusType.BREATH_RESISTANCE)
+            if (data.status.type === ENUM.StatusType.ATTACK_RESISTANCE ||
+                data.status.type === ENUM.StatusType.MAGIC_RESISTANCE ||
+                data.status.type === ENUM.StatusType.BREATH_RESISTANCE)
             {
                 var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type);
                 ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
@@ -730,29 +730,29 @@ class BattleGraphic {
                     displayText = "All Stats Up";
                     fontSize = BattleGraphic.wr * 15;
                 }
-                else if (data.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                else if (data.status.type === ENUM.StatusType.WILL_ATTACK_AGAIN) {
                     displayText = "EXTRA ACT";
                 }
-                else if (data.status.type == ENUM.StatusType.ACTION_ON_DEATH) {
+                else if (data.status.type === ENUM.StatusType.ACTION_ON_DEATH) {
                     displayText = "Revive On"; // for now
                 }
-                else if (data.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
+                else if (data.status.type === ENUM.StatusType.SKILL_PROBABILITY) {
                     displayText = "Prob. Up";
                 }
-                else if (data.status.type == ENUM.StatusType.HP_SHIELD) {
+                else if (data.status.type === ENUM.StatusType.HP_SHIELD) {
                     displayText = "HP Up";
                 }
                 // TODO: these remain hp buffs will be hidden behind the ward (e.g.: Poliahu). Find a better way to do this!
-                else if (data.status.type == ENUM.StatusType.REMAIN_HP_ATK_UP) {
+                else if (data.status.type === ENUM.StatusType.REMAIN_HP_ATK_UP) {
                     displayText = "HP/ATK";
                 }
-                else if (data.status.type == ENUM.StatusType.REMAIN_HP_DEF_UP) {
+                else if (data.status.type === ENUM.StatusType.REMAIN_HP_DEF_UP) {
                     displayText = "HP/DEF";
                 }
-                else if (data.status.type == ENUM.StatusType.REMAIN_HP_WIS_UP) {
+                else if (data.status.type === ENUM.StatusType.REMAIN_HP_WIS_UP) {
                     displayText = "HP/WIS";
                 }
-                else if (data.status.type == ENUM.StatusType.REMAIN_HP_AGI_UP) {
+                else if (data.status.type === ENUM.StatusType.REMAIN_HP_AGI_UP) {
                     displayText = "HP/AGI";
                 }
                 else {
@@ -842,7 +842,7 @@ class BattleGraphic {
             this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
 
             var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
-            if (executor.getPlayerId() == 1) {
+            if (executor.getPlayerId() === 1) {
                 y_offset *= -1; //reverse for p1
             }
 
@@ -932,7 +932,7 @@ class BattleGraphic {
             var newLink = getScaledFamiliarWikiaImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
             image.load(newLink);
 
-            var y_offset = mainId == 1? 255 : -255;
+            var y_offset = mainId === 1? 255 : -255;
             group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
                 that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             });
@@ -1103,8 +1103,8 @@ class BattleGraphic {
 
                 for (i = 0; i < exploSet.length; i++) {
                     // specify a callback for the last explosion animation
-                    if (i == exploSet.length - 1) {
-                        var callback = getCallback(that, majorIndex, minorIndex, option, target, procEffect, exploSet)
+                    if (i === exploSet.length - 1) {
+                        var callback = getCallback(that, majorIndex, minorIndex, option, target, procEffect, exploSet);
                     }
 
                     exploSet[i].animate({ duration: exploDuration + 's' }).opacity(1).after(callback);
@@ -1227,7 +1227,7 @@ class BattleGraphic {
      * Get the proc effect (spellCircle or lineSpark) of a card
      */
     getProcEffect(playerId: number, famIndex: number, type: string) {
-        var file = type == "spellCircle"? "circle_blue.png" : "lineSpark.png";
+        var file = type === "spellCircle"? "circle_blue.png" : "lineSpark.png";
 
         var effect = SVG.get('mainSvg').image(`img/${file}`, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
                             .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])

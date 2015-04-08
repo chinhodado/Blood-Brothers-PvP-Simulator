@@ -326,8 +326,8 @@ class RangeFactory {
         if (this.isEnemyNearRange(rangeId) ||
             this.isEnemyNearScaledRange(rangeId) ||
             this.isRowBasedRange(rangeId) ||
-            rangeId == ENUM.SkillRange.ENEMY_ALL ||
-            rangeId == ENUM.SkillRange.ENEMY_ALL_SCALED) {
+            rangeId === ENUM.SkillRange.ENEMY_ALL ||
+            rangeId === ENUM.SkillRange.ENEMY_ALL_SCALED) {
             canBe = true;
         }
 
@@ -549,7 +549,7 @@ class EitherSideRange extends BothSidesRange {
     getReady(executor: Card): void {
         super.getReady(executor);
 
-        if (this.targets.length != 0) {
+        if (this.targets.length !== 0) {
             this.targets = [getRandomElement(this.targets)];
         }
     }
@@ -757,7 +757,7 @@ class FriendRandomRange extends RandomRange {
         var includeSelf = this.includeSelf;
 
         return (card: Card) => {
-            if (card.getPlayerId() != executor.getPlayerId())
+            if (card.getPlayerId() !== executor.getPlayerId())
                 return false;
 
             if (card.id === executor.id && !includeSelf)

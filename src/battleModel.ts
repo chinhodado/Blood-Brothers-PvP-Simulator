@@ -99,7 +99,7 @@ class BattleModel {
         this.cardManager = CardManager.getInstance();
         var graphic = new BattleGraphic();
 
-        if (option.battleType && option.battleType == ENUM.BattleType.BLOOD_CLASH) {
+        if (option.battleType && option.battleType === ENUM.BattleType.BLOOD_CLASH) {
             this.isBloodClash = true;
         }
 
@@ -189,7 +189,7 @@ class BattleModel {
             damage = 0;
         }
 
-        if (!isMissed && !evaded && data.skill.skillFunc == ENUM.SkillFunc.KILL) {
+        if (!isMissed && !evaded && data.skill.skillFunc === ENUM.SkillFunc.KILL) {
             if (Math.random() <= data.skill.skillFuncArg2) { // probability check
                 var isKilled = true;
             }
@@ -233,7 +233,7 @@ class BattleModel {
         }
 
         // this probably should not be here, but wtv...
-        if (data.skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
+        if (data.skill.skillFunc === ENUM.SkillFunc.PROTECT_REFLECT) {
             if (target.hasWardOfType(data.oriAtkSkill.ward)) {
                 var wardUsed = data.oriAtkSkill.ward;
             }
@@ -287,7 +287,7 @@ class BattleModel {
         var skill = data.skill;
         var skillMod = skill.skillFuncArg1;
 
-        if (skill.skillFunc != ENUM.SkillFunc.PROTECT_REFLECT) {
+        if (skill.skillFunc !== ENUM.SkillFunc.PROTECT_REFLECT) {
             var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
         }
         else {
@@ -327,7 +327,7 @@ class BattleModel {
             damage *= data.dmgRatio;
 
         // apply the target's ward
-        if (skill.skillFunc == ENUM.SkillFunc.PROTECT_REFLECT) {
+        if (skill.skillFunc === ENUM.SkillFunc.PROTECT_REFLECT) {
             skill = data.oriAtkSkill;
         }
         switch (skill.ward) {
@@ -422,15 +422,15 @@ class BattleModel {
         var option: AfflictOptParam = {};
 
         if (skill.skillFuncArg4) {
-            if (type == ENUM.AfflictionType.POISON) {
+            if (type === ENUM.AfflictionType.POISON) {
                 // envenom percent
                 option.percent = skill.skillFuncArg4;
             }
-            else if (type == ENUM.AfflictionType.SILENT || type == ENUM.AfflictionType.BLIND){
+            else if (type === ENUM.AfflictionType.SILENT || type === ENUM.AfflictionType.BLIND){
                 // turn num for silent & blind
                 option.turnNum = skill.skillFuncArg4;
             }
-            else if (type == ENUM.AfflictionType.BURN) {
+            else if (type === ENUM.AfflictionType.BURN) {
                 option.damage = skill.skillFuncArg4;
             }
         }
@@ -442,7 +442,7 @@ class BattleModel {
         if (Math.random() <= prob){
             target.setAffliction(type, option);
 
-            if (type == ENUM.AfflictionType.POISON) {
+            if (type === ENUM.AfflictionType.POISON) {
                 // needed since poison is stacked
                 var percent = target.getPoisonPercent();
             }
@@ -545,7 +545,7 @@ class BattleModel {
             this.logger.currentTurn++;
 
             // process turn order change
-            if (this.turnOrderChangeEffectiveTurns == 0) {
+            if (this.turnOrderChangeEffectiveTurns === 0) {
                 this.turnOrderBase = ENUM.BattleTurnOrderType.AGI;
             }
             else {
@@ -625,7 +625,7 @@ class BattleModel {
                 this.processActivePhase(currentCard, "FIRST");
                 if (this.isFinished) break;
 
-                if (!currentCard.isDead && currentCard.status.willAttackAgain != 0) {
+                if (!currentCard.isDead && currentCard.status.willAttackAgain !== 0) {
                     this.processActivePhase(currentCard, "FIRST");
                     // todo: send a minor event log and handle it
                     currentCard.status.willAttackAgain = 0;
@@ -634,7 +634,7 @@ class BattleModel {
 
                 if (!currentCard.isDead) {
                     // update the affliction
-                    if (currentCard.getAfflictionType() != ENUM.AfflictionType.BURN) {
+                    if (currentCard.getAfflictionType() !== ENUM.AfflictionType.BURN) {
                         var cured = currentCard.updateAffliction();
                     }
 
@@ -707,7 +707,7 @@ class BattleModel {
      */
     processActivePhase(currentCard: Card, nth: string): void {
         // update burn affliction
-        if (currentCard.getAfflictionType() == ENUM.AfflictionType.BURN) {
+        if (currentCard.getAfflictionType() === ENUM.AfflictionType.BURN) {
             this.logger.addMajorEvent({
                 description: currentCard.name + "'s turn"
             });

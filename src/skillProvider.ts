@@ -33,7 +33,7 @@
             this.openingSkillList = [];
             for (var key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type == ENUM.SkillType.OPENING) {
+                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.OPENING) {
                         this.openingSkillList.push(key);
                     }
                 }
@@ -51,7 +51,7 @@
             this.activeSkillList = [];
             for (var key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type == ENUM.SkillType.ACTIVE) {
+                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.ACTIVE) {
                         this.activeSkillList.push(key);
                     }
                 }
@@ -69,8 +69,8 @@
             this.reactiveSkillList = [];
             for (var key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && (SkillDatabase[key].type == ENUM.SkillType.DEFENSE ||
-                        SkillDatabase[key].type == ENUM.SkillType.PROTECT || SkillDatabase[key].type == ENUM.SkillType.EVADE)) {
+                    if (this.isAvailableForSelect(key) && (SkillDatabase[key].type === ENUM.SkillType.DEFENSE ||
+                        SkillDatabase[key].type === ENUM.SkillType.PROTECT || SkillDatabase[key].type === ENUM.SkillType.EVADE)) {
                         this.reactiveSkillList.push(key);
                     }
                 }
@@ -88,7 +88,7 @@
             this.onDeathSkillList = [];
             for (var key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type == ENUM.SkillType.ACTION_ON_DEATH) {
+                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.ACTION_ON_DEATH) {
                         this.onDeathSkillList.push(key);
                     }
                 }
@@ -102,6 +102,6 @@
      * Return true if this skill should be available for user to select, or available to be randomly chosen
      */
     static isAvailableForSelect(skillId: number): boolean {
-        return SkillDatabase[skillId].sac == 1;
+        return SkillDatabase[skillId].sac === 1;
     }
 }

@@ -68,7 +68,7 @@ class CardManager {
     getLeftSideCard (card: Card): Card {
         var playerCards = this.getPlayerCurrentMainCards(card.player);
         var column = card.formationColumn;
-        if (column == 0) { // leftmost position
+        if (column === 0) { // leftmost position
             return null;
         }
         else if (column <= 4 && column >= 1) { // just to be safe
@@ -86,7 +86,7 @@ class CardManager {
     getRightSideCard (card: Card): Card {
         var playerCards = this.getPlayerCurrentMainCards(card.player);
         var column = card.formationColumn;
-        if (column == 4) { // rightmost position
+        if (column === 4) { // rightmost position
             return null;
         }
         else if (column >= 0 && column <= 3) { // just to be safe
@@ -271,7 +271,7 @@ class CardManager {
     isCardInList(card: Card, list: Card[]): boolean {
         var isIn: boolean = false;
         for (var i = 0; i < list.length; i++) {
-            if (list[i].id == card.id) {
+            if (list[i].id === card.id) {
                 isIn = true;
                 break;
             }
@@ -283,7 +283,7 @@ class CardManager {
      * Return true if two cards are the same (same id)
      */
     isSameCard(card1: Card, card2: Card): boolean {
-        return card1.id == card2.id;
+        return card1.id === card2.id;
     }
 
     /**
@@ -317,7 +317,7 @@ class CardManager {
         var allCurrentMainCards = this.battle.allCurrentMainCards;
         var found = false;
         for (var i = 0; i < allCurrentMainCards.length; i++) {
-            if (allCurrentMainCards[i].id == oldCard.id) {
+            if (allCurrentMainCards[i].id === oldCard.id) {
                 found = true;
                 allCurrentMainCards[i] = newCard;
                 break;
@@ -359,7 +359,7 @@ class CardManager {
         var brigStr = "";
 
         for (var i = 0; i < cards.length; i++) {
-            var dash = (i == 0)? "" : " - ";
+            var dash = (i === 0)? "" : " - ";
             var cb = `showCardDetailDialogById(${cards[i].id});`;
             brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
         }
@@ -374,7 +374,7 @@ class CardManager {
         var brigStr = "";
 
         for (var i = 0; i < cards.length; i++) {
-            var dash = (i == 0)? "" : " - ";
+            var dash = (i === 0)? "" : " - ";
             brigStr += (dash + cards[i].name);
         }
 

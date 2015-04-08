@@ -134,7 +134,7 @@ class BattleLogger {
         var dbId2 = p2main[0].dbId;
 
         for (var i = 1; i < 5; i++) {
-            if (p1main[i].dbId != dbId1 || p2main[i].dbId != dbId2) {
+            if (p1main[i].dbId !== dbId1 || p2main[i].dbId !== dbId2) {
                 needWarn = false;
                 break;
             }
@@ -145,14 +145,14 @@ class BattleLogger {
             var p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
 
             for (i = 0; i < 5; i++) {
-                if (p1res[i].dbId != dbId1 || p2res[i].dbId != dbId2) {
+                if (p1res[i].dbId !== dbId1 || p2res[i].dbId !== dbId2) {
                     needWarn = false;
                     break;
                 }
             }
         }
 
-        if (dbId1 == dbId2) needWarn = false;
+        if (dbId1 === dbId2) needWarn = false;
 
         if (needWarn) {
             var simDiv = document.getElementById("simDiv");
@@ -295,7 +295,7 @@ interface MinorEvent {
         protectedId: number;
         counter?: boolean;
         counteredSkillId: number;
-        attackerId: number
+        attackerId: number;
     };
     reserveSwitch?: {
         mainId: number;

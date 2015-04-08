@@ -161,7 +161,7 @@ class BuffSkillLogic extends SkillLogic {
             var statusToBuff: ENUM.StatusType[] = [skill.skillFuncArg2];
 
             // for hp shield buff, arg3 is the ceiling
-            if (skill.skillFuncArg3 != 0 && skill.skillFuncArg2 != ENUM.StatusType.HP_SHIELD) {
+            if (skill.skillFuncArg3 !== 0 && skill.skillFuncArg2 !== ENUM.StatusType.HP_SHIELD) {
                 statusToBuff.push(skill.skillFuncArg3);
             }
         }
@@ -172,7 +172,7 @@ class BuffSkillLogic extends SkillLogic {
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
 
         // for ONHIT_BUFF, the calcType is 6 (Debuff), which doesn't make any sense. Anyway...
-        var baseStat = skill.skillFunc == ENUM.SkillFunc.ONHIT_BUFF? 0 : executor.getStat(basedOnStatType);
+        var baseStat = skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF? 0 : executor.getStat(basedOnStatType);
 
         var target: Card;
         while (target = skill.getTarget(executor)) {
@@ -185,8 +185,8 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
                         var skillMod = skill.skillFuncArg1;
-                        if (skill.skillFunc == ENUM.SkillFunc.ONHIT_BUFF) {
-                            if (skill.skillFuncArg4 == 0) {
+                        if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
+                            if (skill.skillFuncArg4 === 0) {
                                 throw new Error("Not sure what needs to happen here when arg4 = 0 for onhit buff. Check the manual.");
                             } else {
                                 var buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
@@ -194,7 +194,7 @@ class BuffSkillLogic extends SkillLogic {
                         }
                         else {
                             // if the status type is not ALL_STATUS, we have to recalculate the base stat
-                            if (skill.skillFuncArg2 != ENUM.StatusType.ALL_STATUS) {
+                            if (skill.skillFuncArg2 !== ENUM.StatusType.ALL_STATUS) {
                                 baseStat = executor.getStat(basedOnStatType);
                             }
                             buffAmount = Math.round(skillMod * baseStat);
@@ -229,7 +229,7 @@ class BuffSkillLogic extends SkillLogic {
                     type: ENUM.MinorEventType.STATUS,
                     status: {
                         type: statusType,
-                        isAllUp: skill.skillFuncArg2 == ENUM.StatusType.ALL_STATUS
+                        isAllUp: skill.skillFuncArg2 === ENUM.StatusType.ALL_STATUS
                     },
                     description: target.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount,
                     amount: buffAmount,
@@ -332,9 +332,9 @@ class AbsorbSkillLogic extends SkillLogic {
                 // debuff phase
                 // note: arg4 is the base stat for the debuff. We're not processing it here and
                 // hopefully it will always be 2 (WIS)
-                console.assert(skill.skillFuncArg4 == ENUM.SkillCalcType.WIS, "Non WIS-based debuff unimplemented!");
+                console.assert(skill.skillFuncArg4 === ENUM.SkillCalcType.WIS, "Non WIS-based debuff unimplemented!");
                 // note: assuming the inner probability will always be 1 for this skillFunc
-                console.assert(skill.skillFuncArg6 == 1, "Absorb doesn't have 100% probability - unimplemented!");
+                console.assert(skill.skillFuncArg6 === 1, "Absorb doesn't have 100% probability - unimplemented!");
 
                 // it's neither true nor false, since it has its own logic...
                 var isNewLogic = false;
@@ -375,7 +375,7 @@ class AbsorbSkillLogic extends SkillLogic {
                     type: ENUM.MinorEventType.STATUS,
                     status: {
                         type: statusType,
-                        isAllUp: skill.skillFuncArg2 == ENUM.StatusType.ALL_STATUS
+                        isAllUp: skill.skillFuncArg2 === ENUM.StatusType.ALL_STATUS
                     },
                     description: executor.name + "'s " + ENUM.StatusType[statusType] + " increased by " + buffAmount,
                     amount: buffAmount,
@@ -612,7 +612,7 @@ class AttackSkillLogic extends SkillLogic {
                     }
                 }
 
-                if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
+                if (skill.skillFunc === ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc === ENUM.SkillFunc.DRAIN_MAGIC) {
                     this.processDrainPhase(executor, skill);
                 }
 
@@ -658,7 +658,7 @@ class AttackSkillLogic extends SkillLogic {
             }
         }
 
-        if (skill.skillFunc == ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc == ENUM.SkillFunc.DRAIN_MAGIC) {
+        if (skill.skillFunc === ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc === ENUM.SkillFunc.DRAIN_MAGIC) {
             this.processDrainPhase(executor, skill);
         }
 
@@ -674,7 +674,7 @@ class AttackSkillLogic extends SkillLogic {
 
         // hacky
         console.assert(!(healRange instanceof RandomRange), "can't do this with random ranges!");
-        if (healRange.targets.length == 0) {
+        if (healRange.targets.length === 0) {
             return;
         }
 
@@ -693,7 +693,7 @@ class ProtectSkillLogic extends SkillLogic {
         data.skill.getReady(data.executor);
 
         // a fam cannot protect itself, unless the skillRange is MYSELF
-        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange != ENUM.SkillRange.MYSELF) {
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && data.skill.skillRange !== ENUM.SkillRange.MYSELF) {
             return false;
         }
 
@@ -774,7 +774,7 @@ class EvadeSkillLogic extends SkillLogic {
         skill.getReady(data.executor);
 
         // a fam cannot protect itself, unless the skillRange is MYSELF
-        if (this.cardManager.isSameCard(data.targetCard, data.executor) && skill.skillRange != ENUM.SkillRange.MYSELF) {
+        if (this.cardManager.isSameCard(data.targetCard, data.executor) && skill.skillRange !== ENUM.SkillRange.MYSELF) {
             return false;
         }
 
@@ -987,11 +987,11 @@ class OnHitBuffSkillLogic extends BuffSkillLogic {
 
     willBeExecuted(data: SkillLogicData): boolean {
         // this should be done at construction time instead...
-        if (this.executionLeft == OnHitBuffSkillLogic.UNINITIALIZED_VALUE) {
+        if (this.executionLeft === OnHitBuffSkillLogic.UNINITIALIZED_VALUE) {
             this.executionLeft = data.skill.skillFuncArg5;
         }
 
-        if (this.executionLeft == 0) return false;
+        if (this.executionLeft === 0) return false;
 
         var success = super.willBeExecuted(data);
 
@@ -1021,11 +1021,11 @@ class OnHitDebuffSkillLogic extends SkillLogic {
         var hasTarget = data.skill.range.hasValidTarget(data.executor);
 
         // this should be done at construction time instead...
-        if (this.executionLeft == OnHitDebuffSkillLogic.UNINITIALIZED_VALUE) {
+        if (this.executionLeft === OnHitDebuffSkillLogic.UNINITIALIZED_VALUE) {
             this.executionLeft = data.skill.skillFuncArg5;
         }
 
-        if (this.executionLeft == 0) return false;
+        if (this.executionLeft === 0) return false;
 
         var success = super.willBeExecuted(data) && hasTarget;
 
@@ -1124,7 +1124,7 @@ class HealSkillLogic extends SkillLogic {
         var target: Card;
         while (target = data.skill.getTarget(data.executor)) {
             // if the heal is not based on wis, recalculate the heal amount
-            if (data.skill.skillFuncArg2 == 1) {
+            if (data.skill.skillFuncArg2 === 1) {
                 healAmount = multiplier * target.getOriginalHP();
             }
 

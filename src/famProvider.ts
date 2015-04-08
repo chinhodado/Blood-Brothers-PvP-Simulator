@@ -28,7 +28,7 @@ class FamProvider {
                 for (var key in famDatabase) {
                     if (famDatabase.hasOwnProperty(key)) {
                         var name = famDatabase[key].fullName;
-                        if (tierNameList.indexOf(name) != -1) {
+                        if (tierNameList.indexOf(name) !== -1) {
                             this.tierList[tier].push(key);
                         }
                     }

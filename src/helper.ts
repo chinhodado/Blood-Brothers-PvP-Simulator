@@ -6,51 +6,51 @@ declare var startTest;
  */
 function setPreviousChoices() {
     // player 1 fams
-    if (localStorage.getItem("f0") && localStorage.getItem("f0") != "null") {
+    if (localStorage.getItem("f0") && localStorage.getItem("f0") !== "null") {
         for (var i = 0; i < 10; i++) {
             (<HTMLInputElement>document.getElementById(`f${i}`)).value = localStorage.getItem(`f${i}`);
         }
     }
 
     // player 2 fams
-    if (localStorage.getItem("f10") && localStorage.getItem("f10") != "null") {
+    if (localStorage.getItem("f10") && localStorage.getItem("f10") !== "null") {
         for (i = 0; i < 10; i++) {
             (<HTMLInputElement>document.getElementById(`f${i + 10}`)).value = localStorage.getItem(`f${i + 10}`);
         }
     }
 
     // player 1 skills
-    if (localStorage.getItem("s10") && localStorage.getItem("s10") != "null") {
+    if (localStorage.getItem("s10") && localStorage.getItem("s10") !== "null") {
         for (i = 0; i < 3; i++) {
             (<HTMLInputElement>document.getElementById(`s1${i}`)).value = localStorage.getItem(`s1${i}`);
         }
     }
 
     // player 2 skills
-    if (localStorage.getItem("s20") && localStorage.getItem("s20") != "null") {
+    if (localStorage.getItem("s20") && localStorage.getItem("s20") !== "null") {
         for (i = 0; i < 3; i++) {
             (<HTMLInputElement>document.getElementById(`s2${i}`)).value = localStorage.getItem(`s2${i}`);
         }
     }
 
     // player 1 formation
-    if (localStorage.getItem("1f") && localStorage.getItem("1f") != "null") {
+    if (localStorage.getItem("1f") && localStorage.getItem("1f") !== "null") {
         (<HTMLInputElement>document.getElementById("1f")).value = localStorage.getItem("1f");
     }
 
     // player 2 formation
-    if (localStorage.getItem("2f") && localStorage.getItem("2f") != "null") {
+    if (localStorage.getItem("2f") && localStorage.getItem("2f") !== "null") {
         (<HTMLInputElement>document.getElementById("2f")).value = localStorage.getItem("2f");
     }
 
     // debug mode
-    if (localStorage.getItem("debug") == "true") {
+    if (localStorage.getItem("debug") === "true") {
         (<HTMLInputElement>document.getElementById("debug")).checked = true;
     }
 
     // battle type
     var bt = localStorage.getItem("bt");
-    if (bt == 1 || bt == 2) {
+    if (bt === "1" || bt === "2") {
         (<HTMLInputElement>document.getElementById("bt")).value = bt;
     }
 }
@@ -90,7 +90,7 @@ function toogleDisable() {
  */
 function toogleReserve() {
     for (var player = 1; player <= 2; player++) {
-        var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value == "1";
+        var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value === "1";
 
         var elems = document.getElementsByClassName("reserve");
         for (var i = 0; i < elems.length; i++) {
@@ -144,7 +144,7 @@ function validateForm() {
  */
 function submitForm() {
     var form = document.forms["mainForm"];
-    if (form["debug"].checked == true) {
+    if (form["debug"].checked === true) {
         form.action = "debug.html";
     }
     form.submit();
@@ -330,16 +330,16 @@ function prepareField() {
  * Fetch the tier list and cache it
  */
 function getTierList(whatToDoNext) {
-    if (whatToDoNext == "debug") {
+    if (whatToDoNext === "debug") {
         var callback = "updateTierListThenDebug";
     }
-    else if (whatToDoNext == "play") {
+    else if (whatToDoNext === "play") {
         callback = "updateTierListThenPlay";
     }
-    else if (whatToDoNext == "sim") {
+    else if (whatToDoNext === "sim") {
         callback = "updateTierListThenSim";
     }
-    else if (whatToDoNext == "test") {
+    else if (whatToDoNext === "test") {
         callback = "updateTierListThenTest";
     }
     else {
@@ -367,16 +367,16 @@ function getTierList(whatToDoNext) {
         });
     }
     else {
-        if (whatToDoNext == "debug") {
+        if (whatToDoNext === "debug") {
             playDebug();
         }
-        else if (whatToDoNext == "play") {
+        else if (whatToDoNext === "play") {
             playGame();
         }
-        else if (whatToDoNext == "sim") {
+        else if (whatToDoNext === "sim") {
             playSim();
         }
-        else if (whatToDoNext == "test") {
+        else if (whatToDoNext === "test") {
             startTest();
         }
     }
@@ -496,9 +496,9 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
             var newGame = new BattleModel(data, option, tierList);
             var resultBattle = newGame.startBattle();
             BattleModel.resetAll();
-            if (resultBattle.playerWon.id == 1) {
+            if (resultBattle.playerWon.id === 1) {
                 p1WinCount++;
-            } else if (resultBattle.playerWon.id == 2) {
+            } else if (resultBattle.playerWon.id === 2) {
                 p2WinCount++;
             }
 
@@ -546,17 +546,17 @@ function startWorkerSim(data, option, NUM_BATTLE) {
     for (var w = 0; w < NUM_WORKER; w++) {
         var worker = new Worker("js/worker.js");
         worker.onmessage = event => {
-            if (event.data.status == "ongoing") {
+            if (event.data.status === "ongoing") {
                 totalProgress += 100;
                 document.getElementById("progressBar").setAttribute("value", totalProgress.toString());
             }
-            else if (event.data.status == "done") {
+            else if (event.data.status === "done") {
                 totalProgress += 100;
                 document.getElementById("progressBar").setAttribute("value", totalProgress.toString());
                 workerDataReturned[workerDone] = event.data;
                 workerDone++;
                 console.log(workerDone + " workers done.");
-                if (workerDone == NUM_WORKER) { // <- all workers have finished their jobs
+                if (workerDone === NUM_WORKER) { // <- all workers have finished their jobs
                     var endTime = performance.now();
 
                     // aggregate all workers' data to form the final data

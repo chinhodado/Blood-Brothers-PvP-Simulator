@@ -31,7 +31,7 @@ class BattleDebugger {
         var currentTurn = -10;
         for (var i = 0; i < majorLog.length; i++) {
             // display the turn
-            if (majorLog[i].turn != currentTurn) {
+            if (majorLog[i].turn !== currentTurn) {
                 currentTurn = majorLog[i].turn;
                 this.displayTurn(currentTurn);
             }
@@ -74,7 +74,7 @@ class BattleDebugger {
 
         // populate right section with the field situation
         newEvent.onclick = function () {
-            BattleDebugger.getInstance().displayEventLogAtIndex(this.id);
+            BattleDebugger.getInstance().displayEventLogAtIndex(+this.id);
         };
         turnEventList.appendChild(newEvent);
     }
@@ -134,13 +134,13 @@ class BattleDebugger {
      * of the screen with information after the event that you clicked on has been processed. That event
      * is represented by the index argument supplied into this function.
      */
-    displayEventLogAtIndex(majorIndex): void {
+    displayEventLogAtIndex(majorIndex: number): void {
         if (!BattleDebugger.IS_DEBUG_MODE) {
             return;
         }
         var graphic = BattleGraphic.getInstance();
         var logger = BattleLogger.getInstance();
-        var lastEventIndex = (majorIndex == 0)? 0 : majorIndex - 1;
+        var lastEventIndex = (majorIndex === 0)? 0 : majorIndex - 1;
 
         // the field after the last major event and before the current major event
         var lastEventField = logger.getFieldAtMajorIndex(lastEventIndex);
@@ -191,12 +191,12 @@ class BattleDebugger {
                     agi : `AGI: ${finalAgi}`,
                 };
 
-                if (status.attackResistance != 0) infoText.physicalResist = `PW: ${status.attackResistance}`;
-                if (status.magicResistance  != 0) infoText.magicalResist  = `MW: ${status.magicResistance}`;
-                if (status.breathResistance != 0) infoText.breathResist   = `BW: ${status.breathResistance}`;
-                if (status.willAttackAgain  != 0) infoText.willAttackAgain  = "Extra action: Yes";
-                if (status.skillProbability != 0) infoText.skillProbability = `Extra prob.: ${status.skillProbability}`;
-                if (status.hpShield != 0)         infoText.hpShield = `HP Shld.: ${status.hpShield}`;
+                if (status.attackResistance !== 0) infoText.physicalResist = `PW: ${status.attackResistance}`;
+                if (status.magicResistance  !== 0) infoText.magicalResist  = `MW: ${status.magicResistance}`;
+                if (status.breathResistance !== 0) infoText.breathResist   = `BW: ${status.breathResistance}`;
+                if (status.willAttackAgain  !== 0) infoText.willAttackAgain  = "Extra action: Yes";
+                if (status.skillProbability !== 0) infoText.skillProbability = `Extra prob.: ${status.skillProbability}`;
+                if (status.hpShield !== 0)         infoText.hpShield = `HP Shld.: ${status.hpShield}`;
 
                 if (afflict) {
                     infoText.affliction = `Affliction: ${Affliction.getAfflictionAdjective(afflict.type)}`;
@@ -215,38 +215,38 @@ class BattleDebugger {
                 }
 
                 // compare the stats of this fam before and after this major event and decorate the text accordingly
-                if (stats.hp != lastStats.hp) infoText.hp  = this.decorateText(infoText.hp,  stats.hp < lastStats.hp);
-                if (finalAtk != lastFinalAtk) infoText.atk = this.decorateText(infoText.atk, finalAtk < lastFinalAtk);
-                if (finalDef != lastFinalDef) infoText.def = this.decorateText(infoText.def, finalDef < lastFinalDef);
-                if (finalWis != lastFinalWis) infoText.wis = this.decorateText(infoText.wis, finalWis < lastFinalWis);
-                if (finalAgi != lastFinalAgi) infoText.agi = this.decorateText(infoText.agi, finalAgi < lastFinalAgi);
+                if (stats.hp !== lastStats.hp) infoText.hp  = this.decorateText(infoText.hp,  stats.hp < lastStats.hp);
+                if (finalAtk !== lastFinalAtk) infoText.atk = this.decorateText(infoText.atk, finalAtk < lastFinalAtk);
+                if (finalDef !== lastFinalDef) infoText.def = this.decorateText(infoText.def, finalDef < lastFinalDef);
+                if (finalWis !== lastFinalWis) infoText.wis = this.decorateText(infoText.wis, finalWis < lastFinalWis);
+                if (finalAgi !== lastFinalAgi) infoText.agi = this.decorateText(infoText.agi, finalAgi < lastFinalAgi);
 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
                 for (var j = 0; logger.minorEventLog[majorIndex] && j < logger.minorEventLog[majorIndex].length; j++) {
                     var tempEvent = logger.minorEventLog[majorIndex][j]; // a minor event
-                    if (tempEvent.targetId == playerCards[f].id) {
-                        if (tempEvent.type == ENUM.MinorEventType.STATUS) {
-                            if (tempEvent.status.type == ENUM.StatusType.ATTACK_RESISTANCE) {
+                    if (tempEvent.targetId === playerCards[f].id) {
+                        if (tempEvent.type === ENUM.MinorEventType.STATUS) {
+                            if (tempEvent.status.type === ENUM.StatusType.ATTACK_RESISTANCE) {
                                 infoText.physicalResist = this.decorateText(infoText.physicalResist, false);
                             }
-                            else if (tempEvent.status.type == ENUM.StatusType.MAGIC_RESISTANCE) {
+                            else if (tempEvent.status.type === ENUM.StatusType.MAGIC_RESISTANCE) {
                                 infoText.magicalResist = this.decorateText(infoText.magicalResist, false);
                             }
-                            else if (tempEvent.status.type == ENUM.StatusType.BREATH_RESISTANCE) {
+                            else if (tempEvent.status.type === ENUM.StatusType.BREATH_RESISTANCE) {
                                 infoText.breathResist = this.decorateText(infoText.breathResist, false);
                             }
-                            else if (tempEvent.status.type == ENUM.StatusType.WILL_ATTACK_AGAIN) {
+                            else if (tempEvent.status.type === ENUM.StatusType.WILL_ATTACK_AGAIN) {
                                 infoText.willAttackAgain = this.decorateText(infoText.willAttackAgain, false);
                             }
-                            else if (tempEvent.status.type == ENUM.StatusType.SKILL_PROBABILITY) {
+                            else if (tempEvent.status.type === ENUM.StatusType.SKILL_PROBABILITY) {
                                 infoText.skillProbability = this.decorateText(infoText.skillProbability, false);
                             }
-                            else if (tempEvent.status.type == ENUM.StatusType.HP_SHIELD) {
+                            else if (tempEvent.status.type === ENUM.StatusType.HP_SHIELD) {
                                 infoText.hpShield = this.decorateText(infoText.hpShield, false);
                             }
                         }
-                        else if (tempEvent.type == ENUM.MinorEventType.AFFLICTION) {
+                        else if (tempEvent.type === ENUM.MinorEventType.AFFLICTION) {
                             if (!tempEvent.affliction.isFinished) {
                                 infoText.affliction = this.decorateText(infoText.affliction, false);
                             }
@@ -254,7 +254,7 @@ class BattleDebugger {
                     }
                 }
 
-                if (logger.minorEventLog[majorIndex] && logger.minorEventLog[majorIndex][0].executorId == playerCards[f].id) {
+                if (logger.minorEventLog[majorIndex] && logger.minorEventLog[majorIndex][0].executorId === playerCards[f].id) {
                     infoText.name = `<b>${infoText.name}</b>`;
                 }
 

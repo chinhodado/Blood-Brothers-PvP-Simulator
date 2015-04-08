@@ -294,7 +294,7 @@ class Card {
         return this.affliction ? this.affliction.getType() : null;
     }
     getPoisonPercent(): number {
-        if (!this.affliction || this.affliction.type != ENUM.AfflictionType.POISON) {
+        if (!this.affliction || this.affliction.type !== ENUM.AfflictionType.POISON) {
             return undefined;
         }
         else {
@@ -302,7 +302,7 @@ class Card {
         }
     }
     getBurnDamage(): number {
-        if (!this.affliction || this.affliction.type != ENUM.AfflictionType.BURN) {
+        if (!this.affliction || this.affliction.type !== ENUM.AfflictionType.BURN) {
             return undefined;
         }
         else {
@@ -407,7 +407,7 @@ class Card {
             }
         }
 
-        if (this.status.actionOnDeath == 0) {
+        if (this.status.actionOnDeath === 0) {
             this.clearBuffOnDeathSkill();
         }
     }
@@ -449,7 +449,7 @@ class Card {
         }
     }
     isFullHealth(): boolean {
-        return this.stats.hp == this.originalStats.hp;
+        return this.stats.hp === this.originalStats.hp;
     }
     getHpRatio(): number {
         return this.stats.hp / this.originalStats.hp;
