@@ -77,12 +77,8 @@ function removeElementAtIndex(array: any[], index: number): void {
  * Get a random property of an object
  */
 function pickRandomProperty(obj: {}): string {
-    var result = undefined;
-    var count = 0;
-    for (var prop in obj)
-        if (Math.random() < 1/++count)
-           result = prop;
-    return result;
+    var keys = Object.keys(obj);
+    return obj[keys[keys.length * Math.random() << 0]];
 }
 
 /**
