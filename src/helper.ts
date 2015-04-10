@@ -210,14 +210,14 @@ function getBattleDataOption() {
     // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
-    var data: any = {}, option: any = {};
+    var data: any = {}, option: GameOption = {};
 
     var battleType = getURLParameter("bt");
     localStorage.setItem("bt", battleType);
-    option.battleType = battleType;
+    option.battleType = +battleType;
 
-    option.p1RandomMode = getURLParameter("1r");
-    option.p2RandomMode = getURLParameter("2r");
+    option.p1RandomMode = +getURLParameter("1r");
+    option.p2RandomMode = +getURLParameter("2r");
 
     data.p1_formation = getURLParameter("1f");
     if (!option.p1RandomMode) localStorage.setItem("1f", data.p1_formation);
