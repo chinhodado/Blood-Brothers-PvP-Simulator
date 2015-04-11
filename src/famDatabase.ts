@@ -3221,4 +3221,45 @@ var famDatabase: CardMap = {
         img: "322", rarity: 5, evo: 2,
         fullName: "Zuniga, Guard Captain II"
     },
+
+    //  unordered from now
+    11599: {
+        name: "Mammi EP4", stats: [13293, 7699, 8505, 14806, 12500],
+        skills: [892],
+        autoAttack: 10016,
+        img: "46a", rarity: 4, evo: 4,
+        fullName: "Mammi, Spiritmancer II"
+    },
+
+    11595: {
+        name: "Blazing", stats: [18891, 9141, 14005, 19963, 17992],
+        skills: [893, 894],
+        autoAttack: 10019,
+        img: "1c6", rarity: 5, evo: 2,
+        fullName: "Blazing Drake"
+    },
+
+    11597: {
+        name: "Telluric", stats: [16696, 17499, 17693, 11770, 5506],
+        skills: [895],
+        autoAttack: 10122,
+        img: "3d5", rarity: 4, evo: 4,
+        fullName: "Telluric Drake II"
+    },
+
+    11600: {
+        name: "Feathered", stats: [17006, 13008, 15998, 6248, 17992],
+        skills: [896, 897],
+        autoAttack: 10120,
+        img: "25d", rarity: 4, evo: 2,
+        fullName: "Feathered Drake"
+    },
+
+    21599: {
+        name: "Mammi EP2", stats: [15500, 5663, 12987, 18696, 17407],
+        skills: [898, 899],
+        autoAttack: 10052,
+        img: "46a", rarity: 4, evo: 2,
+        fullName: "Mammi, Hare of the Harvest II"
+    },
 };

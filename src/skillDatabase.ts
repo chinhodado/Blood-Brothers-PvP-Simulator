@@ -4693,6 +4693,97 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive ATK-based damage to two random foes."
     },
 
+    892: {
+        name: "Eggsplosion", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to four random foes, ignoring position."
+    },
+
+    893: {
+        name: "Fiery Breath", type: 2, func: 4, calc: 2,
+        args: [1.25, 8, 0.2, 2000],
+        range: 8, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage to all foes and sometimes burn targets, ignoring position."
+    },
+
+    894: {
+        name: "Singed Heart", type: 1, func: 45, calc: 0,
+        args: [0.1, 2, 0, 0, 0, 0.1, 3],
+        range: 7, prob: 70,
+        desc: "Greatly lower DEF/WIS of up to three foes based on 10% of its WIS."
+    },
+
+    895: {
+        name: "Earthen Wall", type: 5, func: 14, calc: 1,
+        args: [1.4],
+        range: 4, prob: 50, ward: 1, sac: 1,
+        desc: "Take damage in place of any ally and counter."
+    },
+
+    896: {
+        name: "Zephyr Blades", type: 2, func: 4, calc: 3,
+        args: [2],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive AGI-based damage to three random foes, ignoring position."
+    },
+
+    897: {
+        name: "Tail Wind", type: 1, func: 1, calc: 0,
+        args: [0.15, 8],
+        range: 36, prob: 70,
+        desc: "Raise the skill trigger rate of self and an ally on the right by 15%."
+    },
+
+    898: {
+        name: "Egg Grenade", type: 2, func: 24, calc: 0,
+        range: 21, prob: 30,
+        randSkills: [893, 896, 900],
+        desc: "No one knows which 1 of 3 random egg skills will be cast."
+    },
+
+    899: {
+        name: "Grace of Spirit", type: 6, func: 27, calc: 0,
+        args: [2, 1, 78, 79],
+        range: 21, prob: 50,
+        desc: "Evade enemy ATK-based attack skills."
+    },
+
+    900: {
+        name: "Tidal Chill", type: 2, func: 4, calc: 2,
+        args: [1.2, 3, 0.25],
+        range: 20, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage and sometimes freeze five random foes, ignoring position."
+    },
+
+    901: {
+        name: "Whirling Eddy", type: 1, func: 44, calc: 0,
+        args: [1.8, 13, 0, 0, 0, 1.4, 14],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self/adjacent familiars based on WIS/AGI respectively when its HP decreases."
+    },
+
+    902: {
+        name: "Leaping Staff", type: 2, func: 3, calc: 2,
+        args: [0.5],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal WIS-based damage to five random foes."
+    },
+
+    903: {
+        name: "Thorn Tail", type: 2, func: 3, calc: 3,
+        args: [0.5],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to five random foes."
+    },
+
+    904: {
+        name: "Lance Rush", type: 2, func: 3, calc: 1,
+        args: [0.5],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5265,5 +5356,33 @@ var SkillDatabase: SkillMap = {
         args: [1, 7, 0.3, 1, 0.9],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage and sometimes blind target."
+    },
+
+    10119: {
+        name: "Standard Action", type: 2, func: 36, calc: 1,
+        args: [1.4, 0.4, 27, 21],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and drain HP from target."
+    },
+
+    10120: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.4],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe, ignoring position."
+    },
+
+    10121: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 5, prob: 100, ward: 3, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10122: {
+        name: "Standard Action", type: 2, func: 36, calc: 1,
+        args: [1.3, 0.5, 27, 21],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and drain HP from target."
     },
 };
