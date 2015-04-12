@@ -326,6 +326,9 @@ class BattleModel {
         if (data.dmgRatio)
             damage *= data.dmgRatio;
 
+        damage *= attacker.getPassiveDamageEffect(target);
+        damage *= target.getPassiveReceivedDamageEffect(attacker);
+
         // apply the target's ward
         if (skill.skillFunc === ENUM.SkillFunc.PROTECT_REFLECT) {
             skill = data.oriAtkSkill;

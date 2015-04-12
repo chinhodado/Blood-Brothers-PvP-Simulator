@@ -127,6 +127,10 @@ function printFam(name, img) {
 
         content += ("    skills: [" + skills + "],\n");
 
+        if (card.passiveSkillId1 !== 0) {
+            content += ("    passiveSkills: [" + card.passiveSkillId1 + "],\n");
+        }
+
         if (card.defaultSkillId != 0) {
             content += ("    autoAttack: " + card.defaultSkillId  + ",\n");
         }

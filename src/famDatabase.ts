@@ -9,6 +9,7 @@ interface CardInfo {
                          // append the rarity at the end (e.g. "Thor" and "Thor L")
     stats: number[];     // Use the POPE stats
     skills: number[];
+    passiveSkills?: number[];
     autoAttack?: number; // needed for those with special autoAttack
     isMounted?: boolean;
     isWarlord?: boolean;
@@ -524,13 +525,6 @@ var famDatabase: CardMap = {
         autoAttack: 10046,
         img: "1bc", rarity: 5, evo: 2,
         fullName: "Bandersnatch, Beast Divine II"
-    },
-    11572: {
-        name: "Banshee", stats: [23560, 16009, 21480, 24708, 18533],
-        skills: [872, 873],
-        autoAttack: 10114,
-        img: "42d", rarity: 6, evo: 2,
-        fullName: "Banshee Rider II"
     },
     10652: {
         name: "Batraz", stats: [14471, 15511, 13442, 12293, 12174],
@@ -3261,5 +3255,30 @@ var famDatabase: CardMap = {
         autoAttack: 10052,
         img: "46a", rarity: 4, evo: 2,
         fullName: "Mammi, Hare of the Harvest II"
+    },
+
+    11572: {
+        name: "Banshee", stats: [23560, 16009, 21480, 24708, 18533],
+        skills: [872, 873],
+        passiveSkills: [9002],
+        autoAttack: 10114,
+        img: "42d", rarity: 6, evo: 2,
+        fullName: "Banshee Rider II"
+    },
+
+    11548: {
+        name: "Zepar", stats: [24557, 23029, 20050, 18111, 18533],
+        skills: [831, 832],
+        passiveSkills: [9001],
+        img: "1ba", rarity: 6, evo: 2,
+        fullName: "Zepar, Blood-Annointed II"
+    },
+
+    11601: {
+        name: "Brine", stats: [18501, 6898, 16009, 22000, 17591],
+        skills: [900, 901],
+        autoAttack: 10121,
+        img: "217", rarity: 5, evo: 2,
+        fullName: "Brine Drake"
     },
 };

@@ -117,6 +117,9 @@ function checkFam(data) {
                 if (famDb.evo !== famSrc.evolution)
                     conflict = true;
 
+                if (famSrc.passiveSkillId1 !== 0 && (!famDb.passiveSkills || famDb.passiveSkills[0] !== famSrc.passiveSkillId1))
+                    conflict = true;
+
                 if (conflict) {
                     div.innerHTML += ("Conflict: " + name + "<br>");
                 }

@@ -363,6 +363,8 @@ class RangeFactory {
                 return new RightRange(id);
             case ENUM.SkillRange.SELF_IMMEDIATE_RIGHT:
                 return new SelfImmediateRightRange(id);
+            case ENUM.SkillRange.PASSIVE:
+                return null; // doesn't really matter
             default:
                 throw new Error("Invalid range or not implemented");
         }

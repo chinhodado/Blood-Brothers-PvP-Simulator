@@ -10,6 +10,8 @@ class Card {
     isMounted: boolean;
     isWarlord: boolean;
     imageLink: string;
+    rarity: ENUM.RarityType;
+    evoStep: number;
 
     private stats: Stats;
     originalStats: Stats;
@@ -37,6 +39,7 @@ class Card {
     private defenseSkills: Skill[] = []; // does not contain survive skills
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
+    private passiveSkills: Skill[] = [];
 
     constructor(dbId: number, player: Player, nth: number, skills: Skill[]) {
         var cardData = famDatabase[dbId];
@@ -47,6 +50,8 @@ class Card {
         this.isMounted = cardData.isMounted;
         this.isWarlord = cardData.isWarlord;
         this.imageLink = cardData.img;
+        this.rarity = cardData.rarity;
+        this.evoStep = cardData.evo;
 
         // the HP will be modified during the battle
         this.stats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
@@ -96,6 +101,11 @@ class Card {
                 }
             }
         }
+
+        if (cardData.passiveSkills) {
+            this.passiveSkills.push(new Skill(cardData.passiveSkills[0]));
+            console.assert(!cardData.passiveSkills[1], "More than one passive skill is not implemented!");
+        }
     }
 
     getSerializableObject() {
@@ -107,6 +117,8 @@ class Card {
             isMounted: this.isMounted,
             isWarlord: this.isWarlord,
             imageLink: this.imageLink,
+            rarity: this.rarity,
+            evoStep: this.evoStep,
 
             stats: this.stats,
             originalStats: this.originalStats,
@@ -133,7 +145,8 @@ class Card {
             protectSkills: getSerializableObjectArray(this.protectSkills),
             defenseSkills: getSerializableObjectArray(this.defenseSkills),
             ondeathSkills: getSerializableObjectArray(this.ondeathSkills),
-            surviveSkill: this.surviveSkill? this.surviveSkill.getSerializableObject() : null
+            surviveSkill: this.surviveSkill? this.surviveSkill.getSerializableObject() : null,
+            passiveSkills: getSerializableObjectArray(this.passiveSkills),
         };
     }
 
@@ -201,6 +214,10 @@ class Card {
     clearBuffOnDeathSkill(): void {
         this.ondeathSkills[0] = null;
         this.status.actionOnDeath = 0;
+    }
+
+    getPassiveSkill(): Skill {
+        return this.passiveSkills[0];
     }
 
     getName(): string {
@@ -541,6 +558,27 @@ class Card {
         value = this.adjustByNewDebuffLogic(ENUM.StatusType.AGI, value, this.originalStats.agi);
 
         return value;
+    }
+
+    // TODO: handle the case of multiple passive effects
+    getPassiveDamageEffect(target: Card): number {
+        var passiveSkill = this.passiveSkills[0];
+        if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.DAMAGE_PASSIVE) {
+            return (<DamagePassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, target, passiveSkill);
+        }
+        else {
+            return 1;
+        }
+    }
+
+    getPassiveReceivedDamageEffect(attacker: Card): number {
+        var passiveSkill = this.passiveSkills[0];
+        if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.DEFENSE_PASSIVE) {
+            return (<DefensePassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, attacker, passiveSkill);
+        }
+        else {
+            return 1;
+        }
     }
 
     adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number): number {

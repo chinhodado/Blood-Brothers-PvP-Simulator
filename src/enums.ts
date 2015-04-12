@@ -14,6 +14,7 @@ module ENUM {
         PROTECT = 5, // protect, protect-counter, evade, protect-reflect, counter-dispell
         EVADE = 6,
         ACTION_ON_DEATH = 16,
+        PASSIVE = 20
     }
 
     /**
@@ -81,6 +82,8 @@ module ENUM {
                      // 4: base stat for debuff (WIS, ATK, etc)
                      // 5: percent gain from the amount debuffed of a target, 6: inner probability,
                      // 7, 8, 9: unimportant (effect ids), 10: not used
+        DAMAGE_PASSIVE = 1001,
+        DEFENSE_PASSIVE = 1002,
     }
 
     /**
@@ -167,6 +170,7 @@ module ENUM {
     }
 
     export enum SkillRange {
+        PASSIVE                =  0, // only passive skills have this range
         EITHER_SIDE            =  1,
         BOTH_SIDES             =  2,
         SELF_BOTH_SIDES        =  3,

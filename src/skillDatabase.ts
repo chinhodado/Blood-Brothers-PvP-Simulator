@@ -5385,4 +5385,18 @@ var SkillDatabase: SkillMap = {
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and drain HP from target."
     },
+
+    9001: {
+        name: "Abject Horror", type: 20, func: 1002, calc: 0,
+        args: [0.3],
+        range: 0, prob: 100,
+        desc: "Decrease damage from lower rarities by up to 30%."
+    },
+
+    9002: {
+        name: "Cursed Cry", type: 20, func: 1001, calc: 0,
+        args: [0.2],
+        range: 0, prob: 100,
+        desc: "Increase damage to lower rarities by up to 20%."
+    }
 };

@@ -62,6 +62,10 @@
                 return new RandomSkillLogic();
             case ENUM.SkillFunc.ABSORB:
                 return new AbsorbSkillLogic();
+            case ENUM.SkillFunc.DAMAGE_PASSIVE:
+                return new DamagePassiveSkillLogic();
+            case ENUM.SkillFunc.DEFENSE_PASSIVE:
+                return new DefensePassiveSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }
@@ -1200,6 +1204,42 @@ class RandomSkillLogic extends SkillLogic {
                 skill.execute(data);
                 break;
             }
+        }
+    }
+}
+
+class BasePassiveSkillLogic extends SkillLogic {
+    willBeExecuted(data: SkillLogicData): boolean {
+        throw new Error("This is undefined for passive skills!");
+    }
+
+    execute(data: SkillLogicData) {
+        throw new Error("There's nothing to execute for passive skills!");
+    }
+
+    getEffectRatio(executor: Card, comparator: Card, passiveSkill: Skill): number {
+        throw new Error("Implement this!");
+    }
+}
+
+class DamagePassiveSkillLogic extends BasePassiveSkillLogic {
+    getEffectRatio(executor: Card, target: Card, passiveSkill: Skill): number {
+        if (executor.rarity > target.rarity) {
+            return 1 + passiveSkill.skillFuncArg1;
+        }
+        else {
+            return 1;
+        }
+    }
+}
+
+class DefensePassiveSkillLogic extends BasePassiveSkillLogic {
+    getEffectRatio(executor: Card, attacker: Card, passiveSkill: Skill): number {
+        if (executor.rarity > attacker.rarity) {
+            return 1 - passiveSkill.skillFuncArg1;
+        }
+        else {
+            return 1;
         }
     }
 }
