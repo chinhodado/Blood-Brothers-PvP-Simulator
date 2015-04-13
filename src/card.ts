@@ -31,6 +31,7 @@ class Card {
     procIndex: number;
 
     skills: Skill[];
+	passiveSkills: Skill[] = [];
     autoAttack: Skill;
 
     private openingSkills: Skill[] = [];
@@ -39,7 +40,6 @@ class Card {
     private defenseSkills: Skill[] = []; // does not contain survive skills
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
-    private passiveSkills: Skill[] = [];
 
     constructor(dbId: number, player: Player, nth: number, skills: Skill[]) {
         var cardData = famDatabase[dbId];

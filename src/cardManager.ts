@@ -414,8 +414,9 @@ class CardManager {
 
     getCardInfoForDialog(card: Card) {
         var skillInfo = [];
-        for (var i = 0; i < card.skills.length; i++) {
-            var skill = card.skills[i];
+        var allSkills = card.skills.concat(card.passiveSkills);
+        for (var i = 0; i < allSkills.length; i++) {
+            var skill = allSkills[i];
             skillInfo.push({
                 "id": skill.id,
                 "name": skill.name,
