@@ -3281,4 +3281,67 @@ var famDatabase: CardMap = {
         img: "217", rarity: 5, evo: 2,
         fullName: "Brine Drake"
     },
+
+    11604: {
+        name: "Hellawes", stats: [15327, 7559, 12272, 16659, 16800],
+        skills: [907],
+        autoAttack: 10007,
+        img: "431", rarity: 4, evo: 2,
+        fullName: "Hellawes, Fetter Witch II"
+    },
+
+    11607: {
+        name: "Shackled Red Wyrm", stats: [25521, 14092, 20386, 23538, 18219],
+        skills: [905],
+        autoAttack: 10123,
+        img: "281", rarity: 6, evo: 2,
+        fullName: "Shackled Red Wyrm II"
+    },
+
+    11606: {
+        name: "Palamedes", stats: [15376, 16217, 14561, 6650, 17071],
+        skills: [908],
+        autoAttack: 10103,
+        img: "21e", rarity: 4, evo: 4,
+        fullName: "Palamedes, the Hawk's Eye II"
+    },
+
+    11612: {
+        name: "Belle", stats: [16009, 17006, 14980, 14807, 18208],
+        skills: [914, 915],
+        autoAttack: 10125,
+        isMounted: true,
+        img: "31f", rarity: 5, evo: 2,
+        fullName: "Belle, Grimoire Keeper II"
+    },
+
+    11611: {
+        name: "Chariot Hippocamp", stats: [14402, 14792, 13024, 7980, 17706],
+        skills: [913],
+        img: "281", rarity: 4, evo: 4,
+        fullName: "Chariot Hippocamp II"
+    },
+
+    21608: {
+        name: "Neptune", stats: [20461, 10404, 17836, 21674, 18023],
+        skills: [911],
+        autoAttack: 10057,
+        img: "349", rarity: 5, evo: 3,
+        fullName: "Intrepid Hand of Neptune"
+    },
+
+    1609: {
+        name: "Charybdis", stats: [14048, 16042, 13918, 9000, 16887],
+        skills: [912],
+        img: "3c9", rarity: 4, evo: 2,
+        fullName: "Charybdis II"
+    },
+
+    11613: {
+        name: "Amphitrite", stats: [16226, 7418, 19638, 20158, 17569],
+        skills: [916, 917],
+        autoAttack: 10001,
+        img: "2ed", rarity: 5, evo: 2,
+        fullName: "Amphitrite, Nereid Queen II"
+    },
 };

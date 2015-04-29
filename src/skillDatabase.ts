@@ -4784,6 +4784,97 @@ var SkillDatabase: SkillMap = {
         desc: "Deal ATK-based damage to five random foes."
     },
 
+    905: {
+        name: "Perdition's Flame", type: 2, func: 4, calc: 2,
+        args: [1.15, 8, 0.2, 3000],
+        range: 41, prob: 30, ward: 3, sac: 1,
+        desc: "Deal WIS-based damage to six random foes and sometimes burn targets. Attacks rear foes first."
+    },
+
+    906: {
+        name: "Binding Water", type: 2, func: 4, calc: 2,
+        args: [1.55, 3, 0.25],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage and sometimes freeze four random foes, ignoring position."
+    },
+
+    907: {
+        name: "Despair", type: 2, func: 7, calc: 2,
+        args: [2.05, 0.05],
+        range: 16, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive WIS-based damage to three random foes. Chance to kill targets."
+    },
+
+    908: {
+        name: "Chivalrous Arrows", type: 2, func: 34, calc: 1,
+        args: [1.35, 1, 0.2, 0.15],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes lower ATK, ignoring position."
+    },
+
+    909: {
+        name: "Arondight", type: 2, func: 4, calc: 1,
+        args: [1.65, 5, 0.2, 1],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage and sometimes silence four random foes, ignoring position."
+    },
+
+    910: {
+        name: "Parting Blade", type: 1, func: 1, calc: 0,
+        args: [0.4, 6, 7],
+        range: 3, prob: 70,
+        desc: "Reduce magic and breath damages taken by self and adjacent familiars."
+    },
+
+    911: {
+        name: "Trident Fist", type: 2, func: 4, calc: 2,
+        args: [1.6, 3, 0.25],
+        range: 19, prob: 30, ward: 3, sac: 1,
+        desc: "Deal heavy WIS-based damage and sometimes freeze four random foes, ignoring position."
+    },
+
+    912: {
+        name: "Devouring Whirl", type: 2, func: 33, calc: 1,
+        args: [1.85, 2, 1, 0.14],
+        range: 43, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy ATK-based damage and lower DEF of three random foes in the front line."
+    },
+
+    913: {
+        name: "Fin Slap", type: 2, func: 3, calc: 3,
+        args: [1.3, 3, 0.2],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage and sometimes freeze four random foes."
+    },
+
+    914: {
+        name: "Claw of the Beast", type: 2, func: 4, calc: 3,
+        args: [1.8, 7, 0.3, 1, 1],
+        range: 16, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage & sometimes blind three random foes for one turn, ignoring position."
+    },
+
+    915: {
+        name: "Thorn of Beauty", type: 2, func: 34, calc: 3,
+        args: [1.8, 3, 0.3, 0.14],
+        range: 16, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage and sometimes lower WIS of three random foes, ignoring position."
+    },
+
+    916: {
+        name: "Crashing Waves", type: 2, func: 34, calc: 2,
+        args: [1.3, 4, 0.2, 0.06],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes lower AGI of all foes, ignoring position."
+    },
+
+    917: {
+        name: "Veil of Brine", type: 3, func: 11, calc: 1,
+        args: [1],
+        range: 36, prob: 50,
+        desc: "Heal self and an ally on the right for the amount of damage taken."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5384,6 +5475,20 @@ var SkillDatabase: SkillMap = {
         args: [1.3, 0.5, 27, 21],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and drain HP from target."
+    },
+
+    10123: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [0.6, 8, 0.2, 2000],
+        range: 6, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to up to 2 foes and sometimes burn targets."
+    },
+
+    10125: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     9001: {
