@@ -21,6 +21,7 @@
     <Content Include="css\debug.css" />
     <Content Include="css\font.css" />
     <Content Include="css\game.css" />
+    <Content Include="css\settings.css" />
     <Content Include="css\sweet-alert.css" />
     <Content Include="debug.html" />
     <Content Include="css\dialog.css" />
