@@ -3344,4 +3344,52 @@ var famDatabase: CardMap = {
         img: "2ed", rarity: 5, evo: 2,
         fullName: "Amphitrite, Nereid Queen II"
     },
+
+    11627: {
+        name: "Charon", stats: [16681, 6689, 10525, 17095, 16950],
+        skills: [919],
+        autoAttack: 10007,
+        img: "3ae", rarity: 4, evo: 4,
+        fullName: "Charon, Greedy Ferryman II"
+    },
+
+    21627: {
+        name: "Charon", stats: [13680, 8285, 9585, 14503, 9964],
+        skills: [920],
+        autoAttack: 10007,
+        img: "430", rarity: 4, evo: 2,
+        fullName: "Charon, Darksun Ferryman II"
+    },
+
+    11631: {
+        name: "Nessus", stats: [13803, 7906, 9635, 13965, 10245],
+        skills: [925],
+        autoAttack: 10007,
+        img: "13e", rarity: 4, evo: 4,
+        fullName: "Nessus, Centaur Gaoler II"
+    },
+
+    21625: {
+        name: "Belial", stats: [21873, 19096, 20100, 9309, 18105],
+        skills: [918],
+        autoAttack: 10044,
+        img: "3af", rarity: 5, evo: 3,
+        fullName: "Belial, Lord of Vices"
+    },
+
+    11629: {
+        name: "Midas", stats: [14048, 7819, 11275, 18013, 17374],
+        skills: [923, 924],
+        autoAttack: 10007,
+        img: "2a6", rarity: 4, evo: 2,
+        fullName: "Midas, the Wailing King II"
+    },
+
+    11628: {
+        name: "Beatrice", stats: [18858, 7895, 15251, 21328, 18165],
+        skills: [921, 922],
+        autoAttack: 10007,
+        img: "26a", rarity: 5, evo: 2,
+        fullName: "Beatrice, the Luminescent II"
+    },
 };

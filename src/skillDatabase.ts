@@ -4875,6 +4875,62 @@ var SkillDatabase: SkillMap = {
         desc: "Heal self and an ally on the right for the amount of damage taken."
     },
 
+    918: {
+        name: "Arms of the Beast", type: 2, func: 3, calc: 3,
+        args: [1.95, 2, 0.3],
+        range: 16, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy AGI-based damage, sometimes paralyze three random foes."
+    },
+
+    919: {
+        name: "Ferryman's Toll", type: 2, func: 34, calc: 2,
+        args: [1.65, 1, 0.25, 0.07],
+        range: 314, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based dmg  and sometimes reduce ATK up to four foes. Increased if fewer foes."
+    },
+
+    920: {
+        name: "Oar Master", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    921: {
+        name: "Light of Negation", type: 2, func: 4, calc: 2,
+        args: [1.2, 7, 0.15, 1, 0.9],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes blind five random foes, ignoring position."
+    },
+
+    922: {
+        name: "Light of Guidance", type: 1, func: 44, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 0.08, 8],
+        range: 3, prob: 70,
+        desc: "Raise WIS of self/adjacent familiars based on 20% of her WIS, and skill trigger rates by 8%."
+    },
+
+    923: {
+        name: "Gold Dust Storm", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
+
+    924: {
+        name: "Gold Dust Gale", type: 1, func: 1, calc: 0,
+        args: [1, 18],
+        range: 21, prob: 70,
+        desc: "Allows self to perform an extra action during the next turn."
+    },
+
+    925: {
+        name: "Fleet of Hoof", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
