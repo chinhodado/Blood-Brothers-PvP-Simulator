@@ -75,7 +75,7 @@ function toogleDisable() {
         }
 
         // random modes
-        var randomSelect = document.getElementById(player + "r");
+        var randomSelect = <HTMLInputElement>document.getElementById(player + "r");
         if (isSelected) {
             randomSelect.disabled = false;
         }
@@ -267,7 +267,7 @@ function prepareRandom() {
  * Callback when the battle in normal mode has ended
  */
 function onBattleFinished() {
-    var startButton = document.getElementById("startButton");
+    var startButton = <HTMLInputElement>document.getElementById("startButton");
     startButton.disabled = false;
 
     if (ENUM.Setting.IS_MOBILE) {
