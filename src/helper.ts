@@ -165,14 +165,18 @@ function setFamOptions() {
     }
     famIdArray.sort((a, b) => famDatabase[a].fullName.localeCompare(famDatabase[b].fullName));
 
-    for (var i = 0; i < famSelects.length; i++) {
-        for (var index = 0; index < famIdArray.length; index++) {
-            key = famIdArray[index];
-            var option = document.createElement("option");
-            option.value = key;
-            option.text = famDatabase[key].fullName;
-            (<HTMLSelectElement>famSelects[i]).add(option);
-        }
+    // populate one select
+    for (var index = 0; index < famIdArray.length; index++) {
+        key = famIdArray[index];
+        var option = document.createElement("option");
+        option.value = key;
+        option.text = famDatabase[key].fullName;
+        (<HTMLSelectElement>famSelects[0]).add(option);
+    }
+
+    // and clone it
+    for (var i = 1; i < famSelects.length; i++) {
+        (<HTMLSelectElement>famSelects[i]).innerHTML = (<HTMLSelectElement>famSelects[0]).innerHTML;
     };
 }
 
@@ -186,14 +190,18 @@ function setSkillOptions() {
     var skillIdArray = SkillProvider.getAvailableSkillsForSelect();
     skillIdArray.sort((a, b) => SkillDatabase[a].name.localeCompare(SkillDatabase[b].name));
 
-    for (var i = 0; i < skillSelects.length; i++) {
-        for (var index = 0; index < skillIdArray.length; index++) {
-            var key = skillIdArray[index];
-            var option = document.createElement("option");
-            option.value = key + "";
-            option.text = SkillDatabase[key].name;
-            (<HTMLSelectElement>skillSelects[i]).add(option);
-        }
+    // populate one select
+    for (var index = 0; index < skillIdArray.length; index++) {
+        var key = skillIdArray[index];
+        var option = document.createElement("option");
+        option.value = key + "";
+        option.text = SkillDatabase[key].name;
+        (<HTMLSelectElement>skillSelects[0]).add(option);
+    }
+
+    // and clone it
+    for (var i = 1; i < skillSelects.length; i++) {
+        (<HTMLSelectElement>skillSelects[i]).innerHTML = (<HTMLSelectElement>skillSelects[0]).innerHTML;
     };
 }
 
