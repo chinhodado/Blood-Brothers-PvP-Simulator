@@ -17,3 +17,6 @@ See [here](https://github.com/chinhodado/bb_pvp_simulator/wiki/Build-instruction
 
 ### Progress
 See [here](https://github.com/chinhodado/bb_pvp_simulator/wiki/What-is-implemented-and-what-is-not) for what has been implemented and what not.
+
+### License
+MIT
