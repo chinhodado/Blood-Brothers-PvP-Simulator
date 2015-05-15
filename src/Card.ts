@@ -1,4 +1,6 @@
-/// <reference path="enums.ts"/>
+/// <reference path="Enums.ts"/>
+/// <reference path="Stats.ts"/>
+/// <reference path="affliction/AfflictionFactory.ts"/>
 
 class Card {
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
@@ -608,46 +610,4 @@ class Card {
         this.justMissed = false;
         this.justEvaded = false;
     }
-}
-
-class Stats {
-    hp: number;
-    atk: number;
-    def: number;
-    wis: number;
-    agi: number;
-
-    constructor(hp: number, atk: number, def: number, wis: number, agi: number) {
-        this.hp = hp;
-        this.atk = atk;
-        this.def = def;
-        this.wis = wis;
-        this.agi = agi;
-    }
-}
-
-class Status {
-    // the amount changed because of buffs or debuffs
-    atk: number = 0;
-    def: number = 0;
-    wis: number = 0;
-    agi: number = 0;
-
-    attackResistance: number = 0;
-    magicResistance:  number = 0;
-    breathResistance: number = 0;
-
-    skillProbability: number = 0;
-
-    remainHpAtkUp: number = 0;
-    remainHpDefUp: number = 0;
-    remainHpWisUp: number = 0;
-    remainHpAgiUp: number = 0;
-
-    actionOnDeath: number = 0;
-    hpShield: number = 0;
-
-    willAttackAgain: number = 0;
-
-    isNewLogic = {};
 }

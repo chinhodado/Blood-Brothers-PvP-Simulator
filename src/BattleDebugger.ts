@@ -1,4 +1,6 @@
-﻿/**
+﻿/// <reference path="Status.ts"/>
+
+/**
  * Responsible for stuffs in the debugger mode
  */
 class BattleDebugger {

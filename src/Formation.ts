@@ -1,4 +1,4 @@
-/// <reference path="enums.ts"/>
+/// <reference path="Enums.ts"/>
 
 class Formation {
     static FORMATION_CONFIG = {};

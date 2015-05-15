@@ -1,4 +1,5 @@
-﻿declare var showCardDetailDialog;
+﻿/// <reference path="interfaces/MinorEvent.ts"/>
+declare var showCardDetailDialog;
 
 class BattleGraphic {
     // holds the coordinates of the bullets of the formation

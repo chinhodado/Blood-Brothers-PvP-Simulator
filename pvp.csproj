@@ -51,7 +51,15 @@
     <Content Include="lib\svg.min.js" />
     <Content Include="tools\generate.html" />
     <Content Include="tools\generate.js" />
-    <TypeScriptCompile Include="src\battleBackground.ts" />
+    <TypeScriptCompile Include="src\affliction\AfflictionFactory.ts" />
+    <TypeScriptCompile Include="src\affliction\BlindAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\BurnAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\DisabledAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\FrozenAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\ParalysisAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\PoisonAffliction.ts" />
+    <TypeScriptCompile Include="src\affliction\SilentAffliction.ts" />
+    <TypeScriptCompile Include="src\BattleBackground.ts" />
     <Content Include="test\qunit-1.14.0.css" />
     <Content Include="test\qunit-1.14.0.js" />
     <Content Include="test\test.html" />
@@ -63,27 +71,63 @@
   <ItemGroup>
     <TypeScriptCompile Include="lib\jquery.d.ts" />
     <TypeScriptCompile Include="lib\svgjs.d.ts" />
-    <TypeScriptCompile Include="src\affliction.ts" />
-    <TypeScriptCompile Include="src\battleDebugger.ts" />
-    <TypeScriptCompile Include="src\battleGraphic.ts" />
-    <TypeScriptCompile Include="src\battleLogger.ts" />
-    <TypeScriptCompile Include="src\battleModel.ts" />
-    <TypeScriptCompile Include="src\csRandom.ts" />
-    <TypeScriptCompile Include="src\brigGenerator.ts" />
-    <TypeScriptCompile Include="src\card.ts" />
-    <TypeScriptCompile Include="src\cardManager.ts" />
-    <TypeScriptCompile Include="src\enums.ts" />
-    <TypeScriptCompile Include="src\famDatabase.ts" />
-    <TypeScriptCompile Include="src\famProvider.ts" />
-    <TypeScriptCompile Include="src\formation.ts" />
-    <TypeScriptCompile Include="src\helper.ts" />
-    <TypeScriptCompile Include="src\player.ts" />
-    <TypeScriptCompile Include="src\skill.ts" />
-    <TypeScriptCompile Include="src\skillCalcType.ts" />
-    <TypeScriptCompile Include="src\skillDatabase.ts" />
-    <TypeScriptCompile Include="src\skillFunc.ts" />
-    <TypeScriptCompile Include="src\skillRange.ts" />
-    <TypeScriptCompile Include="src\util.ts" />
+    <TypeScriptCompile Include="src\affliction\Affliction.ts" />
+    <TypeScriptCompile Include="src\BattleDebugger.ts" />
+    <TypeScriptCompile Include="src\BattleGraphic.ts" />
+    <TypeScriptCompile Include="src\BattleLogger.ts" />
+    <TypeScriptCompile Include="src\BattleModel.ts" />
+    <TypeScriptCompile Include="src\CsRandom.ts" />
+    <TypeScriptCompile Include="src\BrigGenerator.ts" />
+    <TypeScriptCompile Include="src\Card.ts" />
+    <TypeScriptCompile Include="src\CardManager.ts" />
+    <TypeScriptCompile Include="src\Enums.ts" />
+    <TypeScriptCompile Include="src\FamDatabase.ts" />
+    <TypeScriptCompile Include="src\FamProvider.ts" />
+    <TypeScriptCompile Include="src\Formation.ts" />
+    <TypeScriptCompile Include="src\Helper.ts" />
+    <TypeScriptCompile Include="src\interfaces\DamagePhaseData.ts" />
+    <TypeScriptCompile Include="src\interfaces\GameData.ts" />
+    <TypeScriptCompile Include="src\interfaces\GameOption.ts" />
+    <TypeScriptCompile Include="src\interfaces\MajorEvent.ts" />
+    <TypeScriptCompile Include="src\interfaces\MinorEvent.ts" />
+    <TypeScriptCompile Include="src\interfaces\SkillLogicData.ts" />
+    <TypeScriptCompile Include="src\Player.ts" />
+    <TypeScriptCompile Include="src\Skill.ts" />
+    <TypeScriptCompile Include="src\SkillCalcType.ts" />
+    <TypeScriptCompile Include="src\SkillDatabase.ts" />
+    <TypeScriptCompile Include="src\skillLogic\AbsorbSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\AfflictionSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\AttackSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\BuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ClearStatusSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\CounterDebuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\CounterDispellSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\CounterSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\DebuffAfflictionSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\DebuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\DrainSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\EvadeSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\HealSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\MultiBuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\MultiDebuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\OnHitBuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\OnHitDebuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\passive\BasePassiveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\passive\DamagePassiveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\passive\DefensePassiveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ProtectCounterSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ProtectReflectSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ProtectSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\RandomSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ReviveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\SkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\SkillLogicFactory.ts" />
+    <TypeScriptCompile Include="src\skillLogic\SurviveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\TurnOrderChangeSkillLogic.ts" />
+    <TypeScriptCompile Include="src\SkillRange.ts" />
+    <TypeScriptCompile Include="src\Stats.ts" />
+    <TypeScriptCompile Include="src\Status.ts" />
+    <TypeScriptCompile Include="src\Util.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="font\trb.ttf" />
@@ -98,8 +142,9 @@
     <Content Include="font\OpenSans_normal700.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\skillProvider.ts" />
+    <TypeScriptCompile Include="src\SkillProvider.ts" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

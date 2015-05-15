@@ -1,26 +1,25 @@
-/// <reference path="affliction.ts"/>
-/// <reference path="battleBackground.ts"/>
-/// <reference path="battleDebugger.ts"/>
-/// <reference path="battleGraphic.ts"/>
-/// <reference path="battleLogger.ts"/>
-/// <reference path="brigGenerator.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="cardManager.ts"/>
-/// <reference path="csRandom.ts"/>
-/// <reference path="enums.ts"/>
-/// <reference path="famDatabase.ts"/>
-/// <reference path="famProvider.ts"/>
-/// <reference path="formation.ts"/>
-/// <reference path="helper.ts"/>
+/// <reference path="affliction/Affliction.ts"/>
+/// <reference path="interfaces/DamagePhaseData.ts"/>
+/// <reference path="BattleBackground.ts"/>
+/// <reference path="BattleDebugger.ts"/>
+/// <reference path="BattleGraphic.ts"/>
+/// <reference path="BattleLogger.ts"/>
+/// <reference path="BrigGenerator.ts"/>
+/// <reference path="Card.ts"/>
+/// <reference path="CardManager.ts"/>
+/// <reference path="CsRandom.ts"/>
+/// <reference path="FamDatabase.ts"/>
+/// <reference path="FamProvider.ts"/>
+/// <reference path="Formation.ts"/>
+/// <reference path="Helper.ts"/>
 /// <reference path="../lib/jquery.d.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="skill.ts"/>
-/// <reference path="skillCalcType.ts"/>
-/// <reference path="skillDatabase.ts"/>
-/// <reference path="skillFunc.ts"/>
-/// <reference path="skillProvider.ts"/>
-/// <reference path="skillRange.ts"/>
-/// <reference path="util.ts"/>
+/// <reference path="Player.ts"/>
+/// <reference path="Skill.ts"/>
+/// <reference path="SkillCalcType.ts"/>
+/// <reference path="SkillDatabase.ts"/>
+/// <reference path="SkillProvider.ts"/>
+/// <reference path="SkillRange.ts"/>
+/// <reference path="Util.ts"/>
 
 class BattleModel {
     // set to true when doing a mass simulation and you don't care about the graphics or logging stuffs
@@ -983,43 +982,4 @@ class BattleModel {
         // reset the turn order changed flag at the end of opening phase
         this.turnOrderChanged = false;
     }
-}
-
-/**
- * A structure for holding a battle's data
- */
-interface GameData {
-    p1_formation: string;
-    p2_formation: string;
-    p1_cardIds: number[];
-    p2_cardIds: number[];
-    p1_warlordSkillIds: number[];
-    p2_warlordSkillIds: number[];
-}
-
-/**
- * A structure for holding a battle's option
- */
-interface GameOption {
-    p1RandomMode?: ENUM.RandomBrigType;
-    p2RandomMode?: ENUM.RandomBrigType;
-    battleType?: ENUM.BattleType;
-}
-
-/**
- * A structure for holding data for damage phase
- */
-interface DamagePhaseData {
-    attacker: Card;
-    target: Card;
-    skill: Skill;
-    additionalDescription?: string;
-    scaledRatio?: number;
-    varyingRatio?: number;
-
-    // for reflect
-    dmgRatio?: number;
-    oriAttacker?: Card;
-    oriAtkSkill?: Skill;
-    oriDmg?: number;
 }

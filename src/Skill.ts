@@ -1,3 +1,5 @@
+/// <reference path="skillLogic/SkillLogicFactory.ts"/>
+
 class Skill {
     id: number;
     name: string;

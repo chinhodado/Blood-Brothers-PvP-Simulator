@@ -1,4 +1,7 @@
-﻿class BrigGenerator {
+﻿/// <reference path="interfaces/GameData.ts"/>
+/// <reference path="interfaces/GameOption.ts"/>
+
+class BrigGenerator {
     /**
      * Return a randomly generated brig
      */
@@ -147,4 +150,4 @@
 
         return skills;
     }
-} 
+}
