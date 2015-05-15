@@ -63,7 +63,7 @@
     <Content Include="test\qunit-1.14.0.css" />
     <Content Include="test\qunit-1.14.0.js" />
     <Content Include="test\test.html" />
-    <Content Include="test\testFinish.js" />
+    <Content Include="test\tests.js" />
     <Content Include="tools\check.html" />
     <Content Include="tools\check.js" />
     <Content Include="js\worker.js" />
