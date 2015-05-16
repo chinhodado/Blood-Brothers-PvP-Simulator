@@ -15,6 +15,7 @@
 /// <reference path="OnHitBuffSkillLogic.ts"/>
 /// <reference path="OnHitDebuffSkillLogic.ts"/>
 /// <reference path="ProtectCounterSkillLogic.ts"/>
+/// <reference path="ProtectCounterDebuffSkillLogic.ts"/>
 /// <reference path="ProtectReflectSkillLogic.ts"/>
 /// <reference path="RandomSkillLogic.ts"/>
 /// <reference path="ReviveSkillLogic.ts"/>
@@ -62,6 +63,8 @@ class SkillLogicFactory {
                 return new EvadeSkillLogic();
             case ENUM.SkillFunc.PROTECT_COUNTER:
                 return new ProtectCounterSkillLogic();
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
+                return new ProtectCounterDebuffSkillLogic();
             case ENUM.SkillFunc.PROTECT_REFLECT:
                 return new ProtectReflectSkillLogic();
             case ENUM.SkillFunc.COUNTER:

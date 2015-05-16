@@ -490,6 +490,7 @@ class BattleModel {
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
                 status = skill.skillFuncArg2;
                 multi = skill.skillFuncArg4;
                 isNewLogic = true;

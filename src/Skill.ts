@@ -74,6 +74,7 @@ class Skill {
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
             case ENUM.SkillFunc.PROTECT_COUNTER:
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
@@ -100,6 +101,7 @@ class Skill {
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.PROTECT_COUNTER:
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
             case ENUM.SkillFunc.PROTECT_REFLECT:
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
@@ -235,6 +237,7 @@ class Skill {
             // not sure about these 2
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
                 isDebuffAttack = true;
                 break;
             default:
@@ -271,6 +274,7 @@ class Skill {
             case ENUM.SkillFunc.DEBUFF_AFFLICTION:
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
+            case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
                 statuses.push(skillInfo.args[1]);
                 break;
             case ENUM.SkillFunc.MULTI_DEBUFF:
@@ -323,11 +327,13 @@ class Skill {
             case ENUM.ProtectAttackType.SKILL:
                 return (attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER
                     && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER
+                    && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF
                     && attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER_INDIRECT
                     && attackSkill.id !== 10000);
             case ENUM.ProtectAttackType.NOT_COUNTER:
                 return (attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER
                      && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER
+                     && attackSkill.skillFunc !== ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF
                      && attackSkill.skillFunc !== ENUM.SkillFunc.COUNTER_INDIRECT);
             default:
                 throw new Error("Unimplemented ProtectAttackType");

@@ -82,6 +82,7 @@ module ENUM {
                      // 4: base stat for debuff (WIS, ATK, etc)
                      // 5: percent gain from the amount debuffed of a target, 6: inner probability,
                      // 7, 8, 9: unimportant (effect ids), 10: not used
+        PROTECT_COUNTER_DEBUFF = 56, // 1: counter mod, 2: debuff status, 3: debuff prob, 4: debuff power
         DAMAGE_PASSIVE = 1001,
         DEFENSE_PASSIVE = 1002,
         EXTRA_TURN_PASSIVE = 1006,
