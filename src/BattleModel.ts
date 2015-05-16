@@ -627,11 +627,24 @@ class BattleModel {
                 this.processActivePhase(currentCard, "FIRST");
                 if (this.isFinished) break;
 
+                // hopefully there's no mounted fam with extra turn buff and extra turn passive, coz
+                // I have no idea how all that logic will play with each other
+                var passiveSkill = currentCard.getPassiveSkill();
                 if (!currentCard.isDead && currentCard.status.willAttackAgain !== 0) {
                     this.processActivePhase(currentCard, "FIRST");
                     // todo: send a minor event log and handle it
                     currentCard.status.willAttackAgain = 0;
                     if (this.isFinished) break;
+                }
+                else if (!currentCard.isDead && passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.EXTRA_TURN_PASSIVE) {
+                    if (passiveSkill.willBeExecuted({ executor: currentCard, skill: passiveSkill })) {
+                        this.logger.addMinorEvent({
+                            description: currentCard.name + " gets an extra turn!",
+                            type: ENUM.MinorEventType.TEXT
+                        });
+                        this.processActivePhase(currentCard, "FIRST");
+                        if (this.isFinished) break;
+                    }
                 }
 
                 if (!currentCard.isDead) {

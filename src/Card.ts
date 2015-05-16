@@ -396,7 +396,8 @@ class Card {
                     this.status.remainHpAgiUp = amount; // do not stack
                 break;
             case ENUM.StatusType.WILL_ATTACK_AGAIN:
-                this.status.willAttackAgain = amount;
+                if (this.status.willAttackAgain < amount)
+                    this.status.willAttackAgain = amount; // do not stack
                 break;
             case ENUM.StatusType.ACTION_ON_DEATH:
                 var skill = new Skill(amount);

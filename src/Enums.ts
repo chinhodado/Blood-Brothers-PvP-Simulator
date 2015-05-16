@@ -84,6 +84,7 @@ module ENUM {
                      // 7, 8, 9: unimportant (effect ids), 10: not used
         DAMAGE_PASSIVE = 1001,
         DEFENSE_PASSIVE = 1002,
+        EXTRA_TURN_PASSIVE = 1006,
     }
 
     /**
@@ -149,6 +150,8 @@ module ENUM {
         REMAIN_HP_ATK_DEF_AGI_UP = 27,
         REMAIN_HP_DEF_WIS_AGI_UP = 28,
         REMAIN_HP_ATK_WIS_AGI_UP = 29,
+
+        WILL_ATTACK_AGAIN_PASSIVE = 30,
     }
 
     // seems to only be used by absorb

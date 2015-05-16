@@ -4931,6 +4931,20 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
     },
 
+    935: {
+        name: "Blizzard Breath", type: 2, func: 4, calc: 2,
+        args: [1.1],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+
+    936: {
+        name: "Ice Cuirass", type: 1, func: 44, calc: 2,
+        args: [0.15, 3, 0, 0, 0, 0.05, 4],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent familiars on 15% and 5% of its WIS respectively."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5547,6 +5561,13 @@ var SkillDatabase: SkillMap = {
         desc: "ATK-based damage to one foe."
     },
 
+    10126: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2, 3, 0.3],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes freeze target."
+    },
+
     9001: {
         name: "Abject Horror", type: 20, func: 1002, calc: 0,
         args: [0.3],
@@ -5559,5 +5580,12 @@ var SkillDatabase: SkillMap = {
         args: [0.2],
         range: 0, prob: 100,
         desc: "Increase damage to lower rarities by up to 20%."
-    }
+    },
+
+    9004: {
+        name: "Coldblood Claw", type: 20, func: 1006, calc: 0,
+        args: [0.1],
+        range: 0, prob: 100,
+        desc: "Up to 10% chance to reproduce the previous attack action."
+    },
 };

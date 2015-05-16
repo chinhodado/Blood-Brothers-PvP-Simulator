@@ -2,7 +2,7 @@
 
 class BasePassiveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        throw new Error("This is undefined for passive skills!");
+        throw new Error("This is undefined for passive skills (except for extra turn passive)!");
     }
 
     execute(data: SkillLogicData) {

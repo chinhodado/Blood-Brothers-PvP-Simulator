@@ -22,6 +22,7 @@
 /// <reference path="TurnOrderChangeSkillLogic.ts"/>
 /// <reference path="passive/DamagePassiveSkillLogic.ts"/>
 /// <reference path="passive/DefensePassiveSkillLogic.ts"/>
+/// <reference path="passive/ExtraTurnPassiveSkillLogic.ts"/>
 
 class SkillLogicFactory {
     static getSkillLogic(skillFunc: number): SkillLogic {
@@ -91,6 +92,8 @@ class SkillLogicFactory {
                 return new DamagePassiveSkillLogic();
             case ENUM.SkillFunc.DEFENSE_PASSIVE:
                 return new DefensePassiveSkillLogic();
+            case ENUM.SkillFunc.EXTRA_TURN_PASSIVE:
+                return new ExtraTurnPassiveSkillLogic();
             default:
                 throw new Error("Invalid skillFunc or not implemented");
         }

@@ -3392,4 +3392,13 @@ var famDatabase: CardMap = {
         img: "26a", rarity: 5, evo: 2,
         fullName: "Beatrice, the Luminescent II"
     },
+
+    11644: {
+        name: "Nidhogg", stats: [24752, 16128, 22130, 23246, 18035],
+        skills: [935, 936],
+        passiveSkills: [9004],
+        autoAttack: 10126,
+        img: "151", rarity: 6, evo: 2,
+        fullName: "Nidhogg, Iceclad Dragon II"
+    },
 };
