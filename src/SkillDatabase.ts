@@ -4945,6 +4945,139 @@ var SkillDatabase: SkillMap = {
         desc: "Raise WIS/AGI of self and adjacent familiars on 15% and 5% of its WIS respectively."
     },
 
+    937: {
+        name: "Life Siphon Claws", type: 2, func: 37, calc: 3,
+        args: [1.75, 0.2, 27, 21],
+        range: 19, prob: 30, ward: 2,
+        desc: "Drains HP from four random foes while dealing heavy AGI-based damage, ignoring position."
+    },
+
+    938: {
+        name: "Sensual Wing", type: 1, func: 44, calc: 0,
+        args: [0.5, 17, 1.25, 0, 0, 0.3, 6],
+        range: 3, prob: 70,
+        desc: "Raise HP and reduce magic damage taken by self and adjacent familiars."
+    },
+
+    939: {
+        name: "Axe of Judgment", type: 2, func: 3, calc: 1,
+        args: [1.45],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes."
+    },
+
+    940: {
+        name: "Verdict", type: 5, func: 56, calc: 1,
+        args: [1.55, 1, 1, 0.2],
+        range: 4, prob: 50, ward: 1,
+        desc: "Take heavy damage in place of any ally and counter, greatly lower ATK."
+    },
+
+    941: {
+        name: "Infernal Strike", type: 2, func: 4, calc: 2,
+        args: [1.9],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage to two random foes, ignoring position."
+    },
+
+    942: {
+        name: "Soul Slasher", type: 2, func: 4, calc: 2,
+        args: [2.2, 8, 0.3, 2000],
+        range: 16, prob: 30, ward: 2,
+        desc: "Massive WIS-based damage and sometimes burn three random foes, ignoring position."
+    },
+
+    943: {
+        name: "Infernal Rampart", type: 1, func: 44, calc: 0,
+        args: [0.1, 2, 0, 0, 0, 0.1, 3],
+        range: 3, prob: 70,
+        desc: "Raise DEF/WIS of self and adjacent familiars based on 10% of his WIS respectively."
+    },
+
+    944: {
+        name: "Fellfeather Dart", type: 2, func: 34, calc: 2,
+        args: [1.5, 2, 0.25, 0.08],
+        range: 315, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based DMG and sometimes lower DEF of up to five foes. Increased if fewer foes."
+    },
+
+    945: {
+        name: "Raging Bull", type: 2, func: 4, calc: 1,
+        args: [1.65],
+        range: 314, prob: 30, ward: 1,
+        desc: "Heavy ATK-based DMG to up to four foes. Increased if fewer foes, ignoring position."
+    },
+
+    946: {
+        name: "Lasso", type: 1, func: 2, calc: 0,
+        args: [0.05, 8],
+        range: 7, prob: 70,
+        desc: "Lower the skill trigger rate of up to three foes by 5%."
+    },
+
+    947: {
+        name: "Spear & Fang", type: 2, func: 4, calc: 3,
+        args: [1.3],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+
+    948: {
+        name: "Winds of the Wood", type: 1, func: 32, calc: 0,
+        args: [0.3, 4],
+        range: 7, prob: 70,
+        desc: "Greatly lower AGI of up to three foes."
+    },
+
+    949: {
+        name: "Devour", type: 2, func: 4, calc: 1,
+        args: [1.45],
+        range: 315, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to up to five foes. Increased if fewer foes, ignoring position."
+    },
+
+    950: {
+        name: "Greedy Flame", type: 2, func: 34, calc: 3,
+        args: [1.7, 2, 0.25, 0.2],
+        range: 8, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy AGI-based damage and sometimes lower DEF of all foes, ignoring position."
+    },
+
+    951: {
+        name: "Valiant Spear", type: 2, func: 33, calc: 3,
+        args: [1, 4, 0.2, 0.15],
+        range: 17, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to six random foes and sometimes lower AGI."
+    },
+
+    952: {
+        name: "Virtuoso Volley", type: 2, func: 4, calc: 3,
+        args: [1.6],
+        range: 314, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy AGI-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    953: {
+        name: "Grace of the Ring", type: 1, func: 44, calc: 0,
+        args: [0.2, 17, 0.4, 0, 0, 0.2, 2],
+        range: 3, prob: 70, sac: 1,
+        desc: "Raise HP/DEF of self and adjacent familiars based on 20% of his WIS respectively."
+    },
+
+    954: {
+        name: "Brutal Sanction", type: 2, func: 3, calc: 1,
+        args: [1.35, 5, 0.25, 1],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and sometimes silence four random foes."
+    },
+
+    955: {
+        name: "Light of Justice", type: 16, func: 6, calc: 0,
+        args: [1],
+        range: 121, prob: 50,
+        desc: "Revive and fully restore HP of one random ally upon her death."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5566,6 +5699,41 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 3, 0.3],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage and sometimes freeze target."
+    },
+
+    10127: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10128: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.4],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10129: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10130: {
+        name: "Standard Action", type: 2, func: 34, calc: 1,
+        args: [1.2, 3, 1, 0.15],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and lower WIS of target."
+    },
+
+    10131: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.4],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     9001: {

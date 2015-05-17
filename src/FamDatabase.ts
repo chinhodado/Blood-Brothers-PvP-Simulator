@@ -3224,7 +3224,6 @@ var famDatabase: CardMap = {
         img: "46a", rarity: 4, evo: 4,
         fullName: "Mammi, Spiritmancer II"
     },
-
     11595: {
         name: "Blazing", stats: [18891, 9141, 14005, 19963, 17992],
         skills: [893, 894],
@@ -3232,7 +3231,6 @@ var famDatabase: CardMap = {
         img: "1c6", rarity: 5, evo: 2,
         fullName: "Blazing Drake"
     },
-
     11597: {
         name: "Telluric", stats: [16696, 17499, 17693, 11770, 5506],
         skills: [895],
@@ -3240,7 +3238,6 @@ var famDatabase: CardMap = {
         img: "3d5", rarity: 4, evo: 4,
         fullName: "Telluric Drake II"
     },
-
     11600: {
         name: "Feathered", stats: [17006, 13008, 15998, 6248, 17992],
         skills: [896, 897],
@@ -3248,7 +3245,6 @@ var famDatabase: CardMap = {
         img: "25d", rarity: 4, evo: 2,
         fullName: "Feathered Drake"
     },
-
     21599: {
         name: "Mammi EP2", stats: [15500, 5663, 12987, 18696, 17407],
         skills: [898, 899],
@@ -3256,7 +3252,6 @@ var famDatabase: CardMap = {
         img: "46a", rarity: 4, evo: 2,
         fullName: "Mammi, Hare of the Harvest II"
     },
-
     11572: {
         name: "Banshee", stats: [23560, 16009, 21480, 24708, 18533],
         skills: [872, 873],
@@ -3265,7 +3260,6 @@ var famDatabase: CardMap = {
         img: "42d", rarity: 6, evo: 2,
         fullName: "Banshee Rider II"
     },
-
     11548: {
         name: "Zepar", stats: [24557, 23029, 20050, 18111, 18533],
         skills: [831, 832],
@@ -3273,7 +3267,6 @@ var famDatabase: CardMap = {
         img: "1ba", rarity: 6, evo: 2,
         fullName: "Zepar, Blood-Annointed II"
     },
-
     11601: {
         name: "Brine", stats: [18501, 6898, 16009, 22000, 17591],
         skills: [900, 901],
@@ -3281,7 +3274,6 @@ var famDatabase: CardMap = {
         img: "217", rarity: 5, evo: 2,
         fullName: "Brine Drake"
     },
-
     11604: {
         name: "Hellawes", stats: [15327, 7559, 12272, 16659, 16800],
         skills: [907],
@@ -3289,7 +3281,6 @@ var famDatabase: CardMap = {
         img: "431", rarity: 4, evo: 2,
         fullName: "Hellawes, Fetter Witch II"
     },
-
     11607: {
         name: "Shackled Red Wyrm", stats: [25521, 14092, 20386, 23538, 18219],
         skills: [905],
@@ -3297,7 +3288,6 @@ var famDatabase: CardMap = {
         img: "281", rarity: 6, evo: 2,
         fullName: "Shackled Red Wyrm II"
     },
-
     11606: {
         name: "Palamedes", stats: [15376, 16217, 14561, 6650, 17071],
         skills: [908],
@@ -3305,7 +3295,6 @@ var famDatabase: CardMap = {
         img: "21e", rarity: 4, evo: 4,
         fullName: "Palamedes, the Hawk's Eye II"
     },
-
     11612: {
         name: "Belle", stats: [16009, 17006, 14980, 14807, 18208],
         skills: [914, 915],
@@ -3314,14 +3303,12 @@ var famDatabase: CardMap = {
         img: "31f", rarity: 5, evo: 2,
         fullName: "Belle, Grimoire Keeper II"
     },
-
     11611: {
         name: "Chariot Hippocamp", stats: [14402, 14792, 13024, 7980, 17706],
         skills: [913],
         img: "281", rarity: 4, evo: 4,
         fullName: "Chariot Hippocamp II"
     },
-
     21608: {
         name: "Neptune", stats: [20461, 10404, 17836, 21674, 18023],
         skills: [911],
@@ -3329,14 +3316,12 @@ var famDatabase: CardMap = {
         img: "349", rarity: 5, evo: 3,
         fullName: "Intrepid Hand of Neptune"
     },
-
     1609: {
         name: "Charybdis", stats: [14048, 16042, 13918, 9000, 16887],
         skills: [912],
         img: "3c9", rarity: 4, evo: 2,
         fullName: "Charybdis II"
     },
-
     11613: {
         name: "Amphitrite", stats: [16226, 7418, 19638, 20158, 17569],
         skills: [916, 917],
@@ -3344,7 +3329,6 @@ var famDatabase: CardMap = {
         img: "2ed", rarity: 5, evo: 2,
         fullName: "Amphitrite, Nereid Queen II"
     },
-
     11627: {
         name: "Charon", stats: [16681, 6689, 10525, 17095, 16950],
         skills: [919],
@@ -3352,7 +3336,6 @@ var famDatabase: CardMap = {
         img: "3ae", rarity: 4, evo: 4,
         fullName: "Charon, Greedy Ferryman II"
     },
-
     21627: {
         name: "Charon", stats: [13680, 8285, 9585, 14503, 9964],
         skills: [920],
@@ -3360,7 +3343,6 @@ var famDatabase: CardMap = {
         img: "430", rarity: 4, evo: 2,
         fullName: "Charon, Darksun Ferryman II"
     },
-
     11631: {
         name: "Nessus", stats: [13803, 7906, 9635, 13965, 10245],
         skills: [925],
@@ -3368,7 +3350,6 @@ var famDatabase: CardMap = {
         img: "13e", rarity: 4, evo: 4,
         fullName: "Nessus, Centaur Gaoler II"
     },
-
     21625: {
         name: "Belial", stats: [21873, 19096, 20100, 9309, 18105],
         skills: [918],
@@ -3376,7 +3357,6 @@ var famDatabase: CardMap = {
         img: "3af", rarity: 5, evo: 3,
         fullName: "Belial, Lord of Vices"
     },
-
     11629: {
         name: "Midas", stats: [14048, 7819, 11275, 18013, 17374],
         skills: [923, 924],
@@ -3384,7 +3364,6 @@ var famDatabase: CardMap = {
         img: "2a6", rarity: 4, evo: 2,
         fullName: "Midas, the Wailing King II"
     },
-
     11628: {
         name: "Beatrice", stats: [18858, 7895, 15251, 21328, 18165],
         skills: [921, 922],
@@ -3392,7 +3371,6 @@ var famDatabase: CardMap = {
         img: "26a", rarity: 5, evo: 2,
         fullName: "Beatrice, the Luminescent II"
     },
-
     11644: {
         name: "Nidhogg", stats: [24752, 16128, 22130, 23246, 18035],
         skills: [935, 936],
@@ -3400,5 +3378,95 @@ var famDatabase: CardMap = {
         autoAttack: 10126,
         img: "151", rarity: 6, evo: 2,
         fullName: "Nidhogg, Iceclad Dragon II"
+    },
+    11637: {
+        name: "Minos", stats: [15511, 17244, 15002, 6292, 16204],
+        skills: [939, 940],
+        img: "399", rarity: 4, evo: 2,
+        fullName: "Minos, Judgment King II"
+    },
+    11638: {
+        name: "Pasiphae", stats: [18501, 18999, 15002, 10192, 17309],
+        skills: [945, 946],
+        autoAttack: 10125,
+        img: "3dc", rarity: 5, evo: 2,
+        fullName: "Pasiphae, the Brass Bull II"
+    },
+    11583: {
+        name: "Kalevan", stats: [15153, 15803, 14222, 6855, 17006],
+        skills: [947, 948],
+        autoAttack: 10051,
+        img: "187", rarity: 4, evo: 2,
+        fullName: "Kalevan, Swap II"
+    },
+    11634: {
+        name: "Mammon", stats: [16010, 7895, 13010, 14999, 15999],
+        skills: [944],
+        autoAttack: 10129,
+        img: "274", rarity: 4, evo: 4,
+        fullName: "Mammon, Raven Claw II"
+    },
+    21636: {
+        name: "Moloch", stats: [15002, 8003, 12987, 16800, 17201],
+        skills: [942, 943],
+        autoAttack: 10128,
+        img: "1e8", rarity: 4, evo: 2,
+        fullName: "Moloch, Soul Reaper II"
+    },
+    11636: {
+        name: "Moloch", stats: [12001, 6602, 10001, 15207, 12999],
+        skills: [941],
+        autoAttack: 10016,
+        img: "356", rarity: 4, evo: 4,
+        fullName: "Moloch, the Infernal Axe II"
+    },
+    11641: {
+        name: "Aslaug", stats: [15121, 16486, 13496, 6389, 17103],
+        skills: [952],
+        autoAttack: 10130,
+        img: "2c8", rarity: 4, evo: 2,
+        fullName: "Aslaug, the Lyre Bow II"
+    },
+    21578: {
+        name: "Zeruel", stats: [22841, 21478, 18303, 12038, 18128],
+        skills: [954, 955],
+        autoAttack: 10015,
+        img: "3b0", rarity: 5, evo: 3,
+        fullName: "Zeruel Angel of War, Swap"
+    },
+    11639: {
+        name: "Fafnir", stats: [25012, 23538, 20754, 14092, 18349],
+        skills: [950],
+        autoAttack: 10061,
+        img: "257", rarity: 6, evo: 2,
+        fullName: "Fafnir, Fireclad Dragon II"
+    },
+    11643: {
+        name: "Alberich", stats: [15964, 17120, 16523, 15427, 4237],
+        skills: [953],
+        autoAttack: 10131,
+        img: "376", rarity: 4, evo: 4,
+        fullName: "Alberich, the Ceratophrys II"
+    },
+    11640: {
+        name: "Waltraute", stats: [19552, 18100, 16854, 8480, 18046],
+        skills: [951],
+        autoAttack: 10044,
+        img: "24d", rarity: 5, evo: 2,
+        fullName: "Waltraute, Valiant Valkyrie II"
+    },
+    11632: {
+        name: "Azazel", stats: [19010, 17331, 15002, 11492, 18165],
+        skills: [937, 938],
+        autoAttack: 10125,
+        img: "2ef", rarity: 5, evo: 2,
+        fullName: "Azazel, the Temptress II"
+    },
+    11175: {
+        name: "Taotie", stats: [14850, 15803, 13106, 9141, 14720],
+        skills: [949],
+        autoAttack: 10005,
+        img: "2ef", rarity: 4, evo: 2,
+        fullName: "Taotie, the Gluttonous II"
     },
 };
