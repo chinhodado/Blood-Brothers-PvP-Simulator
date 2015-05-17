@@ -150,7 +150,7 @@ function printFam(name, img) {
     if (!found) {
         warnings += ("Not found: " + name + "\n");
     }
-    content += ("\n\n" + warnings);
+    content += (warnings);
     document.getElementById('result').innerText += content;
 }
 
