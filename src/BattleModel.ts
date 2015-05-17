@@ -510,17 +510,21 @@ class BattleModel {
                 throw new Error("Wrong skill to use with processDebuff()");
         }
 
-        if (isFlat) {
-            var baseAmount = -100;
-        }
-        else if (!isNewLogic) {
-            baseAmount = getDebuffAmount(executor, target);
+        if (status === ENUM.StatusType.SKILL_PROBABILITY) {
+            var amount = -1 * skill.skillFuncArg1;
         }
         else {
-            baseAmount = getCasterBasedDebuffAmount(executor);
+            if (isFlat) {
+                var baseAmount = -100;
+            }
+            else if (!isNewLogic) {
+                baseAmount = getDebuffAmount(executor, target);
+            }
+            else {
+                baseAmount = getCasterBasedDebuffAmount(executor);
+            }
+            amount = Math.floor(baseAmount * multi);
         }
-
-        var amount = Math.floor(baseAmount * multi);
 
         target.changeStatus(status, amount, isNewLogic);
         var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);

@@ -738,7 +738,7 @@ class BattleGraphic {
                     displayText = "Revive On"; // for now
                 }
                 else if (data.status.type === ENUM.StatusType.SKILL_PROBABILITY) {
-                    displayText = "Prob. Up";
+                    displayText = `Prob.${data.amount < 0? " Down" : " Up"}`;
                 }
                 else if (data.status.type === ENUM.StatusType.HP_SHIELD) {
                     displayText = "HP Up";
