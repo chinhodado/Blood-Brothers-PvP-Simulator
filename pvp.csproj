@@ -115,6 +115,8 @@
     <TypeScriptCompile Include="src\skillLogic\passive\BasePassiveSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\passive\DamagePassiveSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\passive\DefensePassiveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\passive\ExtraTurnPassiveSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\ProtectCounterDebuffSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\ProtectCounterSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\ProtectReflectSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\ProtectSkillLogic.ts" />
