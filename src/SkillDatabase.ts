@@ -5078,6 +5078,104 @@ var SkillDatabase: SkillMap = {
         desc: "Revive and fully restore HP of one random ally upon her death."
     },
 
+    957: {
+        name: "Sea Breeze Blade", type: 2, func: 33, calc: 1,
+        args: [1.1, 3, 0.2, 0.22],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "ATK-based damage to five random foes and sometimes greatly lower WIS."
+    },
+
+    958: {
+        name: "Blazing Hieroglyph", type: 2, func: 4, calc: 2,
+        args: [1.6, 8, 0.2, 2000],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based damage and sometimes burn four random foes, ignoring position."
+    },
+
+    959: {
+        name: "Scuttle", type: 2, func: 34, calc: 3,
+        args: [1.35, 4, 0.15, 0.11],
+        range: 208, prob: 30, ward: 2, sac: 1,
+        desc: "AGI-based DMG, sometimes lower AGI of all foes, ignoring position. Increased if fewer foes."
+    },
+
+    960: {
+        name: "Wrath of Kilauea", type: 2, func: 34, calc: 1,
+        args: [1.15, 3, 0.2, 0.19],
+        range: 17, prob: 30, ward: 1,
+        desc: "ATK-based damage, sometimes lower WIS of six random foes, ignoring position."
+    },
+
+    961: {
+        name: "Grace of Kilauea", type: 1, func: 2, calc: 0,
+        args: [0.1, 8],
+        range: 7, prob: 70,
+        desc: "Lower the skill trigger rate of up to three foes by 10%."
+    },
+
+    962: {
+        name: "Fist of Stone", type: 2, func: 7, calc: 1,
+        args: [1.6, 0.05],
+        range: 19, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to four random foes. Chance to kill targets."
+    },
+
+    963: {
+        name: "Embrace of Stone", type: 1, func: 44, calc: 0,
+        args: [0.23, 1, 0, 0, 0, 0.4, 5],
+        range: 3, prob: 70,
+        desc: "Raise ATK and reduce physical damage taken by self and adjacent familiars."
+    },
+
+    964: {
+        name: "Drill Bits", type: 2, func: 34, calc: 1,
+        args: [1.6, 3, 0.25, 0.24],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Heavy ATK-based dmg and sometimes reduce WIS of 4 random foes, ignoring position."
+    },
+
+    966: {
+        name: "Diamond Flurry", type: 2, func: 3, calc: 1,
+        args: [1.35],
+        range: 7, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to up to three foes."
+    },
+
+    967: {
+        name: "Amethyst Flame", type: 2, func: 4, calc: 3,
+        args: [1.65],
+        range: 19, prob: 30, ward: 3,
+        desc: "Deal heavy AGI-based damage to four random foes, ignoring position."
+    },
+
+    968: {
+        name: "Amethyst Light", type: 1, func: 44, calc: 0,
+        args: [0.2, 1, 0, 0, 0, 0.12, 4],
+        range: 3, prob: 70,
+        desc: "Raise ATK/AGI of self and adjacent familiars by 20% and 12% of its WIS respectively."
+    },
+
+    969: {
+        name: "Thralls of the Gem", type: 2, func: 3, calc: 3,
+        args: [1],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal AGI-based damage to five random foes."
+    },
+
+    970: {
+        name: "Gifts of the Gem", type: 1, func: 1, calc: 0,
+        args: [0.13, 4],
+        range: 3, prob: 70,
+        desc: "Raise AGI of self and adjacent familiars by 13% of its WIS."
+    },
+
+    971: {
+        name: "Meteor Slash", type: 2, func: 3, calc: 3,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive AGI-based damage to two random foes."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5734,6 +5832,27 @@ var SkillDatabase: SkillMap = {
         args: [1.4],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe."
+    },
+
+    10132: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.6],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to two foes."
+    },
+
+    10133: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10135: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.5],
+        range: 7, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to three foes."
     },
 
     9001: {

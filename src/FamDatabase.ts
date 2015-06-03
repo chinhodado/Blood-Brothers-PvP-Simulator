@@ -3469,4 +3469,72 @@ var famDatabase: CardMap = {
         img: "2ef", rarity: 4, evo: 2,
         fullName: "Taotie, the Gluttonous II"
     },
+    11646: {
+        name: "Thoth", stats: [13117, 8047, 12694, 17645, 17190],
+        skills: [958],
+        autoAttack: 10003,
+        img: "20b", rarity: 4, evo: 2,
+        fullName: "Thoth, Hieroglypher II"
+    },
+    11649: {
+        name: "Pele", stats: [17840, 19357, 17017, 11080, 18208],
+        skills: [960, 961],
+        autoAttack: 10133,
+        img: "2f1", rarity: 5, evo: 2,
+        fullName: "Pele, Volcano Shamaness II"
+    },
+    11676: {
+        name: "Fionn", stats: [12597, 11514, 10027, 7819, 13597],
+        skills: [971],
+        img: "29f", rarity: 4, evo: 4,
+        fullName: "Fionn, the Meteor Sword II"
+    },
+    21645: {
+        name: "Tangata M", stats: [20031, 21103, 21920, 9729, 18105],
+        skills: [957],
+        autoAttack: 10132,
+        img: "284", rarity: 5, evo: 3,
+        fullName: "Tangata Manu, Withering Gale"
+    },
+    11650: {
+        name: "Rongo", stats: [18057, 16800, 17342, 13312, 17992],
+        skills: [962, 963],
+        autoAttack: 10135,
+        img: "198", rarity: 5, evo: 2,
+        fullName: "Rongo, Moai Master II"
+    },
+    11648: {
+        name: "Fleetfoot", stats: [13583, 17924, 11574, 7688, 17144],
+        skills: [959],
+        autoAttack: 10133,
+        img: "165", rarity: 4, evo: 4,
+        fullName: "Fleetfoot Ornithomimus II"
+    },
+    11673: {
+        name: "Amethyst", stats: [20169, 16291, 13788, 13030, 18241],
+        skills: [967, 968],
+        autoAttack: 10108,
+        img: "4a6", rarity: 5, evo: 2,
+        fullName: "Amethyst Dragon II"
+    },
+    11674: {
+        name: "Agate", stats: [16497, 14308, 12077, 7852, 17764],
+        skills: [969, 970],
+        autoAttack: 10108,
+        img: "205", rarity: 4, evo: 2,
+        fullName: "Agate, Gem Tamer II"
+    },
+    21672: {
+        name: "Unbound", stats: [13788, 13138, 10896, 8003, 10343],
+        skills: [966],
+        img: "35b", rarity: 4, evo: 2,
+        fullName: "Unbound Gem Golem II"
+    },
+    21670: {
+        name: "Urcagu", stats: [22527, 22048, 19668, 8912, 17779],
+        skills: [964],
+        autoAttack: 10108,
+        img: "1bc", rarity: 5, evo: 3,
+        fullName: "Urcagu, the Grinder"
+    },
 };
