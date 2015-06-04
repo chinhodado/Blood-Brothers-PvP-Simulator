@@ -1,4 +1,5 @@
-﻿declare var swal;
+﻿/// <reference path="SkillProvider.ts"/>
+declare var swal;
 declare var startTest;
 
 /**

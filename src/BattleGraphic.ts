@@ -1,4 +1,5 @@
 ﻿/// <reference path="interfaces/MinorEvent.ts"/>
+/// <reference path="Enums.ts"/>
 declare var showCardDetailDialog;
 
 class BattleGraphic {
