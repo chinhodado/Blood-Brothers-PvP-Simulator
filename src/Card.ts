@@ -43,7 +43,7 @@ class Card {
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
 
-    constructor(dbId: number, player: Player, nth: number, skills: Skill[]) {
+    constructor(dbId: number, player: Player, nth: number, skills: Skill[], customStats: CustomStats) {
         var cardData = famDatabase[dbId];
         this.name = cardData.name;
         this.fullName = cardData.fullName;
@@ -55,11 +55,17 @@ class Card {
         this.rarity = cardData.rarity;
         this.evoStep = cardData.evo;
 
-        // the HP will be modified during the battle
-        this.stats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
+        if (!customStats) {
+            // the HP will be modified during the battle
+            this.stats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
 
-        // this should never be modified
-        this.originalStats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
+            // this should never be modified
+            this.originalStats = new Stats(cardData.stats[0], cardData.stats[1], cardData.stats[2], cardData.stats[3], cardData.stats[4]);
+        }
+        else {
+            this.stats = new Stats(customStats.hp, customStats.atk, customStats.def, customStats.wis, customStats.agi);
+            this.originalStats = new Stats(customStats.hp, customStats.atk, customStats.def, customStats.wis, customStats.agi);
+        }
 
         this.status = new Status();
         this.isDead = false;

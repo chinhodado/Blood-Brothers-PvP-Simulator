@@ -44,6 +44,19 @@ function setPreviousChoices() {
         (<HTMLInputElement>document.getElementById("2f")).value = localStorage.getItem("2f");
     }
 
+    // custom stats
+    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    for (let player = 1; player <= 2; player++) {
+        for (let famIndex = 0; famIndex < 10; famIndex++) {
+            for (let statIndex = 0; statIndex < arr.length; statIndex++) {
+                let key = `p${player}f${famIndex}${arr[statIndex].toLowerCase()}`;
+                if (localStorage.getItem(key) && localStorage.getItem(key) !== "null") {
+                    (<HTMLInputElement>document.getElementById(key)).value = localStorage.getItem(key);
+                }
+            }
+        }
+    }
+
     // debug mode
     if (localStorage.getItem("debug") === "true") {
         (<HTMLInputElement>document.getElementById("debug")).checked = true;
@@ -115,6 +128,22 @@ function toogleReserve() {
  * Prepare the form when it is loaded
  */
 function onFormLoad() {
+    setFamOptions();
+    setSkillOptions();
+    addCustomsStatDiv();
+
+    // remember to addCustomsStatDiv() first
+    toogleCustomStat(1);
+    toogleCustomStat(2);
+
+    // add onchange listener to battle type chooser
+    document.getElementById("bt").onchange = () => {
+        toogleReserve();
+        toogleCustomStat(1);
+        toogleCustomStat(2);
+    }
+
+    setPreviousChoices();
     toogleReserve();
     toogleDisable();
 
@@ -178,7 +207,38 @@ function setFamOptions() {
     // and clone it
     for (var i = 1; i < famSelects.length; i++) {
         (<HTMLSelectElement>famSelects[i]).innerHTML = (<HTMLSelectElement>famSelects[0]).innerHTML;
-    };
+    }
+}
+
+function toogleCustomStat(player: number) {
+    var checked = (<HTMLInputElement>document.getElementById(`p${player}customStatChbox`)).checked;
+    var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value === "1";
+
+    // for normal (0-5)
+    var customStatDiv = document.getElementById(`p${player}customStatDivNormal`);
+    var inputs = customStatDiv.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = !checked;
+    }
+    customStatDiv.style.display = checked ? "block" : "none";
+
+    // for bloodclash
+    customStatDiv = document.getElementById(`p${player}customStatDivBloodclash`);
+    inputs = customStatDiv.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = !isBloodclash || !checked;
+    }
+    customStatDiv.style.display = (checked && isBloodclash) ? "block" : "none";
+
+    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    for (let i = 0; i < 10; i++) {
+        let slotChecked = (<HTMLInputElement>document.getElementById(`p${player}f${i}customStatChkbox`)).checked;
+        let slotDisabled = (<HTMLInputElement>document.getElementById(`p${player}f${i}customStatChkbox`)).disabled;
+        for (let j = 0; j < arr.length; j++) {
+            let txtBox = <HTMLInputElement>document.getElementById(`p${player}f${i}${arr[j].toLowerCase()}`);
+            txtBox.disabled = slotDisabled || !slotChecked;
+        }
+    }
 }
 
 /**
@@ -203,7 +263,41 @@ function setSkillOptions() {
     // and clone it
     for (var i = 1; i < skillSelects.length; i++) {
         (<HTMLSelectElement>skillSelects[i]).innerHTML = (<HTMLSelectElement>skillSelects[0]).innerHTML;
-    };
+    }
+}
+
+function addCustomsStatDiv() {
+    // array of stats type
+    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+
+    // array of div types. There are two divs for each player, one for fam 0-5, one for fam 6-9 (BC)
+    var divArr = ["Normal", "Bloodclash"];
+
+    for (let divIndex = 0; divIndex < divArr.length; divIndex++) {
+        for (let player = 1; player <= 2; player++) {
+            var customStatDiv = document.getElementById(`p${player}customStatDiv${divArr[divIndex]}`);
+            for (let i = 0; i < 5; i++) { // index of fams
+                let famIndex = i + 5 * divIndex;
+                customStatDiv.appendChild(document.createElement('br'));
+                customStatDiv.appendChild(document.createTextNode(`Familiar ${famIndex + 1}`));
+                let input = document.createElement("input");
+                input.type = "checkbox";
+                input.id = `p${player}f${famIndex}customStatChkbox`;
+                input.onchange = (p => () => toogleCustomStat(p))(player);
+                customStatDiv.appendChild(input);
+                for (let statIndex = 0; statIndex < arr.length; statIndex++) {
+                    customStatDiv.appendChild(document.createTextNode(` ${arr[statIndex]} `));
+                    input = document.createElement("input");
+                    input.type = "text";
+                    input.name = `p${player}f${famIndex}${arr[statIndex].toLowerCase()}`;
+                    input.id = `p${player}f${famIndex}${arr[statIndex].toLowerCase()}`;
+                    input.size = 6;
+                    input.maxLength = 6;
+                    customStatDiv.appendChild(input);
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -233,6 +327,27 @@ function getBattleDataOption() {
 
     data.p2_formation = getURLParameter("2f");
     if (!option.p2RandomMode) localStorage.setItem("2f", data.p2_formation);
+
+    data.p1_customStats = {};
+    data.p2_customStats = {};
+
+    // sorry for the shit code
+    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    for (let player = 1; player <= 2; player++) {
+        for (let famIndex = 0; famIndex < 10; famIndex++) {
+            for (let statIndex = 0; statIndex < arr.length; statIndex++) {
+                let key = `p${player}f${famIndex}${arr[statIndex].toLowerCase()}`;
+                let stat = getURLParameter(key);
+                if (stat) {
+                    if (!data[`p${player}_customStats`][famIndex]) {
+                        data[`p${player}_customStats`][famIndex] = {};
+                    }
+                    data[`p${player}_customStats`][famIndex][arr[statIndex].toLowerCase()] = +stat;
+                    localStorage.setItem(key, stat);
+                }
+            }
+        }
+    }
 
     data.p1_cardIds = [];
     data.p2_cardIds = [];

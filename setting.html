@@ -72,7 +72,15 @@
             <option value="11">Tier A only</option>
             <option value="12">Tier A and up</option>
         </select>
-        <br><br><br><br>
+        <br><br>
+        Custom stats <input type="checkbox" id="p2customStatChbox" onchange="toogleCustomStat(2)"/>
+        <br>
+        <div id="p2customStatDiv">
+            <div id="p2customStatDivNormal"></div>
+            <div id="p2customStatDivBloodclash"></div>
+        </div>
+
+        <br><br>
 
         <p>Player 1</p>
         <select name="f0" id="f0" class="famSelect randomize p1"></select>
@@ -126,8 +134,15 @@
             <option value="12">Tier A and up</option>
         </select>
         <br><br>
+        Custom stats <input type="checkbox" id="p1customStatChbox" onchange="toogleCustomStat(1)"/>
+        <br>
+        <div id="p1customStatDiv">
+            <div id="p1customStatDivNormal"></div>
+            <div id="p1customStatDivBloodclash"></div>
+        </div>
+        <br><br>
         Battle type:
-        <select name="bt" id="bt" onchange="toogleReserve()">
+        <select name="bt" id="bt">
             <option value="1">Bloodclash</option>
             <option value="2">Normal (5v5)</option>
         </select>
@@ -141,12 +156,6 @@
         <span id="debugCheckbox">
             <input type="checkbox" name="debug" value="true" id="debug">Debug
         </span>
-
-        <script type="text/javascript">
-            setFamOptions();
-            setSkillOptions();
-            setPreviousChoices();
-        </script>
 
         <br><br><br>
 

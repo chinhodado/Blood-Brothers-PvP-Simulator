@@ -80,8 +80,8 @@ class BrigGenerator {
             var player2Skills = this.makeSkillArray(p2fSkillIdArray);
 
             // now make the cards and add them to the appropriate collections
-            var card1 = new Card(p1_cardIds[i], battle.player1, i, player1Skills);
-            var card2 = new Card(p2_cardIds[i], battle.player2, i, player2Skills);
+            var card1 = new Card(p1_cardIds[i], battle.player1, i, player1Skills, data.p1_customStats[i]);
+            var card2 = new Card(p2_cardIds[i], battle.player2, i, player2Skills, data.p2_customStats[i]);
 
             if (i < 5) {
                 battle.p1_mainCards[i] = card1;

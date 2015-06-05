@@ -8,4 +8,14 @@ interface GameData {
     p2_cardIds: number[];
     p1_warlordSkillIds: number[];
     p2_warlordSkillIds: number[];
+    p1_customStats: CustomStats;
+    p2_customStats: CustomStats;
+}
+
+interface CustomStats {
+    hp: number;
+    atk: number;
+    def: number;
+    wis: number;
+    agi: number;
 }
