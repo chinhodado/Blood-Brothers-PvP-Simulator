@@ -3537,4 +3537,110 @@ var famDatabase: CardMap = {
         img: "1bc", rarity: 5, evo: 3,
         fullName: "Urcagu, the Grinder"
     },
+    21696: {
+        name: "Ker", stats: [21015, 19040, 18585, 13100, 18517],
+        skills: [972, 973],
+        autoAttack: 10134,
+        img: "233", rarity: 5, evo: 3,
+        fullName: "Ker, the Despair Diamond"
+    },
+    11682: {
+        name: "Takemikazuchi", stats: [17201, 16995, 17006, 11004, 8144],
+        skills: [980, 981],
+        autoAttack: 10137,
+        img: "24a", rarity: 4, evo: 2,
+        fullName: "Takemikazuchi, the Lightning II"
+    },
+    11679: {
+        name: "Ame", stats: [16803, 10001, 14500, 17499, 9209],
+        skills: [976],
+        autoAttack: 10003,
+        img: "152", rarity: 4, evo: 4,
+        fullName: "Ame no Uzume, the Lure II"
+    },
+    11677: {
+        name: "Susanoo", stats: [17797, 19508, 15500, 11784, 18013],
+        skills: [974, 975],
+        autoAttack: 10133,
+        img: "1ab", rarity: 5, evo: 2,
+        fullName: "Susanoo, Rowdy God II"
+    },
+    21681: {
+        name: "Mizuchi", stats: [14698, 6097, 14005, 17797, 17407],
+        skills: [977, 978],
+        autoAttack: 10136,
+        img: "312", rarity: 4, evo: 2,
+        fullName: "Mizuchi, the Raging Storm II"
+    },
+    11688: {
+        name: "Autolycus", stats: [16144, 16696, 13538, 6712, 16902],
+        skills: [988],
+        autoAttack: 10139,
+        img: "3e2", rarity: 4, evo: 4,
+        fullName: "Autolycus, Shrewd Warrior II"
+    },
+    11684: {
+        name: "Heracles", stats: [24849, 25499, 20061, 13203, 18154],
+        skills: [985],
+        autoAttack: 10061,
+        img: "3cd", rarity: 6, evo: 2,
+        fullName: "Heracles, Mightiest of Men II"
+    },
+    11683: {
+        name: "Kushinada", stats: [17992, 10549, 15511, 18999, 18046],
+        skills: [982, 983],
+        autoAttack: 10138,
+        isMounted: true,
+        img: "411", rarity: 5, evo: 2,
+        fullName: "Kushinada, Shamaness II"
+    },
+    11685: {
+        name: "Hippolyta", stats: [20429, 19389, 17862, 7971, 17992],
+        skills: [986],
+        autoAttack: 10103,
+        img: "247", rarity: 5, evo: 2,
+        fullName: "Hippolyta, Amazon Queen II"
+    },
+    11686: {
+        name: "Antaeus", stats: [15652, 17439, 14048, 6010, 16800],
+        skills: [987],
+        autoAttack: 10113,
+        img: "2f2", rarity: 4, evo: 2,
+        fullName: "Antaeus, Giant II"
+    },
+    11693: {
+        name: "Hina", stats: [16097, 6736, 10001, 17875, 17254],
+        skills: [993],
+        autoAttack: 10019,
+        img: "4f1", rarity: 4, evo: 4,
+        fullName: "Hina, Flame Serpent II"
+    },
+    11695: {
+        name: "Azan", stats: [14861, 15478, 14308, 7982, 17309],
+        skills: [992],
+        autoAttack: 10141,
+        img: "18a", rarity: 4, evo: 2,
+        fullName: "Azan, the Dragon Bone II"
+    },
+    21690: {
+        name: "Decaying", stats: [19982, 9075, 18969, 22316, 18152],
+        skills: [991],
+        autoAttack: 10140,
+        img: "12e", rarity: 5, evo: 3,
+        fullName: "Decaying Dragon"
+    },
+    11694: {
+        name: "A'shi", stats: [18208, 7039, 16919, 20689, 18403],
+        skills: [994, 995],
+        autoAttack: 10143,
+        img: "13a", rarity: 5, evo: 2,
+        fullName: "A'shi, Pterorider II"
+    },
+    11681: {
+        name: "Mizuchi", stats: [13010, 7991, 10305, 12001, 13489],
+        skills: [979],
+        autoAttack: 10136,
+        img: "1bd", rarity: 4, evo: 4,
+        fullName: "Mizuchi, the Maelstrom II"
+    },
 };
