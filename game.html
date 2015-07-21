@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/dialog.css">
     <link rel="stylesheet" href="css/game.css">
     <link rel="stylesheet" href="css/sweet-alert.css">
-    
+
     <script src="lib/sweet-alert.min.js"></script>
     <script src="lib/svg.min.js"></script>
     <script src="lib/svg.filter.min.js"></script>
@@ -30,7 +30,7 @@
                 Simulation: <span id="numBattle"></span> battles
                 <div id="mobileInfoDiv" style="display: none;">
                     <div id="infoDivP2TitleMobile">Player 2: </div>
-                    <div id="infoDivP2mobile"></div><br />
+                    <div id="infoDivP2mobile"></div><br/>
                     <div id="infoDivP1TitleMobile">Player 1: </div>
                     <div id="infoDivP1mobile"></div>
                 </div>
@@ -45,16 +45,16 @@
                 <div id="infoDiv"></div>
 
                 <div id="permDiv">
-                    Click the <b>Start Battle</b> button below to view the battle. <br /><br />
-                    Click on a familiar to see its details. <br /><br />
-                    Refresh this page to view another battle.<br /><br />
+                    Click the <b>Start Battle</b> button below to view the battle. <br /><br/>
+                    Click on a familiar to see its details. <br /><br/>
+                    Refresh this page to view another battle.<br /><br/>
                     Click <a href="setting.html">here</a> to return to the main page.
                 </div>
             </div>
         </div>
 
         <div id="githubDiv">
-            Like this? <a href="https://github.com/chinhodado/bb_pvp_simulator" target="_blank">Star</a> it on Github <br />
+            Like this? <a href="https://github.com/chinhodado/bb_pvp_simulator" target="_blank">Star</a> it on Github <br/>
             Has suggestions or bug reports? <a href="https://github.com/chinhodado/bb_pvp_simulator/issues?state=open" target="_blank">Create</a> a new issue
         </div>
     </div>
@@ -157,13 +157,11 @@
         }
 
         if (mode !== "sim") {
-            getTierList("play");
+            getTierList(playGame);
         }
-        else if (mode == "sim") {
-            getTierList("sim");
+        else if (mode === "sim") {
+            getTierList(playSim);
         }
     </script>
-
 </body>
-
 </html>

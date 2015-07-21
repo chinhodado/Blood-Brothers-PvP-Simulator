@@ -16,19 +16,13 @@ class FamProvider {
             var tierArray = ["X+", "X", "S+", "S", "A+", "A", "B", "C"];
 
             for (var i = 0; i < tierArray.length; i++) {
-                var tierNameList = [];
                 var tier = tierArray[i];
-
-                for (var j = 0; j < allTierList[tier].length; j++) {
-                    tierNameList.push(allTierList[tier][j].name);
-                }
-
                 this.tierList[tier] = [];
 
                 for (var key in famDatabase) {
                     if (famDatabase.hasOwnProperty(key)) {
                         var name = famDatabase[key].fullName;
-                        if (tierNameList.indexOf(name) !== -1) {
+                        if (allTierList[tier].indexOf(name) !== -1) {
                             this.tierList[tier].push(key);
                         }
                     }

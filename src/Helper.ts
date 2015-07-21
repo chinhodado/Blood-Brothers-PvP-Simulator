@@ -453,23 +453,7 @@ function prepareField() {
 /**
  * Fetch the tier list and cache it
  */
-function getTierList(whatToDoNext) {
-    if (whatToDoNext === "debug") {
-        var callback = "updateTierListThenDebug";
-    }
-    else if (whatToDoNext === "play") {
-        callback = "updateTierListThenPlay";
-    }
-    else if (whatToDoNext === "sim") {
-        callback = "updateTierListThenSim";
-    }
-    else if (whatToDoNext === "test") {
-        callback = "updateTierListThenTest";
-    }
-    else {
-        callback = "updateTierList";
-    }
-
+function getTierList(whatToDoNext: () => void) {
     var needUpdate = false;
     var currentTime = new Date().getTime();
     var lastUpdatedTime = localStorage.getItem("lastTierUpdateTime");
@@ -481,28 +465,26 @@ function getTierList(whatToDoNext) {
         needUpdate = elapsedTime >= 1000 * 60 * 60 * 24; // 1 day
     }
 
+    function makeCallback(cb: () => void) {
+        return data => {
+            updateTierList(data);
+            if (cb) {
+                cb();
+            }
+        }
+    }
+
     if (!localStorage.getItem("tierList") || needUpdate) {
         console.log("Fetching tier list...");
         $.ajax({
-            "url": "https://www.kimonolabs.com/api/e67eckbg?apikey=ddafaf08128df7d12e4e0f8e044d2372",
+            "url": "http://bloodbrothers-chinhodado.rhcloud.com/getTier/",
             "crossDomain": true,
-            "dataType": "jsonp",
-            "jsonpCallback": callback
+            "dataType": "json",
+            "success": makeCallback(whatToDoNext)
         });
     }
     else {
-        if (whatToDoNext === "debug") {
-            playDebug();
-        }
-        else if (whatToDoNext === "play") {
-            playGame();
-        }
-        else if (whatToDoNext === "sim") {
-            playSim();
-        }
-        else if (whatToDoNext === "test") {
-            startTest();
-        }
+        if (whatToDoNext) whatToDoNext();
     }
 }
 
@@ -510,26 +492,8 @@ function getTierList(whatToDoNext) {
  * Update the tier list
  */
 function updateTierList(data) {
-    localStorage.setItem("tierList", JSON.stringify(data.results));
+    localStorage.setItem("tierList", JSON.stringify(data));
     localStorage.setItem("lastTierUpdateTime", `${new Date().getTime()}`);
-}
-
-// kill me now...
-function updateTierListThenPlay(data) {
-    updateTierList(data);
-    playGame();
-}
-function updateTierListThenDebug(data) {
-    updateTierList(data);
-    playDebug();
-}
-function updateTierListThenSim(data) {
-    updateTierList(data);
-    playSim();
-}
-function updateTierListThenTest(data) {
-    updateTierList(data);
-    startTest();
 }
 
 function playGame() {
