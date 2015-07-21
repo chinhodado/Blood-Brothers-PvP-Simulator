@@ -3643,4 +3643,122 @@ var famDatabase: CardMap = {
         img: "1bd", rarity: 4, evo: 4,
         fullName: "Mizuchi, the Maelstrom II"
     },
+    11733: {
+        name: "Paris", stats: [16854, 16356, 11318, 7895, 17363],
+        skills: [1003, 1004],
+        autoAttack: 10061,
+        img: "4ce", rarity: 4, evo: 2,
+        fullName: "Paris, Trueshot II"
+    },
+    21731: {
+        name: "Siege Horse", stats: [13442, 8101, 9282, 14200, 11069],
+        skills: [1000],
+        img: "20c", rarity: 4, evo: 2,
+        fullName: "Dark-Imbued Siege Horse II"
+    },
+    11691: {
+        name: "Laola", stats: [18382, 8068, 17439, 19129, 18241],
+        skills: [996, 997],
+        autoAttack: 10142,
+        img: "3a1", rarity: 5, evo: 2,
+        fullName: "Laola, Demiwyrm Spearbearer II"
+    },
+    11732: {
+        name: "Helen", stats: [19660, 7039, 15186, 21404, 18208],
+        skills: [1001, 1002],
+        autoAttack: 10007,
+        img: "10d", rarity: 5, evo: 2,
+        fullName: "Helen, Swan Queen II"
+    },
+    11731: {
+        name: "Siege Horse", stats: [16013, 13269, 12049, 9246, 17340],
+        skills: [999],
+        autoAttack: 10021,
+        img: "11e", rarity: 4, evo: 4,
+        fullName: "Vengeful Siege Horse II"
+    },
+    21729: {
+        name: "Menelaus", stats: [22446, 17883, 23414, 17989, 6719],
+        skills: [998],
+        autoAttack: 10144,
+        img: "3f4", rarity: 5, evo: 3,
+        fullName: "Menelaus, Vengeful King"
+    },
+    11738: {
+        name: "Eric", stats: [15999, 16303, 14096, 6051, 16803],
+        skills: [1020],
+        autoAttack: 10146,
+        img: "35d", rarity: 4, evo: 4,
+        fullName: "Eric, Bloodaxe King II"
+    },
+    11717: {
+        name: "Rex", stats: [15002, 6097, 14005, 16009, 17992],
+        skills: [1024, 1025],
+        autoAttack: 10001,
+        img: "3a3", rarity: 4, evo: 2,
+        fullName: "Crystallus Rex II"
+    },
+    21658: {
+        name: "Oenone", stats: [22132, 9543, 17878, 22445, 18273],
+        skills: [1006, 1007],
+        autoAttack: 10121,
+        img: "1a3", rarity: 5, evo: 3,
+        fullName: "Oenone, the Hailstorm"
+    },
+    11740: {
+        name: "Eviscerating Hafgufa", stats: [13013, 12999, 12001, 7003, 11770],
+        skills: [1023],
+        autoAttack: 10005,
+        img: "407", rarity: 4, evo: 4,
+        fullName: "Eviscerating Hafgufa II"
+    },
+    11735: {
+        name: "Cassandra", stats: [13013, 7492, 10087, 13889, 11063],
+        skills: [1005],
+        autoAttack: 10007,
+        img: "39b", rarity: 4, evo: 4,
+        fullName: "Cassandra, the Tragic II"
+    },
+    11736: {
+        name: "Gunhild", stats: [20007, 19508, 16540, 8491, 18057],
+        skills: [1018, 1019],
+        autoAttack: 10145,
+        img: "494", rarity: 5, evo: 2,
+        fullName: "Gunhild, Brass Pincers II"
+    },
+    11819: {
+        name: "Shisen", stats: [16657, 15498, 13052, 6092, 17499],
+        skills: [1034],
+        autoAttack: 10137,
+        img: "1c6", rarity: 4, evo: 4,
+        fullName: "Shisen, the Flitting Bolt II"
+    },
+    11720: {
+        name: "Laned", stats: [24578, 23549, 21523, 13853, 18349],
+        skills: [1031],
+        autoAttack: 10153,
+        img: "22f", rarity: 6, evo: 2,
+        fullName: "Laned, the Piercing Fist II"
+    },
+    11705: {
+        name: "Dryas", stats: [21025, 21632, 15901, 7072, 18100],
+        skills: [1032],
+        autoAttack: 10113,
+        img: "15c", rarity: 5, evo: 2,
+        fullName: "Dryas, Centaur Knight II"
+    },
+    11662: {
+        name: "Feng", stats: [16215, 17569, 13637, 6227, 16399],
+        skills: [1033],
+        autoAttack: 10147,
+        img: "342", rarity: 4, evo: 2,
+        fullName: "Feng, Sanjiegun Master II"
+    },
+    21740: {
+        name: "Ravaging Hafgufa", stats: [16800, 17244, 14005, 5999, 17201],
+        skills: [1021, 1022],
+        autoAttack: 10133,
+        img: "392", rarity: 4, evo: 2,
+        fullName: "Ravaging Hafgufa II"
+    },
 };
