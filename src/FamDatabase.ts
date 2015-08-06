@@ -3761,4 +3761,72 @@ var famDatabase: CardMap = {
         img: "392", rarity: 4, evo: 2,
         fullName: "Ravaging Hafgufa II"
     },
+    11654: {
+        name: "Ullr", stats: [19151, 16692, 17797, 9260, 18349],
+        skills: [1043, 1044],
+        autoAttack: 10152,
+        img: "1a6", rarity: 5, evo: 2,
+        fullName: "Ullr, Starshooter II"
+    },
+    11744: {
+        name: "Triton", stats: [20386, 18414, 16735, 10289, 18176],
+        skills: [1049, 1050],
+        autoAttack: 10151,
+        img: "299", rarity: 5, evo: 2,
+        fullName: "Triton, Lord of the Sea II"
+    },
+    21698: {
+        name: "Dionysus", stats: [23893, 10008, 23600, 22982, 8013],
+        skills: [1037, 1038],
+        autoAttack: 10148,
+        img: "1e3", rarity: 5, evo: 3,
+        fullName: "Dionysus, the Reveler"
+    },
+    11664: {
+        name: "Wyvern Gemwarden", stats: [15164, 5512, 14027, 16583, 17461],
+        skills: [1039],
+        autoAttack: 10149,
+        img: "229", rarity: 4, evo: 2,
+        fullName: "Wyvern Gemwarden II"
+    },
+    11821: {
+        name: "Jarn", stats: [13038, 17461, 14269, 7319, 17120],
+        skills: [1040],
+        autoAttack: 10150,
+        img: "1d2", rarity: 4, evo: 4,
+        fullName: "Jarn, the Bladed Wolf II"
+    },
+    11747: {
+        name: "Kuki", stats: [13196, 13049, 11880, 7223, 10256],
+        skills: [1053],
+        img: "46d", rarity: 4, evo: 4,
+        fullName: "Kuki, Pirate Busho II"
+    },
+    21743: {
+        name: "Vepar", stats: [13344, 13604, 11026, 7548, 10777],
+        skills: [1048],
+        img: "438", rarity: 4, evo: 2,
+        fullName: "Vepar, the Perpetual Night II"
+    },
+    11745: {
+        name: "Rusalka", stats: [16713, 5988, 11015, 17439, 17374],
+        skills: [1051, 1052],
+        autoAttack: 10003,
+        img: "4a8", rarity: 4, evo: 2,
+        fullName: "Rusalka, Spirit of Water II"
+    },
+    11743: {
+        name: "Vepar", stats: [16668, 16196, 13438, 5847, 17047],
+        skills: [1047],
+        autoAttack: 10145,
+        img: "451", rarity: 4, evo: 4,
+        fullName: "Vepar, the Roiling Sea II"
+    },
+    21741: {
+        name: "Walutahanga", stats: [22503, 8235, 17579, 22048, 18105],
+        skills: [1045, 1046],
+        autoAttack: 10126,
+        img: "28b", rarity: 5, evo: 3,
+        fullName: "Walutahanga, Guardian Dragon"
+    },
 };
