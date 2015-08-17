@@ -4,6 +4,7 @@
 
 class Card {
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
+    static COLISEUM_HP_MULTI_FACTOR    = 5;
 
     name: string;
     fullName: string;
@@ -43,7 +44,7 @@ class Card {
     private ondeathSkills: Skill[] = [null, null]; // first is buff, second is inherent
     private surviveSkill: Skill = null;
 
-    constructor(dbId: number, player: Player, nth: number, skills: Skill[], customStats: CustomStats) {
+    constructor(dbId: number, player: Player, nth: number, skills: Skill[], customStats: CustomStats, bonusType: ENUM.BonusType) {
         var cardData = famDatabase[dbId];
         this.name = cardData.name;
         this.fullName = cardData.fullName;
@@ -65,6 +66,11 @@ class Card {
         else {
             this.stats = new Stats(customStats.hp, customStats.atk, customStats.def, customStats.wis, customStats.agi);
             this.originalStats = new Stats(customStats.hp, customStats.atk, customStats.def, customStats.wis, customStats.agi);
+        }
+
+        if (bonusType === ENUM.BonusType.COLISEUM) {
+            this.stats.hp *= Card.COLISEUM_HP_MULTI_FACTOR;
+            this.originalStats.hp *= Card.COLISEUM_HP_MULTI_FACTOR;
         }
 
         this.status = new Status();

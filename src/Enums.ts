@@ -329,7 +329,8 @@ module ENUM {
 
     export enum BattleType {
         BLOOD_CLASH = 1,
-        NORMAL = 2
+        NORMAL = 2,
+        COLISEUM = 3
     }
 
     export enum RandomBrigType {
@@ -383,5 +384,9 @@ module ENUM {
         EPIC = 4,
         LEGEND = 5,
         MYTHIC = 6
+    }
+
+    export enum BonusType {
+        COLISEUM = 1
     }
 }

@@ -64,7 +64,7 @@ function setPreviousChoices() {
 
     // battle type
     var bt = localStorage.getItem("bt");
-    if (bt === "1" || bt === "2") {
+    if (bt === "1" || bt === "2" || bt === "3") {
         (<HTMLInputElement>document.getElementById("bt")).value = bt;
     }
 }
@@ -104,7 +104,8 @@ function toogleDisable() {
  */
 function toogleReserve() {
     for (var player = 1; player <= 2; player++) {
-        var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value === "1";
+        var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+        var isBloodclash = btValue === "1" || btValue === "3";
 
         var elems = document.getElementsByClassName("reserve");
         for (var i = 0; i < elems.length; i++) {
@@ -212,7 +213,8 @@ function setFamOptions() {
 
 function toogleCustomStat(player: number) {
     var checked = (<HTMLInputElement>document.getElementById(`p${player}customStatChbox`)).checked;
-    var isBloodclash = (<HTMLInputElement>document.getElementById("bt")).value === "1";
+    var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+    var isBloodclash = btValue === "1" || btValue === "3";
 
     // for normal (0-5)
     var customStatDiv = document.getElementById(`p${player}customStatDivNormal`);

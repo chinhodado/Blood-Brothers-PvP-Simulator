@@ -28,6 +28,7 @@ class BattleModel {
     p1RandomMode: ENUM.RandomBrigType;
     p2RandomMode: ENUM.RandomBrigType;
     isBloodClash: boolean = false;
+    isColiseum: boolean = false;
 
     logger: BattleLogger;
     cardManager: CardManager;
@@ -100,6 +101,12 @@ class BattleModel {
 
         if (option.battleType && option.battleType === ENUM.BattleType.BLOOD_CLASH) {
             this.isBloodClash = true;
+        }
+
+        if (option.battleType && option.battleType === ENUM.BattleType.COLISEUM) {
+            this.isBloodClash = true;
+            this.isColiseum = true;
+            BattleModel.MAX_TURN_NUM = 10; // not sure about this
         }
 
         var p1_formation: any = option.p1RandomMode ?
