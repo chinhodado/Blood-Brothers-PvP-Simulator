@@ -472,24 +472,25 @@ class BattleModel {
     }
 
     processDebuff(executor: Card, target: Card, skill: Skill) {
-        var status: ENUM.StatusType, multi: number;
+        var statuses: ENUM.StatusType[];
+        var multi: number;
         var isNewLogic: boolean = false; // for caster-based debuff
 
         switch (skill.skillFunc) {
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.DEBUFFINDIRECT:
-                status = skill.skillFuncArg2;
+                statuses = [skill.skillFuncArg2];
                 multi  = skill.skillFuncArg4;
                 break;
             case ENUM.SkillFunc.DEBUFF:
-                status = skill.skillFuncArg2;
+                statuses = [skill.skillFuncArg2];
                 multi  = skill.skillFuncArg1;
                 break;
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF:
             case ENUM.SkillFunc.DEBUFF_AFFLICTION:
             case ENUM.SkillFunc.MULTI_DEBUFF:
-                // todo: arg3 may also be status
-                status = skill.skillFuncArg2;
+                statuses = [skill.skillFuncArg2];
+                if (skill.skillFuncArg3) statuses.push(skill.skillFuncArg3);
                 multi = skill.skillFuncArg1;
                 isNewLogic = true;
                 break;
@@ -498,13 +499,13 @@ class BattleModel {
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
             case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
-                status = skill.skillFuncArg2;
+                statuses = [skill.skillFuncArg2];
                 multi = skill.skillFuncArg4;
                 isNewLogic = true;
                 break;
             case ENUM.SkillFunc.ONHIT_DEBUFF:
-                // todo: arg3 may also be status
-                status = skill.skillFuncArg2;
+                statuses = [skill.skillFuncArg2];
+                if (skill.skillFuncArg3) statuses.push(skill.skillFuncArg3);
                 multi = skill.skillFuncArg1;
                 isNewLogic = true;
 
@@ -517,37 +518,40 @@ class BattleModel {
                 throw new Error("Wrong skill to use with processDebuff()");
         }
 
-        if (status === ENUM.StatusType.SKILL_PROBABILITY) {
-            var amount = -1 * skill.skillFuncArg1;
-        }
-        else {
-            if (isFlat) {
-                var baseAmount = -100;
-            }
-            else if (!isNewLogic) {
-                baseAmount = getDebuffAmount(executor, target);
+        for (var i = 0; i < statuses.length; i++) {
+            var status = statuses[i];
+            if (status === ENUM.StatusType.SKILL_PROBABILITY) {
+                var amount = -1 * skill.skillFuncArg1;
             }
             else {
-                baseAmount = getCasterBasedDebuffAmount(executor);
+                if (isFlat) {
+                    var baseAmount = -100;
+                }
+                else if (!isNewLogic) {
+                    baseAmount = getDebuffAmount(executor, target);
+                }
+                else {
+                    baseAmount = getCasterBasedDebuffAmount(executor);
+                }
+                amount = Math.floor(baseAmount * multi);
             }
-            amount = Math.floor(baseAmount * multi);
+
+            target.changeStatus(status, amount, isNewLogic);
+            var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
+
+            this.logger.addMinorEvent({
+                executorId: executor.id,
+                targetId: target.id,
+                type: ENUM.MinorEventType.STATUS,
+                status: {
+                    type: status,
+                    isNewLogic: isNewLogic
+                },
+                description: description,
+                amount: amount,
+                skillId: skill.id
+            });
         }
-
-        target.changeStatus(status, amount, isNewLogic);
-        var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
-
-        this.logger.addMinorEvent({
-            executorId: executor.id,
-            targetId: target.id,
-            type: ENUM.MinorEventType.STATUS,
-            status: {
-                type: status,
-                isNewLogic: isNewLogic
-            },
-            description: description,
-            amount: amount,
-            skillId: skill.id
-        });
     }
 
     startBattle () {
