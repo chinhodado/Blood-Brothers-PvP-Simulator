@@ -3829,4 +3829,61 @@ var famDatabase: CardMap = {
         img: "28b", rarity: 5, evo: 3,
         fullName: "Walutahanga, Guardian Dragon"
     },
+    11754: {
+        name: "Horus", stats: [21003, 17797, 16497, 7440, 18360],
+        skills: [1066, 1067],
+        autoAttack: 10021,
+        img: "3e4", rarity: 5, evo: 2,
+        fullName: "Horus, the Falcon God II"
+    },
+    11753: {
+        name: "Pagos", stats: [16995, 11297, 15002, 8101, 17699],
+        skills: [1064, 1065],
+        autoAttack: 10137,
+        img: "255", rarity: 4, evo: 2,
+        fullName: "Pagos, Camel Cavalryman II"
+    },
+    21752: {
+        name: "Petsuchos", stats: [16518, 18490, 13994, 5447, 16800],
+        skills: [1061, 1062],
+        autoAttack: 10011,
+        img: "472", rarity: 4, evo: 2,
+        fullName: "Petsuchos Minister II"
+    },
+    11752: {
+        name: "Petsuchos", stats: [12513, 13510, 11001, 6006, 13769],
+        skills: [1063],
+        autoAttack: 10011,
+        img: "1c1", rarity: 4, evo: 4,
+        fullName: "Petsuchos Executioner II"
+    },
+    21748: {
+        name: "Bastet", stats: [23015, 12008, 22038, 23015, 8405],
+        skills: [1058, 1059],
+        autoAttack: 10001,
+        img: "4f4", rarity: 5, evo: 3,
+        fullName: "Bastet, Cat Goddess"
+    },
+    11755: {
+        name: "Spartacus", stats: [25770, 24275, 24871, 15381, 11557],
+        skills: [1070],
+        autoAttack: 10156,
+        img: "4ca", rarity: 6, evo: 2,
+        fullName: "Spartacus, Rebel Gladiator II"
+    },
+    11760: {
+        name: "Crassus", stats: [24253, 25131, 22087, 14482, 18544],
+        skills: [1074, 1075],
+        passiveSkills: [9007],
+        autoAttack: 10106,
+        img: "3be", rarity: 6, evo: 2,
+        fullName: "Crassus, the Lion General II"
+    },
+    11759: {
+        name: "Gaiuz", stats: [17109, 18023, 12134, 5978, 16803],
+        skills: [1073],
+        autoAttack: 10104,
+        img: "461", rarity: 4, evo: 4,
+        fullName: "Gaiuz, Crashing Wave II"
+    },
 };

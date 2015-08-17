@@ -5651,6 +5651,153 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive ATK-based damage to two random foes."
     },
 
+    1054: {
+        name: "Crimson Flash", type: 2, func: 52, calc: 1,
+        args: [0.95, 1, 2500, 6, 0.5, 0.25, 121, 120],
+        range: 17, prob: 30,
+        desc: "Deal ATK-based damage and sometimes absorbs ATK from six random foes."
+    },
+
+    1055: {
+        name: "Flowing Stance", type: 3, func: 42, calc: 1,
+        args: [1.45, 4, 1, 0.11],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a heavy counter attack when struck, lowering AGI of target."
+    },
+
+    1056: {
+        name: "Bring it on!", type: 3, func: 39, calc: 6,
+        args: [1, 1, 0, 100, 10],
+        range: 8, prob: 30,
+        desc: ".."
+    },
+
+    1057: {
+        name: "Bring it on!", type: 3, func: 39, calc: 6,
+        args: [1, 1, 0, 150, 10],
+        range: 8, prob: 30,
+        desc: ".."
+    },
+
+    1058: {
+        name: "Glittering Eye", type: 1, func: 44, calc: 0,
+        args: [0.2, 17, 0, 0, 0, 0.2, 2],
+        range: 3, prob: 70,
+        desc: "Raise HP/DEF of self and adjacent familiars on 20% of its WIS respectively."
+    },
+
+    1059: {
+        name: "Pouncing Cat", type: 3, func: 41, calc: 2,
+        args: [1.6],
+        range: 21, prob: 50, ward: 2,
+        desc: "Chance to unleash heavy WIS-based counter attack when struck, ignoring position."
+    },
+
+    1060: {
+        name: "Poison Wing", type: 2, func: 4, calc: 2,
+        args: [1.4, 1, 0.1, 10],
+        range: 8, prob: 30, ward: 3, sac: 1,
+        desc: "Deal WIS-based damage and sometimes poison all foes, ignoring position."
+    },
+
+    1061: {
+        name: "Aculeate Tail", type: 2, func: 7, calc: 1,
+        args: [1.6, 0.05],
+        range: 7, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage and chance to kill up to three targets."
+    },
+
+    1062: {
+        name: "Punishing Tail", type: 16, func: 19, calc: 0,
+        args: [0, 2, 0.7],
+        range: 7, prob: 70,
+        desc: "High chance to paralyze up to three foes for one turn upon his death."
+    },
+
+    1063: {
+        name: "Double Bite", type: 2, func: 3, calc: 1,
+        args: [1.85],
+        range: 6, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy ATK-based damage to up to two foes."
+    },
+
+    1064: {
+        name: "Sand Slash", type: 2, func: 3, calc: 3,
+        args: [1.75, 7, 0.35, 1, 1],
+        range: 16, prob: 30, ward: 1,
+        desc: "Heavy AGI-based damage to three random foes, sometimes blind them for one turn."
+    },
+
+    1065: {
+        name: "Stalwart Hooves", type: 3, func: 38, calc: 6,
+        args: [0, 1, 4, 10, 5],
+        range: 7, prob: 50,
+        desc: "Greatly lower ATK and AGI of up to three foes when being attacked."
+    },
+
+    1066: {
+        name: "Soaring Talon", type: 2, func: 37, calc: 3,
+        args: [1.85, 0.2, 27, 21],
+        range: 19, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage and drain HP from four random foes, ignoring position."
+    },
+
+    1067: {
+        name: "Gift of the Sky", type: 1, func: 44, calc: 0,
+        args: [2.5, 12, 0, 0, 0, 1.5, 14],
+        range: 3, prob: 70,
+        desc: "Raise DEF/AGI of self and adjacent allies go up when their HP go down"
+    },
+
+    1068: {
+        name: "Mercy for the Fallen2", type: 1, func: 30, calc: 0,
+        args: [0, 1],
+        range: 7, prob: 100,
+        desc: "ATK and WIS of up to three foes swap values with each other."
+    },
+
+    1069: {
+        name: "Scare2", type: 1, func: 2, calc: 0,
+        args: [0.3, 8],
+        range: 8, prob: 100,
+        desc: "Lower the skill trigger rate of all foes by 30%."
+    },
+
+    1070: {
+        name: "Blade of Defiance", type: 5, func: 28, calc: 7,
+        args: [0.3, 9, 23, 2, 0.4],
+        range: 21, prob: 50, sac: 1,
+        desc: "Reflect 60% of ATK/AGI-based damage back to two random foes."
+    },
+
+    1073: {
+        name: "Seaborn Fog", type: 1, func: 44, calc: 0,
+        args: [0.42, 2, 0, 0, 0, 0.25, 5],
+        range: 3, prob: 70, sac: 1,
+        desc: "Raise DEF and reduce physical damage taken by self and adjacent familiars."
+    },
+
+    1074: {
+        name: "Blade of Coercion", type: 2, func: 4, calc: 1,
+        args: [1.35, 8, 0.25, 3000],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and sometimes burn five random foes, ignoring position."
+    },
+
+    1075: {
+        name: "Ward of Wealth", type: 1, func: 44, calc: 0,
+        args: [0.35, 1, 0, 0, 0, 1076, 16],
+        range: 3, prob: 70,
+        desc: "Raise ATK by 35%/Revive with full HP after being killed, self and adjacent familiars."
+    },
+
+    1076: {
+        name: "Dawn's Light", type: 16, func: 6, calc: 0,
+        args: [1],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -6463,6 +6610,20 @@ var SkillDatabase: SkillMap = {
         desc: "ATK-based damage to one foe and lower ATK of target."
     },
 
+    10155: {
+        name: "Standard Action", type: 2, func: 53, calc: 2,
+        args: [0.5, 3, 2000, 6, 1, 1, 121, 120],
+        range: 5, prob: 100, isAutoAttack: true,
+        desc: "Deal WIS-based damage and absorbs WIS from one foe."
+    },
+
+    10156: {
+        name: "Standard Action", type: 2, func: 33, calc: 1,
+        args: [1.2, 2, 1, 0.16],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe and lower DEF of target."
+    },
+
     9001: {
         name: "Abject Horror", type: 20, func: 1002, calc: 0,
         args: [0.3],
@@ -6482,5 +6643,12 @@ var SkillDatabase: SkillMap = {
         args: [0.1],
         range: 0, prob: 100,
         desc: "Up to 10% chance to reproduce the previous attack action."
+    },
+
+    9007: {
+        name: "Devoted Servant", type: 20, func: 1006, calc: 0,
+        args: [0.15],
+        range: 0, prob: 100,
+        desc: "Up to 15% chance to reproduce the previous attack action."
     },
 };
