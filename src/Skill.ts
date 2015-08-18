@@ -82,6 +82,8 @@ class Skill {
             case ENUM.SkillFunc.DRAIN_ATTACK:
             case ENUM.SkillFunc.DRAIN_MAGIC:
             case ENUM.SkillFunc.KILL:
+            case ENUM.SkillFunc.ABSORB_ATTACK:
+            case ENUM.SkillFunc.ABSORB_MAGIC:
                 return true;
             default:
                 return false;
@@ -106,6 +108,7 @@ class Skill {
             case ENUM.SkillFunc.DEBUFFATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.DRAIN_ATTACK:
+            case ENUM.SkillFunc.ABSORB_ATTACK:
                 return false;
             default:
                 return true;
@@ -288,6 +291,8 @@ class Skill {
                 if (skillInfo.args[2]) statuses.push(skillInfo.args[2]);
                 break;
             case ENUM.SkillFunc.ABSORB:
+            case ENUM.SkillFunc.ABSORB_ATTACK:
+            case ENUM.SkillFunc.ABSORB_MAGIC:
                 statuses = AbsorbSkillLogic.getComponentStatusFromBuffStatusType(skillInfo.args[1]);
                 break;
             default:

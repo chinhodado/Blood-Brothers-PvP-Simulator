@@ -56,6 +56,8 @@ class SkillLogicFactory {
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_ATTACK:
             case ENUM.SkillFunc.CASTER_BASED_DEBUFF_MAGIC:
             case ENUM.SkillFunc.KILL:
+            case ENUM.SkillFunc.ABSORB_ATTACK:
+            case ENUM.SkillFunc.ABSORB_MAGIC:
                 return new AttackSkillLogic();
             case ENUM.SkillFunc.PROTECT:
                 return new ProtectSkillLogic();

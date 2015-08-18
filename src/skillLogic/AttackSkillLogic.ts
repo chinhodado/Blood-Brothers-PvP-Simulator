@@ -131,6 +131,10 @@ class AttackSkillLogic extends SkillLogic {
                     this.processDrainPhase(executor, skill);
                 }
 
+                if (skill.skillFunc === ENUM.SkillFunc.ABSORB_ATTACK || skill.skillFunc === ENUM.SkillFunc.ABSORB_MAGIC) {
+                    new AbsorbSkillLogic().absorbTarget(executor, targetCard, skill);
+                }
+
                 this.clearAllCardsDamagePhaseData();
             }
         }
@@ -175,6 +179,10 @@ class AttackSkillLogic extends SkillLogic {
 
         if (skill.skillFunc === ENUM.SkillFunc.DRAIN_ATTACK || skill.skillFunc === ENUM.SkillFunc.DRAIN_MAGIC) {
             this.processDrainPhase(executor, skill);
+        }
+
+        if (skill.skillFunc === ENUM.SkillFunc.ABSORB_ATTACK || skill.skillFunc === ENUM.SkillFunc.ABSORB_MAGIC) {
+            new AbsorbSkillLogic().absorbTarget(executor, target, skill);
         }
 
         this.clearAllCardsDamagePhaseData();

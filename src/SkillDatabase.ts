@@ -5539,6 +5539,20 @@ var SkillDatabase: SkillMap = {
         desc: "Deal AGI-based damage to six random foes and sometimes lower ATK."
     },
 
+    1035: {
+        name: "Twining Net", type: 2, func: 53, calc: 2,
+        args: [2.4, 4, 0.09, 2, 0.5, 0.5, 121, 120],
+        range: 23, prob: 30, ward: 2,
+        desc: "Massive WIS-based damage and absorbs AGI from two random foes, ignoring position."
+    },
+
+    1036: {
+        name: "Leaching Wave", type: 2, func: 53, calc: 3,
+        args: [3.2, 3, 0.12, 2, 0.5, 0.5, 121, 120],
+        range: 23, prob: 30, ward: 2,
+        desc: "Massive AGI-based damage and absorbs WIS from two random foes, ignoring position."
+    },
+
     1037: {
         name: "Medicinal Wine", type: 2, func: 18, calc: 4,
         args: [1, 1],
@@ -5654,7 +5668,7 @@ var SkillDatabase: SkillMap = {
     1054: {
         name: "Crimson Flash", type: 2, func: 52, calc: 1,
         args: [0.95, 1, 2500, 6, 0.5, 0.25, 121, 120],
-        range: 17, prob: 30,
+        range: 17, prob: 30, ward: 1,
         desc: "Deal ATK-based damage and sometimes absorbs ATK from six random foes."
     },
 
@@ -5768,6 +5782,13 @@ var SkillDatabase: SkillMap = {
         args: [0.3, 9, 23, 2, 0.4],
         range: 21, prob: 50, sac: 1,
         desc: "Reflect 60% of ATK/AGI-based damage back to two random foes."
+    },
+
+    1071: {
+        name: "Arena Gale", type: 2, func: 52, calc: 3,
+        args: [0.7, 4, 500, 6, 1, 1, 121, 120],
+        range: 17, prob: 50, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage and absorb AGI from six random foes."
     },
 
     1073: {
@@ -6613,7 +6634,7 @@ var SkillDatabase: SkillMap = {
     10155: {
         name: "Standard Action", type: 2, func: 53, calc: 2,
         args: [0.5, 3, 2000, 6, 1, 1, 121, 120],
-        range: 5, prob: 100, isAutoAttack: true,
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "Deal WIS-based damage and absorbs WIS from one foe."
     },
 
@@ -6643,6 +6664,13 @@ var SkillDatabase: SkillMap = {
         args: [0.1],
         range: 0, prob: 100,
         desc: "Up to 10% chance to reproduce the previous attack action."
+    },
+
+    9006: {
+        name: "Breakwater", type: 20, func: 1002, calc: 0,
+        args: [0.35],
+        range: 0, prob: 100,
+        desc: "Decrease damage from lower rarities by up to 35%."
     },
 
     9007: {

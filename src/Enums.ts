@@ -79,9 +79,11 @@ module ENUM {
         MULTI_DEBUFF = 45,
         DEBUFF_AFFLICTION = 46, // 1-5: same as CASTER_BASED_DEBUFF, 6: afflict type, 7: afflict prob., 8, 9: afflict opt param
         ABSORB = 51, // 1: not used, 2: stat(s) to be absorbed, 3: skill mod used for the buff/debuff,
-                     // 4: base stat for debuff (WIS, ATK, etc)
+                     // 4: base stat for debuff (SkillCalcType, if is 6 (DEBUFF) then arg3 is the direct debuff amount)
                      // 5: percent gain from the amount debuffed of a target, 6: inner probability,
                      // 7, 8, 9: unimportant (effect ids), 10: not used
+        ABSORB_ATTACK = 52, // 1: multi, rest: same as ABSORB
+        ABSORB_MAGIC = 53, // same as 52
         PROTECT_COUNTER_DEBUFF = 56, // 1: counter mod, 2: debuff status, 3: debuff prob, 4: debuff power
         DAMAGE_PASSIVE = 1001,
         DEFENSE_PASSIVE = 1002,

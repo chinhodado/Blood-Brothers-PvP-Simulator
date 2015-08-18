@@ -3886,4 +3886,32 @@ var famDatabase: CardMap = {
         img: "461", rarity: 4, evo: 4,
         fullName: "Gaiuz, Crashing Wave II"
     },
+    11697: {
+        name: "Aegir", stats: [25098, 15088, 21675, 24069, 18544],
+        skills: [1035, 1036],
+        passiveSkills: [9006],
+        autoAttack: 10007,
+        isMounted: true,
+        img: "2e8", rarity: 6, evo: 2,
+        fullName: "Aegir, the Roaring Sea II"
+    },
+    11750: {
+        name: "Khepri", stats: [14792, 7602, 12999, 16010, 16707],
+        skills: [1060],
+        autoAttack: 10155,
+        img: "108", rarity: 4, evo: 4,
+        fullName: "Khepri, the Morning Sun II"
+    },
+    21618: {
+        name: "Isabella", stats: [21538, 21062, 20795, 11217, 18098],
+        skills: [1054, 1055],
+        img: "46a", rarity: 5, evo: 3,
+        fullName: "Isabella, the Waterbrand"
+    },
+    11756: {
+        name: "Julia", stats: [21870, 20353, 14178, 6725, 18154],
+        skills: [1071],
+        img: "1da", rarity: 5, evo: 2,
+        fullName: "Julia, Centaur Eques II"
+    },
 };
