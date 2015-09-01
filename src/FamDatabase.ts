@@ -3915,7 +3915,7 @@ var famDatabase: CardMap = {
         fullName: "Julia, Centaur Eques II"
     },
     11765: {
-        name: "Huitzilopochtli", stats: [20050,	18555, 18100, 8827,	18219],
+        name: "Huitzilopochtli", stats: [20050, 18555, 18100, 8827,	18219],
         skills: [1081, 1082],
         autoAttack: 10160,
         img: "282", rarity: 5, evo: 2,
@@ -3989,5 +3989,23 @@ var famDatabase: CardMap = {
         autoAttack: 10007,
         img: "1f4", rarity: 5, evo: 3,
         fullName: "Demonblade Countess"
+    },
+    10420: {
+        name: "Ziz", stats: [11741, 10042, 11900, 10624, 10042],
+        skills: [19],
+        img: "35e", rarity: 4, evo: 4,
+        fullName: "Ziz, Wings Divine II"
+    },
+    10089: {
+        name: "Granados", stats: [10725, 11825, 11350, 10541, 10418],
+        skills: [19],
+        img: "170", rarity: 4, evo: 4,
+        fullName: "Granados, Lion King II"
+    },
+    10381: {
+        name: "Nine-tailed", stats: [10673, 11807, 12235, 11170, 12500],
+        skills: [19],
+        img: "306", rarity: 4, evo: 4,
+        fullName: "Nine-tailed Fox II"
     },
 };
