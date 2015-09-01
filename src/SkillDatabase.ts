@@ -5819,6 +5819,125 @@ var SkillDatabase: SkillMap = {
         desc: "-"
     },
 
+    1077: {
+        name: "Ancient Flame", type: 2, func: 4, calc: 1,
+        args: [1.65],
+        range: 314, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    1078: {
+        name: "Basalt Skin", type: 1, func: 44, calc: 0,
+        args: [0.36, 2, 0, 0, 0, 0.3, 6],
+        range: 21, prob: 70,
+        desc: "Raise DEF and reduce magic damage taken by self."
+    },
+
+    1079: {
+        name: "Ancient Blizzard", type: 2, func: 4, calc: 2,
+        args: [1.3, 3, 0.2],
+        range: 8, prob: 30, ward: 2, sac: 1,
+        desc: "WIS-based damage to all foes and sometimes freeze targets, ignoring position."
+    },
+
+    1080: {
+        name: "Ancient Thunder", type: 2, func: 4, calc: 2,
+        args: [1.05, 2, 0.2],
+        range: 20, prob: 30, ward: 2, sac: 1,
+        desc: "WIS-based damage to five random foes and sometimes paralyze targets, ignoring position."
+    },
+
+    1081: {
+        name: "Angry Hummingbird", type: 2, func: 34, calc: 1,
+        args: [1.2, 4, 1, 0.03],
+        range: 17, prob: 30, ward: 1,
+        desc: "ATK-based damage to six random foes and lower AGI of targets."
+    },
+
+    1082: {
+        name: "Heartblood Sacrifice", type: 1, func: 51, calc: 0,
+        args: [0, 7, 2000, 6, 0.4, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorbs ATK and AGI from up to three foes at the beginning of battles."
+    },
+
+    1083: {
+        name: "Wrath of the Wood", type: 2, func: 34, calc: 1,
+        args: [1.45, 1, 0.25, 0.19],
+        range: 315, prob: 30, ward: 1,
+        desc: "ATK-based DMG, may lower ATK up to five foes, ignoring position. Increased if fewer foes."
+    },
+
+    1084: {
+        name: "Rage of the Bear", type: 1, func: 44, calc: 0,
+        args: [0.45, 17, 0, 0, 0, 0.45, 2],
+        range: 3, prob: 70,
+        desc: "Raise HP/DEF of self and adjacent familiars on 45% of its WIS respectively."
+    },
+
+    1085: {
+        name: "Flurry of Blades", type: 2, func: 4, calc: 2,
+        args: [2.1],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage to three random foes, ignoring position."
+    },
+
+    1086: {
+        name: "Broken Blade Bane", type: 16, func: 32, calc: 0,
+        args: [0.2, 1],
+        range: 7, prob: 70,
+        desc: "Greatly lower ATK of up to three foes upon her death."
+    },
+
+    1087: {
+        name: "Endless Rush", type: 2, func: 33, calc: 1,
+        args: [1.25, 2, 0.25, 0.25],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes lower DEF."
+    },
+
+    1088: {
+        name: "Dain's Legacy", type: 2, func: 3, calc: 1,
+        args: [1.35],
+        range: 16, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to three random foes."
+    },
+
+    1089: {
+        name: "Flash of Steel", type: 2, func: 4, calc: 2,
+        args: [1.5],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    1090: {
+        name: "Grace of Light", type: 1, func: 44, calc: 0,
+        args: [0.25, 3, 0, 0, 0, 1.25, 14],
+        range: 3, prob: 70,
+        desc: "Raise WIS and AGI of self/adjacent allies go up when their HP go down."
+    },
+
+    1091: {
+        name: "Armageddon", type: 2, func: 4, calc: 1,
+        args: [1.5],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes, ignoring position."
+    },
+
+    1092: {
+        name: "Aura of Madness", type: 1, func: 44, calc: 0,
+        args: [0.35, 1, 0, 0, 0, 0.2, 4],
+        range: 3, prob: 70,
+        desc: "Raise ATK and AGI of self and adjacent familiars by 35% and by 20% of its WIS."
+    },
+
+    1093: {
+        name: "Azoth", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -6643,6 +6762,55 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 2, 1, 0.16],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe and lower DEF of target."
+    },
+
+    10157: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10158: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 3, 0.4],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe and sometimes freeze target."
+    },
+
+    10159: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 2, 0.4],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe and sometimes paralyze target."
+    },
+
+    10160: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10161: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10162: {
+        name: "Standard Action", type: 2, func: 33, calc: 1,
+        args: [1.2, 2, 1, 0.25],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and lower DEF of target."
+    },
+
+    10163: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
     },
 
     9001: {

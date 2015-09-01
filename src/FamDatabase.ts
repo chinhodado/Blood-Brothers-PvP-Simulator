@@ -3914,4 +3914,80 @@ var famDatabase: CardMap = {
         img: "1da", rarity: 5, evo: 2,
         fullName: "Julia, Centaur Eques II"
     },
+    11765: {
+        name: "Huitzilopochtli", stats: [20050,	18555, 18100, 8827,	18219],
+        skills: [1081, 1082],
+        autoAttack: 10160,
+        img: "282", rarity: 5, evo: 2,
+        fullName: "Huitzilopochtli, God of War II"
+    },
+    11762: {
+        name: "Frostscale", stats: [17038, 4396, 12391, 17721, 17201],
+        skills: [1079],
+        autoAttack: 10158,
+        img: "138", rarity: 4, evo: 2,
+        fullName: "Frostscale Plesiosaur II"
+    },
+    11764: {
+        name: "Thundering", stats: [12686, 5029, 14927, 17899, 17424],
+        skills: [1080],
+        autoAttack: 10159,
+        img: "2a2", rarity: 4, evo: 4,
+        fullName: "Thundering Pterosaur II"
+    },
+    11766: {
+        name: "Mielikki", stats: [19053, 18566, 16681, 11340, 18111],
+        skills: [1083, 1084],
+        autoAttack: 10161,
+        img: "1b5", rarity: 5, evo: 2,
+        fullName: "Mielikki, Bear Rider II"
+    },
+    21761: {
+        name: "Hellscale", stats: [20787, 21384, 20088, 11221, 17510],
+        skills: [1077, 1078],
+        autoAttack: 10157,
+        img: "35a", rarity: 5, evo: 3,
+        fullName: "Hellscale Theropod"
+    },
+    11783: {
+        name: "Paracelsus", stats: [12806, 7806, 8198, 15950, 11111],
+        skills: [1093],
+        autoAttack: 10007,
+        img: "15f", rarity: 4, evo: 4,
+        fullName: "Paracelsus, Venomdagger II"
+    },
+    11779: {
+        name: "Hagen", stats: [16779, 15281, 15438, 4785, 16889],
+        skills: [1087],
+        autoAttack: 10162,
+        img: "1c4", rarity: 4, evo: 4,
+        fullName: "Hagen, Dueling King II"
+    },
+    21779: {
+        name: "Hagen", stats: [12759, 13615, 13312, 6313, 10311],
+        skills: [1088],
+        img: "447", rarity: 4, evo: 2,
+        fullName: "Hagen, Mad King II"
+    },
+    11781: {
+        name: "Muramasa", stats: [17049, 16042, 13160, 5923, 17569],
+        skills: [1091, 1092],
+        autoAttack: 10108,
+        img: "45e", rarity: 4, evo: 2,
+        fullName: "Muramasa, the Cursed Katana II"
+    },
+    11780: {
+        name: "Uscias", stats: [20234, 6790, 14991, 21458, 18154],
+        skills: [1089, 1090],
+        autoAttack: 10163,
+        img: "26f", rarity: 5, evo: 2,
+        fullName: "Uscias, the Claiomh Solais II"
+    },
+    21777: {
+        name: "Demonblade", stats: [21454, 9110, 18186, 21674, 18046],
+        skills: [1085, 1086],
+        autoAttack: 10007,
+        img: "1f4", rarity: 5, evo: 3,
+        fullName: "Demonblade Countess"
+    },
 };
