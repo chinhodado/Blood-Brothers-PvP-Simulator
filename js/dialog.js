@@ -55,8 +55,13 @@ function hideCardDetailDialog() {
 }
 
 function updateSkillDisplay() {
-    $(".card-detail-skill-name").text(unescape(currentCard.skills[currentSkillIndex].name));
-    $(".card-detail-skill-description").text(unescape(currentCard.skills[currentSkillIndex].comment));
+    // reset, otherwise if the below if is not executed we'll still show stale text (e.g. of the previous fam)
+    $(".card-detail-skill-name").text("");
+    $(".card-detail-skill-description").text("");
+    if (currentCard.skills[currentSkillIndex]) {
+        $(".card-detail-skill-name").text(unescape(currentCard.skills[currentSkillIndex].name));
+        $(".card-detail-skill-description").text(unescape(currentCard.skills[currentSkillIndex].comment));
+    }
     $(".arrow-left").css("visibility", "hidden");
     $(".arrow-right").css("visibility", "hidden");
     if (currentCard.skills[currentSkillIndex + 1] && currentCard.skills[currentSkillIndex + 1].name) {
