@@ -4413,20 +4413,6 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
     },
 
-    849: {
-        name: "Blazing Rapier", type: 2, func: 4, calc: 2,
-        args: [1.15],
-        range: 16, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
-    },
-
-    850: {
-        name: "Blazing Rapier", type: 2, func: 4, calc: 2,
-        args: [1.15],
-        range: 19, prob: 30, ward: 2,
-        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
-    },
-
     851: {
         name: "Blazing Rapier", type: 2, func: 4, calc: 2,
         args: [1.15],
@@ -4434,39 +4420,11 @@ var SkillDatabase: SkillMap = {
         desc: "Deal heavy WIS-based damage to five random foes, ignoring position."
     },
 
-    852: {
-        name: "Conflagration", type: 1, func: 1, calc: 0,
-        args: [0.1, 3],
-        range: 3, prob: 70,
-        desc: "Raise WIS of self and adjacent familiars, based on 10% of his WIS."
-    },
-
-    853: {
-        name: "Conflagration", type: 1, func: 1, calc: 0,
-        args: [0.15, 3],
-        range: 3, prob: 70,
-        desc: "Raise WIS of self and adjacent familiars, based on 15% of his WIS."
-    },
-
     854: {
         name: "Conflagration", type: 1, func: 1, calc: 0,
         args: [0.2, 3],
         range: 3, prob: 70,
         desc: "Raise WIS of self and adjacent familiars, based on 20% of his WIS."
-    },
-
-    855: {
-        name: "Inferno Aegis", type: 1, func: 1, calc: 0,
-        args: [0.1, 5],
-        range: 3, prob: 70,
-        desc: "Reduce physical damage taken by self and adjacent familiars by 10%."
-    },
-
-    856: {
-        name: "Inferno Aegis", type: 1, func: 1, calc: 0,
-        args: [0.2, 5],
-        range: 3, prob: 70,
-        desc: "Reduce physical damage taken by self and adjacent familiars by 20%."
     },
 
     857: {
@@ -4929,6 +4887,27 @@ var SkillDatabase: SkillMap = {
         args: [2],
         range: 23, prob: 30, ward: 2, sac: 1,
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    928: {
+        name: "Fierce Dash", type: 2, func: 4, calc: 1,
+        args: [1.4],
+        range: 315, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage up to five foes, ignoring position. Increased if fewer foes."
+    },
+
+    931: {
+        name: "Stone Guard", type: 1, func: 1, calc: 0,
+        args: [0.2, 1, 2],
+        range: 3, prob: 70,
+        desc: "Raise ATK/DEF of self and adjacent familiars on 20% of its WIS respectively."
+    },
+
+    934: {
+        name: "Reflecting Carapace", type: 5, func: 28, calc: 7,
+        args: [0.3, 9, 23, 2, 0.4],
+        range: 21, prob: 50,
+        desc: "Reflect 60% of ATK/AGI-based damage back to up to two foes."
     },
 
     935: {
@@ -5434,6 +5413,27 @@ var SkillDatabase: SkillMap = {
         desc: "-"
     },
 
+    1011: {
+        name: "Just Deserts", type: 2, func: 3, calc: 1,
+        args: [1.05],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes."
+    },
+
+    1014: {
+        name: "Indignation", type: 1, func: 44, calc: 0,
+        args: [0.2, 1, 0, 0, 0, 0.7, 3],
+        range: 21, prob: 70,
+        desc: "Raise ATK and WIS of self by 20% and 70% of its WIS respectively."
+    },
+
+    1017: {
+        name: "Mark of Virtue", type: 5, func: 14, calc: 1,
+        args: [1.4],
+        range: 4, prob: 50, ward: 1,
+        desc: "Take damage in place of any ally and unleash a counter attack."
+    },
+
     1018: {
         name: "Chain Snip", type: 2, func: 7, calc: 1,
         args: [1.35, 0.08],
@@ -5936,6 +5936,27 @@ var SkillDatabase: SkillMap = {
         args: [2],
         range: 23, prob: 30, ward: 2, sac: 1,
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    1098: {
+        name: "Crescent Flame", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 17, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage to six random foes, ignoring position."
+    },
+
+    1101: {
+        name: "Waxing Winds", type: 1, func: 1, calc: 0,
+        args: [0.3, 6, 7],
+        range: 3, prob: 70,
+        desc: "Reduce magic and breath damages taken by self and adjacent familiars by 30%."
+    },
+
+    1104: {
+        name: "Gibbous Gleam", type: 1, func: 44, calc: 0,
+        args: [0.1, 2, 0, 0, 0, 0.2, 3],
+        range: 3, prob: 70,
+        desc: "Raise DEF/WIS of self/adjacent familiars on by 10% and 20% of its WIS respectively."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent

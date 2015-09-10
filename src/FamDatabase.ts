@@ -4008,4 +4008,30 @@ var famDatabase: CardMap = {
         img: "306", rarity: 4, evo: 4,
         fullName: "Nine-tailed Fox II"
     },
+    41806: {
+        name: "Crom", stats: [21213, 6017, 16987, 21505, 18112],
+        skills: [],
+        autoAttack: 10016,
+        img: "3b3", rarity: 5, evo: 1,
+        fullName: "Crom Cruach, the Silver Moon"
+    },
+    41659: {
+        name: "Ilya", stats: [19655, 19943, 17687, 8028, 18186],
+        skills: [],
+        img: "260", rarity: 5, evo: 1,
+        fullName: "Ilya, Giant Slayer"
+    },
+    41173: {
+        name: "Adamant", stats: [22911, 17998, 20476, 8002, 13503],
+        skills: [],
+        img: "49b", rarity: 5, evo: 1,
+        fullName: "Adamant Tarasca"
+    },
+    41068: {
+        name: "Valafar", stats: [20005, 8007, 13710, 22024, 17212],
+        skills: [],
+        autoAttack: 10007,
+        img: "168", rarity: 5, evo: 1,
+        fullName: "Valafar, Inferno Vanquisher"
+    },
 };
