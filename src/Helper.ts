@@ -304,9 +304,13 @@ function setSkillOptions() {
     skillIdArray.sort((a, b) => SkillDatabase[a].name.localeCompare(SkillDatabase[b].name));
 
     // populate one select
+    var option = document.createElement("option");
+    option.value = "0"; // add the option for no skill in this slot
+    option.text = "--none--";
+    (<HTMLSelectElement>skillSelects[0]).add(option);
     for (var index = 0; index < skillIdArray.length; index++) {
         var key = skillIdArray[index];
-        var option = document.createElement("option");
+        option = document.createElement("option");
         option.value = key + "";
         option.text = SkillDatabase[key].name;
         (<HTMLSelectElement>skillSelects[0]).add(option);

@@ -123,7 +123,7 @@ class BrigGenerator {
         var skillArray: Skill[] = [];
 
         for (var i = 0; i < 3; i++) {
-            if (skillIds[i]) {
+            if (skillIds[i] && +skillIds[i] !== 0) { // 0 is the special id to mark a "null" skill
                 skillArray.push(new Skill(skillIds[i]));
             }
         }
