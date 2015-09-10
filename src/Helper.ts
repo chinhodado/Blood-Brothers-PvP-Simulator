@@ -57,6 +57,18 @@ function setPreviousChoices() {
         }
     }
 
+    // custom skills
+    for (let player = 1; player <= 2; player++) {
+        for (let famIndex = 0; famIndex < 10; famIndex++) {
+            for (let skillIndex = 0; skillIndex < 3; skillIndex++) {
+                let key = `p${player}f${famIndex}s${skillIndex}`;
+                if (localStorage.getItem(key) && localStorage.getItem(key) !== "null") {
+                    (<HTMLInputElement>document.getElementById(key)).value = localStorage.getItem(key);
+                }
+            }
+        }
+    }
+
     // debug mode
     if (localStorage.getItem("debug") === "true") {
         (<HTMLInputElement>document.getElementById("debug")).checked = true;
@@ -132,16 +144,23 @@ function onFormLoad() {
     setFamOptions();
     setSkillOptions();
     addCustomsStatDiv();
+    addCustomsSkillDiv(); // this has to be called after setSkillOptions()
 
     // remember to addCustomsStatDiv() first
     toogleCustomStat(1);
     toogleCustomStat(2);
+
+    // remember to addCustomsSkillDiv() first
+    toogleCustomSkill(1);
+    toogleCustomSkill(2);
 
     // add onchange listener to battle type chooser
     document.getElementById("bt").onchange = () => {
         toogleReserve();
         toogleCustomStat(1);
         toogleCustomStat(2);
+        toogleCustomSkill(1);
+        toogleCustomSkill(2);
     }
 
     setPreviousChoices();
@@ -243,6 +262,37 @@ function toogleCustomStat(player: number) {
     }
 }
 
+function toogleCustomSkill(player: number) {
+    var checked = (<HTMLInputElement>document.getElementById(`p${player}customSkillChbox`)).checked;
+    var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+    var isBloodclash = btValue === "1" || btValue === "3";
+
+    // for normal (0-5)
+    var customSkillDiv = document.getElementById(`p${player}customSkillDivNormal`);
+    var inputs = customSkillDiv.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = !checked;
+    }
+    customSkillDiv.style.display = checked ? "block" : "none";
+
+    // for bloodclash
+    customSkillDiv = document.getElementById(`p${player}customSkillDivBloodclash`);
+    inputs = customSkillDiv.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = !isBloodclash || !checked;
+    }
+    customSkillDiv.style.display = (checked && isBloodclash) ? "block" : "none";
+
+    for (let i = 0; i < 10; i++) {
+        let slotChecked = (<HTMLInputElement>document.getElementById(`p${player}f${i}customSkillChkbox`)).checked;
+        let slotDisabled = (<HTMLInputElement>document.getElementById(`p${player}f${i}customSkillChkbox`)).disabled;
+        for (let j = 0; j < 3; j++) {
+            let select = <HTMLInputElement>document.getElementById(`p${player}f${i}s${j}`);
+            select.disabled = slotDisabled || !slotChecked;
+        }
+    }
+}
+
 /**
  * Populates the skill selects options
  */
@@ -302,6 +352,38 @@ function addCustomsStatDiv() {
     }
 }
 
+function addCustomsSkillDiv() {
+    // array of div types. There are two divs for each player, one for fam 0-5, one for fam 6-9 (BC)
+    var divArr = ["Normal", "Bloodclash"];
+
+    // this only work under the assumption that we have populated the warlord skill options before
+    var skillSelect = document.getElementsByClassName("skillSelect")[0];
+
+    for (let divIndex = 0; divIndex < divArr.length; divIndex++) {
+        for (let player = 1; player <= 2; player++) {
+            var customSkillDiv = document.getElementById(`p${player}customSkillDiv${divArr[divIndex]}`);
+            for (let i = 0; i < 5; i++) { // index of fams
+                let famIndex = i + 5 * divIndex;
+                customSkillDiv.appendChild(document.createElement('br'));
+                customSkillDiv.appendChild(document.createTextNode(`Familiar ${famIndex + 1}`));
+                let input = document.createElement("input");
+                input.type = "checkbox";
+                input.id = `p${player}f${famIndex}customSkillChkbox`;
+                input.onchange = (p => () => toogleCustomSkill(p))(player);
+                customSkillDiv.appendChild(input);
+                for (let skillIndex = 0; skillIndex < 3; skillIndex++) {
+                    customSkillDiv.appendChild(document.createTextNode(` Skill ${skillIndex} `));
+                    let select = document.createElement("select");
+                    select.name = `p${player}f${famIndex}s${skillIndex}`;
+                    select.id   = `p${player}f${famIndex}s${skillIndex}`;
+                    select.innerHTML = (<HTMLSelectElement>skillSelect).innerHTML;
+                    customSkillDiv.appendChild(select);
+                }
+            }
+        }
+    }
+}
+
 /**
  * Get the battle data and option from the URL. Also saves the settings to localStorage for later retrieval
  */
@@ -312,6 +394,8 @@ function getBattleDataOption() {
     //         player 2: s20 -> s22
     // formation: player 1: 1f, player 2: 2f
     // random mode: player 1: 1r, player 2: 2r
+    // custom stats: e.g. p1f0atk
+    // custom skills: e.g. p1f0s0
     // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
@@ -332,6 +416,8 @@ function getBattleDataOption() {
 
     data.p1_customStats = {};
     data.p2_customStats = {};
+    data.p1_customSkills = {};
+    data.p2_customSkills = {};
 
     // sorry for the shit code
     var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
@@ -346,6 +432,23 @@ function getBattleDataOption() {
                     }
                     data[`p${player}_customStats`][famIndex][arr[statIndex].toLowerCase()] = +stat;
                     localStorage.setItem(key, stat);
+                }
+            }
+        }
+    }
+
+    // custom skills
+    for (let player = 1; player <= 2; player++) {
+        for (let famIndex = 0; famIndex < 10; famIndex++) {
+            for (let skillIndex = 0; skillIndex < 3; skillIndex++) {
+                let key = `p${player}f${famIndex}s${skillIndex}`;
+                let customSkillId = getURLParameter(key);
+                if (customSkillId) {
+                    if (!data[`p${player}_customSkills`][famIndex]) {
+                        data[`p${player}_customSkills`][famIndex] = [];
+                    }
+                    data[`p${player}_customSkills`][famIndex][skillIndex] = +customSkillId;
+                    localStorage.setItem(key, customSkillId);
                 }
             }
         }

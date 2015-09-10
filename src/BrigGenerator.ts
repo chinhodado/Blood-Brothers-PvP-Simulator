@@ -70,10 +70,16 @@ class BrigGenerator {
             if (p1_cardInfo.isWarlord) {
                 p1fSkillIdArray = p1_warlordSkillIds;
             }
+            if (data.p1_customSkills[i]) { // this will overwrite the warlord skill id array when available
+                p1fSkillIdArray = data.p1_customSkills[i];
+            }
 
             var p2fSkillIdArray: number[] = p2_cardInfo.skills;
             if (p2_cardInfo.isWarlord) {
                 p2fSkillIdArray = p2_warlordSkillIds;
+            }
+            if (data.p2_customSkills[i]) { // this will overwrite the warlord skill id array when available
+                p2fSkillIdArray = data.p2_customSkills[i];
             }
 
             var player1Skills = this.makeSkillArray(p1fSkillIdArray);
