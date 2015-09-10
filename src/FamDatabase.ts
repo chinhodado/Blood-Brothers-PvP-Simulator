@@ -4022,7 +4022,7 @@ var famDatabase: CardMap = {
         fullName: "Ilya, Giant Slayer"
     },
     41173: {
-        name: "Adamant", stats: [22911, 17998, 20476, 8002, 13503],
+        name: "Tarasca", stats: [22911, 17998, 20476, 8002, 13503],
         skills: [],
         img: "49b", rarity: 5, evo: 1,
         fullName: "Adamant Tarasca"
@@ -4033,5 +4033,54 @@ var famDatabase: CardMap = {
         autoAttack: 10007,
         img: "168", rarity: 5, evo: 1,
         fullName: "Valafar, Inferno Vanquisher"
+    },
+    11603: {
+        name: "Nimue", stats: [19086, 8599, 14384, 20982, 17992],
+        skills: [906],
+        autoAttack: 10124,
+        img: "2c6", rarity: 5, evo: 2,
+        fullName: "Nimue, Lady of the Lake II"
+    },
+    11789: {
+        name: "Chanchu", stats: [15002, 4396, 13008, 19097, 17602],
+        skills: [1113, 1114],
+        autoAttack: 10001,
+        img: "209", rarity: 4, evo: 2,
+        fullName: "Chanchu, Hermit II"
+    },
+    21788: {
+        name: "Qiong Qi", stats: [17591, 13398, 14503, 8047, 17710],
+        skills: [1110, 1111],
+        autoAttack: 10011,
+        img: "305", rarity: 4, evo: 2,
+        fullName: "Qiong Qi, World Eater II"
+    },
+    21790: {
+        name: "Zhu Rong", stats: [23340, 7660, 18190, 22817, 18318],
+        skills: [1094, 1095],
+        autoAttack: 10164,
+        img: "295", rarity: 5, evo: 3,
+        fullName: "Zhu Rong, the Blazing Storm"
+    },
+    11788: {
+        name: "Qiong Qi", stats: [12806, 11903, 10904, 6689, 14500],
+        skills: [1112],
+        autoAttack: 10011,
+        img: "435", rarity: 4, evo: 4,
+        fullName: "Qiong Qi, Man Eater II"
+    },
+    11786: {
+        name: "Ruyi Zhenxian", stats: [14500, 16489, 14500, 6103, 16510],
+        skills: [1109],
+        autoAttack: 10165,
+        img: "308", rarity: 4, evo: 4,
+        fullName: "Ruyi Zhenxian, the Ferocious II"
+    },
+    21784: {
+        name: "Long Nu", stats: [20492, 6522, 21003, 22480, 17982],
+        skills: [1107, 1108],
+        autoAttack: 10001,
+        img: "11f", rarity: 5, evo: 3,
+        fullName: "Long Nu, Sea Princess"
     },
 };

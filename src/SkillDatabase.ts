@@ -5938,6 +5938,20 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
     },
 
+    1094: {
+        name: "Leaping Flames", type: 2, func: 4, calc: 2,
+        args: [1.3, 8, 0.25, 2500],
+        range: 315, prob: 30, ward: 2,
+        desc: "Deal WIS-based DMG, may burn up to five foes, ignoring position. Increased if fewer foes."
+    },
+
+    1095: {
+        name: "Bewitching Dance", type: 3, func: 38, calc: 6,
+        args: [1, 3, 4, 25, 5],
+        range: 7, prob: 50,
+        desc: "Greatly lower WIS and AGI of up to three foes when being attacked."
+    },
+
     1098: {
         name: "Crescent Flame", type: 2, func: 4, calc: 2,
         args: [1],
@@ -5957,6 +5971,83 @@ var SkillDatabase: SkillMap = {
         args: [0.1, 2, 0, 0, 0, 0.2, 3],
         range: 3, prob: 70,
         desc: "Raise DEF/WIS of self/adjacent familiars on by 10% and 20% of its WIS respectively."
+    },
+
+    1107: {
+        name: "Freezing Rain", type: 2, func: 4, calc: 2,
+        args: [1.55, 3, 0.2],
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage and sometimes freeze up to four foes. Increased if fewer foes."
+    },
+
+    1108: {
+        name: "Healing Rain", type: 2, func: 18, calc: 4,
+        args: [1.2],
+        range: 122, prob: 30,
+        desc: "Restore a large amount of HP to two party members."
+    },
+
+    1109: {
+        name: "Ruyi Hook", type: 2, func: 33, calc: 1,
+        args: [2.55, 2, 0.45, 0.2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes and sometimes lower DEF."
+    },
+
+    1110: {
+        name: "World Breaker", type: 2, func: 52, calc: 3,
+        args: [1.7, 4, 800, 6, 0.5, 1, 121, 120],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage and absorb AGI from three random foes."
+    },
+
+    1111: {
+        name: "Calamity Ward", type: 1, func: 44, calc: 0,
+        args: [0.37, 2, 0, 0, 0, 0.4, 5],
+        range: 3, prob: 70,
+        desc: "Raise DEF and reduce physical damage taken by self and adjacent familiars."
+    },
+
+    1112: {
+        name: "Flying Claws", type: 2, func: 3, calc: 3,
+        args: [1.7],
+        range: 6, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy AGI-based damage to up to two foes."
+    },
+
+    1113: {
+        name: "Toad Venom", type: 2, func: 4, calc: 2,
+        args: [1.95, 2, 0.4],
+        range: 313, prob: 30, ward: 2,
+        desc: "Heavy WIS-based damage, sometimes paralyze up to three foes. Increased if fewer foes."
+    },
+
+    1114: {
+        name: "Toad Remedy", type: 1, func: 44, calc: 0,
+        args: [0.2, 17, 0, 0, 0, 1115, 16],
+        range: 3, prob: 70,
+        desc: "Raise HP/Revive with 50% HP after being killed, self and adjacent familiars."
+    },
+
+    1115: {
+        name: "Toad", type: 16, func: 6, calc: 0,
+        args: [0.5],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
+    1116: {
+        name: "Sword of Discord", type: 2, func: 33, calc: 1,
+        args: [1.65, 4, 0.4, 0.15],
+        range: 16, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to three random foes, sometimes greatly lower AGI."
+    },
+
+    1117: {
+        name: "Faithless Fangs", type: 2, func: 33, calc: 3,
+        args: [1.8, 1, 1, 0.15],
+        range: 16, prob: 30, ward: 1,
+        desc: "Heavy AGI-based damage to three random foes, sometimes greatly lower ATK."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -6568,6 +6659,13 @@ var SkillDatabase: SkillMap = {
         desc: "WIS-based damage to up to 2 foes and sometimes burn targets."
     },
 
+    10124: {
+        name: "Standard Action", type: 2, func: 53, calc: 2,
+        args: [1, 3, 1000, 6, 0.5, 1, 121, 120],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and absorbs WIS from one foe."
+    },
+
     10125: {
         name: "Standard Action", type: 2, func: 4, calc: 1,
         args: [1.2],
@@ -6832,6 +6930,20 @@ var SkillDatabase: SkillMap = {
         args: [1],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage to one foe."
+    },
+
+    10164: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 8, 0.6, 2500],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe and sometimes burn target."
+    },
+
+    10165: {
+        name: "Standard Action", type: 2, func: 33, calc: 1,
+        args: [1.2, 2, 1, 0.14],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and lower DEF of target."
     },
 
     9001: {
