@@ -363,6 +363,8 @@ class RangeFactory {
                 return new RightRange(id);
             case ENUM.SkillRange.SELF_IMMEDIATE_RIGHT:
                 return new SelfImmediateRightRange(id);
+            case ENUM.SkillRange.SELF_IMMEDIATE_LEFT:
+                return new SelfImmediateLeftRange(id);
             case ENUM.SkillRange.PASSIVE:
                 return null; // doesn't really matter
             default:
@@ -494,6 +496,25 @@ class SelfImmediateRightRange extends BaseRange {
         var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
         if (rightCard && !rightCard.isDead) {
             targets.push(rightCard);
+        }
+
+        this.targets = targets;
+    }
+}
+
+// copied from SelfImmediateRightRange
+class SelfImmediateLeftRange extends BaseRange {
+    getReady(executor: Card): void {
+        var targets = [];
+        this.currentIndex = 0;
+
+        if (!executor.isDead) { // should always be true
+            targets.push(executor);
+        }
+
+        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
+        if (leftCard && !leftCard.isDead) {
+            targets.push(leftCard);
         }
 
         this.targets = targets;
