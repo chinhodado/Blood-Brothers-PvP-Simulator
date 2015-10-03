@@ -4083,4 +4083,123 @@ var famDatabase: CardMap = {
         img: "11f", rarity: 5, evo: 3,
         fullName: "Long Nu, Sea Princess"
     },
+    11793: {
+        name: "Carl", stats: [16009, 16952, 14482, 5403, 17201],
+        skills: [1121],
+        autoAttack: 10167,
+        img: "1b8", rarity: 4, evo: 2,
+        fullName: "Carl, Giant Knight II"
+    },
+    11803: {
+        name: "Andras", stats: [18501, 20007, 16009, 8144, 18447],
+        skills: [1116, 1117],
+        autoAttack: 10011,
+        isMounted: true,
+        img: "2c8", rarity: 5, evo: 2,
+        fullName: "Andras, the Slayer II"
+    },
+    11792: {
+        name: "Bercilak", stats: [21588, 22856, 15034, 6487, 17797],
+        skills: [1119, 1120],
+        autoAttack: 10044,
+        img: "111", rarity: 5, evo: 2,
+        fullName: "Bercilak, Green Knight II"
+    },
+    11791: {
+        name: "Gawain", stats: [23798, 22509, 23224, 14113, 18208],
+        skills: [1118],
+        autoAttack: 10166,
+        img: "4a3", rarity: 6, evo: 2,
+        fullName: "Sir Gawain, Sun Knight II"
+    },
+    11621: {
+        name: "Sabnock", stats: [25261, 24643, 21112, 14926, 18544],
+        skills: [1123, 1124],
+        passiveSkills: [9008],
+        autoAttack: 10061,
+        img: "14e", rarity: 6, evo: 2,
+        fullName: "Sabnock, Marquis of Hell II"
+    },
+    11795: {
+        name: "Ragnelle", stats: [16681, 6064, 11662, 17106, 17292],
+        skills: [1122],
+        autoAttack: 10129,
+        img: "32b", rarity: 4, evo: 4,
+        fullName: "Ragnelle, the Moonlight II"
+    },
+    11828: {
+        name: "Leopard Queen", stats: [12487, 11428, 10564, 8026, 13256],
+        skills: [1142],
+        img: "4d5", rarity: 4, evo: 4,
+        fullName: "Cat Sith Leopard Queen II"
+    },
+    11798: {
+        name: "Ollpheist", stats: [17569, 3594, 13507, 16876, 17201],
+        skills: [1127],
+        autoAttack: 10169,
+        img: "372", rarity: 4, evo: 2,
+        fullName: "Ollpheist II"
+    },
+    11801: {
+        name: "Scathach", stats: [19140, 6844, 18100, 19151, 18013],
+        skills: [1129, 1130],
+        autoAttack: 10171,
+        img: "4a6", rarity: 5, evo: 2,
+        fullName: "Scathach, Shadow Goddess II"
+    },
+    11800: {
+        name: "Fergus", stats: [14879, 14792, 14413, 10418, 15487],
+        skills: [1128],
+        autoAttack: 10170,
+        img: "1df", rarity: 4, evo: 4,
+        fullName: "Fergus, Bold King II"
+    },
+    21797: {
+        name: "Cu Chulainn", stats: [20754, 19681, 20170, 12283, 18105],
+        skills: [1125, 1126],
+        autoAttack: 10168,
+        img: "44b", rarity: 5, evo: 3,
+        fullName: "Cu Chulainn, the Thunderbolt"
+    },
+    1623: {
+        name: "Fomor Berserker", stats: [8910, 7170, 7140, 7360, 7510],
+        skills: [1145],
+        img: "291", rarity: 5, evo: 1,
+        fullName: "Fomor Berserker"
+    },
+    11825: {
+        name: "Pomona", stats: [20559, 17894, 13528, 11275, 18349],
+        skills: [1137, 1138],
+        autoAttack: 10151,
+        img: "2e6", rarity: 5, evo: 2,
+        fullName: "Pomona, Grove Goddess II"
+    },
+    11826: {
+        name: "Tricia", stats: [16356, 15348, 12965, 6064, 17797],
+        skills: [1139, 1140],
+        autoAttack: 10151,
+        img: "393", rarity: 4, evo: 2,
+        fullName: "Tricia, Cauldron Witch II"
+    },
+    11824: {
+        name: "Pumpkin Hangman", stats: [15462, 6723, 11770, 16900, 17071],
+        skills: [1135],
+        autoAttack: 10172,
+        img: "2e2", rarity: 4, evo: 4,
+        fullName: "Pumpkin Hangman II"
+    },
+    21822: {
+        name: "Samhain", stats: [21767, 18770, 17836, 14021, 18105],
+        skills: [1133, 1134],
+        autoAttack: 10151,
+        img: "3ae", rarity: 5, evo: 3,
+        fullName: "Samhain, Night Trampler"
+    },
+    21824: {
+        name: "Cursed Pumpkin", stats: [12857, 8534, 9054, 13897, 11156],
+        skills: [1136],
+        autoAttack: 10007,
+        img: "27e", rarity: 4, evo: 2,
+        fullName: "Cursed Pumpkin Golem II"
+    },
 };

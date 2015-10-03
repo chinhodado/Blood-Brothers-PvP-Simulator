@@ -6050,6 +6050,174 @@ var SkillDatabase: SkillMap = {
         desc: "Heavy AGI-based damage to three random foes, sometimes greatly lower ATK."
     },
 
+    1118: {
+        name: "Galatine", type: 2, func: 33, calc: 1,
+        args: [1.5, 2, 0.3, 0.18],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy ATK-based damage to four random foes and sometimes lower DEF."
+    },
+
+    1119: {
+        name: "Virescent Fog", type: 1, func: 1, calc: 0,
+        args: [1, 5],
+        range: 21, prob: 70,
+        desc: "Reduce totally physical damage taken by self."
+    },
+
+    1120: {
+        name: "Headsman's Game", type: 2, func: 3, calc: 1,
+        args: [1.2],
+        range: 6, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to up to two foes."
+    },
+
+    1121: {
+        name: "Whirling Chain", type: 2, func: 3, calc: 1,
+        args: [1.8],
+        range: 7, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy ATK-based damage to up to three foes."
+    },
+
+    1122: {
+        name: "Masked Phantom", type: 2, func: 4, calc: 2,
+        args: [1.65, 7, 0.25, 1, 0.9],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage to four random foes and sometimes blind them."
+    },
+
+    1123: {
+        name: "Unhealing Rend", type: 2, func: 4, calc: 3,
+        args: [1.55, 2, 0.25],
+        range: 17, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage to and sometimes paralyze six random foes, ignoring position. "
+    },
+
+    1124: {
+        name: "Life Tax", type: 1, func: 51, calc: 0,
+        args: [0, 9, 3000, 6, 0.4, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorbs DEF and AGI from up to three foes at the beginning of battles."
+    },
+
+    1125: {
+        name: "Gae Bulg", type: 2, func: 4, calc: 1,
+        args: [1.8, 2, 0.25],
+        range: 19, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage, sometimes paralyze four random foes, ignoring position."
+    },
+
+    1126: {
+        name: "Gift of the Spear", type: 3, func: 39, calc: 6,
+        args: [1, 3, 0, 20, 3],
+        range: 36, prob: 50,
+        desc: "Chance to increase WIS of self and an ally on the right when being attacked."
+    },
+
+    1127: {
+        name: "Freezing Whorl", type: 2, func: 4, calc: 2,
+        args: [1.05, 3, 0.4],
+        range: 8, prob: 30, ward: 2, sac: 1,
+        desc: "WIS-based damage and sometimes freeze all foes, ignoring position."
+    },
+
+    1128: {
+        name: "Light of Caladbolg", type: 3, func: 39, calc: 6,
+        args: [1, 3, 2, 15, 5],
+        range: 3, prob: 50, sac: 1,
+        desc: "Chance to increase DEF and WIS of self and adjacent familiars when being attacked."
+    },
+
+    1129: {
+        name: "Shadow Feast", type: 2, func: 37, calc: 2,
+        args: [2.25, 0.15, 27, 21],
+        range: 16, prob: 30, ward: 2,
+        desc: "Deal massive WIS-based damage and drain HP from three random foes, ignoring position."
+    },
+
+    1130: {
+        name: "Shadow Cloak", type: 1, func: 44, calc: 0,
+        args: [2, 13, 0, 0, 0, 1.4, 14],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent familiars when its HP decreases."
+    },
+
+    1133: {
+        name: "Harvesting Scythe", type: 2, func: 4, calc: 3,
+        args: [1.7],
+        range: 314, prob: 30, ward: 2,
+        desc: "Heavy AGI-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    1134: {
+        name: "Shieldbreaker Hooves", type: 1, func: 32, calc: 0,
+        args: [0.3, 2],
+        range: 7, prob: 70,
+        desc: "Greatly lower DEF of up to three foes based on 30% of his WIS."
+    },
+
+    1135: {
+        name: "Frisky Vines", type: 2, func: 34, calc: 2,
+        args: [1.65, 3, 0.3, 0.07],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based damage to 4 random foes and sometimes lower WIS, ignoring position."
+    },
+
+    1136: {
+        name: "Twining Vines", type: 2, func: 4, calc: 2,
+        args: [1.5],
+        range: 16, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
+    },
+
+    1137: {
+        name: "Stone Fruit", type: 2, func: 4, calc: 3,
+        args: [1.2],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to six random foes, ignoring position."
+    },
+
+    1138: {
+        name: "Grove's Mercy", type: 1, func: 44, calc: 0,
+        args: [0.3, 4, 0, 0, 0, 1, 18],
+        range: 36, prob: 70,
+        desc: "Raise AGI of self and an ally on the right, both take an extra action next turn."
+    },
+
+    1139: {
+        name: "Toil and Trouble", type: 2, func: 4, calc: 3,
+        args: [1.65],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy AGI-based damage to four random foes, ignoring position."
+    },
+
+    1140: {
+        name: "Pumpkin Nostrum", type: 1, func: 44, calc: 0,
+        args: [0.25, 4, 0, 0, 0, 1141, 16],
+        range: 37, prob: 70,
+        desc: "Raise AGI/Revive with 50% HP after being killed, self and an ally on the left."
+    },
+
+    1141: {
+        name: "Dawn's Light", type: 16, func: 6, calc: 0,
+        args: [0.5],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
+    1142: {
+        name: "Rain of Claws", type: 2, func: 3, calc: 3,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive AGI-based damage to two random foes."
+    },
+
+    1145: {
+        name: "Pestilent Blade", type: 1, func: 19, calc: 0,
+        args: [0, 1, 1, 25],
+        range: 8, prob: 100, sac: 1,
+        desc: "Poison all foes at the start of battle."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -6946,6 +7114,55 @@ var SkillDatabase: SkillMap = {
         desc: "ATK-based damage and lower DEF of target."
     },
 
+    10166: {
+        name: "Standard Action", type: 2, func: 52, calc: 1,
+        args: [1, 1, 750, 6, 1, 1, 121, 120],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and absorbs ATK from one foe."
+    },
+
+    10167: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.5],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Heavy ATK-based damage to up to two foes."
+    },
+
+    10168: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10169: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 3, 0.3],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and sometimes freeze target."
+    },
+
+    10170: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.3],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10171: {
+        name: "Standard Action", type: 2, func: 37, calc: 2,
+        args: [1, 0.5, 27, 21],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and drain HP from target."
+    },
+
+    10172: {
+        name: "Standard Action", type: 2, func: 34, calc: 2,
+        args: [1.2, 3, 1, 0.05],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and lower WIS of target."
+    },
+
     9001: {
         name: "Abject Horror", type: 20, func: 1002, calc: 0,
         args: [0.3],
@@ -6979,5 +7196,12 @@ var SkillDatabase: SkillMap = {
         args: [0.15],
         range: 0, prob: 100,
         desc: "Up to 15% chance to reproduce the previous attack action."
+    },
+
+    9008: {
+        name: "Lionpride", type: 20, func: 1001, calc: 0,
+        args: [0.25],
+        range: 0, prob: 100,
+        desc: "Increase damage to lower rarities by up to 25%."
     },
 };
