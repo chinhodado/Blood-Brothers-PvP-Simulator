@@ -373,7 +373,7 @@ class RangeFactory {
     }
 }
 
-class BaseRange {
+abstract class BaseRange {
     id: ENUM.SkillRange;
 
     // these will be reset every time the skill/range is used

@@ -1,6 +1,6 @@
 ﻿/// <reference path="../interfaces/SkillLogicData.ts"/>
 
-class SkillLogic {
+abstract class SkillLogic {
     battleModel: BattleModel;
     logger: BattleLogger;
     cardManager: CardManager;

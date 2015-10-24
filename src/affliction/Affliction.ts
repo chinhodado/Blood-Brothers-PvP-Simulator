@@ -1,4 +1,4 @@
-class Affliction {
+abstract class Affliction {
     type: ENUM.AfflictionType;
     finished: boolean;
 
