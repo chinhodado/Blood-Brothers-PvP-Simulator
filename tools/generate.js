@@ -75,6 +75,7 @@ function generateSkill() {
 }
 
 function generateFam() {
+    document.getElementById('result').innerText = "";
     var names = document.getElementById('famList').value.split('\n');
     for (var i = 0; i < names.length; i++) {
         var name = names[i];
