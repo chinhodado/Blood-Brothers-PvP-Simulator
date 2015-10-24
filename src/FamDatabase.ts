@@ -4202,4 +4202,95 @@ var famDatabase: CardMap = {
         img: "27e", rarity: 4, evo: 2,
         fullName: "Cursed Pumpkin Golem II"
     },
+    11256: {
+        name: "Baba", stats: [14698, 5013, 13799, 19097, 17396],
+        skills: [1150, 1151],
+        autoAttack: 10175,
+        img: "24b", rarity: 4, evo: 2,
+        fullName: "Baba Yaga II"
+    },
+    21848: {
+        name: "Fenrir", stats: [22073, 19760, 19400, 13123, 18425],
+        skills: [1143, 1144],
+        img: "1c3", rarity: 5, evo: 3,
+        fullName: "Fenrir, Vengeful Beast"
+    },
+    11834: {
+        name: "Joro-gumo", stats: [14807, 4537, 13008, 18902, 17851],
+        skills: [1148, 1149],
+        autoAttack: 10174,
+        img: "2b3", rarity: 4, evo: 2,
+        fullName: "Joro-gumo II"
+    },
+    11833: {
+        name: "Twar", stats: [12904, 7785, 10001, 12097, 14000],
+        skills: [1154],
+        autoAttack: 10001,
+        img: "12c", rarity: 4, evo: 4,
+        fullName: "Twar, Ghost Archmage II"
+    },
+    21829: {
+        name: "Fell Bonedrake", stats: [20375, 24595, 18505, 9300, 18202],
+        skills: [1155, 1156],
+        autoAttack: 10011,
+        img: "438", rarity: 5, evo: 3,
+        fullName: "Fell Bonedrake Knight"
+    },
+    11831: {
+        name: "Samedi", stats: [17292, 7102, 16609, 16596, 10511],
+        skills: [1157],
+        autoAttack: 10176,
+        img: "4fb", rarity: 4, evo: 4,
+        fullName: "Samedi, Dark Necromancer II"
+    },
+    21833: {
+        name: "Twar", stats: [15543, 5143, 13702, 18122, 17493],
+        skills: [1146, 1147],
+        autoAttack: 10173,
+        img: "331", rarity: 4, evo: 2,
+        fullName: "Twar, the Moonlit Night II"
+    },
+    11840: {
+        name: "Gilles", stats: [16596, 5871, 12025, 17426, 16902],
+        skills: [1163],
+        autoAttack: 10163,
+        img: "2cc", rarity: 4, evo: 4,
+        fullName: "Gilles, Mad Knight II"
+    },
+    11835: {
+        name: "Peri", stats: [17699, 12293, 15002, 17797, 18403],
+        skills: [1152, 1153],
+        autoAttack: 10001,
+        img: "1bf", rarity: 5, evo: 2,
+        fullName: "Peri, Spirit of Fire II"
+    },
+    11728: {
+        name: "Louise", stats: [16529, 15912, 14709, 5111, 17797],
+        skills: [1162],
+        autoAttack: 10044,
+        img: "131", rarity: 4, evo: 2,
+        fullName: "Louise, Twilight Swordswoman II"
+    },
+    11846: {
+        name: "Lippy", stats: [22466, 21209, 14536, 7321, 18219],
+        skills: [1170, 1171],
+        autoAttack: 10029,
+        img: "1fc", rarity: 5, evo: 2,
+        fullName: "Lippy, Candymancer II"
+    },
+    11837: {
+        name: "Mormo", stats: [21047, 22022, 14005, 6064, 18100],
+        skills: [1160, 1161],
+        autoAttack: 10177,
+        isMounted: true,
+        img: "150", rarity: 5, evo: 2,
+        fullName: "Mormo, Nightmare II"
+    },
+    11836: {
+        name: "Strigoi", stats: [25120, 18512, 24102, 15803, 18306],
+        skills: [1159],
+        autoAttack: 10034,
+        img: "43a", rarity: 6, evo: 2,
+        fullName: "Strigoi, Undying Warrior II"
+    },
 };

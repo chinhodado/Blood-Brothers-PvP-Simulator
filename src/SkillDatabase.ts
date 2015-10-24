@@ -6211,11 +6211,207 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive AGI-based damage to two random foes."
     },
 
+    1143: {
+        name: "Lurking Jaws", type: 2, func: 52, calc: 3,
+        args: [1.65, 7, 1500, 6, 0.5, 0.5, 121, 120],
+        range: 19, prob: 30, ward: 1,
+        desc: "Heavy AGI-based damage and sometimes absorb ATK/AGI from four random foes."
+    },
+
+    1144: {
+        name: "Vengeful Claws", type: 3, func: 42, calc: 1,
+        args: [1.55, 1, 0.5, 0.15],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a heavy counter attack when struck, greatly lower ATK."
+    },
+
     1145: {
         name: "Pestilent Blade", type: 1, func: 19, calc: 0,
         args: [0, 1, 1, 25],
         range: 8, prob: 100, sac: 1,
         desc: "Poison all foes at the start of battle."
+    },
+
+    1146: {
+        name: "Cursed Moonlight", type: 2, func: 4, calc: 2,
+        args: [1.25, 1, 0.25, 10],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to and sometimes poison five random foes, ignoring position. "
+    },
+
+    1147: {
+        name: "Blessed Moonlight", type: 1, func: 1, calc: 0,
+        args: [1, 17, 1.5, 5000],
+        range: 3, prob: 70,
+        desc: "Raise HP of self and adjacent familiars at beginning of battle."
+    },
+
+    1148: {
+        name: "Thread Lash", type: 2, func: 34, calc: 2,
+        args: [1.25, 4, 0.3, 0.04],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes lower AGI of all foes, ignoring position."
+    },
+
+    1149: {
+        name: "Thread Shackle", type: 1, func: 46, calc: 0,
+        args: [0.08, 4, 0, 0, 0, 2, 0.3, 1],
+        range: 7, prob: 70,
+        desc: "Greatly lower AGI of up to three foes and sometimes paralyze targets for one turn."
+    },
+
+    1150: {
+        name: "Witch's Mallet", type: 2, func: 37, calc: 2,
+        args: [1.5, 0.15, 27, 21],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and drain HP from four random foes, ignoring position."
+    },
+
+    1151: {
+        name: "Pumpkin Victuals", type: 1, func: 44, calc: 0,
+        args: [2.5, 12, 0, 0, 0, 1.8, 13],
+        range: 3, prob: 70,
+        desc: "Buff self/adjacent familiars. DEF/WIS of each affected ally increase as its HP decrease."
+    },
+
+    1152: {
+        name: "Dance of Flames", type: 2, func: 4, calc: 2,
+        args: [1.55, 8, 0.3, 2500],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and sometimes burn five random foes, ignoring position."
+    },
+
+    1153: {
+        name: "Splash of Fire", type: 5, func: 28, calc: 7,
+        args: [0.3, 8, 6, 3, 0.4],
+        range: 21, prob: 50,
+        desc: "Reflect 60% of ATK/WIS-based damage back to up to two foes."
+    },
+
+    1154: {
+        name: "Hateful Blaze", type: 2, func: 4, calc: 2,
+        args: [1.25],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal WIS-based damage to four random foes, ignoring position."
+    },
+
+    1155: {
+        name: "Bone Charge", type: 2, func: 3, calc: 1,
+        args: [1.15],
+        range: 314, prob: 30, ward: 1,
+        desc: "ATK-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    1156: {
+        name: "Back from Beyond", type: 1, func: 1, calc: 0,
+        args: [1158, 16],
+        range: 21, prob: 70,
+        desc: "Self is automatically revived with full HP after being killed."
+    },
+
+    1157: {
+        name: "Necromancy", type: 2, func: 6, calc: 0,
+        args: [1],
+        range: 122, prob: 50, sac: 1,
+        desc: "Revive and fully restore HP of two random allies."
+    },
+
+    1158: {
+        name: "Back from Beyond", type: 16, func: 6, calc: 0,
+        args: [1],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
+    1159: {
+        name: "Death's Charge", type: 2, func: 33, calc: 3,
+        args: [1.45, 4, 1, 0.016],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to five random foes and lower AGI."
+    },
+
+    1160: {
+        name: "Impish Wings", type: 2, func: 3, calc: 3,
+        args: [2],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive AGI-based damage to two random foes."
+    },
+
+    1161: {
+        name: "Impish Claws", type: 2, func: 3, calc: 1,
+        args: [1.65],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to two random foes."
+    },
+
+    1162: {
+        name: "Lightning Lunge", type: 2, func: 3, calc: 3,
+        args: [1.3],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to four random foes."
+    },
+
+    1163: {
+        name: "Ardent Swing", type: 2, func: 53, calc: 2,
+        args: [2.1, 2, 2000, 6, 0.4, 1, 121, 120],
+        range: 7, prob: 30, ward: 2, sac: 1,
+        desc: "Massive WIS-based damage and absorbs DEF from up to three foes."
+    },
+
+    1164: {
+        name: "Shadow Piercer", type: 2, func: 4, calc: 1,
+        args: [1.65, 8, 0.5, 1500],
+        range: 19, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage and sometimes burn four random foes, ignoring position."
+    },
+
+    1165: {
+        name: "Tailsman Ward", type: 1, func: 44, calc: 0,
+        args: [0.28, 1, 0, 0, 0, 0.17, 4],
+        range: 3, prob: 70,
+        desc: "Raise ATK/AGI of self and adjacent familiars based on 28% and 17% of his WIS respectively."
+    },
+
+    1166: {
+        name: "Eternal Damnation", type: 2, func: 4, calc: 2,
+        args: [1.3],
+        range: 8, prob: 30, ward: 3,
+        desc: "Deal WIS-based damage to all foes, ignoring position."
+    },
+
+    1167: {
+        name: "Wailing Wall", type: 3, func: 39, calc: 6,
+        args: [1, 2, 0, 30, 3],
+        range: 3, prob: 50,
+        desc: "Greatly increase DEF of self and adjacent familiars when being attacked."
+    },
+
+    1168: {
+        name: "Bone Bash", type: 2, func: 3, calc: 1,
+        args: [1.9, 2, 0.35],
+        range: 7, prob: 30, ward: 1, sac: 1,
+        desc: "Deal heavy ATK-based damage and sometimes paralyze up to three foes."
+    },
+
+    1169: {
+        name: "Might of the Wolf", type: 1, func: 1, calc: 0,
+        args: [3, 11],
+        range: 21, prob: 70, sac: 1,
+        desc: "Greatly increase ATK of self as her HP decrease."
+    },
+
+    1170: {
+        name: "Fist of Treats", type: 2, func: 53, calc: 1,
+        args: [1.25, 1, 1000, 6, 1, 1, 121, 120],
+        range: 20, prob: 30, ward: 1,
+        desc: "ATK-based damage and absorbs ATK from five random foes, ignoring position."
+    },
+
+    1171: {
+        name: "Fist of Tricks", type: 1, func: 46, calc: 0,
+        args: [0.68, 2, 0, 0, 0, 8, 1, 2000],
+        range: 7, prob: 70,
+        desc: "Greatly lower DEF of up to three foes and burn targets."
     },
 
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
@@ -7161,6 +7357,55 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 3, 1, 0.05],
         range: 5, prob: 100, ward: 2, isAutoAttack: true,
         desc: "WIS-based damage and lower WIS of target."
+    },
+
+    10173: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1, 1, 0.5, 10],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe and sometimes poison target."
+    },
+
+    10174: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2, 2, 0.2],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe and sometimes paralyze target."
+    },
+
+    10175: {
+        name: "Standard Action", type: 2, func: 37, calc: 2,
+        args: [1, 0.2, 27, 21],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage and drain HP from target."
+    },
+
+    10176: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10177: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10178: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.2, 2, 0.4],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage, sometimes paralyzing target."
+    },
+
+    10179: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [0.8],
+        range: 23, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to two random foes."
     },
 
     9001: {
