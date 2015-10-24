@@ -740,7 +740,7 @@ class FriendRandomRange extends RandomRange {
         this.currentIndex = 0;
 
         var selfAllowed = false;
-        for (var i = 0; i < baseTargets.length; i++) {
+        for (let i = 0; i < baseTargets.length; i++) {
             if (executor === baseTargets[i]) {
                 selfAllowed = true;
                 break;
@@ -752,7 +752,7 @@ class FriendRandomRange extends RandomRange {
                 targets = getRandomUniqueElements(baseTargets, this.numTargets);
             }
             else {
-                for (i = 0; i < this.numTargets; i++) {
+                for (let i = 0; i < this.numTargets; i++) {
                     targets.push(getRandomElement(baseTargets));
                 }
             }
@@ -760,7 +760,7 @@ class FriendRandomRange extends RandomRange {
 
         if (this.forcedSelf && selfAllowed ) {
              var alreadyIncludedSelf = false;
-             for (i = 0; i < targets.length; i++) {
+             for (let i = 0; i < targets.length; i++) {
                  if (executor === targets[i]) {
                       alreadyIncludedSelf = true;
                       break;

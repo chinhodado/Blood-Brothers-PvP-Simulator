@@ -23,7 +23,7 @@ class CsRandom {
         mj = CsRandom.MSEED - subtraction;
         this.seedArray[55] = mj;
         mk = 1;
-        for (var i = 1; i < 55; i++) {  //Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
+        for (let i = 1; i < 55; i++) {  //Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
             ii = (21 * i) % 55;
             this.seedArray[ii] = mk;
             mk = mj - mk;
@@ -31,7 +31,7 @@ class CsRandom {
             mj = this.seedArray[ii];
         }
         for (var k = 1; k < 5; k++) {
-            for (i = 1; i < 56; i++) {
+            for (let i = 1; i < 56; i++) {
                 this.seedArray[i] -= this.seedArray[1 + (i + 30) % 55];
                 if (this.seedArray[i] < 0) this.seedArray[i] += CsRandom.MBIG;
             }

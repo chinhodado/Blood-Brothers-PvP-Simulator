@@ -8,28 +8,28 @@ declare var startTest;
 function setPreviousChoices() {
     // player 1 fams
     if (localStorage.getItem("f0") && localStorage.getItem("f0") !== "null") {
-        for (var i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             (<HTMLInputElement>document.getElementById(`f${i}`)).value = localStorage.getItem(`f${i}`);
         }
     }
 
     // player 2 fams
     if (localStorage.getItem("f10") && localStorage.getItem("f10") !== "null") {
-        for (i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             (<HTMLInputElement>document.getElementById(`f${i + 10}`)).value = localStorage.getItem(`f${i + 10}`);
         }
     }
 
     // player 1 skills
     if (localStorage.getItem("s10") && localStorage.getItem("s10") !== "null") {
-        for (i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             (<HTMLInputElement>document.getElementById(`s1${i}`)).value = localStorage.getItem(`s1${i}`);
         }
     }
 
     // player 2 skills
     if (localStorage.getItem("s20") && localStorage.getItem("s20") !== "null") {
-        for (i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             (<HTMLInputElement>document.getElementById(`s2${i}`)).value = localStorage.getItem(`s2${i}`);
         }
     }
@@ -463,7 +463,7 @@ function getBattleDataOption() {
     data.p1_warlordSkillIds = [];
     data.p2_warlordSkillIds = [];
 
-    for (var i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         var f1id = getURLParameter(`f${i}`);
         var f2id = getURLParameter(`f${i + 10}`);
         data.p1_cardIds.push(f1id);
@@ -472,7 +472,7 @@ function getBattleDataOption() {
         if (!option.p1RandomMode) localStorage.setItem(`f${i}`, f1id);
         if (!option.p2RandomMode) localStorage.setItem(`f${i + 10}`, f2id);
     }
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         var w1s = getURLParameter(`s1${i}`);
         var w2s = getURLParameter(`s2${i}`);
         data.p1_warlordSkillIds.push(w1s);
@@ -740,7 +740,7 @@ function startWorkerSim(data, option, NUM_BATTLE) {
     var workerPool = [];          // the worker pool
     var workerDataReturned = [];  // list of data returned by each worker
 
-    for (var w = 0; w < NUM_WORKER; w++) {
+    for (let w = 0; w < NUM_WORKER; w++) {
         var worker = new Worker("js/worker.js");
         worker.onmessage = event => {
             if (event.data.status === "ongoing") {
@@ -797,7 +797,7 @@ function startWorkerSim(data, option, NUM_BATTLE) {
     // can't access sessionStorage
     var startTime = performance.now();
 
-    for (w = 0; w < workerPool.length; w++) {
+    for (let w = 0; w < workerPool.length; w++) {
         workerPool[w].postMessage({
             data: data,
             option: option,

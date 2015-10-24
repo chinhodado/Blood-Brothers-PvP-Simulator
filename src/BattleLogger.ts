@@ -134,7 +134,7 @@ class BattleLogger {
         var dbId1 = p1main[0].dbId;
         var dbId2 = p2main[0].dbId;
 
-        for (var i = 1; i < 5; i++) {
+        for (let i = 1; i < 5; i++) {
             if (p1main[i].dbId !== dbId1 || p2main[i].dbId !== dbId2) {
                 needWarn = false;
                 break;
@@ -145,7 +145,7 @@ class BattleLogger {
             var p1res = cardManager.getPlayerOriginalReserveCards(battle.player1);
             var p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
 
-            for (i = 0; i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 if (p1res[i].dbId !== dbId1 || p2res[i].dbId !== dbId2) {
                     needWarn = false;
                     break;

@@ -72,7 +72,7 @@ class BattleGraphic {
         var player2formation = this.battle.player2.formation.getFormationConfig();
         var temp = [];
         var tempNumber : number;
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             switch (player2formation[i]) {
                 case 1 :
                     tempNumber = 3;
@@ -131,7 +131,7 @@ class BattleGraphic {
             }
 
             // calculate the bullets coord
-            for (i = 0; i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
                 var bulletY = (playerFormations[player][i] - 1) * verticalStep;
 
@@ -140,14 +140,14 @@ class BattleGraphic {
 
             // now draw lines and bullets
             if (BattleGraphic.SHOW_FORMATION_LINE) {
-                for (i = 0; i < 5; i++) {
+                for (let i = 0; i < 5; i++) {
                     var diameter = 10;
                     var dot = draw.circle(diameter)
                                   .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
                     groupPlayer.add(dot);
                 }
 
-                for (i = 0; i < 4; i++) {
+                for (let i = 0; i < 4; i++) {
                     var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
                                    .stroke({ width: 1 });
                     groupPlayer.add(line);
@@ -164,7 +164,7 @@ class BattleGraphic {
             }
 
             // display fam images and other effects
-            for (i = 0; i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
                 var image_x_coord = coordArray[i][0] - BattleGraphic.IMAGE_WIDTH / 2;
 

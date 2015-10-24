@@ -794,13 +794,13 @@ class BattleModel {
     processOnDeathPhase() {
         // make a copy
         var hasOnDeath: Card[] = [];
-        for (var i = 0; i < this.onDeathCards.length; i++) {
+        for (let i = 0; i < this.onDeathCards.length; i++) {
             hasOnDeath.push(this.onDeathCards[i]);
         }
 
         this.onDeathCards = [];
 
-        for (i = 0; i < hasOnDeath.length; i++) {
+        for (let i = 0; i < hasOnDeath.length; i++) {
             var card = hasOnDeath[i];
             var skill = card.getInherentOnDeathSkill();
             var data: SkillLogicData = {
@@ -972,7 +972,7 @@ class BattleModel {
         var p1cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player1);
         var p2cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player2);
 
-        for (var i = 0; i < p1cards.length; i++) {
+        for (let i = 0; i < p1cards.length; i++) {
             var skill1 = p1cards[i].getRandomOpeningSkill();
             if (skill1) {
                 var data: SkillLogicData = {
@@ -990,7 +990,7 @@ class BattleModel {
             }
         }
 
-        for (i = 0; i < p2cards.length; i++) {
+        for (let i = 0; i < p2cards.length; i++) {
             var skill2 = p2cards[i].getRandomOpeningSkill();
             if (skill2) {
                 data = {
