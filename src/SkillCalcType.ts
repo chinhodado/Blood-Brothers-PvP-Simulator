@@ -143,6 +143,8 @@ function getReflectAmount(attacker: Card, attackSkill: Skill, caster: Card, targ
         case ENUM.SkillCalcType.WIS:
             damage = x + Math.max(0, caster.getDEF() - (target.getWIS() + target.getDEF()) / 2) * DIFF_FACTOR;
             break;
+        default:
+            throw new Error("Unknown skill calc type!");
     }
     damage = Math.floor(damage * getRandomArbitary(0.9, 1.1));
 
