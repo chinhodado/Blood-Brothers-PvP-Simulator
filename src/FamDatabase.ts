@@ -4293,4 +4293,74 @@ var famDatabase: CardMap = {
         img: "43a", rarity: 6, evo: 2,
         fullName: "Strigoi, Undying Warrior II"
     },
+    21842: {
+        name: "Infernal Wyrm Warden", stats: [21034, 7687, 20031, 21592, 18152],
+        skills: [1166, 1167],
+        autoAttack: 10001,
+        img: "206", rarity: 5, evo: 3,
+        fullName: "Infernal Wyrm Warden"
+    },
+    11853: {
+        name: "Tatsuta", stats: [20104, 6768, 16421, 20126, 18176],
+        skills: [1180, 1181],
+        autoAttack: 10007,
+        img: "25d", rarity: 5, evo: 2,
+        fullName: "Lady Tatsuta, the Mapleleaf II"
+    },
+    11845: {
+        name: "Latona", stats: [14952, 15147, 14585, 5506, 16803],
+        skills: [1169],
+        autoAttack: 10179,
+        img: "267", rarity: 4, evo: 4,
+        fullName: "Latona, Wolfwoman II"
+    },
+    11843: {
+        name: "Rustom", stats: [16096, 15847, 16215, 5035, 16800],
+        skills: [1168],
+        autoAttack: 10178,
+        img: "197", rarity: 4, evo: 2,
+        fullName: "Rustom, Zombie Ape II"
+    },
+    11856: {
+        name: "Bare-Branch", stats: [12355, 8698, 9063, 13451, 11390],
+        skills: [1184],
+        autoAttack: 10007,
+        img: "26f", rarity: 4, evo: 4,
+        fullName: "Bare-Branch Treant II"
+    },
+    21852: {
+        name: "Nicola", stats: [12900, 11611, 11459, 7960, 12066],
+        skills: [1179],
+        autoAttack: 10005,
+        img: "298", rarity: 4, evo: 2,
+        fullName: "Nicola, Corpse Handler II"
+    },
+    11852: {
+        name: "Nicola", stats: [16048, 14606, 12597, 7528, 17147],
+        skills: [1178],
+        autoAttack: 10182,
+        img: "208", rarity: 4, evo: 4,
+        fullName: "Nicola, the Poison Fly II"
+    },
+    11854: {
+        name: "Domini", stats: [15847, 5880, 12358, 17049, 17385],
+        skills: [1182, 1183],
+        autoAttack: 10007,
+        img: "2ad", rarity: 4, evo: 2,
+        fullName: "Domini, Pest Controller II"
+    },
+    11849: {
+        name: "Beelzebub", stats: [22509, 22910, 21242, 17049, 18143],
+        skills: [1174],
+        autoAttack: 10181,
+        img: "3df", rarity: 6, evo: 2,
+        fullName: "Beelzebub, Glutton King II"
+    },
+    21850: {
+        name: "Lucifuge", stats: [21278, 8712, 18221, 22130, 18140],
+        skills: [1175, 1176],
+        autoAttack: 10007,
+        img: "3bb", rarity: 5, evo: 3,
+        fullName: "Lucifuge, Infernal Premier"
+    },
 };

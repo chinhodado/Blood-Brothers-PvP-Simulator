@@ -6414,6 +6414,97 @@ var SkillDatabase: SkillMap = {
         desc: "Greatly lower DEF of up to three foes and burn targets."
     },
 
+    1174: {
+        name: "Arrow of the Fly Lord", type: 2, func: 4, calc: 1,
+        args: [1.7, 2, 0.25],
+        range: 314, prob: 30, ward: 1, sac: 1,
+        desc: "Heavy ATK-based DMG and sometimes paralyze up to four foes. Increased if fewer foes."
+    },
+
+    1175: {
+        name: "Draw of Death", type: 2, func: 4, calc: 2,
+        args: [1.55],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    1176: {
+        name: "Lust for Life", type: 2, func: 6, calc: 0,
+        args: [0.5],
+        range: 2, prob: 50,
+        desc: "Revive and restore with 50% HP of adjacent familiars."
+    },
+
+    1178: {
+        name: "Swarm of Flies", type: 2, func: 37, calc: 3,
+        args: [1.15, 0.2, 27, 21],
+        range: 17, prob: 30, ward: 2, sac: 1,
+        desc: "Deal AGI-based damage and drain HP from six random foes, ignoring position."
+    },
+
+    1179: {
+        name: "Ravenous Flies", type: 2, func: 4, calc: 3,
+        args: [1.35],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Deal AGI-based damage to four random foes, ignoring position."
+    },
+
+    1180: {
+        name: "Maple Edge", type: 2, func: 4, calc: 2,
+        args: [1.25],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
+    },
+
+    1181: {
+        name: "Bracing Breeze", type: 1, func: 44, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 1.8, 13],
+        range: 3, prob: 70,
+        desc: "Raise self/adjacent allies' WIS by 20% of her WIS, their WIS increases as HP falls."
+    },
+
+    1182: {
+        name: "Bug Bomb", type: 2, func: 4, calc: 2,
+        args: [1.15, 1, 0.15, 5],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes poison six random foes, ignoring position. "
+    },
+
+    1183: {
+        name: "Insect Repellant", type: 1, func: 44, calc: 0,
+        args: [0.24, 17, 0, 0, 0, 0.12, 3],
+        range: 3, prob: 70,
+        desc: "Raise HP and WIS of self and adjacent familiars by 24% and 12% of its WIS respectively."
+    },
+
+    1184: {
+        name: "Rampike Claws", type: 2, func: 4, calc: 2,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    1190: {
+        name: "Thundercall Horn", type: 2, func: 4, calc: 3,
+        args: [1.3],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to five random foes, ignoring position."
+    },
+
+    1193: {
+        name: "Enraged Bull", type: 1, func: 44, calc: 1,
+        args: [0.15, 1, 0, 0, 0, 0.1, 4],
+        range: 3, prob: 70,
+        desc: "Raise ATK/AGI of self and adjacent familiars based on 15% and 10% of its ATK respectively."
+    },
+
+    1196: {
+        name: "Lulled Bull", type: 1, func: 44, calc: 1,
+        args: [0.15, 3, 0, 0, 0, 0.1, 4],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent familiars based on 15% and 10% of its ATK respectively."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -7406,6 +7497,27 @@ var SkillDatabase: SkillMap = {
         args: [0.8],
         range: 23, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to two random foes."
+    },
+
+    10180: {
+        name: "Standard Action", type: 2, func: 33, calc: 1,
+        args: [1, 2, 1, 0.1],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and lower DEF of target."
+    },
+
+    10181: {
+        name: "Standard Action", type: 2, func: 53, calc: 1,
+        args: [1.2, 1, 1000, 6, 1, 0.5, 121, 120],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage and sometimes absorbs ATK from one foe."
+    },
+
+    10182: {
+        name: "Standard Action", type: 2, func: 34, calc: 1,
+        args: [1.2, 2, 1, 0.06],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Deal ATK-based damage to one foe and lower DEF."
     },
 
     9001: {
