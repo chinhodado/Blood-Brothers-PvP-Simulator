@@ -984,8 +984,9 @@ class BattleGraphic {
                 var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
                 var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-                var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
-                damageText.text("+10%").center(center_x, center_y).font({ size: BattleGraphic.wr * 25 })
+                var damageText = SVG.get(`p${target.getPlayerId() }f${target.formationColumn}damageText`);
+                var bonusProb = this.battle.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
+                damageText.text(`+${bonusProb}%`).center(center_x, center_y).font({ size: BattleGraphic.wr * 25 })
                     .opacity(1).animate({ delay: '2s' }).opacity(0)
                     .after(function() {
                         this.text('-');

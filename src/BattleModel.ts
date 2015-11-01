@@ -880,17 +880,18 @@ class BattleModel {
                 battleDesc: battleDesc
             });
         }
-        else if (this.isBloodClash) {
+        else if (this.isBloodClash || this.isColiseum) {
             // add skill probability to those still alive
             var allCards = this.cardManager.getAllCurrentCards();
             for (var i = 0; i < allCards.length; i++) {
                 var tmpCard = allCards[i];
                 if (tmpCard && !tmpCard.isDead) {
-                    tmpCard.bcAddedProb += 10;
+                    var bonusProb = this.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
+                    tmpCard.bcAddedProb += bonusProb;
 
                     this.logger.addMinorEvent({
                         type: ENUM.MinorEventType.BC_ADDPROB,
-                        description: tmpCard.name + " gets 10% increase in skill prob.",
+                        description: `${tmpCard.name} gets ${bonusProb}% increase in skill prob.`,
                         bcAddProb: {
                             targetId: tmpCard.id,
                             isMain: this.cardManager.isCurrentMainCard(tmpCard)

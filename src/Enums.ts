@@ -391,4 +391,9 @@ module ENUM {
     export enum BonusType {
         COLISEUM = 1
     }
+
+    export enum AddProbability {
+        BLOODCLASH = 10,
+        COLISEUM = 3
+    }
 }
