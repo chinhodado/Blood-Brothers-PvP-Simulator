@@ -6487,21 +6487,21 @@ var SkillDatabase: SkillMap = {
     1190: {
         name: "Thundercall Horn", type: 2, func: 4, calc: 3,
         args: [1.3],
-        range: 20, prob: 30, ward: 2,
+        range: 20, prob: 30, ward: 2, sac: 1,
         desc: "Deal AGI-based damage to five random foes, ignoring position."
     },
 
     1193: {
         name: "Enraged Bull", type: 1, func: 44, calc: 1,
         args: [0.15, 1, 0, 0, 0, 0.1, 4],
-        range: 3, prob: 70,
+        range: 3, prob: 70, sac: 1,
         desc: "Raise ATK/AGI of self and adjacent familiars based on 15% and 10% of its ATK respectively."
     },
 
     1196: {
         name: "Lulled Bull", type: 1, func: 44, calc: 1,
         args: [0.15, 3, 0, 0, 0, 0.1, 4],
-        range: 3, prob: 70,
+        range: 3, prob: 70, sac: 1,
         desc: "Raise WIS/AGI of self and adjacent familiars based on 15% and 10% of its ATK respectively."
     },
 

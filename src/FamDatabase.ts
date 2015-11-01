@@ -7,8 +7,8 @@
 interface CardInfo {
     name: string;        // Short name for the fam. If multiple fams have the same short name,
                          // append the rarity at the end (e.g. "Thor" and "Thor L")
-    stats: number[];     // Use the POPE stats
-    skills: number[];
+    stats: number[];     // Use the POPE stats. For blood-linked fams, use PE stats on the wiki.
+    skills: number[];    // Skill id's. Leave blank for blood linked fams.
     passiveSkills?: number[];
     autoAttack?: number; // needed for those with special autoAttack
     isMounted?: boolean;
@@ -4362,5 +4362,11 @@ var famDatabase: CardMap = {
         autoAttack: 10007,
         img: "3bb", rarity: 5, evo: 3,
         fullName: "Lucifuge, Infernal Premier"
+    },
+    41726: {
+        name: "Haagenti", stats: [21813, 20148, 16179, 6523, 18386],
+        skills: [],
+        img: "4cb", rarity: 5, evo: 1,
+        fullName: "Haagenti, Lord of Beasts"
     },
 };
