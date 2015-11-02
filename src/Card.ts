@@ -118,7 +118,7 @@ class Card {
 
         if (cardData.passiveSkills) {
             this.passiveSkills.push(new Skill(cardData.passiveSkills[0]));
-            console.assert(!cardData.passiveSkills[1], "More than one passive skill is not implemented!");
+            assert(!cardData.passiveSkills[1], "More than one passive skill is not implemented!");
         }
     }
 

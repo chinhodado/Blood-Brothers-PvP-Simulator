@@ -24,7 +24,7 @@ class DrainSkillLogic extends SkillLogic {
 
         // don't worry about length == 0, it would not have gotten into here anyway
         // TODO: very hacky, only works if the range is not a random range
-        console.assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
+        assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
         var eachTargetHealAmount = Math.floor(data.executor.lastBattleDamageTaken / skill.range.targets.length);
 
         while (target = skill.getTarget(data.executor)) {

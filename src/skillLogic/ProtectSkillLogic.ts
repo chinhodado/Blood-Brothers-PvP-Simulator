@@ -11,7 +11,7 @@ class ProtectSkillLogic extends SkillLogic {
             return false;
         }
 
-        console.assert(!(data.skill.range instanceof RandomRange), "can't do this with random ranges!");
+        assert(!(data.skill.range instanceof RandomRange), "can't do this with random ranges!");
         return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, data.skill.range.targets);
     }
 

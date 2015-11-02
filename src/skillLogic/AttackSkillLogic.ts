@@ -196,7 +196,7 @@ class AttackSkillLogic extends SkillLogic {
         healRange.getReady(executor,(card: Card) => !card.isFullHealth());
 
         // hacky
-        console.assert(!(healRange instanceof RandomRange), "can't do this with random ranges!");
+        assert(!(healRange instanceof RandomRange), "can't do this with random ranges!");
         if (healRange.targets.length === 0) {
             return;
         }

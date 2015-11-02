@@ -13,7 +13,7 @@ class EvadeSkillLogic extends SkillLogic {
         var canEvade = Skill.canProtectFromCalcType(skill.skillFuncArg2, data.attackSkill)
             && Skill.canProtectFromAttackType(skill.skillFuncArg1, data.attackSkill);
 
-        console.assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
+        assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");
         return super.willBeExecuted(data) && this.cardManager.isCardInList(data.targetCard, skill.range.targets) && canEvade;
     }
 

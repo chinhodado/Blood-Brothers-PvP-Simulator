@@ -11,7 +11,7 @@ class CounterDrainSkillLogic extends CounterSkillLogic {
         // TODO: very hacky, only works if the range is not a random range
         var range = RangeFactory.getRange(skill.skillFuncArg4);
         range.getReady(data.executor);
-        console.assert(!(range instanceof RandomRange), "can't do this with random ranges!");
+        assert(!(range instanceof RandomRange), "can't do this with random ranges!");
         var totalHealAmount = data.executor.lastBattleDamageDealt * skill.skillFuncArg2;
         var eachTargetHealAmount = Math.floor(totalHealAmount / range.targets.length);
 

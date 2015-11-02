@@ -42,7 +42,7 @@ class AbsorbSkillLogic extends SkillLogic {
             // note: even though this is new logic, the 1.2 modifier is not applied.
             if (calcType !== ENUM.SkillCalcType.DEBUFF) {
                 // hopefully it will always be 2 (WIS). I'm just too lazy to code up the proper thing...
-                console.assert(calcType === ENUM.SkillCalcType.WIS, "Non WIS-based debuff unimplemented!");
+                assert(calcType === ENUM.SkillCalcType.WIS, "Non WIS-based debuff unimplemented!");
                 var debuffAmount = Math.floor(executor.getWIS() * debuffMulti); // <- the base debuff amount
             }
             else {
