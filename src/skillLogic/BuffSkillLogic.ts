@@ -27,7 +27,11 @@ class BuffSkillLogic extends SkillLogic {
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
 
         // for ONHIT_BUFF, the calcType is 6 (Debuff), which doesn't make any sense. Anyway...
-        var baseStat = skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF ? 0 : executor.getStat(basedOnStatType);
+        // for HP buff, calcType 6 indicates a flat buff
+        var baseStat = skill.skillCalcType === 6? 0 : executor.getStat(basedOnStatType);
+        if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
+            assert(skill.skillCalcType === 6, "ONHIT_BUFF with calcType != 6, not sure what this means...");
+        }
 
         var target: Card;
         while (target = skill.getTarget(executor)) {
@@ -68,9 +72,14 @@ class BuffSkillLogic extends SkillLogic {
                         buffAmount = skill.skillFuncArg1;
                         break;
                     case ENUM.StatusType.HP_SHIELD:
-                        skillMod = skill.skillFuncArg1;
-                        buffAmount = Math.round(skillMod * baseStat);
-                        var maxValue = ~~(target.getOriginalHP() * skill.skillFuncArg3);
+                        if (skill.skillCalcType === 6) {
+                            buffAmount = skill.skillFuncArg4;
+                        }
+                        else {
+                            skillMod = skill.skillFuncArg1;
+                            buffAmount = Math.round(skillMod * baseStat);
+                            var maxValue = ~~(target.getOriginalHP() * skill.skillFuncArg3);
+                        }
                         break;
                     default:
                         throw new Error("Wrong status type or not implemented");

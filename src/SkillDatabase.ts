@@ -6240,7 +6240,7 @@ var SkillDatabase: SkillMap = {
     },
 
     1147: {
-        name: "Blessed Moonlight", type: 1, func: 1, calc: 0,
+        name: "Blessed Moonlight", type: 1, func: 1, calc: 6,
         args: [1, 17, 1.5, 5000],
         range: 3, prob: 70,
         desc: "Raise HP of self and adjacent familiars at beginning of battle."

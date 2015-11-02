@@ -16,8 +16,7 @@ function checkSkill(data) {
 
     var whiteList = [
         202, // Trial by Fire
-        355, 452, 816, 840, 881, 1008, 1076, 1115, 1141, 1158, // ondeath
-        1147 // Blessed Moonlight, changed the calcType from 6 to 0, not sure of correct...
+        355, 452, 816, 840, 881, 1008, 1076, 1115, 1141, 1158 // ondeath
     ];
 
     for (var key in SkillDatabase) {
