@@ -73,6 +73,8 @@ class Skill {
             case ENUM.SkillFunc.COUNTER_INDIRECT:
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
+            case ENUM.SkillFunc.COUNTER_DRAIN:
+            case ENUM.SkillFunc.COUNTER_DRAIN_INDIRECT:
             case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
             case ENUM.SkillFunc.DEBUFFATTACK:
@@ -102,6 +104,7 @@ class Skill {
             case ENUM.SkillFunc.ATTACK:
             case ENUM.SkillFunc.COUNTER:
             case ENUM.SkillFunc.COUNTER_DEBUFF:
+            case ENUM.SkillFunc.COUNTER_DRAIN:
             case ENUM.SkillFunc.PROTECT_COUNTER:
             case ENUM.SkillFunc.PROTECT_COUNTER_DEBUFF:
             case ENUM.SkillFunc.PROTECT_REFLECT:

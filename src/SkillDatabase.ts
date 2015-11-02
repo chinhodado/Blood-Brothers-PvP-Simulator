@@ -6414,6 +6414,20 @@ var SkillDatabase: SkillMap = {
         desc: "Greatly lower DEF of up to three foes and burn targets."
     },
 
+    1172: {
+        name: "Bandaged Blade", type: 2, func: 33, calc: 1,
+        args: [1.75, 2, 0.4, 0.25],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage, may lower DEF of three random foes."
+    },
+
+    1173: {
+        name: "Cursed Bandages", type: 3, func: 63, calc: 1,
+        args: [1.3, 0.3, 27, 21],
+        range: 21, prob: 50, ward: 1,
+        desc: "Chance to unleash a heavy counter attack and drain HP from target when struck."
+    },
+
     1174: {
         name: "Arrow of the Fly Lord", type: 2, func: 4, calc: 1,
         args: [1.7, 2, 0.25],

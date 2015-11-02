@@ -5,6 +5,7 @@
 /// <reference path="ClearStatusSkillLogic.ts"/>
 /// <reference path="CounterDebuffSkillLogic.ts"/>
 /// <reference path="CounterDispellSkillLogic.ts"/>
+/// <reference path="CounterDrainSkillLogic.ts"/>
 /// <reference path="DebuffAfflictionSkillLogic.ts"/>
 /// <reference path="DebuffSkillLogic.ts"/>
 /// <reference path="DrainSkillLogic.ts"/>
@@ -77,6 +78,9 @@ class SkillLogicFactory {
             case ENUM.SkillFunc.COUNTER_DEBUFF:
             case ENUM.SkillFunc.COUNTER_DEBUFF_INDIRECT:
                 return new CounterDebuffSkillLogic();
+            case ENUM.SkillFunc.COUNTER_DRAIN:
+            case ENUM.SkillFunc.COUNTER_DRAIN_INDIRECT:
+                return new CounterDrainSkillLogic();
             case ENUM.SkillFunc.CLEAR_DEBUFF:
                 return new ClearDebuffSkillLogic();
             case ENUM.SkillFunc.DRAIN:

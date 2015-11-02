@@ -4307,6 +4307,13 @@ var famDatabase: CardMap = {
         img: "25d", rarity: 5, evo: 2,
         fullName: "Lady Tatsuta, the Mapleleaf II"
     },
+    11847: {
+        name: "Urom", stats: [20971, 21209, 15056, 8415, 18100],
+        skills: [1172, 1173],
+        autoAttack: 10180,
+        img: "172", rarity: 5, evo: 2,
+        fullName: "Urom, Mummy Lizardman II"
+    },
     11845: {
         name: "Latona", stats: [14952, 15147, 14585, 5506, 16803],
         skills: [1169],

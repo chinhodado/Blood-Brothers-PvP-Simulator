@@ -85,6 +85,11 @@ module ENUM {
         ABSORB_ATTACK = 52, // 1: multi, rest: same as ABSORB
         ABSORB_MAGIC = 53, // same as 52
         PROTECT_COUNTER_DEBUFF = 56, // 1: counter mod, 2: debuff status, 3: debuff prob, 4: debuff power
+        COUNTER_DRAIN_INDIRECT = 62,
+        COUNTER_DRAIN = 63, // 1: counter mod, 2: heal ratio from damage done, 3: effect id, 4: heal range
+        PROTECT_COUNTER_DRAIN_INDIRECT = 64,
+        PROTECT_COUNTER_DRAIN = 65,
+        PROTECT_COUNTER_DEBUFF_INDIRECT = 66,
         DAMAGE_PASSIVE = 1001,
         DEFENSE_PASSIVE = 1002,
         EXTRA_TURN_PASSIVE = 1006,
