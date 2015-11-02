@@ -49,6 +49,7 @@
     <Content Include="lib\sweet-alert.min.js" />
     <Content Include="setting.html" />
     <Content Include="lib\svg.min.js" />
+    <TypeScriptCompile Include="src\skillLogic\CounterDrainSkillLogic.ts" />
     <Content Include="tools\generate.html" />
     <Content Include="tools\generate.js" />
     <TypeScriptCompile Include="src\affliction\AfflictionFactory.ts" />
