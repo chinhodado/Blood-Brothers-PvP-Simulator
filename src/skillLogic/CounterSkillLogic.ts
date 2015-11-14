@@ -23,7 +23,7 @@ class CounterSkillLogic extends SkillLogic {
 
         if (!data.executor.justMissed && !data.attacker.justEvaded && !data.attacker.isDead
             && data.skill.skillFunc === ENUM.SkillFunc.COUNTER) { // because this class can be subclassed. TODO: move the SkillFunc handling to processAffliction
-            this.battleModel.processAffliction(data.executor, data.attacker, data.skill);
+            AfflictionSkillLogic.processAffliction(data.executor, data.attacker, data.skill);
         }
     }
 }

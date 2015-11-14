@@ -37,7 +37,7 @@ class ProtectReflectSkillLogic extends ProtectSkillLogic {
             });
 
             if (data.attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || data.attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                this.battleModel.processAffliction(data.executor, target, data.attackSkill, ProtectReflectSkillLogic.REFLECT_AFFLICTION_PROBABILITY);
+                AfflictionSkillLogic.processAffliction(data.executor, target, data.attackSkill, ProtectReflectSkillLogic.REFLECT_AFFLICTION_PROBABILITY);
             }
 
             this.clearAllCardsDamagePhaseData();

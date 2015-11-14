@@ -61,7 +61,7 @@ class ProtectSkillLogic extends SkillLogic {
         // note: don't need to check for justEvaded here
         if (!data.attacker.justMissed && !protector.isDead) {
             if (attackSkill.skillFunc === ENUM.SkillFunc.ATTACK || attackSkill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                this.battleModel.processAffliction(data.attacker, protector, attackSkill);
+                AfflictionSkillLogic.processAffliction(data.attacker, protector, attackSkill);
             }
             else if (Skill.isDebuffAttackSkill(attackSkill.id)) {
                 if (Math.random() <= attackSkill.skillFuncArg3) {

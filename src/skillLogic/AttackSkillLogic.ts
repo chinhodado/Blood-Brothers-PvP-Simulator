@@ -116,7 +116,7 @@ class AttackSkillLogic extends SkillLogic {
                             }
                         }
                         else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                            this.battleModel.processAffliction(executor, targetCard, skill);
+                            AfflictionSkillLogic.processAffliction(executor, targetCard, skill);
                         }
                     }
 
@@ -168,7 +168,7 @@ class AttackSkillLogic extends SkillLogic {
                     }
                 }
                 else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC) {
-                    this.battleModel.processAffliction(executor, target, skill);
+                    AfflictionSkillLogic.processAffliction(executor, target, skill);
                 }
             }
 
