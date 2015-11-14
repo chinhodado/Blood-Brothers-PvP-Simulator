@@ -283,7 +283,7 @@ class BattleModel {
             this.addOnDeathCard(target);
         }
         else {
-            this.processRemainHpBuff(target, false);
+            BuffSkillLogic.processRemainHpBuff(target, false);
         }
     }
 
@@ -386,37 +386,7 @@ class BattleModel {
             this.addOnDeathCard(target);
         }
         else {
-            this.processRemainHpBuff(target, damage < 0);
-        }
-    }
-
-    /**
-     * Add a debug minor event if a fam's stat changed because of remain-HP-stats-up buffs
-     * This is called after a fam's HP change, i.e. at the end of processDamagePhase() and damageToTargetDirectly()
-     * @oaram isPositiveChange Whether the change in HP was positive (e.g. healing) or not (e.g. battle damage)
-     */
-    processRemainHpBuff(target: Card, isPositiveChange: boolean): void {
-        var types = [];
-
-        if (target.status.remainHpAtkUp > 0)
-             types.push(ENUM.StatusType.ATK);
-
-        if (target.status.remainHpDefUp > 0)
-            types.push(ENUM.StatusType.DEF);
-
-        if (target.status.remainHpWisUp > 0)
-            types.push(ENUM.StatusType.WIS);
-
-        if (target.status.remainHpAgiUp > 0)
-            types.push(ENUM.StatusType.AGI);
-
-        var verb = isPositiveChange ? "decreased" : "increased";
-
-        for (var i = 0; i < types.length; i++) {
-            this.logger.addMinorEvent({
-                type: ENUM.MinorEventType.TEXT,
-                description: target.name + "'s " + ENUM.StatusType[types[i]] + " " + verb + " because of remain HP buff.",
-            });
+            BuffSkillLogic.processRemainHpBuff(target, damage < 0);
         }
     }
 

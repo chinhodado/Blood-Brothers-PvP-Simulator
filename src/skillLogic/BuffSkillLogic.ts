@@ -102,4 +102,34 @@ class BuffSkillLogic extends SkillLogic {
             }
         }
     }
+
+    /**
+     * Add a debug minor event if a fam's stat changed because of remain-HP-stats-up buffs
+     * This is called after a fam's HP change, i.e. at the end of processDamagePhase() and damageToTargetDirectly()
+     * @oaram isPositiveChange Whether the change in HP was positive (e.g. healing) or not (e.g. battle damage)
+     */
+    static processRemainHpBuff(target: Card, isPositiveChange: boolean): void {
+        var types = [];
+
+        if (target.status.remainHpAtkUp > 0)
+            types.push(ENUM.StatusType.ATK);
+
+        if (target.status.remainHpDefUp > 0)
+            types.push(ENUM.StatusType.DEF);
+
+        if (target.status.remainHpWisUp > 0)
+            types.push(ENUM.StatusType.WIS);
+
+        if (target.status.remainHpAgiUp > 0)
+            types.push(ENUM.StatusType.AGI);
+
+        var verb = isPositiveChange ? "decreased" : "increased";
+        var logger = BattleLogger.getInstance();
+        for (var i = 0; i < types.length; i++) {
+            logger.addMinorEvent({
+                type: ENUM.MinorEventType.TEXT,
+                description: target.name + "'s " + ENUM.StatusType[types[i]] + " " + verb + " because of remain HP buff.",
+            });
+        }
+    }
 }
