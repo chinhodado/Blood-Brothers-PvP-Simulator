@@ -65,7 +65,7 @@ class ProtectSkillLogic extends SkillLogic {
             }
             else if (Skill.isDebuffAttackSkill(attackSkill.id)) {
                 if (Math.random() <= attackSkill.skillFuncArg3) {
-                    this.battleModel.processDebuff(data.attacker, protector, attackSkill);
+                    DebuffSkillLogic.processDebuff(data.attacker, protector, attackSkill);
                 }
             }
         }

@@ -35,7 +35,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
 
         // debuff
         while (target = data.skill.getTarget(data.executor)) {
-            this.battleModel.processDebuff(data.executor, target, data.skill);
+            DebuffSkillLogic.processDebuff(data.executor, target, data.skill);
         }
     }
 }

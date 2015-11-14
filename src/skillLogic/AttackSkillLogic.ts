@@ -112,7 +112,7 @@ class AttackSkillLogic extends SkillLogic {
                     if (!executor.justMissed && !targetCard.justEvaded && !targetCard.isDead) {
                         if (Skill.isDebuffAttackSkill(skill.id)) {
                             if (Math.random() <= skill.skillFuncArg3) {
-                                this.battleModel.processDebuff(executor, targetCard, skill);
+                                DebuffSkillLogic.processDebuff(executor, targetCard, skill);
                             }
                         }
                         else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC) {
@@ -164,7 +164,7 @@ class AttackSkillLogic extends SkillLogic {
             if (!executor.justMissed && !target.justEvaded && !target.isDead) {
                 if (Skill.isDebuffAttackSkill(skill.id)) {
                     if (Math.random() <= skill.skillFuncArg3) {
-                        this.battleModel.processDebuff(executor, target, skill);
+                        DebuffSkillLogic.processDebuff(executor, target, skill);
                     }
                 }
                 else if (skill.skillFunc === ENUM.SkillFunc.ATTACK || skill.skillFunc === ENUM.SkillFunc.MAGIC) {
