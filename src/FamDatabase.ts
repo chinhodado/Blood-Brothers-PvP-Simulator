@@ -4376,4 +4376,79 @@ var famDatabase: CardMap = {
         img: "4cb", rarity: 5, evo: 1,
         fullName: "Haagenti, Lord of Beasts"
     },
+    21857: {
+        name: "Jupiter", stats: [22538, 24050, 18017, 8125, 18250],
+        skills: [1197, 1198],
+        img: "113", rarity: 5, evo: 3,
+        fullName: "Intrepid Hand of Jupiter"
+    },
+    11655: {
+        name: "Hermine", stats: [15121, 4710, 13138, 18143, 17992],
+        skills: [1203, 1204],
+        autoAttack: 10183,
+        img: "14f", rarity: 4, evo: 2,
+        fullName: "Hermine, High Priestess II"
+    },
+    11859: {
+        name: "Bennu", stats: [15134, 5040, 13245, 17864, 16803],
+        skills: [1199],
+        autoAttack: 10110,
+        img: "275", rarity: 4, evo: 4,
+        fullName: "Bennu, the Sun Bird II"
+    },
+    11861: {
+        name: "Caim", stats: [12720, 12293, 11124, 6516, 14134],
+        skills: [1202],
+        img: "37b", rarity: 4, evo: 4,
+        fullName: "Caim, the Dark Plume II"
+    },
+    21861: {
+        name: "Caim", stats: [16085, 16908, 13799, 6010, 17201],
+        skills: [1200, 1201],
+        img: "3c3", rarity: 4, evo: 2,
+        fullName: "Caim, Death Seeker II"
+    },
+    11706: {
+        name: "Cat Sith Whipmaster", stats: [16215, 16518, 14211, 5609, 17504],
+        skills: [1210],
+        autoAttack: 10185,
+        img: "41f", rarity: 4, evo: 2,
+        fullName: "Cat Sith Whipmaster II"
+    },
+    11930: {
+        name: "Ljung", stats: [16974, 17133, 13710, 5029, 17206],
+        skills: [1211],
+        autoAttack: 10105,
+        img: "441", rarity: 4, evo: 4,
+        fullName: "Ljung, the Wrecker II"
+    },
+    11865: {
+        name: "Garmr", stats: [21339, 19205, 14417, 8025, 18252],
+        skills: [1208, 1209],
+        autoAttack: 10061,
+        img: "2af", rarity: 5, evo: 2,
+        fullName: "Garmr, Watchhound II"
+    },
+    11869: {
+        name: "Hel", stats: [25824, 12315, 22249, 25553, 18555],
+        skills: [1212, 1213],
+        passiveSkills: [9010],
+        autoAttack: 10129,
+        img: "135", rarity: 6, evo: 2,
+        fullName: "Hel, Goddess of Woe II"
+    },
+    11864: {
+        name: "Tyr", stats: [25109, 25012, 24578, 9000, 18154],
+        skills: [1207],
+        autoAttack: 10184,
+        img: "42b", rarity: 6, evo: 2,
+        fullName: "Tyr, God of War II"
+    },
+    11870: {
+        name: "Chicomecoatl", stats: [21112, 10192, 17363, 19530, 13008],
+        skills: [1205, 1206],
+        autoAttack: 10001,
+        img: "1ba", rarity: 5, evo: 2,
+        fullName: "Chicomecoatl, the Bountiful II"
+    },
 };

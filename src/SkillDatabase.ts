@@ -6519,6 +6519,125 @@ var SkillDatabase: SkillMap = {
         desc: "Raise WIS/AGI of self and adjacent familiars based on 15% and 10% of its ATK respectively."
     },
 
+    1197: {
+        name: "Lightning Doublestrike", type: 2, func: 3, calc: 1,
+        args: [2.1],
+        range: 6, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to up to two foes."
+    },
+
+    1198: {
+        name: "Grace of the Sky", type: 1, func: 1, calc: 0,
+        args: [0.7, 5, 6],
+        range: 21, prob: 70,
+        desc: "Reduce physical and magical damage taken by self greatly."
+    },
+
+    1199: {
+        name: "Embers of the Sun", type: 2, func: 4, calc: 2,
+        args: [1.55, 8, 0.25, 1500],
+        range: 314, prob: 30, ward: 3, sac: 1,
+        desc: "Heavy WIS-based DMG, may burn up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    1200: {
+        name: "Saber & Feather", type: 2, func: 33, calc: 1,
+        args: [1.9, 2, 1, 0.1],
+        range: 16, prob: 30, ward: 1,
+        desc: "Deal heavy ATK-based damage to three random foes and lower DEF."
+    },
+
+    1201: {
+        name: "Wall of Feathers", type: 1, func: 44, calc: 0,
+        args: [0.5, 1, 0, 0, 0, 0.5, 2],
+        range: 3, prob: 70,
+        desc: "Raise ATK and DEF of self and adjacent familiars by 50% of his WIS."
+    },
+
+    1202: {
+        name: "Fellfeather Saber", type: 2, func: 3, calc: 3,
+        args: [1.15],
+        range: 7, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to up to three foes."
+    },
+
+    1203: {
+        name: "Divine Gale", type: 2, func: 34, calc: 2,
+        args: [1.3, 4, 0.25, 0.05],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes lower AGI of five random foes, ignoring position."
+    },
+
+    1204: {
+        name: "Divine Tailwind", type: 1, func: 44, calc: 2,
+        args: [0.14, 3, 0, 0, 0, 0.08, 4],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent familiars on 14% and 8% of its WIS respectively."
+    },
+
+    1205: {
+        name: "Dance of the Harvest", type: 2, func: 18, calc: 4,
+        args: [0.7, 1],
+        range: 4, prob: 50,
+        desc: "Restore 70% of HP to all party members."
+    },
+
+    1206: {
+        name: "Popping Corn", type: 3, func: 43, calc: 2,
+        args: [1.85, 1, 1, 0.06],
+        range: 21, prob: 50, ward: 2,
+        desc: "Chance to unleash a heavy counter attack when struck, lowering ATK of target."
+    },
+
+    1207: {
+        name: "Gleipnir", type: 2, func: 4, calc: 1,
+        args: [1.6, 2, 0.3],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Heavy ATK-based damage, sometimes paralyze four random foes, ignoring position."
+    },
+
+    1208: {
+        name: "Shredded Chain", type: 2, func: 4, calc: 3,
+        args: [1.8],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy AGI-based damage to four random foes, ignoring position."
+    },
+
+    1209: {
+        name: "Sigil of Blood", type: 1, func: 44, calc: 0,
+        args: [0.25, 1, 0, 0, 0, 0.25, 3],
+        range: 3, prob: 70,
+        desc: "Raise ATK/WIS of self and adjacent allies by 25% of its WIS."
+    },
+
+    1210: {
+        name: "Whip & Tail", type: 2, func: 34, calc: 1,
+        args: [1.4, 4, 0.2, 0.15],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to five random foes and sometimes lower AGI, ignoring position."
+    },
+
+    1211: {
+        name: "Heavy Strike", type: 2, func: 4, calc: 1,
+        args: [2.15, 8, 0.35, 2000],
+        range: 7, prob: 30, ward: 1, sac: 1,
+        desc: "Massive ATK-based damage and sometimes burn up to three foes, ignoring position."
+    },
+
+    1212: {
+        name: "Claws of Death", type: 2, func: 4, calc: 2,
+        args: [1.1, 5, 0.3, 1],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage and sometimes silence six random foes, ignoring position."
+    },
+
+    1213: {
+        name: "Miasma of Death", type: 3, func: 62, calc: 2,
+        args: [1.75, 0.4, 27, 21],
+        range: 21, prob: 50, ward: 2,
+        desc: "Chance to unleash a heavy counter attack when struck and drain HP from target."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -7534,6 +7653,27 @@ var SkillDatabase: SkillMap = {
         desc: "Deal ATK-based damage to one foe and lower DEF."
     },
 
+    10183: {
+        name: "Standard Action", type: 2, func: 34, calc: 2,
+        args: [1, 4, 1, 0.014],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "Deal WIS-based damage to one foe and lower AGI of target."
+    },
+
+    10184: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.5, 2, 0.4],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "Heavy ATK-based damage and sometimes paralyze target."
+    },
+
+    10185: {
+        name: "Standard Action", type: 2, func: 34, calc: 1,
+        args: [1.2, 4, 0.4, 0.15],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe and sometimes lower AGI of target."
+    },
+
     9001: {
         name: "Abject Horror", type: 20, func: 1002, calc: 0,
         args: [0.3],
@@ -7574,5 +7714,12 @@ var SkillDatabase: SkillMap = {
         args: [0.25],
         range: 0, prob: 100,
         desc: "Increase damage to lower rarities by up to 25%."
+    },
+
+    9010: {
+        name: "Decree of Death", type: 20, func: 1002, calc: 0,
+        args: [0.4],
+        range: 0, prob: 100,
+        desc: "Decrease damage from lower rarities by up to 40%"
     },
 };
