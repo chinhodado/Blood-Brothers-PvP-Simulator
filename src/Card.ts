@@ -4,7 +4,7 @@
 
 class Card {
     static NEW_DEBUFF_LOW_LIMIT_FACTOR = 0.4;
-    static COLISEUM_HP_MULTI_FACTOR    = 5;
+    static COLISEUM_HP_MULTI_FACTOR    = 3;
 
     name: string;
     fullName: string;
