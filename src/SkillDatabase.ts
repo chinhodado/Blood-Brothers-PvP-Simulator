@@ -6638,6 +6638,167 @@ var SkillDatabase: SkillMap = {
         desc: "Chance to unleash a heavy counter attack when struck and drain HP from target."
     },
 
+    1214: {
+        name: "Moonlight Volley", type: 2, func: 4, calc: 1,
+        args: [1.75],
+        range: 314, prob: 30, ward: 1,
+        desc: "Heavy ATK-based damage to up to four foes, ignoring position. Increased if fewer foes."
+    },
+
+    1215: {
+        name: "Gift of the Moon", type: 1, func: 51, calc: 0,
+        args: [0, 4, 2000, 6, 0.33, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorb AGI from up to three foes at beginning of battles."
+    },
+
+    1216: {
+        name: "Gambol", type: 6, func: 27, calc: 0,
+        args: [2, 9, 78, 79],
+        range: 21, prob: 50, sac: 1,
+        desc: "Evade enemy ATK-based and AGI-based attack skills."
+    },
+
+    1217: {
+        name: "Turkey Dash", type: 2, func: 7, calc: 3,
+        args: [1.05, 0.1],
+        range: 8, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage to all foes. Chance to kill targets."
+    },
+
+    1218: {
+        name: "Falling Apple", type: 2, func: 34, calc: 2,
+        args: [1.1, 3, 0.25, 0.08],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to six random foes, sometimes lower WIS, ignoring position."
+    },
+
+    1219: {
+        name: "Glittering Apple", type: 1, func: 44, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 1220, 16],
+        range: 3, prob: 70,
+        desc: "Raise WIS by 20% of her WIS, self and adjacent allies revive with 75% HP on death."
+    },
+
+    1220: {
+        name: "Glittering Apple", type: 16, func: 6, calc: 0,
+        args: [0.75],
+        range: 21, prob: 100,
+        desc: "-"
+    },
+
+    1221: {
+        name: "Thorn of the Grove", type: 2, func: 52, calc: 3,
+        args: [1.5, 2, 1000, 6, 1, 1, 121, 120],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal heavy AGI-based damage and absorb DEF from four random foes."
+    },
+
+    1222: {
+        name: "Paling of the Grove", type: 1, func: 1, calc: 0,
+        args: [0.12, 9],
+        range: 3, prob: 70,
+        desc: "Raise ATK, DEF, WIS and AGI of self and adjacent allies."
+    },
+
+    1223: {
+        name: "Trailblazer", type: 2, func: 4, calc: 1,
+        args: [1.35, 8, 0.25, 4000],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage and sometimes burn five random foes, ignoring position."
+    },
+
+    1224: {
+        name: "Smoldering Coals", type: 2, func: 4, calc: 2,
+        args: [1.6],
+        range: 314, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to up to four foes. Increased if fewer foes."
+    },
+
+    1225: {
+        name: "Bustling Broom", type: 5, func: 27, calc: 0,
+        args: [2, 2, 78, 79],
+        range: 21, prob: 50,
+        desc: "Evade enemy WIS-based attack skills."
+    },
+
+    1226: {
+        name: "Gift of Fire", type: 2, func: 4, calc: 1,
+        args: [2.1, 8, 0.25, 2500],
+        range: 16, prob: 30, ward: 1, sac: 1,
+        desc: "Massive ATK-based damage and sometimes burn three random foes, ignoring position."
+    },
+
+    1227: {
+        name: "Scold", type: 2, func: 4, calc: 1,
+        args: [1],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal ATK-based damage to five random foes, ignoring position."
+    },
+
+    1228: {
+        name: "Ice Blade", type: 2, func: 3, calc: 1,
+        args: [1.25, 3, 0.3],
+        range: 19, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to four random foes and sometimes freeze them."
+    },
+
+    1229: {
+        name: "Iron Heel Ward", type: 1, func: 44, calc: 1,
+        args: [0.23, 1, 0, 0, 0, 1.5, 14],
+        range: 3, prob: 70,
+        desc: "Raise ATK of self/adjacent familiars by 23% of his ATK; raise their AGI as his HP decreases."
+    },
+
+    1230: {
+        name: "Hail Arrows", type: 2, func: 4, calc: 1,
+        args: [1.45],
+        range: 20, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage to five random foes, ignoring position."
+    },
+
+    1231: {
+        name: "Secrets of the Hunt", type: 1, func: 44, calc: 1,
+        args: [0.1, 4, 0, 0, 0, 0.2, 1],
+        range: 3, prob: 70,
+        desc: "Raise AGI/ATK of self and adjacent familiars by 10% and 20% of its ATK respectively."
+    },
+
+    1232: {
+        name: "Vicious Scratch", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    1233: {
+        name: "Icy Rage", type: 2, func: 34, calc: 2,
+        args: [1.35, 4, 1, 0.04],
+        range: 315, prob: 30, ward: 2,
+        desc: "WIS-based DMG and reduce AGI of up to 5 foes. Increased if fewer foes."
+    },
+
+    1234: {
+        name: "Icy Love", type: 1, func: 44, calc: 0,
+        args: [0.27, 2, 0, 0, 0, 0.18, 3],
+        range: 3, prob: 70,
+        desc: "Raise DEF/WIS of self and adjacent allies by 27%/18% of her WIS."
+    },
+
+    1245: {
+        name: "Revelation of Death", type: 2, func: 52, calc: 1,
+        args: [1.05, 2, 1000, 6, 1, 1, 121, 120],
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and absorb DEF from six random foes."
+    },
+
+    1246: {
+        name: "Grace of the Angel", type: 5, func: 14, calc: 1,
+        args: [1],
+        range: 2, prob: 50, ward: 1,
+        desc: "Take damage in place of nearby ally and counter."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -7672,6 +7833,20 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 4, 0.4, 0.15],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage to one foe and sometimes lower AGI of target."
+    },
+
+    10186: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1.2],
+        range: 6, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to up to two foes."
+    },
+
+    10187: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     9001: {

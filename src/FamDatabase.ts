@@ -4451,4 +4451,98 @@ var famDatabase: CardMap = {
         img: "1ba", rarity: 5, evo: 2,
         fullName: "Chicomecoatl, the Bountiful II"
     },
+    11875: {
+        name: "Guardian of the Grove", stats: [20104, 19086, 14807, 8935, 18317],
+        skills: [1221, 1222],
+        autoAttack: 10187,
+        img: "3fa", rarity: 5, evo: 2,
+        fullName: "Guardian of the Grove II"
+    },
+    11873: {
+        name: "Iridescent Chalchiuhtotolin", stats: [16510, 13476, 15778, 5687, 17292],
+        skills: [1217],
+        img: "4fb", rarity: 4, evo: 4,
+        fullName: "Iridescent Chalchiuhtotolin II"
+    },
+    11874: {
+        name: "Idun", stats: [20722, 6270, 15706, 20299, 18252],
+        skills: [1218, 1219],
+        autoAttack: 10003,
+        img: "467", rarity: 5, evo: 2,
+        fullName: "Idun, the Golden Apple II"
+    },
+    11871: {
+        name: "Ain", stats: [15652, 4472, 15099, 16020, 17504],
+        skills: [1216],
+        autoAttack: 10186,
+        img: "400", rarity: 4, evo: 2,
+        fullName: "Ain, Squirrel-back Faerie II"
+    },
+    21862: {
+        name: "Diana", stats: [20380, 20194, 19493, 10208, 18221],
+        skills: [1214, 1215],
+        autoAttack: 10103,
+        img: "26d", rarity: 5, evo: 3,
+        fullName: "Diana, the Crescent Moon"
+    },
+    11884: {
+        name: "Brass Snow-Leopard", stats: [13256, 13024, 10074, 8209, 10564],
+        skills: [1232],
+        img: "4d8", rarity: 4, evo: 4,
+        fullName: "Brass Snow-Leopard II"
+    },
+    11882: {
+        name: "Negafok", stats: [17103, 16258, 13431, 5468, 17493],
+        skills: [1230, 1231],
+        autoAttack: 10103,
+        img: "192", rarity: 4, evo: 2,
+        fullName: "Negafok, Reindeer Rider II"
+    },
+    11881: {
+        name: "Vidar", stats: [22141, 21859, 15587, 6183, 18306],
+        skills: [1228, 1229],
+        img: "155", rarity: 5, evo: 2,
+        fullName: "Vidar, the Iron Heel II"
+    },
+    11807: {
+        name: "Gabrielle", stats: [19974, 17775, 17255, 8101, 18143],
+        skills: [1245, 1246],
+        img: "372", rarity: 5, evo: 2,
+        fullName: "Gabrielle, Angel of Sky II"
+    },
+    11880: {
+        name: "Yule", stats: [15024, 17353, 13256, 6530, 17034],
+        skills: [1226],
+        autoAttack: 10157,
+        img: "2fc", rarity: 4, evo: 4,
+        fullName: "Yule Goat, Death Bringer II"
+    },
+    21880: {
+        name: "Yule", stats: [13052, 13203, 10733, 7364, 11589],
+        skills: [1227],
+        autoAttack: 10005,
+        img: "1a3", rarity: 4, evo: 2,
+        fullName: "Yule Goat, the Blood-Stained II"
+    },
+    11185: {
+        name: "Michael", stats: [24513, 24004, 22379, 12640, 18284],
+        skills: [1223],
+        autoAttack: 10157,
+        img: "3a7", rarity: 6, evo: 2,
+        fullName: "Michael, Steelclad Angel II"
+    },
+    21878: {
+        name: "Befana", stats: [22153, 8586, 17498, 22048, 18105],
+        skills: [1224, 1225],
+        autoAttack: 10007,
+        img: "3d1", rarity: 5, evo: 3,
+        fullName: "Befana, the Moonless Night"
+    },
+    21885: {
+        name: "Virginal", stats: [23688, 8160, 17865, 22340, 18342],
+        skills: [1233, 1234],
+        autoAttack: 10057,
+        img: "2c8", rarity: 5, evo: 3,
+        fullName: "Virginal, Ice Queen"
+    },
 };
