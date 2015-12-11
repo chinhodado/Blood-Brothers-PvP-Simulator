@@ -101,6 +101,8 @@ class SkillLogicFactory {
                 return new DamagePassiveSkillLogic();
             case ENUM.SkillFunc.DEFENSE_PASSIVE:
                 return new DefensePassiveSkillLogic();
+            case ENUM.SkillFunc.AFFLICTION_PROB_BUFF_PASSIVE:
+                return new AfflictionProbabilityBuffPassiveSkillLogic();
             case ENUM.SkillFunc.EXTRA_TURN_PASSIVE:
                 return new ExtraTurnPassiveSkillLogic();
             default:

@@ -113,6 +113,7 @@
     <TypeScriptCompile Include="src\skillLogic\MultiDebuffSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\OnHitBuffSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\OnHitDebuffSkillLogic.ts" />
+    <TypeScriptCompile Include="src\skillLogic\passive\AfflictionProbabilityBuffPassiveSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\passive\BasePassiveSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\passive\DamagePassiveSkillLogic.ts" />
     <TypeScriptCompile Include="src\skillLogic\passive\DefensePassiveSkillLogic.ts" />
@@ -147,7 +148,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\SkillProvider.ts" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

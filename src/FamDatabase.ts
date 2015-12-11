@@ -4545,4 +4545,12 @@ var famDatabase: CardMap = {
         img: "2c8", rarity: 5, evo: 3,
         fullName: "Virginal, Ice Queen"
     },
+    11689: {
+        name: "Thanatos", stats: [25532, 23452, 22834, 14016, 18544],
+        skills: [989, 990],
+        passiveSkills: [9005],
+        autoAttack: 10061,
+        img: "362", rarity: 6, evo: 2,
+        fullName: "Thanatos, Death Incarnate II"
+    },
 };

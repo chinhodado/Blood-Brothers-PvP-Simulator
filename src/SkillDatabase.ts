@@ -7870,6 +7870,13 @@ var SkillDatabase: SkillMap = {
         desc: "Up to 10% chance to reproduce the previous attack action."
     },
 
+    9005: {
+        name: "Death Wish", type: 20, func: 1003, calc: 0,
+        args: [1],
+        range: 0, prob: 100,
+        desc: "Increase success rate of affliction against lower rarities."
+    },
+
     9006: {
         name: "Breakwater", type: 20, func: 1002, calc: 0,
         args: [0.35],

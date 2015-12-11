@@ -596,6 +596,16 @@ class Card {
         }
     }
 
+    getPassiveAfflictionProbabilityBuffEffect(target: Card): number {
+        var passiveSkill = this.passiveSkills[0];
+        if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.AFFLICTION_PROB_BUFF_PASSIVE) {
+            return (<AfflictionProbabilityBuffPassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, target, passiveSkill);
+        }
+        else {
+            return 1;
+        }
+    }
+
     adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number): number {
         if (this.status.isNewLogic[type]) {
             var lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;

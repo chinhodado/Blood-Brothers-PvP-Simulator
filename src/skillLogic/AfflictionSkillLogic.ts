@@ -22,8 +22,9 @@ class AfflictionSkillLogic extends SkillLogic {
     static processAffliction(executor: Card, target: Card, skill: Skill, fixedProb?: number) {
         var type: ENUM.AfflictionType = skill.skillFuncArg2;
         var prob: number = fixedProb ? fixedProb : skill.skillFuncArg3;
+        prob *= executor.getPassiveAfflictionProbabilityBuffEffect(target);
 
-        if (!type) {
+        if (Math.random() > prob || !type) {
             return;
         }
 
@@ -47,27 +48,25 @@ class AfflictionSkillLogic extends SkillLogic {
             option.missProb = skill.skillFuncArg5;
         }
 
-        if (Math.random() <= prob) {
-            target.setAffliction(type, option);
+        target.setAffliction(type, option);
 
-            if (type === ENUM.AfflictionType.POISON) {
-                // needed since poison is stacked
-                var percent = target.getPoisonPercent();
-            }
-
-            var logger = BattleLogger.getInstance();
-            logger.addMinorEvent({
-                executorId: executor.id,
-                targetId: target.id,
-                type: ENUM.MinorEventType.AFFLICTION,
-                affliction: {
-                    type: type,
-                    duration: option.turnNum,
-                    percent: percent,
-                    missProb: option.missProb
-                },
-                description: target.name + " is now " + ENUM.AfflictionType[type],
-            });
+        if (type === ENUM.AfflictionType.POISON) {
+            // needed since poison is stacked
+            var percent = target.getPoisonPercent();
         }
+
+        var logger = BattleLogger.getInstance();
+        logger.addMinorEvent({
+            executorId: executor.id,
+            targetId: target.id,
+            type: ENUM.MinorEventType.AFFLICTION,
+            affliction: {
+                type: type,
+                duration: option.turnNum,
+                percent: percent,
+                missProb: option.missProb
+            },
+            description: target.name + " is now " + ENUM.AfflictionType[type],
+        });
     }
 }
