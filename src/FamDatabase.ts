@@ -4553,4 +4553,20 @@ var famDatabase: CardMap = {
         img: "362", rarity: 6, evo: 2,
         fullName: "Thanatos, Death Incarnate II"
     },
+    11602: {
+        name: "Lancelot", stats: [23127, 25098, 20093, 17461, 18533],
+        skills: [909, 910],
+        passiveSkills: [9003],
+        autoAttack: 10108,
+        img: "28e", rarity: 6, evo: 2,
+        fullName: "Lancelot of the Lake II"
+    },
+    11841: {
+        name: "Van", stats: [25662, 25521, 20126, 14633, 18555],
+        skills: [1164, 1165],
+        passiveSkills: [9009],
+        autoAttack: 10103,
+        img: "425", rarity: 6, evo: 2,
+        fullName: "Van, Shadow Hunter II"
+    },
 };

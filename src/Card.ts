@@ -606,6 +606,16 @@ class Card {
         }
     }
 
+    getPassiveAffliction(target: Card): Skill {
+        var passiveSkill = this.passiveSkills[0];
+        if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.AFFLICTION_PASSIVE) {
+            return (<AfflictionPassiveSkillLogic>passiveSkill.logic).getAfflictionPassive(this, target, passiveSkill);
+        }
+        else {
+            return null;
+        }
+    }
+
     adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number): number {
         if (this.status.isNewLogic[type]) {
             var lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;

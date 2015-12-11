@@ -2,7 +2,7 @@
 
 class BasePassiveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        throw new Error("This is undefined for passive skills (except for extra turn passive)!");
+        throw new Error("This is undefined for passive skills (except for extra turn passive and affliction passive)!");
     }
 
     execute(data: SkillLogicData) {
@@ -10,6 +10,10 @@ class BasePassiveSkillLogic extends SkillLogic {
     }
 
     getEffectRatio(executor: Card, comparator: Card, passiveSkill: Skill): number {
+        throw new Error("Implement this!");
+    }
+
+    getAfflictionPassive(executor: Card, comparator: Card, passiveSkill: Skill): Skill {
         throw new Error("Implement this!");
     }
 }

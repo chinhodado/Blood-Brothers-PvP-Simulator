@@ -7863,6 +7863,13 @@ var SkillDatabase: SkillMap = {
         desc: "Increase damage to lower rarities by up to 20%."
     },
 
+    9003: {
+        name: "Grace of the Lake", type: 20, func: 1005, calc: 0,
+        args: [0.3, 0, 0, 3, 2],
+        range: 0, prob: 100,
+        desc: "Up to 30% chance to freeze lower rarities when being attacked."
+    },
+
     9004: {
         name: "Coldblood Claw", type: 20, func: 1006, calc: 0,
         args: [0.1],
@@ -7896,6 +7903,13 @@ var SkillDatabase: SkillMap = {
         args: [0.25],
         range: 0, prob: 100,
         desc: "Increase damage to lower rarities by up to 25%."
+    },
+
+    9009: {
+        name: "Exorcism Trap", type: 20, func: 1005, calc: 0,
+        args: [0.5, 0, 0, 8, 3000],
+        range: 0, prob: 100,
+        desc: "Up to 50% chance to burn lower rarities when being attacked."
     },
 
     9010: {

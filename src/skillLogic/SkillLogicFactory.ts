@@ -22,6 +22,8 @@
 /// <reference path="ReviveSkillLogic.ts"/>
 /// <reference path="SurviveSkillLogic.ts"/>
 /// <reference path="TurnOrderChangeSkillLogic.ts"/>
+/// <reference path="passive/AfflictionPassiveSkillLogic.ts"/>
+/// <reference path="passive/AfflictionProbabilityBuffPassiveSkillLogic.ts"/>
 /// <reference path="passive/DamagePassiveSkillLogic.ts"/>
 /// <reference path="passive/DefensePassiveSkillLogic.ts"/>
 /// <reference path="passive/ExtraTurnPassiveSkillLogic.ts"/>
@@ -103,6 +105,8 @@ class SkillLogicFactory {
                 return new DefensePassiveSkillLogic();
             case ENUM.SkillFunc.AFFLICTION_PROB_BUFF_PASSIVE:
                 return new AfflictionProbabilityBuffPassiveSkillLogic();
+            case ENUM.SkillFunc.AFFLICTION_PASSIVE:
+                return new AfflictionPassiveSkillLogic();
             case ENUM.SkillFunc.EXTRA_TURN_PASSIVE:
                 return new ExtraTurnPassiveSkillLogic();
             default:

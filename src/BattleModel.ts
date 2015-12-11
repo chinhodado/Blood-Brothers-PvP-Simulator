@@ -285,6 +285,22 @@ class BattleModel {
         else {
             BuffSkillLogic.processRemainHpBuff(target, false);
         }
+
+        this.processPostDamageAffliction(data.attacker, target, damage);
+    }
+
+    /**
+     * Process post-damage passive affliction
+     */
+    processPostDamageAffliction(attacker: Card, target: Card, damage: number) {
+        // will damage < 0 ever be true? dunno...
+        if (damage < 0 || attacker.isDead || target.justEvaded || attacker.justMissed) {
+            return;
+        }
+        var skill = target.getPassiveAffliction(attacker);
+        if (skill !== null) {
+            AfflictionSkillLogic.processAffliction(target, attacker, skill);
+        }
     }
 
     getWouldBeDamage(data: DamagePhaseData): number {
