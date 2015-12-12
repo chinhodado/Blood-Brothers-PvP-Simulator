@@ -392,4 +392,29 @@ class Skill {
     getReady(executor: Card): void {
         this.range.getReady(executor);
     }
+
+    /**
+     * Return true if confusion is currently set on the skill
+     * (i.e. the skill has a chance to be confused)
+     */
+    isConfused(): boolean {
+        return this.range.isConfused;
+    }
+
+    /**
+     * Clear confusion on the skill
+     */
+    clearConfuse(): void {
+        this.range.isConfused = false;
+    }
+
+    /**
+     * Set confusion on the skill
+     * @param prob The confusion probability
+     */
+    setConfuse(prob: number): void {
+        if (Affliction.canConfuse(this.skillType)) {
+            this.range.setConfuse(prob);
+        }
+    }
 }

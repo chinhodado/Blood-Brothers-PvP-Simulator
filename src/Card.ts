@@ -321,6 +321,31 @@ class Card {
     willMiss(): boolean {
         return (this.affliction) ? this.affliction.canMiss() : false;
     }
+
+    /**
+     * Return true if this fam can be confused (i.e. if it has the confuse affliction).
+     * The real check for whether it is confused or not will take place in the skill range.
+     */
+    canConfuse(): boolean {
+        return this.hasAffliction(ENUM.AfflictionType.CONFUSE);
+    }
+
+    /**
+     * Return true if this fam has an affliction of a given type
+     * @param type
+     */
+    hasAffliction(type: ENUM.AfflictionType): boolean {
+        if (this.isDead) {
+            return false;
+        }
+        var currentType = this.getAfflictionType();
+        return currentType === type;
+    }
+
+    /**
+     * Return the current affliction type of this fam, or null if this fam does
+     * not have an affliction.
+     */
     getAfflictionType(): ENUM.AfflictionType {
         return this.affliction ? this.affliction.getType() : null;
     }
@@ -341,7 +366,23 @@ class Card {
         }
     }
 
-    // return true if an affliction was cleared
+    /**
+     * Get the confuse probability of this fam. Return undefined if this fam is not confused.
+     * Note that the real confuse probability is getConfuseProb() - 0.1 (see BaseRange)
+     */
+    getConfuseProb(): number {
+        if (!this.affliction || this.affliction.type !== ENUM.AfflictionType.CONFUSE) {
+            return undefined;
+        }
+        else {
+            return (<ConfuseAffliction>this.affliction).confuseProb;
+        }
+    }
+
+    /**
+     * Update this fam's affliction.
+     * Return true if an affliction was cleared.
+     */
     updateAffliction(): boolean{
         if (!this.affliction) {
             return false;

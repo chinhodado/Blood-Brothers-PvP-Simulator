@@ -34,7 +34,7 @@ module ENUM {
         BUFF = 1, // arg1: multiplier, arg2, 3: status
         DEBUFF = 2, // arg1: multi, arg2: status
         ATTACK = 3, // arg1: multi, arg2: affliction, arg3: affliction prob.,
-                    // arg4: number of turns for silent & blind, % for venom, arg5: miss prob.for blind
+                    // arg4: number of turns for silent, blind & confuse, % for venom, arg5: miss prob.for blind & confuse prob
         MAGIC = 4, // anything that ignores position, args: same as ATTACK
         COOP = 5,
         REVIVE = 6, // arg1: hp heal ratio on revive
@@ -303,6 +303,7 @@ module ENUM {
         FROZEN = 3,
         DISABLE = 4,
         SILENT = 5,
+        CONFUSE = 6,
         BLIND = 7,
         BURN = 8
     }

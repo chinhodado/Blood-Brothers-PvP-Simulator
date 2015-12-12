@@ -21,6 +21,8 @@ abstract class Affliction {
                 return "Poisoned";
             case ENUM.AfflictionType.SILENT:
                 return "Silent";
+            case ENUM.AfflictionType.CONFUSE:
+                return "Confused";
             case ENUM.AfflictionType.BURN:
                 return "Burned";
             default:
@@ -74,14 +76,19 @@ abstract class Affliction {
     getType(): ENUM.AfflictionType {
         return this.type;
     }
+
+    static canConfuse(skillType: ENUM.SkillType): boolean {
+        return skillType === ENUM.SkillType.ACTIVE;
+    }
 }
 
 /**
  * A simple struct for affliction's optional parameters
  */
 interface AfflictOptParam {
-    turnNum?: number;  // for silent and blind
-    missProb?: number; // for blind
-    percent?: number;  // for poison
-    damage?: number;   // for burn
+    turnNum?: number;     // for silent and blind
+    missProb?: number;    // for blind
+    confuseProb?: number; // for confuse
+    percent?: number;     // for poison
+    damage?: number;      // for burn
 }

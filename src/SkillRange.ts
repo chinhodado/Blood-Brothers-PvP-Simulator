@@ -334,7 +334,7 @@ class RangeFactory {
         return canBe;
     }
 
-    static createRange (id: ENUM.SkillRange, selectDead: boolean) {
+    static createRange(id: ENUM.SkillRange, selectDead: boolean) {
         switch (id) {
             case ENUM.SkillRange.EITHER_SIDE:
                 return new EitherSideRange(id, selectDead); // either side, but not both
@@ -375,6 +375,10 @@ class RangeFactory {
 
 abstract class BaseRange {
     id: ENUM.SkillRange;
+    isDuplicative: boolean;
+    isConfused: boolean;
+    confuseProb: number;
+    confusedCache: boolean;
 
     // these will be reset every time the skill/range is used
     targets: Card[];
@@ -403,7 +407,10 @@ abstract class BaseRange {
      * This should be called at the beginning of every skill execution
      */
     getReady(executor: Card, skillCondFunc?: (card: Card) => boolean): void {
-        throw new Error("Implement this");
+        if (this.isConfused) {
+            this.confusedCache = Math.random() < this.confuseProb;
+        }
+        this.currentIndex = 0;
     }
 
     /**
@@ -433,13 +440,25 @@ abstract class BaseRange {
     /**
      * Get the default conditional function (valid if card is not dead and belongs to the enemy)
      */
-    getCondFunc(executor: Card): (x: Card)=>boolean {
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        var isSameGroup = card => this.isSameGroup(executor, card);
         return (card: Card) => {
-            if (card.isDead || (card.getPlayerId() === executor.getPlayerId())) {
+            if (card.isDead || isSameGroup(card)) {
                 return false;
             }
             return true;
         };
+    }
+
+    /**
+     * Get either the executor, or the opposite of the executor.
+     * Useful for confused affliction.
+     * @param executor
+     */
+    getSelfOrOppositeAsFriend(executor: Card): Card {
+        var condFunc = (card: Card) => this.isSameGroup(executor, card) &&
+            executor.formationColumn === card.formationColumn;
+        return this.getBaseTargets(condFunc)[0];
     }
 
     /**
@@ -455,6 +474,57 @@ abstract class BaseRange {
     getTarget(executor: Card): Card {
         return this.targets[this.currentIndex++];
     }
+
+    /**
+     * Return true if two cards are of the same group (i.e. the same player).
+     *  - If the current range is not confused, two cards are of the same group if
+     * they belong to the same player.
+     *  - If the current range is confused, there is a chance that two cards of the
+     * same player are not considered of the same group.
+     */
+    isSameGroup(card1: Card, card2: Card): boolean {
+        if (this.isConfused) {
+            if (this.isDuplicative) {
+                // if duplicative then random each time, otherwise used cachedValue
+                return (Math.random() <= this.confuseProb) !== (card1.getPlayerId() === card2.getPlayerId());
+            }
+            else {
+                return this.confusedCache !== (card1.getPlayerId() === card2.getPlayerId());
+            }
+        }
+        return card1.getPlayerId() === card2.getPlayerId();
+    }
+
+    /**
+     * Get the group of the executor of this skill.
+     * If not confused, the group is the executor's player.
+     * If confused, the group may be the opposite player.
+     */
+    getGroup(executor: Card): number {
+        var battle = BattleModel.getInstance();
+        if (this.isConfused) {
+            if (this.isDuplicative) {
+                // if duplicative then random each time, otherwise used cachedValue
+                return Math.random() <= this.confuseProb ?
+                    battle.getOppositePlayer(executor.player).id : executor.getPlayerId();
+            }
+            else {
+                return this.confusedCache ?
+                    battle.getOppositePlayer(executor.player).id : executor.getPlayerId();
+            }
+        }
+        return executor.getPlayerId();
+    }
+
+    /**
+     * Set confusion on this skill range.
+     * @param prob The confusion probability
+     */
+    setConfuse(prob: number): void {
+        this.isConfused = true;
+        this.confuseProb = prob - 0.1;
+        if (this.confuseProb < 0) this.confuseProb = 0;
+    }
 }
 
 class BothSidesRange extends BaseRange {
@@ -466,58 +536,40 @@ class BothSidesRange extends BaseRange {
     }
 
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
-        if (leftCard && this.satisfyDeadCondition(leftCard, this.selectDead)) {
-            targets.push(leftCard);
-        }
-
-        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
-        if (rightCard && this.satisfyDeadCondition(rightCard, this.selectDead)) {
-            targets.push(rightCard);
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => this.isSameGroup(executor, card) &&
+            this.satisfyDeadCondition(card, this.selectDead) &&
+            (executor.formationColumn === card.formationColumn + 1 || executor.formationColumn === card.formationColumn - 1);
     }
 }
 
 // TODO: generalize this range
 class SelfImmediateRightRange extends BaseRange {
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        if (!executor.isDead) { // should always be true
-            targets.push(executor);
-        }
-
-        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
-        if (rightCard && !rightCard.isDead) {
-            targets.push(rightCard);
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => !card.isDead && this.isSameGroup(executor, card) &&
+            (executor.formationColumn === card.formationColumn || executor.formationColumn === card.formationColumn - 1);
     }
 }
 
 // copied from SelfImmediateRightRange
 class SelfImmediateLeftRange extends BaseRange {
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        if (!executor.isDead) { // should always be true
-            targets.push(executor);
-        }
-
-        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
-        if (leftCard && !leftCard.isDead) {
-            targets.push(leftCard);
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => !card.isDead && this.isSameGroup(executor, card) &&
+            (executor.formationColumn === card.formationColumn || executor.formationColumn === card.formationColumn + 1);
     }
 }
 
@@ -551,6 +603,7 @@ class EnemyRandomRange extends RandomRange {
     constructor(id: ENUM.SkillRange, numTarget: number) {
         super(id);
         this.numTarget = numTarget;
+        this.isDuplicative = true;
     }
 
     getReady(executor: Card): void {
@@ -580,17 +633,13 @@ class EitherSideRange extends BothSidesRange {
 
 class RightRange extends BaseRange {
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
-        var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        for (var i = executor.formationColumn + 1; i < 5; i++) {
-            if (!partyCards[i].isDead) {
-                targets.push(partyCards[i]);
-            }
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => !card.isDead && this.isSameGroup(executor, card) &&
+            (executor.formationColumn < card.formationColumn);
     }
 }
 
@@ -602,52 +651,39 @@ class SelfRange extends BaseRange {
     }
 
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        if (this.satisfyDeadCondition(executor, this.selectDead)) {
-            targets.push(executor);
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => this.isSameGroup(executor, card) &&
+            this.satisfyDeadCondition(card, this.selectDead) &&
+            executor.formationColumn === card.formationColumn;
     }
 }
 
 class SelfBothSidesRange extends BaseRange {
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        var leftCard: Card = CardManager.getInstance().getLeftSideCard(executor);
-        if (leftCard && !leftCard.isDead) {
-            targets.push(leftCard);
-        }
-
-        if (!executor.isDead) { // should always be true
-            targets.push(executor);
-        }
-
-        var rightCard: Card = CardManager.getInstance().getRightSideCard(executor);
-        if (rightCard && !rightCard.isDead) {
-            targets.push(rightCard);
-        }
-
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => !card.isDead && this.isSameGroup(executor, card) &&
+            (executor.formationColumn === card.formationColumn + 1 ||
+                executor.formationColumn === card.formationColumn ||
+                executor.formationColumn === card.formationColumn - 1);
     }
 }
 
 class AllRange extends BaseRange {
     getReady(executor: Card): void {
-        var targets = [];
-        this.currentIndex = 0;
-        var partyCards = CardManager.getInstance().getPlayerCurrentMainCards(executor.player);
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
+    }
 
-        for (var i = 0; i < partyCards.length; i++) {
-            if (!partyCards[i].isDead) {
-                targets.push(partyCards[i]);
-            }
-        }
-        this.targets = targets;
+    getCondFunc(executor: Card): (x: Card) => boolean {
+        return (card: Card) => !card.isDead && this.isSameGroup(executor, card);
     }
 }
 
@@ -669,17 +705,26 @@ class EnemyNearRange extends BaseRange {
     }
 
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
+        var battle = BattleModel.getInstance();
+
+        // can be real player or opposite player (confused)
+        var executorPlayer = this.getGroup(executor);
 
         // get center enemy
-        var centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
+        var centerEnemy: Card;
+        if (executorPlayer === executor.getPlayerId()) {
+            centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
+        } else {
+            centerEnemy = CardManager.getInstance().getNearestSingleFriendTarget(executor);
+        }
 
         if (!centerEnemy) {
             this.targets = [];
             return;
         }
 
-        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
+        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(battle.getPlayerById(executorPlayer));
 
         // only upto 2 and not 4 since the max distance is 2 anyway
         var offsetArray = [0, -1, 1, -2, 2];
@@ -705,16 +750,8 @@ class EnemyNearRange extends BaseRange {
 
 class EnemyAllRange extends BaseRange {
     getReady(executor: Card): void {
-        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(executor.player);
-        var targets = [];
-        this.currentIndex = 0;
-        for (var i = 0; i < enemyCards.length; i++) {
-            var currentEnemyCard = enemyCards[i];
-            if (currentEnemyCard && !currentEnemyCard.isDead) {
-                targets.push(currentEnemyCard);
-            }
-        }
-        this.targets = targets;
+        super.getReady(executor);
+        this.targets = this.getBaseTargets(this.getCondFunc(executor));
     }
 }
 
@@ -732,6 +769,7 @@ class FriendRandomRange extends RandomRange {
         this.isUnique = RangeFactory.FRIEND_RANDOM_RANGE_TARGET_NUM[id];
         this.includeSelf = RangeFactory.INCLUDE_SELF[id];
         this.forcedSelf = RangeFactory.FORCED_SELF[id];
+        this.isDuplicative = !this.isUnique;
     }
 
     getReady(executor: Card, skillCondFunc?: (card: Card)=>boolean): void{
@@ -741,7 +779,7 @@ class FriendRandomRange extends RandomRange {
 
         var selfAllowed = false;
         for (let i = 0; i < baseTargets.length; i++) {
-            if (executor === baseTargets[i]) {
+            if (executor.formationColumn === baseTargets[i].formationColumn) {
                 selfAllowed = true;
                 break;
             }
@@ -761,14 +799,14 @@ class FriendRandomRange extends RandomRange {
         if (this.forcedSelf && selfAllowed ) {
              var alreadyIncludedSelf = false;
              for (let i = 0; i < targets.length; i++) {
-                 if (executor === targets[i]) {
+                 if (executor.formationColumn === targets[i].formationColumn) {
                       alreadyIncludedSelf = true;
                       break;
                  }
              }
              if (!alreadyIncludedSelf) {
                 targets.shift();
-                targets.unshift(executor);
+                targets.unshift(this.getSelfOrOppositeAsFriend(executor));
              }
         }
 
@@ -780,10 +818,10 @@ class FriendRandomRange extends RandomRange {
         var includeSelf = this.includeSelf;
 
         return (card: Card) => {
-            if (card.getPlayerId() !== executor.getPlayerId())
+            if (!this.isSameGroup(executor, card))
                 return false;
 
-            if (card.id === executor.id && !includeSelf)
+            if (card.formationColumn === executor.formationColumn && !includeSelf)
                 return false;
 
             if ((selectDead && !card.isDead) || (!selectDead && card.isDead))
@@ -843,7 +881,7 @@ class BaseRowRange extends BaseRange {
 
 class EnemyFrontMidAllRange extends BaseRowRange {
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
@@ -861,7 +899,7 @@ class EnemyFrontMidAllRange extends BaseRowRange {
 
 class EnemyFrontRearAllRange extends BaseRowRange {
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
@@ -879,7 +917,7 @@ class EnemyFrontRearAllRange extends BaseRowRange {
 
 class EnemyFrontAllRange extends BaseRowRange {
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);
@@ -890,7 +928,7 @@ class EnemyFrontAllRange extends BaseRowRange {
 
 class EnemyMidAllRange extends BaseRowRange {
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.MID, true);
@@ -901,7 +939,7 @@ class EnemyMidAllRange extends BaseRowRange {
 
 class EnemyRearAllRange extends BaseRowRange {
     getReady(executor: Card): void {
-        this.currentIndex = 0;
+        super.getReady(executor);
         var candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.REAR, false);
@@ -919,6 +957,7 @@ class EnemyRowRandomRange extends RandomRange { // TODO: fix this later (not ext
         super(id);
         this.numTargets = numTargets;
         this.baseOnRangeType = baseOnRangeType;
+        this.isDuplicative = true;
     }
 
     getReady(executor: Card): void {

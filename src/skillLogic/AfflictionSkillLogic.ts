@@ -35,8 +35,8 @@ class AfflictionSkillLogic extends SkillLogic {
                 // envenom percent
                 option.percent = skill.skillFuncArg4;
             }
-            else if (type === ENUM.AfflictionType.SILENT || type === ENUM.AfflictionType.BLIND) {
-                // turn num for silent & blind
+            else if (type === ENUM.AfflictionType.SILENT || type === ENUM.AfflictionType.BLIND || type === ENUM.AfflictionType.CONFUSE) {
+                // turn num for silent & blind & confuse
                 option.turnNum = skill.skillFuncArg4;
             }
             else if (type === ENUM.AfflictionType.BURN) {
@@ -45,7 +45,14 @@ class AfflictionSkillLogic extends SkillLogic {
         }
 
         if (skill.skillFuncArg5) {
-            option.missProb = skill.skillFuncArg5;
+            if (type === ENUM.AfflictionType.BLIND) {
+                // miss probability
+                option.missProb = skill.skillFuncArg5;
+            }
+            else if (type === ENUM.AfflictionType.CONFUSE) {
+                // confuse probability
+                option.confuseProb = skill.skillFuncArg5;
+            }
         }
 
         target.setAffliction(type, option);

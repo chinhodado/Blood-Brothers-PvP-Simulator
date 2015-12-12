@@ -3195,6 +3195,20 @@ var SkillDatabase: SkillMap = {
         desc: "Deal AGI-based damage to all foes and sometimes paralyze targets."
     },
 
+    575: {
+        name: "Chaotic World", type: 1, func: 19, calc: 0,
+        args: [0, 6, 0.6, 2, 0.6],
+        range: 7, prob: 70,
+        desc: "Chance to confuse up to three foes at start of battle."
+    },
+
+    576: {
+        name: "Culling Out", type: 2, func: 4, calc: 2,
+        args: [1.25],
+        range: 20, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to five random foes, ignoring position."
+    },
+
     577: {
         name: "Triple Tails", type: 2, func: 3, calc: 3,
         args: [1.5],
@@ -5490,6 +5504,20 @@ var SkillDatabase: SkillMap = {
         desc: "Raise WIS and reduce magical damage taken by self and adjacent familiars."
     },
 
+    1026: {
+        name: "Spear of Justice", type: 2, func: 4, calc: 1,
+        args: [1.05, 6, 0.1, 2, 0.6],
+        range: 315, prob: 30, ward: 1,
+        desc: "ATK-based DMG to and sometimes confuse up to five foes. Increased if fewer foes."
+    },
+
+    1027: {
+        name: "Prayer of War", type: 1, func: 51, calc: 0,
+        args: [0, 14, 2000, 6, 0.35, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorbs ATK/DEF/WIS/AGI from up to three foes at the beginning of battles."
+    },
+
     1028: {
         name: "Chaotic World", type: 1, func: 19, calc: 0,
         args: [0, 6, 1, 2, 1],
@@ -6141,6 +6169,20 @@ var SkillDatabase: SkillMap = {
         desc: "Raise WIS/AGI of self and adjacent familiars when its HP decreases."
     },
 
+    1131: {
+        name: "Dark Geis", type: 2, func: 4, calc: 2,
+        args: [1.25, 6, 0.1, 2, 0.6],
+        range: 20, prob: 30, ward: 2,
+        desc: "WIS-based DMG, sometimes confuse five random foes, ignoring position."
+    },
+
+    1132: {
+        name: "Bullwark", type: 1, func: 44, calc: 0,
+        args: [0.3, 17, 0, 0, 0, 0.15, 3],
+        range: 3, prob: 70,
+        desc: "Raise HP and WIS of self and adjacent familiars by 30% and 15% of its WIS respectively."
+    },
+
     1133: {
         name: "Harvesting Scythe", type: 2, func: 4, calc: 3,
         args: [1.7],
@@ -6496,6 +6538,27 @@ var SkillDatabase: SkillMap = {
         args: [2],
         range: 23, prob: 30, ward: 2, sac: 1,
         desc: "Deal massive WIS-based damage to two random foes, ignoring position."
+    },
+
+    1185: {
+        name: "Cursed Cobra", type: 2, func: 4, calc: 2,
+        args: [1.3, 6, 0.1, 2, 0.6],
+        range: 315, prob: 30, ward: 2,
+        desc: "WIS-based DMG to and sometimes confuse up to five foes. Increased if fewer foes."
+    },
+
+    1186: {
+        name: "Fortuitous Refrain", type: 1, func: 44, calc: 0,
+        args: [0.2, 3, 0, 0, 0, 1187, 16],
+        range: 3, prob: 70,
+        desc: "Raise WIS by 20%/Revive with 75% HP after being killed, self and adjacent familiars."
+    },
+
+    1187: {
+        name: "Fortuitous Refrain", type: 16, func: 6, calc: 0,
+        args: [0.75],
+        range: 21, prob: 100,
+        desc: "-"
     },
 
     1190: {

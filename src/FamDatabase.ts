@@ -4569,4 +4569,32 @@ var famDatabase: CardMap = {
         img: "425", rarity: 6, evo: 2,
         fullName: "Van, Shadow Hunter II"
     },
+    11397: {
+        name: "Terra", stats: [19053, 7267, 17006, 22498, 18100],
+        skills: [575, 576],
+        autoAttack: 10007,
+        img: "325", rarity: 5, evo: 2,
+        fullName: "Arcanan Terra II"
+    },
+    11816: {
+        name: "Pallas", stats: [18501, 24990, 15998, 5858, 18252],
+        skills: [1026, 1027],
+        autoAttack: 10133,
+        img: "1b1", rarity: 5, evo: 2,
+        fullName: "Pallas, Goddess of Protection II"
+    },
+    11802: {
+        name: "Medb", stats: [21231, 5999, 14893, 20906, 18219],
+        skills: [1131, 1132],
+        autoAttack: 10001,
+        img: "494", rarity: 5, evo: 2,
+        fullName: "Medb, Jealous Queen II"
+    },
+    21877: {
+        name: "Renenet", stats: [23328, 10078, 16343, 22132, 18365],
+        skills: [1185, 1186],
+        autoAttack: 10007,
+        img: "2cb", rarity: 5, evo: 3,
+        fullName: "Renenet, Goddess of Wealth"
+    },
 };

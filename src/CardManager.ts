@@ -206,6 +206,11 @@ class CardManager {
         return cards[possibleIndices[randomIndex]];
     }
 
+    /**
+     * Get the nearest opponent from the executor (e.g. the opposite fam, or
+     * the second nearest if that one's dead, etc.)
+     * @param executor
+     */
     getNearestSingleOpponentTarget (executor: Card): Card {
         var oppCards: Card[] = this.getPlayerCurrentMainCards(this.battle.getOppositePlayer(executor.player));
         var executorIndex = executor.formationColumn;
@@ -216,6 +221,29 @@ class CardManager {
             var currentOppCard = oppCards[executorIndex + offsetArray[i]];
             if (currentOppCard && !currentOppCard.isDead) {
                 return currentOppCard;
+            }
+        }
+
+        // if it reaches this point, there's no target, so return null
+        return null;
+    }
+
+    /**
+     * Get the nearest friend from the executor. Most of the time will be
+     * the executor itself.
+     * This is mostly used for confuse.
+     * @param executor
+     */
+    getNearestSingleFriendTarget(executor: Card): Card {
+        var friendCards: Card[] = this.getPlayerCurrentMainCards(executor.player);
+        var executorIndex = executor.formationColumn;
+
+        var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
+
+        for (var i = 0; i < offsetArray.length; i++) {
+            var currentFriendCard = friendCards[executorIndex + offsetArray[i]];
+            if (currentFriendCard && !currentFriendCard.isDead) {
+                return currentFriendCard;
             }
         }
 

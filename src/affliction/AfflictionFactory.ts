@@ -1,5 +1,6 @@
 ﻿/// <reference path="BlindAffliction.ts"/>
 /// <reference path="BurnAffliction.ts"/>
+/// <reference path="ConfuseAffliction.ts"/>
 /// <reference path="DisabledAffliction.ts"/>
 /// <reference path="FrozenAffliction.ts"/>
 /// <reference path="ParalysisAffliction.ts"/>
@@ -22,6 +23,8 @@ class AfflictionFactory {
                 return new SilentAffliction();
             case ENUM.AfflictionType.BURN:
                 return new BurnAffliction();
+            case ENUM.AfflictionType.CONFUSE:
+                return new ConfuseAffliction();
             default:
                 throw new Error("Invalid affliction type!");
         }

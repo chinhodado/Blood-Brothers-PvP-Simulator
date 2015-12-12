@@ -616,6 +616,13 @@ class BattleModel {
                 skill: activeSkill
             };
             if (activeSkill.willBeExecuted(data)) {
+                // set confuse to the skill if necessary
+                if (currentCard.canConfuse()) {
+                    activeSkill.setConfuse(currentCard.getConfuseProb());
+                } else if (activeSkill.isConfused()) {
+                    activeSkill.clearConfuse();
+                }
+
                 this.logger.addMajorEvent({
                     description: currentCard.name + " procs " + activeSkill.name,
                     executorId: currentCard.id,
@@ -759,15 +766,25 @@ class BattleModel {
             return;
         }
 
+        var skill = attacker.autoAttack;
+
+        // set confuse to the skill if necessary
+        if (attacker.canConfuse()) {
+            skill.setConfuse(attacker.getConfuseProb());
+        }
+        else if (skill.isConfused()) {
+            skill.clearConfuse();
+        }
+
         this.logger.addMajorEvent({
             description: attacker.name + " attacks!",
-            skillId: attacker.autoAttack.id,
+            skillId: skill.id,
             executorId: attacker.id
         });
 
-        attacker.autoAttack.execute({
+        skill.execute({
             executor: attacker,
-            skill: attacker.autoAttack
+            skill: skill
         });
     }
 
