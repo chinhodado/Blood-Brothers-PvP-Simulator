@@ -586,7 +586,7 @@ function getTierList(whatToDoNext: () => void) {
     if (!localStorage.getItem("tierList") || needUpdate) {
         console.log("Fetching tier list...");
         $.ajax({
-            "url": "http://bloodbrothers-chinhodado.rhcloud.com/getTier/",
+            "url": "https://bloodbrothers-chinhodado.rhcloud.com/getTier/",
             "crossDomain": true,
             "dataType": "json",
             "success": makeCallback(whatToDoNext)

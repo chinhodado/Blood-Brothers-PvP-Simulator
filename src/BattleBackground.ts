@@ -41,7 +41,7 @@
      * Given a shortened link (as stored in bgList), return the full link
      */
     static getLinkFromShortenedLink(shortenedLink: string): string {
-        var firstPart = `http://img${shortenedLink.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/`;
+        var firstPart = `https://img${shortenedLink.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/`;
         var link = firstPart + shortenedLink.charAt(1) + "/" + shortenedLink.substring(1) + ".png";
         return link;
     }
