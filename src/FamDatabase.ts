@@ -4161,12 +4161,6 @@ var famDatabase: CardMap = {
         img: "44b", rarity: 5, evo: 3,
         fullName: "Cu Chulainn, the Thunderbolt"
     },
-    1623: {
-        name: "Fomor Berserker", stats: [8910, 7170, 7140, 7360, 7510],
-        skills: [1145],
-        img: "291", rarity: 5, evo: 1,
-        fullName: "Fomor Berserker"
-    },
     11825: {
         name: "Pomona", stats: [20559, 17894, 13528, 11275, 18349],
         skills: [1137, 1138],
@@ -4596,5 +4590,81 @@ var famDatabase: CardMap = {
         autoAttack: 10007,
         img: "2cb", rarity: 5, evo: 3,
         fullName: "Renenet, Goddess of Wealth"
+    },
+    21890: {
+        name: "Chuchunya", stats: [17309, 19422, 11492, 5533, 17493],
+        skills: [1238, 1239],
+        img: "31d", rarity: 4, evo: 2,
+        fullName: "Chuchunya, Tundra Guardian II"
+    },
+    11888: {
+        name: "Kosuke", stats: [15755, 16913, 14003, 5664, 17023],
+        skills: [1237],
+        autoAttack: 10188,
+        img: "454", rarity: 4, evo: 4,
+        fullName: "Kosuke, Master Ninja II"
+    },
+    11891: {
+        name: "Gorynich", stats: [18826, 14579, 17082, 12185, 18533],
+        skills: [1243, 1244],
+        autoAttack: 10190,
+        img: "395", rarity: 5, evo: 2,
+        fullName: "Gorynich, Snow Dragon II"
+    },
+    11892: {
+        name: "Nyx", stats: [16280, 14113, 16172, 4558, 17981],
+        skills: [1241, 1242],
+        autoAttack: 10189,
+        img: "32f", rarity: 4, evo: 2,
+        fullName: "Nyx, the Dark Wing II"
+    },
+    11890: {
+        name: "Chuchunya", stats: [12659, 13245, 11756, 6564, 12586],
+        skills: [1240],
+        img: "344", rarity: 4, evo: 4,
+        fullName: "Chuchunya, Iceberg Breaker II"
+    },
+    21886: {
+        name: "Skadi", stats: [21655, 24515, 19052, 7533, 18225],
+        skills: [1235, 1236],
+        img: "274", rarity: 5, evo: 3,
+        fullName: "Skadi, Goddess of Winter"
+    },
+    11723: {
+        name: "Veigr", stats: [17220, 17678, 15024, 11038, 9101],
+        skills: [1251],
+        autoAttack: 10191,
+        img: "298", rarity: 4, evo: 4,
+        fullName: "Veigr, Under-watch Captain II"
+    },
+    11922: {
+        name: "Ritho", stats: [25402, 24188, 24123, 10127, 18013],
+        skills: [1247],
+        autoAttack: 10145,
+        img: "4c0", rarity: 6, evo: 2,
+        fullName: "Ritho, King of the Giants II"
+    },
+    11767: {
+        name: "Ortlinde", stats: [25716, 23625, 21328, 15218, 18598],
+        skills: [1252, 1253],
+        passiveSkills: [9011],
+        autoAttack: 10103,
+        isMounted: true,
+        img: "10e", rarity: 6, evo: 2,
+        fullName: "Ortlinde, Silent Valkyrie II"
+    },
+    11774: {
+        name: "Gog", stats: [16724, 15197, 13052, 7884, 17201],
+        skills: [1250],
+        autoAttack: 10034,
+        img: "48e", rarity: 4, evo: 2,
+        fullName: "Gog, Giant II"
+    },
+    11710: {
+        name: "Muspell", stats: [22130, 16063, 17201, 15305, 13052],
+        skills: [1248, 1249],
+        autoAttack: 10192,
+        img: "1bc", rarity: 5, evo: 2,
+        fullName: "Muspell, Giant Knight II"
     },
 };

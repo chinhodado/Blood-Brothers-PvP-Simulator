@@ -8,7 +8,8 @@ class RangeFactory {
     };
 
     static ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM = {
-        419: 4
+        419: 4,
+        420: 5,
     };
 
     static ENEMY_ROW_RANDOM_RANGE_TARGET_NUM = {
@@ -185,6 +186,7 @@ class RangeFactory {
 
     static VaryingPatternParam = {
         419: [0.9, 1.0, 1.15, 1.35],
+        420: [0.8, 0.9, 1, 1.1, 1.2],
     }
 
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
