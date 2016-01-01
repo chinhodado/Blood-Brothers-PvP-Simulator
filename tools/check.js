@@ -16,7 +16,7 @@ function checkSkill(data) {
 
     var whiteList = [
         202, // Trial by Fire
-        355, 452, 816, 840, 881, 1008, 1076, 1115, 1141, 1158 // ondeath
+        355, 452, 816, 840, 881, 1008, 1076, 1115, 1141, 1158, 1187, 1220 // ondeath
     ];
 
     for (var key in SkillDatabase) {
@@ -84,6 +84,7 @@ function checkFam(data) {
         "Adamant Tarasca",                     // bloodlinked
         "Ilya, Giant Slayer",                  // bloodlinked
         "Crom Cruach, the Silver Moon",        // bloodlinked
+        "Haagenti, Lord of Beasts",            // bloodlinked
         "Charybdis II",                        // weird error, forgot what it was...
         "Huitzilopochtli, God of War II",      // another one with weird error...
     ];

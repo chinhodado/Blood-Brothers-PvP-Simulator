@@ -6488,7 +6488,7 @@ var SkillDatabase: SkillMap = {
         name: "Lust for Life", type: 2, func: 6, calc: 0,
         args: [0.5],
         range: 2, prob: 50,
-        desc: "Revive and restore with 50% HP of adjacent familiars."
+        desc: "Revive adjacent allies with 50% of their HP."
     },
 
     1178: {
