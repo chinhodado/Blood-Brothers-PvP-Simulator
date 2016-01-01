@@ -4667,4 +4667,87 @@ var famDatabase: CardMap = {
         img: "1bc", rarity: 5, evo: 2,
         fullName: "Muspell, Giant Knight II"
     },
+    11915: {
+        name: "Champion of Aquarius", stats: [19974, 4732, 18761, 19378, 18403],
+        skills: [1258, 1259],
+        autoAttack: 10195,
+        img: "202", rarity: 5, evo: 2,
+        fullName: "Champion of Aquarius II"
+    },
+    11932: {
+        name: "Halphas", stats: [17058, 16913, 12745, 5371, 17913],
+        skills: [1257],
+        autoAttack: 10194,
+        img: "496", rarity: 4, evo: 4,
+        fullName: "Halphas, Earl of Hell II"
+    },
+    21707: {
+        name: "Erupting Golem", stats: [20742, 18258, 19856, 12423, 17218],
+        skills: [1254, 1255],
+        img: "234", rarity: 5, evo: 3,
+        fullName: "Erupting Golem"
+    },
+    11775: {
+        name: "Magog", stats: [17049, 16648, 16161, 12380, 9000],
+        skills: [1256],
+        autoAttack: 10193,
+        img: "315", rarity: 4, evo: 2,
+        fullName: "Magog, Giant II"
+    },
+    11904: {
+        name: "Marsyas", stats: [15889, 6430, 10346, 17950, 17315],
+        skills: [1266],
+        autoAttack: 10007,
+        img: "3d2", rarity: 4, evo: 4,
+        fullName: "Marsyas, the Cursed Flute II"
+    },
+    21904: {
+        name: "Marsyas", stats: [12033, 8935, 10582, 13463, 11665],
+        skills: [1267],
+        autoAttack: 10007,
+        img: "348", rarity: 4, evo: 2,
+        fullName: "Marsyas, Calamity Caller II"
+    },
+    11905: {
+        name: "Apollo", stats: [22043, 15901, 14514, 10809, 18360],
+        skills: [1268, 1269],
+        autoAttack: 10061,
+        img: "307", rarity: 5, evo: 2,
+        fullName: "Apollo, God of the Sun II"
+    },
+    21902: {
+        name: "Amphion", stats: [23414, 9122, 15352, 22364, 18186],
+        skills: [1264, 1265],
+        autoAttack: 10007,
+        img: "136", rarity: 5, evo: 3,
+        fullName: "Amphion, Hymn of Death"
+    },
+    11909: {
+        name: "Amaterasu", stats: [24102, 12553, 23387, 23387, 18403],
+        skills: [1262, 1263],
+        autoAttack: 10016,
+        img: "3d1", rarity: 6, evo: 2,
+        fullName: "Amaterasu, Light of the Sun II"
+    },
+    11653: {
+        name: "Acanthus", stats: [16616, 6129, 10419, 17493, 17894],
+        skills: [1270, 1271],
+        autoAttack: 10007,
+        img: "148", rarity: 4, evo: 2,
+        fullName: "Acanthus, the Gilded Thorn II"
+    },
+    11908: {
+        name: "Hyacinth", stats: [13476, 10391, 10321, 7966, 12366],
+        skills: [1272],
+        autoAttack: 10005,
+        img: "182", rarity: 4, evo: 4,
+        fullName: "Hyacinth, the Death Dealer II"
+    },
+    11712: {
+        name: "Vesta", stats: [19552, 20397, 15500, 7581, 18219],
+        skills: [1260, 1261],
+        autoAttack: 10196,
+        img: "10b", rarity: 5, evo: 2,
+        fullName: "Vesta, Flame Witch II"
+    },
 };

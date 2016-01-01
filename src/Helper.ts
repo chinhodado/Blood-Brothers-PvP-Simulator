@@ -507,7 +507,7 @@ function onBattleFinished() {
         startButton.style.display = "block";
     }
     else {
-        showStarRequest();
+        //showStarRequest();
     }
 }
 

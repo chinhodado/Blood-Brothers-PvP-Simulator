@@ -6980,6 +6980,139 @@ var SkillDatabase: SkillMap = {
         desc: "Massive AGI-based damage and drain HP from three random foes, ignoring position."
     },
 
+    1254: {
+        name: "Volcanic Bomb", type: 2, func: 3, calc: 1,
+        args: [2.1, 8, 1, 2500],
+        range: 7, prob: 30, ward: 1,
+        desc: "Massive ATK-based damage and burn up to three foes."
+    },
+
+    1255: {
+        name: "Hardened Lava", type: 3, func: 39, calc: 6,
+        args: [1, 2, 0, 60, 5],
+        range: 21, prob: 70,
+        desc: "Greatly increase DEF of self when being attacked."
+    },
+
+    1256: {
+        name: "Destructive Urge", type: 3, func: 39, calc: 6,
+        args: [1, 1, 2, 50, 5],
+        range: 21, prob: 50, sac: 1,
+        desc: "Greatly increase ATK and DEF of self when being attacked."
+    },
+
+    1257: {
+        name: "Raise Morale", type: 1, func: 44, calc: 6,
+        args: [1, 1, 0, 2500, 0, 1, 4, 0, 1500],
+        range: 3, prob: 70, sac: 1,
+        desc: "Raise AGI and ATK of self and adjacent allies at start of battle."
+    },
+
+    1258: {
+        name: "Chilling Deluge", type: 2, func: 4, calc: 2,
+        args: [1.75, 3, 0.3],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage and sometimes freeze four random foes, ignoring position."
+    },
+
+    1259: {
+        name: "Aquarius Boon", type: 1, func: 44, calc: 0,
+        args: [2, 13, 0, 0, 0, 0.6, 5],
+        range: 3, prob: 70,
+        desc: "Reduce physical dmg taken by self&adjacent allies; raise their WIS when her HP decreases."
+    },
+
+    1260: {
+        name: "Sacrificial Fire", type: 2, func: 4, calc: 1,
+        args: [1.1, 8, 0.25, 3500],
+        range: 17, prob: 30, ward: 1,
+        desc: "Deal ATK-based damage and sometimes burn six random foes, ignoring position."
+    },
+
+    1261: {
+        name: "Draw Heat", type: 1, func: 51, calc: 0,
+        args: [0, 7, 3000, 6, 0.4, 1, 121, 120, 43],
+        range: 7, prob: 70,
+        desc: "Absorbs ATK and AGI from up to three foes at start of battles."
+    },
+
+    1262: {
+        name: "Shower of Light", type: 2, func: 4, calc: 2,
+        args: [1.4],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to all foes, ignoring position."
+    },
+
+    1263: {
+        name: "Grace of the Sun", type: 1, func: 44, calc: 0,
+        args: [0.26, 2, 0, 0, 0, 0.5, 6],
+        range: 21, prob: 70,
+        desc: "Raise DEF by 26% of its WIS, and reduce magic damage taken by self by 50%."
+    },
+
+    1264: {
+        name: "Piercing Sound", type: 2, func: 4, calc: 2,
+        args: [1.25],
+        range: 315, prob: 30, ward: 2,
+        desc: "Deal WIS-based damage to up to five foes, ignoring position. Increased if fewer foes."
+    },
+
+    1265: {
+        name: "Melody of Hatred", type: 1, func: 19, calc: 0,
+        args: [0, 2, 0.4],
+        range: 7, prob: 70,
+        desc: "Chance to paralyze up to three foes at start of battle."
+    },
+
+    1266: {
+        name: "Deafening Sound", type: 2, func: 4, calc: 2,
+        args: [1.6, 2, 0.3],
+        range: 19, prob: 30, ward: 2, sac: 1,
+        desc: "Heavy WIS-based DMG to and sometimes paralyze four random foes, ignoring position."
+    },
+
+    1267: {
+        name: "Ode to Calamity", type: 2, func: 4, calc: 2,
+        args: [1.55],
+        range: 16, prob: 30, ward: 2, sac: 1,
+        desc: "Deal heavy WIS-based damage to three random foes, ignoring position."
+    },
+
+    1268: {
+        name: "Coronal Arrows", type: 2, func: 4, calc: 3,
+        args: [1.2],
+        range: 17, prob: 30, ward: 2,
+        desc: "Deal AGI-based damage to six random foes, ignoring position."
+    },
+
+    1269: {
+        name: "Wall of Flame", type: 1, func: 44, calc: 1,
+        args: [0.22, 3, 0, 0, 0, 0.19, 4],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent allies by 22%/19% of his ATK."
+    },
+
+    1270: {
+        name: "Thorn Lash", type: 2, func: 4, calc: 2,
+        args: [1.65],
+        range: 19, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to four random foes, ignoring position."
+    },
+
+    1271: {
+        name: "Paling of Thorns", type: 1, func: 44, calc: 2,
+        args: [0.07, 4, 0, 0, 0, 0.15, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent allies by 15%/7% of her WIS."
+    },
+
+    1272: {
+        name: "Weighted Discus", type: 2, func: 4, calc: 3,
+        args: [2],
+        range: 23, prob: 30, ward: 2, sac: 1,
+        desc: "Deal massive AGI-based damage to two random foes, ignoring position."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],
@@ -8063,6 +8196,34 @@ var SkillDatabase: SkillMap = {
         args: [1.2, 0.07],
         range: 5, prob: 100, ward: 1, isAutoAttack: true,
         desc: "ATK-based damage and chance to kill target."
+    },
+
+    10193: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [0.7],
+        range: 6, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to up to two foes."
+    },
+
+    10194: {
+        name: "Standard Action", type: 2, func: 3, calc: 1,
+        args: [1.4],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
+    },
+
+    10195: {
+        name: "Standard Action", type: 2, func: 4, calc: 2,
+        args: [1],
+        range: 5, prob: 100, ward: 2, isAutoAttack: true,
+        desc: "WIS-based damage to one foe."
+    },
+
+    10196: {
+        name: "Standard Action", type: 2, func: 4, calc: 1,
+        args: [1.2],
+        range: 5, prob: 100, ward: 1, isAutoAttack: true,
+        desc: "ATK-based damage to one foe."
     },
 
     9001: {
