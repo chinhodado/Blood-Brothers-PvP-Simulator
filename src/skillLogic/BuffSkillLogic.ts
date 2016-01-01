@@ -26,8 +26,8 @@ class BuffSkillLogic extends SkillLogic {
 
         var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
 
-        // for ONHIT_BUFF, the calcType is 6 (Debuff), which doesn't make any sense. Anyway...
-        // for HP buff, calcType 6 indicates a flat buff
+        // for buff, calcType 6 indicates a flat buff
+        // for onhit buff, calcType 6 indicates a flat buff, but the amount has to be multiplied by 100
         var baseStat = skill.skillCalcType === 6? 0 : executor.getStat(basedOnStatType);
         if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
             assert(skill.skillCalcType === 6, "ONHIT_BUFF with calcType != 6, not sure what this means...");
@@ -44,11 +44,16 @@ class BuffSkillLogic extends SkillLogic {
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
                         var skillMod = skill.skillFuncArg1;
-                        if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
+                        if (skill.skillCalcType === 6) {
                             if (skill.skillFuncArg4 === 0) {
-                                throw new Error("Not sure what needs to happen here when arg4 = 0 for onhit buff. Check the manual.");
+                                throw new Error("Not sure what needs to happen here when arg4 = 0 for skillCalcType = 6. Check the manual.");
                             } else {
-                                var buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
+                                if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
+                                    var buffAmount = Math.round(skillMod * skill.skillFuncArg4 * 100);
+                                }
+                                else {
+                                    buffAmount = Math.round(skillMod * skill.skillFuncArg4);
+                                }
                             }
                         }
                         else {
