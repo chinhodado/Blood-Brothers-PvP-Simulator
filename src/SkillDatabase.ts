@@ -7113,6 +7113,83 @@ var SkillDatabase: SkillMap = {
         desc: "Deal massive AGI-based damage to two random foes, ignoring position."
     },
 
+    1273: {
+        name: "Stinging Rain", type: 2, func: 4, calc: 2,
+        args: [1.6],
+        range: 314, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to up to four foes ignoring position. Increased if fewer foes."
+    },
+
+    1274: {
+        name: "Sapping Rain", type: 1, func: 44, calc: 2,
+        args: [0.07, 4, 0, 0, 0, 0.14, 3],
+        range: 3, prob: 70,
+        desc: "Raise WIS/AGI of self and adjacent allies by 14%/7% of her WIS."
+    },
+
+    1275: {
+        name: "Eviscerating Claws", type: 2, func: 52, calc: 3,
+        args: [1.35, 4, 1000, 6, 0.5, 1, 121, 120],
+        range: 19, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage and absorb AGI from four random foes."
+    },
+
+    1276: {
+        name: "Depraved Blade", type: 2, func: 3, calc: 1,
+        args: [2.6],
+        range: 23, prob: 30, ward: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    1277: {
+        name: "Corruption's Allure", type: 1, func: 51, calc: 0,
+        args: [0, 7, 1000, 6, 0.5, 1, 121, 120, 43],
+        range: 6, prob: 70,
+        desc: "Absorbs ATK and AGI from up to two foes at start of battles."
+    },
+
+    1278: {
+        name: "Apostate Blade", type: 2, func: 3, calc: 1,
+        args: [2],
+        range: 23, prob: 30, ward: 1, sac: 1,
+        desc: "Deal massive ATK-based damage to two random foes."
+    },
+
+    1279: {
+        name: "Unsullied Strike", type: 2, func: 52, calc: 3,
+        args: [1.45, 4, 1000, 6, 0.5, 1, 121, 120],
+        range: 20, prob: 30, ward: 1, sac: 1,
+        desc: "Deal AGI-based damage and absorb AGI from five random foes."
+    },
+
+    1280: {
+        name: "Galvanic Cyclone", type: 2, func: 34, calc: 2,
+        args: [1.7, 3, 1, 0.06],
+        range: 8, prob: 30, ward: 2,
+        desc: "Deal heavy WIS-based damage to all foes and lower WIS of targets."
+    },
+
+    1281: {
+        name: "Galvanic Rebirth", type: 2, func: 6, calc: 0,
+        args: [0.7],
+        range: 122, prob: 50,
+        desc: "Revive two random familiars with 70% of their HP."
+    },
+
+    1282: {
+        name: "Melody of the Beyond", type: 16, func: 19, calc: 0,
+        args: [0, 5, 1, 1],
+        range: 8, prob: 70, sac: 1,
+        desc: "Silence all foes for one turn upon his death."
+    },
+
+    1283: {
+        name: "Shield of Valor", type: 5, func: 14, calc: 1,
+        args: [1],
+        range: 2, prob: 50, ward: 1, sac: 1,
+        desc: "Take damage in place of adjacent familiars and counter."
+    },
+
     10001: { // 100% Mod, Single Hit, WIS-based, position independent
         name: "Standard Action", type: 2, func: 4, calc: 2,
         args: [1],

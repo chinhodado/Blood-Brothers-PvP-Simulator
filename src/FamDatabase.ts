@@ -4750,4 +4750,56 @@ var famDatabase: CardMap = {
         img: "10b", rarity: 5, evo: 2,
         fullName: "Vesta, Flame Witch II"
     },
+    11936: {
+        name: "Hervor", stats: [17751, 18157, 14535, 14120, 5506],
+        skills: [1283],
+        autoAttack: 10041,
+        img: "385", rarity: 4, evo: 4,
+        fullName: "Hervor, the Cursed Blade II"
+    },
+    21914: {
+        name: "Taromaiti", stats: [17385, 18241, 12033, 6151, 17309],
+        skills: [1276, 1277],
+        img: "1bd", rarity: 4, evo: 2,
+        fullName: "Taromaiti, Fallen Goddess II"
+    },
+    11934: {
+        name: "Wepwawet", stats: [16230, 15851, 11634, 6881, 17533],
+        skills: [1275],
+        img: "17b", rarity: 4, evo: 4,
+        fullName: "Wepwawet, the Vanguard II"
+    },
+    21615: {
+        name: "Zaphkiel", stats: [22700, 7602, 17657, 22190, 18318],
+        skills: [1273, 1274],
+        autoAttack: 10007,
+        img: "27e", rarity: 5, evo: 3,
+        fullName: "Zaphkiel, the Blessed Rain"
+    },
+    11914: {
+        name: "Taromaiti", stats: [12890, 12999, 10538, 7419, 12734],
+        skills: [1278],
+        img: "152", rarity: 4, evo: 4,
+        fullName: "Taromaiti, Depraved Queen II"
+    },
+    11624: {
+        name: "Kapoonis", stats: [21935, 11719, 13160, 16139, 18295],
+        skills: [1280, 1281],
+        autoAttack: 10003,
+        img: "378", rarity: 5, evo: 2,
+        fullName: "Kapoonis, Thunder Magus II"
+    },
+    11917: {
+        name: "Sir", stats: [25748, 24578, 22455, 10571, 18501],
+        skills: [1279],
+        img: "44e", rarity: 6, evo: 2,
+        fullName: "Sir Galahad, Knight Champion II"
+    },
+    11330: {
+        name: "Orpheus", stats: [17212, 6162, 13658, 16529, 16497],
+        skills: [1282],
+        autoAttack: 10186,
+        img: "3bb", rarity: 4, evo: 2,
+        fullName: "Orpheus, Fallen Hero II"
+    },
 };
