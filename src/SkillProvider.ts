@@ -13,10 +13,10 @@
     static getAvailableSkillsForSelect(): number[] {
         if (this.availableSkillsForSelect == null) {
             this.availableSkillsForSelect = [];
-            for (var key in SkillDatabase) {
+            for (let key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key)) {
-                        this.availableSkillsForSelect.push(key);
+                    if (this.isAvailableForSelect(+key)) {
+                        this.availableSkillsForSelect.push(+key);
                     }
                 }
             }
@@ -31,10 +31,10 @@
     static getAvailableOpeningSkillList(): number[] {
         if (this.openingSkillList == null) {
             this.openingSkillList = [];
-            for (var key in SkillDatabase) {
+            for (let key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.OPENING) {
-                        this.openingSkillList.push(key);
+                    if (this.isAvailableForSelect(+key) && SkillDatabase[key].type === ENUM.SkillType.OPENING) {
+                        this.openingSkillList.push(+key);
                     }
                 }
             }
@@ -49,10 +49,10 @@
     static getAvailableActiveSkillList(): number[] {
         if (this.activeSkillList == null) {
             this.activeSkillList = [];
-            for (var key in SkillDatabase) {
+            for (let key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.ACTIVE) {
-                        this.activeSkillList.push(key);
+                    if (this.isAvailableForSelect(+key) && SkillDatabase[key].type === ENUM.SkillType.ACTIVE) {
+                        this.activeSkillList.push(+key);
                     }
                 }
             }
@@ -67,11 +67,11 @@
     static getAvailableReactiveSkillList(): number[] {
         if (this.reactiveSkillList == null) {
             this.reactiveSkillList = [];
-            for (var key in SkillDatabase) {
+            for (let key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && (SkillDatabase[key].type === ENUM.SkillType.DEFENSE ||
+                    if (this.isAvailableForSelect(+key) && (SkillDatabase[key].type === ENUM.SkillType.DEFENSE ||
                         SkillDatabase[key].type === ENUM.SkillType.PROTECT || SkillDatabase[key].type === ENUM.SkillType.EVADE)) {
-                        this.reactiveSkillList.push(key);
+                        this.reactiveSkillList.push(+key);
                     }
                 }
             }
@@ -86,10 +86,10 @@
     static getAvailableOnDeathSkillList(): number[] {
         if (this.onDeathSkillList == null) {
             this.onDeathSkillList = [];
-            for (var key in SkillDatabase) {
+            for (let key in SkillDatabase) {
                 if (SkillDatabase.hasOwnProperty(key)) {
-                    if (this.isAvailableForSelect(key) && SkillDatabase[key].type === ENUM.SkillType.ACTION_ON_DEATH) {
-                        this.onDeathSkillList.push(key);
+                    if (this.isAvailableForSelect(+key) && SkillDatabase[key].type === ENUM.SkillType.ACTION_ON_DEATH) {
+                        this.onDeathSkillList.push(+key);
                     }
                 }
             }

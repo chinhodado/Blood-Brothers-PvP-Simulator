@@ -69,14 +69,14 @@ class BattleDebugger {
             battleEventDiv.appendChild(turnEventList);
         }
 
-        var newEvent = document.createElement("li");
+        let newEvent = document.createElement("li");
         newEvent.innerHTML = `<a>${data.description}</a>`;
         newEvent.setAttribute("tabindex", index + "");
         newEvent.setAttribute("id", index + "");
 
         // populate right section with the field situation
         newEvent.onclick = function () {
-            BattleDebugger.getInstance().displayEventLogAtIndex(+this.id);
+            BattleDebugger.getInstance().displayEventLogAtIndex(+(<HTMLLIElement>this).id);
         };
         turnEventList.appendChild(newEvent);
     }

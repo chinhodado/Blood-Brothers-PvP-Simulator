@@ -12,16 +12,16 @@ class FamProvider {
         if (!this.tierList) {
             // parse and make the whole tier list
             this.tierList = {};
-            var allTierList = TierList;
-            var tierArray = ["X+", "X", "S+", "S", "A+", "A", "B", "C"];
+            let allTierList = TierList;
+            let tierArray = ["X+", "X", "S+", "S", "A+", "A", "B", "C"];
 
-            for (var i = 0; i < tierArray.length; i++) {
-                var tier = tierArray[i];
+            for (let i = 0; i < tierArray.length; i++) {
+                let tier = tierArray[i];
                 this.tierList[tier] = [];
 
-                for (var key in famDatabase) {
+                for (let key in famDatabase) {
                     if (famDatabase.hasOwnProperty(key)) {
-                        var name = famDatabase[key].fullName;
+                        let name = famDatabase[key].fullName;
                         if (allTierList[tier].indexOf(name) !== -1) {
                             this.tierList[tier].push(key);
                         }
@@ -40,9 +40,9 @@ class FamProvider {
         if (!this.allIdList) {
             this.allIdList = [];
 
-            for (var key in famDatabase) {
+            for (let key in famDatabase) {
                 if (famDatabase.hasOwnProperty(key) && !famDatabase[key].isWarlord) {
-                    this.allIdList.push(key);
+                    this.allIdList.push(+key);
                 }
             }
         }
@@ -51,12 +51,12 @@ class FamProvider {
     }
 
     static getRandomFamList(type: ENUM.RandomBrigType): number[] {
-        var tierXP = this.getTierList("X+");
-        var tierX = this.getTierList("X");
-        var tierSP = this.getTierList("S+");
-        var tierS = this.getTierList("S");
-        var tierAP = this.getTierList("A+");
-        var tierA = this.getTierList("A");
+        let tierXP = this.getTierList("X+");
+        let tierX = this.getTierList("X");
+        let tierSP = this.getTierList("S+");
+        let tierS = this.getTierList("S");
+        let tierAP = this.getTierList("A+");
+        let tierA = this.getTierList("A");
 
         switch (type) {
             case ENUM.RandomBrigType.ALL:

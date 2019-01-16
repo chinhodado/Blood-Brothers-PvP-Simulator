@@ -320,7 +320,9 @@ class BattleGraphic {
         else {
             var s1 = SVG.get(`p${player}f${index}hpgs1`);
             var s2 = SVG.get(`p${player}f${index}hpgs2`);
+            // @ts-ignore
             s1.animate(duration + 's').update({ offset: percent + '%' });
+            // @ts-ignore
             s2.animate(duration + 's').update({ offset: percent + '%' });
         }
 
@@ -1089,7 +1091,7 @@ class BattleGraphic {
                     option.noNestedAttackAnim = true;
                 }
 
-                function getCallback(graphic, majorIndex, minorIndex, option, target, procEffect, exploSet) {
+                let getCallback = function(graphic, majorIndex, minorIndex, option, target, procEffect, exploSet) {
                     return function() {
                         for (var i = 0; i < exploSet.length; i++) {
                             exploSet[i].opacity(0);
@@ -1102,7 +1104,7 @@ class BattleGraphic {
                         graphic.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
                         graphic.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
                     }
-                }
+                };
 
                 for (i = 0; i < exploSet.length; i++) {
                     // specify a callback for the last explosion animation

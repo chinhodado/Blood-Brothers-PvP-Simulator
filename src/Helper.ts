@@ -546,9 +546,9 @@ function showStarRequest() {
  * Prepare the battle field
  */
 function prepareField() {
-    var rndBgLink = BattleBackground.getRandomBackgroundLink();
-    var img = new Image();
-    var svgWrapper = document.getElementById("svgWrapper");
+    let rndBgLink = BattleBackground.getRandomBackgroundLink();
+    let img = new Image();
+    let svgWrapper = document.getElementById("svgWrapper");
     img.onload = () => {
         svgWrapper.style.backgroundImage = `url('${rndBgLink}')`;
     };
@@ -564,18 +564,19 @@ function playGame() {
     BattleGraphic.PLAY_MODE = 'AUTO';
     BattleDebugger.IS_DEBUG_MODE = false;
     document.getElementById('startButton').onclick = function () {
-        this.disabled = true;
+        let button = (<HTMLButtonElement>this);
+        button.disabled = true;
 
         if (ENUM.Setting.IS_MOBILE) {
-            this.style.display = "none";
+            button.style.display = "none";
         }
 
         BattleGraphic.getInstance().resetInitialField();
         BattleGraphic.getInstance().displayMajorEventAnimation(0);
-    }
-    var dataOption = getBattleDataOption();
-    var data = dataOption[0], option = dataOption[1];
-    var newGame = new BattleModel(data, option);
+    };
+    let dataOption = getBattleDataOption();
+    let data = dataOption[0], option = dataOption[1];
+    let newGame = new BattleModel(data, option);
     newGame.startBattle();
 }
 
@@ -583,10 +584,10 @@ function playSim() {
     if (!ENUM.Setting.IS_MOBILE) {
         prepareField();
     }
-    var dataOption = getBattleDataOption();
-    var data = dataOption[0], option = dataOption[1];
+    let dataOption = getBattleDataOption();
+    let data = dataOption[0], option = dataOption[1];
 
-    var NUM_BATTLE = 10000;
+    let NUM_BATTLE = 10000;
     document.getElementById("numBattle").innerHTML = numberWithCommas(NUM_BATTLE);
     (<HTMLProgressElement>document.getElementById("progressBar")).max = NUM_BATTLE;
 
@@ -631,9 +632,9 @@ function playDebug() {
  */
 function startSynchronousSim(data, option, NUM_BATTLE) {
     prepareRandom();
-    var p1WinCount = 0;
-    var p2WinCount = 0;
-    var winCountTable = {};
+    let p1WinCount = 0;
+    let p2WinCount = 0;
+    let winCountTable = {};
     BattleModel.IS_MASS_SIMULATION = true;
     BattleGraphic.GRAPHIC_DISABLED = true;
     var startTime = new Date().getTime(); // if worker is not supported, chance is high that neither is performance.now()
@@ -687,11 +688,11 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
 
 function startWorkerSim(data, option, NUM_BATTLE) {
     // now make the workers do the simulation in background
-    var totalProgress = 0;        // update every time a worker posts back
-    var workerDone = 0;           // the number of workers that have done their jobs
-    var NUM_WORKER = 4;           // the number of workers
-    var workerPool = [];          // the worker pool
-    var workerDataReturned = [];  // list of data returned by each worker
+    let totalProgress = 0;        // update every time a worker posts back
+    let workerDone = 0;           // the number of workers that have done their jobs
+    let NUM_WORKER = 4;           // the number of workers
+    let workerPool = [];          // the worker pool
+    let workerDataReturned = [];  // list of data returned by each worker
 
     for (let w = 0; w < NUM_WORKER; w++) {
         var worker = new Worker("js/worker.js");
