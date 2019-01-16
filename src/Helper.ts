@@ -559,52 +559,6 @@ function prepareField() {
     img.src = rndBgLink;
 }
 
-/**
- * Fetch the tier list and cache it
- */
-function getTierList(whatToDoNext: () => void) {
-    var needUpdate = false;
-    var currentTime = new Date().getTime();
-    var lastUpdatedTime = localStorage.getItem("lastTierUpdateTime");
-    if (!lastUpdatedTime) {
-        needUpdate = true;
-    }
-    else {
-        var elapsedTime = currentTime - lastUpdatedTime;
-        needUpdate = elapsedTime >= 1000 * 60 * 60 * 24; // 1 day
-    }
-
-    function makeCallback(cb: () => void) {
-        return data => {
-            updateTierList(data);
-            if (cb) {
-                cb();
-            }
-        }
-    }
-
-    if (!localStorage.getItem("tierList") || needUpdate) {
-        console.log("Fetching tier list...");
-        $.ajax({
-            "url": "https://bloodbrothers-chinhodado.rhcloud.com/getTier/",
-            "crossDomain": true,
-            "dataType": "json",
-            "success": makeCallback(whatToDoNext)
-        });
-    }
-    else {
-        if (whatToDoNext) whatToDoNext();
-    }
-}
-
-/**
- * Update the tier list
- */
-function updateTierList(data) {
-    localStorage.setItem("tierList", JSON.stringify(data));
-    localStorage.setItem("lastTierUpdateTime", `${new Date().getTime()}`);
-}
-
 function playGame() {
     prepareField();
     BattleGraphic.PLAY_MODE = 'AUTO';
@@ -682,7 +636,6 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
     var winCountTable = {};
     BattleModel.IS_MASS_SIMULATION = true;
     BattleGraphic.GRAPHIC_DISABLED = true;
-    var tierList = localStorage.getItem("tierList");
     var startTime = new Date().getTime(); // if worker is not supported, chance is high that neither is performance.now()
 
     var intervalCount = 0;
@@ -690,7 +643,7 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
     var CHUNK_SIZE = NUM_BATTLE / NUM_CHUNK;
     var interval = setInterval(() => {
         for (var i = 0; i < CHUNK_SIZE; i++) {
-            var newGame = new BattleModel(data, option, tierList);
+            var newGame = new BattleModel(data, option);
             var resultBattle = newGame.startBattle();
             BattleModel.resetAll();
             if (resultBattle.playerWon.id === 1) {
@@ -793,15 +746,13 @@ function startWorkerSim(data, option, NUM_BATTLE) {
 
     worker = null; // <- just leave this here
 
-    // start the workers. Need to pass the tierList information in since the worker
-    // can't access sessionStorage
+    // start the workers
     var startTime = performance.now();
 
     for (let w = 0; w < workerPool.length; w++) {
         workerPool[w].postMessage({
             data: data,
             option: option,
-            tierList: localStorage.getItem("tierList"),
             numBattle: NUM_BATTLE / NUM_WORKER
         });
     }

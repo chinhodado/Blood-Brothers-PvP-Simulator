@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outFile": "compiled.js",
+    "target": "es5",
+    "removeComments": true,
+    "module": "none"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

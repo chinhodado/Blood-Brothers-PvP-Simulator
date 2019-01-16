@@ -5,8 +5,8 @@ class BrigGenerator {
     /**
      * Return a randomly generated brig
      */
-    static getRandomBrig(randomMode: ENUM.RandomBrigType, tierListString: string, isBloodclash: boolean): number[] {
-        var randomList = FamProvider.getRandomFamList(+randomMode, tierListString);
+    static getRandomBrig(randomMode: ENUM.RandomBrigType, isBloodclash: boolean): number[] {
+        var randomList = FamProvider.getRandomFamList(+randomMode);
         var brigIds: number[] = [];
         var maxIndex = isBloodclash? 9 : 4;
 
@@ -29,7 +29,7 @@ class BrigGenerator {
     /**
      * Initialize the two players' brigade
      */
-    static initializeBrigs(data: GameData, option: GameOption = {}, tierListString?: string): void {
+    static initializeBrigs(data: GameData, option: GameOption = {}): void {
         var battle = BattleModel.getInstance();
         var isBloodClash = battle.isBloodClash;
         var p1_cardIds: number[] = [];
@@ -37,12 +37,8 @@ class BrigGenerator {
         var p1_warlordSkillIds: number[] = [];
         var p2_warlordSkillIds: number[] = [];
 
-        if (!tierListString) {
-            tierListString = localStorage["tierList"];
-        }
-
         if (option.p1RandomMode) {
-            p1_cardIds = BrigGenerator.getRandomBrig(option.p1RandomMode, tierListString, isBloodClash);
+            p1_cardIds = BrigGenerator.getRandomBrig(option.p1RandomMode, isBloodClash);
             p1_warlordSkillIds = BrigGenerator.getSmartWarlordSkills();
         }
         else {
@@ -51,7 +47,7 @@ class BrigGenerator {
         }
 
         if (option.p2RandomMode) {
-            p2_cardIds = BrigGenerator.getRandomBrig(option.p2RandomMode, tierListString, isBloodClash);
+            p2_cardIds = BrigGenerator.getRandomBrig(option.p2RandomMode, isBloodClash);
             p2_warlordSkillIds = BrigGenerator.getSmartWarlordSkills();
         }
         else {

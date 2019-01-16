@@ -8,11 +8,11 @@ class FamProvider {
     // contains ids of all fam
     static allIdList: number[] = null;
 
-    static getTierList(tierToGet: string, allTierString: string) {
+    static getTierList(tierToGet: string) {
         if (!this.tierList) {
             // parse and make the whole tier list
             this.tierList = {};
-            var allTierList = JSON.parse(allTierString);
+            var allTierList = TierList;
             var tierArray = ["X+", "X", "S+", "S", "A+", "A", "B", "C"];
 
             for (var i = 0; i < tierArray.length; i++) {
@@ -50,13 +50,13 @@ class FamProvider {
         return this.allIdList;
     }
 
-    static getRandomFamList(type: ENUM.RandomBrigType, allTierString: string): number[] {
-        var tierXP = this.getTierList("X+", allTierString);
-        var tierX = this.getTierList("X", allTierString);
-        var tierSP = this.getTierList("S+", allTierString);
-        var tierS = this.getTierList("S", allTierString);
-        var tierAP = this.getTierList("A+", allTierString);
-        var tierA = this.getTierList("A", allTierString);
+    static getRandomFamList(type: ENUM.RandomBrigType): number[] {
+        var tierXP = this.getTierList("X+");
+        var tierX = this.getTierList("X");
+        var tierSP = this.getTierList("S+");
+        var tierS = this.getTierList("S");
+        var tierAP = this.getTierList("A+");
+        var tierA = this.getTierList("A");
 
         switch (type) {
             case ENUM.RandomBrigType.ALL:

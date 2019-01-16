@@ -90,7 +90,7 @@ class BattleModel {
         return BattleModel._instance;
     }
 
-    constructor(data: GameData, option: GameOption = {}, tierListString?) {
+    constructor(data: GameData, option: GameOption = {}) {
         if (BattleModel._instance) {
             throw new Error("Error: Instantiation failed: Use getInstance() instead of new.");
         }
@@ -120,7 +120,7 @@ class BattleModel {
         this.player1 = new Player(1, "Player 1", new Formation(p1_formation), 1); // me
         this.player2 = new Player(2, "Player 2", new Formation(p2_formation), 1); // opp
 
-        BrigGenerator.initializeBrigs(data, option, tierListString);
+        BrigGenerator.initializeBrigs(data, option);
         this.cardManager.sortAllCurrentMainCards();
 
         graphic.displayFormationAndFamOnCanvas();

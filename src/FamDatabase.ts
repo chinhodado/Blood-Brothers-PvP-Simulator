@@ -1,3 +1,5 @@
+///<reference path="Enums.ts"/>
+
 /**
  * Some notes:
  * - Order the familiars by the fullName

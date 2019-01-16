@@ -15,7 +15,7 @@ function runSimulation(args) {
     BattleLogger.INFOTEXT_DISPLAYED = true;
     BattleLogger.WARNINGTEXT_DISPLAYED = true;
     for (var i = 0; i < args.numBattle; i++) {
-        var newGame = new BattleModel(args.data, args.option, args.tierList);
+        var newGame = new BattleModel(args.data, args.option);
         var resultBattle = newGame.startBattle();
         BattleModel.resetAll();
         if (resultBattle.playerWon.id == 1) {
