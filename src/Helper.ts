@@ -89,7 +89,7 @@ function toogleDisable() {
 
         // fams, skills, formation
         let elems = document.getElementsByClassName(`p${player}`);
-        for (var i = 0; i < elems.length; i++) {
+        for (let i = 0; i < elems.length; i++) {
             if (isSelected) {
                 (<HTMLInputElement>elems[i]).disabled = true;
             }
@@ -206,7 +206,7 @@ function setFamOptions() {
 
     // create an array of fam id and sort it based on the fam's full name
     let famIdArray = [];
-    for (var key in famDatabase) {
+    for (let key in famDatabase) {
         if (famDatabase.hasOwnProperty(key)) {
             famIdArray.push(key);
         }
@@ -215,7 +215,7 @@ function setFamOptions() {
 
     // populate one select
     for (let index = 0; index < famIdArray.length; index++) {
-        key = famIdArray[index];
+        let key = famIdArray[index];
         let option = document.createElement("option");
         option.value = key;
         option.text = famDatabase[key].fullName;
@@ -229,13 +229,13 @@ function setFamOptions() {
 }
 
 function toogleCustomStat(player: number) {
-    var checked = (<HTMLInputElement>document.getElementById(`p${player}customStatChbox`)).checked;
-    var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
-    var isBloodclash = btValue === "1" || btValue === "3";
+    let checked = (<HTMLInputElement>document.getElementById(`p${player}customStatChbox`)).checked;
+    let btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+    let isBloodclash = btValue === "1" || btValue === "3";
 
     // for normal (0-5)
-    var customStatDiv = document.getElementById(`p${player}customStatDivNormal`);
-    var inputs = customStatDiv.getElementsByTagName("input");
+    let customStatDiv = document.getElementById(`p${player}customStatDivNormal`);
+    let inputs = customStatDiv.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].disabled = !checked;
     }
@@ -575,7 +575,7 @@ function playSim() {
     BattleDebugger.IS_DEBUG_MODE = false;
     BattleModel.IS_MASS_SIMULATION = true;
     if (!ENUM.Setting.IS_MOBILE) {
-        var newGame = new BattleModel(data, option);
+        let newGame = new BattleModel(data, option);
     }
 
     // hide/show some elements on the page
@@ -610,15 +610,15 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
     let winCountTable = {};
     BattleModel.IS_MASS_SIMULATION = true;
     BattleGraphic.GRAPHIC_DISABLED = true;
-    var startTime = new Date().getTime(); // if worker is not supported, chance is high that neither is performance.now()
+    let startTime = new Date().getTime(); // if worker is not supported, chance is high that neither is performance.now()
 
-    var intervalCount = 0;
-    var NUM_CHUNK = 100;
-    var CHUNK_SIZE = NUM_BATTLE / NUM_CHUNK;
-    var interval = setInterval(() => {
-        for (var i = 0; i < CHUNK_SIZE; i++) {
-            var newGame = new BattleModel(data, option);
-            var resultBattle = newGame.startBattle();
+    let intervalCount = 0;
+    let NUM_CHUNK = 100;
+    let CHUNK_SIZE = NUM_BATTLE / NUM_CHUNK;
+    let interval = setInterval(() => {
+        for (let i = 0; i < CHUNK_SIZE; i++) {
+            let newGame = new BattleModel(data, option);
+            let resultBattle = newGame.startBattle();
             BattleModel.resetAll();
             if (resultBattle.playerWon.id === 1) {
                 p1WinCount++;
@@ -626,11 +626,11 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
                 p2WinCount++;
             }
 
-            var winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
+            let winTeam = resultBattle.cardManager.getPlayerOriginalMainCards(resultBattle.playerWon);
             if (resultBattle.isBloodClash) {
                 winTeam = winTeam.concat(resultBattle.cardManager.getPlayerOriginalReserveCards(resultBattle.playerWon));
             }
-            for (var j = 0; j < winTeam.length; j++) {
+            for (let j = 0; j < winTeam.length; j++) {
                 if (winCountTable[winTeam[j].dbId]) {
                     winCountTable[winTeam[j].dbId]++;
                 } else {
@@ -648,8 +648,8 @@ function startSynchronousSim(data, option, NUM_BATTLE) {
         }
 
         if (intervalCount * CHUNK_SIZE >= NUM_BATTLE) {
-            var endTime = new Date().getTime();
-            var finalData = {
+            let endTime = new Date().getTime();
+            let finalData = {
                 p1WinCount: p1WinCount,
                 p2WinCount: p2WinCount,
                 winCountTable: winCountTable

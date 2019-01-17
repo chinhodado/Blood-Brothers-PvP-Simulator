@@ -51,7 +51,7 @@ class Skill {
 
         this.logic = SkillLogicFactory.getSkillLogic(this.skillFunc);
 
-        var selectDead = false;
+        let selectDead = false;
         if (this.skillFunc === ENUM.SkillFunc.REVIVE) {
             selectDead = true;
         }
@@ -63,8 +63,8 @@ class Skill {
      * @param srcSkillData: optional, the skill data from srcdb, if specified it will be used directly
      */
     static isAttackSkill(skillId: number, srcSkillData?: any): boolean {
-        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
-        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
+        let skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        let func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
         switch (func) {
             case ENUM.SkillFunc.ATTACK:
@@ -97,8 +97,8 @@ class Skill {
      * @param srcSkillData: optional, the skill data from srcdb, if specified it will be used directly
      */
     static isIndirectSkill(skillId: number, srcSkillData?: any): boolean {
-        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
-        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
+        let skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        let func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
         switch (func) {
             case ENUM.SkillFunc.ATTACK:

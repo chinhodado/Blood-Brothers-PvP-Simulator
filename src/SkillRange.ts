@@ -224,8 +224,9 @@ class RangeFactory {
     }
 
     static createEnemyRandomRange (id: ENUM.SkillRange) {
+        let numTargets: number;
         if (this.isEnemyVaryingRange(id)) {
-            var numTargets = RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id];
+            numTargets = RangeFactory.ENEMY_VARYING_RANDOM_RANGE_TARGET_NUM[id];
         } else {
             numTargets = RangeFactory.ENEMY_RANDOM_RANGE_TARGET_NUM[id];
         }
@@ -268,8 +269,9 @@ class RangeFactory {
     }
 
     static createEnemyNearRange (id: ENUM.SkillRange) {
+        let numTargets: number;
         if (this.isEnemyNearRange(id)) {
-            var numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
+            numTargets = RangeFactory.ENEMY_NEAR_RANGE_TARGET_NUM[id];
         }
         else if (this.isEnemyNearScaledRange(id)) {
             numTargets = RangeFactory.ENEMY_NEAR_SCALED_RANGE_TARGET_NUM[id];
