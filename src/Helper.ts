@@ -1,5 +1,4 @@
 ﻿/// <reference path="SkillProvider.ts"/>
-declare var swal;
 
 /**
  * Set some form items to what were last chosen
@@ -514,31 +513,6 @@ function onBattleFinished() {
  * Callback when the simulation has ended
  */
 function onSimulationFinished() {
-    if (!ENUM.Setting.IS_MOBILE) {
-        showStarRequest();
-    }
-}
-
-/**
- * Show request for starring on Github
- */
-function showStarRequest() {
-    setTimeout(() => {
-        if (!localStorage.getItem("starRequestShown")) {
-            swal({
-                title: "Star this!",
-                text: "If you like this simulator, star the project on Github. It motivates me to improve it :)",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#5cb85c",
-                confirmButtonText: "Take me there",
-                closeOnConfirm: false
-            }, () => {
-                localStorage.setItem("starRequestShown", "true");
-                window.location.href = 'https://github.com/chinhodado/Blood-Brothers-PvP-Simulator';
-            });
-        }
-    }, 2000);
 }
 
 /**

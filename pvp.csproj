@@ -22,7 +22,6 @@
     <Content Include="css\font.css" />
     <Content Include="css\game.css" />
     <Content Include="css\settings.css" />
-    <Content Include="css\sweet-alert.css" />
     <Content Include="debug.html" />
     <Content Include="css\dialog.css" />
     <Content Include="img\arrow_left.png" />
@@ -46,7 +45,6 @@
     <Content Include="game.html" />
     <Content Include="lib\jquery.min.js" />
     <Content Include="lib\svg.filter.min.js" />
-    <Content Include="lib\sweet-alert.min.js" />
     <Content Include="setting.html" />
     <Content Include="lib\svg.min.js" />
     <TypeScriptCompile Include="src\affliction\ConfuseAffliction.ts" />
