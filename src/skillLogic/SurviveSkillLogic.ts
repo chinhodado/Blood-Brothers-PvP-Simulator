@@ -2,7 +2,7 @@
 
 class SurviveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hpRatio = data.executor.getHpRatio();
+        let hpRatio = data.executor.getHpRatio();
         return super.willBeExecuted(data) && (hpRatio > data.skill.skillFuncArg1) && (data.wouldBeDamage >= data.executor.getHP());
     }
 

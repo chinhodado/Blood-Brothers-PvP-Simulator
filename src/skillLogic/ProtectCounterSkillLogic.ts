@@ -8,8 +8,8 @@ class ProtectCounterSkillLogic extends ProtectSkillLogic {
 
     execute(data: SkillLogicData) {
         // protect phase
-        var toReturn = this.executeProtectPhase(data);
-        var protector = data.executor;
+        let toReturn = this.executeProtectPhase(data);
+        let protector = data.executor;
 
         // counter phase
         if (!protector.isDead && protector.canAttack() && !data.attacker.isDead) {

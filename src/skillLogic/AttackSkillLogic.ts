@@ -2,16 +2,16 @@
 
 class AttackSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasTarget = data.skill.range.hasValidTarget(data.executor);
+        let hasTarget = data.skill.range.hasValidTarget(data.executor);
         return super.willBeExecuted(data) && hasTarget;
     }
 
     execute(data: SkillLogicData) {
-        var skill = data.skill;
+        let skill = data.skill;
         skill.getReady(data.executor);
 
         // hacky, but kinda convenient.
-        var targets: Card[] = skill.range.targets;
+        let targets: Card[] = skill.range.targets;
         if (RangeFactory.isEnemyScaledRange(skill.skillRange)) {
             data.scaledRatio = RangeFactory.getScaledRatio(skill.skillRange, targets.length);
         }
@@ -29,8 +29,8 @@ class AttackSkillLogic extends SkillLogic {
      * Multiple protection is possible
      */
     executeNonAoeAttack(data: SkillLogicData): void {
-        var target: Card;
-        var attackCount = 0; // for varying skills
+        let target: Card;
+        let attackCount = 0; // for varying skills
         while ((target = data.skill.getTarget(data.executor)) && !data.executor.isDead && data.executor.canAttack()) {
             if (RangeFactory.isEnemyVaryingRange(data.skill.skillRange)) {
                 var varyingRatio = RangeFactory.getVaryingRatio(data.skill.skillRange, attackCount);
@@ -44,8 +44,8 @@ class AttackSkillLogic extends SkillLogic {
      * Execute an AoE attack
      */
     executeAoeAttack(data: SkillLogicData, targets: Card[]): void {
-        var skill = data.skill;
-        var executor = data.executor;
+        let skill = data.skill;
+        let executor = data.executor;
 
         if (skill.isIndirectSkill()) {
             // if the skill is indirect and of range type, it must be AoE, so only one reactive skill can be proc
@@ -62,28 +62,28 @@ class AttackSkillLogic extends SkillLogic {
             shuffle(targets);
 
             // assume only one reactive can be proc during an AoE skill. Is it true?
-            var aoeReactiveSkillActivated = false; //<- has any reactive skill proc during this whole AoE?
+            let aoeReactiveSkillActivated = false; //<- has any reactive skill proc during this whole AoE?
 
             // keep track of targets attacked, to make sure a fam can only be attacked once. So if a fam has already been
             // attacked, it cannot protect another fam later on
-            var targetsAttacked: boolean[] = [];
+            let targetsAttacked: boolean[] = [];
 
-            for (var i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
-                var targetCard = targets[i];
+            for (let i = 0; i < targets.length; i++) { //<- note that there's no executor.isDead check here
+                let targetCard = targets[i];
 
                 // a target can be dead, for example from protecting another fam
                 if (targetCard.isDead) {
                     continue;
                 }
 
-                var protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
+                let protectSkillActivated = false; //<- has any protect skill activated to protect the current target?
 
                 // if no reactive skill has been activated at all during this AoE, we can try to
                 // protect this target, otherwise no protect can be activated to protect this target
                 // also, if the target has already been attacked (i.e. it protected another card before), then
                 // don't try to protect it
                 if (!aoeReactiveSkillActivated && !targetsAttacked[targetCard.id]) {
-                    var protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, data.scaledRatio);
+                    let protectData = this.battleModel.processProtect(executor, targetCard, skill, targetsAttacked, data.scaledRatio);
                     protectSkillActivated = protectData.activated;
                     if (protectSkillActivated) {
                         aoeReactiveSkillActivated = true;
@@ -93,9 +93,9 @@ class AttackSkillLogic extends SkillLogic {
                 // if not protected, proceed with the attack as normal
                 // also need to make sure the target is not already attacked
                 if (!protectSkillActivated && !targetsAttacked[targetCard.id]) {
-                    var defenseSkill = targetCard.getRandomDefenseSkill();
+                    let defenseSkill = targetCard.getRandomDefenseSkill();
 
-                    var defenseData: SkillLogicData = {
+                    let defenseData: SkillLogicData = {
                         executor: targetCard,
                         skill: defenseSkill,
                         attacker: executor,
@@ -141,13 +141,13 @@ class AttackSkillLogic extends SkillLogic {
     }
 
     processAttackAgainstSingleTarget(executor: Card, target: Card, skill: Skill, scaledRatio: number, varyingRatio?: number) {
-        var protectData = this.battleModel.processProtect(executor, target, skill, null, scaledRatio, varyingRatio);
+        let protectData = this.battleModel.processProtect(executor, target, skill, null, scaledRatio, varyingRatio);
 
         // if not protected, proceed with the attack as normal
         if (!protectData.activated) {
-            var defenseSkill = target.getRandomDefenseSkill();
+            let defenseSkill = target.getRandomDefenseSkill();
 
-            var defenseData: SkillLogicData = {
+            let defenseData: SkillLogicData = {
                 executor: target,
                 skill: defenseSkill,
                 attacker: executor,
@@ -192,7 +192,7 @@ class AttackSkillLogic extends SkillLogic {
      * Process the drain phase for drain attacks
      */
     processDrainPhase(executor: Card, skill: Skill) {
-        var healRange = RangeFactory.getRange(skill.skillFuncArg4);
+        let healRange = RangeFactory.getRange(skill.skillFuncArg4);
         healRange.getReady(executor,(card: Card) => !card.isFullHealth());
 
         // hacky
@@ -201,8 +201,8 @@ class AttackSkillLogic extends SkillLogic {
             return;
         }
 
-        var healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healRange.targets.length);
-        var target: Card;
+        let healAmount = Math.floor((executor.lastBattleDamageDealt * skill.skillFuncArg2) / healRange.targets.length);
+        let target: Card;
         while (target = healRange.getTarget(executor)) {
             this.battleModel.damageToTargetDirectly(target, -1 * healAmount, " healing");
         }

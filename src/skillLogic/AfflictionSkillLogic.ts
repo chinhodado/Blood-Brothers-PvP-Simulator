@@ -4,7 +4,7 @@ class AfflictionSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         data.skill.getReady(data.executor);
 
-        var target: Card;
+        let target: Card;
         while (target = data.skill.getTarget(data.executor)) {
             AfflictionSkillLogic.processAffliction(data.executor, target, data.skill);
         }
@@ -20,15 +20,15 @@ class AfflictionSkillLogic extends SkillLogic {
      * @returns {}
      */
     static processAffliction(executor: Card, target: Card, skill: Skill, fixedProb?: number) {
-        var type: ENUM.AfflictionType = skill.skillFuncArg2;
-        var prob: number = fixedProb ? fixedProb : skill.skillFuncArg3;
+        let type: ENUM.AfflictionType = skill.skillFuncArg2;
+        let prob: number = fixedProb ? fixedProb : skill.skillFuncArg3;
         prob *= executor.getPassiveAfflictionProbabilityBuffEffect(target);
 
         if (Math.random() > prob || !type) {
             return;
         }
 
-        var option: AfflictOptParam = {};
+        let option: AfflictOptParam = {};
 
         if (skill.skillFuncArg4) {
             if (type === ENUM.AfflictionType.POISON) {
@@ -62,7 +62,7 @@ class AfflictionSkillLogic extends SkillLogic {
             var percent = target.getPoisonPercent();
         }
 
-        var logger = BattleLogger.getInstance();
+        let logger = BattleLogger.getInstance();
         logger.addMinorEvent({
             executorId: executor.id,
             targetId: target.id,

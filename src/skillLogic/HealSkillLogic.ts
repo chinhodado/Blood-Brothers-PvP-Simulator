@@ -2,7 +2,7 @@
 
 class HealSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
+        let hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
         return super.willBeExecuted(data) && hasValidTarget;
     }
 
@@ -13,12 +13,12 @@ class HealSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         data.skill.range.getReady(data.executor, this.getCondFunc());
 
-        var baseHealAmount = getHealAmount(data.executor);
+        let baseHealAmount = getHealAmount(data.executor);
 
-        var multiplier = data.skill.skillFuncArg1;
-        var healAmount = Math.floor(multiplier * baseHealAmount);
+        let multiplier = data.skill.skillFuncArg1;
+        let healAmount = Math.floor(multiplier * baseHealAmount);
 
-        var target: Card;
+        let target: Card;
         while (target = data.skill.getTarget(data.executor)) {
             // if the heal is not based on wis, recalculate the heal amount
             if (data.skill.skillFuncArg2 === 1) {

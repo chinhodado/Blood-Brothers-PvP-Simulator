@@ -187,10 +187,10 @@ class RangeFactory {
     static VaryingPatternParam = {
         419: [0.9, 1.0, 1.15, 1.35],
         420: [0.8, 0.9, 1, 1.1, 1.2],
-    }
+    };
 
     static getRange (id: ENUM.SkillRange, selectDead: boolean = false) {
-        var range: BaseRange;
+        let range: BaseRange;
         if (this.isEnemyRowRandomRange(id)) {
             range = this.createEnemyRowRandomRange(id);
         }
@@ -233,7 +233,7 @@ class RangeFactory {
     }
 
     static createEnemyRowRandomRange (id: ENUM.SkillRange): BaseRange {
-        var numTargets = RangeFactory.ENEMY_ROW_RANDOM_RANGE_TARGET_NUM[id];
+        let numTargets = RangeFactory.ENEMY_ROW_RANDOM_RANGE_TARGET_NUM[id];
 
         switch (id) {
             case ENUM.SkillRange.ENEMY_REAR_RANDOM_2:
@@ -290,7 +290,7 @@ class RangeFactory {
     }
 
     static getScaledRatio(id: ENUM.SkillRange, targetsLeft: number): number {
-        var paramArray = RangeFactory.ScalePatternParams[id];
+        let paramArray = RangeFactory.ScalePatternParams[id];
 
         if (!paramArray) {
             throw new Error("Invalid range for getting scale ratio");
@@ -303,7 +303,7 @@ class RangeFactory {
      * nthTarget: starts at 0
      */
     static getVaryingRatio(id: ENUM.SkillRange, nthTarget: number): number {
-        var paramArray = RangeFactory.VaryingPatternParam[id];
+        let paramArray = RangeFactory.VaryingPatternParam[id];
         if (!paramArray) {
             throw new Error("Invalid range for getting varying ratio");
         }
@@ -323,7 +323,7 @@ class RangeFactory {
     }
 
     static canBeAoeRange(rangeId: ENUM.SkillRange): boolean {
-        var canBe = false;
+        let canBe = false;
 
         if (this.isEnemyNearRange(rangeId) ||
             this.isEnemyNearScaledRange(rangeId) ||
@@ -394,9 +394,9 @@ abstract class BaseRange {
      * Get all targets that satisfy a condition
      */
     getBaseTargets(condFunc: (x: Card) => boolean): Card[] {
-        var allCards = CardManager.getInstance().getAllMainCardsInPlayerOrder();
-        var baseTargets = [];
-        for (var i = 0; i < allCards.length; i++) {
+        let allCards = CardManager.getInstance().getAllMainCardsInPlayerOrder();
+        let baseTargets = [];
+        for (let i = 0; i < allCards.length; i++) {
             if (condFunc(allCards[i])) {
                 baseTargets.push(allCards[i]);
             }
@@ -423,9 +423,9 @@ abstract class BaseRange {
         // this is to initialize targets[]
         this.getReady(executor, condFunc);
 
-        var hasValid = false;
+        let hasValid = false;
         if (condFunc) {
-            for (var i = 0; i < this.targets.length; i++) {
+            for (let i = 0; i < this.targets.length; i++) {
                 if (condFunc(this.targets[i])) {
                     hasValid = true;
                     break;
@@ -443,7 +443,7 @@ abstract class BaseRange {
      * Get the default conditional function (valid if card is not dead and belongs to the enemy)
      */
     getCondFunc(executor: Card): (x: Card) => boolean {
-        var isSameGroup = card => this.isSameGroup(executor, card);
+        let isSameGroup = card => this.isSameGroup(executor, card);
         return (card: Card) => {
             if (card.isDead || isSameGroup(card)) {
                 return false;
@@ -458,7 +458,7 @@ abstract class BaseRange {
      * @param executor
      */
     getSelfOrOppositeAsFriend(executor: Card): Card {
-        var condFunc = (card: Card) => this.isSameGroup(executor, card) &&
+        let condFunc = (card: Card) => this.isSameGroup(executor, card) &&
             executor.formationColumn === card.formationColumn;
         return this.getBaseTargets(condFunc)[0];
     }
@@ -503,7 +503,7 @@ abstract class BaseRange {
      * If confused, the group may be the opposite player.
      */
     getGroup(executor: Card): number {
-        var battle = BattleModel.getInstance();
+        let battle = BattleModel.getInstance();
         if (this.isConfused) {
             if (this.isDuplicative) {
                 // if duplicative then random each time, otherwise used cachedValue
@@ -580,10 +580,10 @@ class RandomRange extends BaseRange {
      * Only difference to the BaseRange version is that we use baseTargets instead of the range's targets[]
      */
     hasValidTarget(executor: Card, condFunc?: (x: Card) => boolean): boolean {
-        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
-        var hasValid = false;
+        let baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor));
+        let hasValid = false;
         if (condFunc) {
-            for (var i = 0; i < baseTargets.length; i++) {
+            for (let i = 0; i < baseTargets.length; i++) {
                 if (condFunc(baseTargets[i])) {
                     hasValid = true;
                     break;
@@ -599,7 +599,7 @@ class RandomRange extends BaseRange {
 }
 
 class EnemyRandomRange extends RandomRange {
-    private numTarget: number;
+    private readonly numTarget: number;
     private numProcessed: number;
 
     constructor(id: ENUM.SkillRange, numTarget: number) {
@@ -708,13 +708,13 @@ class EnemyNearRange extends BaseRange {
 
     getReady(executor: Card): void {
         super.getReady(executor);
-        var battle = BattleModel.getInstance();
+        let battle = BattleModel.getInstance();
 
         // can be real player or opposite player (confused)
-        var executorPlayer = this.getGroup(executor);
+        let executorPlayer = this.getGroup(executor);
 
         // get center enemy
-        var centerEnemy: Card;
+        let centerEnemy: Card;
         if (executorPlayer === executor.getPlayerId()) {
             centerEnemy = CardManager.getInstance().getNearestSingleOpponentTarget(executor);
         } else {
@@ -726,20 +726,20 @@ class EnemyNearRange extends BaseRange {
             return;
         }
 
-        var enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(battle.getPlayerById(executorPlayer));
+        let enemyCards = CardManager.getInstance().getEnemyCurrentMainCards(battle.getPlayerById(executorPlayer));
 
         // only upto 2 and not 4 since the max distance is 2 anyway
-        var offsetArray = [0, -1, 1, -2, 2];
-        var targets = [];
-        var targetCount = 0;
+        let offsetArray = [0, -1, 1, -2, 2];
+        let targets = [];
+        let targetCount = 0;
 
         // starting from the center enemy, go around it, adding targets when possible
-        for (var i = 0; i < offsetArray.length; i++) {
+        for (let i = 0; i < offsetArray.length; i++) {
             if (targetCount >= this.numTarget || Math.abs(offsetArray[i]) > this.maxDistance) {
                 break;
             }
-            var currentEnemyIndex = centerEnemy.formationColumn + offsetArray[i];
-            var currentEnemyCard = enemyCards[currentEnemyIndex];
+            let currentEnemyIndex = centerEnemy.formationColumn + offsetArray[i];
+            let currentEnemyCard = enemyCards[currentEnemyIndex];
             if (currentEnemyCard && !currentEnemyCard.isDead) {
                 targetCount++;
                 targets.push(enemyCards[currentEnemyIndex]);
@@ -775,11 +775,11 @@ class FriendRandomRange extends RandomRange {
     }
 
     getReady(executor: Card, skillCondFunc?: (card: Card)=>boolean): void{
-        var baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
-        var targets: Card[] = [];
+        let baseTargets: Card[] = this.getBaseTargets(this.getCondFunc(executor, skillCondFunc));
+        let targets: Card[] = [];
         this.currentIndex = 0;
 
-        var selfAllowed = false;
+        let selfAllowed = false;
         for (let i = 0; i < baseTargets.length; i++) {
             if (executor.formationColumn === baseTargets[i].formationColumn) {
                 selfAllowed = true;
@@ -799,7 +799,7 @@ class FriendRandomRange extends RandomRange {
         }
 
         if (this.forcedSelf && selfAllowed ) {
-             var alreadyIncludedSelf = false;
+             let alreadyIncludedSelf = false;
              for (let i = 0; i < targets.length; i++) {
                  if (executor.formationColumn === targets[i].formationColumn) {
                       alreadyIncludedSelf = true;
@@ -816,8 +816,8 @@ class FriendRandomRange extends RandomRange {
     }
 
     getCondFunc(executor: Card, skillCondFunc?: (card: Card)=>boolean): (x: Card)=>boolean {
-        var selectDead = this.selectDead;
-        var includeSelf = this.includeSelf;
+        let selectDead = this.selectDead;
+        let includeSelf = this.includeSelf;
 
         return (card: Card) => {
             if (!this.isSameGroup(executor, card))
@@ -841,10 +841,10 @@ class BaseRowRange extends BaseRange {
     static ROW_TYPE_COUNT = 3;
 
     getSameRowCards(cards: Card[], row: ENUM.FormationRow): Card[] {
-        var returnArr: Card[] = [];
+        let returnArr: Card[] = [];
 
-        for (var i = 0; i < cards.length; i++) {
-            var card = cards[i];
+        for (let i = 0; i < cards.length; i++) {
+            let card = cards[i];
             if (card.getFormationRow() === row) {
                 returnArr.push(card);
             }
@@ -854,15 +854,15 @@ class BaseRowRange extends BaseRange {
     }
 
     getRowCandidates(cards: Card[], row: ENUM.FormationRow, isAsc: boolean): Card[] {
-        var candidates: Card[] = [];
+        let candidates: Card[] = [];
         if (!cards || cards.length === 0) {
             return candidates;
         }
 
-        var currentRow = row;
+        let currentRow = row;
         while (!candidates.length) {
-            var sameRowCards = this.getSameRowCards(cards, currentRow);
-            for (var i = 0; i < sameRowCards.length; i++) {
+            let sameRowCards = this.getSameRowCards(cards, currentRow);
+            for (let i = 0; i < sameRowCards.length; i++) {
                 candidates.push(sameRowCards[i]);
             }
 
@@ -884,10 +884,10 @@ class BaseRowRange extends BaseRange {
 class EnemyFrontMidAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        let candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
-            var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
-            var centerCards = this.getSameRowCards(candidates, ENUM.FormationRow.MID);
+            let frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
+            let centerCards = this.getSameRowCards(candidates, ENUM.FormationRow.MID);
 
             if (frontCards.length > 0 || centerCards.length > 0) {
                 candidates = frontCards.concat(centerCards);
@@ -902,10 +902,10 @@ class EnemyFrontMidAllRange extends BaseRowRange {
 class EnemyFrontRearAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        let candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
-            var frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
-            var rearCards = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
+            let frontCards = this.getSameRowCards(candidates, ENUM.FormationRow.FRONT);
+            let rearCards = this.getSameRowCards(candidates, ENUM.FormationRow.REAR);
 
             if (frontCards.length > 0 || rearCards.length > 0) {
                 candidates = frontCards.concat(rearCards);
@@ -920,7 +920,7 @@ class EnemyFrontRearAllRange extends BaseRowRange {
 class EnemyFrontAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        let candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.FRONT, true);
         }
@@ -931,7 +931,7 @@ class EnemyFrontAllRange extends BaseRowRange {
 class EnemyMidAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        let candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.MID, true);
         }
@@ -942,7 +942,7 @@ class EnemyMidAllRange extends BaseRowRange {
 class EnemyRearAllRange extends BaseRowRange {
     getReady(executor: Card): void {
         super.getReady(executor);
-        var candidates = this.getBaseTargets(this.getCondFunc(executor));
+        let candidates = this.getBaseTargets(this.getCondFunc(executor));
         if (candidates.length) {
             candidates = this.getRowCandidates(candidates, ENUM.FormationRow.REAR, false);
         }
@@ -951,9 +951,9 @@ class EnemyRearAllRange extends BaseRowRange {
 }
 
 class EnemyRowRandomRange extends RandomRange { // TODO: fix this later (not extends RandomRange)
-    private numTargets: number;
+    private readonly numTargets: number;
     private numProcessed: number;
-    private baseOnRangeType: ENUM.SkillRange;
+    private readonly baseOnRangeType: ENUM.SkillRange;
 
     constructor(id: ENUM.SkillRange, numTargets: number, baseOnRangeType: ENUM.SkillRange) {
         super(id);
@@ -967,7 +967,7 @@ class EnemyRowRandomRange extends RandomRange { // TODO: fix this later (not ext
     }
 
     getTarget(executor: Card): Card {
-        var tmpRange = RangeFactory.getRange(this.baseOnRangeType);
+        let tmpRange = RangeFactory.getRange(this.baseOnRangeType);
         tmpRange.getReady(executor);
 
         if (this.numProcessed < this.numTargets) {

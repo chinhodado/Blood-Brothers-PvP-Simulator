@@ -6,17 +6,17 @@ class BrigGenerator {
      * Return a randomly generated brig
      */
     static getRandomBrig(randomMode: ENUM.RandomBrigType, isBloodclash: boolean): number[] {
-        var randomList = FamProvider.getRandomFamList(+randomMode);
-        var brigIds: number[] = [];
-        var maxIndex = isBloodclash? 9 : 4;
+        let randomList = FamProvider.getRandomFamList(+randomMode);
+        let brigIds: number[] = [];
+        let maxIndex = isBloodclash? 9 : 4;
 
         if (isBloodclash) {
             // choose a random index for the WL
-            var randIndex = getRandomInt(0, maxIndex);
+            let randIndex = getRandomInt(0, maxIndex);
             brigIds[randIndex] = getRandomElement(FamProvider.getWarlordList());
         }
 
-        for (var i = 0; i <= maxIndex; i++) {
+        for (let i = 0; i <= maxIndex; i++) {
             // if a spot is vacant (i.e. has no WL), put a random fam in there
             if (!brigIds[i]) {
                 brigIds[i] = getRandomElement(randomList);
@@ -30,12 +30,12 @@ class BrigGenerator {
      * Initialize the two players' brigade
      */
     static initializeBrigs(data: GameData, option: GameOption = {}): void {
-        var battle = BattleModel.getInstance();
-        var isBloodClash = battle.isBloodClash;
-        var p1_cardIds: number[] = [];
-        var p2_cardIds: number[] = [];
-        var p1_warlordSkillIds: number[] = [];
-        var p2_warlordSkillIds: number[] = [];
+        let battle = BattleModel.getInstance();
+        let isBloodClash = battle.isBloodClash;
+        let p1_cardIds: number[] = [];
+        let p2_cardIds: number[] = [];
+        let p1_warlordSkillIds: number[] = [];
+        let p2_warlordSkillIds: number[] = [];
 
         if (option.p1RandomMode) {
             p1_cardIds = BrigGenerator.getRandomBrig(option.p1RandomMode, isBloodClash);
@@ -56,13 +56,13 @@ class BrigGenerator {
         }
 
         // create the cards
-        for (var i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             if (i >= 5 && !isBloodClash) break;
-            var p1_cardInfo = famDatabase[p1_cardIds[i]];
-            var p2_cardInfo = famDatabase[p2_cardIds[i]];
+            let p1_cardInfo = famDatabase[p1_cardIds[i]];
+            let p2_cardInfo = famDatabase[p2_cardIds[i]];
 
             // make the skill array for the current fam
-            var p1fSkillIdArray: number[] = p1_cardInfo.skills;
+            let p1fSkillIdArray: number[] = p1_cardInfo.skills;
             if (p1_cardInfo.isWarlord) {
                 p1fSkillIdArray = p1_warlordSkillIds;
             }
@@ -70,7 +70,7 @@ class BrigGenerator {
                 p1fSkillIdArray = data.p1_customSkills[i];
             }
 
-            var p2fSkillIdArray: number[] = p2_cardInfo.skills;
+            let p2fSkillIdArray: number[] = p2_cardInfo.skills;
             if (p2_cardInfo.isWarlord) {
                 p2fSkillIdArray = p2_warlordSkillIds;
             }
@@ -78,16 +78,16 @@ class BrigGenerator {
                 p2fSkillIdArray = data.p2_customSkills[i];
             }
 
-            var player1Skills = this.makeSkillArray(p1fSkillIdArray);
-            var player2Skills = this.makeSkillArray(p2fSkillIdArray);
+            let player1Skills = this.makeSkillArray(p1fSkillIdArray);
+            let player2Skills = this.makeSkillArray(p2fSkillIdArray);
 
             // now make the cards and add them to the appropriate collections
-            var bonusType: ENUM.BonusType;
+            let bonusType: ENUM.BonusType;
             if (battle.isColiseum) {
                 bonusType = ENUM.BonusType.COLISEUM;
             }
-            var card1 = new Card(p1_cardIds[i], battle.player1, i, player1Skills, data.p1_customStats[i], bonusType);
-            var card2 = new Card(p2_cardIds[i], battle.player2, i, player2Skills, data.p2_customStats[i], bonusType);
+            let card1 = new Card(p1_cardIds[i], battle.player1, i, player1Skills, data.p1_customStats[i], bonusType);
+            let card2 = new Card(p2_cardIds[i], battle.player2, i, player2Skills, data.p2_customStats[i], bonusType);
 
             if (i < 5) {
                 battle.p1_mainCards[i] = card1;
@@ -116,9 +116,9 @@ class BrigGenerator {
      * Given an array of skill ids, return an array of Skills
      */
     static makeSkillArray(skillIds: number[]): Skill[] {
-        var skillArray: Skill[] = [];
+        let skillArray: Skill[] = [];
 
-        for (var i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             if (skillIds[i] && +skillIds[i] !== 0) { // 0 is the special id to mark a "null" skill
                 skillArray.push(new Skill(skillIds[i]));
             }
@@ -132,10 +132,10 @@ class BrigGenerator {
      */
     static getSmartWarlordSkills(): number[] {
         // choose 3 out of 4 categories. Maybe there's a more efficient way of doing this...
-        var choosenCategory = getRandomUniqueElements(SkillProvider.skillCategories, 3);
-        var skills: number[] = [];
+        let choosenCategory = getRandomUniqueElements(SkillProvider.skillCategories, 3);
+        let skills: number[] = [];
 
-        for (var i = 0; i < choosenCategory.length; i++) {
+        for (let i = 0; i < choosenCategory.length; i++) {
             switch (choosenCategory[i]) {
             case ENUM.SkillCategory.OPENING:
                 skills.push(getRandomElement(SkillProvider.getAvailableOpeningSkillList()));

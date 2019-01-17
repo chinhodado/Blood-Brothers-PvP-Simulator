@@ -3,10 +3,10 @@
 class ProtectCounterDebuffSkillLogic extends ProtectCounterSkillLogic {
     execute(data: SkillLogicData) {
         // protect/counter phase
-        var toReturn = super.execute(data);
+        let toReturn = super.execute(data);
 
         // debuff phase
-        var protector = data.executor;
+        let protector = data.executor;
         if (!protector.isDead && protector.canUseSkill() && !data.attacker.isDead && Math.random() <= data.skill.skillFuncArg3) {
             DebuffSkillLogic.processDebuff(protector, data.attacker, data.skill);
         }

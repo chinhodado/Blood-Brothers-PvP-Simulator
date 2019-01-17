@@ -2,7 +2,7 @@
 
 class EvadeSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var skill = data.skill;
+        let skill = data.skill;
         skill.getReady(data.executor);
 
         // a fam cannot protect itself, unless the skillRange is MYSELF
@@ -10,7 +10,7 @@ class EvadeSkillLogic extends SkillLogic {
             return false;
         }
 
-        var canEvade = Skill.canProtectFromCalcType(skill.skillFuncArg2, data.attackSkill)
+        let canEvade = Skill.canProtectFromCalcType(skill.skillFuncArg2, data.attackSkill)
             && Skill.canProtectFromAttackType(skill.skillFuncArg1, data.attackSkill);
 
         assert(!(skill.range instanceof RandomRange), "can't do this with random ranges!");

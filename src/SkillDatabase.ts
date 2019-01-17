@@ -19,7 +19,7 @@ interface SkillMap {
     [id: number]: SkillInfo;
 }
 
-var SkillDatabase: SkillMap = {
+const SkillDatabase: SkillMap = {
     10000: {
         name: "Default auto", type: 2, func: 3, calc: 1,
         args: [1],

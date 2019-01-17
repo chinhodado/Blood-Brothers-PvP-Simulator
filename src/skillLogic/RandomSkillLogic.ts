@@ -2,12 +2,12 @@
 
 class RandomSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
-        var randSkillsId: number[] = SkillDatabase[data.skill.id].randSkills;
+        let randSkillsId: number[] = SkillDatabase[data.skill.id].randSkills;
         shuffle(randSkillsId);
         data.noProbCheck = true;
 
-        for (var i = 0; i < randSkillsId.length; i++) {
-            var skill = new Skill(randSkillsId[i]);
+        for (let i = 0; i < randSkillsId.length; i++) {
+            let skill = new Skill(randSkillsId[i]);
             data.skill = skill;
 
             if (skill.willBeExecuted(data)) {

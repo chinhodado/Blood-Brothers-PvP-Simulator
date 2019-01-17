@@ -5,7 +5,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
     private executionLeft: number = OnHitDebuffSkillLogic.UNINITIALIZED_VALUE;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasTarget = data.skill.range.hasValidTarget(data.executor);
+        let hasTarget = data.skill.range.hasValidTarget(data.executor);
 
         // this should be done at construction time instead...
         if (this.executionLeft === OnHitDebuffSkillLogic.UNINITIALIZED_VALUE) {
@@ -14,7 +14,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
 
         if (this.executionLeft === 0) return false;
 
-        var success = super.willBeExecuted(data) && hasTarget;
+        let success = super.willBeExecuted(data) && hasTarget;
 
         if (success) {
             this.executionLeft--;
@@ -24,7 +24,7 @@ class OnHitDebuffSkillLogic extends SkillLogic {
 
     execute(data: SkillLogicData) {
         data.skill.getReady(data.executor);
-        var target: Card;
+        let target: Card;
 
         this.logger.addMinorEvent({
             executorId: data.executor.id,

@@ -5,7 +5,7 @@ class ClearStatusSkillLogic extends SkillLogic {
     isDispelled: boolean = false;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
+        let hasValidTarget = data.skill.range.hasValidTarget(data.executor, this.getCondFunc());
         return super.willBeExecuted(data) && hasValidTarget;
     }
 
@@ -15,7 +15,7 @@ class ClearStatusSkillLogic extends SkillLogic {
 
     execute(data: SkillLogicData) {
         data.skill.getReady(data.executor);
-        var target: Card;
+        let target: Card;
 
         while (target = data.skill.getTarget(data.executor)) {
             target.clearAllStatus(this.condFunc);

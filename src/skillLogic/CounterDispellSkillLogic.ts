@@ -4,8 +4,8 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
     condFunc = (x: number) => x > 0;
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
-        var hasValidtarget = range.hasValidTarget(data.executor, this.getCondFunc());
+        let range = RangeFactory.getRange(data.skill.skillFuncArg3);
+        let hasValidtarget = range.hasValidTarget(data.executor, this.getCondFunc());
         return super.willBeExecuted(data) && hasValidtarget;
     }
 
@@ -14,7 +14,7 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
     }
 
     execute(data: SkillLogicData) {
-        var toReturn = this.executeProtectPhase(data, true);
+        let toReturn = this.executeProtectPhase(data, true);
 
         if (data.executor.isDead || !data.executor.canUseSkill()) {
             return toReturn;
@@ -28,9 +28,9 @@ class CounterDispellSkillLogic extends ProtectSkillLogic {
             skillId: data.skill.id
         });
 
-        var range = RangeFactory.getRange(data.skill.skillFuncArg3);
+        let range = RangeFactory.getRange(data.skill.skillFuncArg3);
         range.getReady(data.executor, this.getCondFunc());
-        var target: Card;
+        let target: Card;
 
         while (target = range.getTarget(data.executor)) {
             target.clearAllStatus(this.condFunc);

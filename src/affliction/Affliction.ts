@@ -2,7 +2,7 @@ abstract class Affliction {
     type: ENUM.AfflictionType;
     finished: boolean;
 
-    constructor(type: ENUM.AfflictionType) {
+    protected constructor(type: ENUM.AfflictionType) {
         this.type = type;
         this.finished = false;
     }

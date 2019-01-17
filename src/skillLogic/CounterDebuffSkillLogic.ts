@@ -6,7 +6,7 @@ class CounterDebuffSkillLogic extends CounterSkillLogic {
         super.execute(data);
 
         // debuff
-        var protector = data.executor;
+        let protector = data.executor;
         if (!protector.isDead && protector.canUseSkill() && !data.attacker.isDead && Math.random() <= data.skill.skillFuncArg3) {
             DebuffSkillLogic.processDebuff(protector, data.attacker, data.skill);
         }

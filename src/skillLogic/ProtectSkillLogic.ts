@@ -20,10 +20,10 @@ class ProtectSkillLogic extends SkillLogic {
     }
 
     executeProtectPhase(data: SkillLogicData, noProtectLog?: boolean) {
-        var protector = data.executor;
-        var protectSkill = data.skill;
-        var attackSkill = data.attackSkill;
-        var toReturn: any = {};
+        let protector = data.executor;
+        let protectSkill = data.skill;
+        let attackSkill = data.attackSkill;
+        let toReturn: any = {};
 
         // first redirect the original attack to the protecting fam
         if (!noProtectLog) {

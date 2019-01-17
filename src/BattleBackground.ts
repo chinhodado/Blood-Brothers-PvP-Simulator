@@ -33,7 +33,7 @@
      * Return a link for a random battle background
      */
     static getRandomBackgroundLink(): string {
-        var shortenedLink = getRandomElement(BattleBackground.bgList);
+        let shortenedLink = getRandomElement(BattleBackground.bgList);
         return BattleBackground.getLinkFromShortenedLink(shortenedLink);
     }
 
@@ -41,8 +41,8 @@
      * Given a shortened link (as stored in bgList), return the full link
      */
     static getLinkFromShortenedLink(shortenedLink: string): string {
-        var firstPart = `https://img${shortenedLink.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/`;
-        var link = firstPart + shortenedLink.charAt(1) + "/" + shortenedLink.substring(1) + ".png";
+        let firstPart = `https://img${shortenedLink.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/`;
+        let link = firstPart + shortenedLink.charAt(1) + "/" + shortenedLink.substring(1) + ".png";
         return link;
     }
 }

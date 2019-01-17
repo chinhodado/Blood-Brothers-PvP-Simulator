@@ -6,7 +6,7 @@ class MultiDebuffSkillLogic extends DebuffSkillLogic {
         super.execute(data);
 
         // make a temporary skill with the original skill's last 5 args as the first 5 args
-        var tempSkill: Skill = new Skill(data.skill.id);
+        let tempSkill: Skill = new Skill(data.skill.id);
         tempSkill.skillFuncArg1 = tempSkill.skillFuncArg6;
         tempSkill.skillFuncArg2 = tempSkill.skillFuncArg7;
         tempSkill.skillFuncArg3 = tempSkill.skillFuncArg8;

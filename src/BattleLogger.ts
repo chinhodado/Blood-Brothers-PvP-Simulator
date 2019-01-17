@@ -65,7 +65,7 @@ class BattleLogger {
             return;
         }
 
-        var index = this.majorEventLog.length - 1;
+        let index = this.majorEventLog.length - 1;
 
         if (!this.minorEventLog[index]) {
             this.minorEventLog[index] = [];
@@ -85,15 +85,15 @@ class BattleLogger {
         if (BattleLogger.INFOTEXT_DISPLAYED) {
             return;
         }
-        var cardManager = CardManager.getInstance();
-        var battle = BattleModel.getInstance();
-        var p1randTxt = this.getRandomModeText(+battle.p1RandomMode);
-        var p2randTxt = this.getRandomModeText(+battle.p2RandomMode);
+        let cardManager = CardManager.getInstance();
+        let battle = BattleModel.getInstance();
+        let p1randTxt = this.getRandomModeText(+battle.p1RandomMode);
+        let p2randTxt = this.getRandomModeText(+battle.p2RandomMode);
 
-        var infoDivP1 = ENUM.Setting.IS_MOBILE ? $("#infoDivP1mobile")[0] : $("#infoDivP1")[0];
-        var infoDivP2 = ENUM.Setting.IS_MOBILE ? $("#infoDivP2mobile")[0] : $("#infoDivP2")[0];
-        var infoDivP1Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP1TitleMobile")[0] : $("#infoDivP1Title")[0];
-        var infoDivP2Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP2TitleMobile")[0] : $("#infoDivP2Title")[0];
+        let infoDivP1 = ENUM.Setting.IS_MOBILE ? $("#infoDivP1mobile")[0] : $("#infoDivP1")[0];
+        let infoDivP2 = ENUM.Setting.IS_MOBILE ? $("#infoDivP2mobile")[0] : $("#infoDivP2")[0];
+        let infoDivP1Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP1TitleMobile")[0] : $("#infoDivP1Title")[0];
+        let infoDivP2Title = ENUM.Setting.IS_MOBILE ? $("#infoDivP2TitleMobile")[0] : $("#infoDivP2Title")[0];
 
         if (!battle.p1RandomMode || !BattleModel.IS_MASS_SIMULATION) {
             infoDivP1.innerHTML = cardManager.getPlayerMainBrigString(battle.player1);
@@ -126,13 +126,13 @@ class BattleLogger {
         if (BattleLogger.WARNINGTEXT_DISPLAYED) {
             return;
         }
-        var needWarn = true;
-        var cardManager = CardManager.getInstance();
-        var battle = BattleModel.getInstance();
-        var p1main = cardManager.getPlayerCurrentMainCards(battle.player1);
-        var p2main = cardManager.getPlayerCurrentMainCards(battle.player2);
-        var dbId1 = p1main[0].dbId;
-        var dbId2 = p2main[0].dbId;
+        let needWarn = true;
+        let cardManager = CardManager.getInstance();
+        let battle = BattleModel.getInstance();
+        let p1main = cardManager.getPlayerCurrentMainCards(battle.player1);
+        let p2main = cardManager.getPlayerCurrentMainCards(battle.player2);
+        let dbId1 = p1main[0].dbId;
+        let dbId2 = p2main[0].dbId;
 
         for (let i = 1; i < 5; i++) {
             if (p1main[i].dbId !== dbId1 || p2main[i].dbId !== dbId2) {
@@ -142,8 +142,8 @@ class BattleLogger {
         }
 
         if (battle.isBloodClash) {
-            var p1res = cardManager.getPlayerOriginalReserveCards(battle.player1);
-            var p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
+            let p1res = cardManager.getPlayerOriginalReserveCards(battle.player1);
+            let p2res = cardManager.getPlayerOriginalReserveCards(battle.player2);
 
             for (let i = 0; i < 5; i++) {
                 if (p1res[i].dbId !== dbId1 || p2res[i].dbId !== dbId2) {
@@ -156,9 +156,9 @@ class BattleLogger {
         if (dbId1 === dbId2) needWarn = false;
 
         if (needWarn) {
-            var simDiv = document.getElementById("simDiv");
-            var gameDiv = document.getElementById("gameDiv");
-            var warnTxt = `<p><b>Note:</b> It seems that you using a 5v5 or 10v10 battle to determine whether ${p1main[0].name} or ${p2main[0].name} is "stronger". This is <b>NOT</b> a recommended way of comparing two familiars.</p>`;
+            let simDiv = document.getElementById("simDiv");
+            let gameDiv = document.getElementById("gameDiv");
+            let warnTxt = `<p><b>Note:</b> It seems that you using a 5v5 or 10v10 battle to determine whether ${p1main[0].name} or ${p2main[0].name} is "stronger". This is <b>NOT</b> a recommended way of comparing two familiars.</p>`;
             simDiv.innerHTML += warnTxt;
             gameDiv.innerHTML += warnTxt;
         }
@@ -195,8 +195,8 @@ class BattleLogger {
             return this.getFieldAtMajorIndex(majorIndex - 1);
         }
 
-        var minorLogLength = this.minorEventLog[majorIndex].length;
-        var minorFieldsLength = this.minorEventFields[majorIndex].length;
+        let minorLogLength = this.minorEventLog[majorIndex].length;
+        let minorFieldsLength = this.minorEventFields[majorIndex].length;
 
         if (minorLogLength !== minorFieldsLength) {
             throw new Error ("Log length and stored fields length are not equal!");
@@ -210,7 +210,7 @@ class BattleLogger {
     }
 
     getCurrentFieldJSON(): string {
-        var toSerialize = {
+        let toSerialize = {
             player1Cards: getSerializableObjectArray(BattleModel.getInstance().p1_mainCards),
             player2Cards: getSerializableObjectArray(BattleModel.getInstance().p2_mainCards)
         };
@@ -223,10 +223,10 @@ class BattleLogger {
      * Return an array of target id's
      */
     getTargetsInMajorEvent(majorIndex: number): number[] {
-        var targets = [];
-        var majorEvent = this.majorEventLog[majorIndex];
-        for (var i = 0; i < this.minorEventLog[majorIndex].length; i++) {
-            var tmpData = this.minorEventLog[majorIndex][i];
+        let targets = [];
+        let majorEvent = this.majorEventLog[majorIndex];
+        for (let i = 0; i < this.minorEventLog[majorIndex].length; i++) {
+            let tmpData = this.minorEventLog[majorIndex][i];
             if (tmpData.executorId === majorEvent.executorId && tmpData.skillId === majorEvent.skillId) {
                 targets.push(tmpData.targetId);
             }
@@ -239,13 +239,13 @@ class BattleLogger {
      * Return an array of target id's
      */
     getNestedTargetsInMajorEvent(majorIndex: number, minorIndex: number): number[] {
-        var targets = [];
-        var initialAttackLog = this.minorEventLog[majorIndex][minorIndex];
-        var executorId = initialAttackLog.executorId;
-        var skillId = initialAttackLog.skillId;
+        let targets = [];
+        let initialAttackLog = this.minorEventLog[majorIndex][minorIndex];
+        let executorId = initialAttackLog.executorId;
+        let skillId = initialAttackLog.skillId;
 
-        for (var i = minorIndex; i < this.minorEventLog[majorIndex].length; i++) {
-            var tmpData = this.minorEventLog[majorIndex][i];
+        for (let i = minorIndex; i < this.minorEventLog[majorIndex].length; i++) {
+            let tmpData = this.minorEventLog[majorIndex][i];
             if (tmpData.executorId === executorId && tmpData.skillId === skillId) {
                 targets.push(tmpData.targetId);
             }

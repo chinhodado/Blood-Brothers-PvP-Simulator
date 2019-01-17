@@ -24,7 +24,7 @@ function getURLParameter(name: string): string {
  * Shuffle an array. The argument array will be modified.
  */
 function shuffle<T>(array: T[]): T[] {
-    var currentIndex = array.length
+    let currentIndex = array.length
         , temporaryValue
         , randomIndex
     ;
@@ -56,10 +56,10 @@ function getRandomElement<T>(myArray: T[]): T {
  * Note: the argument array will be modified (its content will be shuffled)
  */
 function getRandomUniqueElements<T>(arr: T[], num: number): T[] {
-    var len = arr.length;
+    let len = arr.length;
     while (len) {
-        var a = Math.floor(Math.random() * len);
-        var b = arr[--len];
+        let a = Math.floor(Math.random() * len);
+        let b = arr[--len];
         arr[len] = arr[a];
         arr[a] = b;
     }
@@ -77,7 +77,7 @@ function removeElementAtIndex(array: any[], index: number): void {
  * Get a random property of an object
  */
 function pickRandomProperty(obj: {}): string {
-    var keys = Object.keys(obj);
+    let keys = Object.keys(obj);
     return keys[keys.length * Math.random() << 0];
 }
 
@@ -90,17 +90,17 @@ function pickRandomProperty(obj: {}): string {
 function getScaledFamiliarWikiaImageLink (link: string, fullName: string, newWidth: number): string {
     // first un-shorten the link
     // http://img2.wikia.nocookie.net/bloodbrothersgame/images/thumb/d/dd/
-    var firstPart = `https://img${link.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/thumb/${link.charAt(1)}/${link.substring(1)}/`;
-    var urlName = fullName.replace(/,/g, "%2C").replace(/ /g, "_");
-    var fileName = urlName + "_Figure.png";
-    var newScaledLink = firstPart + fileName + "/" + newWidth + "px-" + fileName;
+    let firstPart = `https://img${link.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/thumb/${link.charAt(1)}/${link.substring(1)}/`;
+    let urlName = fullName.replace(/,/g, "%2C").replace(/ /g, "_");
+    let fileName = urlName + "_Figure.png";
+    let newScaledLink = firstPart + fileName + "/" + newWidth + "px-" + fileName;
 
     return newScaledLink;
 }
 
 function getSerializableObjectArray(array: any[]) {
-    var toReturn = [];
-    for (var i = 0; i < array.length; i++) {
+    let toReturn = [];
+    for (let i = 0; i < array.length; i++) {
         if (array[i] == null) {
             toReturn.push(null);
         }
@@ -117,7 +117,7 @@ function getSerializableObjectArray(array: any[]) {
 function isChrome(): boolean {
     // please note, that IE11 now returns true for window.chrome
     var window: any = window;
-    var isChromium = window.chrome,
+    let isChromium = window.chrome,
         vendorName = window.navigator.vendor;
     if(isChromium !== null && vendorName === "Google Inc.") {
         // is Google chrome

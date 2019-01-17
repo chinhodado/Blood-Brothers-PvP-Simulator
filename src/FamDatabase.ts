@@ -25,7 +25,7 @@ interface CardMap {
     [id: number]: CardInfo;
 }
 
-var famDatabase: CardMap = {
+const famDatabase: CardMap = {
     11261: {
         name: "Rahab", stats: [14073, 12597, 15498, 9004, 16754],
         skills: [434],

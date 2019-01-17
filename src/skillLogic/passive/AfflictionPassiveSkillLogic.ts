@@ -6,7 +6,7 @@ class AfflictionPassiveSkillLogic extends BasePassiveSkillLogic {
             // modelled after Affliction skill logic
             // NOTE: we are copying from the passive skill, but just override the first 5 args.
             // Apart from the skill name, all other remaining skill attribute should/must NOT be used
-            var afflictionSkill = new Skill(passiveSkill.id);
+            let afflictionSkill = new Skill(passiveSkill.id);
             afflictionSkill.skillFuncArg1 = 0; // always 0?
             afflictionSkill.skillFuncArg2 = passiveSkill.skillFuncArg4; // afflict type
             afflictionSkill.skillFuncArg3 = passiveSkill.skillFuncArg1; // afflict prob

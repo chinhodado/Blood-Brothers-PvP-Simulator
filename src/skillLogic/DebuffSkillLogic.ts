@@ -2,20 +2,20 @@
 
 class DebuffSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
-        var skill = data.skill;
-        var executor = data.executor;
+        let skill = data.skill;
+        let executor = data.executor;
         skill.getReady(executor);
 
-        var target: Card;
+        let target: Card;
         while (target = skill.getTarget(executor)) {
             DebuffSkillLogic.processDebuff(executor, target, skill);
         }
     }
 
     static processDebuff(executor: Card, target: Card, skill: Skill) {
-        var statuses: ENUM.StatusType[];
-        var multi: number;
-        var isNewLogic: boolean = false; // for caster-based debuff
+        let statuses: ENUM.StatusType[];
+        let multi: number;
+        let isNewLogic: boolean = false; // for caster-based debuff
 
         switch (skill.skillFunc) {
             case ENUM.SkillFunc.DEBUFFATTACK:
@@ -59,8 +59,8 @@ class DebuffSkillLogic extends SkillLogic {
                 throw new Error("Wrong skill to use with processDebuff()");
         }
 
-        for (var i = 0; i < statuses.length; i++) {
-            var status = statuses[i];
+        for (let i = 0; i < statuses.length; i++) {
+            let status = statuses[i];
             if (status === ENUM.StatusType.SKILL_PROBABILITY) {
                 var amount = -1 * skill.skillFuncArg1;
             }
@@ -78,9 +78,9 @@ class DebuffSkillLogic extends SkillLogic {
             }
 
             target.changeStatus(status, amount, isNewLogic);
-            var description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
+            let description = target.name + "'s " + ENUM.StatusType[status] + " decreased by " + Math.abs(amount);
 
-            var logger = BattleLogger.getInstance();
+            let logger = BattleLogger.getInstance();
             logger.addMinorEvent({
                 executorId: executor.id,
                 targetId: target.id,

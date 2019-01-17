@@ -1,6 +1,5 @@
 ﻿/// <reference path="SkillProvider.ts"/>
 declare var swal;
-declare var startTest;
 
 /**
  * Set some form items to what were last chosen
@@ -45,7 +44,7 @@ function setPreviousChoices() {
     }
 
     // custom stats
-    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    let arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
     for (let player = 1; player <= 2; player++) {
         for (let famIndex = 0; famIndex < 10; famIndex++) {
             for (let statIndex = 0; statIndex < arr.length; statIndex++) {
@@ -75,7 +74,7 @@ function setPreviousChoices() {
     }
 
     // battle type
-    var bt = localStorage.getItem("bt");
+    let bt = localStorage.getItem("bt");
     if (bt === "1" || bt === "2" || bt === "3") {
         (<HTMLInputElement>document.getElementById("bt")).value = bt;
     }
@@ -85,12 +84,12 @@ function setPreviousChoices() {
  * Disable/enable form items belonging to a player based on whether random is chosen or not
  */
 function toogleDisable() {
-    for (var player = 1; player <= 2; player++) {
+    for (let player = 1; player <= 2; player++) {
         // is the random checkbox checked?
-        var isSelected = (<HTMLInputElement>document.getElementById(`r${player}`)).checked;
+        let isSelected = (<HTMLInputElement>document.getElementById(`r${player}`)).checked;
 
         // fams, skills, formation
-        var elems = document.getElementsByClassName(`p${player}`);
+        let elems = document.getElementsByClassName(`p${player}`);
         for (var i = 0; i < elems.length; i++) {
             if (isSelected) {
                 (<HTMLInputElement>elems[i]).disabled = true;
@@ -101,7 +100,7 @@ function toogleDisable() {
         }
 
         // random modes
-        var randomSelect = <HTMLInputElement>document.getElementById(player + "r");
+        let randomSelect = <HTMLInputElement>document.getElementById(player + "r");
         if (isSelected) {
             randomSelect.disabled = false;
         }
@@ -115,13 +114,13 @@ function toogleDisable() {
  * Toogle on/off the reserve depending on whether the mode is Bloodclash or not
  */
 function toogleReserve() {
-    for (var player = 1; player <= 2; player++) {
-        var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
-        var isBloodclash = btValue === "1" || btValue === "3";
+    for (let player = 1; player <= 2; player++) {
+        let btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+        let isBloodclash = btValue === "1" || btValue === "3";
 
-        var elems = document.getElementsByClassName("reserve");
-        for (var i = 0; i < elems.length; i++) {
-            var elem = (<HTMLInputElement>elems[i]);
+        let elems = document.getElementsByClassName("reserve");
+        for (let i = 0; i < elems.length; i++) {
+            let elem = (<HTMLInputElement>elems[i]);
             if (!isBloodclash) {
                 elem.disabled = true;
                 elem.style.display = 'none';
@@ -161,7 +160,7 @@ function onFormLoad() {
         toogleCustomStat(2);
         toogleCustomSkill(1);
         toogleCustomSkill(2);
-    }
+    };
 
     setPreviousChoices();
     toogleReserve();
@@ -193,7 +192,7 @@ function validateForm() {
  * Submits the form. Goes into debug mode if necesary.
  */
 function submitForm() {
-    var form = document.forms["mainForm"];
+    let form = document.forms["mainForm"];
     if (form["debug"].checked === true) {
         form.action = "debug.html";
     }
@@ -204,10 +203,10 @@ function submitForm() {
  * Populates the familiar selects options
  */
 function setFamOptions() {
-    var famSelects = document.getElementsByClassName("famSelect");
+    let famSelects = document.getElementsByClassName("famSelect");
 
     // create an array of fam id and sort it based on the fam's full name
-    var famIdArray = [];
+    let famIdArray = [];
     for (var key in famDatabase) {
         if (famDatabase.hasOwnProperty(key)) {
             famIdArray.push(key);
@@ -216,16 +215,16 @@ function setFamOptions() {
     famIdArray.sort((a, b) => famDatabase[a].fullName.localeCompare(famDatabase[b].fullName));
 
     // populate one select
-    for (var index = 0; index < famIdArray.length; index++) {
+    for (let index = 0; index < famIdArray.length; index++) {
         key = famIdArray[index];
-        var option = document.createElement("option");
+        let option = document.createElement("option");
         option.value = key;
         option.text = famDatabase[key].fullName;
         (<HTMLSelectElement>famSelects[0]).add(option);
     }
 
     // and clone it
-    for (var i = 1; i < famSelects.length; i++) {
+    for (let i = 1; i < famSelects.length; i++) {
         (<HTMLSelectElement>famSelects[i]).innerHTML = (<HTMLSelectElement>famSelects[0]).innerHTML;
     }
 }
@@ -251,7 +250,7 @@ function toogleCustomStat(player: number) {
     }
     customStatDiv.style.display = (checked && isBloodclash) ? "block" : "none";
 
-    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    let arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
     for (let i = 0; i < 10; i++) {
         let slotChecked = (<HTMLInputElement>document.getElementById(`p${player}f${i}customStatChkbox`)).checked;
         let slotDisabled = (<HTMLInputElement>document.getElementById(`p${player}f${i}customStatChkbox`)).disabled;
@@ -263,13 +262,13 @@ function toogleCustomStat(player: number) {
 }
 
 function toogleCustomSkill(player: number) {
-    var checked = (<HTMLInputElement>document.getElementById(`p${player}customSkillChbox`)).checked;
-    var btValue = (<HTMLInputElement>document.getElementById("bt")).value;
-    var isBloodclash = btValue === "1" || btValue === "3";
+    let checked = (<HTMLInputElement>document.getElementById(`p${player}customSkillChbox`)).checked;
+    let btValue = (<HTMLInputElement>document.getElementById("bt")).value;
+    let isBloodclash = btValue === "1" || btValue === "3";
 
     // for normal (0-5)
-    var customSkillDiv = document.getElementById(`p${player}customSkillDivNormal`);
-    var inputs = customSkillDiv.getElementsByTagName("input");
+    let customSkillDiv = document.getElementById(`p${player}customSkillDivNormal`);
+    let inputs = customSkillDiv.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].disabled = !checked;
     }
@@ -297,19 +296,19 @@ function toogleCustomSkill(player: number) {
  * Populates the skill selects options
  */
 function setSkillOptions() {
-    var skillSelects = document.getElementsByClassName("skillSelect");
+    let skillSelects = document.getElementsByClassName("skillSelect");
 
     // create an array of skill id and sort it based on the skill's name
-    var skillIdArray = SkillProvider.getAvailableSkillsForSelect();
+    let skillIdArray = SkillProvider.getAvailableSkillsForSelect();
     skillIdArray.sort((a, b) => SkillDatabase[a].name.localeCompare(SkillDatabase[b].name));
 
     // populate one select
-    var option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = "0"; // add the option for no skill in this slot
     option.text = "--none--";
     (<HTMLSelectElement>skillSelects[0]).add(option);
-    for (var index = 0; index < skillIdArray.length; index++) {
-        var key = skillIdArray[index];
+    for (let index = 0; index < skillIdArray.length; index++) {
+        let key = skillIdArray[index];
         option = document.createElement("option");
         option.value = key + "";
         option.text = SkillDatabase[key].name;
@@ -317,21 +316,21 @@ function setSkillOptions() {
     }
 
     // and clone it
-    for (var i = 1; i < skillSelects.length; i++) {
+    for (let i = 1; i < skillSelects.length; i++) {
         (<HTMLSelectElement>skillSelects[i]).innerHTML = (<HTMLSelectElement>skillSelects[0]).innerHTML;
     }
 }
 
 function addCustomsStatDiv() {
     // array of stats type
-    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    let arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
 
     // array of div types. There are two divs for each player, one for fam 0-5, one for fam 6-9 (BC)
-    var divArr = ["Normal", "Bloodclash"];
+    let divArr = ["Normal", "Bloodclash"];
 
     for (let divIndex = 0; divIndex < divArr.length; divIndex++) {
         for (let player = 1; player <= 2; player++) {
-            var customStatDiv = document.getElementById(`p${player}customStatDiv${divArr[divIndex]}`);
+            let customStatDiv = document.getElementById(`p${player}customStatDiv${divArr[divIndex]}`);
             for (let i = 0; i < 5; i++) { // index of fams
                 let famIndex = i + 5 * divIndex;
                 customStatDiv.appendChild(document.createElement('br'));
@@ -358,14 +357,14 @@ function addCustomsStatDiv() {
 
 function addCustomsSkillDiv() {
     // array of div types. There are two divs for each player, one for fam 0-5, one for fam 6-9 (BC)
-    var divArr = ["Normal", "Bloodclash"];
+    let divArr = ["Normal", "Bloodclash"];
 
     // this only work under the assumption that we have populated the warlord skill options before
-    var skillSelect = document.getElementsByClassName("skillSelect")[0];
+    let skillSelect = document.getElementsByClassName("skillSelect")[0];
 
     for (let divIndex = 0; divIndex < divArr.length; divIndex++) {
         for (let player = 1; player <= 2; player++) {
-            var customSkillDiv = document.getElementById(`p${player}customSkillDiv${divArr[divIndex]}`);
+            let customSkillDiv = document.getElementById(`p${player}customSkillDiv${divArr[divIndex]}`);
             for (let i = 0; i < 5; i++) { // index of fams
                 let famIndex = i + 5 * divIndex;
                 customSkillDiv.appendChild(document.createElement('br'));
@@ -403,9 +402,9 @@ function getBattleDataOption() {
     // battle type: bt
     localStorage.setItem("debug", getURLParameter("debug"));
 
-    var data: any = {}, option: GameOption = {};
+    let data: any = {}, option: GameOption = {};
 
-    var battleType = getURLParameter("bt");
+    let battleType = getURLParameter("bt");
     localStorage.setItem("bt", battleType);
     option.battleType = +battleType;
 
@@ -424,7 +423,7 @@ function getBattleDataOption() {
     data.p2_customSkills = {};
 
     // sorry for the shit code
-    var arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
+    let arr = ["HP", "ATK", "DEF", "WIS", "AGI"];
     for (let player = 1; player <= 2; player++) {
         for (let famIndex = 0; famIndex < 10; famIndex++) {
             for (let statIndex = 0; statIndex < arr.length; statIndex++) {
@@ -464,8 +463,8 @@ function getBattleDataOption() {
     data.p2_warlordSkillIds = [];
 
     for (let i = 0; i < 10; i++) {
-        var f1id = getURLParameter(`f${i}`);
-        var f2id = getURLParameter(`f${i + 10}`);
+        let f1id = getURLParameter(`f${i}`);
+        let f2id = getURLParameter(`f${i + 10}`);
         data.p1_cardIds.push(f1id);
         data.p2_cardIds.push(f2id);
 
@@ -473,8 +472,8 @@ function getBattleDataOption() {
         if (!option.p2RandomMode) localStorage.setItem(`f${i + 10}`, f2id);
     }
     for (let i = 0; i < 3; i++) {
-        var w1s = getURLParameter(`s1${i}`);
-        var w2s = getURLParameter(`s2${i}`);
+        let w1s = getURLParameter(`s1${i}`);
+        let w2s = getURLParameter(`s2${i}`);
         data.p1_warlordSkillIds.push(w1s);
         data.p2_warlordSkillIds.push(w2s);
 
@@ -489,9 +488,9 @@ function getBattleDataOption() {
  * Hijack the Math.random() with our own random implementation if needed
  */
 function prepareRandom() {
-    var USE_CS_RND = false;
+    let USE_CS_RND = false;
     if (USE_CS_RND) {
-        var rnd = new CsRandom(1234);
+        let rnd = new CsRandom(1234);
         Math.random = () => rnd.nextDouble();
     }
 }
@@ -500,7 +499,7 @@ function prepareRandom() {
  * Callback when the battle in normal mode has ended
  */
 function onBattleFinished() {
-    var startButton = <HTMLInputElement>document.getElementById("startButton");
+    let startButton = <HTMLInputElement>document.getElementById("startButton");
     startButton.disabled = false;
 
     if (ENUM.Setting.IS_MOBILE) {
@@ -620,10 +619,10 @@ function playSim() {
 
 function playDebug() {
     prepareField();
-    var dataOption = getBattleDataOption();
-    var data = dataOption[0], option = dataOption[1];
+    let dataOption = getBattleDataOption();
+    let data = dataOption[0], option = dataOption[1];
 
-    var newGame = new BattleModel(data, option);
+    let newGame = new BattleModel(data, option);
     newGame.startBattle();
 }
 
@@ -708,20 +707,20 @@ function startWorkerSim(data, option, NUM_BATTLE) {
                 workerDone++;
                 console.log(workerDone + " workers done.");
                 if (workerDone === NUM_WORKER) { // <- all workers have finished their jobs
-                    var endTime = performance.now();
+                    let endTime = performance.now();
 
                     // aggregate all workers' data to form the final data
-                    var finalData = {
+                    let finalData = {
                         p1WinCount: 0,
                         p2WinCount: 0,
                         winCountTable: []
                     };
-                    for (var i = 0; i < NUM_WORKER; i++) {
+                    for (let i = 0; i < NUM_WORKER; i++) {
                         finalData.p1WinCount += workerDataReturned[i].p1WinCount;
                         finalData.p2WinCount += workerDataReturned[i].p2WinCount;
 
-                        var workerTable = workerDataReturned[i].winCountTable;
-                        for (var key in workerTable) {
+                        let workerTable = workerDataReturned[i].winCountTable;
+                        for (let key in workerTable) {
                             if (workerTable.hasOwnProperty(key)) {
                                 if (finalData.winCountTable[key]) {
                                     finalData.winCountTable[key] += workerTable[key];
@@ -748,7 +747,7 @@ function startWorkerSim(data, option, NUM_BATTLE) {
     worker = null; // <- just leave this here
 
     // start the workers
-    var startTime = performance.now();
+    let startTime = performance.now();
 
     for (let w = 0; w < workerPool.length; w++) {
         workerPool[w].postMessage({
@@ -760,8 +759,8 @@ function startWorkerSim(data, option, NUM_BATTLE) {
 }
 
 function onSimulationResultObtained(finalData, startTime, endTime) {
-    var famIdArray = [];
-    for (var key in finalData.winCountTable) {
+    let famIdArray = [];
+    for (let key in finalData.winCountTable) {
         if (finalData.winCountTable.hasOwnProperty(key)) {
             famIdArray.push(key);
         }
@@ -769,12 +768,12 @@ function onSimulationResultObtained(finalData, startTime, endTime) {
     famIdArray.sort((a, b) => finalData.winCountTable[b] - finalData.winCountTable[a]);
 
     // now print out the details
-    var simResultDiv = document.getElementById("simResultDiv");
+    let simResultDiv = document.getElementById("simResultDiv");
     simResultDiv.innerHTML += (`Player 2 won: ${finalData.p2WinCount}<br> Player 1 won: ${finalData.p1WinCount}<br><br> Time: ${((endTime - startTime) / 1000).toFixed(2)}s<br><a href=setting.html>Go back to main page </a>`);
 
-    var detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
-    for (var i = 0; i < famIdArray.length; i++) {
-        var id = famIdArray[i];
+    let detail1 = "<br><br><details><summary> Most frequent appearances in win team: </summary><br>";
+    for (let i = 0; i < famIdArray.length; i++) {
+        let id = famIdArray[i];
         detail1 += (famDatabase[id].fullName + ": " + finalData.winCountTable[id] + "<br>");
     }
     detail1 += "</details>";

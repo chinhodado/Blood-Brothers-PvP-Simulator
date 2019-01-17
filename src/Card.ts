@@ -45,7 +45,7 @@ class Card {
     private surviveSkill: Skill = null;
 
     constructor(dbId: number, player: Player, nth: number, skills: Skill[], customStats: CustomStats, bonusType: ENUM.BonusType) {
-        var cardData = famDatabase[dbId];
+        let cardData = famDatabase[dbId];
         this.name = cardData.name;
         this.fullName = cardData.fullName;
         this.dbId = dbId;
@@ -90,8 +90,8 @@ class Card {
             this.autoAttack = new Skill(10000);
         }
 
-        for (var i = 0; i < skills.length; i++) {
-            var skill = skills[i];
+        for (let i = 0; i < skills.length; i++) {
+            let skill = skills[i];
             if (skill) {
                 if (skill.skillType === ENUM.SkillType.OPENING) {
                     this.openingSkills.push(skill);
@@ -338,7 +338,7 @@ class Card {
         if (this.isDead) {
             return false;
         }
-        var currentType = this.getAfflictionType();
+        let currentType = this.getAfflictionType();
         return currentType === type;
     }
 
@@ -453,7 +453,7 @@ class Card {
                     this.status.willAttackAgain = amount; // do not stack
                 break;
             case ENUM.StatusType.ACTION_ON_DEATH:
-                var skill = new Skill(amount);
+                let skill = new Skill(amount);
                 this.ondeathSkills[0] = skill;
                 this.status.actionOnDeath = amount;
                 break;
@@ -472,7 +472,7 @@ class Card {
      * Clear all statuses of this card that satisfy the supplied conditional function
      */
     clearAllStatus(condFunc: (x: number)=>boolean): void {
-        for (var key in this.status) {
+        for (let key in this.status) {
             if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number") {
                 if (condFunc(this.status[key])) {
                     this.status[key] = 0;
@@ -489,9 +489,9 @@ class Card {
      * Return true if this card has a status that satisfies the supplied conditional function
      */
     hasStatus(condFunc: (x: number)=>boolean): boolean {
-        var hasStatus = false;
+        let hasStatus = false;
 
-        for (var key in this.status) {
+        for (let key in this.status) {
             if (this.status.hasOwnProperty(key) && typeof this.status[key] === "number"){
                 if (condFunc(this.status[key])) {
                     hasStatus = true;
@@ -544,10 +544,10 @@ class Card {
     }
 
     getATK() {
-        var value = this.stats.atk;
+        let value = this.stats.atk;
 
         if (this.status.remainHpAtkUp > 1){
-            var hpRatio = this.getHpRatio();
+            let hpRatio = this.getHpRatio();
             value += Math.round(value * (1 - hpRatio) * (this.status.remainHpAtkUp - 1));
         }
 
@@ -562,10 +562,10 @@ class Card {
         return value;
     }
     getDEF() {
-        var value = this.stats.def;
+        let value = this.stats.def;
 
         if (this.status.remainHpDefUp > 1){
-            var hpRatio = this.getHpRatio();
+            let hpRatio = this.getHpRatio();
             value += Math.round(value * (1 - hpRatio) * (this.status.remainHpDefUp - 1));
         }
 
@@ -580,10 +580,10 @@ class Card {
         return value;
     }
     getWIS() {
-        var value = this.stats.wis;
+        let value = this.stats.wis;
 
         if (this.status.remainHpWisUp > 1){
-            var hpRatio = this.getHpRatio();
+            let hpRatio = this.getHpRatio();
             value += Math.round(value * (1 - hpRatio) * (this.status.remainHpWisUp - 1));
         }
 
@@ -598,10 +598,10 @@ class Card {
         return value;
     }
     getAGI() {
-        var value = this.stats.agi;
+        let value = this.stats.agi;
 
         if (this.status.remainHpAgiUp > 1){
-            var hpRatio = this.getHpRatio();
+            let hpRatio = this.getHpRatio();
             value += Math.round(value * (1 - hpRatio) * (this.status.remainHpAgiUp - 1));
         }
 
@@ -618,7 +618,7 @@ class Card {
 
     // TODO: handle the case of multiple passive effects
     getPassiveDamageEffect(target: Card): number {
-        var passiveSkill = this.passiveSkills[0];
+        let passiveSkill = this.passiveSkills[0];
         if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.DAMAGE_PASSIVE) {
             return (<DamagePassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, target, passiveSkill);
         }
@@ -628,7 +628,7 @@ class Card {
     }
 
     getPassiveReceivedDamageEffect(attacker: Card): number {
-        var passiveSkill = this.passiveSkills[0];
+        let passiveSkill = this.passiveSkills[0];
         if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.DEFENSE_PASSIVE) {
             return (<DefensePassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, attacker, passiveSkill);
         }
@@ -638,7 +638,7 @@ class Card {
     }
 
     getPassiveAfflictionProbabilityBuffEffect(target: Card): number {
-        var passiveSkill = this.passiveSkills[0];
+        let passiveSkill = this.passiveSkills[0];
         if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.AFFLICTION_PROB_BUFF_PASSIVE) {
             return (<AfflictionProbabilityBuffPassiveSkillLogic>passiveSkill.logic).getEffectRatio(this, target, passiveSkill);
         }
@@ -648,7 +648,7 @@ class Card {
     }
 
     getPassiveAffliction(target: Card): Skill {
-        var passiveSkill = this.passiveSkills[0];
+        let passiveSkill = this.passiveSkills[0];
         if (passiveSkill && passiveSkill.skillFunc === ENUM.SkillFunc.AFFLICTION_PASSIVE) {
             return (<AfflictionPassiveSkillLogic>passiveSkill.logic).getAfflictionPassive(this, target, passiveSkill);
         }
@@ -659,7 +659,7 @@ class Card {
 
     adjustByNewDebuffLogic(type: ENUM.StatusType, value: number, originalValue: number): number {
         if (this.status.isNewLogic[type]) {
-            var lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
+            let lowerLimit = originalValue * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
             value = (value > lowerLimit) ? value : lowerLimit;
         }
         return value;

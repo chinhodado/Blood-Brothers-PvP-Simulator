@@ -14,12 +14,12 @@ class CsRandom {
 
     // may want to add a time-based-seed constructor
     constructor(seed: number) {
-        var ii: number;
-        var mj: number, mk: number;
+        let ii: number;
+        let mj: number, mk: number;
 
         //Initialize our Seed array.
         //This algorithm comes from Numerical Recipes in C (2nd Ed.)
-        var subtraction: number = (seed ===-2147483648) ? 2147483647 : Math.abs(seed);
+        let subtraction: number = (seed ===-2147483648) ? 2147483647 : Math.abs(seed);
         mj = CsRandom.MSEED - subtraction;
         this.seedArray[55] = mj;
         mk = 1;
@@ -30,7 +30,7 @@ class CsRandom {
             if (mk < 0) mk += CsRandom.MBIG;
             mj = this.seedArray[ii];
         }
-        for (var k = 1; k < 5; k++) {
+        for (let k = 1; k < 5; k++) {
             for (let i = 1; i < 56; i++) {
                 this.seedArray[i] -= this.seedArray[1 + (i + 30) % 55];
                 if (this.seedArray[i] < 0) this.seedArray[i] += CsRandom.MBIG;
@@ -54,9 +54,9 @@ class CsRandom {
     }
 
     private internalSample(): number {
-        var retVal: number;
-        var locINext: number = this.inext;
-        var locINextp: number = this.inextp;
+        let retVal: number;
+        let locINext: number = this.inext;
+        let locINextp: number = this.inextp;
 
         if (++locINext >= 56) locINext = 1;
         if (++locINextp >= 56) locINextp = 1;
@@ -89,13 +89,13 @@ class CsRandom {
         // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
         // We will end up getting even numbers only.
 
-        var result: number = this.internalSample();
+        let result: number = this.internalSample();
         // Note we can't use addition here. The distribution will be bad if we do that.
-        var negative: boolean = (this.internalSample() % 2 === 0) ? true : false;  // decide the sign based on second sample
+        let negative: boolean = (this.internalSample() % 2 === 0) ? true : false;  // decide the sign based on second sample
         if (negative) {
             result = -result;
         }
-        var d: number = result;
+        let d: number = result;
         d += (2147483647 - 1); // get a number in range [0 .. 2 * Int32MaxValue - 1)
         d /= 2 * 2147483647 - 1; //note: cast to (uint)?
         return d;
@@ -113,7 +113,7 @@ class CsRandom {
         }
 
         // a lot of castings in here...
-        var range: number = maxValue - minValue;
+        let range: number = maxValue - minValue;
         if (range <= 2147483647) {
             return (Math.floor(this.sample() * range) + minValue);
         }

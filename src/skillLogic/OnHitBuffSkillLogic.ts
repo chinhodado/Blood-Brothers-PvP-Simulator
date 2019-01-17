@@ -12,7 +12,7 @@ class OnHitBuffSkillLogic extends BuffSkillLogic {
 
         if (this.executionLeft === 0) return false;
 
-        var success = super.willBeExecuted(data);
+        let success = super.willBeExecuted(data);
 
         if (success) {
             this.executionLeft--;

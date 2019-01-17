@@ -26,7 +26,7 @@ class Skill {
     logic: SkillLogic;
 
     constructor (skillId: number) {
-        var skillData = SkillDatabase[skillId];
+        let skillData = SkillDatabase[skillId];
 
         this.id = skillId;
         this.name = skillData.name;
@@ -119,8 +119,8 @@ class Skill {
     }
 
     static isPositionIndependentAttackSkill(skillId: number, srcSkillData?: any): boolean {
-        var skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
-        var func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
+        let skillInfo = srcSkillData? srcSkillData : SkillDatabase[skillId];
+        let func = srcSkillData? srcSkillData.skillFunc : skillInfo.func;
 
         // generally, indirect skills are position independent
         // however, kill skills are indirect (do not make contact) but not position independent
@@ -133,16 +133,16 @@ class Skill {
      * @param srcSkillData: the skill data from srcdb
      */
     static getWardType(srcSkillData): ENUM.WardType {
-        var wardType = undefined;
+        let wardType = undefined;
         if (Skill.isAttackSkill(null, srcSkillData)) {
             if (Skill.isPositionIndependentAttackSkill(null, srcSkillData)) {
-                var isCalcAtk = srcSkillData.skillCalcType === ENUM.SkillCalcType.ATK;
-                var isCalcWisOrAgi = srcSkillData.skillCalcType === ENUM.SkillCalcType.WIS ||
+                let isCalcAtk = srcSkillData.skillCalcType === ENUM.SkillCalcType.ATK;
+                let isCalcWisOrAgi = srcSkillData.skillCalcType === ENUM.SkillCalcType.WIS ||
                                      srcSkillData.skillCalcType === ENUM.SkillCalcType.AGI;
                 if (isCalcAtk) {
                     wardType = ENUM.WardType.PHYSICAL;
                 } else if (isCalcWisOrAgi) {
-                    var isEffectBreath = [17, 18, 19].indexOf(srcSkillData.casterEffectId) !== -1;
+                    let isEffectBreath = [17, 18, 19].indexOf(srcSkillData.casterEffectId) !== -1;
                     if (isEffectBreath) {
                         wardType = ENUM.WardType.BREATH;
                     } else {
@@ -161,7 +161,7 @@ class Skill {
      * (mainly used for displaying the wis circle when attack)
      */
     static isWisAutoAttack(skillId: number): boolean {
-        var skillInfo = SkillDatabase[skillId];
+        let skillInfo = SkillDatabase[skillId];
         return this.isAutoAttackSkill(skillId) && skillInfo.calc === ENUM.SkillCalcType.WIS;
     }
 
@@ -169,7 +169,7 @@ class Skill {
      * Return true if this is a ATK-based auto attack
      */
     static isAtkAutoAttack(skillId: number): boolean {
-        var skillInfo = SkillDatabase[skillId];
+        let skillInfo = SkillDatabase[skillId];
 
         return this.isAutoAttackSkill(skillId) && skillInfo.calc === ENUM.SkillCalcType.ATK;
     }
@@ -186,7 +186,7 @@ class Skill {
      * (mainly used to determine whether to use the magic circle)
      */
     static isMagicSkill(skillId: number): boolean {
-        var skillInfo = SkillDatabase[skillId];
+        let skillInfo = SkillDatabase[skillId];
 
         if (skillInfo.calc === ENUM.SkillCalcType.WIS) {
             return true;
@@ -218,8 +218,8 @@ class Skill {
      * (mainly used to determine the animation)
      */
     static isAoeSkill(skillId: number): boolean {
-        var isAoe = false;
-        var skillInfo = SkillDatabase[skillId];
+        let isAoe = false;
+        let skillInfo = SkillDatabase[skillId];
 
         if (RangeFactory.canBeAoeRange(skillInfo.range) && this.isIndirectSkill(skillId)) {
             isAoe = true;
@@ -232,8 +232,8 @@ class Skill {
      * Return true if this is an attack skill with debuff
      */
     static isDebuffAttackSkill(skillId: number): boolean {
-        var isDebuffAttack = false;
-        var skillInfo = SkillDatabase[skillId];
+        let isDebuffAttack = false;
+        let skillInfo = SkillDatabase[skillId];
 
         switch (skillInfo.func) {
             case ENUM.SkillFunc.DEBUFFATTACK:
@@ -258,8 +258,8 @@ class Skill {
      * (mainly used for displaying the status text)
      */
     static getStatusModified(skillId: number): ENUM.StatusType[] {
-        var skillInfo = SkillDatabase[skillId];
-        var statuses = [];
+        let skillInfo = SkillDatabase[skillId];
+        let statuses = [];
 
         switch (skillInfo.func) {
             case ENUM.SkillFunc.BUFF:

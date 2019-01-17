@@ -3,11 +3,11 @@
 class AbsorbSkillLogic extends SkillLogic {
     execute(data: SkillLogicData) {
         // process the debuff first
-        var skill = data.skill;
-        var executor = data.executor;
+        let skill = data.skill;
+        let executor = data.executor;
         skill.getReady(executor);
 
-        var target: Card;
+        let target: Card;
 
         while (target = skill.getTarget(executor)) {
             this.absorbTarget(executor, target, skill);
@@ -16,8 +16,8 @@ class AbsorbSkillLogic extends SkillLogic {
 
     absorbTarget(executor: Card, target: Card, skill: Skill): void {
         // get a list of statuses to absorb
-        var statusToBuff = AbsorbSkillLogic.getComponentStatusFromBuffStatusType(skill.skillFuncArg2);
-        var debuffMulti = skill.skillFuncArg3;
+        let statusToBuff = AbsorbSkillLogic.getComponentStatusFromBuffStatusType(skill.skillFuncArg2);
+        let debuffMulti = skill.skillFuncArg3;
 
         // note: we may want to check target.isDead here, however that would make the executor unable
         // to absorb from a target that it has just killed, which is probably not what we want
@@ -30,14 +30,14 @@ class AbsorbSkillLogic extends SkillLogic {
             return;
         }
 
-        for (var j = 0; j < statusToBuff.length; j++) {
-            var statusType = statusToBuff[j];
+        for (let j = 0; j < statusToBuff.length; j++) {
+            let statusType = statusToBuff[j];
 
             // debuff phase
-            var calcType = skill.skillFuncArg4;
+            let calcType = skill.skillFuncArg4;
 
             // it's neither true nor false, since it has its own logic...
-            var isNewLogic = false;
+            let isNewLogic = false;
 
             // note: even though this is new logic, the 1.2 modifier is not applied.
             if (calcType !== ENUM.SkillCalcType.DEBUFF) {
@@ -50,9 +50,9 @@ class AbsorbSkillLogic extends SkillLogic {
             }
 
             // get the maximum debuff amount
-            var lowStatLimit = target.getOriginalStat(ENUM.StatusType[statusType]) * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
-            var currentStat = target.getStat(ENUM.StatusType[statusType]);
-            var maxDebuffLimit = lowStatLimit > currentStat ? 0 : currentStat - lowStatLimit; // <- the maximum debuff amount
+            let lowStatLimit = target.getOriginalStat(ENUM.StatusType[statusType]) * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
+            let currentStat = target.getStat(ENUM.StatusType[statusType]);
+            let maxDebuffLimit = lowStatLimit > currentStat ? 0 : currentStat - lowStatLimit; // <- the maximum debuff amount
 
             if (debuffAmount > maxDebuffLimit) {
                 debuffAmount = maxDebuffLimit;
@@ -73,7 +73,7 @@ class AbsorbSkillLogic extends SkillLogic {
             });
 
             // buff phase
-            var buffAmount = Math.floor(Math.abs(debuffAmount) * skill.skillFuncArg5);
+            let buffAmount = Math.floor(Math.abs(debuffAmount) * skill.skillFuncArg5);
             executor.changeStatus(statusType, buffAmount, false);
 
             this.logger.addMinorEvent({

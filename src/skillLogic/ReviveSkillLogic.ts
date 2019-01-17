@@ -2,15 +2,15 @@
 
 class ReviveSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasValidTarget = data.skill.range.hasValidTarget(data.executor);
+        let hasValidTarget = data.skill.range.hasValidTarget(data.executor);
         return super.willBeExecuted(data) && hasValidTarget;
     }
 
     execute(data: SkillLogicData) {
         data.skill.getReady(data.executor);
-        var hpRatio = data.skill.skillFuncArg1;
+        let hpRatio = data.skill.skillFuncArg1;
 
-        var target: Card;
+        let target: Card;
         while (target = data.skill.getTarget(data.executor)) {
             target.revive(hpRatio);
 

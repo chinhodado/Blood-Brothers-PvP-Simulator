@@ -3,7 +3,7 @@
  */
 class CardManager {
     private static _instance: CardManager = null;
-    private battle: BattleModel;
+    private readonly battle: BattleModel;
 
     public static getInstance(): CardManager {
         if (CardManager._instance === null) {
@@ -46,14 +46,14 @@ class CardManager {
     }
 
     sortAllCurrentMainCards(): void {
-        var sortFunc = this.getSortFunc(this.battle.turnOrderBase);
+        let sortFunc = this.getSortFunc(this.battle.turnOrderBase);
         this.battle.allCurrentMainCards.sort(sortFunc);
     }
 
     getPlayerCurrentMainCardsByProcOrder(player: Player): Card[] {
-        var playerCards = this.getPlayerCurrentMainCards(player);
-        var copy = [];
-        for (var i = 0; i < playerCards.length; i++) {
+        let playerCards = this.getPlayerCurrentMainCards(player);
+        let copy = [];
+        for (let i = 0; i < playerCards.length; i++) {
             copy.push(playerCards[i]);
         }
 
@@ -66,8 +66,8 @@ class CardManager {
      * position in the formation
      */
     getLeftSideCard (card: Card): Card {
-        var playerCards = this.getPlayerCurrentMainCards(card.player);
-        var column = card.formationColumn;
+        let playerCards = this.getPlayerCurrentMainCards(card.player);
+        let column = card.formationColumn;
         if (column === 0) { // leftmost position
             return null;
         }
@@ -84,8 +84,8 @@ class CardManager {
      * position in the formation
      */
     getRightSideCard (card: Card): Card {
-        var playerCards = this.getPlayerCurrentMainCards(card.player);
-        var column = card.formationColumn;
+        let playerCards = this.getPlayerCurrentMainCards(card.player);
+        let column = card.formationColumn;
         if (column === 4) { // rightmost position
             return null;
         }
@@ -108,7 +108,7 @@ class CardManager {
      * Get all the current main cards of a player
      */
     getPlayerCurrentMainCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_mainCards;
         }
@@ -121,7 +121,7 @@ class CardManager {
     }
 
     getPlayerCurrentReserveCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_reserveCards;
         }
@@ -134,7 +134,7 @@ class CardManager {
     }
 
     getPlayerOriginalMainCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_originalMainCards;
         }
@@ -146,7 +146,7 @@ class CardManager {
         }
     }
     getPlayerOriginalReserveCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p1_originalReserveCards;
         }
@@ -163,7 +163,7 @@ class CardManager {
     }
 
     getEnemyCurrentMainCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p2_mainCards;
         }
@@ -176,7 +176,7 @@ class CardManager {
     }
 
     getEnemyCurrentReserveCards (player: Player): Card[] {
-        var battle = this.battle;
+        let battle = this.battle;
         if (player === battle.player1) {
             return battle.p2_reserveCards;
         }
@@ -189,8 +189,8 @@ class CardManager {
     }
 
     getValidSingleTarget (cards: Card[]): Card {
-        var possibleIndices: number[] = [];
-        for (var i = 0; i < 5; i++) {
+        let possibleIndices: number[] = [];
+        for (let i = 0; i < 5; i++) {
             if (!cards[i].isDead) {
                 possibleIndices.push(i);
             }
@@ -201,7 +201,7 @@ class CardManager {
         }
 
         // get a random index from the list of possible indices
-        var randomIndex = getRandomInt(0, possibleIndices.length - 1);
+        let randomIndex = getRandomInt(0, possibleIndices.length - 1);
 
         return cards[possibleIndices[randomIndex]];
     }
@@ -212,13 +212,13 @@ class CardManager {
      * @param executor
      */
     getNearestSingleOpponentTarget (executor: Card): Card {
-        var oppCards: Card[] = this.getPlayerCurrentMainCards(this.battle.getOppositePlayer(executor.player));
-        var executorIndex = executor.formationColumn;
+        let oppCards: Card[] = this.getPlayerCurrentMainCards(this.battle.getOppositePlayer(executor.player));
+        let executorIndex = executor.formationColumn;
 
-        var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
+        let offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
 
-        for (var i = 0; i < offsetArray.length; i++) {
-            var currentOppCard = oppCards[executorIndex + offsetArray[i]];
+        for (let i = 0; i < offsetArray.length; i++) {
+            let currentOppCard = oppCards[executorIndex + offsetArray[i]];
             if (currentOppCard && !currentOppCard.isDead) {
                 return currentOppCard;
             }
@@ -235,13 +235,13 @@ class CardManager {
      * @param executor
      */
     getNearestSingleFriendTarget(executor: Card): Card {
-        var friendCards: Card[] = this.getPlayerCurrentMainCards(executor.player);
-        var executorIndex = executor.formationColumn;
+        let friendCards: Card[] = this.getPlayerCurrentMainCards(executor.player);
+        let executorIndex = executor.formationColumn;
 
-        var offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
+        let offsetArray = [0, -1, 1, -2, 2, -3, 3, -4, 4];
 
-        for (var i = 0; i < offsetArray.length; i++) {
-            var currentFriendCard = friendCards[executorIndex + offsetArray[i]];
+        for (let i = 0; i < offsetArray.length; i++) {
+            let currentFriendCard = friendCards[executorIndex + offsetArray[i]];
             if (currentFriendCard && !currentFriendCard.isDead) {
                 return currentFriendCard;
             }
@@ -255,7 +255,7 @@ class CardManager {
      * Check if all cards of a player has died
      */
     isAllDeadPlayer (player: Player): boolean {
-        var reserveCond = true;
+        let reserveCond = true;
         if (this.battle.isBloodClash) {
             if (!this.isNoReserveLeft(player)) reserveCond = false;
         }
@@ -266,9 +266,9 @@ class CardManager {
      * Check if all the current main cards of a player has died
      */
     isAllMainCardsDead (player: Player): boolean {
-        var mainCards = this.getPlayerCurrentMainCards(player);
-        var isAllDead = true;
-        for (var i = 0; i < mainCards.length; i++) {
+        let mainCards = this.getPlayerCurrentMainCards(player);
+        let isAllDead = true;
+        for (let i = 0; i < mainCards.length; i++) {
             // main cards can never be null
             if (!mainCards[i].isDead) {
                 isAllDead = false;
@@ -282,9 +282,9 @@ class CardManager {
      * Check if a player has no reserve left. Use it only when battle is bloodclash.
      */
     isNoReserveLeft (player: Player): boolean {
-        var reserveCards = this.getPlayerCurrentReserveCards(player);
-        var noReserveLeft = true;
-        for (var i = 0; i < reserveCards.length; i++) {
+        let reserveCards = this.getPlayerCurrentReserveCards(player);
+        let noReserveLeft = true;
+        for (let i = 0; i < reserveCards.length; i++) {
             if (reserveCards[i]) { // not null
                 noReserveLeft = false;
                 break;
@@ -297,8 +297,8 @@ class CardManager {
      * Return true if a card is in a list of cards, or false if not
      */
     isCardInList(card: Card, list: Card[]): boolean {
-        var isIn: boolean = false;
-        for (var i = 0; i < list.length; i++) {
+        let isIn: boolean = false;
+        for (let i = 0; i < list.length; i++) {
             if (list[i].id === card.id) {
                 isIn = true;
                 break;
@@ -321,7 +321,7 @@ class CardManager {
         return this.battle.allCurrentMainCards;
     }
     getAllCurrentCards(): Card[] {
-        var bt = this.battle;
+        let bt = this.battle;
         return bt.p1_mainCards.concat(bt.p2_mainCards).concat(bt.p1_reserveCards).concat(bt.p2_reserveCards);
     }
 
@@ -334,7 +334,7 @@ class CardManager {
 
     // remember to call this when there's a change in membership of p1_mainCards or p2_mainCards
     updateAllCurrentMainCards(): void {
-        var battle = this.battle;
+        let battle = this.battle;
         battle.allCurrentMainCards = battle.p1_mainCards.concat(battle.p2_mainCards);
     }
 
@@ -342,9 +342,9 @@ class CardManager {
     // allCurrentMainCards while still maintaining the current order (the order won't be updated until
     // the beginning of a game turn)
     switchCardInAllCurrentMainCards(oldCard: Card, newCard: Card): void{
-        var allCurrentMainCards = this.battle.allCurrentMainCards;
-        var found = false;
-        for (var i = 0; i < allCurrentMainCards.length; i++) {
+        let allCurrentMainCards = this.battle.allCurrentMainCards;
+        let found = false;
+        for (let i = 0; i < allCurrentMainCards.length; i++) {
             if (allCurrentMainCards[i].id === oldCard.id) {
                 found = true;
                 allCurrentMainCards[i] = newCard;
@@ -368,7 +368,7 @@ class CardManager {
      * Get a string for a player's main brig
      */
     getPlayerMainBrigString(player: Player): string {
-        var cards = this.getPlayerCurrentMainCards(player);
+        let cards = this.getPlayerCurrentMainCards(player);
         return ENUM.Setting.IS_MOBILE? this.getPlainBrigString(cards) : this.getHtmlBrigString(cards);
     }
 
@@ -376,7 +376,7 @@ class CardManager {
      * Get a string for a player's reserve brig
      */
     getPlayerReserveBrigString(player: Player): string {
-        var cards = this.getPlayerOriginalReserveCards(player);
+        let cards = this.getPlayerOriginalReserveCards(player);
         return ENUM.Setting.IS_MOBILE? this.getPlainBrigString(cards) : this.getHtmlBrigString(cards);
     }
 
@@ -384,11 +384,11 @@ class CardManager {
      * Get a HTML string for a list of cards, with each fam name being a link to open that fam's detail dialog
      */
     getHtmlBrigString(cards: Card[]): string {
-        var brigStr = "";
+        let brigStr = "";
 
-        for (var i = 0; i < cards.length; i++) {
-            var dash = (i === 0)? "" : " - ";
-            var cb = `showCardDetailDialogById(${cards[i].id});`;
+        for (let i = 0; i < cards.length; i++) {
+            let dash = (i === 0)? "" : " - ";
+            let cb = `showCardDetailDialogById(${cards[i].id});`;
             brigStr += (dash + "<a href='javascript:void(0)' onclick='" + cb + "'>" + cards[i].name) + "</a>";
         }
 
@@ -399,10 +399,10 @@ class CardManager {
      * Get a plain string for a list of cards
      */
     getPlainBrigString(cards: Card[]): string {
-        var brigStr = "";
+        let brigStr = "";
 
-        for (var i = 0; i < cards.length; i++) {
-            var dash = (i === 0)? "" : " - ";
+        for (let i = 0; i < cards.length; i++) {
+            let dash = (i === 0)? "" : " - ";
             brigStr += (dash + cards[i].name);
         }
 
@@ -410,25 +410,25 @@ class CardManager {
     }
 
     getCurrentMainCardByIndex(playerId: number, index: number): Card {
-        var cards = this.getPlayerCurrentMainCards(this.battle.getPlayerById(playerId));
+        let cards = this.getPlayerCurrentMainCards(this.battle.getPlayerById(playerId));
         return cards[index];
     }
 
     getOriginalMainCardByIndex(playerId: number, index: number): Card {
-        var cards = this.getPlayerOriginalMainCards(this.battle.getPlayerById(playerId));
+        let cards = this.getPlayerOriginalMainCards(this.battle.getPlayerById(playerId));
         return cards[index];
     }
 
     getOriginalReserveCardByIndex(playerId: number, index: number): Card {
-        var cards = this.getPlayerOriginalReserveCards(this.battle.getPlayerById(playerId));
+        let cards = this.getPlayerOriginalReserveCards(this.battle.getPlayerById(playerId));
         return cards[index];
     }
 
     getTotalHPRatio(cards: Card[]): number {
-        var totalRemainHp = 0;
-        var totalOriginalHp = 0;
-        for (var i = 0, len = cards.length; i < len; i++) {
-            var card = cards[i];
+        let totalRemainHp = 0;
+        let totalOriginalHp = 0;
+        for (let i = 0, len = cards.length; i < len; i++) {
+            let card = cards[i];
             // if dead, remain HP is 0, so no need to care
             if (card) {
                 if (!card.isDead) {
@@ -441,10 +441,10 @@ class CardManager {
     }
 
     getCardInfoForDialog(card: Card) {
-        var skillInfo = [];
-        var allSkills = card.skills.concat(card.passiveSkills);
-        for (var i = 0; i < allSkills.length; i++) {
-            var skill = allSkills[i];
+        let skillInfo = [];
+        let allSkills = card.skills.concat(card.passiveSkills);
+        for (let i = 0; i < allSkills.length; i++) {
+            let skill = allSkills[i];
             skillInfo.push({
                 "id": skill.id,
                 "name": skill.name,

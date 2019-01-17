@@ -27,11 +27,11 @@ class BattleDebugger {
      */
     public displayDebugger(): void {
         this.displayEventLogAtIndex(0);
-        var minorLog = BattleLogger.getInstance().minorEventLog;
-        var majorLog = BattleLogger.getInstance().majorEventLog;
+        let minorLog = BattleLogger.getInstance().minorEventLog;
+        let majorLog = BattleLogger.getInstance().majorEventLog;
 
-        var currentTurn = -10;
-        for (var i = 0; i < majorLog.length; i++) {
+        let currentTurn = -10;
+        for (let i = 0; i < majorLog.length; i++) {
             // display the turn
             if (majorLog[i].turn !== currentTurn) {
                 currentTurn = majorLog[i].turn;
@@ -43,7 +43,7 @@ class BattleDebugger {
 
             // display all the minor events inside this major event
             // TODO: make sure that there is at lest 1 minorEvent for each majorEvent, so we don't need to check for minorLog[i]
-            for (var j = 0; minorLog[i] && j < minorLog[i].length; j++) {
+            for (let j = 0; minorLog[i] && j < minorLog[i].length; j++) {
                 this.displayMinorEvent(i, j);
             }
         }
@@ -57,10 +57,10 @@ class BattleDebugger {
             return;
         }
 
-        var data = BattleLogger.getInstance().majorEventLog[index];
-        var id = `turn${data.turn}events`;
-        var battleEventDiv = document.getElementById("battleEventDiv");
-        var turnEventList = document.getElementById(id);
+        let data = BattleLogger.getInstance().majorEventLog[index];
+        let id = `turn${data.turn}events`;
+        let battleEventDiv = document.getElementById("battleEventDiv");
+        let turnEventList = document.getElementById(id);
 
         // if not already exist, create it
         if (!turnEventList) {
@@ -89,20 +89,20 @@ class BattleDebugger {
             return;
         }
 
-        var currentTurn = BattleLogger.getInstance().majorEventLog[majorIndex].turn;
-        var id = `turn${currentTurn}events`;
+        let currentTurn = BattleLogger.getInstance().majorEventLog[majorIndex].turn;
+        let id = `turn${currentTurn}events`;
 
-        var description = BattleLogger.getInstance().minorEventLog[majorIndex][minorIndex].description;
+        let description = BattleLogger.getInstance().minorEventLog[majorIndex][minorIndex].description;
 
         // the list of events of this turn
         // assume that it has already been created
-        var turnEventList = document.getElementById(id);
+        let turnEventList = document.getElementById(id);
 
         // a <li>, the last "major" event that occurred in this turn, like when a fam procs
-        var lastEvent : any = turnEventList.lastChild;
+        let lastEvent : any = turnEventList.lastChild;
 
         // the <ul> nested inside the above <li>, the sub event list
-        var subEventList = lastEvent.getElementsByTagName("ul")[0];
+        let subEventList = lastEvent.getElementsByTagName("ul")[0];
 
         // if not already exist, create it
         if (!subEventList) {
@@ -112,7 +112,7 @@ class BattleDebugger {
         }
 
         // new list item for the sub event, and append it to the sub event list
-        var newEvent = document.createElement("li");
+        let newEvent = document.createElement("li");
         newEvent.innerHTML = description;
         subEventList.appendChild(newEvent);
     }
@@ -125,8 +125,8 @@ class BattleDebugger {
             return;
         }
 
-        var battleEventDiv = document.getElementById("battleEventDiv");
-        var newEvent = document.createElement("p");
+        let battleEventDiv = document.getElementById("battleEventDiv");
+        let newEvent = document.createElement("p");
         newEvent.innerHTML = `Turn ${turnNum}`;
         battleEventDiv.appendChild(newEvent);
     }
@@ -140,51 +140,51 @@ class BattleDebugger {
         if (!BattleDebugger.IS_DEBUG_MODE) {
             return;
         }
-        var graphic = BattleGraphic.getInstance();
-        var logger = BattleLogger.getInstance();
-        var lastEventIndex = (majorIndex === 0)? 0 : majorIndex - 1;
+        let graphic = BattleGraphic.getInstance();
+        let logger = BattleLogger.getInstance();
+        let lastEventIndex = (majorIndex === 0)? 0 : majorIndex - 1;
 
         // the field after the last major event and before the current major event
-        var lastEventField = logger.getFieldAtMajorIndex(lastEventIndex);
+        let lastEventField = logger.getFieldAtMajorIndex(lastEventIndex);
 
         // the current field, aka the field after the current major event
-        var field = logger.getFieldAtMajorIndex(majorIndex);
+        let field = logger.getFieldAtMajorIndex(majorIndex);
 
         // now prepares the info and print them out
-        for (var p = 1; p <= 2; p++) { // for each player
-            var playerCards = field[`player${p}Cards`]; // get the cards of that player
-            var lastPlayerCards = lastEventField[`player${p}Cards`];
-            for (var f = 0; f < 5; f++) { // for each card
-                var stats          = playerCards[f].stats;
-                var originalStats  = playerCards[f].originalStats;
-                var status: Status = playerCards[f].status;
-                var afflict = playerCards[f].affliction; // not the same thing as in the original card class
+        for (let p = 1; p <= 2; p++) { // for each player
+            let playerCards = field[`player${p}Cards`]; // get the cards of that player
+            let lastPlayerCards = lastEventField[`player${p}Cards`];
+            for (let f = 0; f < 5; f++) { // for each card
+                let stats          = playerCards[f].stats;
+                let originalStats  = playerCards[f].originalStats;
+                let status: Status = playerCards[f].status;
+                let afflict = playerCards[f].affliction; // not the same thing as in the original card class
 
-                var hpRatio = stats.hp / originalStats.hp;
-                var finalAtk = this.getFinalStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK],
+                let hpRatio = stats.hp / originalStats.hp;
+                let finalAtk = this.getFinalStat(originalStats.atk, status.atk, status.isNewLogic[ENUM.StatusType.ATK],
                     status.remainHpAtkUp, hpRatio);
-                var finalDef = this.getFinalStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF],
+                let finalDef = this.getFinalStat(originalStats.def, status.def, status.isNewLogic[ENUM.StatusType.DEF],
                     status.remainHpDefUp, hpRatio);
-                var finalWis = this.getFinalStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS],
+                let finalWis = this.getFinalStat(originalStats.wis, status.wis, status.isNewLogic[ENUM.StatusType.WIS],
                     status.remainHpWisUp, hpRatio);
-                var finalAgi = this.getFinalStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI],
+                let finalAgi = this.getFinalStat(originalStats.agi, status.agi, status.isNewLogic[ENUM.StatusType.AGI],
                     status.remainHpAgiUp, hpRatio);
 
                 // get the stats after the last major event so we can compare with it later
-                var lastStats          = lastPlayerCards[f].stats;
-                var lastOriginalStats  = lastPlayerCards[f].originalStats;
-                var lastStatus: Status = lastPlayerCards[f].status;
-                var lastHpRatio = lastStats.hp / lastOriginalStats.hp;
-                var lastFinalAtk = this.getFinalStat(lastOriginalStats.atk, lastStatus.atk, lastStatus.isNewLogic[ENUM.StatusType.ATK],
+                let lastStats          = lastPlayerCards[f].stats;
+                let lastOriginalStats  = lastPlayerCards[f].originalStats;
+                let lastStatus: Status = lastPlayerCards[f].status;
+                let lastHpRatio = lastStats.hp / lastOriginalStats.hp;
+                let lastFinalAtk = this.getFinalStat(lastOriginalStats.atk, lastStatus.atk, lastStatus.isNewLogic[ENUM.StatusType.ATK],
                     lastStatus.remainHpAtkUp, lastHpRatio);
-                var lastFinalDef = this.getFinalStat(lastOriginalStats.def, lastStatus.def, lastStatus.isNewLogic[ENUM.StatusType.DEF],
+                let lastFinalDef = this.getFinalStat(lastOriginalStats.def, lastStatus.def, lastStatus.isNewLogic[ENUM.StatusType.DEF],
                     lastStatus.remainHpDefUp, lastHpRatio);
-                var lastFinalWis = this.getFinalStat(lastOriginalStats.wis, lastStatus.wis, lastStatus.isNewLogic[ENUM.StatusType.WIS],
+                let lastFinalWis = this.getFinalStat(lastOriginalStats.wis, lastStatus.wis, lastStatus.isNewLogic[ENUM.StatusType.WIS],
                     lastStatus.remainHpWisUp, lastHpRatio);
-                var lastFinalAgi = this.getFinalStat(lastOriginalStats.agi, lastStatus.agi, lastStatus.isNewLogic[ENUM.StatusType.AGI],
+                let lastFinalAgi = this.getFinalStat(lastOriginalStats.agi, lastStatus.agi, lastStatus.isNewLogic[ENUM.StatusType.AGI],
                     lastStatus.remainHpAgiUp, lastHpRatio);
 
-                var infoText: any = {
+                let infoText: any = {
                     name : playerCards[f].name,
                     hp : `HP: ${stats.hp}`,
                     atk : `ATK: ${finalAtk}`,
@@ -225,8 +225,8 @@ class BattleDebugger {
 
                 // grab all minor events under the latest major event
                 // need to make sure eventLog[index] exists
-                for (var j = 0; logger.minorEventLog[majorIndex] && j < logger.minorEventLog[majorIndex].length; j++) {
-                    var tempEvent = logger.minorEventLog[majorIndex][j]; // a minor event
+                for (let j = 0; logger.minorEventLog[majorIndex] && j < logger.minorEventLog[majorIndex].length; j++) {
+                    let tempEvent = logger.minorEventLog[majorIndex][j]; // a minor event
                     if (tempEvent.targetId === playerCards[f].id) {
                         if (tempEvent.type === ENUM.MinorEventType.STATUS) {
                             if (tempEvent.status.type === ENUM.StatusType.ATTACK_RESISTANCE) {
@@ -260,7 +260,7 @@ class BattleDebugger {
                     infoText.name = `<b>${infoText.name}</b>`;
                 }
 
-                var htmlelem = document.getElementById(`player${p}Fam${f}`); // <- the box to display info of the current fam
+                let htmlelem = document.getElementById(`player${p}Fam${f}`); // <- the box to display info of the current fam
                 htmlelem.innerHTML = infoText.name + "<br>" +
                                     infoText.hp  + "<br>" +
                                     infoText.atk + "<br>" +
@@ -276,7 +276,7 @@ class BattleDebugger {
                                     (infoText.affliction?       `<br>${infoText.affliction}` : "");
 
                 // display last event's HP
-                var lastEventCard = lastEventField[`player${p}Cards`][f];
+                let lastEventCard = lastEventField[`player${p}Cards`][f];
                 graphic.displayHP (lastEventCard.stats.hp / lastEventCard.originalStats.hp * 100, p, f, 0);
             }
         }
@@ -292,7 +292,7 @@ class BattleDebugger {
      * new debuff logic adjustment, remain hp power up)
      */
     getFinalStat(original: number, statusAmount: number, isNewLogic: boolean, remainHpPwrUp: number, hpRatio: number): number {
-        var value = original;
+        let value = original;
 
         if (remainHpPwrUp > 1){
             value += Math.round(value * (1 - hpRatio) * (remainHpPwrUp - 1));
@@ -305,7 +305,7 @@ class BattleDebugger {
         }
 
         if (isNewLogic) {
-            var lowerLimit = original * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
+            let lowerLimit = original * Card.NEW_DEBUFF_LOW_LIMIT_FACTOR;
             value = (value > lowerLimit) ? value : lowerLimit;
         }
         return value;
@@ -317,7 +317,7 @@ class BattleDebugger {
      * @param isNegative true if you want the text to be red, false if green
      */
     decorateText(text: string, isNegative: boolean): string {
-        var openTag: string;
+        let openTag: string;
         if (isNegative) {
             openTag = "<span style='color:red'><b>";
         }

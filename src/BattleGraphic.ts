@@ -65,13 +65,13 @@ class BattleGraphic {
             return;
         }
 
-        var playerFormations = {};
+        let playerFormations = {};
         playerFormations[1] = this.battle.player1.formation.getFormationConfig(); // player1's formation
 
         // reverse player2's formation for display purpose
-        var player2formation = this.battle.player2.formation.getFormationConfig();
-        var temp = [];
-        var tempNumber : number;
+        let player2formation = this.battle.player2.formation.getFormationConfig();
+        let temp = [];
+        let tempNumber : number;
         for (let i = 0; i < 5; i++) {
             switch (player2formation[i]) {
                 case 1 :
@@ -88,11 +88,11 @@ class BattleGraphic {
         }
         playerFormations[2] = temp;
 
-        var wr = BattleGraphic.wr;
-        var hr = BattleGraphic.hr;
-        var draw = SVG('svg').size(wr * 400, hr * 600).attr('id', 'mainSvg').attr('class', 'svg');
+        let wr = BattleGraphic.wr;
+        let hr = BattleGraphic.hr;
+        let draw = SVG('svg').size(wr * 400, hr * 600).attr('id', 'mainSvg').attr('class', 'svg');
 
-        for (var player = 1; player <= 2; player++) {
+        for (let player = 1; player <= 2; player++) {
             // draw the skill name background, don't show them yet
             if (player === 2) {
                 var skillImg = draw.image('img/skillBg.png', wr * 300, hr * 29).move(wr * 55, hr * 5).attr('id', 'p2SkillBg');
@@ -108,17 +108,17 @@ class BattleGraphic {
             }
 
             // change these to change the "compactity" of the formation
-            var PLAYER_GROUP_WIDTH = wr * 350;
-            var PLAYER_GROUP_HEIGHT = hr * 80;
+            let PLAYER_GROUP_WIDTH = wr * 350;
+            let PLAYER_GROUP_HEIGHT = hr * 80;
 
-            var horizontalStep = PLAYER_GROUP_WIDTH / 10;
-            var verticalStep   = PLAYER_GROUP_HEIGHT / 2;
+            let horizontalStep = PLAYER_GROUP_WIDTH / 10;
+            let verticalStep   = PLAYER_GROUP_HEIGHT / 2;
 
-            var coordArray = [];
+            let coordArray = [];
             this.coordArray[player] = coordArray;
 
             // a svg group for everything belonging to that player: fam image, hp, formation, etc.
-            var groupPlayer = draw.group().attr('id', `p${player}group`);
+            let groupPlayer = draw.group().attr('id', `p${player}group`);
             if ((BattleGraphic.HIDE_PLAYER1 && player === 1) || (BattleGraphic.HIDE_PLAYER2 && player === 2)) {
                 groupPlayer.hide();
             }
@@ -132,8 +132,8 @@ class BattleGraphic {
 
             // calculate the bullets coord
             for (let i = 0; i < 5; i++) {
-                var bulletX = ((i + 1) * 2 - 1) * horizontalStep;
-                var bulletY = (playerFormations[player][i] - 1) * verticalStep;
+                let bulletX = ((i + 1) * 2 - 1) * horizontalStep;
+                let bulletY = (playerFormations[player][i] - 1) * verticalStep;
 
                 coordArray.push([bulletX, bulletY]);
             }
@@ -141,70 +141,70 @@ class BattleGraphic {
             // now draw lines and bullets
             if (BattleGraphic.SHOW_FORMATION_LINE) {
                 for (let i = 0; i < 5; i++) {
-                    var diameter = 10;
-                    var dot = draw.circle(diameter)
+                    let diameter = 10;
+                    let dot = draw.circle(diameter)
                                   .move(coordArray[i][0] - diameter / 2, coordArray[i][1] - diameter / 2);
                     groupPlayer.add(dot);
                 }
 
                 for (let i = 0; i < 4; i++) {
-                    var line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
+                    let line = draw.line(coordArray[i][0], coordArray[i][1], coordArray[i + 1][0], coordArray[i + 1][1])
                                    .stroke({ width: 1 });
                     groupPlayer.add(line);
                 }
             }
 
             // grab the image links of the curent player's fam
-            var imageLinksArray = [];
-            var playerCards = this.cardMan.getPlayerCurrentMainCards(this.battle.getPlayerById(player));
-            var reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
+            let imageLinksArray = [];
+            let playerCards = this.cardMan.getPlayerCurrentMainCards(this.battle.getPlayerById(player));
+            let reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
 
-            for (var fam = 0; fam < playerCards.length; fam++) {
+            for (let fam = 0; fam < playerCards.length; fam++) {
                 imageLinksArray.push(getScaledFamiliarWikiaImageLink(playerCards[fam].imageLink, playerCards[fam].fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
 
             // display fam images and other effects
             for (let i = 0; i < 5; i++) {
                 // the x coordinate is 1/2 image width to the left of the bullet
-                var image_x_coord = coordArray[i][0] - BattleGraphic.IMAGE_WIDTH / 2;
+                let image_x_coord = coordArray[i][0] - BattleGraphic.IMAGE_WIDTH / 2;
 
                 // the y coordinate is 1/2 image height above the bullet
-                var image_y_coord = coordArray[i][1] - BattleGraphic.IMAGE_WIDTH * 1.5 / 2;
+                let image_y_coord = coordArray[i][1] - BattleGraphic.IMAGE_WIDTH * 1.5 / 2;
 
-                var image = draw.image(imageLinksArray[i])
+                let image = draw.image(imageLinksArray[i])
                     .move(image_x_coord, image_y_coord)
                     .attr('id', `p${player}f${i}image`)
                     .loaded(function (loader) {
                         this.size(BattleGraphic.IMAGE_WIDTH);
                     });
 
-                var damageText = draw.text('0').font({ size: wr * 22, family: BattleGraphic.FONT })
+                let damageText = draw.text('0').font({ size: wr * 22, family: BattleGraphic.FONT })
                                      .attr({fill:'#fff', stroke: '#000', 'stroke-width': hr * 2 + 'px'})
                                      .center(coordArray[i][0], coordArray[i][1])
                                      .attr('id', `p${player}f${i}damageText`)
                                      .opacity(0);
 
-                var explosion = draw.image('img/explosion.png', wr * 70, wr * 70)
+                let explosion = draw.image('img/explosion.png', wr * 70, wr * 70)
                                     .move(image_x_coord, image_y_coord)
                                     .attr('id', `p${player}f${i}explosion`)
                                     .opacity(0);
 
                 // make a svg group for the image + hp bar + explosion + proc spark + spell circle
-                var group = draw.group().attr('id', `p${player}f${i}group`);
+                let group = draw.group().attr('id', `p${player}f${i}group`);
                 group.add(image);
                 group.add(damageText);
                 group.add(explosion);
 
-                var click = arg => {
-                    var cardMan = CardManager.getInstance();
+                let click = arg => {
+                    let cardMan = CardManager.getInstance();
 
                     return function() {
                         // Get the svg image element nested inside the current fam group.
                         // Here, "this" is the group, and we're assuming that the card image is always
                         // the first children of the group, which I'm not sure is true all the time
-                        var nestedImg = this.get(0);
-                        var nestedImgHref = nestedImg.attr("href");
-                        var card = cardMan.getOriginalMainCardByIndex(arg[0], arg[1]);
+                        let nestedImg = this.get(0);
+                        let nestedImgHref = nestedImg.attr("href");
+                        let card = cardMan.getOriginalMainCardByIndex(arg[0], arg[1]);
 
                         // In this player's brig, at this index, if the current fam image is different from
                         // the image of the fam originally in the main brig, we know that this is a reserve fam
@@ -223,7 +223,7 @@ class BattleGraphic {
 
                 // preload the reserve image
                 if (this.battle.isBloodClash) {
-                    var reserve_img = new Image();
+                    let reserve_img = new Image();
                     reserve_img.src = getScaledFamiliarWikiaImageLink(reserveCards[i].imageLink, reserveCards[i].fullName, BattleGraphic.IMAGE_WIDTH_BIG);
                 }
             }
@@ -234,8 +234,8 @@ class BattleGraphic {
      * Reset HP to full, make all fam alive, remove all affliction text, etc.
      */
     resetInitialField() {
-        for (var player = 1; player <= 2; player++) {
-            for (var index = 0; index < 5; index++) {
+        for (let player = 1; player <= 2; player++) {
+            for (let index = 0; index < 5; index++) {
                 this.displayHP(100, player, index, 0);
                 this.getAfflictionText(player, index).hide();
             }
@@ -247,12 +247,12 @@ class BattleGraphic {
      * Display all fam images at the beginning of a major index
      */
     displayAllCardImages(majorIndex: number) {
-        var field = this.logger.getFieldAtMajorIndex(majorIndex);
+        let field = this.logger.getFieldAtMajorIndex(majorIndex);
 
-        for (var p = 1; p <= 2; p++) {
-            for (var f = 0; f < 5; f++) {
-                var image: any = SVG.get(`p${p}f${f}image`);
-                var card = field[`player${p}Cards`][f];
+        for (let p = 1; p <= 2; p++) {
+            for (let f = 0; f < 5; f++) {
+                let image: any = SVG.get(`p${p}f${f}image`);
+                let card = field[`player${p}Cards`][f];
                 image.load(getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
         }
@@ -263,21 +263,21 @@ class BattleGraphic {
      * animDuration: set to 0 if you don't want to display the HP change animation
      */
     displayHP(percent: number, player: number, index: number, animDuration?: number) {
-        var draw = SVG.get('mainSvg');
+        let draw = SVG.get('mainSvg');
 
         // the x coordinate is 1/2 image width to the left of the bullet
-        var image_x_coord = this.coordArray[player][index][0] - BattleGraphic.IMAGE_WIDTH / 2;
+        let image_x_coord = this.coordArray[player][index][0] - BattleGraphic.IMAGE_WIDTH / 2;
 
         // the y coordinate is 1/2 image height above the bullet
-        var image_y_coord = this.coordArray[player][index][1] - BattleGraphic.IMAGE_WIDTH * 1.5 / 2;
+        let image_y_coord = this.coordArray[player][index][1] - BattleGraphic.IMAGE_WIDTH * 1.5 / 2;
 
-        var xstart = Math.round(image_x_coord);
+        let xstart = Math.round(image_x_coord);
 
         // display hp on bottom of the fam
-        var ystart: number = image_y_coord + BattleGraphic.IMAGE_WIDTH * 1.5;
+        let ystart: number = image_y_coord + BattleGraphic.IMAGE_WIDTH * 1.5;
 
-        var width = BattleGraphic.IMAGE_WIDTH; // width of the health bar
-        var height = BattleGraphic.hr * 5; // height of the health bar
+        let width = BattleGraphic.IMAGE_WIDTH; // width of the health bar
+        let height = BattleGraphic.hr * 5; // height of the health bar
 
         if (percent < 0) {
             percent = 0; // health can't be less than 0
@@ -285,26 +285,26 @@ class BattleGraphic {
 
         // first draw the (empty) hp bar
         // try to get the bar if it exist, or create if not
-        var hpbarId = `p${player}f${index}hp`;
-        var hpbar = SVG.get(hpbarId);
+        let hpbarId = `p${player}f${index}hp`;
+        let hpbar = SVG.get(hpbarId);
 
         if (!hpbar) {
             hpbar = draw.rect(width, height)
                 .style({ 'stroke-width': BattleGraphic.wr * 1, 'stroke': '#000000'})
                 .attr('id', hpbarId)
                 .move(xstart, ystart);
-            var groupId = `p${player}f${index}group`;
+            let groupId = `p${player}f${index}group`;
 
             // add the hpbar to the group
-            var group = SVG.get(groupId);
+            let group = SVG.get(groupId);
             group.add(hpbar);
         }
 
         // now we deal with the background gradient used for displaying the HP
-        var hpGradientId = `p${player}f${index}hpGradient`;
-        var hpGradient : any = SVG.get(hpGradientId);
+        let hpGradientId = `p${player}f${index}hpGradient`;
+        let hpGradient : any = SVG.get(hpGradientId);
 
-        var duration = 1;
+        let duration = 1;
         if (!isNaN(animDuration)) {
             duration = animDuration;
         }
@@ -318,8 +318,8 @@ class BattleGraphic {
             hpbar.fill(hpGradient);
         }
         else {
-            var s1 = SVG.get(`p${player}f${index}hpgs1`);
-            var s2 = SVG.get(`p${player}f${index}hpgs2`);
+            let s1 = SVG.get(`p${player}f${index}hpgs1`);
+            let s2 = SVG.get(`p${player}f${index}hpgs2`);
             // @ts-ignore
             s1.animate(duration + 's').update({ offset: percent + '%' });
             // @ts-ignore
@@ -334,15 +334,15 @@ class BattleGraphic {
      * Display the damage text and HP of a fam
      */
     displayDamageTextAndHP(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
-        var field = this.logger.getFieldAtMinorIndex(majorIndex, minorIndex);
-        var targetInfo = field[`player${playerId}Cards`][famIndex];
-        var stats = targetInfo.stats;
-        var originalStats = targetInfo.originalStats;
+        let field = this.logger.getFieldAtMinorIndex(majorIndex, minorIndex);
+        let targetInfo = field[`player${playerId}Cards`][famIndex];
+        let stats = targetInfo.stats;
+        let originalStats = targetInfo.originalStats;
 
-        var center_x = this.coordArray[playerId][famIndex][0];
-        var center_y = this.coordArray[playerId][famIndex][1];
+        let center_x = this.coordArray[playerId][famIndex][0];
+        let center_y = this.coordArray[playerId][famIndex][1];
 
-        var data = this.logger.minorEventLog[majorIndex][minorIndex];
+        let data = this.logger.minorEventLog[majorIndex][minorIndex];
 
         if (data.missed) {
             var txt = "missed";
@@ -357,13 +357,13 @@ class BattleGraphic {
             txt = Math.abs(data.amount) + "";
         }
 
-        var txtColor = '#fff';
+        let txtColor = '#fff';
         if (data.amount > 0) {
             // green text for healing
             txtColor = '#00ff00';
         }
 
-        var damageText = SVG.get(`p${playerId}f${famIndex}damageText`);
+        let damageText = SVG.get(`p${playerId}f${famIndex}damageText`);
         damageText.text(txt).font({ size: BattleGraphic.wr * 22}).attr({fill: txtColor})
                   .center(center_x, center_y).opacity(1).front();
         damageText.animate({duration: '2s'}).opacity(0)
@@ -379,13 +379,13 @@ class BattleGraphic {
      * Display the ward effect on a fam
      */
     displayWard(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
-        var data = this.logger.minorEventLog[majorIndex][minorIndex];
+        let data = this.logger.minorEventLog[majorIndex][minorIndex];
 
         if (data.missed) {
             return;
         }
 
-        var type;
+        let type;
         switch (data.wardUsed) {
             case ENUM.WardType.PHYSICAL:
                 type = ENUM.StatusType.ATTACK_RESISTANCE;
@@ -400,7 +400,7 @@ class BattleGraphic {
                 return; // no ward was used
         }
 
-        var wardImg = this.getWard(playerId, famIndex, type);
+        let wardImg = this.getWard(playerId, famIndex, type);
         wardImg.opacity(1).animate({delay: '0.5s'}).opacity(0);
     }
 
@@ -408,15 +408,15 @@ class BattleGraphic {
      * Display the affliction text of a fam
      */
     displayAfflictionText(playerId: number, famIndex: number, majorIndex: number, minorIndex: number) {
-        var data = this.logger.minorEventLog[majorIndex][minorIndex];
-        var svgAfflictTxt = this.getAfflictionText(playerId, famIndex);
+        let data = this.logger.minorEventLog[majorIndex][minorIndex];
+        let svgAfflictTxt = this.getAfflictionText(playerId, famIndex);
 
         if (data.affliction.isFinished) {
             svgAfflictTxt.hide();
             svgAfflictTxt.text('-');
         }
         else {
-            var text = Affliction.getAfflictionAdjective(data.affliction.type);
+            let text = Affliction.getAfflictionAdjective(data.affliction.type);
             svgAfflictTxt.text(text).show();
         }
     }
@@ -425,19 +425,19 @@ class BattleGraphic {
      * Display the affliction texts of all fams at a major index
      */
     displayAllAfflictionText(majorIndex: number) {
-        var field = this.logger.getFieldAtMajorIndex(majorIndex);
+        let field = this.logger.getFieldAtMajorIndex(majorIndex);
 
-        for (var player = 1; player <= 2; player++) {
-            for (var fam = 0; fam < 5; fam++) {
-                var svgAfflictTxt = this.getAfflictionText(player, fam);
-                var data = field[`player${player}Cards`][fam];
+        for (let player = 1; player <= 2; player++) {
+            for (let fam = 0; fam < 5; fam++) {
+                let svgAfflictTxt = this.getAfflictionText(player, fam);
+                let data = field[`player${player}Cards`][fam];
 
                 if (!data.affliction) {
                     svgAfflictTxt.hide();
                     svgAfflictTxt.text('-');
                 }
                 else {
-                    var text = Affliction.getAfflictionAdjective(data.affliction.type);
+                    let text = Affliction.getAfflictionAdjective(data.affliction.type);
                     svgAfflictTxt.text(text).show();
                 }
             }
@@ -456,7 +456,7 @@ class BattleGraphic {
      * Display a familiar as dead (greyed) or alive
      */
     displayDeadAliveFamiliar(player: number, fam: number, isDead: boolean) {
-        var image: any;
+        let image: any;
         if (ENUM.Setting.IS_MOBILE) {
             // fall back to using opacity, since svg filter can be a luxury...
             image = document.getElementById(`p${player}f${fam}image`);
@@ -468,7 +468,7 @@ class BattleGraphic {
         }
         else {
             image = SVG.get(`p${player}f${fam}image`);
-            var filter = SVG.get('darkenFilter');
+            let filter = SVG.get('darkenFilter');
             if (isDead) {
                 if (!filter) {
                     // If the filter does not exist yet, create it
@@ -511,8 +511,8 @@ class BattleGraphic {
      * Display the animation of a major event, including any minor events belong to it
      */
     displayMajorEventAnimation(majorIndex: number) {
-        var majorLog = this.logger.majorEventLog;
-        var that = this;
+        let majorLog = this.logger.majorEventLog;
+        let that = this;
 
         if (majorIndex >= majorLog.length) {
             onBattleFinished();
@@ -522,7 +522,7 @@ class BattleGraphic {
         // TODO: check this
         if (!majorLog[majorIndex]) {
             if (BattleGraphic.PLAY_MODE === 'AUTO') {
-                var nextIndex = +majorIndex + 1;
+                let nextIndex = +majorIndex + 1;
                 this.displayMajorEventAnimation(nextIndex);
             }
             return; //description event like battle start, etc
@@ -539,7 +539,7 @@ class BattleGraphic {
             this.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
         }
         else {
-            var callback = function() {
+            let callback = function() {
                 that.displayMinorEventAnimation(majorIndex, 0, {callback: autoCallback});
             };
 
@@ -563,18 +563,18 @@ class BattleGraphic {
             return;
         }
 
-        var executor = this.cardMan.getCardById(executorId);
-        var group: any = this.getCardImageGroup(executor);
+        let executor = this.cardMan.getCardById(executorId);
+        let group: any = this.getCardImageGroup(executor);
 
         // display the proc effect: spell circle or light spark
         if (!option.noProcEffect) {
             // enlarge the executor, then shrink it
             // scale from center
-            var scaleFactor = 1.3;
-            var cx = group.cx();
-            var cy = group.cy();
+            let scaleFactor = 1.3;
+            let cx = group.cx();
+            let cy = group.cy();
 
-            var D1 = 1, D05 = 0.5;
+            let D1 = 1, D05 = 0.5;
             if (option.durationRatio) {
                 D1  *= option.durationRatio;
                 D05 *= option.durationRatio;
@@ -610,13 +610,13 @@ class BattleGraphic {
             }
 
             // display skill name
-            var groupSkillBg = SVG.get(`p${executor.getPlayerId()}SkillBgTextGroup`);
-            var svgText      = SVG.get(`p${executor.getPlayerId()}SkillText`);
+            let groupSkillBg = SVG.get(`p${executor.getPlayerId()}SkillBgTextGroup`);
+            let svgText      = SVG.get(`p${executor.getPlayerId()}SkillText`);
 
             // the y-coordinate of the text, depending on whether this is player 1 or 2
-            var yText = BattleGraphic.hr * (executor.getPlayerId() === 1 ? 272 : 8);
+            let yText = BattleGraphic.hr * (executor.getPlayerId() === 1 ? 272 : 8);
 
-            var skillName: string = SkillDatabase[skillId].name;
+            let skillName: string = SkillDatabase[skillId].name;
 
             // center the text inside the background
             svgText.text(skillName).move(BattleGraphic.wr * (55 + 150) - svgText.bbox().width / 2, yText);
@@ -637,7 +637,7 @@ class BattleGraphic {
      * noNestedAttackAnim: same, for nested AoE
      */
     displayMinorEventAnimation(majorIndex: number, minorIndex: number, option: {noAttackAnim?: boolean; noNestedAttackAnim?: boolean; callback?} = {}) {
-        var minorLog = this.logger.minorEventLog;
+        let minorLog = this.logger.minorEventLog;
 
         // need to make sure minorEventLog[index] exists, in case this is an empty event (like the "Battle start" event);
         if (!minorLog[majorIndex] || minorIndex >= minorLog[majorIndex].length) {
@@ -647,7 +647,7 @@ class BattleGraphic {
             return;
         }
 
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
 
         switch (data.type) {
             case ENUM.MinorEventType.TEXT:
@@ -694,8 +694,8 @@ class BattleGraphic {
     }
 
     displayBattleDescriptionEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
             this.getMainBattleEffect().text(data.battleDesc).center(BattleGraphic.wr * 200, BattleGraphic.hr * 300)
                 .opacity(1).animate({ duration: '3s' }).opacity(0).after(function() { this.text('-') });
@@ -704,25 +704,25 @@ class BattleGraphic {
     }
 
     displayStatusEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
-            var target = this.cardMan.getCardById(data.targetId);
+            let target = this.cardMan.getCardById(data.targetId);
 
-            var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
-            var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+            let center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+            let center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
             if (data.status.type === ENUM.StatusType.ATTACK_RESISTANCE ||
                 data.status.type === ENUM.StatusType.MAGIC_RESISTANCE ||
                 data.status.type === ENUM.StatusType.BREATH_RESISTANCE)
             {
-                var ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type);
+                let ward = this.getWard(target.getPlayerId(), target.formationColumn, data.status.type);
                 ward.opacity(1).animate({delay: '0.5s'}).opacity(0);
             }
             else {
                 // display status text
 
-                var fontSize = BattleGraphic.wr * 18;
+                let fontSize = BattleGraphic.wr * 18;
 
                 if (data.status.isDispelled) {
                     var displayText = "dispelled";
@@ -761,18 +761,18 @@ class BattleGraphic {
                 }
                 else {
                     // for stats buff, this does not really use the log
-                    var upDownText = data.amount < 0? " Down" : " Up";
-                    var statuses = Skill.getStatusModified(data.skillId);
+                    let upDownText = data.amount < 0? " Down" : " Up";
+                    let statuses = Skill.getStatusModified(data.skillId);
                     displayText = ENUM.StatusType[statuses[0]] + upDownText;
 
                     // hacky
                     if (statuses[1]) {
-                        var displayText2 = ENUM.StatusType[statuses[1]] + upDownText;
+                        let displayText2 = ENUM.StatusType[statuses[1]] + upDownText;
                         displayText = displayText + "\n" + displayText2;
                     }
                 }
 
-                var damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
+                let damageText = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}damageText`);
                 damageText.text(displayText).center(center_x, center_y).font({ size: fontSize})
                     .opacity(1).animate({delay: '0.5s'}).opacity(0)
                     .after(function() {
@@ -786,23 +786,23 @@ class BattleGraphic {
     }
 
     displayReviveEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
 
-        var executor = this.cardMan.getCardById(data.executorId);
-        var executorGroup: any = this.getCardImageGroup(executor);
+        let executor = this.cardMan.getCardById(data.executorId);
+        let executorGroup: any = this.getCardImageGroup(executor);
         // move the executor's group to the front
         executorGroup.front();
         SVG.get(`p${executor.getPlayerId()}group`).front();
 
         if (minorIndex < minorLog[majorIndex].length) {
-            var target = this.cardMan.getCardById(data.targetId);
-            var playerId = target.getPlayerId();
-            var index = target.formationColumn;
-            var center_x = this.coordArray[playerId][index][0];
-            var center_y = this.coordArray[playerId][index][1];
+            let target = this.cardMan.getCardById(data.targetId);
+            let playerId = target.getPlayerId();
+            let index = target.formationColumn;
+            let center_x = this.coordArray[playerId][index][0];
+            let center_y = this.coordArray[playerId][index][1];
 
-            var damageText = SVG.get(`p${playerId}f${index}damageText`);
+            let damageText = SVG.get(`p${playerId}f${index}damageText`);
             damageText.text("REVIVED").center(center_x, center_y).font({ size: BattleGraphic.wr * 18})
                 .opacity(1).animate({delay: '0.5s'}).opacity(0)
                 .after(function() {
@@ -817,48 +817,48 @@ class BattleGraphic {
     }
 
     displayProtectEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
-        var that = this;
-        var executor = this.cardMan.getCardById(data.executorId);
-        var executorGroup: any = this.getCardImageGroup(executor);
-        var x1 = executorGroup.rbox().x;
-        var y1 = executorGroup.rbox().y;
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let that = this;
+        let executor = this.cardMan.getCardById(data.executorId);
+        let executorGroup: any = this.getCardImageGroup(executor);
+        let x1 = executorGroup.rbox().x;
+        let y1 = executorGroup.rbox().y;
 
         // move the executor's group to the front
         executorGroup.front();
         SVG.get(`p${executor.getPlayerId()}group`).front();
 
         if (minorIndex < minorLog[majorIndex].length) {
-            var protectedCard = this.cardMan.getCardById(data.protect.protectedId);
-            var protectedGroup = this.getCardImageGroup(protectedCard);
+            let protectedCard = this.cardMan.getCardById(data.protect.protectedId);
+            let protectedGroup = this.getCardImageGroup(protectedCard);
 
-            var attackerCard = this.cardMan.getCardById(data.protect.attackerId);
-            var attackerGroup = this.getCardImageGroup(attackerCard);
+            let attackerCard = this.cardMan.getCardById(data.protect.attackerId);
+            let attackerGroup = this.getCardImageGroup(attackerCard);
 
-            var x_protected = protectedGroup.rbox().x;
-            var y_protected = protectedGroup.rbox().y;
+            let x_protected = protectedGroup.rbox().x;
+            let y_protected = protectedGroup.rbox().y;
 
-            var x_attacker = attackerGroup.rbox().x;
-            var y_attacker = attackerGroup.rbox().y;
+            let x_attacker = attackerGroup.rbox().x;
+            let y_attacker = attackerGroup.rbox().y;
 
             //display the skill text, but not proc effect
             this.displayProcSkill(executor.id, data.skillId, {noProcEffect: true});
 
-            var y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
+            let y_offset = 70; // for p2, so that the protect fam is in front of the protected fam
             if (executor.getPlayerId() === 1) {
                 y_offset *= -1; //reverse for p1
             }
 
-            var moveTime = 0.5;
-            var moveBackTime = 0.5;
+            let moveTime = 0.5;
+            let moveBackTime = 0.5;
             if (data.protect.counter && Skill.isIndirectSkill(data.protect.counteredSkillId)) {
                 moveTime = 0.1;
                 moveBackTime = 0.1;
             }
 
-            var nextData = minorLog[majorIndex][minorIndex + 1];
-            var explosion = SVG.get(`p${executor.getPlayerId()}f${executor.formationColumn}explosion`);
+            let nextData = minorLog[majorIndex][minorIndex + 1];
+            let explosion = SVG.get(`p${executor.getPlayerId()}f${executor.formationColumn}explosion`);
 
             // animation for the protect. Also use the next MinorEvent's information.
             // after this is done, call the animation for the +2 MinorEvent, which is the counter, or another event
@@ -870,7 +870,7 @@ class BattleGraphic {
                 .move(x_protected - x1, y_protected - y1 + y_offset) // move to protect place
                 .after(function () {
                     if (Skill.isIndirectSkill(nextData.skillId)) { // receive damage - indirect
-                        var exploDuration = 0.2;
+                        let exploDuration = 0.2;
                         if (Skill.isWisAutoAttack(nextData.skillId)) {
                             var procEffect = that.getProcEffect(attackerCard.getPlayerId(), attackerCard.formationColumn, 'spellCircle');
                             procEffect.animate({duration: '0.2s'}).opacity(1);
@@ -923,20 +923,20 @@ class BattleGraphic {
     }
 
     displayReserveSwitchEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
-        var that = this;
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let that = this;
         if (minorIndex < minorLog[majorIndex].length) {
-            var main = this.cardMan.getCardById(data.reserveSwitch.mainId);
-            var reserve = this.cardMan.getCardById(data.reserveSwitch.reserveId);
-            var group = this.getCardImageGroup(main);
-            var mainId = main.getPlayerId();
+            let main = this.cardMan.getCardById(data.reserveSwitch.mainId);
+            let reserve = this.cardMan.getCardById(data.reserveSwitch.reserveId);
+            let group = this.getCardImageGroup(main);
+            let mainId = main.getPlayerId();
 
-            var image: any = this.getCardImage(main);
-            var newLink = getScaledFamiliarWikiaImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
+            let image: any = this.getCardImage(main);
+            let newLink = getScaledFamiliarWikiaImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
             image.load(newLink);
 
-            var y_offset = mainId === 1? 255 : -255;
+            let y_offset = mainId === 1? 255 : -255;
             group.move(0, y_offset).animate(1000).move(0, 0).after(function(){
                 that.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
             });
@@ -947,12 +947,12 @@ class BattleGraphic {
     }
 
     displayDescriptionEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
-        var that = this;
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let that = this;
 
-        var executor = this.cardMan.getCardById(data.executorId);
-        var executorGroup: any = this.getCardImageGroup(executor);
+        let executor = this.cardMan.getCardById(data.executorId);
+        let executorGroup: any = this.getCardImageGroup(executor);
         // move the executor's group to the front
         executorGroup.front();
         SVG.get(`p${executor.getPlayerId()}group`).front();
@@ -977,17 +977,17 @@ class BattleGraphic {
     }
 
     displayBcAddProbEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
             // we don't care about showing the text for reserve fams
             if (data.bcAddProb.isMain) {
-                var target = this.cardMan.getCardById(data.bcAddProb.targetId);
-                var center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
-                var center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
+                let target = this.cardMan.getCardById(data.bcAddProb.targetId);
+                let center_x = this.coordArray[target.getPlayerId()][target.formationColumn][0];
+                let center_y = this.coordArray[target.getPlayerId()][target.formationColumn][1];
 
-                var damageText = SVG.get(`p${target.getPlayerId() }f${target.formationColumn}damageText`);
-                var bonusProb = this.battle.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
+                let damageText = SVG.get(`p${target.getPlayerId() }f${target.formationColumn}damageText`);
+                let bonusProb = this.battle.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
                 damageText.text(`+${bonusProb}%`).center(center_x, center_y).font({ size: BattleGraphic.wr * 25 })
                     .opacity(1).animate({ delay: '2s' }).opacity(0)
                     .after(function() {
@@ -1001,10 +1001,10 @@ class BattleGraphic {
     }
 
     displayAfflictionEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
-            var target = this.cardMan.getCardById(data.targetId);
+            let target = this.cardMan.getCardById(data.targetId);
             this.displayAfflictionText(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
 
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
@@ -1015,10 +1015,10 @@ class BattleGraphic {
      * For non-battle HP change
      */
     displayHpChangeEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let minorLog = this.logger.minorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
         if (minorIndex < minorLog[majorIndex].length) {
-            var target = this.cardMan.getCardById(data.targetId);
+            let target = this.cardMan.getCardById(data.targetId);
 
             this.displayPostDamage(target.getPlayerId(), target.formationColumn, majorIndex, minorIndex);
             this.displayMinorEventAnimation(majorIndex, minorIndex + 1, option);
@@ -1026,28 +1026,28 @@ class BattleGraphic {
     }
 
     displayBattleEvent(majorIndex: number, minorIndex: number, option) {
-        var minorLog = this.logger.minorEventLog;
-        var majorLog = this.logger.majorEventLog;
-        var data: MinorEvent = minorLog[majorIndex][minorIndex];
-        var that = this;
+        let minorLog = this.logger.minorEventLog;
+        let majorLog = this.logger.majorEventLog;
+        let data: MinorEvent = minorLog[majorIndex][minorIndex];
+        let that = this;
 
-        var target = this.cardMan.getCardById(data.targetId);
-        var targetGroup: any = this.getCardImageGroup(target);
-        var x = targetGroup.rbox().x;
-        var y = targetGroup.rbox().y;
+        let target = this.cardMan.getCardById(data.targetId);
+        let targetGroup: any = this.getCardImageGroup(target);
+        let x = targetGroup.rbox().x;
+        let y = targetGroup.rbox().y;
 
-        var executor = this.cardMan.getCardById(data.executorId);
-        var executorGroup: any = this.getCardImageGroup(executor);
-        var x1 = executorGroup.rbox().x;
-        var y1 = executorGroup.rbox().y;
+        let executor = this.cardMan.getCardById(data.executorId);
+        let executorGroup: any = this.getCardImageGroup(executor);
+        let x1 = executorGroup.rbox().x;
+        let y1 = executorGroup.rbox().y;
 
         // move the executor's group to the front
         executorGroup.front();
         SVG.get(`p${executor.getPlayerId()}group`).front();
 
-        var explosion = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}explosion`);
+        let explosion = SVG.get(`p${target.getPlayerId()}f${target.formationColumn}explosion`);
         if (Skill.isAoeSkill(data.skillId)) {
-            var exploSet = [];
+            let exploSet = [];
 
             // add targets to the set
             if (data.executorId === majorLog[majorIndex].executorId && data.skillId === majorLog[majorIndex].skillId) {
@@ -1063,7 +1063,7 @@ class BattleGraphic {
             }
 
             for (var i = 0; i < aoeTargets.length; i++) {
-                var exploTargetCol = this.cardMan.getCardById(aoeTargets[i]).formationColumn;
+                let exploTargetCol = this.cardMan.getCardById(aoeTargets[i]).formationColumn;
                 exploSet.push(SVG.get(`p${target.getPlayerId()}f${exploTargetCol}explosion`));
             }
 
@@ -1093,7 +1093,7 @@ class BattleGraphic {
 
                 let getCallback = function(graphic, majorIndex, minorIndex, option, target, procEffect, exploSet) {
                     return function() {
-                        for (var i = 0; i < exploSet.length; i++) {
+                        for (let i = 0; i < exploSet.length; i++) {
                             exploSet[i].opacity(0);
                         }
 
@@ -1177,7 +1177,7 @@ class BattleGraphic {
      * Get the ward effect on a card
      */
     getWard(playerId: number, famIndex: number, type: ENUM.StatusType) {
-        var wardTxt, wardFileName;
+        let wardTxt, wardFileName;
         switch (type) {
             case ENUM.StatusType.ATTACK_RESISTANCE:
                 wardTxt = "physicalWard";
@@ -1195,7 +1195,7 @@ class BattleGraphic {
                 throw new Error("Invalid type of ward");
         }
 
-        var ward = SVG.get(`p${playerId}f${famIndex}${wardTxt}`);
+        let ward = SVG.get(`p${playerId}f${famIndex}${wardTxt}`);
 
         if (!ward) {
             ward = SVG.get('mainSvg').image(`img/${wardFileName}`, BattleGraphic.wr * 70, BattleGraphic.wr * 70)
@@ -1212,7 +1212,7 @@ class BattleGraphic {
      * Get the affiction text of a card
      */
     getAfflictionText(playerId: number, famIndex: number) {
-        var txt = SVG.get(`p${playerId}f${famIndex}afflictText`);
+        let txt = SVG.get(`p${playerId}f${famIndex}afflictText`);
 
         if (!txt) {
             txt = SVG.get('mainSvg').text('Paralyzed').font({ size: BattleGraphic.wr * 14, family: BattleGraphic.FONT })
@@ -1232,9 +1232,9 @@ class BattleGraphic {
      * Get the proc effect (spellCircle or lineSpark) of a card
      */
     getProcEffect(playerId: number, famIndex: number, type: string) {
-        var file = type === "spellCircle"? "circle_blue.png" : "lineSpark.png";
+        let file = type === "spellCircle"? "circle_blue.png" : "lineSpark.png";
 
-        var effect = SVG.get('mainSvg').image(`img/${file}`, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
+        let effect = SVG.get('mainSvg').image(`img/${file}`, BattleGraphic.wr * 150, BattleGraphic.wr * 150)
                             .center(this.coordArray[playerId][famIndex][0], this.coordArray[playerId][famIndex][1])
                             .attr('id', `p${playerId}f${famIndex}spellCircle`)
                             .opacity(0);
@@ -1247,7 +1247,7 @@ class BattleGraphic {
      * Get the main battle text of the whole field (for turn order change, decision win, etc.)
      */
     getMainBattleEffect() {
-        var txt = SVG.get('battleText');
+        let txt = SVG.get('battleText');
 
         if (!txt) {
             txt = SVG.get('mainSvg').text('0').font({ size: BattleGraphic.wr * 24, family: BattleGraphic.FONT })

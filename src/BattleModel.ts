@@ -97,7 +97,7 @@ class BattleModel {
         BattleModel._instance = this;
         this.logger = BattleLogger.getInstance();
         this.cardManager = CardManager.getInstance();
-        var graphic = new BattleGraphic();
+        let graphic = new BattleGraphic();
 
         if (option.battleType && option.battleType === ENUM.BattleType.BLOOD_CLASH) {
             this.isBloodClash = true;
@@ -109,9 +109,9 @@ class BattleModel {
             BattleModel.MAX_TURN_NUM = 10; // not sure about this
         }
 
-        var p1_formation: any = option.p1RandomMode ?
+        let p1_formation: any = option.p1RandomMode ?
             pickRandomProperty(Formation.FORMATION_CONFIG) : data.p1_formation;
-        var p2_formation: any = option.p2RandomMode ?
+        let p2_formation: any = option.p2RandomMode ?
             pickRandomProperty(Formation.FORMATION_CONFIG) : data.p2_formation;
 
         this.p1RandomMode = option.p1RandomMode ? option.p1RandomMode : ENUM.RandomBrigType.NONE;
@@ -178,10 +178,10 @@ class BattleModel {
      * Use this for damage because of attacks
      */
     processDamagePhase(data: DamagePhaseData) {
-        var target = data.target;
-        var damage = this.getWouldBeDamage(data);
+        let target = data.target;
+        let damage = this.getWouldBeDamage(data);
 
-        var isMissed = data.attacker.willMiss();
+        let isMissed = data.attacker.willMiss();
         if (isMissed) {
             damage = 0;
             data.attacker.justMissed = true;
@@ -190,7 +190,7 @@ class BattleModel {
             data.attacker.justMissed = false;
         }
 
-        var evaded = target.justEvaded;
+        let evaded = target.justEvaded;
         if (evaded) {
             damage = 0;
         }
@@ -205,7 +205,7 @@ class BattleModel {
         }
 
         // HP shield skill
-        var hpShield = ~~target.status.hpShield;
+        let hpShield = ~~target.status.hpShield;
         if (hpShield > 0 && !isMissed && !evaded && !isKilled) {
             if (damage >= hpShield) {
                 target.status.hpShield = 0;
@@ -217,8 +217,8 @@ class BattleModel {
         }
 
         // survive
-        var surviveSkill = target.getSurviveSkill();
-        var defenseData: SkillLogicData = {
+        let surviveSkill = target.getSurviveSkill();
+        let defenseData: SkillLogicData = {
             executor: target,
             skill: surviveSkill,
             attacker: data.attacker,
@@ -297,17 +297,17 @@ class BattleModel {
         if (damage < 0 || attacker.isDead || target.justEvaded || attacker.justMissed) {
             return;
         }
-        var skill = target.getPassiveAffliction(attacker);
+        let skill = target.getPassiveAffliction(attacker);
         if (skill !== null) {
             AfflictionSkillLogic.processAffliction(target, attacker, skill);
         }
     }
 
     getWouldBeDamage(data: DamagePhaseData): number {
-        var attacker = data.attacker;
-        var target = data.target;
-        var skill = data.skill;
-        var skillMod = skill.skillFuncArg1;
+        let attacker = data.attacker;
+        let target = data.target;
+        let skill = data.skill;
+        let skillMod = skill.skillFuncArg1;
 
         if (skill.skillFunc !== ENUM.SkillFunc.PROTECT_REFLECT) {
             var ignorePosition = Skill.isPositionIndependentAttackSkill(skill.id);
@@ -316,7 +316,7 @@ class BattleModel {
             ignorePosition = Skill.isPositionIndependentAttackSkill(data.oriAtkSkill.id);
         }
 
-        var baseDamage: number;
+        let baseDamage: number;
 
         switch (skill.skillCalcType) {
             case (ENUM.SkillCalcType.DEFAULT):
@@ -337,7 +337,7 @@ class BattleModel {
         }
 
         // apply the multiplier
-        var damage = skillMod * baseDamage;
+        let damage = skillMod * baseDamage;
 
         if (data.scaledRatio)
             damage *= data.scaledRatio;
@@ -380,12 +380,12 @@ class BattleModel {
     damageToTargetDirectly(target: Card, damage: number, reason: string) {
         target.changeHP(-1 * damage);
 
-        var descVerb = " lost ";
+        let descVerb = " lost ";
         if (damage < 0) {
             descVerb = " gained ";
         }
 
-        var description = target.name + descVerb + Math.abs(damage) + " HP because of " + reason;
+        let description = target.name + descVerb + Math.abs(damage) + " HP because of " + reason;
 
         this.logger.addMinorEvent({
             targetId: target.id,
@@ -426,8 +426,8 @@ class BattleModel {
             this.cardManager.sortAllCurrentMainCards();
 
             // assuming both have 5 cards
-            for (var i = 0; i < 10 && !this.isFinished; i++) {
-                var currentCard = this.allCurrentMainCards[i];
+            for (let i = 0; i < 10 && !this.isFinished; i++) {
+                let currentCard = this.allCurrentMainCards[i];
 
                 this.currentPlayer = currentCard.player;
                 this.currentPlayerMainCards = this.cardManager.getPlayerCurrentMainCards(this.currentPlayer);
@@ -438,10 +438,10 @@ class BattleModel {
                 this.oppositePlayerReserveCards = this.cardManager.getPlayerCurrentReserveCards(this.oppositePlayer);
 
                 if (currentCard.isDead) {
-                    var column = currentCard.formationColumn;
+                    let column = currentCard.formationColumn;
                     if (this.isBloodClash && this.currentPlayerReserveCards[column]) {
                         // swich in reserve
-                        var reserveCard = this.currentPlayerReserveCards[column];
+                        let reserveCard = this.currentPlayerReserveCards[column];
 
                         this.cardManager.switchCardInAllCurrentMainCards(currentCard, reserveCard);
                         this.currentPlayerMainCards[column] = reserveCard;
@@ -463,9 +463,9 @@ class BattleModel {
                         currentCard = reserveCard;
 
                         // proc opening skill when switch in
-                        var openingSkill = currentCard.getRandomOpeningSkill();
+                        let openingSkill = currentCard.getRandomOpeningSkill();
                         if (openingSkill) {
-                            var data: SkillLogicData = {
+                            let data: SkillLogicData = {
                                 executor: currentCard,
                                 skill: openingSkill
                             };
@@ -484,7 +484,7 @@ class BattleModel {
                     }
                 }
 
-                var missTurn = !currentCard.canAttack();
+                let missTurn = !currentCard.canAttack();
                 if (missTurn) {
                     this.logger.addMajorEvent({
                         description: currentCard.name + " missed a turn"
@@ -497,7 +497,7 @@ class BattleModel {
 
                 // hopefully there's no mounted fam with extra turn buff and extra turn passive, coz
                 // I have no idea how all that logic will play with each other
-                var passiveSkill = currentCard.getPassiveSkill();
+                let passiveSkill = currentCard.getPassiveSkill();
                 if (!currentCard.isDead && currentCard.status.willAttackAgain !== 0) {
                     this.processActivePhase(currentCard, "FIRST");
                     // todo: send a minor event log and handle it
@@ -523,7 +523,7 @@ class BattleModel {
 
                     // if cured, make a log
                     if (!currentCard.affliction && cured) {
-                        var desc = currentCard.name + " is cured of affliction!";
+                        let desc = currentCard.name + " is cured of affliction!";
 
                         this.logger.addMinorEvent({
                             targetId: currentCard.id,
@@ -562,7 +562,7 @@ class BattleModel {
     }
 
     checkFinish(): void {
-        var noOnDeathRemain = this.onDeathCards.length === 0;
+        let noOnDeathRemain = this.onDeathCards.length === 0;
         if (this.cardManager.isAllDeadPlayer(this.oppositePlayer) && noOnDeathRemain) {
             this.playerWon = this.currentPlayer;
         }
@@ -601,7 +601,7 @@ class BattleModel {
             }
         }
 
-        var activeSkill = currentCard.getRandomActiveSkill();
+        let activeSkill = currentCard.getRandomActiveSkill();
 
         if (nth === "FIRST" && currentCard.isMounted) {
             activeSkill = currentCard.getFirstActiveSkill();
@@ -611,7 +611,7 @@ class BattleModel {
         }
 
         if (activeSkill) {
-            var data: SkillLogicData = {
+            let data: SkillLogicData = {
                 executor: currentCard,
                 skill: activeSkill
             };
@@ -652,7 +652,7 @@ class BattleModel {
 
     processOnDeathPhase() {
         // make a copy
-        var hasOnDeath: Card[] = [];
+        let hasOnDeath: Card[] = [];
         for (let i = 0; i < this.onDeathCards.length; i++) {
             hasOnDeath.push(this.onDeathCards[i]);
         }
@@ -660,9 +660,9 @@ class BattleModel {
         this.onDeathCards = [];
 
         for (let i = 0; i < hasOnDeath.length; i++) {
-            var card = hasOnDeath[i];
-            var skill = card.getInherentOnDeathSkill();
-            var data: SkillLogicData = {
+            let card = hasOnDeath[i];
+            let skill = card.getInherentOnDeathSkill();
+            let data: SkillLogicData = {
                 executor: card,
                 skill: skill
             };
@@ -714,11 +714,11 @@ class BattleModel {
         });
 
         if (this.logger.currentTurn >= BattleModel.MAX_TURN_NUM) {
-            var p1Cards    = this.cardManager.getPlayerAllCurrentCards(this.player1);
-            var p2Cards    = this.cardManager.getPlayerAllCurrentCards(this.player2);
+            let p1Cards    = this.cardManager.getPlayerAllCurrentCards(this.player1);
+            let p2Cards    = this.cardManager.getPlayerAllCurrentCards(this.player2);
 
-            var p1Ratio    = this.cardManager.getTotalHPRatio(p1Cards);
-            var p2Ratio    = this.cardManager.getTotalHPRatio(p2Cards);
+            let p1Ratio    = this.cardManager.getTotalHPRatio(p1Cards);
+            let p2Ratio    = this.cardManager.getTotalHPRatio(p2Cards);
 
             if (p1Ratio >= p2Ratio) {
                 this.playerWon = this.player1;
@@ -741,11 +741,11 @@ class BattleModel {
         }
         else if (this.isBloodClash || this.isColiseum) {
             // add skill probability to those still alive
-            var allCards = this.cardManager.getAllCurrentCards();
-            for (var i = 0; i < allCards.length; i++) {
-                var tmpCard = allCards[i];
+            let allCards = this.cardManager.getAllCurrentCards();
+            for (let i = 0; i < allCards.length; i++) {
+                let tmpCard = allCards[i];
                 if (tmpCard && !tmpCard.isDead) {
-                    var bonusProb = this.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
+                    let bonusProb = this.isColiseum ? ENUM.AddProbability.COLISEUM : ENUM.AddProbability.BLOODCLASH;
                     tmpCard.bcAddedProb += bonusProb;
 
                     this.logger.addMinorEvent({
@@ -766,7 +766,7 @@ class BattleModel {
             return;
         }
 
-        var skill = attacker.autoAttack;
+        let skill = attacker.autoAttack;
 
         // set confuse to the skill if necessary
         if (attacker.canConfuse()) {
@@ -796,23 +796,23 @@ class BattleModel {
      */
     processProtect(attacker: Card, targetCard: Card, attackSkill: Skill, targetsAttacked: boolean[], scaledRatio?: number, varyingRatio?: number) {
         // now check if someone on the enemy side can protect before the damage is dealt
-        var enemyCards = this.cardManager.getEnemyCurrentMainCards(attacker.player);
-        var protectSkillActivated = false; //<- has any protect skill been activated yet?
-        var toReturn: any = {}; // data that we will return
-        for (var i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
+        let enemyCards = this.cardManager.getEnemyCurrentMainCards(attacker.player);
+        let protectSkillActivated = false; //<- has any protect skill been activated yet?
+        let toReturn: any = {}; // data that we will return
+        for (let i = 0; i < enemyCards.length && !protectSkillActivated; i++) {
             if (enemyCards[i].isDead) {
                 continue;
             }
-            var protectSkill = enemyCards[i].getRandomProtectSkill();
+            let protectSkill = enemyCards[i].getRandomProtectSkill();
             if (protectSkill) {
-                var protector = enemyCards[i];
+                let protector = enemyCards[i];
 
                 // if a fam that has been attacked is not allowed to protect (like in the case of AoE), continue
                 if (targetsAttacked && targetsAttacked[protector.id]) {
                     continue;
                 }
 
-                var protectData: SkillLogicData = {
+                let protectData: SkillLogicData = {
                     executor: protector,
                     skill: protectSkill,
                     attacker: attacker,    // for protect
@@ -839,11 +839,11 @@ class BattleModel {
 
     performOpeningSkills () {
         // the cards sorted by proc order
-        var p1cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player1);
-        var p2cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player2);
+        let p1cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player1);
+        let p2cards = this.cardManager.getPlayerCurrentMainCardsByProcOrder(this.player2);
 
         for (let i = 0; i < p1cards.length; i++) {
-            var skill1 = p1cards[i].getRandomOpeningSkill();
+            let skill1 = p1cards[i].getRandomOpeningSkill();
             if (skill1) {
                 var data: SkillLogicData = {
                     executor: p1cards[i],
@@ -861,7 +861,7 @@ class BattleModel {
         }
 
         for (let i = 0; i < p2cards.length; i++) {
-            var skill2 = p2cards[i].getRandomOpeningSkill();
+            let skill2 = p2cards[i].getRandomOpeningSkill();
             if (skill2) {
                 data = {
                     executor: p2cards[i],

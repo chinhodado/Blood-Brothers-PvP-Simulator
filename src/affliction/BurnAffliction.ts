@@ -17,12 +17,12 @@
 
     add(option: AfflictOptParam): void {
         // update the damage as the sum of the highest 3 values
-        var arr = this.values;
+        let arr = this.values;
         arr.push(option.damage);
         arr.sort((a, b) => b - a); // sort descending
 
         this.damage = 0;
-        for (var i = 0; i < BurnAffliction.STACK_NUM; i++) {
+        for (let i = 0; i < BurnAffliction.STACK_NUM; i++) {
             if (arr[i]) {
                 this.damage += arr[i];
             }

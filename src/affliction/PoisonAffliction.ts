@@ -16,7 +16,7 @@
     }
 
     update(card: Card): void {
-        var damage: number = Math.floor(card.originalStats.hp * this.percent / 100);
+        let damage: number = Math.floor(card.originalStats.hp * this.percent / 100);
         if (damage > PoisonAffliction.MAX_DAMAGE) {
             damage = PoisonAffliction.MAX_DAMAGE;
         }
@@ -25,14 +25,14 @@
     }
 
     add(option: AfflictOptParam): void {
-        var percent = option.percent;
+        let percent = option.percent;
         if (!percent) {
             percent = PoisonAffliction.DEFAULT_PERCENT;
         }
         this.percent += percent;
 
         // there's a bug in here. Not my fault though
-        var maxPercent = percent * PoisonAffliction.MAX_STACK_NUM;
+        let maxPercent = percent * PoisonAffliction.MAX_STACK_NUM;
         if (this.percent > maxPercent) {
             this.percent = maxPercent;
         }

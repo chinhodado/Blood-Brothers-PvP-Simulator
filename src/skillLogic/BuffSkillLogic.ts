@@ -2,13 +2,13 @@
 
 class BuffSkillLogic extends SkillLogic {
     willBeExecuted(data: SkillLogicData): boolean {
-        var hasTarget = data.skill.range.hasValidTarget(data.executor);
+        let hasTarget = data.skill.range.hasValidTarget(data.executor);
         return super.willBeExecuted(data) && hasTarget;
     }
 
     execute(data: SkillLogicData) {
-        var skill = data.skill;
-        var executor = data.executor;
+        let skill = data.skill;
+        let executor = data.executor;
         skill.getReady(executor);
 
         // get a list of things to buff
@@ -24,26 +24,26 @@ class BuffSkillLogic extends SkillLogic {
             statusToBuff = this.getComponentStatus(skill.skillFuncArg2);
         }
 
-        var basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
+        let basedOnStatType = ENUM.SkillCalcType[skill.skillCalcType];
 
         // for buff, calcType 6 indicates a flat buff
         // for onhit buff, calcType 6 indicates a flat buff, but the amount has to be multiplied by 100
-        var baseStat = skill.skillCalcType === 6? 0 : executor.getStat(basedOnStatType);
+        let baseStat = skill.skillCalcType === 6? 0 : executor.getStat(basedOnStatType);
         if (skill.skillFunc === ENUM.SkillFunc.ONHIT_BUFF) {
             assert(skill.skillCalcType === 6, "ONHIT_BUFF with calcType != 6, not sure what this means...");
         }
 
-        var target: Card;
+        let target: Card;
         while (target = skill.getTarget(executor)) {
-            for (var j = 0; j < statusToBuff.length; j++) {
-                var statusType = statusToBuff[j];
+            for (let j = 0; j < statusToBuff.length; j++) {
+                let statusType = statusToBuff[j];
 
                 switch (statusType) {
                     case ENUM.StatusType.ATK:
                     case ENUM.StatusType.DEF:
                     case ENUM.StatusType.WIS:
                     case ENUM.StatusType.AGI:
-                        var skillMod = skill.skillFuncArg1;
+                        let skillMod = skill.skillFuncArg1;
                         if (skill.skillCalcType === 6) {
                             if (skill.skillFuncArg4 === 0) {
                                 throw new Error("Not sure what needs to happen here when arg4 = 0 for skillCalcType = 6. Check the manual.");
@@ -111,10 +111,11 @@ class BuffSkillLogic extends SkillLogic {
     /**
      * Add a debug minor event if a fam's stat changed because of remain-HP-stats-up buffs
      * This is called after a fam's HP change, i.e. at the end of processDamagePhase() and damageToTargetDirectly()
-     * @oaram isPositiveChange Whether the change in HP was positive (e.g. healing) or not (e.g. battle damage)
+     * @param target the target fam
+     * @param isPositiveChange Whether the change in HP was positive (e.g. healing) or not (e.g. battle damage)
      */
     static processRemainHpBuff(target: Card, isPositiveChange: boolean): void {
-        var types = [];
+        let types = [];
 
         if (target.status.remainHpAtkUp > 0)
             types.push(ENUM.StatusType.ATK);
@@ -128,9 +129,9 @@ class BuffSkillLogic extends SkillLogic {
         if (target.status.remainHpAgiUp > 0)
             types.push(ENUM.StatusType.AGI);
 
-        var verb = isPositiveChange ? "decreased" : "increased";
-        var logger = BattleLogger.getInstance();
-        for (var i = 0; i < types.length; i++) {
+        let verb = isPositiveChange ? "decreased" : "increased";
+        let logger = BattleLogger.getInstance();
+        for (let i = 0; i < types.length; i++) {
             logger.addMinorEvent({
                 type: ENUM.MinorEventType.TEXT,
                 description: target.name + "'s " + ENUM.StatusType[types[i]] + " " + verb + " because of remain HP buff.",

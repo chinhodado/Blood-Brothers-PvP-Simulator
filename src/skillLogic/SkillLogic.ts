@@ -12,7 +12,7 @@ abstract class SkillLogic {
     }
 
     willBeExecuted(data: SkillLogicData): boolean {
-        var deadCond = (data.executor.isDead && data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
+        let deadCond = (data.executor.isDead && data.skill.skillType === ENUM.SkillType.ACTION_ON_DEATH) ||
             (!data.executor.isDead && data.skill.skillType !== ENUM.SkillType.ACTION_ON_DEATH);
 
         if (data.noProbCheck) {
@@ -34,8 +34,8 @@ abstract class SkillLogic {
     }
 
     clearAllCardsDamagePhaseData() {
-        var allCards = this.cardManager.getAllCurrentMainCards();
-        for (var i = 0; i < allCards.length; i++) {
+        let allCards = this.cardManager.getAllCurrentMainCards();
+        for (let i = 0; i < allCards.length; i++) {
             allCards[i].clearDamagePhaseData();
         }
     }
