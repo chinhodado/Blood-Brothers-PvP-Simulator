@@ -160,7 +160,7 @@ class BattleGraphic {
             let reserveCards = this.cardMan.getPlayerOriginalReserveCards(this.battle.getPlayerById(player));
 
             for (let fam = 0; fam < playerCards.length; fam++) {
-                imageLinksArray.push(getScaledFamiliarWikiaImageLink(playerCards[fam].imageLink, playerCards[fam].fullName, BattleGraphic.IMAGE_WIDTH_BIG));
+                imageLinksArray.push(getImageLink(playerCards[fam].imageLink, playerCards[fam].fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
 
             // display fam images and other effects
@@ -210,7 +210,7 @@ class BattleGraphic {
                         // the image of the fam originally in the main brig, we know that this is a reserve fam
                         // Note: this wouldn't work if the main and reserve fam are same in name but are different
                         // fams (e.g. with different stats, levels, etc). Fortunately the simulator doesn't support that.
-                        if (nestedImgHref !== getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG)) {
+                        if (nestedImgHref !== getImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG)) {
                             card = cardMan.getOriginalReserveCardByIndex(arg[0], arg[1]);
                         }
 
@@ -224,7 +224,7 @@ class BattleGraphic {
                 // preload the reserve image
                 if (this.battle.isBloodClash) {
                     let reserve_img = new Image();
-                    reserve_img.src = getScaledFamiliarWikiaImageLink(reserveCards[i].imageLink, reserveCards[i].fullName, BattleGraphic.IMAGE_WIDTH_BIG);
+                    reserve_img.src = getImageLink(reserveCards[i].imageLink, reserveCards[i].fullName, BattleGraphic.IMAGE_WIDTH_BIG);
                 }
             }
         }
@@ -253,7 +253,7 @@ class BattleGraphic {
             for (let f = 0; f < 5; f++) {
                 let image: any = SVG.get(`p${p}f${f}image`);
                 let card = field[`player${p}Cards`][f];
-                image.load(getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG));
+                image.load(getImageLink(card.imageLink, card.fullName, BattleGraphic.IMAGE_WIDTH_BIG));
             }
         }
     }
@@ -933,7 +933,7 @@ class BattleGraphic {
             let mainId = main.getPlayerId();
 
             let image: any = this.getCardImage(main);
-            let newLink = getScaledFamiliarWikiaImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
+            let newLink = getImageLink(reserve.imageLink, reserve.fullName, BattleGraphic.IMAGE_WIDTH_BIG);
             image.load(newLink);
 
             let y_offset = mainId === 1? 255 : -255;

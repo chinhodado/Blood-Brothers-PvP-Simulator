@@ -455,7 +455,7 @@ class CardManager {
 
         return {
             "name": card.fullName,
-            "image": getScaledFamiliarWikiaImageLink(card.imageLink, card.fullName, 150),
+            "image": getImageLink(card.imageLink, card.fullName, 150),
             //"rarity": 5,
             //"price": 25850,
             "hp": card.originalStats.hp,

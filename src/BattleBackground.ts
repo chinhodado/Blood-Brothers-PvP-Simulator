@@ -34,15 +34,20 @@
      */
     static getRandomBackgroundLink(): string {
         let shortenedLink = getRandomElement(BattleBackground.bgList);
-        return BattleBackground.getLinkFromShortenedLink(shortenedLink);
+        // return BattleBackground.getWikiaLinkFromShortenedLink(shortenedLink);
+        return BattleBackground.getLocalLinkFromShortenedLink(shortenedLink);
     }
 
     /**
      * Given a shortened link (as stored in bgList), return the full link
      */
-    static getLinkFromShortenedLink(shortenedLink: string): string {
+    static getWikiaLinkFromShortenedLink(shortenedLink: string): string {
         let firstPart = `https://img${shortenedLink.charAt(0)}.wikia.nocookie.net/bloodbrothersgame/images/`;
         let link = firstPart + shortenedLink.charAt(1) + "/" + shortenedLink.substring(1) + ".png";
         return link;
+    }
+
+    static getLocalLinkFromShortenedLink(shortenedLink: string, root: string = ""): string {
+        return root + "img/wikia/" + shortenedLink.substring(4) + ".png";
     }
 }

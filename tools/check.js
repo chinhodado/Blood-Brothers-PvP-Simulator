@@ -147,7 +147,8 @@ function checkFamImages() {
     var imgCheckDiv = document.getElementById("imgCheck");
     for (var key in famDatabase) {
         if (famDatabase.hasOwnProperty(key)) {
-            var url = getScaledFamiliarWikiaImageLink(famDatabase[key].img, famDatabase[key].fullName, 30);
+            // var url = getImageLink(famDatabase[key].img, famDatabase[key].fullName, 30);
+            var url = getLocalImageLink(famDatabase[key].fullName, "../");
             var img = new Image();
             img.src = url;
             imgCheckDiv.appendChild(img);
@@ -160,7 +161,7 @@ function checkBackgrounds() {
 
     for (var i = 0; i < BattleBackground.bgList.length; i++) {
         var shortenedLink = BattleBackground.bgList[i];
-        var url = BattleBackground.getLinkFromShortenedLink(shortenedLink);
+        var url = BattleBackground.getLocalLinkFromShortenedLink(shortenedLink, "../");
 
         var img = new Image();
         img.src = url;

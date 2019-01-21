@@ -98,6 +98,19 @@ function getScaledFamiliarWikiaImageLink (link: string, fullName: string, newWid
     return newScaledLink;
 }
 
+function getImageLink(link: string, fullName: string, newWidth: number) {
+    // return getScaledFamiliarWikiaImageLink(link, fullName, newWidth);
+    return getLocalImageLink(fullName);
+}
+
+function getLocalImageLink(fullName:string, root: string = "") {
+    let urlName = fullName.replace(/, /g, "_")
+                          .replace(/ /g, "_")
+                          .replace(/'/g, "");
+    let fileName = urlName + "_Figure.png";
+    return root + "img/wikia/" + fileName;
+}
+
 function getSerializableObjectArray(array: any[]) {
     let toReturn = [];
     for (let i = 0; i < array.length; i++) {
