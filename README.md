@@ -10,13 +10,13 @@ Blood Brothers PvP Simulator
 This is a pvp simulator for the Blood Brothers game.
 I code it for fun and also for playing with TypeScript.
 
-[Link](http://chinhodado.github.io/bb_pvp/setting.html)
+[Link](http://chinhodado.github.io/Blood-Brothers-PvP-Simulator/setting.html)
 
 ### Build instruction
-See [here](https://github.com/chinhodado/bb_pvp_simulator/wiki/Build-instruction)
+See [here](https://github.com/chinhodado/Blood-Brothers-PvP-Simulator/wiki/Build-instruction)
 
 ### Progress
-See [here](https://github.com/chinhodado/bb_pvp_simulator/wiki/What-is-implemented-and-what-is-not) for what has been implemented and what not.
+See [here](https://github.com/chinhodado/Blood-Brothers-PvP-Simulator/wiki/What-is-implemented-and-what-is-not) for what has been implemented and what not.
 
 ### License
 MIT
