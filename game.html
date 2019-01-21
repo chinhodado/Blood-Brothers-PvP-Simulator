@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Blood Brothers Simulator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -146,7 +146,7 @@
                 "zoom": window.innerWidth / 400
             });
         }
-        else if (ENUM.Setting.IS_MOBILE && mode == "sim") {
+        else if (ENUM.Setting.IS_MOBILE && mode === "sim") {
             $(".midCol, .rightCol, #githubDiv").css("display", "none");
             $("#mobileInfoDiv").css("display", "block");
             $(".leftCol").css({ "width": "100%", "height": "100%", "position": "relative" });
